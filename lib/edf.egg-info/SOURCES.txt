@@ -1,0 +1,10 @@
+setup.py
+lib/edf/__init__.py
+lib/edf.egg-info/PKG-INFO
+lib/edf.egg-info/SOURCES.txt
+lib/edf.egg-info/dependency_links.txt
+lib/edf.egg-info/requires.txt
+lib/edf.egg-info/top_level.txt
+lib/edf/importers/__init__.py
+lib/edf/importers/sip256c/__init__.py
+lib/edf/importers/sip256c/importer.py
