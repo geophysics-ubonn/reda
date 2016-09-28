@@ -140,10 +140,11 @@ def parse_remote_unit(ru_block):
         delim_whitespace=True,
         # header=None,
         # sep=' ',
-        index_col=0,
+        # index_col=0,
     )
 
     df.columns = [
+        'frequency_[Hz]',
         'rho',
         'phi',
         'drho',
@@ -155,17 +156,37 @@ def parse_remote_unit(ru_block):
         'date'
     ]
 
-    # phase is in degree, convert to rad
-    df['phi'] *= np.pi / 180.0
+    # phase is in degree, convert to mrad
+    df['phi'] *= np.pi / 180.0 * 1000
 
     df['|Z|'] = df['rho'] / df['K']
 
     # % RA error (Ohm m)
-    # errorar = errorar .* rhoraw;
+    errorar = df['drho'] * df['rho'] / df['K']
+    df['d|Z|'] = errorar
+
     # % Error phase (mrad)
-    # errorpha = errorpha .* pi ./ 180 * 1000;
+    errorpha = df['dphi'] * np.pi / 180.0 * 1000
+    df['dphi'] = errorpha
+
     # % U(V)
-    # voltage = Iraw ./ 1000 .* rhoraw ./ Kraw;
+    voltage = df['I'] / 1000 * df['|Z|'] / df['K']
+    df['U'] = voltage
+
+    # rename some columns
+    col_descriptions = {
+        'rho': 'rho_[Ohm m]',
+        'phi': 'phi_[mrad]',
+        'dphi': 'dphi_[mrad]',
+        '|Z|': '|Z|_[Ohm]',
+        'd|Z|': 'd|Z|_[Ohm]',
+        'U': 'U_[V]',
+    }
+    columns = df.columns.values.tolist()
+    for key in columns:
+        if key in col_descriptions:
+            columns[columns.index(key)] = col_descriptions[key]
+    df.columns = columns
 
     #
     df_sort = df.sort_index()
@@ -298,10 +319,10 @@ def compute_quadrupoles(reading_configs, readings):
         # for configs_in_reading, reading in zip(reading_configs, readings):
         for nr, config in enumerate(configs_in_reading):
             df = reading[nr]
-            df['A'] = config[0]
-            df['B'] = config[1]
-            df['M'] = config[3]
-            df['N'] = config[2]
+            df['A'] = config[0].astype(int)
+            df['B'] = config[1].astype(int)
+            df['M'] = config[3].astype(int)
+            df['N'] = config[2].astype(int)
 
             if decide_on_quadpole(config, mode='after'):
                 quadpole_data.append(df)
