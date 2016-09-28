@@ -26,6 +26,7 @@ if __name__ == '__main__':
               'edf',
               'edf.importers',
               'edf.importers.sip256c',
+              'edf.exporters',
           ],
           # scripts=['src/cc_fit.py', ],
           install_requires=['numpy', 'scipy', 'matplotlib'],
