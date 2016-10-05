@@ -26,6 +26,7 @@ if __name__ == '__main__':
               'edf',
               'edf.importers',
               'edf.importers.sip256c',
+              'edf.importers.eit40',
               'edf.exporters',
           ],
           # scripts=['src/cc_fit.py', ],

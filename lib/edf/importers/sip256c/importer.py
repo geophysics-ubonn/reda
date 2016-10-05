@@ -212,7 +212,7 @@ def parse_reading(reading_block):
     return ru_reading
 
 
-def parse_radic_file(filename, selection_mode="after"):
+def parse_radic_file(filename, settings, selection_mode="after"):
     """Import one result file as produced by the SIP256c SIP measuring device
     (Radic Research)
 
@@ -233,6 +233,7 @@ def parse_radic_file(filename, selection_mode="after"):
         with open(filename, 'r', encoding='latin-1') as fid:
             lines = fid.readlines()
     except:
+        print('file not found', filename)
         import pdb
         pdb.set_trace()
 
@@ -271,14 +272,14 @@ def parse_radic_file(filename, selection_mode="after"):
 
     # print('readings', readings)
 
-    sip_data_raw = compute_quadrupoles(header_data, readings)
+    sip_data_raw = compute_quadrupoles(header_data, readings, settings)
 
     sip_data = pd.concat(sip_data_raw)
 
     return sip_data
 
 
-def decide_on_quadpole(config, mode='after'):
+def decide_on_quadpole(config, settings, mode='after'):
     """
 
     """
@@ -289,8 +290,9 @@ def decide_on_quadpole(config, mode='after'):
         decision = False
 
     # we only want skip 3 data
-    # if np.abs(config[3] - config[2]) != 4:
-    #     decision = False
+    if 'filter_skip' in settings:
+        if np.abs(config[3] - config[2]) != settings['filter_skip'] + 1:
+            decision = False
 
     if mode == 'before':
         if max(config[2:4]) > min(config[0:2]):
@@ -306,7 +308,7 @@ def decide_on_quadpole(config, mode='after'):
     return decision
 
 
-def compute_quadrupoles(reading_configs, readings):
+def compute_quadrupoles(reading_configs, readings, settings):
     """
 
     """
@@ -324,7 +326,7 @@ def compute_quadrupoles(reading_configs, readings):
             df['M'] = config[3].astype(int)
             df['N'] = config[2].astype(int)
 
-            if decide_on_quadpole(config, mode='after'):
+            if decide_on_quadpole(config, settings, mode='after'):
                 quadpole_data.append(df)
     return quadpole_data
 
