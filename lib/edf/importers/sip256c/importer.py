@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # *-* coding: utf-8 *-*
+import re
 import itertools
 import pandas as pd
 import numpy as np
 # from StringIO import StringIO
 from io import StringIO
 import os
+import logging
 
 
 def _get_nr_of_electrodes(header_group):
@@ -118,11 +120,36 @@ def parse_remote_unit(ru_block):
 
     # add header
     text_block = next(ru_block)
+    text_block = text_block.replace('Freq. /Hz', 'Freq./Hz')
+    text_block = text_block.replace('K Factor/m', 'K-Factor/m')
+    text_block = text_block.strip()
+
+    text_block = re.sub( '\s+', ' ', text_block) + os.linesep
 
     def prep_line(line):
-        end_characters = (10, 25, 35, 45, 55)
-        for index in reversed(end_characters):
-            line = line[0:index] + ' ' + line[index:]
+        # for i in range(0, 7):
+        index = 0
+        for i in range(0, 5):
+            index = line.find('.', index + 2)
+            if index == -1 or index > len(line) - 12:
+                break
+            else:
+                # number generally have 6 digits after the dot
+                index += 6
+            line = line[0: index] + ' ' + line[index:]
+
+        # end_characters = (10, 25, 35, 45, 55)
+        # for index in reversed(end_characters):
+        #     line = line[0:index] + ' ' + line[index:]
+
+        # line = ' '.join(line.split()) + r'\n'
+        # import IPython
+        # IPython.embed()
+        line = re.sub( '\s+', ' ', line) + os.linesep
+
+        # calibration dot
+        line = re.sub( ' . ', ' nc ', line)
+        line = line.lstrip()
         return line
 
     # now the data lines, with special attention
@@ -130,18 +157,22 @@ def parse_remote_unit(ru_block):
         text_block += prep_line(line)
 
     # text_block = ''.join(ru_block)
-    text_block = text_block.replace('Freq. /Hz', 'Freq./Hz')
-    text_block = text_block.replace('K Factor/m', 'K-Factor/m')
-    text_block = text_block.strip()
 
     tmp_file = StringIO(text_block)
-    df = pd.read_csv(
-        tmp_file,
-        delim_whitespace=True,
-        # header=None,
-        # sep=' ',
-        # index_col=0,
-    )
+    try:
+        df = pd.read_csv(
+            tmp_file,
+            delim_whitespace=True,
+            na_values=['NaN', ],
+            # header=None,
+            # sep=' ',
+            # index_col=0,
+        )
+    except Exception as e:
+        print(e)
+        print(tmp_file.getvalue())
+        import IPython
+        IPython.embed()
 
     df.columns = [
         'frequency_[Hz]',
@@ -166,7 +197,16 @@ def parse_remote_unit(ru_block):
     df['d|Z|'] = errorar
 
     # % Error phase (mrad)
-    errorpha = df['dphi'] * np.pi / 180.0 * 1000
+    try:
+        errorpha = df['dphi'] * np.pi / 180.0 * 1000
+    except Exception as e:
+        print('Exception', e)
+        print(df['dphi'])
+        print(df)
+        print('raw', tmp_file.getvalue())
+        import IPython
+        IPython.embed()
+        exit()
     df['dphi'] = errorpha
 
     # % U(V)
@@ -200,11 +240,18 @@ def parse_reading(reading_block):
         lambda line: line.startswith('Remote Unit:')
     )
     index = 0
+    # import IPython
+    # IPython.embed()
+    # logging.debug('reading groups: {0}'.format(len(groups)))
 
     ru_reading = []
     for key, group in groups:
         if key:
             # reading_nr = ''.join(group)[13:].strip()
+            # import IPython
+            # IPython.embed()
+            print(next(group).strip())
+            # print(next(groups)[1])
             df_sort = parse_remote_unit(next(groups)[1])
             # ru_reading[reading_nr] = df_sort
             ru_reading.append(df_sort)
@@ -219,6 +266,14 @@ def parse_radic_file(filename, settings, selection_mode="after"):
     Parameters
     ==========
     filename: input filename, usually with the ending ".RES"
+
+    settings = {
+        'filter_skip': (integer) skip dipoles we are interested in
+        'quadrupole_mode': ['after'|'between'|'before'| 'all']
+                           which dipoles to use from the file
+    }
+
+
     selection_mode: which voltage dipoles should be returned. Possible choices:
         "all"
         "before"
@@ -259,19 +314,27 @@ def parse_radic_file(filename, settings, selection_mode="after"):
     # print(sorted(reading_blocks.keys()))
     # now parse the readings
     print('number of readings', len(reading_blocks))
+    print('keys', sorted(reading_blocks.keys()))
     readings = {}
     for key in sorted(reading_blocks):
+        print('KEY/Reading', key)
         reading = reading_blocks[key]
         tmp = parse_reading(reading)
+        # except Exception as e:
+        #     print('Parsing of reading failed')
+        #     print(''.join(reading))
+        #     print('error message')
+        #     print(e)
+        #     exit()
         readings[key] = tmp
     # print('reading keys', sorted(readings.keys()))
 
+    logging.debug('removing calibration reading')
     # remove calibration reading
     if 0 in readings:
         del(readings[0])
 
     # print('readings', readings)
-
     sip_data_raw = compute_quadrupoles(header_data, readings, settings)
 
     sip_data = pd.concat(sip_data_raw)
@@ -279,10 +342,12 @@ def parse_radic_file(filename, settings, selection_mode="after"):
     return sip_data
 
 
-def decide_on_quadpole(config, settings, mode='after'):
+def decide_on_quadpole(config, settings):
     """
 
     """
+    mode = settings.get('quadrupole_mode', 'after')
+    logging.debug('Using quadrupole_mode: {0}'.format(mode))
     decision = True
     # print 'deciding on', config
     # we don't want duplicates
@@ -326,7 +391,7 @@ def compute_quadrupoles(reading_configs, readings, settings):
             df['M'] = config[3].astype(int)
             df['N'] = config[2].astype(int)
 
-            if decide_on_quadpole(config, settings, mode='after'):
+            if decide_on_quadpole(config, settings):
                 quadpole_data.append(df)
     return quadpole_data
 
