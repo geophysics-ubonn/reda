@@ -8,6 +8,7 @@ import numpy as np
 from io import StringIO
 import os
 import logging
+import IPython
 
 
 def _get_nr_of_electrodes(header_group):
@@ -59,6 +60,7 @@ def parse_readic_header(header_group, dipole_mode="all"):
             # curpots = tmp.T.copy()
             # curpots.resize(nr_of_electrodes + 2, tmp.shape[0])
             break
+
     # now we have the raw readings, pad them with zeros
     readings = []
     for raw_reading in tmp:
@@ -81,37 +83,17 @@ def parse_readic_header(header_group, dipole_mode="all"):
         voltages = []
 
         # loop over the RU-settings
-        # we always measure to the next zweo electrode
+        # we always measure to the next zero electrode
         for i in range(3, nr_of_electrodes + 3):
             for j in range(i + 1, nr_of_electrodes + 3):
                 if reading[j] == 0:
                     M = i - 2
                     N = j - 2
-                    # print('A', 'B', 'M, N', A, B, M, N)
-                    voltages.append((A, B, M, N))
+                    all_active = ((reading[i] == 0) and (reading[j] == 0))
+                    print('A', 'B', 'M, N', A, B, M, N, all_active)
+                    voltages.append((A, B, M, N, all_active))
                     break
 
-            # if reading[i] == 0:
-            #     if i == nr_of_electrodes - 1 + 2:
-            #         # apparently we came to the end, so use electrode 49
-            #         M = i - 2
-            #         N = i - 1
-            #         # print('A', 'B', 'M, N', A, B, M, N)
-            #         voltages.append((A, B, M, N))
-            #     else:
-            #         # we don't skip, measure to the next electrode with 0
-            #         for j in range(i + 1, nr_of_electrodes + 2):
-            #             if reading[j] == 0:
-            #                 M = i - 2
-            #                 N = j - 2
-            #                 # print('A', 'B', 'M, N', A, B, M, N)
-            #                 voltages.append((A, B, M, N))
-            #                 break
-            # else:
-            #     M = i - 2
-            #     N = i - 1
-            #     # print('A', 'B', 'M, N', A, B, M, N)
-            #     voltages.append((A, B, M, N))
         reading_configs[nr + 1] = np.array(voltages)
     return reading_configs
 
@@ -259,6 +241,113 @@ def parse_reading(reading_block):
     return ru_reading
 
 
+def decide_on_quadpole(config, settings):
+    """
+
+    """
+    mode = settings.get('quadrupole_mode', 'after')
+    logging.debug('Using quadrupole_mode: {0}'.format(mode))
+    decision = True
+    # print 'deciding on', config
+    # we don't want duplicates
+    if np.unique(config[0:4]).size != 4:
+        logging.debug('FILTER failed: uniqueness {0} {1} {2} {3}'.format(
+            *config[0:4]
+        ))
+        decision = False
+
+    # we only want skip 3 data
+    if 'filter_skip' in settings:
+        if np.abs(config[3] - config[2]) != settings['filter_skip'] + 1:
+            logging.debug('FILTER failed: filter_skip {0} {1} {2} {3}'.format(
+                *config[0:4]
+            ))
+            decision = False
+
+    if mode == 'before':
+        if max(config[2:4]) > min(config[0:2]):
+            logging.debug('FILTER failed: mode==before {0} {1} {2} {3}'.format(
+                *config[0:4]
+            ))
+            decision = False
+    elif mode == 'between':
+        if (min(config[2:4] < min(config[0:2])) or
+                max(config[2:4] > max(config[0:2]))):
+            logging.debug('FILTER failed: mode==between {0} {1} {2} {3}'.format(
+                *config[0:4]
+            ))
+            decision = False
+    elif mode == 'after':
+        if min(config[2:4]) < max(config[0:2]):
+            logging.debug('FILTER failed: mode==after {0} {1} {2} {3}'.format(
+                *config[0:4]
+            ))
+            decision = False
+
+    return decision
+
+
+def compute_quadrupoles(reading_configs, readings, settings):
+    """
+
+    """
+
+    quadpole_data = []
+    for key in sorted(readings.keys()):
+        print('key', key, len(reading_configs), type(reading_configs))
+        configs_in_reading = reading_configs[key]
+        reading = readings[key]
+        # for configs_in_reading, reading in zip(reading_configs, readings):
+        for nr, config in enumerate(configs_in_reading):
+            df = reading[nr]
+            df['A'] = config[0].astype(int)
+            df['B'] = config[1].astype(int)
+            df['M'] = config[3].astype(int)
+            df['N'] = config[2].astype(int)
+
+            # for now we only want configurations that are constructed out of
+            # 'zero`d' electrodes in the "readings"-section of the config file
+            if not config[4]:
+                logging.debug(
+                    'removing because of inactive electrodes: ' +
+                    '{0} {1} {2} {3} {4}'.format(*config)
+                )
+                continue
+
+            if decide_on_quadpole(config, settings):
+                quadpole_data.append(df)
+    return quadpole_data
+
+
+def write_crmod_file(sipdata, directory):
+
+    if not os.path.isdir(directory):
+        os.makedirs(directory)
+
+    pwd = os.getcwd()
+    os.chdir(directory)
+
+    np.savetxt('frequencies.dat', sipdata[0].index)
+    for nr, frequency in enumerate(sipdata[0].index):
+        print('f', frequency)
+        filename = 'volt_{0:02}_{1}Hz.crt'.format(nr, frequency)
+        with open(filename, 'w') as fid:
+            fid.write('{0}\n'.format(len(sipdata)))
+            for df in sipdata:
+                AB = df.iloc[nr]['A'] * 1e4 + df.iloc[nr]['B']
+                MN = df.iloc[nr]['M'] * 1e4 + df.iloc[nr]['N']
+                line = '{0} {1} {2} {3}'.format(
+                    int(AB),
+                    int(MN),
+                    df.iloc[nr]['|Z|'],
+                    df.iloc[nr]['phi'] * 1000,
+                )
+
+                fid.write(line + '\n')
+
+    os.chdir(pwd)
+
+
 def parse_radic_file(filename, settings, selection_mode="after"):
     """Import one result file as produced by the SIP256c SIP measuring device
     (Radic Research)
@@ -340,89 +429,6 @@ def parse_radic_file(filename, settings, selection_mode="after"):
     sip_data = pd.concat(sip_data_raw)
 
     return sip_data
-
-
-def decide_on_quadpole(config, settings):
-    """
-
-    """
-    mode = settings.get('quadrupole_mode', 'after')
-    logging.debug('Using quadrupole_mode: {0}'.format(mode))
-    decision = True
-    # print 'deciding on', config
-    # we don't want duplicates
-    if np.unique(config).size != 4:
-        decision = False
-
-    # we only want skip 3 data
-    if 'filter_skip' in settings:
-        if np.abs(config[3] - config[2]) != settings['filter_skip'] + 1:
-            decision = False
-
-    if mode == 'before':
-        if max(config[2:4]) > min(config[0:2]):
-            decision = False
-    elif mode == 'between':
-        if (min(config[2:4] < min(config[0:2])) or
-                max(config[2:4] > max(config[0:2]))):
-            decision = False
-    elif mode == 'after':
-        if min(config[2:4]) < max(config[0:2]):
-            decision = False
-
-    return decision
-
-
-def compute_quadrupoles(reading_configs, readings, settings):
-    """
-
-    """
-
-    quadpole_data = []
-    for key in sorted(readings.keys()):
-        print('key', key, len(reading_configs), type(reading_configs))
-        configs_in_reading = reading_configs[key]
-        reading = readings[key]
-        # for configs_in_reading, reading in zip(reading_configs, readings):
-        for nr, config in enumerate(configs_in_reading):
-            df = reading[nr]
-            df['A'] = config[0].astype(int)
-            df['B'] = config[1].astype(int)
-            df['M'] = config[3].astype(int)
-            df['N'] = config[2].astype(int)
-
-            if decide_on_quadpole(config, settings):
-                quadpole_data.append(df)
-    return quadpole_data
-
-
-def write_crmod_file(sipdata, directory):
-
-    if not os.path.isdir(directory):
-        os.makedirs(directory)
-
-    pwd = os.getcwd()
-    os.chdir(directory)
-
-    np.savetxt('frequencies.dat', sipdata[0].index)
-    for nr, frequency in enumerate(sipdata[0].index):
-        print('f', frequency)
-        filename = 'volt_{0:02}_{1}Hz.crt'.format(nr, frequency)
-        with open(filename, 'w') as fid:
-            fid.write('{0}\n'.format(len(sipdata)))
-            for df in sipdata:
-                AB = df.iloc[nr]['A'] * 1e4 + df.iloc[nr]['B']
-                MN = df.iloc[nr]['M'] * 1e4 + df.iloc[nr]['N']
-                line = '{0} {1} {2} {3}'.format(
-                    int(AB),
-                    int(MN),
-                    df.iloc[nr]['|Z|'],
-                    df.iloc[nr]['phi'] * 1000,
-                )
-
-                fid.write(line + '\n')
-
-    os.chdir(pwd)
 
 
 if __name__ == '__main__':
