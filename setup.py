@@ -24,7 +24,10 @@ if __name__ == '__main__':
           package_dir={'': 'lib'},
           packages=[
               'edf',
+              'edf.plotters',
+              'edf.containers',
               'edf.importers',
+              'edf.importers.geotom',
               'edf.importers.sip256c',
               'edf.importers.eit40',
               'edf.exporters',

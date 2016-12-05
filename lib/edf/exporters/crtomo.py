@@ -6,6 +6,7 @@ import numpy as np
 
 
 def save_block_to_crt(filename, group, store_errors=False):
+    # todo: we need to fix the global naming scheme for columns!
     with open(filename, 'wb') as fid:
         fid.write(
             bytes('{0}\n'.format(len(group)), 'UTF-8')
@@ -16,9 +17,14 @@ def save_block_to_crt(filename, group, store_errors=False):
         line = [
             AB.values.astype(int),
             MN.values.astype(int),
-            group['|Z|_[Ohm]'].values,
-            group['phi_[mrad]'].values,
+            group['R'].values,
         ]
+
+        if 'phase' in group:
+            line.append(group['phase'].values)
+        else:
+            line.append(group['R'].values * 0.0)
+
         fmt = '%i %i %f %f'
         if store_errors:
             line += (

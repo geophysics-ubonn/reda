@@ -7,6 +7,14 @@ pip install ipython
 
 ipython3
 
+TODO
+----
+
+EDF container:
+
+[] save to CRTomo
+[] filter function with queue for later reevaluation
+
 Separate information
 --------------------
 
