@@ -38,6 +38,13 @@ def save_block_to_crt(filename, group, store_errors=False):
 
 
 def write_files_to_directory(df, directory, **kwargs):
+    """
+
+    kwargs = {
+        'store_errors': [True|False] store the device generated errors in the
+                        output files (as additional columns)
+    }
+    """
 
     if not os.path.isdir(directory):
         os.makedirs(directory)
@@ -54,7 +61,11 @@ def write_files_to_directory(df, directory, **kwargs):
         nr = 1
         for frequency, group in g:
             filename = 'volt_{0:02}_{1:.6}Hz.crt'.format(nr, frequency)
-            save_block_to_crt(filename, group, store_errors=True)
+            save_block_to_crt(
+                filename,
+                group,
+                store_errors=kwargs.get('store_errors', False),
+            )
 
             nr += 1
 
