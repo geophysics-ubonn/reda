@@ -90,6 +90,8 @@ Create the work environment using the following commands: ::
 TODO
 ----
 
+* add a 'switch_polarity' option to the containers (do we need K factors then?)
+
 * implement the following containers:
 
 	* ERT

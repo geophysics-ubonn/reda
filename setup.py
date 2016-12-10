@@ -30,6 +30,8 @@ if __name__ == '__main__':
               'edf.importers.geotom',
               'edf.importers.sip256c',
               'edf.importers.eit40',
+              'edf.importers.geotom',
+              'edf.importers.res2dinv',
               'edf.exporters',
           ],
           # scripts=['src/cc_fit.py', ],
