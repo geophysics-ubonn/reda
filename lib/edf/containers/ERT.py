@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import edf.main.init as edfi
 
 
 class ERT(object):
@@ -12,6 +13,8 @@ class ERT(object):
         self.df = self.dfn
         # reciprocal data
         self.dfr = None
+
+        edfi.set_mpl_settings()
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns

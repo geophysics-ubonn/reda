@@ -92,6 +92,9 @@ TODO
 
 * add a 'switch_polarity' option to the containers (do we need K factors then?)
 
+* make the built-in plot functions aware of the various additional dimensions
+  such as timestep, frequency, etc. Perhaps via a 'split_into_dimensions' switch?
+
 * implement the following containers:
 
 	* ERT
@@ -115,10 +118,10 @@ TODO
 
 * implement pseudosections
 
-	* automatically determine type of dataset: dipole-dipole, wenner,
+	* automatically determine type of dataset: dipole-dipole, Wenner,
 	  schlumberger, mixed
 	* implement specific pseudosections for DD and Wenner
-	* not sure how to manage mixed data sets. We shouls, however, provide a
+	* not sure how to manage mixed data sets. We should, however, provide a
 	  warning in those cases
 	* for all keys required by the containers
 
