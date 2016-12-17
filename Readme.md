@@ -1,3 +1,7 @@
+==================================
+EDF - electrical data format tools
+==================================
+
 Introduction
 ============
 
@@ -20,7 +24,7 @@ analysis, the method is often referred to as electrical impedance tomography
 (EIT). Hereby some ambiguity exists, as EIT can refer to tomographic
 measurements of the complex impedance (resistance plus polarization) in the
 frequency domain for only one frequency or for a whole frequency range.
-Sometimes multi-frequency measurements are thus reffered to as sEIT
+Sometimes multi-frequency measurements are thus referred to as sEIT
 measurements (spectral electrical impedance tomography).
 
 The dimensionality of the data that is nowadays captures increases steadily,

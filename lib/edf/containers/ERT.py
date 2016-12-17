@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import edf.main.init as edfi
+import contextlib
 
 
 class ERT(object):
@@ -15,6 +16,16 @@ class ERT(object):
         self.dfr = None
 
         edfi.set_mpl_settings()
+
+    @contextlib.contextmanager
+    def subset(self, subset_query):
+        """
+
+        """
+        subset = self.df.query(subset_query)
+        subERT = ERT(subset)
+        print('index of subset', subset.index)
+        yield subERT
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
