@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 import edf.main.init as edfi
-import contextlib
 
 
 class ERT(object):
@@ -16,16 +15,6 @@ class ERT(object):
         self.dfr = None
 
         edfi.set_mpl_settings()
-
-    @contextlib.contextmanager
-    def subset(self, subset_query):
-        """
-
-        """
-        subset = self.df.query(subset_query)
-        subERT = ERT(subset)
-        print('index of subset', subset.index)
-        yield subERT
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
@@ -42,6 +31,29 @@ class ERT(object):
                 raise Exception('Required column not in dataframe: {0}'.format(
                     column
                 ))
+
+    def subquery(self, subset, filter, inplace=True):
+        """
+
+        Usage
+        =====
+
+        subquery(
+            'timestep == 2',
+            'R > 4',
+        )
+
+        """
+        # build the full query
+        full_query = ''.join((
+            'not (',
+            subset,
+            ') or not (',
+            filter,
+            ')',
+        ))
+        result = self.df.query(full_query, inplace=inplace)
+        return result
 
     def query(self, query, inplace=True):
         # TODO: add to queue
