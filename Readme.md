@@ -80,6 +80,8 @@ and procedures:
 * The software is provided under an open-source licence (GPL-3), to facilitate
   and encourage contributions from the community
 
+* Only optional dependencies on external packages
+
 Work environment
 ================
 
@@ -175,8 +177,9 @@ TODO
 	* Radic Fuchs
 	* Zonge
 
-* time-domain analysis after Olson et al. (mainly ABEM data)
+* time-domain analysis after Olsson et al. 2016 (mainly ABEM data)
 
+* prepare the iSAT data as an example (Syscal)
 
 Separate information
 --------------------
