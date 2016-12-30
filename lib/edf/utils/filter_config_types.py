@@ -9,6 +9,7 @@ previously applied filters.
     * Wenner
     * misc
 """
+import numpy as np
 
 
 def _filter_dipole_dipole(configs):
@@ -22,7 +23,25 @@ def _filter_dipole_dipole(configs):
           voltage electrodes
         * no overlap of dipoles
     """
-    pass
+    dist_ab = np.abs(configs[:, 0] - configs[:, 1])
+    dist_mn = np.abs(configs[:, 2] - configs[:, 3])
+
+    distances_equal = (dist_ab == dist_mn)
+
+    max_ab = np.max(configs[:, 0:2], axis=1)
+    min_mn = np.min(configs[:, 2:4], axis=1)
+
+    overlapping = (max_ab > min_mn)
+
+    print('filter', distances_equal, overlapping)
+
+    is_dipole_dipole = (distances_equal & ~overlapping)
+    print(is_dipole_dipole)
+
+    dd_indices = np.where(is_dipole_dipole)
+    # set all dd configs to nan
+    configs[dd_indices, :] = np.nan
+    return configs, dd_indices
 
 
 def filter(configs, settings):
@@ -54,14 +73,15 @@ def filter(configs, settings):
     results = {}
     # we operate iteratively on the configs, set the first round here
     # rows are iteratively set to nan when filters remove them!
-    configs_filtered = configs[:]
+    configs_filtered = configs[:].astype(float)
     for key in keys:
         if key in allowed_keys:
-            configs_filtered, indices_filtered = filter_funcs[key](
+            indices_filtered = filter_funcs[key](
                 configs_filtered,
             )
             results[key] = {
-                'configs': configs_filtered,
                 'indices': indices_filtered,
             }
+
+    # TODO: add all remaining indices to the results dict
     return results
