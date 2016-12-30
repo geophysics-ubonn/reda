@@ -19,6 +19,7 @@ def _write_config_file(filename, dataframe):
             np.vstack((AB, MN)).T,
             fmt='%i %i',
         )
+    return np.vstack((AB, MN)).T
 
 
 def _write_crmod_file(filename):
@@ -129,7 +130,7 @@ def compute_K(
 
         _write_crmod_file('exe/crmod.cfg')
 
-        _write_config_file('config/config.dat', dataframe)
+        config_orig = _write_config_file('config/config.dat', dataframe)
 
         os.chdir('exe')
         subprocess.call('CRMod', shell=True)
@@ -141,8 +142,16 @@ def compute_K(
             skiprows=1,
         )
         print(modeled_resistances)
+
+        # now we have to make sure CRMod didn't change the signs
+        changed_sign = (config_orig[:, 1] == modeled_resistances[:, 1])
+        print('signs', changed_sign)
+        modeled_resistances[~changed_sign, 2] *= -1
+
+        K = settings['rho'] / modeled_resistances[:, 2]
+        dataframe['K'] = K
+
         # debug
         # shutil.copytree('.', pwd + os.sep + 'indir')
 
     os.chdir(pwd)
-    exit()
