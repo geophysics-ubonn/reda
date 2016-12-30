@@ -181,6 +181,10 @@ TODO
 
 * prepare the iSAT data as an example (Syscal)
 
+* edf.utils.filter_config_types:
+
+	* create tests for mixed configurations
+
 Separate information
 --------------------
 
