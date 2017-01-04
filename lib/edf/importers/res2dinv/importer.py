@@ -67,7 +67,7 @@ def _read_general_type(content, settings):
         names=(
             'nr_elecs',
             'x1',
-            'z2',
+            'z1',
             'x2',
             'z2',
             'x3',
