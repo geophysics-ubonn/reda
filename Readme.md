@@ -1,13 +1,10 @@
-==================================
-EDF - electrical data format tools
-==================================
+# EDF - electrical data format tools
 
-Introduction
-============
+## Introduction
 
 Electrical geophysical data is increasingly measured in time-lapse setups,
 which leads, in addition to the common use of multi-channel systems which are
-capabale of capturing the full time-series of either time-domain or frequency
+capable of capturing the full time-series of either time-domain or frequency
 domain systems, to a large number of datasets. These datasets are to be
 analyzed with respect to various properties. These are, among others, outlier
 detection, normal-reciprocal analysis for error estimation and quality control,
@@ -15,7 +12,7 @@ and coupling effects.
 
 While electrical resistivity tomography (ERT) measures real transfer
 resistances using a large number of four-point spreads, tomographic IP
-measurments additionally capture the induced polarization (IP) effect in terms
+measurements additionally capture the induced polarization (IP) effect in terms
 of a decay curve. Measurements in the frequency domain capture the resistance
 and polarizability for a wide range of frequencies, thereby capturing spectral
 induced polarization (SIP) signatures. When SIP signatures are recorded at a
@@ -31,14 +28,14 @@ The dimensionality of the data that is nowadays captures increases steadily,
 with new dimensions being measurement frequency, time step in a time-lapse
 monitoring setup and third dimension. This requires the adaptation of existing
 and new analysis procedures to these N-dimensional datasets. Established
-procedures are herby commonly based on plain text files or 2-dimensional data array
+procedures are hereby commonly based on plain text files or 2-dimensional data array
 representations (e.g., Matlab matrices, columns denote electrode positions and
 measurements, row denote measurements at various four-point spreads). Here, new
 approaches are required to keep data analysis efforts at similar levels,
 compared to "established" work flows. Luckily, the last years have seen the
 emergence of suitable, free, and advanced (Python) libraries that can be used
 without much adaptation for these purposes. The pandas DataFrame object allows
-the storage and manupilation of N-dimensional datasets. We here propose to
+the storage and manipulation of N-dimensional datasets. We here propose to
 build a framework for the import, storage, and modification of geoelectrical
 datasets based upon this established tool, and amend it with domain-specific
 functionality and handling instructions.
@@ -66,7 +63,7 @@ and procedures:
 
   A history is provided for common data selection (i.e., filtering) procedures,
   which provides a means to later account for all changes applied to the raw data
-  (i.e., providing reproducability of the data filtering process).
+  (i.e., providing reproducibility of the data filtering process).
 
 * Provide ground work for text-based output formats that could be used for
   archiving purposes. However, defining and maintaining suitable file formats
@@ -82,8 +79,7 @@ and procedures:
 
 * Only optional dependencies on external packages
 
-Work environment
-================
+## Work environment
 
 Create the work environment using the following commands: ::
 
@@ -93,10 +89,33 @@ Create the work environment using the following commands: ::
 
 	ipython3
 
-TODO
-----
+## Roadmap
+
+Milestones for beta versions of the EDF framework. For detailed TODO items,
+please refer to the TODO section down below.
+
+### 0.1
+
+* proof-of-concept for the ERT container
+* proof-of-concept for the SIP container
+* importers: Syscal, ABEM (text), SIP-04
+* plots: histograms, pseudosections (regular, normal-vs-reciprocal), decay
+  curves
+
+### 0.1.1
+
+* proof-of-concept for the EIT container
+* saving of containers to file
+
+### 0.1.2
+
+* logfile/log of applied filters/apply filters to other data sets
+
+## TODO
 
 * add a 'switch_polarity' option to the containers (do we need K factors then?)
+
+* implement saving of containers using pytables and HDF5 files
 
 * make the built-in plot functions aware of the various additional dimensions
   such as timestep, frequency, etc. Perhaps via a 'split_into_dimensions' switch?
@@ -185,43 +204,40 @@ TODO
 
 	* create tests for mixed configurations
 
-Separate information
---------------------
+## Metadata for Containers
 
-electrode positions and assignments
+### separate information
 
-Base entries
-------------
+Electrode positions and assignments
 
-time
-A
-B
-M
-N
-Z
-Y/Y'/Y'' <- computed from Z
-K
-rho/sigma/sigma'/sigma''/phi <- computed from Z,K
+### Base entries
 
-deltaR
-deltaPhi
-U
-I
+* time
+* A
+* B
+* M
+* N
+* Z
+* Y/Y'/Y'' <- computed from Z
+* K
+* rho/sigma/sigma'/sigma''/phi <- computed from Z,K
+* deltaR
+* deltaPhi
+* U
+* I
 
-Additional dimensions
----------------------
+## Additional dimensions
 
-frequencies
-timestep
-projects
-experiments
-profile
-datetime
-measurement_nr
-quadpole_nr
+* frequencies
+* timestep
+* projects
+* experiments
+* profile
+* datetime
+* measurement_nr
+* quadpole_nr
 
-Open Questions
---------------
+## Open Questions
 
 * how to approach normal/reciprocal data?
 
@@ -236,15 +252,17 @@ Open Questions
 * dimensionality should not be a problem if we use a pandas.DataFrame with
   multiindexing
 
-Notes
------
 
-
-Test activities
----------------
+## Test activities
 
 * select measurement nr 3
 * show quadpole nr 2
 * show all measurements with A=1, B=2, M=4, N=3
 * plot R of measurement nr 3, quadpole 6
 * filter all measurements with R < 0.08 Ohm
+
+## Pytables
+
+On Debian systems:
+
+CFLAGS="-I/usr/lib/openmpi/include/" pip install tables
