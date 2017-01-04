@@ -47,7 +47,8 @@ def _read_general_type(content, settings):
     # parse header
     header = {
         'name': header_raw[0],
-        'unit_spacing': int(header_raw[1]),
+        # unit is meters?
+        'unit_spacing': float(header_raw[1]),
         'type': int(header_raw[2]),
         'type2': int(header_raw[3]),
         'type_of_measurements': int(header_raw[5]),
@@ -78,16 +79,22 @@ def _read_general_type(content, settings):
     )
 
     # for now ignore the z coordinates and compute simple electrode denotations
-    df['A'] = df['x1'] / header['unit_spacing']
-    df['B'] = df['x2'] / header['unit_spacing']
-    df['M'] = df['x3'] / header['unit_spacing']
-    df['N'] = df['x4'] / header['unit_spacing']
+    df['A'] = df['x1'] / header['unit_spacing'] + 1
+    df['B'] = df['x2'] / header['unit_spacing'] + 1
+    df['M'] = df['x3'] / header['unit_spacing'] + 1
+    df['N'] = df['x4'] / header['unit_spacing'] + 1
 
     # for now assume value in resistances
     df['R'] = df['value']
 
     # remove any nan values
     df.dropna(axis=0, subset=['A', 'B', 'M', 'N', 'R'], inplace=True)
+
+    # ABMN are integers
+    df['A'] = df['A'].astype(int)
+    df['B'] = df['B'].astype(int)
+    df['M'] = df['M'].astype(int)
+    df['N'] = df['N'].astype(int)
 
     # drop unused columns
     df.drop(
