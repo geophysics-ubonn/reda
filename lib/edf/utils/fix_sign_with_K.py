@@ -12,7 +12,6 @@ def fix_sign_with_K(dataframe):
     # import IPython
     # IPython.embed()
     indices_negative = (dataframe['K'] < 0) & (dataframe['R'] < 0)
-    print(indices_negative)
 
     dataframe.ix[indices_negative, ['K', 'R']] *= -1
     if 'rho_a' in dataframe:

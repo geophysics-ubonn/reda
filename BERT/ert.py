@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 """Simplistic version a complete ERT Modelling->Inversion example."""
-
+import matplotlib as mpl
+mpl.use('Qt4Agg')
 import pygimli as pg
 import pygimli.meshtools as plc  # save space
 

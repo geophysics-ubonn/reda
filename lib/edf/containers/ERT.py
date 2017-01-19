@@ -9,12 +9,19 @@ class ERT(object):
         self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
         self.dfn = dataframe
-        # convenience link to normal/full data
-        self.df = self.dfn
         # reciprocal data
         self.dfr = None
 
         edfi.set_mpl_settings()
+
+    @property
+    def df(self):
+        """Return the normal data set
+
+        convenience link to normal/full data
+
+        """
+        return self.dfn
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
