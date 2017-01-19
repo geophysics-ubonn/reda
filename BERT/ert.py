@@ -31,6 +31,8 @@ scheme = pb.createData(elecs=pg.utils.grange(start=-10, end=10, n=21),
 # nodes in a distance of 10% of electrode spacing, to achieve sufficient
 # numerical accuracy.
 for pos in scheme.sensorPositions():
+    print(pos)
+    exit()
     geom.createNode(pos)
     geom.createNode(pos + pg.RVector3(0, -0.1))
 

@@ -95,13 +95,10 @@ def compute_K(
             sep=' ',
             dtype=int,
         )
-    print(cell_type, cell_number, edge_number)
 
     # generate forward model as a string
     forward_model = '{0}\n'.format(cell_number)
     forward_model += '{0} {1}\n'.format(settings['rho'], 0) * cell_number
-
-    print(forward_model)
 
     full_path_elem = os.path.abspath(settings['elem'])
     full_path_elec = os.path.abspath(settings['elec'])
@@ -109,7 +106,6 @@ def compute_K(
     pwd = os.getcwd()
     with tempfile.TemporaryDirectory() as invdir:
         os.chdir(invdir)
-        print(invdir)
         # create tomodir directory structure
         for dir in [
             'exe',
@@ -141,11 +137,9 @@ def compute_K(
             'mod/volt.dat',
             skiprows=1,
         )
-        print(modeled_resistances)
 
         # now we have to make sure CRMod didn't change the signs
         changed_sign = (config_orig[:, 1] == modeled_resistances[:, 1])
-        print('signs', changed_sign)
         modeled_resistances[~changed_sign, 2] *= -1
 
         K = settings['rho'] / modeled_resistances[:, 2]

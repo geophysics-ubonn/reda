@@ -105,5 +105,5 @@ class ERT(object):
             indices = np.where(
                 (self.df['A'] == row['M']) & (self.df['B'] == row['N'])
             )[0]
-            if indices:
+            if indices.size > 0:
                 self.dfr.loc[nr] = row
