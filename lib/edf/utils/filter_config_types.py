@@ -23,20 +23,37 @@ def _filter_dipole_dipole(configs):
           voltage electrodes
         * no overlap of dipoles
     """
+    # check that dipoles have equal size
     dist_ab = np.abs(configs[:, 0] - configs[:, 1])
     dist_mn = np.abs(configs[:, 2] - configs[:, 3])
 
     distances_equal = (dist_ab == dist_mn)
 
-    max_ab = np.max(configs[:, 0:2], axis=1)
-    min_mn = np.min(configs[:, 2:4], axis=1)
+    # check that they are not overlapping
+    not_overlapping = (
+        # either a,b < m,n
+        (
+            (configs[:, 0] < configs[:, 2]) &
+            (configs[:, 1] < configs[:, 2]) &
+            (configs[:, 0] < configs[:, 3]) &
+            (configs[:, 1] < configs[:, 3])
+        ) |
+        # or m,n < a,b
+        (
+            (configs[:, 2] < configs[:, 0]) &
+            (configs[:, 3] < configs[:, 0]) &
+            (configs[:, 2] < configs[:, 1]) &
+            (configs[:, 3] < configs[:, 1])
+        )
+    )
 
-    overlapping = (max_ab > min_mn)
+    # max_ab = np.max(configs[:, 0:2], axis=1)
+    # min_ab = np.min(configs[:, 0:2], axis=1)
+    # min_mn = np.min(configs[:, 2:4], axis=1)
 
-    print('filter', distances_equal, overlapping)
+    # overlapping = (max_ab > min_mn)
 
-    is_dipole_dipole = (distances_equal & ~overlapping)
-    print(is_dipole_dipole)
+    is_dipole_dipole = (distances_equal & not_overlapping)
 
     dd_indices = np.where(is_dipole_dipole)
     # set all dd configs to nan
@@ -49,15 +66,17 @@ def filter(configs, settings):
 
     Parameters
     ----------
-    configs: Nx4 array containing A-B-M-N configurations
-    settings: {
+    configs: Nx4 array
+        array containing A-B-M-N configurations
+    settings: dict
         'only_types': ['dd', 'other'],  # filter only for those types
-    }
 
     Returns
     -------
-    results dict containing filter results for all registered filter functions.
-    All remaining configs are stored under the keywords 'remaining'
+    dict
+        results dict containing filter results for all registered filter
+        functions.  All remaining configs are stored under the keywords
+        'remaining'
 
     """
     # assign short labels to Python functions
@@ -76,7 +95,7 @@ def filter(configs, settings):
     configs_filtered = configs[:].astype(float)
     for key in keys:
         if key in allowed_keys:
-            indices_filtered = filter_funcs[key](
+            configs_filtered, indices_filtered = filter_funcs[key](
                 configs_filtered,
             )
             results[key] = {
@@ -84,4 +103,7 @@ def filter(configs, settings):
             }
 
     # TODO: add all remaining indices to the results dict
+    results['not_sorted'] = np.where(
+        ~np.all(np.isnan(configs_filtered), axis=1)
+    )[0]
     return results
