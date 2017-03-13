@@ -83,6 +83,8 @@ and procedures:
 
 Create the work environment using the following commands: ::
 
+	mkvirtualenv --python /usr/bin/python3 edf
+	pip install --upgrade pip
 	workon edf
 	pip install -r requirements.txt
 	pip install ipython
