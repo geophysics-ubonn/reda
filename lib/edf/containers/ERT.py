@@ -82,7 +82,7 @@ class ERT(object):
         **What about Schlumberger, Gradient, and mixed configurations?**
 
         * Schlumber has no reciprocals, normal: 1 4 2 3
-        * Gradients have no recirprocals, , normal: 1 4 2 3
+        * Gradients have no reciprocals, , normal: 1 4 2 3
         * mixed configurations can have reciprocals: normal: 1 3 2 4
         reciprocal: 2 4 1 3
 

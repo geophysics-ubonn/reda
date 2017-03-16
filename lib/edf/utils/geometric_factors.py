@@ -38,7 +38,7 @@ def compute_K_analytical(dataframe, spacing):
         of the electrodes
     """
     if isinstance(dataframe, pd.DataFrame):
-        configs = dataframe[['A', 'B', 'M', 'N']]
+        configs = dataframe[['A', 'B', 'M', 'N']].values
     else:
         configs = dataframe
 
