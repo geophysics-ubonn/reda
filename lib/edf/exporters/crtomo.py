@@ -1,11 +1,13 @@
-"""
-Write CRTomo (Kemna, 2000) compatible files
+"""Write CRMod/CRTomo (Kemna, 2000) compatible files
 """
 import os
 import numpy as np
 
 
 def save_block_to_crt(filename, group, store_errors=False):
+    """
+
+    """
     # todo: we need to fix the global naming scheme for columns!
     with open(filename, 'wb') as fid:
         fid.write(

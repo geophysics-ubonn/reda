@@ -63,6 +63,9 @@ class ERT(object):
         return result
 
     def query(self, query, inplace=True):
+        """State what you want to keep
+
+        """
         # TODO: add to queue
         result = self.df.query(query, inplace=inplace)
         return result
