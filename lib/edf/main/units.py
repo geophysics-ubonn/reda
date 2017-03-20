@@ -11,6 +11,12 @@ rel = {
         'label_latex': r'$|Z|~[\Omega]$',
         'unit': r'$\Ohm$',
     },
+    'rho_a': {
+        'full_name': 'rhoa_[Ohm m]',
+        'label_latex': r'$\rho_a~[\Omega m]$',
+        'unit': r'$\Ohm m$',
+    },
+
 
 
 }
