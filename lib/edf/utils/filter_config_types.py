@@ -34,7 +34,7 @@ def _filter_schlumberger(configs):
     configs: numpy.ndarray
         Remaining configurations, all Schlumberger configurations are set to
         numpy.nan
-    schl_indices: numpy.ndarray
+    schl_indices: dict with one entry: numpy.ndarray
         indices of Schlumberger configurations
     """
     # sort configs
@@ -89,11 +89,11 @@ def _filter_schlumberger(configs):
 
     # set Schlumberger configs to nan
     if len(schl_indices_list) == 0:
-        return configs, np.array([])
+        return configs, {0: np.array([])}
     else:
         schl_indices = np.hstack(schl_indices_list).squeeze()
         configs[schl_indices, :] = np.nan
-        return configs, schl_indices
+        return configs, {0: schl_indices}
 
 
 def _filter_dipole_dipole(configs):
@@ -143,18 +143,49 @@ def _filter_dipole_dipole(configs):
         )
     )
 
-    # max_ab = np.max(configs[:, 0:2], axis=1)
-    # min_ab = np.min(configs[:, 0:2], axis=1)
-    # min_mn = np.min(configs[:, 2:4], axis=1)
-
-    # overlapping = (max_ab > min_mn)
-
     is_dipole_dipole = (distances_equal & not_overlapping)
 
-    dd_indices = np.where(is_dipole_dipole)
+    dd_indices = np.where(is_dipole_dipole)[0]
+    dd_indices_sorted = _sort_dd_skips(configs[dd_indices, :], dd_indices)
+
     # set all dd configs to nan
     configs[dd_indices, :] = np.nan
-    return configs, dd_indices
+
+    return configs, dd_indices_sorted
+
+
+def _sort_dd_skips(configs, dd_indices_all):
+    """Given a set of dipole-dipole configurations, sort them according to
+    their current skip.
+
+    Parameters
+    ----------
+    configs: Nx4 numpy.ndarray
+        Dipole-Dipole configurations
+
+    Returns
+    -------
+    dd_configs_sorted: dict
+        dictionary with the skip as keys, and arrays/lists with indices to
+        these skips.
+    """
+    config_current_skips = np.abs(configs[:, 1] - configs[:, 0])
+    if np.all(np.isnan(config_current_skips)):
+        return {0: []}
+
+    # determine skips
+    available_skips_raw = np.unique(config_current_skips)
+    available_skips = available_skips_raw[
+        ~np.isnan(available_skips_raw)
+    ].astype(int)
+
+    # now determine the configurations
+    dd_configs_sorted = {}
+    for skip in available_skips:
+        indices = np.where(config_current_skips == skip)[0]
+        dd_configs_sorted[skip - 1] = dd_indices_all[indices]
+
+    return dd_configs_sorted
 
 
 def filter(configs, settings):
@@ -170,8 +201,8 @@ def filter(configs, settings):
     Returns
     -------
     dict
-        results dict containing filter results for all registered filter
-        functions.  All remaining configs are stored under the keywords
+        results dict containing filter results (indices) for all registered
+        filter functions.  All remaining configs are stored under the keywords
         'remaining'
 
     """
@@ -189,16 +220,15 @@ def filter(configs, settings):
     results = {}
     # we operate iteratively on the configs, set the first round here
     # rows are iteratively set to nan when filters remove them!
-    configs_filtered = configs[:].astype(float)
+    configs_filtered = configs.copy().astype(float)
+
     for key in keys:
         if key in allowed_keys:
             configs_filtered, indices_filtered = filter_funcs[key](
                 configs_filtered,
             )
             if len(indices_filtered) > 0:
-                results[key] = {
-                    'indices': indices_filtered,
-                }
+                results[key] = indices_filtered
 
     # add all remaining indices to the results dict
     results['not_sorted'] = np.where(
