@@ -1,6 +1,5 @@
-#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-""" Work with result files from the EIT-40 tomograph (also called medusa).
+""" Work with result files from the EIT-40/160 tomograph (also called medusa).
 """
 import numpy as np
 import scipy.io as sio
@@ -16,7 +15,7 @@ Data structure of .mat files:
     EMD(n).Time point of time of this measurement
     EMD(n).ni number of the two excitation electrodes (not the channel number)
     EMD(n).nu number of the two potential electrodes (not the channel number)
-    EMD(n).Z3 array with the transfer impedances (repetition measurement)
+    EMD(n).Zt3 array with the transfer impedances (repetition measurement)
     EMD(n).nni number of injection
     EMD(n).cni number of channels used to inject current
     EMD(n).cnu number of channels used to measure voltage
@@ -56,20 +55,40 @@ def import_medusa_data(mat_filename, configs):
     if not isinstance(configs, np.ndarray):
         configs = np.loadtxt(configs).astype(int)
 
-    for A, B, M, N in configs:
-        print(A,B,M,N)
-        query1 = df.query('A=={0} and B=={1} and C=={2} and D=={3}'.format(
+    # construct four-point measurements via superposition
+    quadpole_list = []
+    for Ar, Br, M, N in configs:
+        # the order of A and B doesn't concern us
+        A = np.min((Ar, Br))
+        B = np.max((Ar, Br))
+
+        query_M = df.query('A=={0} and B=={1} and P=={2}'.format(
             A, B, M
         ))
-        query2 = df.query('A=={0} and B=={1} and C=={2} and D=={3}'.format(
+        query_N = df.query('A=={0} and B=={1} and P=={2}'.format(
             A, B, N
         ))
+        keep_cols = ['datetime', 'frequency', 'A', 'B']
+
+        df4 = pd.DataFrame()
+        diff_cols = ['Zt', ]
+        df4[keep_cols] = query_M[keep_cols]
+        for col in diff_cols:
+            df4[col] = query_N[col].values - query_M[col].values
+        df4['M'] = query_M['P'].values
+        df4['N'] = query_N['P'].values
+        # print(df4)
+
+        quadpole_list.append(df4)
+    dfn = pd.concat(quadpole_list)
+    return dfn
 
 
 def read_mat_single_file(filename):
     """Import a .mat file with single potentials (A B M) into a pandas
     DataFrame
     """
+    print('read_mag_single_file')
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
@@ -81,6 +100,7 @@ def read_mat_single_file(filename):
         return timestamp
 
     dfl = []
+    # loop over frequencies
     for f_id in range(0, emd.size):
         # print('Frequency: ', emd[f_id]['fm'])
         fdata = emd[f_id]
@@ -91,13 +111,13 @@ def read_mat_single_file(filename):
         df = pd.DataFrame(
             np.hstack((
                 timestamp,
-                fdata['ni'], fdata['nu'], fdata['Z3']))
+                fdata['ni'], fdata['nu'], fdata['Zt3']))
         )
         df.columns = (
-            'Time',
+            'datetime',
             'A',
             'B',
-            'M',
+            'P',
             'Z1',
             'Z2',
             'Z3',
@@ -108,17 +128,24 @@ def read_mat_single_file(filename):
         # cast to correct type
         df['A'] = df['A'].astype(int)
         df['B'] = df['B'].astype(int)
-        df['M'] = df['M'].astype(int)
+        df['P'] = df['P'].astype(int)
 
         df['Z1'] = df['Z1'].astype(complex)
         df['Z2'] = df['Z2'].astype(complex)
         df['Z3'] = df['Z3'].astype(complex)
 
+        # average of Z1-Z3
+        df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
+
         dfl.append(df)
 
-    df_all = pd.concat(dfl)
+    df = pd.concat(dfl)
 
-    return df_all
+    condition = df['A'] > df['B']
+    df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
+    df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
+
+    return df
 
 
 class medusa():
@@ -131,11 +158,13 @@ class medusa():
         self.emd = self.mat['EMD']
 
     def save(self, filename):
-        sio.savemat(filename,
-                    mdict=self.mat,
-                    format='5',
-                    do_compression=True,
-                    oned_as='column')
+        sio.savemat(
+            filename,
+            mdict=self.mat,
+            format='5',
+            do_compression=True,
+            oned_as='column'
+        )
 
     def frequencies(self):
         frequencies = np.squeeze(
@@ -179,7 +208,7 @@ class medusa():
                     'ni', 'nu', 'Is3',
                     'Il3', 'Yg1', 'Yg2',
                     'Z3', 'As3', 'Zg3',
-                    'Time'):
+                    'datetime'):
             print(key)
             subdata[key] = np.delete(subdata[key], indices, axis=0)
 
@@ -204,6 +233,7 @@ class medusa():
         then all frequencies will be returned.
         The return variable is a list of
         """
+        pass
 
     # def plot_Z3(self, A, B, frequency):
     #     """Plot the three R measurements for all potential electrodes of one
