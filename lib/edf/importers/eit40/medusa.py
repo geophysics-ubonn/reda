@@ -81,6 +81,7 @@ def import_medusa_data(mat_filename, configs):
 
         quadpole_list.append(df4)
     dfn = pd.concat(quadpole_list)
+    dfn['R'] = np.abs(dfn['Zt'])
     return dfn
 
 
@@ -94,6 +95,7 @@ def read_mat_single_file(filename):
 
     mat = sio.loadmat(filename)
     emd = mat['EMD'].squeeze()
+    # md = mat['MD'].squeeze()
 
     def convert_epoch(x):
         timestamp = epoch + datetime.timedelta(seconds=x.astype(float))
@@ -104,6 +106,7 @@ def read_mat_single_file(filename):
     for f_id in range(0, emd.size):
         # print('Frequency: ', emd[f_id]['fm'])
         fdata = emd[f_id]
+        # fdata_md = md[f_id]
 
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in fdata['Time'].squeeze()]
@@ -111,7 +114,13 @@ def read_mat_single_file(filename):
         df = pd.DataFrame(
             np.hstack((
                 timestamp,
-                fdata['ni'], fdata['nu'], fdata['Zt3']))
+                fdata['ni'],
+                fdata['nu'],
+                fdata['Zt3'],
+                fdata['Is3'],
+                fdata['Il3'],
+                fdata['Zg3'],
+            ))
         )
         df.columns = (
             'datetime',
@@ -121,6 +130,15 @@ def read_mat_single_file(filename):
             'Z1',
             'Z2',
             'Z3',
+            'I1',
+            'I2',
+            'I3',
+            'Il1',
+            'Il2',
+            'Il3',
+            'Zg1',
+            'Zg2',
+            'Zg3',
         )
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
@@ -134,9 +152,6 @@ def read_mat_single_file(filename):
         df['Z2'] = df['Z2'].astype(complex)
         df['Z3'] = df['Z3'].astype(complex)
 
-        # average of Z1-Z3
-        df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
-
         dfl.append(df)
 
     df = pd.concat(dfl)
@@ -144,6 +159,9 @@ def read_mat_single_file(filename):
     condition = df['A'] > df['B']
     df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
+
+    # average of Z1-Z3
+    df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
 
     return df
 
