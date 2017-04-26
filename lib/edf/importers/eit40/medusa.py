@@ -68,7 +68,16 @@ def import_medusa_data(mat_filename, configs):
         query_N = df.query('A=={0} and B=={1} and P=={2}'.format(
             A, B, N
         ))
-        keep_cols = ['datetime', 'frequency', 'A', 'B']
+        # keep these columns as they are (no subtracting)
+        keep_cols = [
+            'datetime',
+            'frequency',
+            'A', 'B',
+            'Zg1', 'Zg2', 'Zg3',
+            'Is',
+            'Il',
+            'Zg',
+        ]
 
         df4 = pd.DataFrame()
         diff_cols = ['Zt', ]
@@ -130,9 +139,9 @@ def read_mat_single_file(filename):
             'Z1',
             'Z2',
             'Z3',
-            'I1',
-            'I2',
-            'I3',
+            'Is1',
+            'Is2',
+            'Is3',
             'Il1',
             'Il2',
             'Il3',
@@ -152,16 +161,27 @@ def read_mat_single_file(filename):
         df['Z2'] = df['Z2'].astype(complex)
         df['Z3'] = df['Z3'].astype(complex)
 
+        df['Zg1'] = df['Zg1'].astype(complex)
+        df['Zg2'] = df['Zg2'].astype(complex)
+        df['Zg3'] = df['Zg3'].astype(complex)
+
         dfl.append(df)
 
     df = pd.concat(dfl)
 
     condition = df['A'] > df['B']
     df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
+    # why?
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
 
     # average of Z1-Z3
     df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
+    # df['Zt_std'] = np.std(df[['Z1', 'Z2', 'Z3']].values, axis=1)
+
+    df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
+    df['Il'] = np.mean(df[['Il1', 'Il2', 'Il3']].values, axis=1)
+    df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']].values, axis=1)
+    # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
 
     return df
 
