@@ -1,13 +1,5 @@
 # -*- coding: utf-8 -*-
 """ Work with result files from the EIT-40/160 tomograph (also called medusa).
-"""
-import numpy as np
-import scipy.io as sio
-import pandas as pd
-import datetime
-# from crlab_py.mpl import *
-
-"""
 
 Data structure of .mat files:
 
@@ -43,13 +35,27 @@ Import pipeline:
 - should we provide a time delta between the two measurements?
 
 """
+import numpy as np
+import scipy.io as sio
+import pandas as pd
+import datetime
+
+import edf.utils.geometric_factors as edfK
+
+
+def _add_rhoa(df, spacing):
+    """a simple wrapper to compute K factors and add rhoa
+    """
+    df['K'] = edfK.compute_K_analytical(df, spacing=spacing)
+    df['rho_a'] = df['R'] * df['K']
+    return df
 
 
 def import_medusa_data(mat_filename, configs):
     """
 
     """
-    df = read_mat_single_file(mat_filename)
+    df_emd, df_md = read_mat_mnu0(mat_filename)
 
     # 'configs' can be a numpy array or a filename
     if not isinstance(configs, np.ndarray):
@@ -57,17 +63,32 @@ def import_medusa_data(mat_filename, configs):
 
     # construct four-point measurements via superposition
     quadpole_list = []
+    index = 0
     for Ar, Br, M, N in configs:
         # the order of A and B doesn't concern us
         A = np.min((Ar, Br))
         B = np.max((Ar, Br))
 
-        query_M = df.query('A=={0} and B=={1} and P=={2}'.format(
+        query_M = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
             A, B, M
         ))
-        query_N = df.query('A=={0} and B=={1} and P=={2}'.format(
+        query_N = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
             A, B, N
         ))
+
+        if query_M.shape[0] == 0:
+            print('first potential not found!')
+            exit()
+
+        if query_N.shape[0] == 0:
+            print('second potential not found!')
+            exit()
+
+        # if index == 0:
+        #     import IPython
+        #     IPython.embed()
+        index += 1
+
         # keep these columns as they are (no subtracting)
         keep_cols = [
             'datetime',
@@ -86,25 +107,85 @@ def import_medusa_data(mat_filename, configs):
             df4[col] = query_N[col].values - query_M[col].values
         df4['M'] = query_M['P'].values
         df4['N'] = query_N['P'].values
-        # print(df4)
+        # rint(df4)
 
         quadpole_list.append(df4)
     dfn = pd.concat(quadpole_list)
     dfn['R'] = np.abs(dfn['Zt'])
-    return dfn
+
+    dfn['rpha'] = np.arctan2(
+        np.imag(dfn['Zt'].values),
+        np.real(dfn['Zt'].values)
+    ) * 1e3
+
+    return dfn, df_md
 
 
-def read_mat_single_file(filename):
+def read_mat_mnu0(filename):
     """Import a .mat file with single potentials (A B M) into a pandas
     DataFrame
+
+    Also export some variables of the md struct into a separate structure
     """
     print('read_mag_single_file')
+
+    mat = sio.loadmat(filename)
+
+    df_emd = _extract_emd(mat)
+    df_md = _extract_md(mat)
+
+    return df_emd, df_md
+
+
+def _extract_md(mat):
+    md = mat['MD'].squeeze()
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
-    mat = sio.loadmat(filename)
+    def convert_epoch(x):
+        timestamp = epoch + datetime.timedelta(seconds=x.astype(float))
+        return timestamp
+
+    dfl = []
+    # loop over frequencies
+    for f_id in range(0, md.size):
+        # print('Frequency: ', emd[f_id]['fm'])
+        fdata = md[f_id]
+        # for name in fdata.dtype.names:
+        #     print(name, fdata[name].shape)
+
+        timestamp = np.atleast_2d(
+            [convert_epoch(x) for x in fdata['Time'].squeeze()]
+        ).T
+        df = pd.DataFrame(
+            np.hstack((
+                timestamp,
+                fdata['cni'],
+                fdata['Cl3'],
+            ))
+        )
+        df.columns = (
+            'datetime',
+            'A',
+            'B',
+            'Cl1',
+            'Cl2',
+            'Cl3',
+        )
+        df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
+        dfl.append(df)
+
+    df = pd.concat(dfl)
+    # import IPython
+    # IPython.embed()
+
+    return df
+
+
+def _extract_emd(mat):
     emd = mat['EMD'].squeeze()
-    # md = mat['MD'].squeeze()
+    # Labview epoch
+    epoch = datetime.datetime(1904, 1, 1)
 
     def convert_epoch(x):
         timestamp = epoch + datetime.timedelta(seconds=x.astype(float))
@@ -169,9 +250,13 @@ def read_mat_single_file(filename):
 
     df = pd.concat(dfl)
 
+    # average swapped current injections here!
+    # TODO
+
+    # sort current injections
     condition = df['A'] > df['B']
     df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
-    # why?
+    # change sign because we changes A and B
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
 
     # average of Z1-Z3
@@ -184,103 +269,3 @@ def read_mat_single_file(filename):
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
 
     return df
-
-
-class medusa():
-
-    def __init__(self, filename):
-        """
-        filename points to a single potential file
-        """
-        self.mat = sio.loadmat(filename)
-        self.emd = self.mat['EMD']
-
-    def save(self, filename):
-        sio.savemat(
-            filename,
-            mdict=self.mat,
-            format='5',
-            do_compression=True,
-            oned_as='column'
-        )
-
-    def frequencies(self):
-        frequencies = np.squeeze(
-            np.array([self.emd[0, i]['fm'] for i in
-                      range(0, self.emd.shape[1])]))
-        return frequencies
-
-    def filter_for_Z3_std(self, frequency, threshold):
-        """
-        """
-
-        subdata = self.emd[0, frequency]
-        std = np.std(subdata['Z3'], axis=1)
-        ids = np.where(std > threshold)
-
-        self._filter_indices(frequency, ids)
-
-    def filter_3_Is3(self, frequency, threshold, repetition):
-        """
-        Filter measurements were at least one of the three repetitions has a
-        current below the threshold.
-
-        The threshold is given in mA!!!!
-        """
-
-        subdata = self.emd[0, frequency]
-        result = subdata['Is3']
-        ids = np.any(result < (threshold / 1000), axis=1)
-
-        ids = np.where(ids)
-
-        self._filter_indices(frequency, ids)
-
-    def _filter_indices(self, frequency, indices):
-        """
-        Remove indices from ['nni', 'cni', 'cnu', 'ni', 'nu', 'Is3', 'II3',
-        'Yg1', 'Yg2', 'Z3', 'As3', 'Zg3']
-        """
-        subdata = self.emd[0, frequency]
-        for key in ('nni', 'cni', 'cnu',
-                    'ni', 'nu', 'Is3',
-                    'Il3', 'Yg1', 'Yg2',
-                    'Z3', 'As3', 'Zg3',
-                    'datetime'):
-            print(key)
-            subdata[key] = np.delete(subdata[key], indices, axis=0)
-
-    def load_configs(self, filename):
-        """Load voltage dipoles from a config file. These information can then
-        be used to create a mat file containing full four point spreads
-        (instead of only single potentials).
-        """
-        self.configs = np.loadtxt(filename)
-
-    def create_full_file(filename):
-        """
-        Use self.configs to create a file containg four point spreads.
-        """
-
-        pass
-
-    def _get_I_dipole(self, A=None, B=None, M=None, N=None, frequency=None):
-        """
-        Return the data for a specific dipole or measurement. Every parameter
-        that is None will be ignored. For example, if frequency is set to None,
-        then all frequencies will be returned.
-        The return variable is a list of
-        """
-        pass
-
-    # def plot_Z3(self, A, B, frequency):
-    #     """Plot the three R measurements for all potential electrodes of one
-    #     injection dipole
-    #     """
-    #     fig = plt.figure()
-    #     ax = fig.add_subplot(111)
-    #     ax
-    #     Z3 = self.emd[0, frequency]['Z3']
-
-    #     print(Z3.shape)
-    #     fig.savefig('plot_Z3.png')

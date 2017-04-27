@@ -2,6 +2,8 @@
 
 """
 import numpy as np
+import scipy.interpolate as si
+import scipy.spatial.qhull as siq
 
 from edf.utils.mpl_setup import *
 import edf.utils.filter_config_types as fT
@@ -179,6 +181,7 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
             print('schlumberger', plot_list)
             labels_add = ['', ]
 
+        grid = None
         # generate plots
         for indices, label_add in zip(plot_list, labels_add):
             if len(indices) == 0:
@@ -214,10 +217,213 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
             figs.append(fig)
             axes.append(ax)
 
-    if ln(figs) == 1:
+    if len(figs) == 1:
         return figs[0], axes[0]
     else:
         return figs, axes
+
+
+def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
+                       dd_merge=False, cb=False, **kwargs):
+    """Create a pseudosection plot for a given measurement
+
+    Parameters
+    ----------
+    df: dataframe
+        measurement dataframe, one measurement frame (i.e., only one frequency
+        etc)
+    key:
+        which key to colorcode
+    spacing: float, optional
+        assumed electrode spacing
+    ctypes: list of strings
+        which configurations to plot, default: dd
+    dd_merge: bool, optional
+        ?
+    cb: bool, optional
+        ?
+
+    """
+    grid = None
+
+    pseudo_d_functions = {
+        'dd': _pseudodepths_dd_simple,
+        'schlumberger': _pseudodepths_schlumberger,
+        'wenner': _pseudodepths_wenner,
+    }
+
+    titles = {
+        'dd': 'dipole-dipole configurations',
+        'schlumberger': 'Schlumberger configurations',
+        'wenner': 'Wenner configurations',
+    }
+
+    # for now sort data and only plot dipole-dipole
+    only_types = ctypes or ['dd', ]
+    if 'schlumberger' in only_types:
+        raise Exception(
+            'plotting of pseudosections not implemented for ' +
+            'Schlumberger configurations!'
+        )
+
+    configs = df[['A', 'B', 'M', 'N']].values
+    results = fT.filter(
+        configs,
+        settings={
+            'only_types': only_types,
+        },
+    )
+    values = df[plot_key].values
+
+    plot_objects = []
+    for key in sorted(results.keys()):
+        print('plotting: ', key)
+        if key == 'not_sorted':
+            continue
+        index_dict = results[key]
+        # it is possible that we want to generate multiple plots for one
+        # type of measurement, i.e., to separate skips of dipole-dipole
+        # measurements. Therefore we generate two lists:
+        # 1) list of list of indices to plot
+        # 2) corresponding labels
+        if key == 'dd' and not dd_merge:
+            plot_list = []
+            labels_add = []
+            for skip in sorted(index_dict.keys()):
+                plot_list.append(index_dict[skip])
+                labels_add.append(
+                    ' - skip {0}'.format(skip)
+                )
+        else:
+            # merge all indices
+            plot_list = [np.hstack(index_dict.values()), ]
+            print('schlumberger', plot_list)
+            labels_add = ['', ]
+
+        # generate plots
+        for indices, label_add in zip(plot_list, labels_add):
+            if len(indices) == 0:
+                continue
+
+            ddc = configs[indices]
+            plot_data = values[indices]
+            px, pz = pseudo_d_functions[key](ddc, spacing, grid)
+            print('pxpz', px, pz)
+
+            # take 200 points for the new grid in every direction. Could be
+            # adapted to the actual ratio
+            xg = np.linspace(px.min(), px.max(), 200)
+            zg = np.linspace(pz.min(), pz.max(), 200)
+
+            x, z = np.meshgrid(xg, zg)
+
+            cmap_name = kwargs.get('cmap_name', 'jet')
+            cmap = mpl.cm.get_cmap(cmap_name)
+
+            # normalize data
+            data_min = kwargs.get('cbmin', plot_data.min())
+            data_max = kwargs.get('cbmax', plot_data.max())
+            cnorm = mpl.colors.Normalize(vmin=data_min, vmax=data_max)
+            scalarMap = mpl.cm.ScalarMappable(norm=cnorm, cmap=cmap)
+            fcolors = scalarMap.to_rgba(plot_data)
+
+            try:
+                image = si.griddata(
+                    (px, pz),
+                    fcolors,
+                    (x, z),
+                    method='linear',
+                )
+            except siq.QhullError as e:
+                print('Ex', e)
+                continue
+
+            cmap = mpl.cm.get_cmap('jet_r')
+
+            data_ratio = np.abs(
+                px.max() - px.min()
+            ) / np.abs(
+                pz.min()
+            )
+
+            fig_size_y = 15 / data_ratio + 6 / 2.54
+            fig = plt.figure(figsize=(15, fig_size_y))
+
+            fig_top = 1 / 2.54 / fig_size_y
+            fig_left = 2 / 2.54 / 15
+            fig_right = 1 / 2.54 / 15
+            if cb:
+                fig_bottom = 3 / 2.54 / fig_size_y
+            else:
+                fig_bottom = 0.05
+
+            ax = fig.add_axes([
+                fig_left,
+                fig_bottom + fig_top * 2,
+                1 - fig_left - fig_right,
+                1 - fig_top - fig_bottom - fig_top * 2
+            ])
+
+            im = ax.imshow(
+                image[::-1],
+                extent=(xg.min(), xg.max(), zg.min(), zg.max()),
+                interpolation='none',
+                aspect='auto',
+                # vmin=10,
+                # vmax=300,
+                cmap=cmap,
+            )
+            ax.set_ylim(pz.min(), 0)
+
+            # colorbar
+            if cb:
+                print('plotting colorbar')
+                # the colorbar has 3 cm on the bottom
+                ax_cb = fig.add_axes(
+                    [
+                        fig_left * 4,
+                        fig_top * 2,
+                        1 - fig_left * 4 - fig_right * 4,
+                        fig_bottom - fig_top * 2
+                    ]
+                )
+                # from mpl_toolkits.axes_grid1 import make_axes_locatable
+                # divider = make_axes_locatable(ax)
+                # ax_cb = divider.append_axes("bottom", "5%", pad="3%")
+                # (ax_cb, kw) = mpl.colorbar.make_axes_gridspec(
+                #     ax,
+                #     orientation='horizontal',
+                #     fraction=fig_bottom,
+                #     pad=0.3,
+                #     shrink=0.9,
+                #     # location='bottom',
+                # )
+                cb = mpl.colorbar.ColorbarBase(
+                    ax=ax_cb,
+                    cmap=cmap,
+                    norm=cnorm,
+                    orientation='horizontal',
+                    # **kw
+                )
+                cb.set_label('cb label')
+            else:
+                fig_bottom = 0.05
+
+            # 1cm on top
+
+            # # 3 cm on bottom for colorbar
+            # fig.subplots_adjust(
+            #     top=1 - fig_top,
+            #     bottom=fig_bottom,
+            # )
+
+            ax.set_title(titles[key] + label_add)
+            ax.set_aspect('equal')
+            ax.set_xlabel('x [m]')
+            ax.set_ylabel('x [z]')
+            plot_objects.append((fig, ax, im))
+
+    return plot_objects
 
 
 def plot_rawdataplot():
