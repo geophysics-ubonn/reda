@@ -214,7 +214,11 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
             figs.append(fig)
             axes.append(ax)
 
-    if len(figs) == 1:
+    if ln(figs) == 1:
         return figs[0], axes[0]
     else:
         return figs, axes
+
+
+def plot_rawdataplot():
+    pass
