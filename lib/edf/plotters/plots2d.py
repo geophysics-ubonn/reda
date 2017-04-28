@@ -308,7 +308,10 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
             ddc = configs[indices]
             plot_data = values[indices]
             px, pz = pseudo_d_functions[key](ddc, spacing, grid)
-            print('pxpz', px, pz)
+            # we need at least four points for a spatial interpolation, I
+            # think...
+            if px.size <= 4:
+                continue
 
             # take 200 points for the new grid in every direction. Could be
             # adapted to the actual ratio
