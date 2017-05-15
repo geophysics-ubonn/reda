@@ -26,6 +26,11 @@ def add_txt_file(filename, container=None, **kwargs):
         a given measurement setup. If not given, then the smallest distance
         between electrodes is assumed to be the electrode spacing. Naturally,
         this requires measurements (or injections) with subsequent electrodes.
+    reciprocals: int, optional
+        if provided, then assume that this is a reciprocal measurements where
+        only the electrode cables were switched. The provided number N is
+        treated as the maximum electrode number, and denotations are renamed
+        according to the equation :math:`X_n = N - (X_a - 1)`
 
 
     Notes
@@ -85,6 +90,12 @@ def add_txt_file(filename, container=None, **kwargs):
     data['R'] = data_raw['Vp'] / data_raw['In']
     data['Vmn'] = data_raw['Vp']
     data['Iab'] = data_raw['In']
+
+    # rename electrode denotations
+    rec_max = kwargs.get('reciprocals', None)
+    if rec_max is not None:
+        print('renumbering electrode numbers')
+        data[['A', 'B', 'M', 'N']] = rec_max + 1 - data[['A', 'B', 'M', 'N']]
 
     if container is None:
         container = ERT(data)
