@@ -44,6 +44,7 @@ def add_txt_file(filename, container=None, **kwargs):
         text = fid.read()
     strings_to_replace = {
         'Mixed / non conventional': 'Mixed/non-conventional',
+        'Date': 'Date Time AM-PM',
     }
     for key in strings_to_replace.keys():
         text = text.replace(key, strings_to_replace[key])
