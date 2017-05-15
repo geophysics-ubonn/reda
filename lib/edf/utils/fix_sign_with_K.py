@@ -14,8 +14,16 @@ def fix_sign_with_K(dataframe):
     indices_negative = (dataframe['K'] < 0) & (dataframe['R'] < 0)
 
     dataframe.ix[indices_negative, ['K', 'R']] *= -1
-    if 'rho_a' in dataframe:
-        dataframe.ix[indices_negative, 'rho_a'] *= -1
+    dataframe.ix[indices_negative, ['M', 'N']] = dataframe.ix[
+        indices_negative, ['N', 'M']
+    ]
+
+    # switch sign of voltages
+    if 'Vmn' in dataframe:
+        dataframe.ix[indices_negative, 'Vmn'] *= -1
+
+    # if 'rho_a' in dataframe:
+    #     dataframe.ix[indices_negative, 'rho_a'] *= -1
 
     # switch potential electrodes
     dataframe[['M', 'N']] = dataframe[['N', 'M']]

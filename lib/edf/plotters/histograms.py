@@ -30,6 +30,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         size_x = 10 / 2.54
         size_y = 5 * nr_y / 2.54
         fig, axes_all = plt.subplots(nr_y, nr_x, figsize=(size_x, size_y))
+        axes_all = np.atleast_2d(axes_all)
 
     for row_nr, key in enumerate(keys):
         print('generating histogram plot for key: {0}'.format(key))
@@ -41,7 +42,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         ]
 
         if merge_figs:
-            axes = axes_all[row_nr, :].squeeze()
+            axes = axes_all[row_nr].squeeze()
         else:
             fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
 
@@ -66,7 +67,8 @@ def plot_histograms(ertobj, keys, **kwargs):
             ax.set_ylabel('count')
             ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
         else:
-            del(axes[1])
+            pass
+            # del(axes[1])
 
         fig.tight_layout()
 

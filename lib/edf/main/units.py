@@ -16,9 +16,16 @@ rel = {
         'label_latex': r'$\rho_a~[\Omega m]$',
         'unit': r'$\Ohm m$',
     },
-
-
-
+    'Iab': {
+        'full_name': 'Iab_[mA]',
+        'label_latex': r'$I_{ab}~[mA]$',
+        'unit': r'mA',
+    },
+    'Umn': {
+        'full_name': 'Umn_[mV]',
+        'label_latex': r'$U_{mn}~[mV]$',
+        'unit': r'mV',
+    },
 }
 
 
