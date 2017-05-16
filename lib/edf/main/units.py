@@ -21,8 +21,8 @@ rel = {
         'label_latex': r'$I_{ab}~[mA]$',
         'unit': r'mA',
     },
-    'Umn': {
-        'full_name': 'Umn_[mV]',
+    'Vmn': {
+        'full_name': 'Vmn_[mV]',
         'label_latex': r'$U_{mn}~[mV]$',
         'unit': r'mV',
     },
