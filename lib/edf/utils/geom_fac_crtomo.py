@@ -7,6 +7,8 @@ import tempfile
 import shutil
 import subprocess
 
+import crtomo.binaries
+
 
 def _write_config_file(filename, dataframe):
     AB = dataframe['A'].values * 1e4 + dataframe['B'].values
@@ -129,7 +131,8 @@ def compute_K(
         config_orig = _write_config_file('config/config.dat', dataframe)
 
         os.chdir('exe')
-        subprocess.call('CRMod', shell=True)
+        binary = crtomo.binaries.get('CRMod')
+        subprocess.call(binary, shell=True)
         os.chdir('..')
 
         # read in results

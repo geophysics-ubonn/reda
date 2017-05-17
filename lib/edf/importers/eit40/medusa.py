@@ -65,6 +65,7 @@ def import_medusa_data(mat_filename, configs):
     quadpole_list = []
     index = 0
     for Ar, Br, M, N in configs:
+        print('NEW CONFIG')
         # the order of A and B doesn't concern us
         A = np.min((Ar, Br))
         B = np.max((Ar, Br))
@@ -98,20 +99,25 @@ def import_medusa_data(mat_filename, configs):
             'Is',
             'Il',
             'Zg',
+            'Iab',
         ]
 
         df4 = pd.DataFrame()
-        diff_cols = ['Zt', ]
+        diff_cols = ['Zt', 'R']
         df4[keep_cols] = query_M[keep_cols]
         for col in diff_cols:
-            df4[col] = query_N[col].values - query_M[col].values
+            print('diffing:', col)
+            print(query_M[col].iloc[0])
+            print(query_N[col].iloc[0])
+            df4[col] = query_M[col].values - query_N[col].values
         df4['M'] = query_M['P'].values
         df4['N'] = query_N['P'].values
+        df4['Vmn'] = df4['R'] * df4['Iab']
         # rint(df4)
 
         quadpole_list.append(df4)
     dfn = pd.concat(quadpole_list)
-    dfn['R'] = np.abs(dfn['Zt'])
+    # dfn['R'] = dfn['Zt']
 
     dfn['rpha'] = np.arctan2(
         np.imag(dfn['Zt'].values),
@@ -261,11 +267,17 @@ def _extract_emd(mat):
 
     # average of Z1-Z3
     df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
+    # we need to keep the sign of the real part
+    sign_re = df['Zt'].real / np.abs(df['Zt'].real)
+    df['R'] = np.abs(df['Zt']) * sign_re
     # df['Zt_std'] = np.std(df[['Z1', 'Z2', 'Z3']].values, axis=1)
 
     df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
     df['Il'] = np.mean(df[['Il1', 'Il2', 'Il3']].values, axis=1)
     df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']].values, axis=1)
+
+    # "standard" injected current, in [mA]
+    df['Iab'] = np.abs(df['Is']) * 1e3
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
 
     return df

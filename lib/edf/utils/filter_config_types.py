@@ -11,6 +11,7 @@ not 'chosen' by any previously applied filters.
 
 """
 import numpy as np
+import pandas as pd
 
 
 def _filter_schlumberger(configs):
@@ -206,6 +207,9 @@ def filter(configs, settings):
         'remaining'
 
     """
+    if isinstance(configs, pd.DataFrame):
+        configs = configs[['A', 'B', 'M', 'N']].values
+
     # assign short labels to Python functions
     filter_funcs = {
         'dd': _filter_dipole_dipole,
