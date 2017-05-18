@@ -4,6 +4,60 @@
 import numpy as np
 
 
+def first(x):
+    """return the first item of the supplied Series"""
+    return x.iloc[0]
+
+
+def average_repetitions(df, keys_mean):
+    """average diplicate measurements. This requires that IDs and norrec labels
+    were assigned using the *assign_norrec_to_df* function.
+
+    Parameters
+    ----------
+    df
+        DataFrame
+    keys_mean: list
+        list of keys to average. For all other keys the first entry will be
+        used.
+    """
+
+    keys_keep = list(set(df.columns.tolist()) - set(keys_mean))
+    agg_dict = {x: first for x in keys_keep}
+    agg_dict.update({x: np.mean for x in keys_mean})
+    print(agg_dict)
+
+    # average over duplicate measurements
+    df = df.groupby(['id', 'norrec', 'frequency', 'timestep']).agg(agg_dict)
+    return df
+
+
+def compute_norrec_differences(df, keys_diff):
+    """
+
+    """
+    print('computing normal-reciprocal differences')
+    # df.sort_index(level='norrec')
+
+    def norrec_diff(x):
+        """compute norrec_diff"""
+        if x.shape[0] != 2:
+            return np.nan
+        else:
+            return np.abs(x.iloc[1] - x.iloc[0])
+
+    keys_keep = list(set(df.columns.tolist()) - set(keys_diff))
+    agg_dict = {x: first for x in keys_keep}
+    agg_dict.update({x: norrec_diff for x in keys_diff})
+    if 'id' in agg_dict:
+        del(agg_dict['id'])
+
+    df = df.groupby(('timestep', 'frequency', 'id')).agg(agg_dict)
+    # df.rename(columns={'R': 'Rdiff'}, inplace=True)
+    # df.reset_index()
+    return df
+
+
 def normalize_abmn(abmn):
     """return a normalized version of abmn
     """
@@ -19,14 +73,6 @@ def assign_norrec_to_df(df):
     """
 
     """
-    # configs = np.array((
-    #     (1, 2, 3, 4),
-    #     (2, 1, 3, 4),
-    #     (1, 2, 4, 3),
-    #     (2, 1, 4, 3),
-    #     (3, 4, 2, 1),
-    # ))
-    # df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N'])
     df['id'] = ''
     df['norrec'] = ''
     c = df[['A', 'B', 'M', 'N']].values.copy()
