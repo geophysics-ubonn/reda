@@ -40,7 +40,7 @@ def assign_norrec_to_df(df):
     normal_ids = {}
     reciprocal_ids = {}
     for i in range(0, cu.shape[0]):
-        print('testing', cu[i], i, cu.shape[0])
+        # print('testing', cu[i], i, cu.shape[0])
         cu_norm = normalize_abmn(cu[i, :]).squeeze()
         if tuple(cu_norm) in normal_ids:
             # print('already indexed')
@@ -111,7 +111,6 @@ def assign_norrec_to_df(df):
             ('id', 'norrec')
         ] = (item, 'nor')
     for key, item in reciprocal_ids.items():
-        print(key)
         df.loc[
             ((df.A == key[0]) & (df.B == key[1]) &
              (df.M == key[2]) & (df.N == key[3])) |
