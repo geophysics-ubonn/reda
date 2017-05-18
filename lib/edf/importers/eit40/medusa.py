@@ -278,6 +278,7 @@ def _extract_emd(mat):
 
     # "standard" injected current, in [mA]
     df['Iab'] = np.abs(df['Is']) * 1e3
+    df['Iab'] = df['Iab'].astype(float)
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
 
     return df
