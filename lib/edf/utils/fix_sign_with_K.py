@@ -22,6 +22,9 @@ def fix_sign_with_K(dataframe):
     if 'Vmn' in dataframe:
         dataframe.ix[indices_negative, 'Vmn'] *= -1
 
+    if 'Zt' in dataframe:
+        dataframe.ix[indices_negative, 'Zt'] *= -1
+
     if 'rho_a' in dataframe:
         dataframe['rho_a'] = dataframe['R'] * dataframe['K']
 
