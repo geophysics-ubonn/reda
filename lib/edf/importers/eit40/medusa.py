@@ -65,36 +65,19 @@ def import_medusa_data(mat_filename, configs):
     quadpole_list = []
     index = 0
     for Ar, Br, M, N in configs:
-        print('NEW CONFIG')
+        print('constructing', Ar, Br, M, N)
+        # the order of A and B doesn't concern us
+        A = np.min((Ar, Br))
+        B = np.max((Ar, Br))
 
         # first choice: correct ordering
-        query_M1 = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
-            Ar, Br, M
+        query_M = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+            A, B, M
         ))
-        query_N1 = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
-            Ar, Br, N
-        ))
-        query_M2 = df_emd.query('B=={0} and B=={1} and P=={2}'.format(
-            Ar, Br, M
-        ))
-        query_N2 = df_emd.query('B=={0} and B=={1} and P=={2}'.format(
-            Ar, Br, N
+        query_N = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+            A, B, N
         ))
 
-        # decide on which selection to take
-        if query_M1.shape[0] > 0 and query_N1.shape[0] > 0:
-            query_M = query_M1
-            query_N = query_N1
-        elif query_M2.shape[0] > 0 and query_N2.shape[0] > 0:
-            query_M = query_N1
-            query_N = query_M1
-        else:
-            print('There is a problem finding configurations')
-            exit()
-
-        # if index == 0:
-        #     import IPython
-        #     IPython.embed()
         index += 1
 
         # keep these columns as they are (no subtracting)
@@ -113,14 +96,10 @@ def import_medusa_data(mat_filename, configs):
         diff_cols = ['Zt', 'R']
         df4[keep_cols] = query_M[keep_cols]
         for col in diff_cols:
-            print('diffing:', col)
-            print(query_M[col].iloc[0])
-            print(query_N[col].iloc[0])
-            df4[col] = query_N[col].values - query_M[col].values
+            df4[col] = query_M[col].values - query_N[col].values
         df4['M'] = query_M['P'].values
         df4['N'] = query_N['P'].values
         df4['Vmn'] = df4['R'] * df4['Iab']
-        # rint(df4)
 
         quadpole_list.append(df4)
     dfn = pd.concat(quadpole_list)
@@ -269,7 +248,7 @@ def _extract_emd(mat):
     # sort current injections
     condition = df['A'] > df['B']
     df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
-    # change sign because we changes A and B
+    # change sign because we changed A and B
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
 
     # average of Z1-Z3

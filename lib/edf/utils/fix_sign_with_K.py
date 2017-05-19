@@ -31,8 +31,9 @@ def fix_sign_with_K(dataframe):
 
     # recompute phase values
     if 'rpha' in dataframe:
-        dataframe.ix[indices_negative, 'rho_a'] = (
-            np.pi - (dataframe.ix[indices_negative, 'rho_a'] / 1e3)
+        # recompute
+        dataframe['rpha'] = np.arctan2(
+            dataframe['Zt'].imag, dataframe['Zt'].real
         ) * 1e3
 
     return dataframe
