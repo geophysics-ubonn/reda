@@ -25,10 +25,14 @@ def average_repetitions(df, keys_mean):
     keys_keep = list(set(df.columns.tolist()) - set(keys_mean))
     agg_dict = {x: first for x in keys_keep}
     agg_dict.update({x: np.mean for x in keys_mean})
+    for key in ('id', 'timestep', 'frequency', 'norrec'):
+        if key in agg_dict:
+            del(agg_dict[key])
     print(agg_dict)
 
     # average over duplicate measurements
     df = df.groupby(['id', 'norrec', 'frequency', 'timestep']).agg(agg_dict)
+    df.reset_index(inplace=True)
     return df
 
 
@@ -49,14 +53,15 @@ def compute_norrec_differences(df, keys_diff):
     keys_keep = list(set(df.columns.tolist()) - set(keys_diff))
     agg_dict = {x: first for x in keys_keep}
     agg_dict.update({x: norrec_diff for x in keys_diff})
-    if 'id' in agg_dict:
-        del(agg_dict['id'])
+    for key in ('id', 'timestep', 'frequency'):
+        if key in agg_dict:
+            del(agg_dict[key])
 
     # for frequencies, we could (I think) somehow prevent grouping by
     # frequencies...
     df = df.groupby(('timestep', 'frequency', 'id')).agg(agg_dict)
     # df.rename(columns={'R': 'Rdiff'}, inplace=True)
-    # df.reset_index()
+    df.reset_index()
     return df
 
 

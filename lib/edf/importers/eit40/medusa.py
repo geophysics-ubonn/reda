@@ -93,18 +93,19 @@ def import_medusa_data(mat_filename, configs):
         ]
 
         df4 = pd.DataFrame()
-        diff_cols = ['Zt', 'R']
+        diff_cols = ['Zt', ]
         df4[keep_cols] = query_M[keep_cols]
         for col in diff_cols:
             df4[col] = query_M[col].values - query_N[col].values
         df4['M'] = query_M['P'].values
         df4['N'] = query_N['P'].values
-        df4['Vmn'] = df4['R'] * df4['Iab']
 
         quadpole_list.append(df4)
     dfn = pd.concat(quadpole_list)
-    # dfn['R'] = dfn['Zt']
 
+    Rsign = np.sign(dfn['Zt'].real)
+    dfn['R'] = Rsign * np.abs(dfn['Zt'])
+    dfn['Vmn'] = dfn['R'] * dfn['Iab']
     dfn['rpha'] = np.arctan2(
         np.imag(dfn['Zt'].values),
         np.real(dfn['Zt'].values)
