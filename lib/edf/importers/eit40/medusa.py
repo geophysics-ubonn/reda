@@ -66,23 +66,30 @@ def import_medusa_data(mat_filename, configs):
     index = 0
     for Ar, Br, M, N in configs:
         print('NEW CONFIG')
-        # the order of A and B doesn't concern us
-        A = np.min((Ar, Br))
-        B = np.max((Ar, Br))
 
-        query_M = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
-            A, B, M
+        # first choice: correct ordering
+        query_M1 = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+            Ar, Br, M
         ))
-        query_N = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
-            A, B, N
+        query_N1 = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+            Ar, Br, N
+        ))
+        query_M2 = df_emd.query('B=={0} and B=={1} and P=={2}'.format(
+            Ar, Br, M
+        ))
+        query_N2 = df_emd.query('B=={0} and B=={1} and P=={2}'.format(
+            Ar, Br, N
         ))
 
-        if query_M.shape[0] == 0:
-            print('first potential not found!')
-            exit()
-
-        if query_N.shape[0] == 0:
-            print('second potential not found!')
+        # decide on which selection to take
+        if query_M1.shape[0] > 0 and query_N1.shape[0] > 0:
+            query_M = query_M1
+            query_N = query_N1
+        elif query_M2.shape[0] > 0 and query_N2.shape[0] > 0:
+            query_M = query_N1
+            query_N = query_M1
+        else:
+            print('There is a problem finding configurations')
             exit()
 
         # if index == 0:
