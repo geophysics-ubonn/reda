@@ -52,6 +52,8 @@ def compute_norrec_differences(df, keys_diff):
     if 'id' in agg_dict:
         del(agg_dict['id'])
 
+    # for frequencies, we could (I think) somehow prevent grouping by
+    # frequencies...
     df = df.groupby(('timestep', 'frequency', 'id')).agg(agg_dict)
     # df.rename(columns={'R': 'Rdiff'}, inplace=True)
     # df.reset_index()

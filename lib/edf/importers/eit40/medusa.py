@@ -109,7 +109,7 @@ def import_medusa_data(mat_filename, configs):
             print('diffing:', col)
             print(query_M[col].iloc[0])
             print(query_N[col].iloc[0])
-            df4[col] = query_M[col].values - query_N[col].values
+            df4[col] = query_N[col].values - query_M[col].values
         df4['M'] = query_M['P'].values
         df4['N'] = query_N['P'].values
         df4['Vmn'] = df4['R'] * df4['Iab']

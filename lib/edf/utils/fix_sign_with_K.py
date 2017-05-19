@@ -2,6 +2,7 @@
 Fix signs in resistance measurements using the K factors. The sign of negative
 resistance measurements can be switched if the geometrical factor is negative.
 """
+import numpy as np
 
 
 def fix_sign_with_K(dataframe):
@@ -27,6 +28,12 @@ def fix_sign_with_K(dataframe):
 
     if 'rho_a' in dataframe:
         dataframe['rho_a'] = dataframe['R'] * dataframe['K']
+
+    # recompute phase values
+    if 'rpha' in dataframe:
+        dataframe.ix[indices_negative, 'rho_a'] = (
+            np.pi - (dataframe.ix[indices_negative, 'rho_a'] / 1e3)
+        ) * 1e3
 
     return dataframe
 
