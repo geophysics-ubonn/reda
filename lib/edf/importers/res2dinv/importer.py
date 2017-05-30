@@ -85,7 +85,6 @@ def _read_general_type(content, settings):
     df['M'] = df['x3'] / header['unit_spacing'] + 1
     df['N'] = df['x4'] / header['unit_spacing'] + 1
     print('AMBN', df.ix[10, ['A', 'B', 'M', 'N']])
-    exit()
 
     # for now assume value in resistances
     df['R'] = df['value']
