@@ -1,10 +1,27 @@
-# import matplotlib as mpl
+"""Histogram functions for raw data
+"""
 import pandas as pd
 import pylab as plt
 import matplotlib as mpl
 mpl.rcParams['font.size'] = 8.0
 import numpy as np
+
 import edf.main.units as units
+
+
+def _get_nr_bins(count):
+    """depending on the number of data points, compute a best guess for an
+    optimal number of bins
+
+    https://en.wikipedia.org/wiki/Histogram#Number_of_bins_and_width
+    """
+    if count <= 30:
+        # use the square-root choice, used by Excel and Co
+        k = np.ceil(np.sqrt(count))
+    else:
+        # use Sturges' formula
+        k = np.ceil(np.log2(count)) + 1
+    return int(k)
 
 
 def plot_histograms(ertobj, keys, **kwargs):
@@ -12,8 +29,15 @@ def plot_histograms(ertobj, keys, **kwargs):
 
     Parameters
     ----------
-    merge: bool
+    ertobj: container instance or :class:`pandas.DataFrame`
+        data object which contains the data.
+    keys: list of strings
+        which keys (column names) to plot
+    merge: bool, optional
         if True, then generate only one figure with all key-plots as columns
+
+    Returns
+    -------
 
     """
     # you can either provide a DataFrame or an ERT object
@@ -52,7 +76,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         ax = axes[0]
         ax.hist(
             subdata,
-            100,
+            _get_nr_bins(subdata.size),
         )
         ax.set_xlabel(
             units.get_label(key)
@@ -64,7 +88,7 @@ def plot_histograms(ertobj, keys, **kwargs):
             ax = axes[1]
             ax.hist(
                 subdata_log10,
-                100,
+                _get_nr_bins(subdata.size),
             )
             ax.set_xlabel(r'$log_{10}($' + units.get_label(key) + ')')
             ax.set_ylabel('count')
