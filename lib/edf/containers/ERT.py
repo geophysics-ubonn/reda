@@ -2,11 +2,39 @@ import numpy as np
 import pandas as pd
 import edf.main.init as edfi
 
+import edf.importers.syscal.importer as edf_syscal
 
-class ERT(object):
 
-    def __init__(self, dataframe):
-        self.check_dataframe(dataframe)
+class importers(object):
+    """This class provides wrappers for most of the importer functions, and is
+    meant to be inherited by the data containers
+    """
+    def _add_to_container(self, df):
+        if self.dfn is None:
+            self.dfn = pd.concat((self.dfn, df))
+        else:
+            self.dfn = df
+
+    def _describe_data(self, df=None):
+        if df is None:
+            df_to_use = self.dfn
+        else:
+            df_to_use = df
+        print(df_to_use.describe())
+
+    def import_syscal_dat(self, filename, **kwargs):
+        """Syscal import"""
+        df = edf_syscal.add_txt_file(filename, **kwargs)
+        self._add_to_container(df)
+        print('Summary:')
+        self._describe_data(df)
+
+
+class ERT(importers):
+
+    def __init__(self, dataframe=None):
+        if dataframe is not None:
+            self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
         self.dfn = dataframe
         # reciprocal data

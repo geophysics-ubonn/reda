@@ -5,8 +5,6 @@ from io import StringIO
 import numpy as np
 import pandas as pd
 
-from edf.containers.ERT import ERT
-
 
 def add_txt_file(filename, container=None, **kwargs):
     """Import Syscal measurements from a textfile, exported as 'Spreadsheet'.
@@ -98,9 +96,4 @@ def add_txt_file(filename, container=None, **kwargs):
         print('renumbering electrode numbers')
         data[['A', 'B', 'M', 'N']] = rec_max + 1 - data[['A', 'B', 'M', 'N']]
 
-    if container is None:
-        container = ERT(data)
-    else:
-        container.dfn = pd.concat((container.dfn, data))
-
-    return container
+    return data
