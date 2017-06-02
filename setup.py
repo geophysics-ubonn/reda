@@ -14,12 +14,9 @@ if __name__ == '__main__':
     setup(name='edf',
           version=version_long,
           description='???',
-          author='Maximilian Weigand',
-          license='GPL-3',
-          author_email='mweigand@geo.uni-bonn.de',
-          url='http://www.geo.uni-bonn.de/~mweigand',
-          # find_packages() somehow does not work under Win7 when creating a
-          # msi # installer
+          author='Maximilian Weigand and Florian Wagner',
+          license='MIT',
+          url='',
           # packages=find_packages(),
           package_dir={'': 'lib'},
           packages=[
