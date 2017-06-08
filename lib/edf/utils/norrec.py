@@ -31,7 +31,9 @@ def average_repetitions(df, keys_mean):
     print(agg_dict)
 
     # average over duplicate measurements
-    df = df.groupby(['id', 'norrec', 'frequency', 'timestep']).agg(agg_dict)
+    extra_dimensions_raw = ['id', 'norrec', 'frequency', 'timestep']
+    extra_dimensions = [x for x in extra_dimensions_raw if x in df.columns]
+    df = df.groupby(extra_dimensions).agg(agg_dict)
     df.reset_index(inplace=True)
     return df
 
