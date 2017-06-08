@@ -206,6 +206,36 @@ def get_test_df():
     return df
 
 
+def get_test_df_advanced():
+    """Return a test dataframe suitable to test the normal-reciprocal functions
+    """
+    df = pd.DataFrame(
+        [
+            (0, 0.1, 1, 2, 3, 4, 10),
+            # (0, 0.2, 2, 1, 4, 3, 11),
+            (0, 0.3, 3, 4, 1, 2, 12),
+            (0, 0.4, 2, 3, 4, 5, 20),
+            (0, 0.5, 4, 3, 3, 2, 17),
+            (1, 0.1, 1, 2, 3, 4, 10),
+            # (1, 0.2, 2, 1, 4, 3, 11),
+            (1, 0.3, 3, 4, 1, 2, 12),
+            (1, 0.4, 2, 3, 4, 5, 20),
+            (1, 0.5, 4, 3, 3, 2, 17),
+
+        ],
+        columns=[
+            'timestep',
+            'frequency',
+            'A',
+            'B',
+            'M',
+            'N',
+            'R',
+        ]
+    )
+    return df
+
+
 def test_norrec_assignments1():
     import edf.utils.norrec as edfnr
     df = edfnr.get_test_df()
@@ -214,7 +244,30 @@ def test_norrec_assignments1():
     g = df1.groupby('id')
     diffs_R = g['R'].diff()
 
-
     def apply_nr_diff(row):
         return diffs_R.iloc[row['id']]
     df1['norrec_diff'] = df1.apply(apply_nr_diff, axis=1)
+
+
+def test2():
+    import numpy as np
+    import edf.utils.norrec as edfnr
+    df = edfnr.get_test_df_advanced()
+    edfnr.assign_norrec_to_df(df)
+    df1 = edfnr.average_repetitions(df, ['R', ])
+    g = df1.groupby(['timestep', 'id'])
+    for x in g:
+        print(x)
+
+    def subrow(row):
+        if row.size == 2:
+            return row.iloc[1] - row.iloc[0]
+        else:
+            return np.nan
+
+    # diff['Rdiff'] = g['R'].apply(subrow)
+    diff = g['R'].agg(subrow).reset_index()
+    cols = list(diff.columns)
+    cols[-1] = 'Rdiff'
+    diff.columns = cols
+    df1 = df1.merge(diff)
