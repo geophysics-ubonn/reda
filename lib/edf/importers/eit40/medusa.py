@@ -155,6 +155,7 @@ def _extract_md(mat):
                 timestamp,
                 fdata['cni'],
                 fdata['Cl3'],
+                fdata['Zg3'],
             ))
         )
         df.columns = (
@@ -164,7 +165,23 @@ def _extract_md(mat):
             'Cl1',
             'Cl2',
             'Cl3',
+            'Zg1',
+            'Zg2',
+            'Zg3',
         )
+
+        df['datetime'] = pd.to_datetime(df['datetime'])
+        df['A'] = df['A'].astype(int)
+        df['B'] = df['B'].astype(int)
+        df['Cl1'] = df['Cl1'].astype(complex)
+        df['Cl2'] = df['Cl2'].astype(complex)
+        df['Cl3'] = df['Cl3'].astype(complex)
+        df['Zg1'] = df['Zg1'].astype(complex)
+        df['Zg2'] = df['Zg2'].astype(complex)
+        df['Zg3'] = df['Zg3'].astype(complex)
+
+        df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
+
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
         dfl.append(df)
 
@@ -203,7 +220,7 @@ def _extract_emd(mat):
                 fdata['Is3'],
                 fdata['Il3'],
                 fdata['Zg3'],
-            ))
+            )),
         )
         df.columns = (
             'datetime',
@@ -227,6 +244,7 @@ def _extract_emd(mat):
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
 
         # cast to correct type
+        df['datetime'] = pd.to_datetime(df['datetime'])
         df['A'] = df['A'].astype(int)
         df['B'] = df['B'].astype(int)
         df['P'] = df['P'].astype(int)
@@ -238,6 +256,14 @@ def _extract_emd(mat):
         df['Zg1'] = df['Zg1'].astype(complex)
         df['Zg2'] = df['Zg2'].astype(complex)
         df['Zg3'] = df['Zg3'].astype(complex)
+
+        df['Is1'] = df['Is1'].astype(complex)
+        df['Is2'] = df['Is2'].astype(complex)
+        df['Is3'] = df['Is3'].astype(complex)
+
+        df['Il1'] = df['Il1'].astype(complex)
+        df['Il2'] = df['Il2'].astype(complex)
+        df['Il3'] = df['Il3'].astype(complex)
 
         dfl.append(df)
 
