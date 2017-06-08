@@ -1,6 +1,6 @@
 """
 """
-# import pandas as pd
+import pandas as pd
 import numpy as np
 
 
@@ -179,3 +179,42 @@ def assign_norrec_to_df(df):
         ] = [item, 'rec']
 
     return df
+
+
+def get_test_df():
+    """Return a test dataframe suitable to test the normal-reciprocal functions
+    """
+    df = pd.DataFrame(
+        [
+            (1, 2, 3, 4, 10),
+            (2, 1, 3, 4, 9),
+            (1, 2, 4, 3, 8),
+            (2, 1, 4, 3, 11),
+            (3, 4, 1, 2, 12),
+            (2, 3, 4, 5, 20),
+            (4, 3, 3, 2, 17),
+
+        ],
+        columns=[
+            'A',
+            'B',
+            'M',
+            'N',
+            'R',
+        ]
+    )
+    return df
+
+
+def test_norrec_assignments1():
+    import edf.utils.norrec as edfnr
+    df = edfnr.get_test_df()
+    edfnr.assign_norrec_to_df(df)
+    df1 = edfnr.average_repetitions(df, ['R', ])
+    g = df1.groupby('id')
+    diffs_R = g['R'].diff()
+
+
+    def apply_nr_diff(row):
+        return diffs_R.iloc[row['id']]
+    df1['norrec_diff'] = df1.apply(apply_nr_diff, axis=1)
