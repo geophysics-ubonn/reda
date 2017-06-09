@@ -21,6 +21,10 @@ def average_repetitions(df, keys_mean):
         list of keys to average. For all other keys the first entry will be
         used.
     """
+    if 'norrec' not in df.columns:
+        raise Exception(
+            'The "norrec" column is required for this function to work!'
+        )
 
     keys_keep = list(set(df.columns.tolist()) - set(keys_mean))
     agg_dict = {x: first for x in keys_keep}
@@ -28,7 +32,7 @@ def average_repetitions(df, keys_mean):
     for key in ('id', 'timestep', 'frequency', 'norrec'):
         if key in agg_dict:
             del(agg_dict[key])
-    print(agg_dict)
+    # print(agg_dict)
 
     # average over duplicate measurements
     extra_dimensions_raw = ['id', 'norrec', 'frequency', 'timestep']
@@ -212,15 +216,14 @@ def get_test_df_advanced():
     df = pd.DataFrame(
         [
             (0, 0.1, 1, 2, 3, 4, 10),
-            # (0, 0.2, 2, 1, 4, 3, 11),
             (0, 0.3, 3, 4, 1, 2, 12),
             (0, 0.4, 2, 3, 4, 5, 20),
             (0, 0.5, 4, 3, 3, 2, 17),
-            (1, 0.1, 1, 2, 3, 4, 10),
-            # (1, 0.2, 2, 1, 4, 3, 11),
-            (1, 0.3, 3, 4, 1, 2, 12),
-            (1, 0.4, 2, 3, 4, 5, 20),
-            (1, 0.5, 4, 3, 3, 2, 17),
+            (1, 0.1, 1, 2, 3, 4, 20),
+            (1, 0.3, 1, 2, 3, 4, 20),
+            (1, 0.3, 3, 4, 1, 2, 25),
+            (1, 0.4, 2, 3, 4, 5, 30),
+            (1, 0.5, 4, 3, 3, 2, 47),
 
         ],
         columns=[
@@ -233,6 +236,45 @@ def get_test_df_advanced():
             'R',
         ]
     )
+    return df
+
+
+def assign_norrec_diffs(df, diff_list):
+    """Compute and write the difference between normal and reciprocal values
+    for all columns specified in the diff_list parameter.
+
+    Parameters
+    ----------
+    df: pandas.DataFrame
+        Dataframe containing the data
+    diff_list: list
+        list of columns to compute differences for.
+
+    Returns
+    -------
+    df_new
+    """
+    extra_dims = [
+        x for x in ('timestep', 'frequency', 'id') if x in df.columns
+    ]
+    g = df.groupby(extra_dims)
+
+    def subrow(row):
+        if row.size == 2:
+            return row.iloc[1] - row.iloc[0]
+        else:
+            return np.nan
+
+    for diffcol in diff_list:
+        diff = g[diffcol].agg(subrow).reset_index()
+        # rename the column
+        cols = list(diff.columns)
+        cols[-1] = diffcol + 'diff'
+        diff.columns = cols
+
+        df = df.merge(diff)
+
+    df = df.sort_values(extra_dims)
     return df
 
 
@@ -250,14 +292,10 @@ def test_norrec_assignments1():
 
 
 def test2():
-    import numpy as np
-    import edf.utils.norrec as edfnr
-    df = edfnr.get_test_df_advanced()
-    edfnr.assign_norrec_to_df(df)
-    df1 = edfnr.average_repetitions(df, ['R', ])
-    g = df1.groupby(['timestep', 'id'])
-    for x in g:
-        print(x)
+    df = get_test_df_advanced()
+    assign_norrec_to_df(df)
+    df1 = average_repetitions(df, ['R', ])
+    g = df1.groupby(['timestep', 'frequency', 'id'])
 
     def subrow(row):
         if row.size == 2:
@@ -265,9 +303,17 @@ def test2():
         else:
             return np.nan
 
-    # diff['Rdiff'] = g['R'].apply(subrow)
     diff = g['R'].agg(subrow).reset_index()
     cols = list(diff.columns)
     cols[-1] = 'Rdiff'
     diff.columns = cols
     df1 = df1.merge(diff)
+    df1 = df1.sort_values(['timestep', 'frequency'])
+    print(df1)
+    print('@')
+    assert(
+        df1.query(
+            'timestep == 1 and A == 1 and B == 2 and M == 3 and N == 4 ' +
+            'and frequency == 0.3'
+        )['Rdiff'].values == 5.0
+    )
