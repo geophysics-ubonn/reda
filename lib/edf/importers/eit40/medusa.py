@@ -48,6 +48,8 @@ def _add_rhoa(df, spacing):
     """
     df['K'] = edfK.compute_K_analytical(df, spacing=spacing)
     df['rho_a'] = df['R'] * df['K']
+    if 'Zt' in df.columns:
+        df['rho_a_complex'] = df['Zt'] * df['K']
     return df
 
 
