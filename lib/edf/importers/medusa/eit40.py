@@ -121,7 +121,8 @@ def import_medusa_data(mat_filename, configs):
         np.real(dfn['Zt'].values)
     ) * 1e3
 
-    return dfn
+    df_final = dfn.reset_index()
+    return df_final
 
 
 def _read_mat_mnu0(filename):
@@ -225,6 +226,13 @@ def _extract_emd(mat):
     # change sign because we changed A and B
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
 
+    # as long as we do not properly average over swapped current injections,
+    # only keep the first injection
+    indices_duplicates = df.duplicated(
+        ['A', 'B', 'P', 'frequency'], keep='first'
+    )
+    df = df[indices_duplicates]
+
     # average of Z1-Z3
     df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
     # we need to keep the sign of the real part
@@ -242,3 +250,57 @@ def _extract_emd(mat):
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
 
     return df
+
+
+def apply_correction_factors(df, correction_file):
+    """Apply correction factors for a pseudo-2D measurement setup. See Weigand
+    and Kemna, 2017, Biogeosciences, for detailed information.
+    """
+    if isinstance(correction_file, (list, tuple)):
+        corr_data_raw = np.vstack(
+            [np.loadtxt(x) for x in correction_file]
+        )
+    else:
+        corr_data_raw = np.loadtxt(correction_file)
+    print('shape', corr_data_raw.shape)
+    A = (corr_data_raw[:, 0] / 1e4).astype(int)
+    B = (corr_data_raw[:, 0] % 1e4).astype(int)
+    M = (corr_data_raw[:, 1] / 1e4).astype(int)
+    N = (corr_data_raw[:, 1] % 1e4).astype(int)
+
+    corr_data = np.vstack((A, B, M, N, corr_data_raw[:, 2])).T
+    corr_data[:, 0:2] = np.sort(corr_data[:, 0:2], axis=1)
+    corr_data[:, 2:4] = np.sort(corr_data[:, 2:4], axis=1)
+
+    if 'frequency' not in df.columns:
+        raise Exception(
+            'No frequency data found. Are you sure this is a seit data set?'
+        )
+
+    gf = df.groupby(['A', 'B', 'M', 'N'])
+    for key, item in gf.groups.items():
+        # print('key', key)
+        # print(item)
+        item_norm = np.hstack((np.sort(key[0:2]), np.sort(key[2:4])))
+        # print(item_norm)
+        index = np.where(
+            (corr_data[:, 0] == item_norm[0]) &
+            (corr_data[:, 1] == item_norm[1]) &
+            (corr_data[:, 2] == item_norm[2]) &
+            (corr_data[:, 3] == item_norm[3])
+        )[0]
+        # print(index, corr_data[index])
+        if len(index) == 0:
+            print(key)
+            # import IPython
+            # IPython.embed()
+            raise Exception(
+                'No correction factor found for this configuration'
+            )
+
+        factor = corr_data[index, 4]
+        # apply correction factor
+        for col in ('R', 'Zt', 'Vmn', 'rho_a'):
+            if col in df.columns:
+                df.ix[item, col] *= factor
+    return corr_data
