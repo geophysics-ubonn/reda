@@ -6,6 +6,30 @@ import numpy as np
 
 
 def fix_sign_with_K(dataframe):
+    """Swap electrode denotations so that geometrical (K) factors become
+    positive. Also, swap signs of all parameters affected by this process.
+
+    Affected parameters, at the moment, are:
+
+        * K
+        * R
+        * Vmn
+        * Zt
+        * rho_a
+        * rpha
+
+    Parameters
+    ----------
+    dataframe: pandas.DateFrame
+        dataframe holding the data
+
+    Returns
+    -------
+    dataframe: pandas.DateFrame
+        the fixed dataframe
+
+
+    """
     # check for required columns
     if 'K' not in dataframe or 'R' not in dataframe:
         raise Exception('K and R columns required!')
