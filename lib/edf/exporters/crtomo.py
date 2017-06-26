@@ -4,10 +4,13 @@ import os
 import numpy as np
 
 
-def save_block_to_crt(filename, group, store_errors=False):
+def save_block_to_crt(filename, group, norrec='all', store_errors=False):
     """
 
     """
+    if norrec != 'all':
+        group = group.query('norrec == "{0}"'.format(norrec))
+
     # todo: we need to fix the global naming scheme for columns!
     with open(filename, 'wb') as fid:
         fid.write(
@@ -22,8 +25,8 @@ def save_block_to_crt(filename, group, store_errors=False):
             group['R'].values,
         ]
 
-        if 'phase' in group:
-            line.append(group['phase'].values)
+        if 'rpha' in group:
+            line.append(group['rpha'].values)
         else:
             line.append(group['R'].values * 0.0)
 
@@ -45,8 +48,15 @@ def write_files_to_directory(df, directory, **kwargs):
     kwargs = {
         'store_errors': [True|False] store the device generated errors in the
                         output files (as additional columns)
+        'norrec': all|nor|rec which normal-reciprocal data set to use
     }
     """
+    if 'frequency' in df.columns:
+        group_key = 'frequency'
+    elif 'frequency_[Hz]' in df.columns:
+        group_key = 'frequency_[Hz]'
+    else:
+        group_key = None
 
     if not os.path.isdir(directory):
         os.makedirs(directory)
@@ -54,9 +64,8 @@ def write_files_to_directory(df, directory, **kwargs):
     pwd = os.getcwd()
     os.chdir(directory)
 
-    if 'frequency_[Hz]' in df.columns.values:
-        print('found frequency data')
-        g = df.groupby('frequency_[Hz]')
+    if group_key is not None:
+        g = df.groupby(group_key)
         frequencies = g.first().index.values
         np.savetxt('frequencies.dat', frequencies)
 
@@ -66,9 +75,17 @@ def write_files_to_directory(df, directory, **kwargs):
             save_block_to_crt(
                 filename,
                 group,
+                norrec=kwargs.get('norrec', 'all'),
                 store_errors=kwargs.get('store_errors', False),
             )
 
             nr += 1
+    else:
+        save_block_to_crt(
+            'volt.dat',
+            df,
+            norrec=kwargs.get('norrec', 'all'),
+            store_errors=kwargs.get('store_errors', False),
+        )
 
     os.chdir(pwd)
