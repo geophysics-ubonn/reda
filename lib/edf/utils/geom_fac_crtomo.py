@@ -8,6 +8,7 @@ import shutil
 import subprocess
 
 import crtomo.binaries
+import crtomo.cfg as CRcfg
 
 
 def _write_config_file(filename, dataframe):
@@ -73,10 +74,12 @@ def compute_K(
         'rho': 100,  # resistivity to use for homogeneous model, [Ohm m]
         'elem'
         'elec'
+        '2D' : True|False
     }
 
     """
     if settings is None:
+        print('using default settings')
         settings = get_default_settings()
 
     if not os.path.isfile(settings['elem']):
@@ -126,7 +129,21 @@ def compute_K(
         shutil.copy(full_path_elem, 'grid/elem.dat')
         shutil.copy(full_path_elec, 'grid/elec.dat')
 
-        _write_crmod_file('exe/crmod.cfg')
+        print('SETTINGS')
+        print(settings)
+
+        cfg = CRcfg.crmod_config()
+        if settings.get('2D', False):
+            # activate 2D mode
+            print('2D modeling')
+            cfg['2D'] = '0'
+            cfg['fictitious_sink'] = 'T'
+            cfg['sink_node'] = settings.get('sink_node')
+        else:
+            cfg['2D'] = 1
+
+        cfg.write_to_file('exe/crmod.cfg')
+        subprocess.call('cat exe/crmod.cfg', shell=True)
 
         config_orig = _write_config_file('config/config.dat', dataframe)
 
@@ -152,3 +169,4 @@ def compute_K(
         # shutil.copytree('.', pwd + os.sep + 'indir')
 
     os.chdir(pwd)
+    return K
