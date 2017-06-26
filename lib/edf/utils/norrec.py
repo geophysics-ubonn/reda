@@ -10,7 +10,7 @@ def first(x):
 
 
 def average_repetitions(df, keys_mean):
-    """average diplicate measurements. This requires that IDs and norrec labels
+    """average duplicate measurements. This requires that IDs and norrec labels
     were assigned using the *assign_norrec_to_df* function.
 
     Parameters
