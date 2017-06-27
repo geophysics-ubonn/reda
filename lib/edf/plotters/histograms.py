@@ -35,6 +35,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         which keys (column names) to plot
     merge: bool, optional
         if True, then generate only one figure with all key-plots as columns
+        (default True)
 
     Returns
     -------
@@ -47,7 +48,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         df = ertobj.df
 
     figures = {}
-    merge_figs = kwargs.get('merge', False)
+    merge_figs = kwargs.get('merge', True)
     if merge_figs:
         nr_x = 2
         nr_y = len(keys)
@@ -105,3 +106,25 @@ def plot_histograms(ertobj, keys, **kwargs):
     if merge_figs:
         figures['all'] = fig
     return figures
+
+
+def plot_histograms_extra_dims(dataobj, keys, extra_dims, **kwargs):
+    """Produce histograms grouped by the extra dims
+    """
+    if isinstance(dataobj, pd.DataFrame):
+        df = dataobj
+    else:
+        df = dataobj.df
+
+    g = df.groupby(extra_dims)
+
+    results = {}
+    for name in sorted(g.groups.keys()):
+        item = g.get_group(name)
+        # print(type(item))
+        # import IPython
+        # IPython.embed()
+        plot_results = plot_histograms(item, keys, **kwargs)
+        results[name] = plot_results
+
+    return results
