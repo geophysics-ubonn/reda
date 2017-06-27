@@ -35,6 +35,7 @@ class importers(object):
             edf_eit40.apply_correction_factors(df, correction_file)
 
         edfnr.assign_norrec_to_df(df)
+        df = edfnr.assign_norrec_diffs(df, ['R', 'rpha'])
 
         self._add_to_container(df)
         print('Summary:')
