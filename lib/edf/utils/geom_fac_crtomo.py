@@ -1,19 +1,25 @@
 """
 Compute geometric factors (also referred to as K) using CRMod/CRTomo
 """
-import numpy as np
 import os
 import tempfile
 import shutil
 import subprocess
+
+import numpy as np
+import pandas as pd
 
 import crtomo.binaries
 import crtomo.cfg as CRcfg
 
 
 def _write_config_file(filename, dataframe):
-    AB = dataframe['A'].values * 1e4 + dataframe['B'].values
-    MN = dataframe['M'].values * 1e4 + dataframe['N'].values
+    if isinstance(dataframe, pd.DataFrame):
+        AB = dataframe['A'].values * 1e4 + dataframe['B'].values
+        MN = dataframe['M'].values * 1e4 + dataframe['N'].values
+    else:
+        AB = dataframe[:, 0] * 1e4 + dataframe[:, 1]
+        MN = dataframe[:, 2] * 1e4 + dataframe[:, 3]
 
     with open(filename, 'wb') as fid:
         fid.write('{0}\n'.format(AB.shape[0]).encode('utf-8'))
@@ -163,7 +169,8 @@ def compute_K(
         modeled_resistances[~changed_sign, 2] *= -1
 
         K = settings['rho'] / modeled_resistances[:, 2]
-        dataframe['K'] = K
+        if isinstance(dataframe, pd.DataFrame):
+            dataframe['K'] = K
 
         # debug
         # shutil.copytree('.', pwd + os.sep + 'indir')
