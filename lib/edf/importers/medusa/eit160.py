@@ -80,6 +80,9 @@ def import_medusa_data(mat_filename, configs):
             A, B, N
         ))
 
+        if query_M.size == 0 or query_N.size == 0:
+            continue
+
         index += 1
 
         # keep these columns as they are (no subtracting)
