@@ -106,15 +106,18 @@ def import_medusa_data(mat_filename, configs):
         df4['N'] = query_N['P'].values
 
         quadpole_list.append(df4)
-    dfn = pd.concat(quadpole_list)
 
-    Rsign = np.sign(dfn['Zt'].real)
-    dfn['R'] = Rsign * np.abs(dfn['Zt'])
-    dfn['Vmn'] = dfn['R'] * dfn['Iab']
-    dfn['rpha'] = np.arctan2(
-        np.imag(dfn['Zt'].values),
-        np.real(dfn['Zt'].values)
-    ) * 1e3
+    if quadpole_list:
+        dfn = pd.concat(quadpole_list)
+        Rsign = np.sign(dfn['Zt'].real)
+        dfn['R'] = Rsign * np.abs(dfn['Zt'])
+        dfn['Vmn'] = dfn['R'] * dfn['Iab']
+        dfn['rpha'] = np.arctan2(
+            np.imag(dfn['Zt'].values),
+            np.real(dfn['Zt'].values)
+        ) * 1e3
+    else:
+        dfn = pd.DataFrame()
 
     return dfn, df_md
 
