@@ -214,6 +214,10 @@ def _extract_emd(mat):
     for f_id in range(0, emd.size):
         # print('Frequency: ', emd[f_id]['fm'])
         fdata = emd[f_id]
+        # some consistency checks
+        if fdata['nu'].shape[1] == 2:
+            raise Exception('Need MNU0 file, not a quadpole .mat file')
+
         # fdata_md = md[f_id]
 
         timestamp = np.atleast_2d(
