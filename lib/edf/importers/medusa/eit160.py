@@ -164,6 +164,8 @@ def _extract_md(mat):
                 fdata['cni'],
                 fdata['Cl3'],
                 fdata['Zg3'],
+                fdata['As3'][:, 0, :].squeeze(),
+                fdata['As3'][:, 2, :].squeeze(),
             ))
         )
         df.columns = (
@@ -176,6 +178,12 @@ def _extract_md(mat):
             'Zg1',
             'Zg2',
             'Zg3',
+            'ShuntVoltage1-1',
+            'ShuntVoltage1-2',
+            'ShuntVoltage1-3',
+            'ShuntVoltage2-1',
+            'ShuntVoltage2-2',
+            'ShuntVoltage2-3',
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
