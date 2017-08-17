@@ -201,6 +201,15 @@ def _extract_md(mat):
 
 
 def _extract_emd(mat):
+    """Extract the data from the EMD substruct, given a medusa-created MNU0-mat
+    file
+
+    Parameters
+    ----------
+
+    mat: matlab-imported struct
+
+    """
     emd = mat['EMD'].squeeze()
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
@@ -232,6 +241,10 @@ def _extract_emd(mat):
                 fdata['Is3'],
                 fdata['Il3'],
                 fdata['Zg3'],
+                fdata['As3'][:, 0, :].squeeze(),
+                fdata['As3'][:, 2, :].squeeze(),
+                fdata['Yg13'],
+                fdata['Yg23'],
             )),
         )
         df.columns = (
@@ -251,6 +264,18 @@ def _extract_emd(mat):
             'Zg1',
             'Zg2',
             'Zg3',
+            'ShuntVoltage1-1',
+            'ShuntVoltage1-2',
+            'ShuntVoltage1-3',
+            'ShuntVoltage2-1',
+            'ShuntVoltage2-2',
+            'ShuntVoltage2-3',
+            'Yg13-1',
+            'Yg13-2',
+            'Yg13-3',
+            'Yg23-1',
+            'Yg23-2',
+            'Yg23-3',
         )
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
