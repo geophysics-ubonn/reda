@@ -27,6 +27,15 @@ directory of this structure as the working directory: ::
     	├── elec.dat
     	└── elem.dat
 
+The **configs.dat** file contains the four-point spreads to be imported from
+the measurement. This file is a text file with four columns (A, B, M, N),
+separated by spaces or tabs. Each line denotes one measurement: ::
+
+    1   2   4   3
+    2   3   5   6
+    ...
+
+
 Importing EIT40 data
 --------------------
 
@@ -46,7 +55,7 @@ postprocessing program: ::
     seit.import_eit40(
     	'Data/eit_data.mat',
     	'Documentation/configs.dat',
-    	[
+    	correction_file=[
     		'Documentation/corr_fac_avg_nor.dat',
     		'Documentation/corr_fac_avg_rec.dat'
     	],
@@ -54,6 +63,11 @@ postprocessing program: ::
 
 Note that, at the moment, we only import measurement data referenced to the
 common ground (NMU0).
+
+..note ::
+
+    If you don't want to add geometric factors, just leave the parameter
+    *correction_file* empty, i.e., set to None.
 
 Adding geometric factors
 ------------------------
