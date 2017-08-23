@@ -134,7 +134,7 @@ Filtered plots: ::
 Exporting
 ---------
 
-Crtomo
+CRTomo
 ^^^^^^
 
 ::
