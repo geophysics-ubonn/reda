@@ -46,7 +46,7 @@ Multi-frequency data is handled by the sEIT container: ::
     import edf.utils.geometric_factors as edfK
     import edf.utils.fix_sign_with_K as edffixK
     import edf.plotters.histograms as edfH
-    eit = SEIT.sEIT()
+    seit = SEIT.sEIT()
 
 
 The eit-object can now be used to load a .mat file created by the EIT40
