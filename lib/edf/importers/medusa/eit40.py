@@ -88,6 +88,13 @@ def import_medusa_data(mat_filename, configs):
             A, B, N
         ))
 
+        if query_M.size == 0 or query_N.size == 0:
+            print(
+                'Could not find suitable injections',
+                query_M.size, query_N.size
+            )
+            continue
+
         index += 1
 
         # keep these columns as they are (no subtracting)
@@ -138,6 +145,77 @@ def _read_mat_mnu0(filename):
     df_emd = _extract_emd(mat)
 
     return df_emd
+
+
+def _average_swapped_current_injections(df):
+    AB = df[['A', 'B']].values
+
+    # get unique injections
+    abu = np.unique(
+        AB.flatten().view(AB.dtype.descr * 2)
+    ).view(AB.dtype).reshape(-1, 2)
+    # find swapped pairs
+    pairs = []
+    alone = []
+    abul = [x.tolist() for x in abu]
+    for ab in abul:
+        swap = list(reversed(ab))
+        if swap in abul:
+            pair = (ab, swap)
+            pair_r = (swap, ab)
+            if pair not in pairs and pair_r not in pairs:
+                pairs.append(pair)
+        else:
+            alone.append(ab)
+
+    # check that all pairs got assigned
+    if len(pairs) * 2 + len(alone) != len(abul):
+        print('len(pairs) * 2 == {0}'.format(len(pairs) * 2))
+        print(len(abul))
+        raise Exception(
+            'total numbers of unswapped-swapped matching do not match!'
+        )
+    if len(pairs) > 0 and len(alone) > 0:
+        print(
+            'WARNING: Found both swapped configurations and non-swapped ones!'
+        )
+
+    delete_slices = []
+
+    columns = [
+        'frequency', 'A', 'B', 'P', 'Z1', 'Z2', 'Z3', 'Is1', 'Is2',
+        'Is3', 'Il1', 'Il2', 'Il3', 'Zg1', 'Zg2', 'Zg3', 'datetime',
+    ]
+    dtypes = {col: df.dtypes[col] for col in columns}
+
+    X = df[columns].values
+
+    for pair in pairs:
+        index_a = np.where(
+            (X[:, 1] == pair[0][0]) & (X[:, 2] == pair[0][1])
+        )[0]
+        index_b = np.where(
+            (X[:, 1] == pair[1][0]) & (X[:, 2] == pair[1][1])
+        )[0]
+        # normal injection
+        A = X[index_a, :]
+        # swapped injection
+        B = X[index_b, :]
+        # make sure we have the same ordering in P, frequency
+        diff = A[:, [0, 3]] - B[:, [0, 3]]
+        if not np.all(diff) == 0:
+            raise Exception('Wrong ordering')
+        # compute the averages in A
+        X[index_a, 4:16] = (A[:, 4:16] + B[:, 4:16]) / 2.0
+        delete_slices.append(
+            index_b
+        )
+    X_clean = np.delete(X, np.vstack(delete_slices), axis=0)
+    df_clean = pd.DataFrame(X_clean, columns=columns)
+    # for col in columns:
+    #   # df_clean[col] = df_clean[col].astype(dtypes[col])
+    df_clean = df_clean.astype(dtype=dtypes)
+    return df_clean
 
 
 def _extract_emd(mat):
@@ -218,20 +296,13 @@ def _extract_emd(mat):
     df = pd.concat(dfl)
 
     # average swapped current injections here!
-    # TODO
+    df = _average_swapped_current_injections(df)
 
     # sort current injections
     condition = df['A'] > df['B']
     df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
     # change sign because we changed A and B
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
-
-    # as long as we do not properly average over swapped current injections,
-    # only keep the first injection
-    indices_duplicates = df.duplicated(
-        ['A', 'B', 'P', 'frequency'], keep='first'
-    )
-    df = df[indices_duplicates]
 
     # average of Z1-Z3
     df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
