@@ -46,6 +46,7 @@ def compute_norrec_differences(df, keys_diff):
     """
 
     """
+    raise Exception('This function is depreciated!')
     print('computing normal-reciprocal differences')
     # df.sort_index(level='norrec')
 
