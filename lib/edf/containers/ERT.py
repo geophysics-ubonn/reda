@@ -10,7 +10,8 @@ class importers(object):
     meant to be inherited by the data containers
     """
     def _add_to_container(self, df):
-        if self.dfn is None:
+        if self.dfn is not None:
+            print('merging with existing data')
             self.dfn = pd.concat((self.dfn, df))
         else:
             self.dfn = df
