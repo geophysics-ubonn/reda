@@ -206,7 +206,10 @@ def _average_swapped_current_injections(df):
         if not np.all(diff) == 0:
             raise Exception('Wrong ordering')
         # compute the averages in A
-        X[index_a, 4:16] = (A[:, 4:16] + B[:, 4:16]) / 2.0
+        # the minus stems from the swapped current electrodes
+        X[index_a, 4:13] = (A[:, 4:13] - B[:, 4:13]) / 2.0
+        X[index_a, 13:16] = (A[:, 13:16] + B[:, 13:16]) / 2.0
+
         delete_slices.append(
             index_b
         )
