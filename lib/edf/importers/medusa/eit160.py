@@ -196,6 +196,14 @@ def _extract_md(mat):
         df['Zg2'] = df['Zg2'].astype(complex)
         df['Zg3'] = df['Zg3'].astype(complex)
 
+        df['ShuntVoltage1-1'] = df['ShuntVoltage1-1'].astype(complex)
+        df['ShuntVoltage1-2'] = df['ShuntVoltage1-2'].astype(complex)
+        df['ShuntVoltage1-3'] = df['ShuntVoltage1-3'].astype(complex)
+
+        df['ShuntVoltage2-1'] = df['ShuntVoltage2-1'].astype(complex)
+        df['ShuntVoltage2-2'] = df['ShuntVoltage2-2'].astype(complex)
+        df['ShuntVoltage2-3'] = df['ShuntVoltage2-3'].astype(complex)
+
         df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
