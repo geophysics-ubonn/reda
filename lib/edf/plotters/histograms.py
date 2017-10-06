@@ -39,7 +39,8 @@ def plot_histograms(ertobj, keys, **kwargs):
 
     Returns
     -------
-
+    figures: dict
+        dictionary with the generated histogram figures
     """
     # you can either provide a DataFrame or an ERT object
     if isinstance(ertobj, pd.DataFrame):
