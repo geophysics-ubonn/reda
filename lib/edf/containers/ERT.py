@@ -24,7 +24,26 @@ class importers(object):
         print(df_to_use.describe())
 
     def import_syscal_dat(self, filename, **kwargs):
-        """Syscal import"""
+        """Syscal import
+
+        filename: string
+            input filename
+        x0: float
+            position of first electrode. If not given, then use the smallest
+            x-position in the data as the first electrode.
+        spacing: float
+            electrode spacing. This is important if not all electrodes are used
+            in a given measurement setup. If not given, then the smallest
+            distance between electrodes is assumed to be the electrode spacing.
+            Naturally, this requires measurements (or injections) with
+            subsequent electrodes.
+        reciprocals: int, optional
+            if provided, then assume that this is a reciprocal measurements
+            where only the electrode cables were switched. The provided number
+            N is treated as the maximum electrode number, and denotations are
+            renamed according to the equation :math:`X_n = N - (X_a - 1)`
+        """
+
         df = edf_syscal.add_txt_file(filename, **kwargs)
         self._add_to_container(df)
         print('Summary:')
