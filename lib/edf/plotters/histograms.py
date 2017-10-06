@@ -62,7 +62,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         print('generating histogram plot for key: {0}'.format(key))
         subdata_raw = df[key].values
         subdata = subdata_raw[~np.isnan(subdata_raw)]
-        subdata = subdata[np.isfinite(subdata)]
+        subdata = subdata[(np.isfinite(subdata)) & (subdata > 0)]
         subdata_log10_with_nan = np.log10(subdata)
         subdata_log10 = subdata_log10_with_nan[~np.isnan(
             subdata_log10_with_nan)
