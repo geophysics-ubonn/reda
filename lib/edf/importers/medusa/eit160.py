@@ -178,12 +178,12 @@ def _extract_md(mat):
             'Zg1',
             'Zg2',
             'Zg3',
-            'ShuntVoltage1-1',
-            'ShuntVoltage1-2',
-            'ShuntVoltage1-3',
-            'ShuntVoltage2-1',
-            'ShuntVoltage2-2',
-            'ShuntVoltage2-3',
+            'ShuntVoltage1_1',
+            'ShuntVoltage1_2',
+            'ShuntVoltage1_3',
+            'ShuntVoltage2_1',
+            'ShuntVoltage2_2',
+            'ShuntVoltage2_3',
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
@@ -196,13 +196,13 @@ def _extract_md(mat):
         df['Zg2'] = df['Zg2'].astype(complex)
         df['Zg3'] = df['Zg3'].astype(complex)
 
-        df['ShuntVoltage1-1'] = df['ShuntVoltage1-1'].astype(complex)
-        df['ShuntVoltage1-2'] = df['ShuntVoltage1-2'].astype(complex)
-        df['ShuntVoltage1-3'] = df['ShuntVoltage1-3'].astype(complex)
+        df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
+        df['ShuntVoltage1_2'] = df['ShuntVoltage1_2'].astype(complex)
+        df['ShuntVoltage1_3'] = df['ShuntVoltage1_3'].astype(complex)
 
-        df['ShuntVoltage2-1'] = df['ShuntVoltage2-1'].astype(complex)
-        df['ShuntVoltage2-2'] = df['ShuntVoltage2-2'].astype(complex)
-        df['ShuntVoltage2-3'] = df['ShuntVoltage2-3'].astype(complex)
+        df['ShuntVoltage2_1'] = df['ShuntVoltage2_1'].astype(complex)
+        df['ShuntVoltage2_2'] = df['ShuntVoltage2_2'].astype(complex)
+        df['ShuntVoltage2_3'] = df['ShuntVoltage2_3'].astype(complex)
 
         df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
 
@@ -280,18 +280,18 @@ def _extract_emd(mat):
             'Zg1',
             'Zg2',
             'Zg3',
-            'ShuntVoltage1-1',
-            'ShuntVoltage1-2',
-            'ShuntVoltage1-3',
-            'ShuntVoltage2-1',
-            'ShuntVoltage2-2',
-            'ShuntVoltage2-3',
-            'Yg13-1',
-            'Yg13-2',
-            'Yg13-3',
-            'Yg23-1',
-            'Yg23-2',
-            'Yg23-3',
+            'ShuntVoltage1_1',
+            'ShuntVoltage1_2',
+            'ShuntVoltage1_3',
+            'ShuntVoltage2_1',
+            'ShuntVoltage2_2',
+            'ShuntVoltage2_3',
+            'Yg13_1',
+            'Yg13_2',
+            'Yg13_3',
+            'Yg23_1',
+            'Yg23_2',
+            'Yg23_3',
         )
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
