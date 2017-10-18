@@ -64,10 +64,11 @@ def import_medusa_data(mat_filename, configs):
         configs = np.loadtxt(configs).astype(int)
 
     # construct four-point measurements via superposition
+    print('constructing four-point measurements')
     quadpole_list = []
     index = 0
     for Ar, Br, M, N in configs:
-        print('constructing', Ar, Br, M, N)
+        # print('constructing', Ar, Br, M, N)
         # the order of A and B doesn't concern us
         A = np.min((Ar, Br))
         B = np.max((Ar, Br))
