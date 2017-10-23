@@ -167,6 +167,7 @@ def _extract_md(mat):
                 fdata['Zg3'],
                 fdata['As3'][:, 0, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
+                fdata['Is'],
             ))
         )
         df.columns = (
@@ -185,7 +186,16 @@ def _extract_md(mat):
             'ShuntVoltage2_1',
             'ShuntVoltage2_2',
             'ShuntVoltage2_3',
+            'Is1',
+            'Is2',
+            'Is3',
         )
+
+        df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
+
+        # "standard" injected current, in [mA]
+        df['Iab'] = np.abs(df['Is']) * 1e3
+        df['Iab'] = df['Iab'].astype(float)
 
         df['datetime'] = pd.to_datetime(df['datetime'])
         df['A'] = df['A'].astype(int)
