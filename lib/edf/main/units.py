@@ -31,6 +31,11 @@ rel = {
         'label_latex': r'$\log_{10}(|\rho|~[\Omega\mbox{m}])$',
         'unit': r'\Ohm m',
     },
+    'rho': {
+        'full_name': 'rho_[Ohm m]',
+        'label_latex': r'$|\rho|~[\Omega\mbox{m}]$',
+        'unit': r'\Ohm m',
+    },
     'phi': {
         'full_name': 'phi_[mrad]',
         'label_latex': r'$\phi~[\mbox{mrad}]$',
