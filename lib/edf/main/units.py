@@ -48,7 +48,7 @@ rel = {
     },
     'log_imag': {
         'full_name': 'log_imag_[S/m]',
-        'label_latex': r"$\log_{10}(\sigma''~[\mbox{S/m}])$",
+        'label_latex': r"$\log_{10}(|\sigma''|~[\mbox{S/m}])$",
         'unit': r'S/m',
     },
 }
