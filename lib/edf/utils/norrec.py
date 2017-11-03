@@ -183,6 +183,9 @@ def assign_norrec_to_df(df):
             ('id', 'norrec')
         ] = [item, 'rec']
 
+    # cast norrec-column to string
+    df['norrec'] = df['norrec'].astype(str)
+
     return df
 
 
