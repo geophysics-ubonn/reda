@@ -129,11 +129,11 @@ def read_mat_mnu0(filename):
 
     Also export some variables of the md struct into a separate structure
     """
-    print('read_mag_single_file')
+    print('read_mag_single_file: {0}'.format(filename))
 
     mat = sio.loadmat(filename)
 
-    df_emd = _extract_emd(mat)
+    df_emd = _extract_emd(mat, filename=filename)
     df_md = _extract_md(mat)
 
     return df_emd, df_md
@@ -167,7 +167,7 @@ def _extract_md(mat):
                 fdata['Zg3'],
                 fdata['As3'][:, 0, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
-                fdata['Is'],
+                fdata['Is3'],
             ))
         )
         df.columns = (
@@ -191,12 +191,6 @@ def _extract_md(mat):
             'Is3',
         )
 
-        df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
-
-        # "standard" injected current, in [mA]
-        df['Iab'] = np.abs(df['Is']) * 1e3
-        df['Iab'] = df['Iab'].astype(float)
-
         df['datetime'] = pd.to_datetime(df['datetime'])
         df['A'] = df['A'].astype(int)
         df['B'] = df['B'].astype(int)
@@ -215,6 +209,15 @@ def _extract_md(mat):
         df['ShuntVoltage2_2'] = df['ShuntVoltage2_2'].astype(complex)
         df['ShuntVoltage2_3'] = df['ShuntVoltage2_3'].astype(complex)
 
+        df['Is1'] = df['Is1'].astype(complex)
+        df['Is2'] = df['Is2'].astype(complex)
+        df['Is3'] = df['Is3'].astype(complex)
+
+        df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
+        # "standard" injected current, in [mA]
+        df['Iab'] = np.abs(df['Is']) * 1e3
+        df['Iab'] = df['Iab'].astype(float)
+
         df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
@@ -227,7 +230,7 @@ def _extract_md(mat):
     return df
 
 
-def _extract_emd(mat):
+def _extract_emd(mat, filename):
     """Extract the data from the EMD substruct, given a medusa-created MNU0-mat
     file
 
@@ -252,7 +255,11 @@ def _extract_emd(mat):
         fdata = emd[f_id]
         # some consistency checks
         if fdata['nu'].shape[1] == 2:
-            raise Exception('Need MNU0 file, not a quadpole .mat file')
+            raise Exception(
+                'Need MNU0 file, not a quadpole .mat file: {0}'.format(
+                    filename
+                )
+            )
 
         # fdata_md = md[f_id]
 
