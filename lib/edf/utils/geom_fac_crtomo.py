@@ -9,8 +9,10 @@ import subprocess
 import numpy as np
 import pandas as pd
 
-import crtomo.binaries
-import crtomo.cfg as CRcfg
+from edf.utils import opt_import
+
+CRbinaries = opt_import("crtomo.binaries")
+CRcfg = opt_import("crtomo.cfg")
 
 
 def _write_config_file(filename, dataframe):
@@ -154,7 +156,7 @@ def compute_K(
         config_orig = _write_config_file('config/config.dat', dataframe)
 
         os.chdir('exe')
-        binary = crtomo.binaries.get('CRMod')
+        binary = CRbinaries.get('CRMod')
         subprocess.call(binary, shell=True)
         os.chdir('..')
 
