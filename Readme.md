@@ -1,4 +1,4 @@
-# EDF - electrical data format tools
+# REDA --
 
 ## Introduction
 
