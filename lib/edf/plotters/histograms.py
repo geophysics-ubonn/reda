@@ -37,6 +37,12 @@ def plot_histograms(ertobj, keys, **kwargs):
         if True, then generate only one figure with all key-plots as columns
         (default True)
 
+    Examples
+    --------
+    >>> from edf.plotters import plot_histograms
+    >>> from edf.testing import ERTContainer
+    >>> plot_histograms(ERTContainer, ['R'])
+
     Returns
     -------
     figures: dict
