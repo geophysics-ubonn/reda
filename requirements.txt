@@ -2,3 +2,4 @@ numpy
 matplotlib>=2
 pandas
 scipy
+pytest

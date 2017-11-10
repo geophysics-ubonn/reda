@@ -25,7 +25,7 @@ def _get_nr_bins(count):
 
 
 def plot_histograms(ertobj, keys, **kwargs):
-    """Generate histograms for one or more keys in the given container
+    """Generate histograms for one or more keys in the given container.
 
     Parameters
     ----------
@@ -114,8 +114,7 @@ def plot_histograms(ertobj, keys, **kwargs):
 
 
 def plot_histograms_extra_dims(dataobj, keys, extra_dims, **kwargs):
-    """Produce histograms grouped by the extra dims
-    """
+    """Produce histograms grouped by the extra dims."""
     if isinstance(dataobj, pd.DataFrame):
         df = dataobj
     else:
