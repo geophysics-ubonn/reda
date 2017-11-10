@@ -6,10 +6,10 @@ import edf
 
 ERTContainer = edf.ERT()
 df = pd.DataFrame(columns=list("ABMNR"))
-df.A = np.arange(1,23)
+df.A = np.arange(1, 23)
 df.B = df.A + 1
 df.M = df.A + 2
 df.N = df.B + 2
 np.random.seed(0)
 df.R = np.random.randn(len(df.R))
-ERTContainer.dfn = df
+ERTContainer.df = df
