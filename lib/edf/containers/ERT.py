@@ -14,14 +14,13 @@ class LogDataChanges():
     --------
 
     >>> from edf.testing.containers import ERTContainer
-    ... from edf.containers.ERT import LogDataChanges
-    ... with LogDataChanges(ERTContainer):
+    >>> from edf.containers.ERT import LogDataChanges
+    >>> with LogDataChanges(ERTContainer):
     ...     # now change the data
     ...     ERTContainer.df.loc[0, "R"] = 22
     ...     ERTContainer.df.query("R < 10", inplace=True)
-    ... ERTContainer.print_log()
-    ...
-    2017-11-10 16:00:54,052 - root - INFO - Data change from 22 to 21
+    >>> ERTContainer.print_log()
+    2... - root - INFO - Data change from 22 to 21
 
     """
     def __init__(self, container, filter_action='default',
