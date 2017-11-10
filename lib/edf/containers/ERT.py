@@ -213,15 +213,15 @@ class ERT(LoggingClass, importers):
                 ))
 
     def subquery(self, subset, filter, inplace=True):
-        """
+        """Apply a filter to subset of the data
 
         Usage
         =====
 
-        >>> subquery(
-                'timestep == 2',
-                'R > 4',
-            )
+        subquery(
+            'timestep == 2',
+            'R > 4',
+        )
 
         """
         # build the full query
@@ -232,11 +232,25 @@ class ERT(LoggingClass, importers):
             filter,
             ')',
         ))
-        result = self.df.query(full_query, inplace=inplace)
+        with LogDataChanges(self, filter_action='filter', filter_query=filter):
+            result = self.df.query(full_query, inplace=inplace)
         return result
 
     def query(self, query, inplace=True):
         """State what you want to keep
+
+        Parameters
+        ----------
+        query: string
+            The query string to be evaluated. Is directly provided to
+            pandas.DataFrame.query
+        inplace: bool
+            if True, change the container dataframe in place (defaults to True)
+
+        Returns
+        -------
+        result: pandas.DataFrame
+            DataFrame that contains the result of the filter application
 
         """
         with LogDataChanges(self, filter_action='filter', filter_query=query):
