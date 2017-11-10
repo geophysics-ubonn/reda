@@ -15,7 +15,7 @@ if __name__ == '__main__':
           author='Maximilian Weigand and Florian Wagner',
           license='MIT',
           url='',
-          packages=find_packages(),
+          packages=find_packages("lib"),
           package_dir={'': 'lib'},
           # scripts=['src/cc_fit.py', ],
           install_requires=['numpy', 'scipy', 'matplotlib'],
