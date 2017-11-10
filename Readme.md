@@ -1,7 +1,22 @@
-# REDA --
+## REDA - Reproducible Electrical Data Analysis
 
-## Introduction
+REDA is a scientific Python library for reproducible geoelectrical data analysis. It aims to provide a unified interface for common and advanced data processing steps while bridging the gap between a multitude of geoelectric measurement devices and inversion codes used across the geophysical community. It offers functionality to import, analyze, process, visualize, and export geoelectrical data with particular emphasis on time-lapse functionality and reproducibility. The latter is realized in the form of a logging system, which keeps track of each individual processing step applied to particular data set in a human-readable journal. REDA is platform compatible, tested and open-source under the permissive MIT license. Any contributions from the community are highly welcome.
 
+### Installation
+
+```bash
+git clone https://github.com/ubonn-geophysics/reda
+cd reda
+
+# 1) Installing dependencies with pip
+pip install -r requirements.txt
+# 2) Installing dependencies with conda
+conda install --file requirements.txt
+
+python setup.py install
+```
+
+<!--
 Electrical geophysical data is increasingly measured in time-lapse setups,
 which leads, in addition to the common use of multi-channel systems which are
 capable of capturing the full time-series of either time-domain or frequency
@@ -47,49 +62,49 @@ analysis/display procedures, and some specialized ones.
 This software package aims at providing the following programmatical structures
 and procedures:
 
-* provide a pure-Python implementation of data structures that can hold the
-  various datasets described above.
+-   provide a pure-Python implementation of data structures that can hold the
+    various datasets described above.
 
-* provide a tested set of import functions for the common measurement device
-  formats
+-   provide a tested set of import functions for the common measurement device
+    formats
 
-* provide a tested set of output functions which export to common analysis
-  software such as tomographic inversion packages.
+-   provide a tested set of output functions which export to common analysis
+    software such as tomographic inversion packages.
 
-* provide a Python based software framework for the general analysis of
-  electrical raw measurement data. We refer to waw measurement data as the data
-  produced by the geoeletrical measurement devices before any kind of
-  transformation such as tomographic analysis.
+-   provide a Python based software framework for the general analysis of
+    electrical raw measurement data. We refer to waw measurement data as the data
+    produced by the geoeletrical measurement devices before any kind of
+    transformation such as tomographic analysis.
 
-  A history is provided for common data selection (i.e., filtering) procedures,
-  which provides a means to later account for all changes applied to the raw data
-  (i.e., providing reproducibility of the data filtering process).
+    A history is provided for common data selection (i.e., filtering) procedures,
+    which provides a means to later account for all changes applied to the raw data
+    (i.e., providing reproducibility of the data filtering process).
 
-* Provide ground work for text-based output formats that could be used for
-  archiving purposes. However, defining and maintaining suitable file formats
-  for the long-term storage of measurement data is a huge and complex task.
-  Therefore, the data formats presented here are meant only as a starting base
-  for the development and discussion of corresponding file formats.
+-   Provide ground work for text-based output formats that could be used for
+    archiving purposes. However, defining and maintaining suitable file formats
+    for the long-term storage of measurement data is a huge and complex task.
+    Therefore, the data formats presented here are meant only as a starting base
+    for the development and discussion of corresponding file formats.
 
-* Provide open implementations of common features of geoeletrical data
-  processing, such as error model estimations for ERT and sEIT data sets.
+-   Provide open implementations of common features of geoeletrical data
+    processing, such as error model estimations for ERT and sEIT data sets.
 
-* The software is provided under an open-source licence (GPL-3), to facilitate
-  and encourage contributions from the community
+-   The software is provided under an open-source licence (GPL-3), to facilitate
+    and encourage contributions from the community
 
-* Only optional dependencies on external packages
+-   Only optional dependencies on external packages
 
 ## Work environment
 
 Create the work environment using the following commands: ::
 
-	mkvirtualenv --python /usr/bin/python3 edf
-	pip install --upgrade pip
-	workon edf
-	pip install -r requirements.txt
-	pip install ipython
+    mkvirtualenv --python /usr/bin/python3 edf
+    pip install --upgrade pip
+    workon edf
+    pip install -r requirements.txt
+    pip install ipython
 
-	ipython3
+    ipython3
 
 ## Roadmap
 
@@ -98,113 +113,112 @@ please refer to the TODO section down below.
 
 ### 0.1
 
-* proof-of-concept for the ERT container
-* proof-of-concept for the SIP container
-* importers: Syscal, ABEM (text), SIP-04
-* plots: histograms, pseudosections (regular, normal-vs-reciprocal), decay
-  curves
+-   proof-of-concept for the ERT container
+-   proof-of-concept for the SIP container
+-   importers: Syscal, ABEM (text), SIP-04
+-   plots: histograms, pseudosections (regular, normal-vs-reciprocal), decay
+    curves
 
 ### 0.1.1
 
-* proof-of-concept for the EIT container
-* saving of containers to file
+-   proof-of-concept for the EIT container
+-   saving of containers to file
 
 ### 0.1.2
 
-* logfile/log of applied filters/apply filters to other data sets
+-   logfile/log of applied filters/apply filters to other data sets
 
 ## TODO
 
-* add a 'switch_polarity' option to the containers (do we need K factors then?)
+-   add a 'switch_polarity' option to the containers (do we need K factors then?)
 
-* implement saving of containers using pytables and HDF5 files
+-   implement saving of containers using pytables and HDF5 files
 
-* make the built-in plot functions aware of the various additional dimensions
-  such as timestep, frequency, etc. Perhaps via a 'split_into_dimensions' switch?
+-   make the built-in plot functions aware of the various additional dimensions
+    such as timestep, frequency, etc. Perhaps via a 'split_into_dimensions' switch?
 
-* implement the following containers:
+-   implement the following containers:
 
-	* ERT
-	* IPT (IP-tomography)
-	* SIP
-	* EIT
+        	* ERT
+        	* IPT (IP-tomography)
+        	* SIP
+        	* EIT
 
-* containers need a function to strip all non-essential data, i.e., columns
-  specific to a device, but not required by the container base format
+-   containers need a function to strip all non-essential data, i.e., columns
+    specific to a device, but not required by the container base format
 
-* implement saving of containers
+-   implement saving of containers
 
-	* including processing steps
+        	* including processing steps
 
-* each container should contain functionality to transform simplified column
-  names (for easy handling in queries) to extended, self explanatory columns,
-  e.g.:
+-   each container should contain functionality to transform simplified column
+    names (for easy handling in queries) to extended, self explanatory columns,
+    e.g.:
 
-	'R' -> '|Z|_[Ohmm]'
-	'phi' -> 'phase_[mrad]'
+        	'R' -> '|Z|_[Ohmm]'
+        	'phi' -> 'phase_[mrad]'
 
-* implement pseudosections
+-   implement pseudosections
 
-	* automatically determine type of dataset: dipole-dipole, Wenner,
-	  schlumberger, mixed
-	* implement specific pseudosections for DD and Wenner
-	* not sure how to manage mixed data sets. We should, however, provide a
-	  warning in those cases
-	* for all keys required by the containers
+        	* automatically determine type of dataset: dipole-dipole, Wenner,
+        	  schlumberger, mixed
+        	* implement specific pseudosections for DD and Wenner
+        	* not sure how to manage mixed data sets. We should, however, provide a
+        	  warning in those cases
+        	* for all keys required by the containers
 
-* implement the history function for specified functionality
+-   implement the history function for specified functionality
 
-	* how to store the history for later usage? JSON?
+        	* how to store the history for later usage? JSON?
 
-* error models:
+-   error models:
 
-	* magnitude error models: Köstel et al
-	* SIP error models: Flores Orosco et al
+        	* magnitude error models: Köstel et al
+        	* SIP error models: Flores Orosco et al
 
-* SIP plots
+-   SIP plots
 
-	* one spectrum
-	* normal/reciprocal spectrum
+        	* one spectrum
+        	* normal/reciprocal spectrum
 
-* normal-reciprocal plots:
+-   normal-reciprocal plots:
 
-	* K vs R_n
-	* K vs R_r
-	* K vs (R_n - R_r)
-	* K vs rho_n
-	* K vs rho_r
-	* K vs (rho_n - rho_r)
+        	* K vs R_n
+        	* K vs R_r
+        	* K vs (R_n - R_r)
+        	* K vs rho_n
+        	* K vs rho_r
+        	* K vs (rho_n - rho_r)
 
 
+-   export to RES2DINV
 
-* export to RES2DINV
+-   Syscal: import decay curve
 
-* Syscal: import decay curve
+-   ERT container:
 
-* ERT container:
+        	* save to CRTomo
+        	* filter function with queue for later reevaluation
 
-	* save to CRTomo
-	* filter function with queue for later reevaluation
+-   device importers
 
-* device importers
+        	* EIT40 (Medusa)
+        	* SIP-04
+        	* Syscal
+        	* Radic SIP-256c
+        	* ABEM
+        	* Geotom
+        	* DAC1
+        	* Radic Fuchs
+        	* Zonge
 
-	* EIT40 (Medusa)
-	* SIP-04
-	* Syscal
-	* Radic SIP-256c
-	* ABEM
-	* Geotom
-	* DAC1
-	* Radic Fuchs
-	* Zonge
+-   time-domain analysis after Olsson et al. 2016 (mainly ABEM data)
 
-* time-domain analysis after Olsson et al. 2016 (mainly ABEM data)
+-   prepare the iSAT data as an example (Syscal)
 
-* prepare the iSAT data as an example (Syscal)
+-   edf.utils.filter_config_types:
 
-* edf.utils.filter_config_types:
-
-	* create tests for mixed configurations
+        	* create tests for mixed configurations
 
 ## Metadata for Containers
 
@@ -214,57 +228,56 @@ Electrode positions and assignments
 
 ### Base entries
 
-* time
-* A
-* B
-* M
-* N
-* Z
-* Y/Y'/Y'' <- computed from Z
-* K
-* rho/sigma/sigma'/sigma''/phi <- computed from Z,K
-* deltaR
-* deltaPhi
-* U
-* I
+-   time
+-   A
+-   B
+-   M
+-   N
+-   Z
+-   Y/Y'/Y'' &lt;- computed from Z
+-   K
+-   rho/sigma/sigma'/sigma''/phi &lt;- computed from Z,K
+-   deltaR
+-   deltaPhi
+-   U
+-   I
 
 ## Additional dimensions
 
-* frequencies
-* timestep
-* projects
-* experiments
-* profile
-* datetime
-* measurement_nr
-* quadpole_nr
+-   frequencies
+-   timestep
+-   projects
+-   experiments
+-   profile
+-   datetime
+-   measurement_nr
+-   quadpole_nr
 
 ## Open Questions
 
-* how to approach normal/reciprocal data?
+-   how to approach normal/reciprocal data?
 
-	* we have a default DataFrame df, which points to dfn (normal data).
-	  Additionally, dfr can be used to split data into normal (dfn) and (dfr)
-      dataframes.
+        	* we have a default DataFrame df, which points to dfn (normal data).
+        	  Additionally, dfr can be used to split data into normal (dfn) and (dfr)
+        dataframes.
 
-* how to incorporate repeated measurements
-* errors can be computed using error propagation. However, if not all required
-  errors (i.e., only phase, no magnitude errors) are provided, then this must
-  end in all other errors as nan values.
-* dimensionality should not be a problem if we use a pandas.DataFrame with
-  multiindexing
-
+-   how to incorporate repeated measurements
+-   errors can be computed using error propagation. However, if not all required
+    errors (i.e., only phase, no magnitude errors) are provided, then this must
+    end in all other errors as nan values.
+-   dimensionality should not be a problem if we use a pandas.DataFrame with
+    multiindexing
 
 ## Test activities
 
-* select measurement nr 3
-* show quadpole nr 2
-* show all measurements with A=1, B=2, M=4, N=3
-* plot R of measurement nr 3, quadpole 6
-* filter all measurements with R < 0.08 Ohm
+-   select measurement nr 3
+-   show quadpole nr 2
+-   show all measurements with A=1, B=2, M=4, N=3
+-   plot R of measurement nr 3, quadpole 6
+-   filter all measurements with R &lt; 0.08 Ohm
 
 ## Pytables
 
 On Debian systems:
 
-CFLAGS="-I/usr/lib/openmpi/include/" pip install tables
+CFLAGS="-I/usr/lib/openmpi/include/" pip install tables -->
