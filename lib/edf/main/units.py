@@ -26,6 +26,31 @@ rel = {
         'label_latex': r'$U_{mn}~[mV]$',
         'unit': r'mV',
     },
+    'log_rho': {
+        'full_name': 'log_rho_[Ohm m]',
+        'label_latex': r'$\log_{10}(|\rho|~[\Omega\mbox{m}])$',
+        'unit': r'\Ohm m',
+    },
+    'rho': {
+        'full_name': 'rho_[Ohm m]',
+        'label_latex': r'$|\rho|~[\Omega\mbox{m}]$',
+        'unit': r'\Ohm m',
+    },
+    'phi': {
+        'full_name': 'phi_[mrad]',
+        'label_latex': r'$\phi~[\mbox{mrad}]$',
+        'unit': r'mrad',
+    },
+    'log_real': {
+        'full_name': 'log_real_[S/m]',
+        'label_latex': r"$\log_{10}(\sigma'~[\mbox{S/m}])$",
+        'unit': r'S/m',
+    },
+    'log_imag': {
+        'full_name': 'log_imag_[S/m]',
+        'label_latex': r"$\log_{10}(|\sigma''|~[\mbox{S/m}])$",
+        'unit': r'S/m',
+    },
 }
 
 
