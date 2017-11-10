@@ -1,4 +1,3 @@
-import numpy as np
 import pandas as pd
 import edf.main.init as edfi
 
@@ -10,15 +9,15 @@ class importers(object):
     meant to be inherited by the data containers
     """
     def _add_to_container(self, df):
-        if self.dfn is not None:
+        if self.df is not None:
             print('merging with existing data')
-            self.dfn = pd.concat((self.dfn, df))
+            self.df = pd.concat((self.df, df))
         else:
-            self.dfn = df
+            self.df = df
 
     def _describe_data(self, df=None):
         if df is None:
-            df_to_use = self.dfn
+            df_to_use = self.df
         else:
             df_to_use = df
         print(df_to_use.describe())
@@ -53,27 +52,31 @@ class importers(object):
 class ERT(importers):
 
     def __init__(self, dataframe=None):
-        if dataframe is not None:
-            self.check_dataframe(dataframe)
-        # normal data (or full data, if reciprocals are not sorted
-        self.dfn = dataframe
-        # reciprocal data
-        self.dfr = None
-
-        edfi.set_mpl_settings()
-
-    @property
-    def df(self):
-        """Return the normal data set
-
-        convenience link to normal/full data
+        """
+        Parameters
+        ----------
+        dataframe: None|pandas.DataFrame
+            If not None, then the provided DataFrame is assumed to contain
+            valid data previously prepared elsewhere. Required columns are:
+                "A", "B", "M", "N", "R".
 
         """
-        return self.dfn
+        if dataframe is not None:
+            self.check_dataframe(dataframe)
+        # DataFrame that contains all data
+        self.df = dataframe
+
+        edfi.set_mpl_settings()
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
         """
+        # is this a DataFrame
+        if not isinstance(dataframe, pd.DataFrame):
+            raise Exception(
+                'The provided dataframe object is not a pandas.DataFrame'
+            )
+
         required_columns = (
             'A',
             'B',
@@ -93,10 +96,10 @@ class ERT(importers):
         Usage
         =====
 
-        subquery(
-            'timestep == 2',
-            'R > 4',
-        )
+        >>> subquery(
+                'timestep == 2',
+                'R > 4',
+            )
 
         """
         # build the full query
@@ -117,44 +120,3 @@ class ERT(importers):
         # TODO: add to queue
         result = self.df.query(query, inplace=inplace)
         return result
-
-    def sort_normal_reciprocals(self):
-        """Sort data into normal and reciprocal data using the following rules:
-
-        Definition: What is a reciprocal measurement?
-
-        **Usually**: A measurement with swapped current and voltage dipoles
-        (swapping of electrodes within a given dipole is always allowed).
-
-        In order to define 'normal' and 'reciprocal', we define the reciprocal
-        as being the measurement were both electrodes of the voltage dipole are
-        smaller (in terms of electrode numbers) than the current electrodes.
-
-        **What about Schlumberger, Gradient, and mixed configurations?**
-
-        * Schlumber has no reciprocals, normal: 1 4 2 3
-        * Gradients have no reciprocals, , normal: 1 4 2 3
-        * mixed configurations can have reciprocals: normal: 1 3 2 4
-        reciprocal: 2 4 1 3
-
-        ** *Rule 1: the normal configuration contains the smallest electrode
-        number of the four involved electrodes in the current dipole* **
-
-        ** *Rule 2: normal and reciprocals must be added to the DataFrame in
-        correct form, that is without any sign changes (swapped electrodes
-        within one dipole)* **
-        """
-
-        # select normal configurations
-        self.dfn = self.df[
-            self.df[['A', 'B']].min(axis=1) < self.df[['M', 'N']].min(axis=1)
-        ]
-
-        self.dfr = pd.DataFrame(columns=self.df.columns)
-
-        for nr, row in self.dfn.iterrows():
-            indices = np.where(
-                (self.df['A'] == row['M']) & (self.df['B'] == row['N'])
-            )[0]
-            if indices.size > 0:
-                self.dfr.loc[nr] = row
