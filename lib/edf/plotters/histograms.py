@@ -1,5 +1,5 @@
-"""Histogram functions for raw data
-"""
+"""Histogram functions for raw data."""
+
 import pandas as pd
 import pylab as plt
 import matplotlib as mpl
@@ -41,7 +41,9 @@ def plot_histograms(ertobj, keys, **kwargs):
     --------
     >>> from edf.plotters import plot_histograms
     >>> from edf.testing import ERTContainer
-    >>> plot_histograms(ERTContainer, ['R'])
+    >>> figs_dict = plot_histograms(ERTContainer, "R", merge=False)
+    Generating histogram plot for key: R
+    >>> figs_dict["R"].show()
 
     Returns
     -------
@@ -68,7 +70,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         axes_all = np.atleast_2d(axes_all)
 
     for row_nr, key in enumerate(keys):
-        print('generating histogram plot for key: {0}'.format(key))
+        print('Generating histogram plot for key: {0}'.format(key))
         subdata_raw = df[key].values
         subdata = subdata_raw[~np.isnan(subdata_raw)]
         subdata = subdata[np.isfinite(subdata)]

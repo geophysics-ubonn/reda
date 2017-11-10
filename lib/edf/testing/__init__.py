@@ -17,15 +17,6 @@ import matplotlib.pyplot as plt
 def test(target=None, show=False, onlydoctests=False, abort=False, verbose=True):
     """Run docstring examples and additional tests.
 
-    Examples
-    --------
-    >>> import edf
-    >>> # You can test everything with edf.test() or test an individual function:
-    >>> edf.test("edf.utils.opt_import", verbose=False)
-    >>> # The target argument can also be the function directly
-    >>> from edf.utils import opt_import
-    >>> edf.test(opt_import, verbose=False)
-
     Parameters
     ----------
     target : function or string, optional
