@@ -11,13 +11,9 @@ Examples
 
 """
 import sys
-already_loaded = 'matplotlib' in sys.modules
 
 # just make sure we can access matplotlib as mpl
 import matplotlib as mpl
-
-if(not already_loaded):
-    mpl.use('Agg')
 
 # general settings
 mpl.rcParams["lines.linewidth"] = 2.0
@@ -46,13 +42,9 @@ mpl.rc(
 )
 
 
-mpl.use('Agg')
-
 import matplotlib.pyplot as plt
-plt
 
 import mpl_toolkits.axes_grid1 as axes_grid1
-axes_grid1
 
 
 def mpl_get_cb_bound_next_to_plot(ax):
