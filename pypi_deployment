@@ -1,0 +1,33 @@
+
+* create login credentials for pypi.python.org and pypitest.python.org
+* install twine
+* create ~/.pypirc ::
+
+	[distutils]
+	index-servers=
+		pypi
+		pypitest
+
+	[pypitest]
+	repository=https://testpypi.python.org/pypi
+	username=[USER]
+	password=[PASSWORD]
+
+	[pypi]
+	repository=https://pypi.python.org/pypi
+	username=[USER]
+	password=[PASSWORD]
+
+* python setup.py register -r https://testpypi.python.org/pypi
+* python setup.py sdist
+* sign with pgp:
+gpg --detach-sign -a dist/ccd_
+* twine upload -r pypi dist/ccd_
+
+Links
+=====
+
+https://pythonhosted.org/an_example_pypi_project/setuptools.html
+http://peterdowns.com/posts/first-time-with-pypi.html
+https://github.com/pypa/twine
+http://setuptools.readthedocs.io/en/latest/setuptools.html#declaring-dependencies
