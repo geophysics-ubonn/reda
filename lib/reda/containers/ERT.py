@@ -54,7 +54,7 @@ class LogDataChanges():
         )
 
 
-class importers(object):
+class Importers(object):
     """This class provides wrappers for most of the importer functions, and is
     meant to be inherited by the data containers
     """
@@ -169,7 +169,7 @@ class LoggingClass(object):
         print('')
 
 
-class ERT(LoggingClass, importers):
+class ERT(LoggingClass, Importers):
 
     def __init__(self, dataframe=None):
         """
