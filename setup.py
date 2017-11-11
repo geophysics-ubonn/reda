@@ -9,14 +9,15 @@ version_short = '0.1'
 version_long = '0.1.0'
 
 if __name__ == '__main__':
-    setup(name='edf',
-          version=version_long,
-          description='???',
-          author='Maximilian Weigand and Florian Wagner',
-          license='MIT',
-          url='',
-          packages=find_packages("lib"),
-          package_dir={'': 'lib'},
-          # scripts=['src/cc_fit.py', ],
-          install_requires=['numpy', 'scipy', 'matplotlib'],
-          )
+    setup(
+        name='REDA',
+        version=version_long,
+        description='Reproducible Electrical Data Analysis',
+        long_description=open('Readme.md', 'r').read(),
+        author='Maximilian Weigand and Florian M. Wagner',
+        license='MIT',
+        url='https://github.com/geophysics-ubonn/REDA',
+        packages=find_packages("lib"),
+        package_dir={'': 'lib'},
+        install_requires=['numpy', 'scipy', 'matplotlib'],
+    )
