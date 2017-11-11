@@ -1,8 +1,24 @@
 ## REDA - Reproducible Electrical Data Analysis
 
-REDA is a scientific Python library for reproducible geoelectrical data analysis. It aims to provide a unified interface for common and advanced data processing steps while bridging the gap between a multitude of geoelectric measurement devices and inversion codes used across the geophysical community. It offers functionality to import, analyze, process, visualize, and export geoelectrical data with particular emphasis on time-lapse functionality and reproducibility. The latter is realized in the form of a logging system, which keeps track of each individual processing step applied to particular data set in a human-readable journal. REDA is platform compatible, tested and open-source under the permissive MIT license. Any contributions from the community are highly welcome.
+REDA is a scientific Python library for reproducible geoelectrical data
+analysis. It aims to provide a unified interface for common and advanced data
+processing steps while bridging the gap between a multitude of geoelectric
+measurement devices and inversion codes used across the geophysical community.
+It offers functionality to import, analyze, process, visualize, and export
+geoelectrical data with particular emphasis on time-lapse functionality and
+reproducibility. The latter is realized in the form of a logging system, which
+keeps track of each individual processing step applied to particular data set
+in a human-readable journal. REDA is platform compatible, tested and
+open-source under the permissive MIT license. Any contributions from the
+community are highly welcome.
 
 ### Installation
+
+Installation from PYPI: ::
+
+	pip install REDA
+
+Installation from git:
 
 ```bash
 git clone https://github.com/ubonn-geophysics/reda
@@ -15,6 +31,11 @@ conda install --file requirements.txt
 
 python setup.py install
 ```
+### Documentation
+
+An online version of the docs can be found here:
+https://geophysics-ubonn.github.io/REDA/documentation/
+
 
 <!--
 Electrical geophysical data is increasingly measured in time-lapse setups,
