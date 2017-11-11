@@ -1,10 +1,10 @@
-.. P4 documentation master file, created by
+.. REDA documentation master file, created by
    sphinx-quickstart on Mon Jun 26 10:10:25 2017.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to P4's documentation!
-==============================
+Welcome to the REDA documentation!
+==================================
 
 Contents:
 
