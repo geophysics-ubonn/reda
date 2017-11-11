@@ -1,9 +1,10 @@
 import datetime
+import logging
 
 import pandas as pd
 import reda.main.init as redai
 
-import reda.importers.syscal.importer as reda_syscal
+import reda.importers.iris_syscal_pro as reda_syscal
 
 
 class LogDataChanges():
@@ -54,6 +55,15 @@ class LogDataChanges():
         )
 
 
+def append_doc_of(fun):
+
+    def decorator(f):
+        f.__doc__ += fun.__doc__
+        return f
+
+    return decorator
+
+
 class Importers(object):
     """This class provides wrappers for most of the importer functions, and is
     meant to be inherited by the data containers
@@ -72,35 +82,15 @@ class Importers(object):
             df_to_use = df
         print(df_to_use.describe())
 
+    @append_doc_of(reda_syscal.add_txt_file)
     def import_syscal_dat(self, filename, **kwargs):
-        """Syscal import
-
-        filename: string
-            input filename
-        x0: float
-            position of first electrode. If not given, then use the smallest
-            x-position in the data as the first electrode.
-        spacing: float
-            electrode spacing. This is important if not all electrodes are used
-            in a given measurement setup. If not given, then the smallest
-            distance between electrodes is assumed to be the electrode spacing.
-            Naturally, this requires measurements (or injections) with
-            subsequent electrodes.
-        reciprocals: int, optional
-            if provided, then assume that this is a reciprocal measurements
-            where only the electrode cables were switched. The provided number
-            N is treated as the maximum electrode number, and denotations are
-            renamed according to the equation :math:`X_n = N - (X_a - 1)`
-        """
-        self.logger.info('Syscal Pro text import')
+        """Syscal import"""
+        self.logger.info('IRIS Syscal Pro text import')
         with LogDataChanges(self, filter_action='import'):
             df = reda_syscal.add_txt_file(filename, **kwargs)
             self._add_to_container(df)
         print('Summary:')
         self._describe_data(df)
-
-
-import logging
 
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
