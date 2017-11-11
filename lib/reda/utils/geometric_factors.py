@@ -4,7 +4,7 @@ rcParams variable.
 """
 import pandas as pd
 import numpy as np
-import edf
+import reda
 
 
 def apply_K(df, K):
@@ -49,9 +49,9 @@ def compute_K_numerical(dataframe, settings=None):
     }
 
     """
-    inversion_code = edf.rcParams.get('geom_factor.inversion_code', 'crtomo')
+    inversion_code = reda.rcParams.get('geom_factor.inversion_code', 'crtomo')
     if inversion_code == 'crtomo':
-        import edf.utils.geom_fac_crtomo as geom_fac_crtomo
+        import reda.utils.geom_fac_crtomo as geom_fac_crtomo
         K = geom_fac_crtomo.compute_K(dataframe, settings)
     else:
         raise Exception(

@@ -1,2 +1,2 @@
 test:
-	python -c "import edf; edf.test(show=True)"
+	python -c "import reda; reda.test(show=True)"

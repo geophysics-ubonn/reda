@@ -1,11 +1,11 @@
 """spectral electrical impedance tomography (sEIT) container
 """
 import pandas as pd
-import edf.main.init as edfi
+import reda.main.init as redai
 
-import edf.importers.medusa.eit40 as edf_eit40
-import edf.importers.medusa.eit160 as edf_eit160
-import edf.utils.norrec as edfnr
+import reda.importers.medusa.eit40 as reda_eit40
+import reda.importers.medusa.eit160 as reda_eit160
+import reda.utils.norrec as redanr
 
 
 class importers(object):
@@ -27,15 +27,15 @@ class importers(object):
 
     def import_eit40(self, filename, configfile, correction_file=None):
         """EIT40 data import"""
-        df = edf_eit40.import_medusa_data(
+        df = reda_eit40.import_medusa_data(
             filename,
             configfile,
         )
         if correction_file is not None:
-            edf_eit40.apply_correction_factors(df, correction_file)
+            reda_eit40.apply_correction_factors(df, correction_file)
 
-        edfnr.assign_norrec_to_df(df)
-        df = edfnr.assign_norrec_diffs(df, ['R', 'rpha'])
+        redanr.assign_norrec_to_df(df)
+        df = redanr.assign_norrec_diffs(df, ['R', 'rpha'])
 
         self._add_to_container(df)
         print('Summary:')
@@ -43,7 +43,7 @@ class importers(object):
 
     def import_eit160(self, filename, configfile):
         """EIT160 data import"""
-        df_emd, df_md = edf_eit160.import_medusa_data(
+        df_emd, df_md = reda_eit160.import_medusa_data(
             filename,
             configfile,
         )
@@ -61,7 +61,7 @@ class sEIT(importers):
         # normal data (or full data, if reciprocals are not sorted
         self.df = dataframe
 
-        edfi.set_mpl_settings()
+        redai.set_mpl_settings()
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns

@@ -20,10 +20,10 @@ def opt_import(module, requiredFor="use the full functionality"):
 
     Examples
     --------
-    >>> from edf.utils import opt_import
-    >>> edf = opt_import("edf")
-    >>> edf.__name__
-    'edf'
+    >>> from reda.utils import opt_import
+    >>> reda = opt_import("reda")
+    >>> reda.__name__
+    'reda'
     >>> opt_import("doesNotExist", requiredFor="do something special")
     No module named 'doesNotExist'.
     You need to install this optional dependency to do something special.

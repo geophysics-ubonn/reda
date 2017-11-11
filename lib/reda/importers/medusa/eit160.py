@@ -40,13 +40,13 @@ import scipy.io as sio
 import pandas as pd
 import datetime
 
-import edf.utils.geometric_factors as edfK
+import reda.utils.geometric_factors as redaK
 
 
 def _add_rhoa(df, spacing):
     """a simple wrapper to compute K factors and add rhoa
     """
-    df['K'] = edfK.compute_K_analytical(df, spacing=spacing)
+    df['K'] = redaK.compute_K_analytical(df, spacing=spacing)
     df['rho_a'] = df['R'] * df['K']
     if 'Zt' in df.columns:
         df['rho_a_complex'] = df['Zt'] * df['K']

@@ -3,7 +3,7 @@ Importer for RES2DINV files
 """
 from io import StringIO
 import pandas as pd
-from edf.containers.ERT import ERT
+from reda.containers.ERT import ERT
 
 
 def _read_file(filename):

@@ -2,7 +2,7 @@
 """
 Testing utilities
 ==================
-In Python you can call edf.test(show=True) to run and show  all docstring
+In Python you can call reda.test(show=True) to run and show  all docstring
 examples.
 """
 

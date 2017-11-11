@@ -2,9 +2,9 @@
 
 import pandas as pd
 import numpy as np
-import edf
+import reda
 
-ERTContainer = edf.ERT()
+ERTContainer = reda.ERT()
 df = pd.DataFrame(columns=list("ABMNR"))
 df.A = np.arange(1, 23)
 df.B = df.A + 1

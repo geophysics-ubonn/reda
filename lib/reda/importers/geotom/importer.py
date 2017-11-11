@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from edf.containers.ERT import ERT
+from reda.containers.ERT import ERT
 from io import StringIO
 
 

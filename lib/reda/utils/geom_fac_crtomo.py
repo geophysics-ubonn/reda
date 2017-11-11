@@ -9,7 +9,7 @@ import subprocess
 import numpy as np
 import pandas as pd
 
-from edf.utils import opt_import
+from reda.utils import opt_import
 
 CRbinaries = opt_import("crtomo.binaries")
 CRcfg = opt_import("crtomo.cfg")

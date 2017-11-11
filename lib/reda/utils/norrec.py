@@ -283,10 +283,10 @@ def assign_norrec_diffs(df, diff_list):
 
 
 def test_norrec_assignments1():
-    import edf.utils.norrec as edfnr
-    df = edfnr.get_test_df()
-    edfnr.assign_norrec_to_df(df)
-    df1 = edfnr.average_repetitions(df, ['R', ])
+    import reda.utils.norrec as redanr
+    df = redanr.get_test_df()
+    redanr.assign_norrec_to_df(df)
+    df1 = redanr.average_repetitions(df, ['R', ])
     g = df1.groupby('id')
     diffs_R = g['R'].diff()
 

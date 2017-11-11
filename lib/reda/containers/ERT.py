@@ -1,9 +1,9 @@
 import datetime
 
 import pandas as pd
-import edf.main.init as edfi
+import reda.main.init as redai
 
-import edf.importers.syscal.importer as edf_syscal
+import reda.importers.syscal.importer as reda_syscal
 
 
 class LogDataChanges():
@@ -13,8 +13,8 @@ class LogDataChanges():
     Examples
     --------
 
-    >>> from edf.testing.containers import ERTContainer
-    >>> from edf.containers.ERT import LogDataChanges
+    >>> from reda.testing.containers import ERTContainer
+    >>> from reda.containers.ERT import LogDataChanges
     >>> with LogDataChanges(ERTContainer):
     ...     # now change the data
     ...     ERTContainer.df.loc[0, "R"] = 22
@@ -94,7 +94,7 @@ class importers(object):
         """
         self.logger.info('Syscal Pro text import')
         with LogDataChanges(self, filter_action='import'):
-            df = edf_syscal.add_txt_file(filename, **kwargs)
+            df = reda_syscal.add_txt_file(filename, **kwargs)
             self._add_to_container(df)
         print('Summary:')
         self._describe_data(df)
@@ -187,7 +187,7 @@ class ERT(LoggingClass, importers):
         # DataFrame that contains all data
         self.df = dataframe
 
-        edfi.set_mpl_settings()
+        redai.set_mpl_settings()
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns

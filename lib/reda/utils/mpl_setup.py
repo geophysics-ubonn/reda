@@ -7,7 +7,7 @@ To use this module, import * from it:
 Examples
 --------
 
-    >>> from edf.utils.mpl_setup import *
+    >>> from reda.utils.mpl_setup import *
 
 """
 import sys

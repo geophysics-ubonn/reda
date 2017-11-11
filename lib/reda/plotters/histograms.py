@@ -6,7 +6,7 @@ import matplotlib as mpl
 mpl.rcParams['font.size'] = 8.0
 import numpy as np
 
-import edf.main.units as units
+import reda.main.units as units
 
 
 def _get_nr_bins(count):
@@ -39,8 +39,8 @@ def plot_histograms(ertobj, keys, **kwargs):
 
     Examples
     --------
-    >>> from edf.plotters import plot_histograms
-    >>> from edf.testing import ERTContainer
+    >>> from reda.plotters import plot_histograms
+    >>> from reda.testing import ERTContainer
     >>> figs_dict = plot_histograms(ERTContainer, "R", merge=False)
     Generating histogram plot for key: R
     >>> figs_dict["R"].show()
