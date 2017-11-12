@@ -42,7 +42,7 @@ Importing data
 
 ::
 
-    import edf.containers.ERT as edfERT
+    import reda.containers.ERT as edfERT
 
     ert = edfERT.ERT()
     ert.import_syscal_dat('data/ML_20140124_03n.txt')

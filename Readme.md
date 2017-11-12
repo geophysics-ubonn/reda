@@ -237,7 +237,7 @@ please refer to the TODO section down below.
 
 -   prepare the iSAT data as an example (Syscal)
 
--   edf.utils.filter_config_types:
+-   reda.utils.filter_config_types:
 
         	* create tests for mixed configurations
 
