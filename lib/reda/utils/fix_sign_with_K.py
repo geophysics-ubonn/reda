@@ -39,8 +39,15 @@ def fix_sign_with_K(dataframe):
     dataframe.ix[indices_negative, ['K', 'R']] *= -1
 
     # switch potential electrodes
-    dataframe.ix[indices_negative, ['M', 'N']] = dataframe.ix[
-        indices_negative, ['N', 'M']
+    indices_switched_ab = indices_negative & (dataframe['A'] > dataframe['B'])
+    indices_switched_mn = indices_negative & (dataframe['A'] < dataframe['B'])
+
+    dataframe.ix[indices_switched_ab, ['A', 'B']] = dataframe.ix[
+        indices_switched_ab, ['B', 'A']
+    ].values
+
+    dataframe.ix[indices_switched_mn, ['M', 'N']] = dataframe.ix[
+        indices_switched_mn, ['N', 'M']
     ].values
 
     # switch sign of voltages
