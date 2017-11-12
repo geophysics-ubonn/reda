@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Thils file set ups matplotlib plot functions for the whole package.
+"""This file set ups matplotlib plot functions for the whole package.
 
 Import all necessary Matplotlib modules and set default options
 To use this module, import * from it:
@@ -7,44 +7,37 @@ To use this module, import * from it:
 Examples
 --------
 
-    >>> from reda.utils.mpl_setup import *
+>>> import reda.utils.mpl
+>>> plt, mpl = reda.utils.mpl.setup()
 
 """
-import sys
-
-# just make sure we can access matplotlib as mpl
-import matplotlib as mpl
-
-# general settings
-mpl.rcParams["lines.linewidth"] = 2.0
-mpl.rcParams["lines.markeredgewidth"] = 3.0
-mpl.rcParams["lines.markersize"] = 3.0
-mpl.rcParams["font.size"] = 12
-# mpl.rcParams['font.sans-serif'] = 'Droid Sans'
-
-mpl.rcParams['font.family'] = 'Open Sans'
-# mpl.rcParams['font.weight'] = 400
-mpl.rcParams['mathtext.default'] = 'regular'
-
-# mpl.rcParams['font.family'] = 'Droid Sans'
-
-mpl.rcParams['text.usetex'] = True
-mpl.rcParams['text.latex.unicode'] = True
-
-mpl.rc(
-    'text.latex',
-    preamble=''.join((
-        r'\usepackage{droidsans} \usepackage[T1]{fontenc} ',
-        r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
-        r'\renewcommand\familydefault{\sfdefault} ',
-        r'\usepackage{mathastext} '
-    ))
-)
 
 
-import matplotlib.pyplot as plt
+def setup():
+    # just make sure we can access matplotlib as mpl
+    import matplotlib as mpl
 
-import mpl_toolkits.axes_grid1 as axes_grid1
+    # general settings
+    mpl.rcParams["lines.linewidth"] = 2.0
+    mpl.rcParams["lines.markeredgewidth"] = 3.0
+    mpl.rcParams["lines.markersize"] = 3.0
+    mpl.rcParams["font.size"] = 12
+    mpl.rcParams['mathtext.default'] = 'regular'
+    mpl.rcParams['text.usetex'] = True
+    mpl.rcParams['text.latex.unicode'] = True
+
+    # mpl.rc(
+    #     'text.latex',
+    #     preamble=''.join((
+    #         r'\usepackage{droidsans} \usepackage[T1]{fontenc} ',
+    #         r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
+    #         r'\renewcommand\familydefault{\sfdefault} ',
+    #         r'\usepackage{mathastext} '
+    #     ))
+    # )
+
+    import matplotlib.pyplot as plt
+    return plt, mpl
 
 
 def mpl_get_cb_bound_next_to_plot(ax):
