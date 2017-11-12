@@ -12,6 +12,8 @@ Examples
 
 """
 
+from reda.utils import which
+latex = which("latex")
 
 def setup():
     # just make sure we can access matplotlib as mpl
@@ -23,18 +25,18 @@ def setup():
     mpl.rcParams["lines.markersize"] = 3.0
     mpl.rcParams["font.size"] = 12
     mpl.rcParams['mathtext.default'] = 'regular'
-    mpl.rcParams['text.usetex'] = True
-    mpl.rcParams['text.latex.unicode'] = True
-
-    # mpl.rc(
-    #     'text.latex',
-    #     preamble=''.join((
-    #         r'\usepackage{droidsans} \usepackage[T1]{fontenc} ',
-    #         r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
-    #         r'\renewcommand\familydefault{\sfdefault} ',
-    #         r'\usepackage{mathastext} '
-    #     ))
-    # )
+    if latex:
+        mpl.rcParams['text.usetex'] = True
+        mpl.rcParams['text.latex.unicode'] = True
+        # mpl.rc(
+        #     'text.latex',
+        #     preamble=''.join((
+        #         r'\usepackage{droidsans} \usepackage[T1]{fontenc} ',
+        #         r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
+        #         r'\renewcommand\familydefault{\sfdefault} ',
+        #         r'\usepackage{mathastext} '
+        #     ))
+        # )
 
     import matplotlib.pyplot as plt
     return plt, mpl
