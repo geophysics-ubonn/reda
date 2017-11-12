@@ -1,5 +1,7 @@
 ## REDA - Reproducible Electrical Data Analysis
 
+[![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 REDA is a scientific Python library for reproducible geoelectrical data
 analysis. It aims to provide a unified interface for common and advanced data
 processing steps while bridging the gap between a multitude of geoelectric
