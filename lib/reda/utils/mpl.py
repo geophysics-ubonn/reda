@@ -26,8 +26,10 @@ def setup():
     mpl.rcParams["font.size"] = 12
     mpl.rcParams['mathtext.default'] = 'regular'
     if latex:
+        print("Found LaTeX at %s, switching matplotlib settings to use it."  % latex)
         mpl.rcParams['text.usetex'] = True
         mpl.rcParams['text.latex.unicode'] = True
+
         # mpl.rc(
         #     'text.latex',
         #     preamble=''.join((
@@ -37,6 +39,9 @@ def setup():
         #         r'\usepackage{mathastext} '
         #     ))
         # )
+    else:
+        mpl.rcParams['text.usetex'] = False
+        mpl.rcParams['text.latex.unicode'] = False
 
     import matplotlib.pyplot as plt
     return plt, mpl
