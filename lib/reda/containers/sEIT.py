@@ -3,8 +3,8 @@
 import pandas as pd
 import reda.main.init as redai
 
-import reda.importers.medusa.eit40 as reda_eit40
-import reda.importers.medusa.eit160 as reda_eit160
+import reda.importers.eit40 as reda_eit40
+import reda.importers.eit160 as reda_eit160
 import reda.utils.norrec as redanr
 
 
