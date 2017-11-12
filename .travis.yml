@@ -5,8 +5,8 @@ python:
   - "3.5"
   - "3.6"
 install:
-  - pip install --user -q -r requirements.txt -r doc/requirements_doc.txt
-  - pip install --user -q .
+  - pip install -q -r requirements.txt -r doc/requirements_doc.txt
+  - pip install .
 
 script:
   - make test
