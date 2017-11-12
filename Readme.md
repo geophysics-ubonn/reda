@@ -16,12 +16,12 @@ community are highly welcome.
 
 Installation from PYPI: ::
 
-	pip install REDA
+	pip install reda
 
 Installation from git:
 
 ```bash
-git clone https://github.com/ubonn-geophysics/reda
+git clone https://github.com/geophysics-ubonn/reda
 cd reda
 
 # 1) Installing dependencies with pip
@@ -34,7 +34,7 @@ python setup.py install
 ### Documentation
 
 An online version of the docs can be found here:
-https://geophysics-ubonn.github.io/REDA/documentation/
+https://geophysics-ubonn.github.io/reda/documentation/
 
 
 <!--
