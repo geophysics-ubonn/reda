@@ -1,7 +1,7 @@
 test:
-	python -c "import reda; reda.test()"
+	python -c "import reda; reda.test(abort=True)"
 testshow:
-	python -c "import reda; reda.test(show=True)"
+	python -c "import reda; reda.test(abort=True, show=True)"
 
 .PHONY: doc
 doc:
