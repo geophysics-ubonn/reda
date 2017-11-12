@@ -5,7 +5,8 @@ import numpy as np
 import scipy.interpolate as si
 import scipy.spatial.qhull as siq
 
-from reda.utils.mpl_setup import *
+import reda.utils.mpl
+plt, mpl = reda.utils.mpl.setup()
 import reda.utils.filter_config_types as fT
 
 
