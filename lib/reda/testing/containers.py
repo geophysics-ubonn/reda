@@ -5,7 +5,6 @@ import numpy as np
 import reda
 
 # construct a simple container using random numbers
-ERTContainer = reda.ERT()
 df = pd.DataFrame(columns=list("ABMNR"))
 df.A = np.arange(1, 23)
 df.B = df.A + 1
@@ -13,7 +12,8 @@ df.M = df.A + 2
 df.N = df.B + 2
 np.random.seed(0)
 df.R = np.random.randn(len(df.R))
-ERTContainer.df = df
+
+ERTContainer = reda.ERT(data=df)
 
 # construct an ERT container with normal and reciprocal data
 df = pd.DataFrame(
@@ -54,4 +54,4 @@ df = pd.DataFrame(
 # now add gaussian noise to the reciprocals
 df.loc[10:20, 'R'] += np.random.randn(10)
 
-ERTContainer_nr = reda.ERT(df)
+ERTContainer_nr = reda.ERT(data=df)
