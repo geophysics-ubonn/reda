@@ -209,7 +209,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     if isinstance(dataobj, pd.DataFrame):
         df = dataobj
     else:
-        df = dataobj.df
+        df = dataobj.data
 
     c = df[['A', 'B', 'M', 'N']].values
 

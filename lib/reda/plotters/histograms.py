@@ -54,7 +54,7 @@ def plot_histograms(ertobj, keys, **kwargs):
     if isinstance(ertobj, pd.DataFrame):
         df = ertobj
     else:
-        df = ertobj.df
+        df = ertobj.data
 
     if df.shape[0] == 0:
         raise Exception('No data present, cannot plot')
@@ -126,7 +126,7 @@ def plot_histograms_extra_dims(dataobj, keys, extra_dims, **kwargs):
     if isinstance(dataobj, pd.DataFrame):
         df = dataobj
     else:
-        df = dataobj.df
+        df = dataobj.data
 
     g = df.groupby(extra_dims)
 
