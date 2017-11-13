@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 
-def import_ohm(filename, verbose=True):
+def import_ohm(filename, verbose=False):
     """
     Construct pandas data frame BERT's unified data format (*.ohm).
 
