@@ -7,6 +7,9 @@ import reda.main.init as redai
 import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.bert as reda_bert
 
+import reda.utils.geometric_factors as redaK
+import reda.utils.fix_sign_with_K as redafixK
+
 
 class LogDataChanges():
     """Context manager that observes the DataFrame of a data container for
@@ -293,3 +296,10 @@ class ERT(LoggingClass, Importers):
         with LogDataChanges(self, filter_action='filter', filter_query=query):
             result = self.data.query(query, inplace=inplace)
         return result
+
+    def compute_K_analytical(self, spacing):
+        """Compute geometrical factors over the homogeneous half-space with a
+        constant electrode spacing
+        """
+        redaK.compute_K_analytical(self.data, spacing=spacing)
+        redafixK.fix_sign_with_K(self.data)
