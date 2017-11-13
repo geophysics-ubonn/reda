@@ -1,5 +1,6 @@
 import datetime
 import logging
+import functools
 
 import pandas as pd
 import reda.main.init as redai
@@ -114,7 +115,7 @@ class Importers(object):
         self._describe_data(data)
 
     @append_doc_of(reda_bert.import_ohm)
-    def import_bert_ohm(self, filename, **kwargs):
+    def import_bert(self, filename, **kwargs):
         """BERT .ohm file import"""
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
@@ -131,6 +132,10 @@ class Importers(object):
             self._add_to_container(data)
         print('Summary:')
         self._describe_data(data)
+
+    @functools.wraps(import_bert)
+    def import_pygimli(self, *args, **kargs):
+        self.import_bert(*args, **kargs)
 
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
