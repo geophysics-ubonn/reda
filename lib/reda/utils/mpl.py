@@ -9,11 +9,12 @@ Examples
 
 >>> import reda.utils.mpl
 >>> plt, mpl = reda.utils.mpl.setup()
-
+Found LaTeX at /usr/bin/latex, switching matplotlib settings to use it.
 """
 
 from reda.utils import which
 latex = which("latex")
+
 
 def setup():
     # just make sure we can access matplotlib as mpl
@@ -26,7 +27,10 @@ def setup():
     mpl.rcParams["font.size"] = 12
     mpl.rcParams['mathtext.default'] = 'regular'
     if latex:
-        print("Found LaTeX at %s, switching matplotlib settings to use it."  % latex)
+        print(
+            "Found LaTeX at" +
+            " %s, switching matplotlib settings to use it." % latex
+        )
         mpl.rcParams['text.usetex'] = True
         mpl.rcParams['text.latex.unicode'] = True
 
