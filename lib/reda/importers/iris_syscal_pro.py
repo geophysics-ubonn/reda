@@ -26,9 +26,6 @@ def import_txt(filename, **kwargs):
         only the electrode cables were switched. The provided number N is
         treated as the maximum electrode number, and denotations are renamed
         according to the equation :math:`X_n = N - (X_a - 1)`
-    timestep: int|datetime
-        if provided use this value to set the 'timestep' column of the produced
-        dataframe. Default: 0
 
     Returns
     -------
@@ -65,8 +62,6 @@ def import_txt(filename, **kwargs):
         delim_whitespace=True,
     )
 
-    timestep = kwargs.get('timestep', 0)
-
     x0 = kwargs.get(
         'x0',
         data_raw[['Spa.1', 'Spa.2', 'Spa.3', 'Spa.4']].min().min()
@@ -94,7 +89,6 @@ def import_txt(filename, **kwargs):
     for col in (('A', 'B', 'M', 'N')):
         data[col] = data[col].astype(int)
 
-    data['timestep'] = timestep
     # [mV] / [mA]
     data['R'] = data_raw['Vp'] / data_raw['In']
     data['Vmn'] = data_raw['Vp']
