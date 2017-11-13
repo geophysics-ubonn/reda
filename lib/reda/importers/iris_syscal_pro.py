@@ -7,7 +7,7 @@ import pandas as pd
 
 
 def add_txt_file(filename, container=None, **kwargs):
-    """Import Syscal measurements from a textfile, exported as 'Spreadsheet'.
+    """Import Syscal measurements from a text file, exported as 'Spreadsheet'.
 
     Parameters
     ----------

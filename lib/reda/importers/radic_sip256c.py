@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 # *-* coding: utf-8 *-*
 import re
 import itertools
@@ -108,7 +107,7 @@ def parse_remote_unit(ru_block):
     text_block = text_block.replace('K Factor/m', 'K-Factor/m')
     text_block = text_block.strip()
 
-    text_block = re.sub( '\s+', ' ', text_block) + os.linesep
+    text_block = re.sub('\s+', ' ', text_block) + os.linesep
 
     def prep_line(line):
         # for i in range(0, 7):
@@ -129,10 +128,10 @@ def parse_remote_unit(ru_block):
         # line = ' '.join(line.split()) + r'\n'
         # import IPython
         # IPython.embed()
-        line = re.sub( '\s+', ' ', line) + os.linesep
+        line = re.sub('\s+', ' ', line) + os.linesep
 
         # calibration dot
-        line = re.sub( ' . ', ' nc ', line)
+        line = re.sub(' . ', ' nc ', line)
         line = line.lstrip()
         return line
 
@@ -275,9 +274,11 @@ def decide_on_quadpole(config, settings):
     elif mode == 'between':
         if (min(config[2:4] < min(config[0:2])) or
                 max(config[2:4] > max(config[0:2]))):
-            logging.debug('FILTER failed: mode==between {0} {1} {2} {3}'.format(
-                *config[0:4]
-            ))
+            logging.debug(
+                'FILTER failed: mode==between {0} {1} {2} {3}'.format(
+                    *config[0:4]
+                )
+            )
             decision = False
     elif mode == 'after':
         if min(config[2:4]) < max(config[0:2]):

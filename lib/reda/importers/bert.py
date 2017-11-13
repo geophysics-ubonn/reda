@@ -1,7 +1,9 @@
-""" Importer to load the unified data format used in pyGIMLi, BERT, and dc2dinvres."""
+""" Importer to load the unified data format used in pyGIMLi, BERT, and
+dc2dinvres."""
 
 import pandas as pd
 import numpy as np
+
 
 def load(filename, verbose=True):
     """
