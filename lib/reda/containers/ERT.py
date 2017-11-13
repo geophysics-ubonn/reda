@@ -126,7 +126,6 @@ class Importers(object):
             data, electrodes, topography = reda_bert.import_ohm(
                 filename, **kwargs
             )
-            print(data)
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
