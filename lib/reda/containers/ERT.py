@@ -5,6 +5,7 @@ import pandas as pd
 import reda.main.init as redai
 
 import reda.importers.iris_syscal_pro as reda_syscal
+import reda.importers.bert as reda_bert
 
 
 class LogDataChanges():
@@ -56,11 +57,16 @@ class LogDataChanges():
 
 
 def append_doc_of(fun):
-
     def decorator(f):
         f.__doc__ += fun.__doc__
         return f
+    return decorator
 
+
+def prepend_doc_of(fun):
+    def decorator(f):
+        f.__doc__ = fun.__doc__ + f.__doc__
+        return f
     return decorator
 
 
@@ -84,13 +90,44 @@ class Importers(object):
 
     @append_doc_of(reda_syscal.import_txt)
     def import_syscal_txt(self, filename, **kwargs):
-        """Syscal import"""
+        """Syscal import
+
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del(kwargs['timestep'])
         self.logger.info('IRIS Syscal Pro text import')
         with LogDataChanges(self, filter_action='import'):
-            df = reda_syscal.import_txt(filename, **kwargs)
-            self._add_to_container(df)
+            data, electrodes, topography = reda_syscal.import_txt(
+                filename, **kwargs
+            )
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
         print('Summary:')
-        self._describe_data(df)
+        self._describe_data(data)
+
+    @append_doc_of(reda_bert.import_ohm)
+    def import_bert_ohm(self, filename, **kwargs):
+        """BERT .ohm file import"""
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del(kwargs['timestep'])
+
+        self.logger.info('BERT .ohm file import')
+        with LogDataChanges(self, filter_action='import'):
+            data, electrodes, topography = reda_bert.import_ohm(
+                filename, **kwargs
+            )
+            print(data)
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+        print('Summary:')
+        self._describe_data(data)
 
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
