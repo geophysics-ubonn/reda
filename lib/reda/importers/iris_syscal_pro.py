@@ -6,16 +6,13 @@ import numpy as np
 import pandas as pd
 
 
-def add_txt_file(filename, container=None, **kwargs):
+def import_txt(filename, **kwargs):
     """Import Syscal measurements from a text file, exported as 'Spreadsheet'.
 
     Parameters
     ----------
     filename: string
         input filename
-    container: ERT container, optional
-        the data container that the data should be added to. If set to None,
-        return a new ERT container
     x0: float
         position of first electrode. If not given, then use the smallest
         x-position in the data as the first electrode.
@@ -32,6 +29,16 @@ def add_txt_file(filename, container=None, **kwargs):
     timestep: int|datetime
         if provided use this value to set the 'timestep' column of the produced
         dataframe. Default: 0
+
+    Returns
+    -------
+    data: :class:`pandas.DataFrame`
+        Contains the measurement data
+    electrodes: :class:`pandas.DataFrame`
+        Contains electrode positions (None at the moment)
+    topography: None
+        No topography information is contained in the text files, so we always
+        return None
 
     Notes
     -----
@@ -99,4 +106,4 @@ def add_txt_file(filename, container=None, **kwargs):
         print('renumbering electrode numbers')
         data[['A', 'B', 'M', 'N']] = rec_max + 1 - data[['A', 'B', 'M', 'N']]
 
-    return data
+    return data, None, None
