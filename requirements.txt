@@ -3,4 +3,3 @@ matplotlib>=2
 pandas
 scipy
 pytest
-ipython # should not be necessary, see: https://github.com/geophysics-ubonn/reda/issues/11
