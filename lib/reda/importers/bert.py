@@ -5,11 +5,22 @@ import pandas as pd
 import numpy as np
 
 
-def load(filename, verbose=True):
+def import_ohm(filename, verbose=True):
     """
     Construct pandas data frame BERT's unified data format (*.ohm).
-    """
 
+    Parameters
+    ----------
+    filename: string
+        File path to .ohm file
+    verbose: bool, optional
+        Enables extended debug output
+
+    Returns
+    -------
+    data: :class:`pandas.DataFrame`
+       The measurement data
+    """
     if verbose:
         print(("Reading in %s... \n" % filename))
     file = open(filename)
@@ -45,7 +56,25 @@ def load(filename, verbose=True):
     file.close()
 
     data = pd.DataFrame(data, columns=data_ix)
+    # rename columns to the reda standard
+    data_reda = data.rename(
+        index=str,
+        columns={
+            'a': 'A',
+            'b': 'B',
+            'm': 'M',
+            'n': 'N',
+            'rhoa': 'rho_a',
+            'k': 'K',
+        }
+    )
+    data_reda['R'] = data_reda['rho_a'] / data_reda['K']
+    for col in ('A', 'B', 'M', 'N'):
+        data_reda[col] = data_reda[col].astype(int)
+
     elecs = pd.DataFrame(elecs, columns=elecs_ix)
 
     if verbose:
         print((_string_))
+
+    return data_reda, elecs, None
