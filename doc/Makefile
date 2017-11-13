@@ -50,6 +50,8 @@ clean:
 	rm -rf $(BUILDDIR)/*
 
 html:
+	rm -rf api
+	sphinx-apidoc -o api ../lib/reda
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."
