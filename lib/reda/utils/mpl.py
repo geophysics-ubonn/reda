@@ -44,15 +44,16 @@ def setup(use_latex=True):
         mpl.rcParams['text.usetex'] = True
         mpl.rcParams['text.latex.unicode'] = True
 
-        # mpl.rc(
-        #     'text.latex',
-        #     preamble=''.join((
-        #         r'\usepackage{droidsans} \usepackage[T1]{fontenc} ',
-        #         r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
-        #         r'\renewcommand\familydefault{\sfdefault} ',
-        #         r'\usepackage{mathastext} '
-        #     ))
-        # )
+        mpl.rc(
+            'text.latex',
+            preamble=''.join((
+                #         r'\usepackage{droidsans}
+                r'\usepackage[T1]{fontenc} ',
+                r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
+                r'\renewcommand\familydefault{\sfdefault} ',
+                r'\usepackage{mathastext} '
+            ))
+        )
     else:
         mpl.rcParams['text.usetex'] = False
         mpl.rcParams['text.latex.unicode'] = False
