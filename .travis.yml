@@ -8,8 +8,8 @@ python:
   - "3.6"
 
 install:
-  - sudo apt-get update -q
-  - sudo apt-get install texlive -y
+  - sudo apt-get update -qq
+  - sudo apt-get install texlive texlive-latex-extra -y
   - pip install -q -r requirements.txt -r doc/requirements_doc.txt
   - pip install .
 
