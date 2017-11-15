@@ -80,7 +80,6 @@ class Importers(object):
     """
     def _add_to_container(self, df):
         if self.data is not None:
-            print('merging with existing data')
             self.data = pd.concat((self.data, df))
         else:
             self.data = df
@@ -129,8 +128,9 @@ class Importers(object):
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
-        print('Summary:')
-        self._describe_data(data)
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
 
     @functools.wraps(import_bert)
     def import_pygimli(self, *args, **kargs):
