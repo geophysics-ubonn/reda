@@ -36,6 +36,9 @@ def plot_histograms(ertobj, keys, **kwargs):
     merge: bool, optional
         if True, then generate only one figure with all key-plots as columns
         (default True)
+    log10plot: bool, optional
+        default: True
+    extra_dims: list, optional
 
     Examples
     --------
@@ -43,7 +46,6 @@ def plot_histograms(ertobj, keys, **kwargs):
     >>> from reda.testing import ERTContainer
     >>> figs_dict = plot_histograms(ERTContainer, "R", merge=False)
     Generating histogram plot for key: R
-    >>> figs_dict["R"].show()
 
     Returns
     -------
@@ -124,19 +126,76 @@ def plot_histograms(ertobj, keys, **kwargs):
 def plot_histograms_extra_dims(dataobj, keys, extra_dims, **kwargs):
     """Produce histograms grouped by the extra dims."""
     if isinstance(dataobj, pd.DataFrame):
-        df = dataobj
+        df_raw = dataobj
     else:
-        df = dataobj.data
+        df_raw = dataobj.data
 
-    g = df.groupby(extra_dims)
+    if kwargs.get('subquery', False):
+        df = df_raw.query(kwargs.get('subquery'))
 
-    results = {}
-    for name in sorted(g.groups.keys()):
-        item = g.get_group(name)
-        # print(type(item))
-        # import IPython
-        # IPython.embed()
-        plot_results = plot_histograms(item, keys, **kwargs)
-        results[name] = plot_results
+    split_timestamps = True
+    if split_timestamps:
+        group_timestamps = df.groupby('timestep')
+        N_ts = len(group_timestamps.groups.keys())
+    else:
+        group_timestamps = ('all', df)
+        N_ts = 1
+    columns = ['rho_a', ]
+    N_c = len(columns)
 
-    return results
+    plot_log10 = False
+    if plot_log10:
+        transformers = ['lin', 'log10']
+        N_log10 = 2
+    else:
+        transformers = ['lin', ]
+        N_log10 = 1
+
+    # determine layout of plots
+    Nx_max = kwargs.get('Nx', 4)
+    N = N_ts * N_c * N_log10
+    Nx = min(Nx_max, N)
+    Ny = int(np.ceil(N / Nx))
+
+    size_x = 4 * Nx / 2.54
+    size_y = 5 * Ny / 2.54
+    fig, axes = plt.subplots(Ny, Nx, figsize=(size_x, size_y))
+    axes = np.atleast_2d(axes)
+
+    index = 0
+    for ts_name, tgroup in group_timestamps:
+        for column in columns:
+            for transformer in transformers:
+                # print('{0}-{1}-{2}'.format(ts_name, column, transformer))
+
+                subdata_raw = tgroup[column].values
+                subdata = subdata_raw[~np.isnan(subdata_raw)]
+                subdata = subdata[np.isfinite(subdata)]
+
+                if transformer == 'log10':
+                    subdata_log10_with_nan = np.log10(subdata[subdata > 0])
+                    subdata_log10 = subdata_log10_with_nan[~np.isnan(
+                        subdata_log10_with_nan)
+                    ]
+
+                    subdata_log10 = subdata_log10[np.isfinite(subdata_log10)]
+                    subdata = subdata_log10
+
+                ax = axes.flat[index]
+                ax.hist(
+                    subdata,
+                    _get_nr_bins(subdata.size),
+                )
+                ax.set_xlabel(
+                    units.get_label(column)
+                )
+                ax.set_ylabel('count')
+                ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(3))
+
+                index += 1
+
+    # remove some labels
+    for ax in axes[:, 1:].flat:
+        ax.set_ylabel('')
+    fig.tight_layout()
+    return fig
