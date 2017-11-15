@@ -1,3 +1,4 @@
+import os
 import datetime
 import logging
 import functools
@@ -121,7 +122,8 @@ class Importers(object):
             del(kwargs['timestep'])
 
         self.logger.info('BERT .ohm file import')
-        with LogDataChanges(self, filter_action='import'):
+        with LogDataChanges(self, filter_action='import',
+                            filter_query=os.path.basename(filename)):
             data, electrodes, topography = reda_bert.import_ohm(
                 filename, **kwargs
             )
@@ -186,7 +188,9 @@ class LoggingClass(object):
                 # print(record)
                 if record.filter_action == 'import':
                     print(
-                        'Data was imported from file X ' +
+                        'Data was imported from file {0} '.format(
+                            record.filter_query
+                        ) +
                         '({0} data points)'.format(
                             record.df_size_after - record.df_size_before
                         )
@@ -256,7 +260,7 @@ class ERT(LoggingClass, Importers):
                 ))
         return dataframe
 
-    def subquery(self, subset, filter, inplace=True):
+    def sub_filter(self, subset, filter, inplace=True):
         """Apply a filter to subset of the data
 
         Usage
@@ -280,8 +284,9 @@ class ERT(LoggingClass, Importers):
             result = self.data.query(full_query, inplace=inplace)
         return result
 
-    def query(self, query, inplace=True):
-        """State what you want to keep
+    def filter(self, query, inplace=True):
+        """Use a query statement to filter data. Note that you specify the data
+        to be removed!
 
         Parameters
         ----------
@@ -298,7 +303,10 @@ class ERT(LoggingClass, Importers):
 
         """
         with LogDataChanges(self, filter_action='filter', filter_query=query):
-            result = self.data.query(query, inplace=inplace)
+            result = self.data.query(
+                'not ({0})'.format(query),
+                inplace=inplace,
+            )
         return result
 
     def compute_K_analytical(self, spacing):
