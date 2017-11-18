@@ -349,7 +349,7 @@ def plot_ps_extra(dataobj, columns, **kwargs):
             cbmin=50, cbmax=300,
         )
         cbs.append(cb1)
-        ax.set_title('timestep: {0}'.format(name))
+        ax.set_title('timestep: {0}'.format(int(name)))
         ax.xaxis.set_ticks_position('bottom')
         ax.set_aspect('equal')
 
