@@ -18,6 +18,11 @@ in a human-readable journal. REDA is platform compatible, tested and
 open-source under the permissive MIT license. Any contributions from the
 community are highly welcome.  Contents:
 
+.. note::
+
+    REDA is a work in progress. Please get in touch if you are interested in
+    using REDA for your work and have encountered any problems.
+
 .. toctree::
     :maxdepth: 2
 
