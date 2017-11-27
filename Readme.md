@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/geophysics-ubonn/reda.svg?branch=master)](https://travis-ci.org/geophysics-ubonn/reda)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 REDA is a scientific Python library for reproducible geoelectrical data
 analysis. It aims to provide a unified interface for common and advanced data
@@ -14,6 +15,10 @@ keeps track of each individual processing step applied to particular data set
 in a human-readable journal. REDA is platform compatible, tested and
 open-source under the permissive MIT license. Any contributions from the
 community are highly welcome.
+
+<aside class="warning">
+REDA is a work-in-progress. Please get contact us if you wish to use it and feel lost or are missing functionality. A lot of things can be added easily, especially missing functionality.
+</aside>
 
 ### Installation
 
@@ -39,6 +44,17 @@ python setup.py install
 
 An online version of the docs can be found here:
 <https://geophysics-ubonn.github.io/reda/documentation/>
+
+### Contributing
+
+We look forward to any type of contributions:
+
+* code contribution
+* example contributions
+* documentation help
+* issuing bug reports
+
+If in doubt, use the gitter chat to contact us (click the Gitter badge above to join the chat).
 
 <!--
 Electrical geophysical data is increasingly measured in time-lapse setups,
