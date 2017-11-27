@@ -16,6 +16,10 @@ in a human-readable journal. REDA is platform compatible, tested and
 open-source under the permissive MIT license. Any contributions from the
 community are highly welcome.
 
+<aside class="warning">
+REDA is a work-in-progress. Please get contact us if you wish to use it and feel lost or are missing functionality. A lot of things can be added easily, especially missing functionality.
+</aside>
+
 ### Installation
 
 Install latest release from PyPI:
@@ -40,6 +44,17 @@ python setup.py install
 
 An online version of the docs can be found here:
 <https://geophysics-ubonn.github.io/reda/documentation/>
+
+### Contributing
+
+We look forward to any type of contributions:
+
+* code contribution
+* example contributions
+* documentation help
+* issuing bug reports
+
+If in doubt, use the gitter chat to contact us (click the Gitter badge above to join the chat).
 
 <!--
 Electrical geophysical data is increasingly measured in time-lapse setups,
