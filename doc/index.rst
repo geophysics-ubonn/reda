@@ -26,6 +26,7 @@ community are highly welcome.  Contents:
 .. toctree::
     :maxdepth: 2
 
+    status.rst
     data_containers.rst
     importers.rst
     syscal.rst
