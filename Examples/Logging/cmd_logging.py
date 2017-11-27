@@ -11,7 +11,7 @@ import pandas as pd
 pd.set_option('display.width', 1000)
 
 import edf
-container = edf.ERT()
+container = reda.ERT()
 container.import_syscal_dat('data_normal.txt')
 container.import_syscal_dat('data_reciprocal.txt', reciprocals=48)
 

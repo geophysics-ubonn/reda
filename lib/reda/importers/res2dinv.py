@@ -1,6 +1,4 @@
-"""
-Importer for RES2DINV files
-"""
+""" Importer for RES2DINV files """
 from io import StringIO
 import pandas as pd
 from reda.containers.ERT import ERT

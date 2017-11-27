@@ -1,5 +1,7 @@
 ## REDA - Reproducible Electrical Data Analysis
 
+[![Build Status](https://travis-ci.org/geophysics-ubonn/reda.svg?branch=master)](https://travis-ci.org/geophysics-ubonn/reda)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 REDA is a scientific Python library for reproducible geoelectrical data
@@ -16,11 +18,11 @@ community are highly welcome.
 
 ### Installation
 
-Installation from PYPI: ::
+Install latest release from PyPI:
 
-	pip install reda
+    pip install reda
 
-Installation from git:
+Install current development version from git:
 
 ```bash
 git clone https://github.com/geophysics-ubonn/reda
@@ -33,11 +35,11 @@ conda install --file requirements.txt
 
 python setup.py install
 ```
+
 ### Documentation
 
 An online version of the docs can be found here:
-https://geophysics-ubonn.github.io/reda/documentation/
-
+<https://geophysics-ubonn.github.io/reda/documentation/>
 
 <!--
 Electrical geophysical data is increasingly measured in time-lapse setups,
@@ -239,7 +241,7 @@ please refer to the TODO section down below.
 
 -   prepare the iSAT data as an example (Syscal)
 
--   edf.utils.filter_config_types:
+-   reda.utils.filter_config_types:
 
         	* create tests for mixed configurations
 

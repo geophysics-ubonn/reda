@@ -9,11 +9,28 @@ Examples
 
 >>> import reda.utils.mpl
 >>> plt, mpl = reda.utils.mpl.setup()
-
 """
 
+from reda.utils import which
+latex = which("latex")
 
-def setup():
+
+def setup(use_latex=True):
+    """Set up matplotlib imports and settings.
+
+    Parameters
+    ----------
+    use_latex: bool, optional
+        Determine if Latex output should be used. Latex will only be enable if
+        a 'latex' binary is found in the system.
+
+    Returns
+    -------
+    plt: :mod:`pylab`
+        pylab module imported as plt
+    mpl: :mod:`matplotlib`
+        matplotlib module imported as mpl
+    """
     # just make sure we can access matplotlib as mpl
     import matplotlib as mpl
 
@@ -23,18 +40,23 @@ def setup():
     mpl.rcParams["lines.markersize"] = 3.0
     mpl.rcParams["font.size"] = 12
     mpl.rcParams['mathtext.default'] = 'regular'
-    mpl.rcParams['text.usetex'] = True
-    mpl.rcParams['text.latex.unicode'] = True
+    if latex and use_latex:
+        mpl.rcParams['text.usetex'] = True
+        mpl.rcParams['text.latex.unicode'] = True
 
-    # mpl.rc(
-    #     'text.latex',
-    #     preamble=''.join((
-    #         r'\usepackage{droidsans} \usepackage[T1]{fontenc} ',
-    #         r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
-    #         r'\renewcommand\familydefault{\sfdefault} ',
-    #         r'\usepackage{mathastext} '
-    #     ))
-    # )
+        mpl.rc(
+            'text.latex',
+            preamble=''.join((
+                #         r'\usepackage{droidsans}
+                r'\usepackage[T1]{fontenc} ',
+                r'\usepackage{sfmath} \renewcommand{\rmfamily}{\sffamily}',
+                r'\renewcommand\familydefault{\sfdefault} ',
+                r'\usepackage{mathastext} '
+            ))
+        )
+    else:
+        mpl.rcParams['text.usetex'] = False
+        mpl.rcParams['text.latex.unicode'] = False
 
     import matplotlib.pyplot as plt
     return plt, mpl

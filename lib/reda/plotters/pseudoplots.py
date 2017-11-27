@@ -129,6 +129,8 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         figure object
     ax:
         axes object
+    cb:
+        colorbar object
 
     Examples
     --------
@@ -203,13 +205,13 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
 
     >>> from reda.testing.containers import ERTContainer_nr
     >>> import reda.plotters.pseudoplots as ps
-    >>> fig, axes = ps.plot_pseudosection_type2(ERTContainer_nr, 'R')
+    >>> fig, axes, cb = ps.plot_pseudosection_type2(ERTContainer_nr, 'R')
 
     """
     if isinstance(dataobj, pd.DataFrame):
         df = dataobj
     else:
-        df = dataobj.df
+        df = dataobj.data
 
     c = df[['A', 'B', 'M', 'N']].values
 
@@ -291,6 +293,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         linewidth=1.0,
     )
 
+    cb = None
     if not kwargs.get('nocb', False):
         cb = fig.colorbar(im, ax=ax)
         cb.set_label(
@@ -304,4 +307,55 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         kwargs.get('ylabel', 'voltage dipoles')
     )
 
-    return fig, ax
+    return fig, ax, cb
+
+
+def plot_ps_extra(dataobj, columns, **kwargs):
+    """Create grouped pseudoplots, either for all columns (one timestep) or
+    multiples
+
+
+    """
+    if isinstance(dataobj, pd.DataFrame):
+        df_raw = dataobj
+    else:
+        df_raw = dataobj.data
+
+    if kwargs.get('subquery', False):
+        df = df_raw.query(kwargs.get('subquery'))
+
+    def fancyfy(axes, N):
+        for ax in axes[0:-1, :].flat:
+            ax.set_xlabel('')
+        for ax in axes[:, 1:].flat:
+            ax.set_ylabel('')
+
+    g = df.groupby('timestep')
+    N = len(g.groups.keys())
+    nrx = 5
+    nry = int(np.ceil(N / nrx))
+    sizex = nrx * 3
+    sizey = nry * 4 - 1
+    fig, axes = plt.subplots(
+        nry, nrx,
+        sharex=True, sharey=True,
+        figsize=(sizex, sizey),
+    )
+
+    cbs = []
+    for ax, (name, group) in zip(axes.flat, g):
+        fig1, axes1, cb1 = plot_pseudosection_type2(
+            group, 'rho_a', ax=ax, log10=False,
+            cbmin=50, cbmax=300,
+        )
+        cbs.append(cb1)
+        ax.set_title('timestep: {0}'.format(int(name)))
+        ax.xaxis.set_ticks_position('bottom')
+        ax.set_aspect('equal')
+
+    for cb in np.array(cbs).reshape(axes.shape)[:, 0:-1].flat:
+        cb.ax.set_visible(False)
+
+    fancyfy(axes, N)
+    fig.tight_layout()
+    return fig

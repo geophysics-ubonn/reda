@@ -1,10 +1,16 @@
+import os
 import datetime
 import logging
+import functools
 
 import pandas as pd
 import reda.main.init as redai
 
 import reda.importers.iris_syscal_pro as reda_syscal
+import reda.importers.bert as reda_bert
+
+import reda.utils.geometric_factors as redaK
+import reda.utils.fix_sign_with_K as redafixK
 
 
 class LogDataChanges():
@@ -18,8 +24,8 @@ class LogDataChanges():
     >>> from reda.containers.ERT import LogDataChanges
     >>> with LogDataChanges(ERTContainer):
     ...     # now change the data
-    ...     ERTContainer.df.loc[0, "R"] = 22
-    ...     ERTContainer.df.query("R < 10", inplace=True)
+    ...     ERTContainer.data.loc[0, "R"] = 22
+    ...     ERTContainer.data.query("R < 10", inplace=True)
     >>> ERTContainer.print_log()
     2... - root - INFO - Data change from 22 to 21
 
@@ -29,68 +35,108 @@ class LogDataChanges():
         self.container = container
         self.logger = container.logger
         self.filter_action = filter_action
-        self.df_size_before = None
-        self.df_size_after = None
+        self.data_size_before = None
+        self.data_size_after = None
         self.filter_query = filter_query
 
     def __enter__(self):
-        if self.container.df is None:
-            self.df_size_before = 0
+        if self.container.data is None:
+            self.data_size_before = 0
         else:
-            self.df_size_before = self.container.df.shape[0]
+            self.data_size_before = self.container.data.shape[0]
         return None
 
     def __exit__(self, *args):
-        self.df_size_after = self.container.df.shape[0]
+        self.data_size_after = self.container.data.shape[0]
         self.logger.info(
             'Data change from {0} to {1}'.format(
-                self.df_size_before, self.df_size_after,
+                self.data_size_before, self.data_size_after,
             ),
             extra={
                 'filter_action': self.filter_action,
-                'df_size_before': self.df_size_before,
-                'df_size_after': self.df_size_after,
+                'df_size_before': self.data_size_before,
+                'df_size_after': self.data_size_after,
                 'filter_query': self.filter_query,
             },
         )
 
 
 def append_doc_of(fun):
-
     def decorator(f):
         f.__doc__ += fun.__doc__
         return f
+    return decorator
 
+
+def prepend_doc_of(fun):
+    def decorator(f):
+        f.__doc__ = fun.__doc__ + f.__doc__
+        return f
     return decorator
 
 
 class Importers(object):
     """This class provides wrappers for most of the importer functions, and is
-    meant to be inherited by the data containers
+    meant to be inherited by the ERT data container
     """
     def _add_to_container(self, df):
-        if self.df is not None:
-            print('merging with existing data')
-            self.df = pd.concat((self.df, df))
+        if self.data is not None:
+            self.data = pd.concat((self.data, df))
         else:
-            self.df = df
+            self.data = df
 
     def _describe_data(self, df=None):
         if df is None:
-            df_to_use = self.df
+            df_to_use = self.data
         else:
             df_to_use = df
         print(df_to_use.describe())
 
-    @append_doc_of(reda_syscal.add_txt_file)
-    def import_syscal_dat(self, filename, **kwargs):
-        """Syscal import"""
+    @append_doc_of(reda_syscal.import_txt)
+    def import_syscal_txt(self, filename, **kwargs):
+        """Syscal import
+
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del(kwargs['timestep'])
         self.logger.info('IRIS Syscal Pro text import')
         with LogDataChanges(self, filter_action='import'):
-            df = reda_syscal.add_txt_file(filename, **kwargs)
-            self._add_to_container(df)
+            data, electrodes, topography = reda_syscal.import_txt(
+                filename, **kwargs
+            )
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
         print('Summary:')
-        self._describe_data(df)
+        self._describe_data(data)
+
+    @append_doc_of(reda_bert.import_ohm)
+    def import_bert(self, filename, **kwargs):
+        """BERT .ohm file import"""
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del(kwargs['timestep'])
+
+        self.logger.info('BERT .ohm file import')
+        with LogDataChanges(self, filter_action='import',
+                            filter_query=os.path.basename(filename)):
+            data, electrodes, topography = reda_bert.import_ohm(
+                filename, **kwargs
+            )
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
+    @functools.wraps(import_bert)
+    def import_pygimli(self, *args, **kargs):
+        self.import_bert(*args, **kargs)
 
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
@@ -142,7 +188,9 @@ class LoggingClass(object):
                 # print(record)
                 if record.filter_action == 'import':
                     print(
-                        'Data was imported from file X ' +
+                        'Data was imported from file {0} '.format(
+                            record.filter_query
+                        ) +
                         '({0} data points)'.format(
                             record.df_size_after - record.df_size_before
                         )
@@ -161,27 +209,37 @@ class LoggingClass(object):
 
 class ERT(LoggingClass, Importers):
 
-    def __init__(self, dataframe=None):
+    def __init__(self, data=None, electrode_positions=None,
+                 topography=None):
         """
         Parameters
         ----------
-        dataframe: None|pandas.DataFrame
+        data: pandas.DataFrame
             If not None, then the provided DataFrame is assumed to contain
             valid data previously prepared elsewhere. Required columns are:
                 "A", "B", "M", "N", "R".
+        electrodes: pandas.DataFrame
+            If set, this is expected to be a DataFrame which contains electrode
+            positions with columns: "X", "Y", "Z".
+        topography: pandas.DataFrame
+            If set, this is expected to a DataFrame which contains topography
+            information with columns: "X", "Y", "Z".
+
 
         """
         self.setup_logger()
-        if dataframe is not None:
-            self.check_dataframe(dataframe)
-        # DataFrame that contains all data
-        self.df = dataframe
+        self.data = self.check_dataframe(data)
+        self.electrode_positions = electrode_positions
+        self.topography = topography
 
         redai.set_mpl_settings()
 
     def check_dataframe(self, dataframe):
-        """Check the given dataframe for the required columns
+        """Check the given dataframe for the required type and columns
         """
+        if dataframe is None:
+            return None
+
         # is this a DataFrame
         if not isinstance(dataframe, pd.DataFrame):
             raise Exception(
@@ -200,12 +258,13 @@ class ERT(LoggingClass, Importers):
                 raise Exception('Required column not in dataframe: {0}'.format(
                     column
                 ))
+        return dataframe
 
-    def subquery(self, subset, filter, inplace=True):
+    def sub_filter(self, subset, filter, inplace=True):
         """Apply a filter to subset of the data
 
         Usage
-        =====
+        -----
 
         subquery(
             'timestep == 2',
@@ -222,11 +281,12 @@ class ERT(LoggingClass, Importers):
             ')',
         ))
         with LogDataChanges(self, filter_action='filter', filter_query=filter):
-            result = self.df.query(full_query, inplace=inplace)
+            result = self.data.query(full_query, inplace=inplace)
         return result
 
-    def query(self, query, inplace=True):
-        """State what you want to keep
+    def filter(self, query, inplace=True):
+        """Use a query statement to filter data. Note that you specify the data
+        to be removed!
 
         Parameters
         ----------
@@ -243,5 +303,15 @@ class ERT(LoggingClass, Importers):
 
         """
         with LogDataChanges(self, filter_action='filter', filter_query=query):
-            result = self.df.query(query, inplace=inplace)
+            result = self.data.query(
+                'not ({0})'.format(query),
+                inplace=inplace,
+            )
         return result
+
+    def compute_K_analytical(self, spacing):
+        """Compute geometrical factors over the homogeneous half-space with a
+        constant electrode spacing
+        """
+        redaK.compute_K_analytical(self.data, spacing=spacing)
+        redafixK.fix_sign_with_K(self.data)

@@ -42,10 +42,10 @@ Importing EIT40 data
 Multi-frequency data is handled by the sEIT container: ::
 
     import os
-    import edf.containers.sEIT as sEIT
-    import edf.utils.geometric_factors as edfK
-    import edf.utils.fix_sign_with_K as edffixK
-    import edf.plotters.histograms as edfH
+    import reda.containers.sEIT as sEIT
+    import reda.utils.geometric_factors as edfK
+    import reda.utils.fix_sign_with_K as edffixK
+    import reda.plotters.histograms as edfH
     seit = SEIT.sEIT()
 
 
@@ -139,5 +139,5 @@ CRTomo
 
 ::
 
-    import edf.exporters.crtomo as edfC
+    import reda.exporters.crtomo as edfC
     edfC.write_files_to_directory(seit.df, 'crt_results', norrec='nor', )

@@ -1,0 +1,49 @@
+sudo: false # Use docker containers rather than VMs -> faster
+
+language: python
+
+python:
+  - "2.7"
+  - "3.5"
+  - "3.6"
+
+install:
+  - sudo apt-get update -qq
+  - sudo apt-get install texlive texlive-latex-extra -y
+  - pip install -q -r requirements.txt -r doc/requirements_doc.txt
+  - pip install .
+
+script:
+  - make test
+  - make doc
+
+notifications:
+  webhooks:
+    urls:
+      - https://webhooks.gitter.im/e/b238f1b4f26967edf138 # Gitter channel
+    on_success: change  # options: [always|never|change] default: always
+    on_failure: always  # options: [always|never|change] default: always
+    on_start: always    # options: [always|never|change] default: always
+# not used, but could be interesting:
+# https://docs.travis-ci.com/user/deployment/pages/
+# loosely after:
+# https://stackoverflow.com/questions/23277391/how-to-publish-to-github-pages-from-travis-ci#33125422
+after_success: |
+  if [ -n "$GITHUB_API_KEY" ]; then
+    if [ `python -c "import platform; print(platform.python_version()[0:3])"` == "3.6" ]; then
+      cd "$TRAVIS_BUILD_DIR"
+      mkdir ghpages
+      cd ghpages
+      git clone --depth=2 --branch=gh-pages https://github.com/geophysics-ubonn/reda.git
+      rm -r reda/documentation
+      cp -r ../doc/_build/html/ reda/documentation
+      cd reda
+      git status
+      git add documentation
+      git commit -m "[by travis] update documentation"
+      # # Make sure to make the output quiet, or else the API token will leak!
+      # # This works because the API key can replace your password.
+      git push -f -q https://m-weigand:$GITHUB_API_KEY@github.com/geophysics-ubonn/reda.git gh-pages &2>/dev/null
+      cd "$TRAVIS_BUILD_DIR"
+    fi
+  fi
