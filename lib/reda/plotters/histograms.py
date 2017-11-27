@@ -123,8 +123,29 @@ def plot_histograms(ertobj, keys, **kwargs):
     return figures
 
 
-def plot_histograms_extra_dims(dataobj, keys, extra_dims, **kwargs):
-    """Produce histograms grouped by the extra dims."""
+def plot_histograms_extra_dims(dataobj, keys, **kwargs):
+    """Produce histograms grouped by the extra dims.
+
+    Parameters
+    ----------
+
+    Examples
+    --------
+    >>> import reda.testing.containers
+    >>> ert = reda.testing.containers.ERTContainer_nr
+    >>> import reda.plotters.histograms as RH
+    >>> fig = RH.plot_histograms_extra_dims(ert, ['R', ])
+    >>> fig
+    <matplotlib.figure.Figure object at ...>
+
+    >>> import reda.testing.containers
+    >>> ert = reda.testing.containers.ERTContainer_nr
+    >>> import reda.plotters.histograms as RH
+    >>> fig = RH.plot_histograms_extra_dims(ert, ['R', 'A'])
+    >>> fig
+    <matplotlib.figure.Figure object at ...>
+
+    """
     if isinstance(dataobj, pd.DataFrame):
         df_raw = dataobj
     else:
@@ -132,6 +153,8 @@ def plot_histograms_extra_dims(dataobj, keys, extra_dims, **kwargs):
 
     if kwargs.get('subquery', False):
         df = df_raw.query(kwargs.get('subquery'))
+    else:
+        df = df_raw
 
     split_timestamps = True
     if split_timestamps:
@@ -140,10 +163,11 @@ def plot_histograms_extra_dims(dataobj, keys, extra_dims, **kwargs):
     else:
         group_timestamps = ('all', df)
         N_ts = 1
-    columns = ['rho_a', ]
+
+    columns = keys
     N_c = len(columns)
 
-    plot_log10 = False
+    plot_log10 = kwargs.get('log10plot', False)
     if plot_log10:
         transformers = ['lin', 'log10']
         N_log10 = 2
