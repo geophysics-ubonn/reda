@@ -310,10 +310,28 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     return fig, ax, cb
 
 
-def plot_ps_extra(dataobj, columns, **kwargs):
-    """Create grouped pseudoplots, either for all columns (one timestep) or
-    multiples
+def plot_ps_extra(dataobj, key, **kwargs):
+    """Create grouped pseudoplots for one or more time steps
 
+    Parameters
+    ----------
+    dataobj: :class:`reda.containers.ERT`
+        An ERT container with loaded data
+    key: string
+        The column name to plot
+    subquery: string, optional
+    cbmin: float, optional
+    cbmax: float, optional
+
+    Examples
+    --------
+    >>> import reda.testing.containers
+    >>> ert = reda.testing.containers.ERTContainer_nr
+    >>> import reda.plotters.pseudoplots as PS
+    >>> fig = PS.plot_ps_extra(ert, key='R')
+    >>> fig
+    ...
+    <matplotlib.figure.Figure object at ...>
 
     """
     if isinstance(dataobj, pd.DataFrame):
@@ -323,6 +341,8 @@ def plot_ps_extra(dataobj, columns, **kwargs):
 
     if kwargs.get('subquery', False):
         df = df_raw.query(kwargs.get('subquery'))
+    else:
+        df = df_raw
 
     def fancyfy(axes, N):
         for ax in axes[0:-1, :].flat:
@@ -332,21 +352,28 @@ def plot_ps_extra(dataobj, columns, **kwargs):
 
     g = df.groupby('timestep')
     N = len(g.groups.keys())
-    nrx = 5
+    nrx = min((N, 5))
     nry = int(np.ceil(N / nrx))
+    # the sizes are heuristics [inches]
     sizex = nrx * 3
     sizey = nry * 4 - 1
     fig, axes = plt.subplots(
         nry, nrx,
-        sharex=True, sharey=True,
+        sharex=True,
+        sharey=True,
         figsize=(sizex, sizey),
     )
+    axes = np.atleast_2d(axes)
 
     cbs = []
     for ax, (name, group) in zip(axes.flat, g):
         fig1, axes1, cb1 = plot_pseudosection_type2(
-            group, 'rho_a', ax=ax, log10=False,
-            cbmin=50, cbmax=300,
+            group,
+            key,
+            ax=ax,
+            log10=False,
+            cbmin=kwargs.get('cbmin', None),
+            cbmax=kwargs.get('cbmax', None),
         )
         cbs.append(cb1)
         ax.set_title('timestep: {0}'.format(int(name)))
