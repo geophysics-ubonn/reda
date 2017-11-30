@@ -7,7 +7,8 @@ import pandas as pd
 import reda.main.init as redai
 
 import reda.importers.iris_syscal_pro as reda_syscal
-import reda.importers.bert as reda_bert
+import reda.importers.bert as reda_bert_import
+import reda.exporters.bert as reda_bert_export
 
 import reda.utils.geometric_factors as redaK
 import reda.utils.fix_sign_with_K as redafixK
@@ -76,8 +77,12 @@ def prepend_doc_of(fun):
 
 
 class Importers(object):
-    """This class provides wrappers for most of the importer functions, and is
-    meant to be inherited by the ERT data container
+    """This class provides wrappers for most of the importer functions and is
+    meant to be inherited by the ERT data container.
+
+    See Also
+    --------
+    Exporters
     """
     def _add_to_container(self, df):
         if self.data is not None:
@@ -114,7 +119,7 @@ class Importers(object):
         print('Summary:')
         self._describe_data(data)
 
-    @append_doc_of(reda_bert.import_ohm)
+    @append_doc_of(reda_bert_import.import_ohm)
     def import_bert(self, filename, **kwargs):
         """BERT .ohm file import"""
         timestep = kwargs.get('timestep', None)
@@ -124,12 +129,13 @@ class Importers(object):
         self.logger.info('BERT .ohm file import')
         with LogDataChanges(self, filter_action='import',
                             filter_query=os.path.basename(filename)):
-            data, electrodes, topography = reda_bert.import_ohm(
+            data, electrodes, topography = reda_bert_import.import_ohm(
                 filename, **kwargs
             )
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
+            self.electrode_positions = electrodes # See issue #22
         if kwargs.get('verbose', False):
             print('Summary:')
             self._describe_data(data)
@@ -138,6 +144,20 @@ class Importers(object):
     def import_pygimli(self, *args, **kargs):
         self.import_bert(*args, **kargs)
 
+class Exporters(object):
+    """This class provides wrappers for most of the exporter functions and is
+    meant to be inherited by the ERT data container.
+
+    See Also
+    --------
+    Importers
+    """
+    def export_bert(self, filename):
+        reda_bert_export.export_bert(self.data, self.electrode_positions, filename)
+
+    @functools.wraps(export_bert)
+    def export_pygimli(self, *args, **kargs):
+        self.export_bert(*args, **kargs)
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
     def __init__(self, log_list):
@@ -207,7 +227,7 @@ class LoggingClass(object):
         print('')
 
 
-class ERT(LoggingClass, Importers):
+class ERT(LoggingClass, Importers, Exporters):
 
     def __init__(self, data=None, electrode_positions=None,
                  topography=None):
