@@ -25,20 +25,20 @@ def import_ohm(filename, verbose=False):
         print(("Reading in %s... \n" % filename))
     file = open(filename)
 
-    eleccount = int(file.readline())
-    elecs_str = file.readline()
-    elecs_dim = len(elecs_str.rsplit()) - 1
-    elecs_ix = elecs_str.rsplit()[1:]
+    eleccount = int(file.readline().split("#")[0])
+    elecs_str = file.readline().split("#")[1]
+    elecs_dim = len(elecs_str.split())
+    elecs_ix = elecs_str.split()
 
     elecs = np.zeros((eleccount, elecs_dim), 'float')
     for i in range(eleccount):
         line = file.readline()
         elecs[i] = line.rsplit()
 
-    datacount = int(file.readline())
-    data_str = file.readline()
-    data_dim = len(data_str.rsplit()) - 1
-    data_ix = data_str.rsplit()[1:]
+    datacount = int(file.readline().split("#")[0])
+    data_str = file.readline().split("#")[1]
+    data_dim = len(data_str.split())
+    data_ix = data_str.split()
 
     _string_ = """
     Number of electrodes: %s
