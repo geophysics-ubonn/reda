@@ -1,13 +1,13 @@
-"""2D plots of raw data. This includes pseudosections.
+"""2D plots of raw data. This includes pseudosections."""
 
-"""
 import numpy as np
 import scipy.interpolate as si
 import scipy.spatial.qhull as siq
 
-import reda.utils.mpl
-plt, mpl = reda.utils.mpl.setup()
 import reda.utils.filter_config_types as fT
+import reda.utils.mpl
+
+plt, mpl = reda.utils.mpl.setup()
 
 
 def _pseudodepths_wenner(configs, spacing=1, grid=None):
@@ -26,9 +26,7 @@ def _pseudodepths_wenner(configs, spacing=1, grid=None):
     else:
         xpositions = grid.get_electrode_positions()[configs - 1, 0]
 
-    z = np.abs(
-        np.max(xpositions, axis=1) - np.min(xpositions, axis=1)
-    ) * -0.11
+    z = np.abs(np.max(xpositions, axis=1) - np.min(xpositions, axis=1)) * -0.11
     x = np.mean(xpositions, axis=1)
     return x, z
 
@@ -47,9 +45,8 @@ def _pseudodepths_schlumberger(configs, spacing=1, grid=None):
         xpositions = grid.get_electrode_positions()[configs - 1, 0]
 
     x = np.mean(xpositions, axis=1)
-    z = np.abs(
-        np.max(xpositions, axis=1) - np.min(xpositions, axis=1)
-    ) * -0.125
+    z = np.abs(np.max(xpositions, axis=1) - np.min(xpositions,
+                                                   axis=1)) * -0.125
     return x, z
 
 
@@ -66,16 +63,14 @@ def _pseudodepths_dd_simple(configs, spacing=1, grid=None):
     else:
         xpositions = grid.get_electrode_positions()[configs - 1, 0]
 
-    z = np.abs(
-        np.max(xpositions, axis=1) - np.min(xpositions, axis=1)
-    ) * -0.195
+    z = np.abs(np.max(xpositions, axis=1) - np.min(xpositions,
+                                                   axis=1)) * -0.195
     x = np.mean(xpositions, axis=1)
     return x, z
 
 
 def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
-                      ctypes=None,
-                      dd_merge=False, **kwargs):
+                      ctypes=None, dd_merge=False, **kwargs):
     """Plot pseudodepths for the measurements. If grid is given, then the
     actual electrode positions are used, and the parameter 'spacing' is
     ignored'
@@ -148,12 +143,7 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
 
     # sort the configurations into the various types of configurations
     only_types = ctypes or ['dd', ]
-    results = fT.filter(
-        configs,
-        settings={
-            'only_types': only_types,
-        }
-    )
+    results = fT.filter(configs, settings={'only_types': only_types, })
 
     # loop through all measurement types
     figs = []
@@ -173,9 +163,7 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
             labels_add = []
             for skip in sorted(index_dict.keys()):
                 plot_list.append(index_dict[skip])
-                labels_add.append(
-                    ' - skip {0}'.format(skip)
-                )
+                labels_add.append(' - skip {0}'.format(skip))
         else:
             # merge all indices
             plot_list = [np.hstack(index_dict.values()), ]
@@ -200,15 +188,13 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
                     electrodes[:, 0],
                     electrodes[:, 1],
                     color='b',
-                    label='electrodes',
-                )
+                    label='electrodes', )
             else:
                 ax.scatter(
                     np.arange(0, nr_electrodes) * spacing,
                     np.zeros(nr_electrodes),
                     color='b',
-                    label='electrodes',
-                )
+                    label='electrodes', )
             ax.set_title(titles[key] + label_add)
             ax.set_aspect('equal')
             ax.set_xlabel('x [m]')
@@ -224,8 +210,8 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
         return figs, axes
 
 
-def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
-                       dd_merge=False, cb=False, **kwargs):
+def plot_pseudosection(df, plot_key, spacing=1, ctypes=None, dd_merge=False,
+                       cb=False, **kwargs):
     """Create a pseudosection plot for a given measurement
 
     Parameters
@@ -262,18 +248,13 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
     # for now sort data and only plot dipole-dipole
     only_types = ctypes or ['dd', ]
     if 'schlumberger' in only_types:
-        raise Exception(
-            'plotting of pseudosections not implemented for ' +
-            'Schlumberger configurations!'
-        )
+        raise Exception('plotting of pseudosections not implemented for ' +
+                        'Schlumberger configurations!')
 
     configs = df[['A', 'B', 'M', 'N']].values
     results = fT.filter(
         configs,
-        settings={
-            'only_types': only_types,
-        },
-    )
+        settings={'only_types': only_types, }, )
     values = df[plot_key].values
 
     plot_objects = []
@@ -292,9 +273,7 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
             labels_add = []
             for skip in sorted(index_dict.keys()):
                 plot_list.append(index_dict[skip])
-                labels_add.append(
-                    ' - skip {0}'.format(skip)
-                )
+                labels_add.append(' - skip {0}'.format(skip))
         else:
             # merge all indices
             plot_list = [np.hstack(index_dict.values()), ]
@@ -336,19 +315,14 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
                     (px, pz),
                     fcolors,
                     (x, z),
-                    method='linear',
-                )
+                    method='linear', )
             except siq.QhullError as e:
                 print('Ex', e)
                 continue
 
             cmap = mpl.cm.get_cmap('jet_r')
 
-            data_ratio = np.abs(
-                px.max() - px.min()
-            ) / np.abs(
-                pz.min()
-            )
+            data_ratio = np.abs(px.max() - px.min()) / np.abs(pz.min())
 
             fig_size_y = 15 / data_ratio + 6 / 2.54
             fig = plt.figure(figsize=(15, fig_size_y))
@@ -362,9 +336,7 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
                 fig_bottom = 0.05
 
             ax = fig.add_axes([
-                fig_left,
-                fig_bottom + fig_top * 2,
-                1 - fig_left - fig_right,
+                fig_left, fig_bottom + fig_top * 2, 1 - fig_left - fig_right,
                 1 - fig_top - fig_bottom - fig_top * 2
             ])
 
@@ -375,22 +347,17 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
                 aspect='auto',
                 # vmin=10,
                 # vmax=300,
-                cmap=cmap,
-            )
+                cmap=cmap, )
             ax.set_ylim(pz.min(), 0)
 
             # colorbar
             if cb:
                 print('plotting colorbar')
                 # the colorbar has 3 cm on the bottom
-                ax_cb = fig.add_axes(
-                    [
-                        fig_left * 4,
-                        fig_top * 2,
-                        1 - fig_left * 4 - fig_right * 4,
-                        fig_bottom - fig_top * 2
-                    ]
-                )
+                ax_cb = fig.add_axes([
+                    fig_left * 4, fig_top * 2,
+                    1 - fig_left * 4 - fig_right * 4, fig_bottom - fig_top * 2
+                ])
                 # from mpl_toolkits.axes_grid1 import make_axes_locatable
                 # divider = make_axes_locatable(ax)
                 # ax_cb = divider.append_axes("bottom", "5%", pad="3%")
@@ -429,6 +396,53 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None,
 
     return plot_objects
 
+
+def matplot(x, y, z, ax=None, colorbar=True, **kwargs):
+    """ Plot x, y, z as expected with correct axis labels.
+
+    Examples
+    --------
+    >>> import numpy as np
+    >>> a = np.arange(4)
+    >>> b = np.arange(3) + 3
+    >>> def sum(a, b):
+    ...    return a + b
+    >>> x, y = np.meshgrid(a, b)
+    >>> c = sum(x, y)
+    >>> ax, cbar = matplot(x, y, c, cmap="Blues")
+
+    Note
+    ----
+    Only works for equidistant data at the moment.
+    """
+    xmin = x.min()
+    xmax = x.max()
+    dx = np.abs(x[0, 1] - x[0, 0])
+
+    ymin = y.min()
+    ymax = y.max()
+    dy = np.abs(y[1, 0] - y[0, 0])
+
+    x2, y2 = np.meshgrid(
+        np.arange(xmin, xmax + 2 * dx, dx) - dx / 2.,
+        np.arange(ymin, ymax + 2 * dy, dy) - dy / 2.)
+
+    if not ax:
+        fig, ax = plt.subplots()
+    else:
+        fig = ax.figure
+
+    im = ax.pcolormesh(x2, y2, z, **kwargs)
+    ax.axis([x2.min(), x2.max(), y2.min(), y2.max()])
+    ax.set_xticks(np.arange(xmin, xmax + dx, dx))
+    ax.set_yticks(np.arange(ymin, ymax + dx, dy))
+
+    if colorbar:
+        cbar = fig.colorbar(im, ax=ax)
+    else:
+        cbar = None
+
+    return ax, cbar
 
 def plot_rawdataplot():
     pass
