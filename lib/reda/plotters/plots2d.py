@@ -413,7 +413,7 @@ def matplot(x, y, z, ax=None, colorbar=True, **kwargs):
     >>> c = sum(x, y)
     >>> fig, (ax1, ax2) = plt.subplots(1, 2)
     >>> im = ax1.pcolormesh(x, y, c)
-    >>> plt.colorbar(im, ax=ax1)
+    >>> _ = plt.colorbar(im, ax=ax1)
     >>> ax1.set_title("plt.pcolormesh")
     >>> _, _ = matplot(x, y, c, ax=ax2)
     >>> ax2.set_title("reda.plotters.matplot")
