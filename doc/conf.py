@@ -14,6 +14,8 @@
 
 # import sys
 # import os
+import matplotlib
+matplotlib.use("Agg")
 
 # If extensions (or modules to document with autodoc) are in another directory,
 # add these directories to sys.path here. If the directory is relative to the
@@ -31,9 +33,13 @@
 extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.todo',
+    'sphinx.ext.doctest',
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
+    'matplotlib.sphinxext.only_directives',
+    'matplotlib.sphinxext.plot_directive',
+    'numpydoc',
 ]
 
 intersphinx_mapping = {
@@ -189,6 +195,15 @@ html_static_path = ['_static']
 # Output file base name for HTML help builder.
 htmlhelp_basename = 'REDAdoc'
 
+# Options for API documentation with figures
+numpydoc_class_members_toctree = False
+numpydoc_show_class_members = True
+numpydoc_use_plots = True
+
+# MPL plot directive settings
+plot_formats = [('png', 96), ('pdf', 96)]
+plot_include_source = True
+plot_html_show_formats = True
 
 # -- Options for LaTeX output ---------------------------------------------
 

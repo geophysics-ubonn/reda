@@ -402,14 +402,22 @@ def matplot(x, y, z, ax=None, colorbar=True, **kwargs):
 
     Examples
     --------
+    >>> import matplotlib.pyplot as plt
     >>> import numpy as np
+    >>> from reda.plotters import matplot
     >>> a = np.arange(4)
     >>> b = np.arange(3) + 3
     >>> def sum(a, b):
     ...    return a + b
     >>> x, y = np.meshgrid(a, b)
     >>> c = sum(x, y)
-    >>> ax, cbar = matplot(x, y, c, cmap="Blues")
+    >>> fig, (ax1, ax2) = plt.subplots(1, 2)
+    >>> im = ax1.pcolormesh(x, y, c)
+    >>> plt.colorbar(im, ax=ax1)
+    >>> ax1.set_title("plt.pcolormesh")
+    >>> _, _ = matplot(x, y, c, ax=ax2)
+    >>> ax2.set_title("reda.plotters.matplot")
+    >>> fig.show()
 
     Note
     ----
