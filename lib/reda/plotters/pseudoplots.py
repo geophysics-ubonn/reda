@@ -132,74 +132,74 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     cb:
         colorbar object
 
-    Examples
-    --------
-
-    You can just supply a data vector to the plot function:
-
-    .. plot::
-        :include-source:
-
-        # Missing dependency on travis
-        # import numpy as np
-        # import crtomo.configManager as CRConfig
-        # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-        # configs.gen_dipole_dipole(skipc=1, stepc=2)
-        # measurements = np.random.random(configs.nr_of_configs)
-        # configs.plot_pseudosection_type2(
-        #     mid=measurements,
-        # )
-
-    Generate a simple type 2 plot:
-
-    .. plot::
-        :include-source:
-
-        # import numpy as np
-        # import crtomo.configManager as CRConfig
-        # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-        # configs.gen_dipole_dipole(skipc=1, stepc=2)
-        # measurements = np.random.random(configs.nr_of_configs)
-        # mid = configs.add_measurements(measurements)
-        # configs.plot_pseudosection_type2(
-        #     mid,
-        #     cblabel='this label',
-        #     xlabel='xlabel',
-        #     ylabel='ylabel',
-        # )
-
-    You can also supply axes to plot to:
-
-    .. plot::
-        :include-source:
-
-        import numpy as np
-        from crtomo.mpl_setup import *
-        import crtomo.configManager as CRConfig
-
-        configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-        configs.gen_dipole_dipole(skipc=1, stepc=2)
-        K = configs.compute_K_factors(spacing=1)
-        measurements = np.random.random(configs.nr_of_configs)
-        mid = configs.add_measurements(measurements)
-
-        fig, axes = plt.subplots(1, 2)
-
-        configs.plot_pseudosection_type2(
-            mid,
-            ax=axes[0],
-            cblabel='this label',
-            xlabel='xlabel',
-            ylabel='ylabel',
-        )
-        configs.plot_pseudosection_type2(
-            K,
-            ax=axes[1],
-            cblabel='K factor',
-            xlabel='xlabel',
-            ylabel='ylabel',
-        )
-        fig.tight_layout()
+    # Examples
+    # --------
+    #
+    # You can just supply a data vector to the plot function:
+    #
+    # .. plot::
+    #     :include-source:
+    #
+    #     # Missing dependency on travis
+    #     # import numpy as np
+    #     # import crtomo.configManager as CRConfig
+    #     # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
+    #     # configs.gen_dipole_dipole(skipc=1, stepc=2)
+    #     # measurements = np.random.random(configs.nr_of_configs)
+    #     # configs.plot_pseudosection_type2(
+    #     #     mid=measurements,
+    #     # )
+    #
+    # Generate a simple type 2 plot:
+    #
+    # .. plot::
+    #     :include-source:
+    #
+    #     # import numpy as np
+    #     # import crtomo.configManager as CRConfig
+    #     # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
+    #     # configs.gen_dipole_dipole(skipc=1, stepc=2)
+    #     # measurements = np.random.random(configs.nr_of_configs)
+    #     # mid = configs.add_measurements(measurements)
+    #     # configs.plot_pseudosection_type2(
+    #     #     mid,
+    #     #     cblabel='this label',
+    #     #     xlabel='xlabel',
+    #     #     ylabel='ylabel',
+    #     # )
+    #
+    # You can also supply axes to plot to:
+    #
+    # .. plot::
+    #     :include-source:
+    #
+    #     import numpy as np
+    #     from crtomo.mpl_setup import *
+    #     import crtomo.configManager as CRConfig
+    #
+    #     configs = CRConfig.ConfigManager(nr_of_electrodes=48)
+    #     configs.gen_dipole_dipole(skipc=1, stepc=2)
+    #     K = configs.compute_K_factors(spacing=1)
+    #     measurements = np.random.random(configs.nr_of_configs)
+    #     mid = configs.add_measurements(measurements)
+    #
+    #     fig, axes = plt.subplots(1, 2)
+    #
+    #     configs.plot_pseudosection_type2(
+    #         mid,
+    #         ax=axes[0],
+    #         cblabel='this label',
+    #         xlabel='xlabel',
+    #         ylabel='ylabel',
+    #     )
+    #     configs.plot_pseudosection_type2(
+    #         K,
+    #         ax=axes[1],
+    #         cblabel='K factor',
+    #         xlabel='xlabel',
+    #         ylabel='ylabel',
+    #     )
+    #     fig.tight_layout()
 
     Examples
     --------
