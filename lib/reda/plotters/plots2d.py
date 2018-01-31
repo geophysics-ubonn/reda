@@ -107,24 +107,25 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
     .. plot::
         :include-source:
 
-        import crtomo.configManager as CRconfig
-        config = CRconfig.ConfigManager(nr_of_electrodes=48)
-        config.gen_dipole_dipole(skipc=2)
-        fig, ax = config.plot_pseudodepths(
-            spacing=0.3,
-            ctypes=['dd', ],
-        )
+        # Missing dependency on travis
+        # import crtomo.configManager as CRconfig
+        # config = CRconfig.ConfigManager(nr_of_electrodes=48)
+        # config.gen_dipole_dipole(skipc=2)
+        # fig, ax = config.plot_pseudodepths(
+        #     spacing=0.3,
+        #     ctypes=['dd', ],
+        # )
 
     .. plot::
         :include-source:
 
-        import crtomo.configManager as CRconfig
-        config = CRconfig.ConfigManager(nr_of_electrodes=48)
-        config.gen_schlumberger(M=24, N=25)
-        fig, ax = config.plot_pseudodepths(
-            spacing=1,
-            ctypes=['schlumberger', ],
-        )
+        # import crtomo.configManager as CRconfig
+        # config = CRconfig.ConfigManager(nr_of_electrodes=48)
+        # config.gen_schlumberger(M=24, N=25)
+        # fig, ax = config.plot_pseudodepths(
+        #     spacing=1,
+        #     ctypes=['schlumberger', ],
+        # )
 
     """
     # for each configuration type we have different ways of computing

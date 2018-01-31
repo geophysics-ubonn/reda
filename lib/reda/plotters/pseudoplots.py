@@ -140,32 +140,33 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     .. plot::
         :include-source:
 
-        import numpy as np
-        import crtomo.configManager as CRConfig
-        configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-        configs.gen_dipole_dipole(skipc=1, stepc=2)
-        measurements = np.random.random(configs.nr_of_configs)
-        configs.plot_pseudosection_type2(
-            mid=measurements,
-        )
+        # Missing dependency on travis
+        # import numpy as np
+        # import crtomo.configManager as CRConfig
+        # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
+        # configs.gen_dipole_dipole(skipc=1, stepc=2)
+        # measurements = np.random.random(configs.nr_of_configs)
+        # configs.plot_pseudosection_type2(
+        #     mid=measurements,
+        # )
 
     Generate a simple type 2 plot:
 
     .. plot::
         :include-source:
 
-        import numpy as np
-        import crtomo.configManager as CRConfig
-        configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-        configs.gen_dipole_dipole(skipc=1, stepc=2)
-        measurements = np.random.random(configs.nr_of_configs)
-        mid = configs.add_measurements(measurements)
-        configs.plot_pseudosection_type2(
-            mid,
-            cblabel='this label',
-            xlabel='xlabel',
-            ylabel='ylabel',
-        )
+        # import numpy as np
+        # import crtomo.configManager as CRConfig
+        # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
+        # configs.gen_dipole_dipole(skipc=1, stepc=2)
+        # measurements = np.random.random(configs.nr_of_configs)
+        # mid = configs.add_measurements(measurements)
+        # configs.plot_pseudosection_type2(
+        #     mid,
+        #     cblabel='this label',
+        #     xlabel='xlabel',
+        #     ylabel='ylabel',
+        # )
 
     You can also supply axes to plot to:
 
