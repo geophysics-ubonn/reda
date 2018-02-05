@@ -32,6 +32,8 @@ Import pipeline:
   required if we use the arctan2 function?)
 - compute variance/standard deviation from the repetition values
 
+Open questions:
+
 - should we provide a time delta between the two measurements?
 
 """
@@ -53,15 +55,30 @@ def _add_rhoa(df, spacing):
     return df
 
 
-def import_medusa_data(mat_filename, configs):
-    """
+def import_medusa_data(mat_filename, config_file):
+    """Import measurement data (a .mat file) of the FZJ EIT160 system. This
+    data format is identified as 'FZJ-EZ-2017'.
+
+    Parameters
+    ----------
+    mat_filename: string
+        filename to the .mat data file. Note that only MNU0 single-potentials
+        are supported!
+    config_file: string
+        filename for configuration file. The configuration file contains N rows
+        with 4 columns each (A, B, M, N)
+
+    Returns
+    -------
 
     """
-    df_emd, df_md = read_mat_mnu0(mat_filename)
+    df_emd, df_md = _read_mat_mnu0(mat_filename)
 
     # 'configs' can be a numpy array or a filename
-    if not isinstance(configs, np.ndarray):
-        configs = np.loadtxt(configs).astype(int)
+    if not isinstance(config_file, np.ndarray):
+        configs = np.loadtxt(config_file).astype(int)
+    else:
+        configs = config_file
 
     # construct four-point measurements via superposition
     print('constructing four-point measurements')
@@ -123,15 +140,20 @@ def import_medusa_data(mat_filename, configs):
     return dfn, df_md
 
 
-def read_mat_mnu0(filename):
+def _read_mat_mnu0(filename):
     """Import a .mat file with single potentials (A B M) into a pandas
     DataFrame
 
-    Also export some variables of the md struct into a separate structure
+    Also export some variables of the MD struct into a separate structure
     """
     print('read_mag_single_file: {0}'.format(filename))
 
-    mat = sio.loadmat(filename)
+    mat = sio.loadmat(filename, squeeze_me=True)
+    # check the version
+    if mat['MP']['Version'].item() != 'FZJ-EZ-2017':
+        raise Exception(
+            'This data format is not supported (expected: FZJ-EZ-2017)'
+        )
 
     df_emd = _extract_emd(mat, filename=filename)
     df_md = _extract_md(mat)
@@ -168,6 +190,7 @@ def _extract_md(mat):
                 fdata['As3'][:, 0, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
                 fdata['Is3'],
+                fdata['Yl3'],
             ))
         )
         df.columns = (
@@ -189,6 +212,9 @@ def _extract_md(mat):
             'Is1',
             'Is2',
             'Is3',
+            'Yl1',
+            'Yl2',
+            'Yl3',
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
@@ -200,6 +226,8 @@ def _extract_md(mat):
         df['Zg1'] = df['Zg1'].astype(complex)
         df['Zg2'] = df['Zg2'].astype(complex)
         df['Zg3'] = df['Zg3'].astype(complex)
+
+        df['Yl3'] = df['Yl3'].astype(complex)
 
         df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
         df['ShuntVoltage1_2'] = df['ShuntVoltage1_2'].astype(complex)
@@ -220,12 +248,10 @@ def _extract_md(mat):
 
         df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
 
-        df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
+        df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
         dfl.append(df)
 
     df = pd.concat(dfl)
-    # import IPython
-    # IPython.embed()
 
     return df
 
@@ -254,7 +280,7 @@ def _extract_emd(mat, filename):
         # print('Frequency: ', emd[f_id]['fm'])
         fdata = emd[f_id]
         # some consistency checks
-        if fdata['nu'].shape[1] == 2:
+        if len(fdata['nu']) == 2 and fdata['nu'].shape[1] == 2:
             raise Exception(
                 'Need MNU0 file, not a quadpole .mat file: {0}'.format(
                     filename
@@ -270,7 +296,7 @@ def _extract_emd(mat, filename):
             np.hstack((
                 timestamp,
                 fdata['ni'],
-                fdata['nu'],
+                fdata['nu'][:, np.newaxis],
                 fdata['Zt3'],
                 fdata['Is3'],
                 fdata['Il3'],
@@ -312,7 +338,7 @@ def _extract_emd(mat, filename):
             'Yg23_3',
         )
 
-        df['frequency'] = np.ones(df.shape[0]) * fdata['fm'].squeeze()
+        df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
 
         # cast to correct type
         df['datetime'] = pd.to_datetime(df['datetime'])
