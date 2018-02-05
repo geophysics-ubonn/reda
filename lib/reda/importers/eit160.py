@@ -227,6 +227,8 @@ def _extract_md(mat):
         df['Zg2'] = df['Zg2'].astype(complex)
         df['Zg3'] = df['Zg3'].astype(complex)
 
+        df['Yl1'] = df['Yl1'].astype(complex)
+        df['Yl2'] = df['Yl2'].astype(complex)
         df['Yl3'] = df['Yl3'].astype(complex)
 
         df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
