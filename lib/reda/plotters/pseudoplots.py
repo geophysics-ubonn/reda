@@ -132,77 +132,77 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     cb:
         colorbar object
 
-    # Examples
-    # --------
-    #
-    # You can just supply a data vector to the plot function:
-    #
-    # .. plot::
-    #     :include-source:
-    #
-    #     # Missing dependency on travis
-    #     # import numpy as np
-    #     # import crtomo.configManager as CRConfig
-    #     # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-    #     # configs.gen_dipole_dipole(skipc=1, stepc=2)
-    #     # measurements = np.random.random(configs.nr_of_configs)
-    #     # configs.plot_pseudosection_type2(
-    #     #     mid=measurements,
-    #     # )
-    #
-    # Generate a simple type 2 plot:
-    #
-    # .. plot::
-    #     :include-source:
-    #
-    #     # import numpy as np
-    #     # import crtomo.configManager as CRConfig
-    #     # configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-    #     # configs.gen_dipole_dipole(skipc=1, stepc=2)
-    #     # measurements = np.random.random(configs.nr_of_configs)
-    #     # mid = configs.add_measurements(measurements)
-    #     # configs.plot_pseudosection_type2(
-    #     #     mid,
-    #     #     cblabel='this label',
-    #     #     xlabel='xlabel',
-    #     #     ylabel='ylabel',
-    #     # )
-    #
-    # You can also supply axes to plot to:
-    #
-    # .. plot::
-    #     :include-source:
-    #
-    #     import numpy as np
-    #     from crtomo.mpl_setup import *
-    #     import crtomo.configManager as CRConfig
-    #
-    #     configs = CRConfig.ConfigManager(nr_of_electrodes=48)
-    #     configs.gen_dipole_dipole(skipc=1, stepc=2)
-    #     K = configs.compute_K_factors(spacing=1)
-    #     measurements = np.random.random(configs.nr_of_configs)
-    #     mid = configs.add_measurements(measurements)
-    #
-    #     fig, axes = plt.subplots(1, 2)
-    #
-    #     configs.plot_pseudosection_type2(
-    #         mid,
-    #         ax=axes[0],
-    #         cblabel='this label',
-    #         xlabel='xlabel',
-    #         ylabel='ylabel',
-    #     )
-    #     configs.plot_pseudosection_type2(
-    #         K,
-    #         ax=axes[1],
-    #         cblabel='K factor',
-    #         xlabel='xlabel',
-    #         ylabel='ylabel',
-    #     )
-    #     fig.tight_layout()
-
     Examples
     --------
+
+    You can just supply a pandas.DataFrame to the plot function:
+
+    .. plot::
+        :include-source:
+
+        import numpy as np
+        configs = np.array((
+            (1, 2, 4, 3),
+            (1, 2, 5, 4),
+            (1, 2, 6, 5),
+            (2, 3, 5, 4),
+            (2, 3, 6, 5),
+            (3, 4, 6, 5),
+        ))
+        measurements = np.random.random(configs.shape[0])
+        import pandas as pd
+        df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N'])
+        df['measurements'] = measurements
+
+        from reda.plotters.pseudoplots import plot_pseudosection_type2
+        fig, ax, cb = plot_pseudosection_type2(
+           dataobj=df,
+           column='measurements',
+        )
+
+    You can also supply axes to plot to:
+
+    .. plot::
+        :include-source:
+
+        import numpy as np
+        configs = np.array((
+            (1, 2, 4, 3),
+            (1, 2, 5, 4),
+            (1, 2, 6, 5),
+            (2, 3, 5, 4),
+            (2, 3, 6, 5),
+            (3, 4, 6, 5),
+        ))
+        measurements = np.random.random(configs.shape[0])
+        measurements2 = np.random.random(configs.shape[0])
+
+        import pandas as pd
+        df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N'])
+        df['measurements'] = measurements
+        df['measurements2'] = measurements2
+
+        from reda.plotters.pseudoplots import plot_pseudosection_type2
+
+        fig, axes = plt.subplots(1, 2)
+
+        plot_pseudosection_type2(
+            df,
+            column='measurements',
+            ax=axes[0],
+            cblabel='this label',
+            xlabel='xlabel',
+            ylabel='ylabel',
+        )
+        plot_pseudosection_type2(
+            df,
+            column='measurements2',
+            ax=axes[1],
+            cblabel='measurement 2',
+            xlabel='xlabel',
+            ylabel='ylabel',
+        )
+        fig.tight_layout()
 
     >>> from reda.testing.containers import ERTContainer_nr
     >>> import reda.plotters.pseudoplots as ps

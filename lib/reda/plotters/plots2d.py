@@ -77,6 +77,11 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
 
     Parameters
     ----------
+    configs: :class:`numpy.ndarray`
+        Nx4 array containing the quadrupoles for different measurements
+    nr_electrodes: int
+        The overall number of electrodes of the dataset. This is used to plot
+        the surface electrodes
     spacing: float, optional
         assumed distance between electrodes. Default=1
     grid: crtomo.grid.crt_grid instance, optional
@@ -96,7 +101,7 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
     Returns
     -------
     figs: matplotlib.figure.Figure instance or list of Figure instances
-        if only one type was plotted, then the figure instance is return.
+        if only one type was plotted, then the figure instance is returned.
         Otherwise, return a list of figure instances.
     axes: axes object or list of axes ojects
         plot axes
@@ -107,25 +112,36 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
     .. plot::
         :include-source:
 
-        # Missing dependency on travis
-        # import crtomo.configManager as CRconfig
-        # config = CRconfig.ConfigManager(nr_of_electrodes=48)
-        # config.gen_dipole_dipole(skipc=2)
-        # fig, ax = config.plot_pseudodepths(
-        #     spacing=0.3,
-        #     ctypes=['dd', ],
-        # )
+        from reda.plotters.plots2d import plot_pseudodepths
+        # define a few measurements
+        import numpy as np
+        configs = np.array((
+            (1, 2, 4, 3),
+            (1, 2, 5, 4),
+            (1, 2, 6, 5),
+            (2, 3, 5, 4),
+            (2, 3, 6, 5),
+            (3, 4, 6, 5),
+        ))
+        # plot
+        fig, axes = plot_pseudodepths(configs, nr_electrodes=6, spacing=1,
+                                      ctypes=['dd', ])
 
     .. plot::
         :include-source:
 
-        # import crtomo.configManager as CRconfig
-        # config = CRconfig.ConfigManager(nr_of_electrodes=48)
-        # config.gen_schlumberger(M=24, N=25)
-        # fig, ax = config.plot_pseudodepths(
-        #     spacing=1,
-        #     ctypes=['schlumberger', ],
-        # )
+        from reda.plotters.plots2d import plot_pseudodepths
+        # define a few measurements
+        import numpy as np
+        configs = np.array((
+            (4, 7, 5, 6),
+            (3, 8, 5, 6),
+            (2, 9, 5, 6),
+            (1, 10, 5, 6),
+        ))
+        # plot
+        fig, axes = plot_pseudodepths(configs, nr_electrodes=10, spacing=1,
+                                      ctypes=['schlumberger', ])
 
     """
     # for each configuration type we have different ways of computing
