@@ -28,14 +28,17 @@ Import pipeline:
 - read quadrupoles from separate file or provide numpy array
 - compute mean of three impedance measurement repetitions (Z1-Z3) for each ABM
 - compute quadrupole impedance via superposition using
+
     - a) averaged Z-values
     - b) the single repetitions Z1-Z3
-(I think we don't need the next step because of np.arctan2)
-- check for correct quadrant in phase values, correct if necessary (is this
-  required if we use the arctan2 function?)
-- compute variance/standard deviation from the repetition values
 
-- should we provide a time delta between the two measurements?
+* (I think we don't need the next step because of np.arctan2)
+  check for correct quadrant in phase values, correct if necessary (is this
+  required if we use the arctan2 function?)
+
+* compute variance/standard deviation from the repetition values
+
+* should we provide a time delta between the two measurements?
 
 """
 import numpy as np
