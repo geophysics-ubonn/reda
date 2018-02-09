@@ -36,17 +36,18 @@ def compute_K_numerical(dataframe, settings=None):
 
     Returns
     -------
-    K
+    K: :class:`numpy.ndarray`
         K factors (are also directly written to the dataframe)
 
     Examples
     --------
+    ::
 
-    settings = {
-        'rho': 100,
-        'elem': 'elem.dat',
-        'elec': 'elec.dat',
-    }
+        settings = {
+            'rho': 100,
+            'elem': 'elem.dat',
+            'elec': 'elec.dat',
+        }
 
     """
     inversion_code = reda.rcParams.get('geom_factor.inversion_code', 'crtomo')

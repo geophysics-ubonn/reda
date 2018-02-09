@@ -6,8 +6,7 @@ import numpy as np
 
 
 def import_ohm(filename, verbose=False):
-    """
-    Construct pandas data frame BERT's unified data format (*.ohm).
+    """Construct pandas data frame from BERT`s unified data format (.ohm).
 
     Parameters
     ----------
@@ -20,6 +19,7 @@ def import_ohm(filename, verbose=False):
     -------
     data: :class:`pandas.DataFrame`
        The measurement data
+
     """
     if verbose:
         print(("Reading in %s... \n" % filename))
@@ -72,7 +72,10 @@ def import_ohm(filename, verbose=False):
     if (not 'R' in data_reda.keys()) and \
        ('rho_a' in data_reda.keys() and 'K' in data_reda.keys()):
         data_reda['R'] = data_reda['rho_a'] / data_reda['K']
-        print("Calculating resistance from apparent resistivity and geometric factors. (R = rhoa_/K)")
+        print(
+            "Calculating resistance from apparent resistivity and "
+            "geometric factors. (R = rhoa_/K)")
+
     for col in ('A', 'B', 'M', 'N'):
         data_reda[col] = data_reda[col].astype(int)
 
