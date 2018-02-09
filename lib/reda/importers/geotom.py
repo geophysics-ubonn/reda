@@ -71,10 +71,21 @@ def _parse_wenner_file(filename, settings):
 
 def add_file(filename, settings, container=None):
     """
-    settings = {
-        timestep: [int|datetime], timestep relating to this measurement
-    }
-    container: ERT container to add dataset to
+
+    Parameters
+    ----------
+    filename: string
+        path
+    settings: dict
+        ::
+
+            {
+                timestep: [int|datetime], timestep relating to this measurement
+            }
+
+    container: :class:`reda.container.ERT.ERT`
+        ERT container to add dataset to
+
     """
     timestep = settings.get('timestep', 0)
 

@@ -356,23 +356,28 @@ def parse_radic_file(filename, settings, selection_mode="after"):
     (Radic Research)
 
     Parameters
-    ==========
-    filename: input filename, usually with the ending ".RES"
+    ----------
+    filename: string
+        input filename, usually with the ending ".RES"
 
-    settings = {
-        'filter_skip': (integer) skip dipoles we are interested in
-        'quadrupole_mode': ['after'|'between'|'before'| 'all']
-                           which dipoles to use from the file
-    }
+    settings: dict
+        ::
 
+            settings = {
+                'filter_skip': (integer) skip dipoles we are interested in
+                'quadrupole_mode': ['after'|'between'|'before'| 'all']
+                                   which dipoles to use from the file
+            }
 
-    selection_mode: which voltage dipoles should be returned. Possible choices:
-        "all"
-        "before"
-        "after"
+    selection_mode: dict
+        which voltage dipoles should be returned. Possible choices:
+
+        * "all"
+        * "before"
+        * "after"
 
     Returns
-    =======
+    -------
 
 
     """
