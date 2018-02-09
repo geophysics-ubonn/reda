@@ -45,11 +45,14 @@ def save_block_to_crt(filename, group, norrec='all', store_errors=False):
 def write_files_to_directory(df, directory, **kwargs):
     """
 
-    kwargs = {
-        'store_errors': [True|False] store the device generated errors in the
-                        output files (as additional columns)
-        'norrec': all|nor|rec which normal-reciprocal data set to use
-    }
+    ::
+
+        kwargs = {
+            'store_errors': [True|False] store the device generated errors in
+                            the output files (as additional columns)
+            'norrec': all|nor|rec which normal-reciprocal data set to use
+        }
+
     """
     if 'frequency' in df.columns:
         group_key = 'frequency'
