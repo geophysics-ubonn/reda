@@ -19,5 +19,5 @@ if __name__ == '__main__':
         url='https://github.com/geophysics-ubonn/reda',
         packages=find_packages("lib"),
         package_dir={'': 'lib'},
-        install_requires=['numpy', 'scipy', 'matplotlib'],
+        install_requires=['numpy', 'scipy', 'pandas', 'matplotlib'],
     )
