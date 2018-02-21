@@ -76,17 +76,16 @@ class ConfigManager(object):
         --------
 
         >>> import numpy as np
-            from reda.configs.configManager import ConfigManager
-            config = ConfigManager(nr_of_electrodes=5)
-            # generate some CRMod-style configurations
-            crmod_configs = np.array((
-                (10002, 40003),
-                (10010, 30004),
-            ))
-            abmn = config._crmod_to_abmn(crmod_configs)
-            print(abmn)
-        [[  2.   1.   3.   4.]
-         [ 10.   1.   4.   3.]]
+        >>> from reda.configs.configManager import ConfigManager
+        >>> config = ConfigManager(nr_of_electrodes=5)
+        >>> crmod_configs = np.array((
+        ...     (10002, 40003),
+        ...     (10010, 30004),
+        ... ))
+        >>> abmn = config._crmod_to_abmn(crmod_configs)
+        >>> print(abmn)
+        [[ 2  1  3  4]
+         [10  1  4  3]]
 
         """
         A = configs[:, 0] % 1e4
@@ -98,7 +97,7 @@ class ConfigManager(object):
             B[:, np.newaxis],
             M[:, np.newaxis],
             N[:, np.newaxis]
-        ))
+        )).astype(int)
         return ABMN
 
     def load_configs(self, filename):
@@ -816,6 +815,21 @@ class ConfigManager(object):
         Returns
         -------
         data: pybert.DataContainerERT
+
+        Examples
+        --------
+
+        >>> import numpy as np
+        >>> from reda.configs.configManager import ConfigManager
+        >>> configs = ConfigManager(nr_of_electrodes=48)
+        >>> new_configs = configs.gen_dipole_dipole(skipc=2)
+        >>> x = np.arange(0, 48, 1)
+        >>> z = np.ones(48) * -1
+        >>> y = np.zeros(48)
+        >>> xyz = np.vstack((x, y, z)).T
+        >>> scheme = configs.to_pg_scheme(positions=xyz)
+        >>> print(scheme)
+        Data: Electrodes: 48 data: 365
 
 
         """
