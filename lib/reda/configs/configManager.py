@@ -819,17 +819,16 @@ class ConfigManager(object):
         Examples
         --------
 
-        >>> import numpy as np
-        >>> from reda.configs.configManager import ConfigManager
-        >>> configs = ConfigManager(nr_of_electrodes=48)
-        >>> new_configs = configs.gen_dipole_dipole(skipc=2)
-        >>> x = np.arange(0, 48, 1)
-        >>> z = np.ones(48) * -1
-        >>> y = np.zeros(48)
-        >>> xyz = np.vstack((x, y, z)).T
-        >>> scheme = configs.to_pg_scheme(positions=xyz)
-        >>> print(scheme)
-        Data: Electrodes: 48 data: 365
+            import numpy as np
+            from reda.configs.configManager import ConfigManager
+            configs = ConfigManager(nr_of_electrodes=48)
+            new_configs = configs.gen_dipole_dipole(skipc=2)
+            x = np.arange(0, 48, 1)
+            z = np.ones(48) * -1
+            y = np.zeros(48)
+            xyz = np.vstack((x, y, z)).T
+            scheme = configs.to_pg_scheme(positions=xyz)
+            print(scheme)
 
 
         """
