@@ -135,16 +135,11 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.histograms as RH
     >>> fig = RH.plot_histograms_extra_dims(ert, ['R', ])
-    >>> fig
-    <matplotlib.figure.Figure object at ...>
 
     >>> import reda.testing.containers
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.histograms as RH
     >>> fig = RH.plot_histograms_extra_dims(ert, ['R', 'A'])
-    >>> fig
-    <matplotlib.figure.Figure object at ...>
-
     """
     if isinstance(dataobj, pd.DataFrame):
         df_raw = dataobj

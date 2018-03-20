@@ -330,10 +330,6 @@ def plot_ps_extra(dataobj, key, **kwargs):
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.pseudoplots as PS
     >>> fig = PS.plot_ps_extra(ert, key='R')
-    >>> fig
-    ...
-    <matplotlib.figure.Figure object at ...>
-
     """
     if isinstance(dataobj, pd.DataFrame):
         df_raw = dataobj
