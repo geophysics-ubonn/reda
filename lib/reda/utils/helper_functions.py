@@ -4,6 +4,9 @@
 import os.path
 from importlib import import_module
 
+import numpy as np
+
+
 def opt_import(module, requiredFor="use the full functionality"):
     """Import and return module only if it exists.
     If `module` cannot be imported, a warning is printed followed by the
@@ -30,8 +33,9 @@ def opt_import(module, requiredFor="use the full functionality"):
     """
     # set default message for common imports
     if not requiredFor and "crtomo" in module:
-        requiredFor = ("modelling and inversion with CRTOMO. Check"
-                       "http://geo.uni-bonn.de/~mweigand/dashboard for details.")
+        requiredFor = (
+            "modelling and inversion with CRTOMO. Check"
+            "http://geo.uni-bonn.de/~mweigand/dashboard for details.")
 
     if not requiredFor and "pygimli" in module:
         requiredFor = ("modelling and inversion with pygimli. Check"
@@ -50,10 +54,12 @@ def opt_import(module, requiredFor="use the full functionality"):
 
     return mod
 
+
 def which(program):
     """Python function to mimic the unix 'which' command."""
     # Taken from https://stackoverflow.com/questions/377017/test-if-executable-exists-in-python
     import os
+
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
 
@@ -68,3 +74,8 @@ def which(program):
                 return exe_file
 
     return None
+
+
+def search(what):
+    """Utility function to search docstrings for string `what`."""
+    np.lookfor(what, module="reda", import_modules=False)
