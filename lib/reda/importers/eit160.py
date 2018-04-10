@@ -190,7 +190,9 @@ def _extract_md(mat):
                 fdata['Cl3'],
                 fdata['Zg3'],
                 fdata['As3'][:, 0, :].squeeze(),
+                fdata['As3'][:, 1, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
+                fdata['As3'][:, 3, :].squeeze(),
                 fdata['Is3'],
                 fdata['Yl3'],
             ))
@@ -211,6 +213,12 @@ def _extract_md(mat):
             'ShuntVoltage2_1',
             'ShuntVoltage2_2',
             'ShuntVoltage2_3',
+            'ShuntVoltage3_1',
+            'ShuntVoltage3_2',
+            'ShuntVoltage3_3',
+            'ShuntVoltage4_1',
+            'ShuntVoltage4_2',
+            'ShuntVoltage4_3',
             'Is1',
             'Is2',
             'Is3',
@@ -240,6 +248,14 @@ def _extract_md(mat):
         df['ShuntVoltage2_1'] = df['ShuntVoltage2_1'].astype(complex)
         df['ShuntVoltage2_2'] = df['ShuntVoltage2_2'].astype(complex)
         df['ShuntVoltage2_3'] = df['ShuntVoltage2_3'].astype(complex)
+
+        df['ShuntVoltage3_1'] = df['ShuntVoltage3_1'].astype(complex)
+        df['ShuntVoltage3_2'] = df['ShuntVoltage3_2'].astype(complex)
+        df['ShuntVoltage3_3'] = df['ShuntVoltage3_3'].astype(complex)
+
+        df['ShuntVoltage4_1'] = df['ShuntVoltage4_1'].astype(complex)
+        df['ShuntVoltage4_2'] = df['ShuntVoltage4_2'].astype(complex)
+        df['ShuntVoltage4_3'] = df['ShuntVoltage4_3'].astype(complex)
 
         df['Is1'] = df['Is1'].astype(complex)
         df['Is2'] = df['Is2'].astype(complex)
@@ -306,7 +322,9 @@ def _extract_emd(mat, filename):
                 fdata['Il3'],
                 fdata['Zg3'],
                 fdata['As3'][:, 0, :].squeeze(),
+                fdata['As3'][:, 1, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
+                fdata['As3'][:, 4, :].squeeze(),
                 fdata['Yg13'],
                 fdata['Yg23'],
             )),
@@ -334,6 +352,12 @@ def _extract_emd(mat, filename):
             'ShuntVoltage2_1',
             'ShuntVoltage2_2',
             'ShuntVoltage2_3',
+            'ShuntVoltage3_1',
+            'ShuntVoltage3_2',
+            'ShuntVoltage3_3',
+            'ShuntVoltage4_1',
+            'ShuntVoltage4_2',
+            'ShuntVoltage4_3',
             'Yg13_1',
             'Yg13_2',
             'Yg13_3',
@@ -365,6 +389,22 @@ def _extract_emd(mat, filename):
         df['Il1'] = df['Il1'].astype(complex)
         df['Il2'] = df['Il2'].astype(complex)
         df['Il3'] = df['Il3'].astype(complex)
+
+        df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
+        df['ShuntVoltage1_2'] = df['ShuntVoltage1_2'].astype(complex)
+        df['ShuntVoltage1_3'] = df['ShuntVoltage1_3'].astype(complex)
+
+        df['ShuntVoltage2_1'] = df['ShuntVoltage2_1'].astype(complex)
+        df['ShuntVoltage2_2'] = df['ShuntVoltage2_2'].astype(complex)
+        df['ShuntVoltage2_3'] = df['ShuntVoltage2_3'].astype(complex)
+
+        df['ShuntVoltage3_1'] = df['ShuntVoltage3_1'].astype(complex)
+        df['ShuntVoltage3_2'] = df['ShuntVoltage3_2'].astype(complex)
+        df['ShuntVoltage3_3'] = df['ShuntVoltage3_3'].astype(complex)
+
+        df['ShuntVoltage4_1'] = df['ShuntVoltage4_1'].astype(complex)
+        df['ShuntVoltage4_2'] = df['ShuntVoltage4_2'].astype(complex)
+        df['ShuntVoltage4_3'] = df['ShuntVoltage4_3'].astype(complex)
 
         dfl.append(df)
 
