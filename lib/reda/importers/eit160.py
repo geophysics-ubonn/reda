@@ -324,7 +324,7 @@ def _extract_emd(mat, filename):
                 fdata['As3'][:, 0, :].squeeze(),
                 fdata['As3'][:, 1, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
-                fdata['As3'][:, 4, :].squeeze(),
+                fdata['As3'][:, 3, :].squeeze(),
                 fdata['Yg13'],
                 fdata['Yg23'],
             )),
