@@ -185,9 +185,14 @@ def _average_swapped_current_injections(df):
 
     delete_slices = []
 
+    # these are the columns that we workon (and that are retained)
     columns = [
-        'frequency', 'A', 'B', 'P', 'Z1', 'Z2', 'Z3', 'Is1', 'Is2',
-        'Is3', 'Il1', 'Il2', 'Il3', 'Zg1', 'Zg2', 'Zg3', 'datetime',
+        'frequency', 'A', 'B', 'P',
+        'Z1', 'Z2', 'Z3',
+        'Il1', 'Il2', 'Il3',
+        'Is1', 'Is2', 'Is3',
+        'Zg1', 'Zg2', 'Zg3',
+        'datetime',
     ]
     dtypes = {col: df.dtypes[col] for col in columns}
 
@@ -210,8 +215,8 @@ def _average_swapped_current_injections(df):
             raise Exception('Wrong ordering')
         # compute the averages in A
         # the minus stems from the swapped current electrodes
-        X[index_a, 4:13] = (A[:, 4:13] - B[:, 4:13]) / 2.0
-        X[index_a, 13:16] = (A[:, 13:16] + B[:, 13:16]) / 2.0
+        X[index_a, 4:10] = (A[:, 4:10] - B[:, 4:10]) / 2.0
+        X[index_a, 10:16] = (A[:, 10:16] + B[:, 10:16]) / 2.0
 
         delete_slices.append(
             index_b
@@ -339,7 +344,6 @@ def apply_correction_factors(df, correction_file):
         )
     else:
         corr_data_raw = np.loadtxt(correction_file)
-    print('shape', corr_data_raw.shape)
     A = (corr_data_raw[:, 0] / 1e4).astype(int)
     B = (corr_data_raw[:, 0] % 1e4).astype(int)
     M = (corr_data_raw[:, 1] / 1e4).astype(int)
