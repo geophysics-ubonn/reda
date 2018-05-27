@@ -66,7 +66,7 @@ def plot_histograms(ertobj, keys, **kwargs):
     if merge_figs:
         nr_x = 2
         nr_y = len(keys)
-        size_x = 10 / 2.54
+        size_x = 15 / 2.54
         size_y = 5 * nr_y / 2.54
         fig, axes_all = plt.subplots(nr_y, nr_x, figsize=(size_x, size_y))
         axes_all = np.atleast_2d(axes_all)
@@ -99,6 +99,8 @@ def plot_histograms(ertobj, keys, **kwargs):
         )
         ax.set_ylabel('count')
         ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
+        ax.tick_params(axis='both', which='major', labelsize=6)
+        ax.tick_params(axis='both', which='minor', labelsize=6)
 
         if subdata_log10.size > 0:
             ax = axes[1]
@@ -124,10 +126,26 @@ def plot_histograms(ertobj, keys, **kwargs):
 
 
 def plot_histograms_extra_dims(dataobj, keys, **kwargs):
-    """Produce histograms grouped by the extra dims.
+    """Produce histograms grouped by the extra dimensions.
+
+    Extra dimensions are:
+
+    * timesteps
+    * frequency
 
     Parameters
     ----------
+    dataobj: pandas.DataFrame or reda-Container
+        The object holding the data
+    keys:   list|tuple|iterable
+        The keys (columns) of the dataobj to plot
+    subquery:
+
+    log10plot: bool
+        if True, generate linear and log10 versions of the histogram
+
+    Returns
+    -------
 
     Examples
     --------
@@ -176,7 +194,7 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
     Nx = min(Nx_max, N)
     Ny = int(np.ceil(N / Nx))
 
-    size_x = 4 * Nx / 2.54
+    size_x = 5 * Nx / 2.54
     size_y = 5 * Ny / 2.54
     fig, axes = plt.subplots(Ny, Nx, figsize=(size_x, size_y))
     axes = np.atleast_2d(axes)
@@ -210,6 +228,8 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
                 )
                 ax.set_ylabel('count')
                 ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(3))
+                ax.tick_params(axis='both', which='major', labelsize=6)
+                ax.tick_params(axis='both', which='minor', labelsize=6)
 
                 index += 1
 
@@ -218,3 +238,25 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
         ax.set_ylabel('')
     fig.tight_layout()
     return fig
+
+
+def plot_histograms_it_extra_dims(dataobj, keys, extra_dims, **kwargs):
+    """Produce histograms for each group of extra dimensions. **kwargs are
+    directly passed on to plot_histograms().
+
+
+    """
+    if isinstance(dataobj, pd.DataFrame):
+        df = dataobj
+    else:
+        df = dataobj.df
+
+    g = df.groupby(extra_dims)
+
+    results = {}
+    for name in sorted(g.groups.keys()):
+        item = g.get_group(name)
+        plot_results = plot_histograms(item, keys, **kwargs)
+        results[name] = plot_results
+
+    return results
