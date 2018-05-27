@@ -1,10 +1,10 @@
-"""
+"""Normal-reciprocal functionality
 """
 import pandas as pd
 import numpy as np
 
 
-def first(x):
+def _first(x):
     """return the first item of the supplied Series"""
     return x.iloc[0]
 
@@ -27,7 +27,7 @@ def average_repetitions(df, keys_mean):
         )
 
     keys_keep = list(set(df.columns.tolist()) - set(keys_mean))
-    agg_dict = {x: first for x in keys_keep}
+    agg_dict = {x: _first for x in keys_keep}
     agg_dict.update({x: np.mean for x in keys_mean})
     for key in ('id', 'timestep', 'frequency', 'norrec'):
         if key in agg_dict:
@@ -43,7 +43,7 @@ def average_repetitions(df, keys_mean):
 
 
 def compute_norrec_differences(df, keys_diff):
-    """
+    """DO NOT USE ANY MORE - DEPRECIATED!
 
     """
     raise Exception('This function is depreciated!')
@@ -58,7 +58,7 @@ def compute_norrec_differences(df, keys_diff):
             return np.abs(x.iloc[1] - x.iloc[0])
 
     keys_keep = list(set(df.columns.tolist()) - set(keys_diff))
-    agg_dict = {x: first for x in keys_keep}
+    agg_dict = {x: _first for x in keys_keep}
     agg_dict.update({x: norrec_diff for x in keys_diff})
     for key in ('id', 'timestep', 'frequency'):
         if key in agg_dict:
@@ -72,7 +72,7 @@ def compute_norrec_differences(df, keys_diff):
     return df
 
 
-def normalize_abmn(abmn):
+def _normalize_abmn(abmn):
     """return a normalized version of abmn
     """
     abmn_2d = np.atleast_2d(abmn)
@@ -84,7 +84,17 @@ def normalize_abmn(abmn):
 
 
 def assign_norrec_to_df(df):
-    """
+    """Determine normal-reciprocal pairs for a given dataframe.
+
+    Parameters
+    ----------
+    df: pandas.DataFrame
+        The data
+
+    Returns
+    -------
+    df: pandas.DataFrame
+        The data with two new columns: "id" and "norrec"
 
     """
     df['id'] = ''
@@ -101,7 +111,7 @@ def assign_norrec_to_df(df):
     reciprocal_ids = {}
     for i in range(0, cu.shape[0]):
         # print('testing', cu[i], i, cu.shape[0])
-        cu_norm = normalize_abmn(cu[i, :]).squeeze()
+        cu_norm = _normalize_abmn(cu[i, :]).squeeze()
         if tuple(cu_norm) in normal_ids:
             # print('already indexed')
             continue
@@ -142,7 +152,7 @@ def assign_norrec_to_df(df):
         #     print('found more than one reciprocals')
 
         # normalize the first reciprocal
-        cu_rec_norm = normalize_abmn(cu[indices[0], :]).squeeze()
+        cu_rec_norm = _normalize_abmn(cu[indices[0], :]).squeeze()
 
         # decide on normal or reciprocal
         # print('ABREC', cu_norm[0:2], cu_rec_norm[0:2])
@@ -247,6 +257,9 @@ def assign_norrec_diffs(df, diff_list):
     """Compute and write the difference between normal and reciprocal values
     for all columns specified in the diff_list parameter.
 
+    Note that the DataFrame is directly written to. That is, it is changed
+    during the call of this function. No need to use the returned object.
+
     Parameters
     ----------
     df: pandas.DataFrame
@@ -256,7 +269,8 @@ def assign_norrec_diffs(df, diff_list):
 
     Returns
     -------
-    df_new
+    df_new: pandas.DataFrame
+        The data with added columns
     """
     extra_dims = [
         x for x in ('timestep', 'frequency', 'id') if x in df.columns
