@@ -12,6 +12,7 @@ import reda.exporters.bert as reda_bert_export
 
 import reda.utils.geometric_factors as redaK
 import reda.utils.fix_sign_with_K as redafixK
+from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
 
 class LogDataChanges():
@@ -335,3 +336,51 @@ class ERT(LoggingClass, Importers, Exporters):
         """
         redaK.compute_K_analytical(self.data, spacing=spacing)
         redafixK.fix_sign_with_K(self.data)
+
+    def compute_reciprocal_errors(self, key="R"):
+        r"""
+        Compute reciprocal erros following LaBrecque et al. (1996) according to:
+
+        .. math::
+
+            \epsilon = \left|\frac{2(R_n - R_r)}{R_n + R_r}\right|
+
+        Parameters
+        ----------
+        key : str
+            Parameter to calculate the reciprocal error for (default is "R").
+
+        Examples
+        --------
+        >>> import reda
+        >>> ert = reda.ERT()
+        >>> ert.data = reda.utils.norrec.get_test_df()
+        >>> ert.compute_reciprocal_errors()
+        >>> "error" in ert.data.keys()
+        True
+        """
+
+        # Assign norrec ids if not already present
+        if not "id" in self.data.keys():
+            assign_norrec_to_df(self.data)
+
+        # Average repititions
+        average_repetitions(self.data, "R")
+
+        # Get configurations with reciprocals
+        data = self.data.groupby("id").filter(lambda b: not b.shape[0] == 1)
+        n = self.data.shape[0] - data.shape[0]
+        print("Could not find reciprocals for %d configurations" % n)
+
+        # Calc reciprocal error
+        grouped = data.groupby("id")
+
+        def _error(group):
+            R_n = group["R"].iloc[0]
+            R_r = group["R"].iloc[1]
+            return abs(2*(R_n - R_r)/(R_n + R_r))
+
+        error = grouped.apply(_error)
+        error.name = "error"
+        self.data = pd.merge(self.data, error.to_frame().reset_index(),
+                             how='outer', on='id')
