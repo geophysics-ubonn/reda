@@ -365,10 +365,10 @@ class ERT(LoggingClass, Importers, Exporters):
             assign_norrec_to_df(self.data)
 
         # Average repititions
-        average_repetitions(self.data, "R")
+        data = average_repetitions(self.data, "R")
 
         # Get configurations with reciprocals
-        data = self.data.groupby("id").filter(lambda b: not b.shape[0] == 1)
+        data = data.groupby("id").filter(lambda b: not b.shape[0] == 1)
         n = self.data.shape[0] - data.shape[0]
         print("Could not find reciprocals for %d configurations" % n)
 

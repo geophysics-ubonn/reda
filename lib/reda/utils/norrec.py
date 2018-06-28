@@ -26,6 +26,9 @@ def average_repetitions(df, keys_mean):
             'The "norrec" column is required for this function to work!'
         )
 
+    # Get column order to restore later
+    cols = list(df.columns.values)
+
     keys_keep = list(set(df.columns.tolist()) - set(keys_mean))
     agg_dict = {x: first for x in keys_keep}
     agg_dict.update({x: np.mean for x in keys_mean})
@@ -39,7 +42,7 @@ def average_repetitions(df, keys_mean):
     extra_dimensions = [x for x in extra_dimensions_raw if x in df.columns]
     df = df.groupby(extra_dimensions).agg(agg_dict)
     df.reset_index(inplace=True)
-    return df
+    return df[cols]
 
 
 def compute_norrec_differences(df, keys_diff):
