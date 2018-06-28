@@ -356,6 +356,9 @@ class ERT(LoggingClass, Importers, Exporters):
         >>> ert = reda.ERT()
         >>> ert.data = reda.utils.norrec.get_test_df()
         >>> ert.compute_reciprocal_errors()
+        generating ids
+        assigning ids
+        Could not find reciprocals for 2 configurations
         >>> "error" in ert.data.keys()
         True
         """
