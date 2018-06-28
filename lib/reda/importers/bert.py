@@ -5,7 +5,7 @@ import pandas as pd
 import numpy as np
 
 
-def import_ohm(filename, verbose=False):
+def import_ohm(filename, verbose=False, reciprocals=False):
     """Construct pandas data frame from BERT`s unified data format (.ohm).
 
     Parameters
@@ -14,6 +14,11 @@ def import_ohm(filename, verbose=False):
         File path to .ohm file
     verbose: bool, optional
         Enables extended debug output
+    reciprocals: int, optional
+        if provided, then assume that this is a reciprocal measurements where
+        only the electrode cables were switched. The provided number N is
+        treated as the maximum electrode number, and denotations are renamed
+        according to the equation :math:`X_n = N - (X_a - 1)`
 
     Returns
     -------
@@ -82,6 +87,11 @@ def import_ohm(filename, verbose=False):
     elecs = pd.DataFrame(elecs, columns=elecs_ix)
     # Ensure uppercase labels (X, Y, Z) in electrode positions
     elecs.columns = elecs.columns.str.upper()
+
+    # rename electrode denotations
+    if type(reciprocals) == int:
+        print('renumbering electrode numbers')
+        data_reda[['A', 'B', 'M', 'N']] = reciprocals + 1 - data_reda[['A', 'B', 'M', 'N']]
 
     if verbose:
         print((_string_))
