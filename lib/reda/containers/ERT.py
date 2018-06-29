@@ -358,7 +358,7 @@ class ERT(LoggingClass, Importers, Exporters):
         >>> ert.compute_reciprocal_errors()
         generating ids
         assigning ids
-        Could not find reciprocals for 2 configurations
+        Could not find reciprocals for 5 configurations
         >>> "error" in ert.data.keys()
         True
         """
