@@ -3,7 +3,6 @@ sudo: false # Use docker containers rather than VMs -> faster
 language: python
 
 python:
-  - "2.7"
   - "3.5"
   - "3.6"
 
