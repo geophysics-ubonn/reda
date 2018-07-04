@@ -266,13 +266,16 @@ class ConfigManager(object):
         Examples
         --------
 
-        .. plot::
-            :include-source:
+        >>> from reda.configs.configManager import ConfigManager
+        >>> config = ConfigManager(nr_of_electrodes=10)
+        >>> config.gen_dipole_dipole(skipc=2)
+        array([[ 1,  4,  5,  8],
+               [ 1,  4,  6,  9],
+               [ 1,  4,  7, 10],
+               [ 2,  5,  6,  9],
+               [ 2,  5,  7, 10],
+               [ 3,  6,  7, 10]])
 
-            from reda.configs.configManager import ConfigManager
-            config = ConfigManager(nr_of_electrodes=10)
-            config.gen_dipole_dipole(skipc=2)
-            config.plot_pseudodepths()
 
         """
         if N is None and self.nr_electrodes is None:
