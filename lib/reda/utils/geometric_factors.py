@@ -2,6 +2,7 @@
 select and execute functions to compute geometric factors according to the
 rcParams variable.
 """
+import os
 import pandas as pd
 import numpy as np
 import reda
@@ -22,7 +23,7 @@ def apply_K(df, K):
     return df
 
 
-def compute_K_numerical(dataframe, settings=None):
+def compute_K_numerical(dataframe, settings=None, keep_dir=None):
     """Use a finite-element modeling code to infer geometric factors for meshes
     with topography or irregular electrode spacings.
 
@@ -33,6 +34,8 @@ def compute_K_numerical(dataframe, settings=None):
     settings: dict
         The settings required to compute the geometric factors. See examples
         down below for more information in the required content.
+    keep_dir: path
+        if not None, copy modeling dir here
 
     Returns
     -------
@@ -53,7 +56,10 @@ def compute_K_numerical(dataframe, settings=None):
     inversion_code = reda.rcParams.get('geom_factor.inversion_code', 'crtomo')
     if inversion_code == 'crtomo':
         import reda.utils.geom_fac_crtomo as geom_fac_crtomo
-        K = geom_fac_crtomo.compute_K(dataframe, settings)
+        if keep_dir is not None:
+            keep_dir = os.path.abspath(keep_dir)
+        K = geom_fac_crtomo.compute_K(
+            dataframe, settings, keep_dir)
     else:
         raise Exception(
             'Inversion code {0} not implemented for K computation'.format(
