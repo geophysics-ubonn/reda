@@ -67,22 +67,29 @@ def get_default_settings():
         'rho': 100,
         'elem': 'elem.dat',
         'elec': 'elec.dat',
+        'sink_node': '100',
+        '2D': False,
     }
 
 
-def compute_K(
-        dataframe, settings):
+def compute_K(dataframe, settings, keep_dir=False):
     """
     Parameters
     ----------
-    dataframe: dataframe that contains the data
-    settings: dict with required settings, see below
+    dataframe: pandas.DataFrame
+        dataframe that contains the data
+    settings: dict
+        with required settings, see below
+    keep_dir: path
+        if not None, copy modeling dir here
+
 
     settings = {
         'rho': 100,  # resistivity to use for homogeneous model, [Ohm m]
         'elem'
         'elec'
         '2D' : True|False
+        'sink_node': '100',
     }
 
     """
@@ -173,9 +180,9 @@ def compute_K(
         K = settings['rho'] / modeled_resistances[:, 2]
         if isinstance(dataframe, pd.DataFrame):
             dataframe['K'] = K
-
-        # debug
-        # shutil.copytree('.', pwd + os.sep + 'indir')
+        if keep_dir is not None and not os.path.isdir(keep_dir):
+            shutil.copytree('.', keep_dir)
+            print('Copy of modeling dir stored here: {}'.format(keep_dir))
 
     os.chdir(pwd)
     return K
