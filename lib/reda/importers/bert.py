@@ -37,7 +37,7 @@ def import_ohm(filename, verbose=False, reciprocals=False):
 
     elecs = np.zeros((eleccount, elecs_dim), 'float')
     for i in range(eleccount):
-        line = file.readline()
+        line = file.readline().split("#")[0] # Account for comments
         elecs[i] = line.rsplit()
 
     datacount = int(file.readline().split("#")[0])
@@ -72,6 +72,8 @@ def import_ohm(filename, verbose=False, reciprocals=False):
             'rhoa': 'rho_a',
             'k': 'K',
             'r': 'R',
+            'u': 'U',
+            'i': 'I'
         }
     )
     if (not 'R' in data_reda.keys()) and \
