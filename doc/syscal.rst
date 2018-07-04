@@ -45,8 +45,8 @@ Importing data
     import reda.containers.ERT as edfERT
 
     ert = edfERT.ERT()
-    ert.import_syscal_dat('data/ML_20140124_03n.txt')
-    ert.import_syscal_dat('data/ML_20140124_03r.txt', reciprocals=48)
+    ert.import_syscal_txt('data/ML_20140124_03n.txt')
+    ert.import_syscal_txt('data/ML_20140124_03r.txt', reciprocals=48)
 
 Geometrical factors
 -------------------
