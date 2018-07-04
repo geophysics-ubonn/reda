@@ -69,9 +69,6 @@ def compute_K_analytical(dataframe, spacing):
     If a dataframe is given, use the column (A, B, M, N). Otherwise, expect an
     Nx4 arrray.
 
-    TODO
-    ----
-
     Parameters
     ----------
     dataframe: pandas.DataFrame or numpy.ndarray
