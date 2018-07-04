@@ -117,8 +117,9 @@ class Importers(object):
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
-        print('Summary:')
-        self._describe_data(data)
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
 
     @append_doc_of(reda_bert_import.import_ohm)
     def import_bert(self, filename, **kwargs):
