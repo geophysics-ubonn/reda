@@ -22,7 +22,7 @@ REDA is a work-in-progress. Please get contact us if you wish to use it and feel
 
 ### Installation
 
-Install latest release from PyPI:
+Install latest release from PyPI (https://pypi.org/project/reda/):
 
     pip install reda
 
