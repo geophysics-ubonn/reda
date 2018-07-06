@@ -345,7 +345,7 @@ class ERT(LoggingClass, Importers, Exporters):
 
         .. math::
 
-            \epsilon = \left|\frac{2(R_n - R_r)}{R_n + R_r}\right|
+            \epsilon = \left|\frac{2(|R_n| - |R_r|)}{|R_n| + |R_r|}\right|
 
         Parameters
         ----------
@@ -357,11 +357,15 @@ class ERT(LoggingClass, Importers, Exporters):
         >>> import reda
         >>> ert = reda.ERT()
         >>> ert.data = reda.utils.norrec.get_test_df()
+        >>> ert.data = pd.DataFrame([
+        ...     [1,2,3,4,95],
+        ...     [3,4,2,1,-105]], columns=list("ABMNR")
+        ... )
         >>> ert.compute_reciprocal_errors()
         generating ids
         assigning ids
-        Could not find reciprocals for 5 configurations
-        >>> "error" in ert.data.keys()
+        Could not find reciprocals for 0 configurations
+        >>> ert.data["error"].mean() == 0.1
         True
         """
 
@@ -383,7 +387,7 @@ class ERT(LoggingClass, Importers, Exporters):
         def _error(group):
             R_n = group["R"].iloc[0]
             R_r = group["R"].iloc[1]
-            return abs(2*(R_n - R_r)/(R_n + R_r))
+            return abs(2*(abs(R_n) - abs(R_r))/(abs(R_n) + abs(R_r)))
 
         error = grouped.apply(_error)
         error.name = "error"
