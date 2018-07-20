@@ -31,18 +31,19 @@ class importers(object):
             Path to .mat or .csv file containing SIP-04 measurement results
 
         Examples:
-        >>> import tempfile
+        >>> import tempfile #DOCTEST+ELLIPSIS
         >>> import reda
         >>> with tempfile.TemporaryDirectory() as fid:
         ...     reda.data.download_data('sip04_fs_01', fid)
         ...     sip = reda.SIP()
         ...     sip.import_sip04(fid + '/sip_dataA.mat')
+        >>> print(sip.data.shape)
         url_base: ...
         data url: ...
         Import SIP04 data from .mat file
         Summary:
-         ...
-         ...
+        ...
+        ...
         frequency                                         z
         count     22.000000                                   (22+0j)
         mean    3816.797353   (207263.58870953086-9933.202724179699j)
@@ -52,6 +53,7 @@ class importers(object):
         50%       24.705883    (207539.4646037334-4955.323274068519j)
         75%      875.000000    (221976.7738590724-8721.791212210472j)
         max    45000.000000   (246577.99000876423-9694.755195379917j)
+        ...
 
         """
         df = reda_sip04.import_sip04_data(filename)
