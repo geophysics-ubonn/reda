@@ -14,7 +14,9 @@ from os.path import isdir, join, realpath
 
 import matplotlib.pyplot as plt
 
-def test(target=None, show=False, onlydoctests=False, abort=False, verbose=True):
+
+def test(target=None, show=False, onlydoctests=False, abort=False,
+         verbose=True):
     """Run docstring examples and additional tests.
 
     Parameters
@@ -45,9 +47,12 @@ def test(target=None, show=False, onlydoctests=False, abort=False, verbose=True)
             target = getattr(mod, func_name)
 
         import doctest
-        doctest.run_docstring_examples(target, globals(), verbose=verbose,
-                                       optionflags=doctest.ELLIPSIS,
-                                       name=target.__name__)
+        doctest.run_docstring_examples(
+            target, globals(),
+            verbose=verbose,
+            optionflags=doctest.ELLIPSIS,
+            name=target.__name__
+        )
         return
 
     try:
@@ -65,7 +70,10 @@ def test(target=None, show=False, onlydoctests=False, abort=False, verbose=True)
     if onlydoctests:
         excluded.append("testing")
 
-    cmd = (["-v", "-rsxX", "--color", "yes", "--doctest-modules", "--durations", 5, cwd])
+    cmd = ([
+        "-v", "-rsxX", "--color", "yes", "--doctest-modules",
+        "--durations", 5, cwd
+    ])
     for directory in excluded:
         cmd.extend(["--ignore", join(cwd, directory)])
 
