@@ -12,14 +12,14 @@ class importers(object):
     meant to be inherited by the data containers
     """
     def _add_to_container(self, df):
-        if self.df is None:
-            self.df = pd.concat((self.df, df))
+        if self.data is None:
+            self.data = pd.concat((self.data, df))
         else:
-            self.df = df
+            self.data = df
 
     def _describe_data(self, df=None):
         if df is None:
-            df_to_use = self.df
+            df_to_use = self.data
         else:
             df_to_use = df
         print(df_to_use.describe())
@@ -58,7 +58,7 @@ class sEIT(importers):
         if dataframe is not None:
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
-        self.df = dataframe
+        self.data = dataframe
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
@@ -96,7 +96,7 @@ class sEIT(importers):
             filter,
             ')',
         ))
-        result = self.df.query(full_query, inplace=inplace)
+        result = self.data.query(full_query, inplace=inplace)
         return result
 
     def query(self, query, inplace=True):
@@ -104,16 +104,16 @@ class sEIT(importers):
 
         """
         # TODO: add to queue
-        result = self.df.query(query, inplace=inplace)
+        result = self.data.query(query, inplace=inplace)
         return result
 
     def remove_frequencies(self, fmin, fmax):
         """Remove frequencies from the dataset
         """
-        self.df.query(
+        self.data.query(
             'frequency > {0} and frequency < {1}'.format(fmin, fmax),
             inplace=True
         )
-        g = self.df.groupby('frequency')
+        g = self.data.groupby('frequency')
         print('Remaining frequencies:')
         print(sorted(g.groups.keys()))
