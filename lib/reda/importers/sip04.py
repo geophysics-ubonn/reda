@@ -22,7 +22,46 @@ import os
 
 
 def import_sip04_data(data_filename):
+    """Import RELEVANT data from the result files. Refer to the function
+    :method:`reda.importers.sip04.import_sip04_data_all` for an importer that
+    imports ALL data.
+
+    Exported parameters:
+
+    ------- -----------------------
+    key     description
+    ------- -----------------------
+    a       First current electrode
+    b
+    m
+    n
+    ------- -----------------------
+
     """
+    df_all = import_sip04_data_all(data_filename)
+    columns_to_keep = [
+        'a', 'b', 'm', 'n',
+        'frequency',
+        'Temp_1', 'Temp_2',
+        'Zm_1', 'Zm_2', 'Zm_3',
+        'Zg_m',
+        'zt',
+        'Rs',
+    ]
+    df = df_all[columns_to_keep]
+    df = df.rename(columns={
+        'Rs': 'ShuntResistance',
+        'Zg_m': 'ContactResistance',
+        'Zm_1': 'zt_1',
+        'Zm_2': 'zt_2',
+        'Zm_3': 'zt_3',
+    })
+
+    return df
+
+
+def import_sip04_data_all(data_filename):
+    """Import ALL data from the result files
     Parameters
     ----------
     data_filename: string
@@ -153,7 +192,7 @@ def _import_mat_file(mat_filename):
     df['b'] = 4
     df['m'] = 2
     df['n'] = 3
-    df['z'] = df['Zm_m']
+    df['zt'] = df['Zm_m']
     df['frequency'] = df['fm']
 
     return df
