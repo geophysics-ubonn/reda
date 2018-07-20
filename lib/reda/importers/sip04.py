@@ -23,13 +23,17 @@ import os
 
 def import_sip04_data(data_filename):
     """
+    Parameters
+    ----------
+    data_filename: string
+        Path to .mat or .csv file containing SIP-04 measurement results
     """
-    filename, format = os.path.splitext(data_filename)
+    filename, fformat = os.path.splitext(data_filename)
 
-    if format == '.csv':
+    if fformat == '.csv':
         print('Import SIP04 data from .csv file')
         df_final = _import_csv_file(data_filename)
-    elif format == '.mat':
+    elif fformat == '.mat':
         print('Import SIP04 data from .mat file')
         df_final = _import_mat_file(data_filename)
     else:
@@ -52,8 +56,10 @@ def _import_mat_file(mat_filename):
     df['Zm_1'] = pd.Series(mat['Zm'][:, 0], index=df.index)
     df['Zm_2'] = pd.Series(mat['Zm'][:, 1], index=df.index)
     df['Zm_3'] = pd.Series(mat['Zm'][:, 2], index=df.index)
-    df['Rs'] = pd.Series(np.array(mat['fm'].size * [mat['Rs']]),
-                         index=df.index)  # single value of RS for all enteries
+    df['Rs'] = pd.Series(
+        np.array(mat['fm'].size * [mat['Rs']]),
+        index=df.index
+    )  # single value of RS for all enteries
     df['Zg_1'] = pd.Series(mat['Zg'][:, 0], index=df.index)
     df['Zg_2'] = pd.Series(mat['Zg'][:, 1], index=df.index)
     df['Zg_3'] = pd.Series(mat['Zg'][:, 2], index=df.index)
@@ -100,21 +106,27 @@ def _import_mat_file(mat_filename):
     df['Us3_m'] = pd.Series(mat['Usm'][:, 2], index=df.index)
     df['Us4_m'] = pd.Series(mat['Usm'][:, 3], index=df.index)
 
-    # calculating other values, e.g. used in the .csv-file
-    df['Temp_m'] = pd.Series(np.mean([df['Temp_1'], df['Temp_2']], axis=0),
-                             index=df.index)
+    # calculate other values, e.g. used in the .csv-file
+    df['Temp_m'] = pd.Series(
+        np.mean([df['Temp_1'], df['Temp_2']], axis=0),
+        index=df.index
+    )
     df['Zm_mAbs'] = pd.Series(np.abs(df['Zm_m']), index=df.index)
     Zm_1Abs = np.abs(df['Zm_1'])
     Zm_2Abs = np.abs(df['Zm_2'])
     Zm_3Abs = np.abs(df['Zm_3'])
-    df['Zm_AbsStd'] = pd.Series(np.std([Zm_1Abs, Zm_2Abs, Zm_3Abs], axis=0),
-                                index=df.index)
+    df['Zm_AbsStd'] = pd.Series(
+        np.std([Zm_1Abs, Zm_2Abs, Zm_3Abs], axis=0),
+        index=df.index
+    )
     df['Zm_mPhi'] = pd.Series(np.angle(df['Zm_m']), index=df.index)
     Zm_1Phi = np.angle(df['Zm_1'])
     Zm_2Phi = np.angle(df['Zm_2'])
     Zm_3Phi = np.angle(df['Zm_3'])
-    df['Zm_PhiStd'] = pd.Series(np.std([Zm_1Phi, Zm_2Phi, Zm_3Phi], axis=0),
-                                index=df.index)
+    df['Zm_PhiStd'] = pd.Series(
+        np.std([Zm_1Phi, Zm_2Phi, Zm_3Phi], axis=0),
+        index=df.index
+    )
     df['Zm_mRe'] = pd.Series(np.real(df['Zm_m']), index=df.index)
     df['Zm_mIm'] = pd.Series(np.imag(df['Zm_m']), index=df.index)
     df['Z12_mAbs'] = pd.Series(np.abs(df['Z12_m']), index=df.index)
@@ -132,9 +144,17 @@ def _import_mat_file(mat_filename):
     df['Ug3_m'] = pd.Series(np.mean([df['Ug2_1'], df['Ug2_2'], df['Ug2_3']],
                                     axis=0),
                             index=df.index)
-    df['Ug4_m'] = pd.Series(np.mean([df['Ug2_1'], df['Ug2_2'], df['Ug2_3']],
-                                    axis=0),
-                            index=df.index)
+    df['Ug4_m'] = pd.Series(
+        np.mean([df['Ug2_1'], df['Ug2_2'], df['Ug2_3']],
+        axis=0),
+        index=df.index
+    )
+    df['a'] = 1
+    df['b'] = 4
+    df['m'] = 2
+    df['n'] = 3
+    df['z'] = df['Zm_m']
+    df['frequency'] = df['fm']
 
     return df
 
@@ -263,6 +283,11 @@ def _import_csv_file(csv_filename):
     df_merged['Zm_m'] = pd.Series(df_merged['Zm_mAbs'] *
                                   np.exp(1j * df_merged['Zm_mPhi']),
                                   index=df_merged.index)
+
+    df_merged['a'] = 1
+    df_merged['b'] = 4
+    df_merged['m'] = 2
+    df_merged['n'] = 3
 
     return df_merged
 
