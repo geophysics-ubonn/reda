@@ -1,20 +1,26 @@
 # -*- coding: utf-8 -*-
-"""
-Explaination/Meaning of Parameters:
-    ..._1 => first measurement
-    ..._2 => second measurement
-    ..._3 => third measurement
-    ..._m => mean value of that three measurements
-    ..._std => standard deviation of three three measurements
-    Zm => complex value of transfer impedance
-    Zm_mAbs => Absolute value of Zm_m
-    Zm_mPhi => Phase shift of Zm_m
-    Zm_mRe => Real part of Zm_m
-    Zm_mIm => Imaginary Part of Zm_m
-    Zm_AbsStd => Standard deviation of all 3 Zm_Abs values
-    Zm_PhiStd => Standard deviation of all 3 Zm_Phi values
-"""
+"""Importer functions for data files measured with the SIP-04 SIP system,
+developed at the research center Jülich.
 
+The result files contain a lot of different, sometimes redundant parameters.
+
+========= ====================================================
+Parameter Explanation/Meaning of Parameters:
+========= ====================================================
+..._1     First measurement
+..._2     Second measurement
+..._3     Third measurement
+..._m     Mean value of that three measurements
+..._std   Standard deviation of three three measurements
+Zm        complex value of transfer impedance
+Zm_mAbs   Absolute value of Zm_m
+Zm_mPhi   Phase shift of Zm_m
+Zm_mRe    Real part of Zm_m
+Zm_mIm    Imaginary Part of Zm_m
+Zm_AbsStd Standard deviation of all 3 Zm_Abs values
+Zm_PhiStd Standard deviation of all 3 Zm_Phi values
+========= ====================================================
+"""
 import scipy.io
 import pandas as pd
 import numpy as np
@@ -28,14 +34,33 @@ def import_sip04_data(data_filename):
 
     Exported parameters:
 
-    ------- -----------------------
-    key     description
-    ------- -----------------------
-    a       First current electrode
-    b
-    m
-    n
-    ------- -----------------------
+    ================== ========================================================
+    key                description
+    ================== ========================================================
+    a                  First current electrode
+    b                  Second current electrode
+    m                  First potential electrode
+    n                  Second potential electrode
+    frequency          Measurement frequency
+    Temp_1             Temperature sensor 1 (optional)
+    Temp_2             Temperature sensor 2 (optional)
+    Zt                 Complex Transfer Impedance (the measurement), mean value
+    Zt_1               Complex Transfer Impedance, first repetition
+    Zt_2               Complex Transfer Impedance, second repetition
+    Zt_3               Complex Transfer Impedance, third repetition
+    ContactResistance  Contact resistance (mean value)
+    ShuntResistance    Shunt resistance used [Ohm]
+    ================== ========================================================
+
+    Parameters
+    ----------
+    data_filename: string
+        Path to .mat or .csv file containing SIP-04 measurement results
+
+    Returns
+    -------
+    df: :class:`pandas.DataFrame`
+        The data, contained in a DataFrame
 
     """
     df_all = import_sip04_data_all(data_filename)
@@ -62,24 +87,30 @@ def import_sip04_data(data_filename):
 
 def import_sip04_data_all(data_filename):
     """Import ALL data from the result files
+
     Parameters
     ----------
     data_filename: string
         Path to .mat or .csv file containing SIP-04 measurement results
+
+    Returns
+    -------
+    df_all: :class:`pandas.DataFrame`
+        The data, contained in a DataFrame
     """
     filename, fformat = os.path.splitext(data_filename)
 
     if fformat == '.csv':
         print('Import SIP04 data from .csv file')
-        df_final = _import_csv_file(data_filename)
+        df_all = _import_csv_file(data_filename)
     elif fformat == '.mat':
         print('Import SIP04 data from .mat file')
-        df_final = _import_mat_file(data_filename)
+        df_all = _import_mat_file(data_filename)
     else:
         print('Please use .csv or .mat format.')
-        df_final = np.NaN
+        df_all = None
 
-    return df_final
+    return df_all
 
 
 def _import_mat_file(mat_filename):
@@ -184,8 +215,7 @@ def _import_mat_file(mat_filename):
                                     axis=0),
                             index=df.index)
     df['Ug4_m'] = pd.Series(
-        np.mean([df['Ug2_1'], df['Ug2_2'], df['Ug2_3']],
-        axis=0),
+        np.mean([df['Ug2_1'], df['Ug2_2'], df['Ug2_3']], axis=0),
         index=df.index
     )
     df['a'] = 1
@@ -327,6 +357,9 @@ def _import_csv_file(csv_filename):
     df_merged['b'] = 4
     df_merged['m'] = 2
     df_merged['n'] = 3
+
+    df['zt'] = df['Zm_m']
+    df['frequency'] = df['fm']
 
     return df_merged
 
