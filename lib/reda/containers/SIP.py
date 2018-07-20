@@ -72,11 +72,11 @@ class SIP(importers):
             'm',
             'n',
             'frequency',
-            'z',
+            'zt',
         ]
         self.plot_columns = [
             'frequency',
-            'z'
+            'zt'
         ]
 
     def check_dataframe(self, dataframe):
