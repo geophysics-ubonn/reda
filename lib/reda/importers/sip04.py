@@ -55,7 +55,9 @@ def import_sip04_data(data_filename):
     Parameters
     ----------
     data_filename: string
-        Path to .mat or .csv file containing SIP-04 measurement results
+        Path to .mat or .csv file containing SIP-04 measurement results. Note
+        that the .csv file does not contain all data contained in the .mat
+        file!
 
     Returns
     -------
@@ -91,7 +93,9 @@ def import_sip04_data_all(data_filename):
     Parameters
     ----------
     data_filename: string
-        Path to .mat or .csv file containing SIP-04 measurement results
+        Path to .mat or .csv file containing SIP-04 measurement results. Note
+        that the .csv file does not contain all data contained in the .mat
+        file!
 
     Returns
     -------
@@ -269,37 +273,38 @@ def _import_csv_file(csv_filename):
     df_merged = pd.concat([df1, df2, df3, df4], axis=1)
     df_merged = df_merged.T.drop_duplicates().T
     df_merged = df_merged.drop(['Unnamed: 6'], axis=1)
-    df_merged = df_merged.rename(index=str,
-                                 columns={'f': 'fm',
-                                          'Abs(Zm)': 'Zm_mAbs',
-                                          'Std(Abs)': 'Zm_AbsStd',
-                                          'Phi(Zm)': 'Zm_mPhi',
-                                          'Std(Phi)': 'Zm_PhiStd',
-                                          'Re(Zm)': 'Zm_mRe',
-                                          'Im(Zm)': 'Zm_mIm',
-                                          'Time [s]': 'Time',
-                                          'Abs(Z12)': 'Z12_mAbs',
-                                          'Phi(Z12)': 'Z12_mPhi',
-                                          'Abs(Z34)': 'Z34_mAbs',
-                                          'Phi(Z34)': 'Z34_mPhi',
-                                          'Abs(Z14)': 'Z14_mAbs',
-                                          'Phi(Z14)': 'Z14_mPhi',
-                                          'Ug1': 'Ug1_m',
-                                          'Ug2': 'Ug2_m',
-                                          'Ug3': 'Ug3_m',
-                                          'Ug4': 'Ug4_m',
-                                          'Us1': 'Us1_m',
-                                          'Us2': 'Us2_m',
-                                          'Us3': 'Us3_m',
-                                          'Us4': 'Us4_m'})
+    df_merged = df_merged.rename(
+        index=str,
+        columns={
+            'f': 'fm',
+            'Abs(Zm)': 'Zm_mAbs',
+            'Std(Abs)': 'Zm_AbsStd',
+            'Phi(Zm)': 'Zm_mPhi',
+            'Std(Phi)': 'Zm_PhiStd',
+            'Re(Zm)': 'Zm_mRe',
+            'Im(Zm)': 'Zm_mIm',
+            'Time [s]': 'Time',
+            'Abs(Z12)': 'Z12_mAbs',
+            'Phi(Z12)': 'Z12_mPhi',
+            'Abs(Z34)': 'Z34_mAbs',
+            'Phi(Z34)': 'Z34_mPhi',
+            'Abs(Z14)': 'Z14_mAbs',
+            'Phi(Z14)': 'Z14_mPhi',
+            'Ug1': 'Ug1_m',
+            'Ug2': 'Ug2_m',
+            'Ug3': 'Ug3_m',
+            'Ug4': 'Ug4_m',
+            'Us1': 'Us1_m',
+            'Us2': 'Us2_m',
+            'Us3': 'Us3_m',
+            'Us4': 'Us4_m'
+        }
+    )
 
     # filling the final DataFrame:
-    df_merged['Temp_1'] = np.nan
-    df_merged['Temp_2'] = np.nan
-    df_merged['Temp_m'] = np.nan
-    df_merged['Zm_1'] = np.nan
-    df_merged['Zm_2'] = np.nan
-    df_merged['Zm_3'] = np.nan
+    for column in ('Temp_1', 'Temp_2', 'Temp_m', 'Zm_1', 'Zm_2', 'Zm_3'):
+        df_merged[column] = np.nan
+
     df_merged['Rs'] = np.nan
     df_merged['Zg_1'] = np.nan
     df_merged['Zg_2'] = np.nan
@@ -340,26 +345,30 @@ def _import_csv_file(csv_filename):
     df_merged['Zg_m'] = np.nan
 
     # calculating other values, e.g. used in the .mat-file
-    df_merged['Z12_m'] = pd.Series(df_merged['Z12_mAbs'] *
-                                   np.exp(1j * df_merged['Z12_mPhi']),
-                                   index=df_merged.index)
-    df_merged['Z14_m'] = pd.Series(df_merged['Z14_mAbs'] *
-                                   np.exp(1j * df_merged['Z14_mPhi']),
-                                   index=df_merged.index)
-    df_merged['Z34_m'] = pd.Series(df_merged['Z34_mAbs'] *
-                                   np.exp(1j * df_merged['Z34_mPhi']),
-                                   index=df_merged.index)
-    df_merged['Zm_m'] = pd.Series(df_merged['Zm_mAbs'] *
-                                  np.exp(1j * df_merged['Zm_mPhi']),
-                                  index=df_merged.index)
+    df_merged['Z12_m'] = pd.Series(
+        df_merged['Z12_mAbs'] * np.exp(1j * df_merged['Z12_mPhi']),
+        index=df_merged.index
+    )
+    df_merged['Z14_m'] = pd.Series(
+        df_merged['Z14_mAbs'] * np.exp(1j * df_merged['Z14_mPhi']),
+        index=df_merged.index
+    )
+    df_merged['Z34_m'] = pd.Series(
+        df_merged['Z34_mAbs'] * np.exp(1j * df_merged['Z34_mPhi']),
+        index=df_merged.index
+    )
+    df_merged['Zm_m'] = pd.Series(
+        df_merged['Zm_mAbs'] * np.exp(1j * df_merged['Zm_mPhi']),
+        index=df_merged.index
+    )
 
     df_merged['a'] = 1
     df_merged['b'] = 4
     df_merged['m'] = 2
     df_merged['n'] = 3
 
-    df['zt'] = df['Zm_m']
-    df['frequency'] = df['fm']
+    df_merged['zt'] = df_merged['Zm_m']
+    df_merged['frequency'] = df_merged['fm']
 
     return df_merged
 
