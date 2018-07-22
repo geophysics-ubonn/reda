@@ -33,27 +33,16 @@ class importers(object):
 
         Examples
         --------
-        >>> import tempfile
-        >>> import reda
-        >>> with tempfile.TemporaryDirectory() as fid:
-        ...     reda.data.download_data('sip04_fs_01', fid)
-        ...     sip = reda.SIP()
-        ...     sip.import_sip04(fid + '/sip_dataA.mat')
-        url_base: ...
-        data url: ...
-        Import SIP04 data from .mat file
-        Summary:
-                  frequency                                        zt
-        count     22.000000                                   (22+0j)
-        mean    3816.797353   (207263.58870953086-9933.202724179699j)
-        std    10316.004203                   (23785.806341843596+0j)
-        min        0.010000  (153209.50404500033-25519.471708747482j)
-        25%        0.625000   (196546.51676727907-7846.687490714178j)
-        50%       24.705883    (207539.4646037334-4955.323274068519j)
-        75%      875.000000    (221976.7738590724-8721.791212210472j)
-        max    45000.000000   (246577.99000876423-9694.755195379917j)
-        >>> print(sip.data.shape)
-        (22, 13)
+
+        ::
+
+            import tempfile
+            import reda
+            with tempfile.TemporaryDirectory() as fid:
+                reda.data.download_data('sip04_fs_01', fid)
+                sip = reda.SIP()
+                sip.import_sip04(fid + '/sip_dataA.mat')
+
         """
         df = reda_sip04.import_sip04_data(filename)
         if timestep is not None:
@@ -109,43 +98,19 @@ class SIP(importers):
 
         Examples
         --------
-        >>> import tempfile
-        >>> import reda
-        >>> with tempfile.TemporaryDirectory() as fid:
-        ...     reda.data.download_data('sip04_fs_06', fid)
-        ...     sip = reda.SIP()
-        ...     sip.import_sip04(fid + '/sip_dataA.mat', timestep=0)
-        ...     # well, add the spectrum again as another timestep
-        ...     sip.import_sip04(fid + '/sip_dataA.mat', timestep=1)
-        url_base: ...
-        data url: ...
-        Import SIP04 data from .mat file
-        adding timestep
-        Summary:
-                  frequency                                       zt
-        count     29.000000                                  (29+0j)
-        mean    3278.643164  (202410.60445031957-9087.437197041454j)
-        std     9150.698830                  (21340.249236032232+0j)
-        min        0.010000   (150368.6337725162-24376.55413095727j)
-        25%        0.500000  (191233.95777916498-7983.988543911568j)
-        50%       20.000000  (203048.80371817187-4479.471332015763j)
-        75%     1000.000000  (215334.15416514408-7902.795806935399j)
-        max    45000.000000   (234890.9441193946-8409.981361182312j)
-        Import SIP04 data from .mat file
-        adding timestep
-        Summary:
-                  frequency                                       zt
-        count     29.000000                                  (29+0j)
-        mean    3278.643164  (202410.60445031957-9087.437197041454j)
-        std     9150.698830                  (21340.249236032232+0j)
-        min        0.010000   (150368.6337725162-24376.55413095727j)
-        25%        0.500000  (191233.95777916498-7983.988543911568j)
-        50%       20.000000  (203048.80371817187-4479.471332015763j)
-        75%     1000.000000  (215334.15416514408-7902.795806935399j)
-        max    45000.000000   (234890.9441193946-8409.981361182312j)
-        >>> df = sip.reduce_duplicate_frequencies()
-        >>> print(df.shape)
-        (46, 6)
+
+        ::
+
+            import tempfile
+            import reda
+            with tempfile.TemporaryDirectory() as fid:
+                reda.data.download_data('sip04_fs_06', fid)
+                sip = reda.SIP()
+                sip.import_sip04(fid + '/sip_dataA.mat', timestep=0)
+                # well, add the spectrum again as another timestep
+                sip.import_sip04(fid + '/sip_dataA.mat', timestep=1)
+            df = sip.reduce_duplicate_frequencies()
+
         """
         group_keys = ['frequency', ]
         if 'timestep' in self.data.columns:
@@ -168,10 +133,13 @@ class SIP(importers):
                     'zt_real_mean': zt_real_mean,
                     'zt_real_std': zt_real_std,
                     'zt_real_min': zt_real_min,
+                    'zt_real_max': zt_real_max,
                     'zt_imag_mean': zt_imag_mean,
                     'zt_imag_std': zt_imag_std,
+                    'zt_imag_min': zt_imag_min,
+                    'zt_imag_max': zt_imag_max,
                 },
-                    index=[0, ]
+                index=[0, ]
             )
 
             dfn['count'] = len(y)
@@ -183,168 +151,3 @@ class SIP(importers):
         if len(group_keys) > 1:
             p = p.swaplevel(0, 1).sort_index()
         return p
-
-
-class multi_sip_response(object):
-    """manage multiple sip_response objects and provide some nice overview
-    plots
-    """
-    @staticmethod
-    def _is_correct_type(object):
-        """check if we can work with this object """
-        if not isinstance(object, sip_response.sip_response):
-            raise Exception(
-                'can only add sip_reponse.sip_response objects')
-
-    @staticmethod
-    def _check_list(object_list):
-        if not isinstance(object_list, list):
-            raise Exception('can only work with lists')
-        [multi_sip_response._is_correct_type(x) for x in object_list]
-
-    def __init__(self, objects=None, labels=None):
-        # here we store the responses
-        if objects is not None:
-            multi_sip_response._check_list(objects)
-            if len(objects) != len(labels):
-                raise Exception(
-                    'length of object list must match length of label list')
-            self.objects = objects
-            self.labels = labels
-        else:
-            self.objects = []
-            self.labels = []
-        self.xlim = [None, None]
-
-    def set_xlim(self, xmin, xmax):
-        self.xlim = [xmin, xmax]
-
-    def add(self, response, label=None):
-        """add one response object to the list
-        """
-        if not isinstance(response, sip_response.sip_response):
-            raise Exception(
-                'can only add sip_reponse.sip_response objects'
-            )
-        self.objects.append(response)
-
-        if label is None:
-            self.labels.append('na')
-        else:
-            self.labels.append(label)
-
-    def _add_legend(self, ax):
-        leg = ax.legend(
-            loc="lower center",
-            ncol=4,
-            bbox_to_anchor=(0, 0, 1, 1),
-            bbox_transform=ax.get_figure().transFigure,
-            fontsize=6.0,
-        )
-        return leg
-
-    def plot_rmag(self, filename, pmin=None, pmax=None, title=None):
-        """plot all resistance/resistivity magnitude spectra
-        """
-        cmap = mpl.cm.get_cmap('viridis')
-        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
-        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
-        for nr, item in enumerate(self.objects):
-            ax.semilogx(
-                item.frequencies,
-                item.rmag,
-                '.-',
-                color=colors[nr],
-                label=self.labels[nr],
-            )
-        ax.set_ylabel(sip_labels.get_label('rmag', 'meas', 'mathml'))
-        ax.set_xlabel('frequency [Hz]')
-        ax.set_ylim(pmin, pmax)
-        ax.set_xlim(*self.xlim)
-        if title is not None:
-            ax.set_title(title)
-        self._add_legend(ax)
-        fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5)
-        fig.savefig(filename, dpi=300)
-        plt.close(fig)
-
-    def plot_rpha(self, filename, pmin=None, pmax=None, title=None):
-        """plot all resistance/resistivity phase spectra
-        """
-        cmap = mpl.cm.get_cmap('viridis')
-        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
-        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
-        for nr, item in enumerate(self.objects):
-            ax.semilogx(
-                item.frequencies,
-                -item.rpha,
-                '.-',
-                color=colors[nr],
-                label=self.labels[nr],
-            )
-        ax.set_xlim(*self.xlim)
-        ax.set_ylabel(sip_labels.get_label('rpha', 'meas', 'mathml'))
-        ax.set_xlabel('frequency [Hz]')
-        ax.set_ylim(pmin, pmax)
-        if title is not None:
-            ax.set_title(title)
-        self._add_legend(ax)
-        fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5)
-        fig.savefig(filename, dpi=300)
-        plt.close(fig)
-
-    def plot_cim(self, filename, cmin=None, cmax=None, title=None):
-        cmap = mpl.cm.get_cmap('viridis')
-        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
-        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
-        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
-        for nr, item in enumerate(self.objects):
-            ax.loglog(
-                item.frequencies,
-                item.cim,
-                '.-',
-                color=colors[nr],
-                label=self.labels[nr],
-            )
-        ax.set_ylabel(sip_labels.get_label('cim', 'meas', 'mathml'))
-        ax.set_xlim(*self.xlim)
-        ax.set_xlabel('frequency [Hz]')
-        ax.set_ylim(cmin, cmax)
-        if title is not None:
-            ax.set_title(title)
-        self._add_legend(ax)
-        fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5)
-        fig.savefig(filename, dpi=300)
-        plt.close(fig)
-
-    def plot_cre(self, filename, cmin=None, cmax=None, title=None):
-        cmap = mpl.cm.get_cmap('viridis')
-        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
-        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
-        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
-        for nr, item in enumerate(self.objects):
-            ax.loglog(
-                item.frequencies,
-                item.cre,
-                '.-',
-                color=colors[nr],
-                label=self.labels[nr],
-            )
-        ax.set_xlim(*self.xlim)
-        ax.set_ylabel(sip_labels.get_label('cre', 'meas', 'mathml'))
-        ax.set_xlabel('frequency [Hz]')
-        ax.set_ylim(cmin, cmax)
-        if title is not None:
-            ax.set_title(title)
-        self._add_legend(ax)
-        fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5, top=0.9)
-        fig.savefig(filename, dpi=300)
-        plt.close(fig)
