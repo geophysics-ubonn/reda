@@ -79,13 +79,15 @@ class sEIT(importers):
     def subquery(self, subset, filter, inplace=True):
         """
 
-        Usage
-        =====
+        Examples
+        --------
 
-        subquery(
-            'timestep == 2',
-            'R > 4',
-        )
+        ::
+
+            subquery(
+                'timestep == 2',
+                'R > 4',
+            )
 
         """
         # build the full query
