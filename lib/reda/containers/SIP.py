@@ -159,3 +159,168 @@ class SIP(importers):
         if len(group_keys) > 1:
             p = p.swaplevel(0, 1).sort_index()
         return p
+
+
+class multi_sip_response(object):
+    """manage multiple sip_response objects and provide some nice overview
+    plots
+    """
+    @staticmethod
+    def _is_correct_type(object):
+        """check if we can work with this object """
+        if not isinstance(object, sip_response.sip_response):
+            raise Exception(
+                'can only add sip_reponse.sip_response objects')
+
+    @staticmethod
+    def _check_list(object_list):
+        if not isinstance(object_list, list):
+            raise Exception('can only work with lists')
+        [multi_sip_response._is_correct_type(x) for x in object_list]
+
+    def __init__(self, objects=None, labels=None):
+        # here we store the responses
+        if objects is not None:
+            multi_sip_response._check_list(objects)
+            if len(objects) != len(labels):
+                raise Exception(
+                    'length of object list must match length of label list')
+            self.objects = objects
+            self.labels = labels
+        else:
+            self.objects = []
+            self.labels = []
+        self.xlim = [None, None]
+
+    def set_xlim(self, xmin, xmax):
+        self.xlim = [xmin, xmax]
+
+    def add(self, response, label=None):
+        """add one response object to the list
+        """
+        if not isinstance(response, sip_response.sip_response):
+            raise Exception(
+                'can only add sip_reponse.sip_response objects'
+            )
+        self.objects.append(response)
+
+        if label is None:
+            self.labels.append('na')
+        else:
+            self.labels.append(label)
+
+    def _add_legend(self, ax):
+        leg = ax.legend(
+            loc="lower center",
+            ncol=4,
+            bbox_to_anchor=(0, 0, 1, 1),
+            bbox_transform=ax.get_figure().transFigure,
+            fontsize=6.0,
+        )
+        return leg
+
+    def plot_rmag(self, filename, pmin=None, pmax=None, title=None):
+        """plot all resistance/resistivity magnitude spectra
+        """
+        cmap = mpl.cm.get_cmap('viridis')
+        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
+        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
+        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        for nr, item in enumerate(self.objects):
+            ax.semilogx(
+                item.frequencies,
+                item.rmag,
+                '.-',
+                color=colors[nr],
+                label=self.labels[nr],
+            )
+        ax.set_ylabel(sip_labels.get_label('rmag', 'meas', 'mathml'))
+        ax.set_xlabel('frequency [Hz]')
+        ax.set_ylim(pmin, pmax)
+        ax.set_xlim(*self.xlim)
+        if title is not None:
+            ax.set_title(title)
+        self._add_legend(ax)
+        fig.tight_layout()
+        fig.subplots_adjust(bottom=0.5)
+        fig.savefig(filename, dpi=300)
+        plt.close(fig)
+
+    def plot_rpha(self, filename, pmin=None, pmax=None, title=None):
+        """plot all resistance/resistivity phase spectra
+        """
+        cmap = mpl.cm.get_cmap('viridis')
+        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
+        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
+        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        for nr, item in enumerate(self.objects):
+            ax.semilogx(
+                item.frequencies,
+                -item.rpha,
+                '.-',
+                color=colors[nr],
+                label=self.labels[nr],
+            )
+        ax.set_xlim(*self.xlim)
+        ax.set_ylabel(sip_labels.get_label('rpha', 'meas', 'mathml'))
+        ax.set_xlabel('frequency [Hz]')
+        ax.set_ylim(pmin, pmax)
+        if title is not None:
+            ax.set_title(title)
+        self._add_legend(ax)
+        fig.tight_layout()
+        fig.subplots_adjust(bottom=0.5)
+        fig.savefig(filename, dpi=300)
+        plt.close(fig)
+
+    def plot_cim(self, filename, cmin=None, cmax=None, title=None):
+        cmap = mpl.cm.get_cmap('viridis')
+        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
+        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
+        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
+        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        for nr, item in enumerate(self.objects):
+            ax.loglog(
+                item.frequencies,
+                item.cim,
+                '.-',
+                color=colors[nr],
+                label=self.labels[nr],
+            )
+        ax.set_ylabel(sip_labels.get_label('cim', 'meas', 'mathml'))
+        ax.set_xlim(*self.xlim)
+        ax.set_xlabel('frequency [Hz]')
+        ax.set_ylim(cmin, cmax)
+        if title is not None:
+            ax.set_title(title)
+        self._add_legend(ax)
+        fig.tight_layout()
+        fig.subplots_adjust(bottom=0.5)
+        fig.savefig(filename, dpi=300)
+        plt.close(fig)
+
+    def plot_cre(self, filename, cmin=None, cmax=None, title=None):
+        cmap = mpl.cm.get_cmap('viridis')
+        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
+        SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
+        colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
+        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        for nr, item in enumerate(self.objects):
+            ax.loglog(
+                item.frequencies,
+                item.cre,
+                '.-',
+                color=colors[nr],
+                label=self.labels[nr],
+            )
+        ax.set_xlim(*self.xlim)
+        ax.set_ylabel(sip_labels.get_label('cre', 'meas', 'mathml'))
+        ax.set_xlabel('frequency [Hz]')
+        ax.set_ylim(cmin, cmax)
+        if title is not None:
+            ax.set_title(title)
+        self._add_legend(ax)
+        fig.tight_layout()
+        fig.subplots_adjust(bottom=0.5, top=0.9)
+        fig.savefig(filename, dpi=300)
+        plt.close(fig)
