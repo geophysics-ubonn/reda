@@ -8,9 +8,6 @@ from io import StringIO
 import os
 import logging
 
-from reda.utils import opt_import
-IPython = opt_import("IPython", "interactive debugging")
-
 
 def _get_nr_of_electrodes(header_group):
     groups = itertools.groupby(
@@ -154,8 +151,6 @@ def parse_remote_unit(ru_block):
     except Exception as e:
         print(e)
         print(tmp_file.getvalue())
-        if IPython:
-            IPython.embed()
 
     df.columns = [
         'frequency_[Hz]',
@@ -187,8 +182,6 @@ def parse_remote_unit(ru_block):
         print(df['dphi'])
         print(df)
         print('raw', tmp_file.getvalue())
-        import IPython
-        IPython.embed()
         exit()
     df['dphi'] = errorpha
 
