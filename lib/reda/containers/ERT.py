@@ -4,7 +4,6 @@ import logging
 import functools
 
 import pandas as pd
-import reda.main.init as redai
 
 import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.bert as reda_bert_import
@@ -254,8 +253,6 @@ class ERT(LoggingClass, Importers, Exporters):
         self.data = self.check_dataframe(data)
         self.electrode_positions = electrode_positions
         self.topography = topography
-
-        redai.set_mpl_settings()
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
