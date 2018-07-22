@@ -137,7 +137,7 @@ class Importers(object):
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
-            self.electrode_positions = electrodes # See issue #22
+            self.electrode_positions = electrodes  # See issue #22
         if kwargs.get('verbose', False):
             print('Summary:')
             self._describe_data(data)
@@ -145,6 +145,7 @@ class Importers(object):
     @functools.wraps(import_bert)
     def import_pygimli(self, *args, **kargs):
         self.import_bert(*args, **kargs)
+
 
 class Exporters(object):
     """This class provides wrappers for most of the exporter functions and is
@@ -155,11 +156,13 @@ class Exporters(object):
     Importers
     """
     def export_bert(self, filename):
-        reda_bert_export.export_bert(self.data, self.electrode_positions, filename)
+        reda_bert_export.export_bert(
+            self.data, self.electrode_positions, filename)
 
     @functools.wraps(export_bert)
     def export_pygimli(self, *args, **kargs):
         self.export_bert(*args, **kargs)
+
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
     def __init__(self, log_list):
@@ -236,17 +239,16 @@ class ERT(LoggingClass, Importers, Exporters):
         """
         Parameters
         ----------
-        data: pandas.DataFrame
+        data : :py:class:`pandas.DataFrame`
             If not None, then the provided DataFrame is assumed to contain
             valid data previously prepared elsewhere. Required columns are:
                 "A", "B", "M", "N", "R".
-        electrodes: pandas.DataFrame
+        electrodes : :py:class:`pandas.DataFrame`
             If set, this is expected to be a DataFrame which contains electrode
             positions with columns: "X", "Y", "Z".
-        topography: pandas.DataFrame
+        topography : :py:class:`pandas.DataFrame`
             If set, this is expected to a DataFrame which contains topography
             information with columns: "X", "Y", "Z".
-
 
         """
         self.setup_logger()
@@ -283,13 +285,15 @@ class ERT(LoggingClass, Importers, Exporters):
     def sub_filter(self, subset, filter, inplace=True):
         """Apply a filter to subset of the data
 
-        Usage
-        -----
+        Examples
+        --------
 
-        subquery(
-            'timestep == 2',
-            'R > 4',
-        )
+        ::
+
+            .subquery(
+                'timestep == 2',
+                'R > 4',
+            )
 
         """
         # build the full query
@@ -310,15 +314,15 @@ class ERT(LoggingClass, Importers, Exporters):
 
         Parameters
         ----------
-        query: string
+        query : string
             The query string to be evaluated. Is directly provided to
             pandas.DataFrame.query
-        inplace: bool
+        inplace : bool
             if True, change the container dataframe in place (defaults to True)
 
         Returns
         -------
-        result: pandas.DataFrame
+        result : :py:class:`pandas.DataFrame`
             DataFrame that contains the result of the filter application
 
         """
@@ -338,7 +342,8 @@ class ERT(LoggingClass, Importers, Exporters):
 
     def compute_reciprocal_errors(self, key="R"):
         r"""
-        Compute reciprocal erros following LaBrecque et al. (1996) according to:
+        Compute reciprocal erros following LaBrecque et al. (1996) according
+        to:
 
         .. math::
 
@@ -367,7 +372,7 @@ class ERT(LoggingClass, Importers, Exporters):
         """
 
         # Assign norrec ids if not already present
-        if not "id" in self.data.keys():
+        if "id" not in self.data.keys():
             assign_norrec_to_df(self.data)
 
         # Average repititions
@@ -384,7 +389,7 @@ class ERT(LoggingClass, Importers, Exporters):
         def _error(group):
             R_n = group["R"].iloc[0]
             R_r = group["R"].iloc[1]
-            return abs(2*(abs(R_n) - abs(R_r))/(abs(R_n) + abs(R_r)))
+            return abs(2 * (abs(R_n) - abs(R_r)) / (abs(R_n) + abs(R_r)))
 
         error = grouped.apply(_error)
         error.name = "error"
