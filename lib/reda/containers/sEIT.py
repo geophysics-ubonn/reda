@@ -1,7 +1,6 @@
 """spectral electrical impedance tomography (sEIT) container
 """
 import pandas as pd
-import reda.main.init as redai
 
 import reda.importers.eit40 as reda_eit40
 import reda.importers.eit160 as reda_eit160
@@ -60,8 +59,6 @@ class sEIT(importers):
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
         self.data = dataframe
-
-        redai.set_mpl_settings()
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
