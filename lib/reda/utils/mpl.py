@@ -16,7 +16,7 @@ from reda.utils import which
 latex = which("latex")
 
 
-def setup(use_latex=True):
+def setup(use_latex=False, overwrite=False):
     """Set up matplotlib imports and settings.
 
     Parameters
@@ -24,6 +24,8 @@ def setup(use_latex=True):
     use_latex: bool, optional
         Determine if Latex output should be used. Latex will only be enable if
         a 'latex' binary is found in the system.
+    overwrite: bool, optional
+        Overwrite some matplotlib config values.
 
     Returns
     -------
@@ -36,11 +38,12 @@ def setup(use_latex=True):
     import matplotlib as mpl
 
     # general settings
-    mpl.rcParams["lines.linewidth"] = 2.0
-    mpl.rcParams["lines.markeredgewidth"] = 3.0
-    mpl.rcParams["lines.markersize"] = 3.0
-    mpl.rcParams["font.size"] = 12
-    mpl.rcParams['mathtext.default'] = 'regular'
+    if overwrite:
+        mpl.rcParams["lines.linewidth"] = 2.0
+        mpl.rcParams["lines.markeredgewidth"] = 3.0
+        mpl.rcParams["lines.markersize"] = 3.0
+        mpl.rcParams["font.size"] = 12
+        mpl.rcParams['mathtext.default'] = 'regular'
     if latex and use_latex:
         mpl.rcParams['text.usetex'] = True
         mpl.rcParams['text.latex.unicode'] = True
