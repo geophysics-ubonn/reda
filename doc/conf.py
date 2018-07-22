@@ -45,6 +45,8 @@ extensions = [
 
 intersphinx_mapping = {
     'python': ('http://docs.python.org/', None),
+    'numpy': ('http://docs.scipy.org/doc/numpy/', None),
+    'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
     'pandas': ('http://pandas-docs.github.io/pandas-docs-travis/', None),
 }
 
@@ -62,7 +64,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'REDA'
-copyright = u'2017, Weigand, M. and Wagner F.M.'
+copyright = u'2017, 2018, Weigand, M. and Wagner F.M. and others'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
