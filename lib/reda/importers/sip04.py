@@ -29,7 +29,7 @@ import os
 
 def import_sip04_data(data_filename):
     """Import RELEVANT data from the result files. Refer to the function
-    :method:`reda.importers.sip04.import_sip04_data_all` for an importer that
+    :func:`reda.importers.sip04.import_sip04_data_all` for an importer that
     imports ALL data.
 
     Exported parameters:
@@ -54,14 +54,14 @@ def import_sip04_data(data_filename):
 
     Parameters
     ----------
-    data_filename: string
+    data_filename : string
         Path to .mat or .csv file containing SIP-04 measurement results. Note
         that the .csv file does not contain all data contained in the .mat
         file!
 
     Returns
     -------
-    df: :class:`pandas.DataFrame`
+    df : :py:class:`pandas.DataFrame`
         The data, contained in a DataFrame
 
     """
@@ -92,14 +92,14 @@ def import_sip04_data_all(data_filename):
 
     Parameters
     ----------
-    data_filename: string
+    data_filename : string
         Path to .mat or .csv file containing SIP-04 measurement results. Note
         that the .csv file does not contain all data contained in the .mat
         file!
 
     Returns
     -------
-    df_all: :class:`pandas.DataFrame`
+    df_all : :py:class:`pandas.DataFrame`
         The data, contained in a DataFrame
     """
     filename, fformat = os.path.splitext(data_filename)
