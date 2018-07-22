@@ -31,31 +31,29 @@ class importers(object):
         filename: string
             Path to .mat or .csv file containing SIP-04 measurement results
 
-        Examples:
-        >>> import tempfile #DOCTEST+ELLIPSIS
+        Examples
+        --------
+        >>> import tempfile
         >>> import reda
         >>> with tempfile.TemporaryDirectory() as fid:
         ...     reda.data.download_data('sip04_fs_01', fid)
         ...     sip = reda.SIP()
         ...     sip.import_sip04(fid + '/sip_dataA.mat')
-        >>> print(sip.data.shape)
         url_base: ...
         data url: ...
         Import SIP04 data from .mat file
         Summary:
-        ...
-        ...
-        frequency                                         z
+                  frequency                                        zt
         count     22.000000                                   (22+0j)
         mean    3816.797353   (207263.58870953086-9933.202724179699j)
-        std    10316.004203                   (19907.035710808243+0j)
+        std    10316.004203                   (23785.806341843596+0j)
         min        0.010000  (153209.50404500033-25519.471708747482j)
         25%        0.625000   (196546.51676727907-7846.687490714178j)
         50%       24.705883    (207539.4646037334-4955.323274068519j)
         75%      875.000000    (221976.7738590724-8721.791212210472j)
         max    45000.000000   (246577.99000876423-9694.755195379917j)
-        ...
-
+        >>> print(sip.data.shape)
+        (22, 13)
         """
         df = reda_sip04.import_sip04_data(filename)
         if timestep is not None:
@@ -119,9 +117,35 @@ class SIP(importers):
         ...     sip.import_sip04(fid + '/sip_dataA.mat', timestep=0)
         ...     # well, add the spectrum again as another timestep
         ...     sip.import_sip04(fid + '/sip_dataA.mat', timestep=1)
-        ...     df = sip.reduce_duplicate_frequencies()
-        >>> print(df)
-
+        url_base: ...
+        data url: ...
+        Import SIP04 data from .mat file
+        adding timestep
+        Summary:
+                  frequency                                       zt
+        count     29.000000                                  (29+0j)
+        mean    3278.643164  (202410.60445031957-9087.437197041454j)
+        std     9150.698830                  (21340.249236032232+0j)
+        min        0.010000   (150368.6337725162-24376.55413095727j)
+        25%        0.500000  (191233.95777916498-7983.988543911568j)
+        50%       20.000000  (203048.80371817187-4479.471332015763j)
+        75%     1000.000000  (215334.15416514408-7902.795806935399j)
+        max    45000.000000   (234890.9441193946-8409.981361182312j)
+        Import SIP04 data from .mat file
+        adding timestep
+        Summary:
+                  frequency                                       zt
+        count     29.000000                                  (29+0j)
+        mean    3278.643164  (202410.60445031957-9087.437197041454j)
+        std     9150.698830                  (21340.249236032232+0j)
+        min        0.010000   (150368.6337725162-24376.55413095727j)
+        25%        0.500000  (191233.95777916498-7983.988543911568j)
+        50%       20.000000  (203048.80371817187-4479.471332015763j)
+        75%     1000.000000  (215334.15416514408-7902.795806935399j)
+        max    45000.000000   (234890.9441193946-8409.981361182312j)
+        >>> df = sip.reduce_duplicate_frequencies()
+        >>> print(df.shape)
+        (46, 6)
         """
         group_keys = ['frequency', ]
         if 'timestep' in self.data.columns:
