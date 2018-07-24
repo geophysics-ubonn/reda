@@ -11,7 +11,7 @@ reproducibility. The latter is realized in the form of a logging system, which
 keeps track of each individual processing step applied to particular data set
 in a human-readable journal. REDA is platform compatible, tested and
 open-source under the permissive MIT license. Any contributions from the
-community are highly welcome.  Contents:
+community are highly welcome.
 
 .. note::
 
@@ -19,19 +19,15 @@ community are highly welcome.  Contents:
     using REDA for your work and have encountered any problems.
 
 .. toctree::
-    :maxdepth: 2
+    :maxdepth: 1
+    :hidden:
 
-    status.rst
+    about.rst
+    installation.rst
     data_containers.rst
+    _examples/index.rst
     importers.rst
     syscal.rst
     seit.rst
-    api/modules.rst
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+    api.rst
+    Source code <https://github.com/geophysics-ubonn/reda>

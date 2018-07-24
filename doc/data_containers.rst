@@ -1,5 +1,5 @@
 Data Containers
-###############
+===============
 
 REDA uses so-called data containers to manage various types of data. A data
 container provides a curated interface to importer functions, exporter
@@ -59,4 +59,3 @@ r         Resistance [Ohm]
 rpha      Resistance phase value [mrad]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
-

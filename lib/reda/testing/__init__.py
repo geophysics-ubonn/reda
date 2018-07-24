@@ -1,9 +1,6 @@
 # coding=utf-8
 """
 Testing utilities
-==================
-In Python you can call reda.test(show=True) to run and show  all docstring
-examples.
 """
 
 from .containers import ERTContainer

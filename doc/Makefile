@@ -47,11 +47,10 @@ help:
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
 clean:
-	rm -rf $(BUILDDIR)/*
+	rm -rf $(BUILDDIR) _api _examples
 
 html:
-	rm -rf api
-	sphinx-apidoc -o api ../lib/reda
+	sphinx-apidoc -f -o _api ../lib/reda
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 	@echo
 	@echo "Build finished. The HTML pages are in $(BUILDDIR)/html."

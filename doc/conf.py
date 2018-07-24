@@ -38,6 +38,7 @@ extensions = [
     'sphinx.ext.mathjax',
     'sphinx.ext.viewcode',
     'sphinx.ext.intersphinx',
+    'sphinx_gallery.gen_gallery',
     'matplotlib.sphinxext.only_directives',
     'matplotlib.sphinxext.plot_directive',
     'numpydoc',
@@ -50,6 +51,30 @@ intersphinx_mapping = {
     'pandas': ('http://pandas-docs.github.io/pandas-docs-travis/', None),
 }
 
+# Gallery conf
+sphinx_gallery_conf = {
+    'examples_dirs': ['../examples'],
+    'gallery_dirs': ['_examples'],
+    'filename_pattern': 'plot_',
+    'abort_on_example_error': True,
+    'reference_url': {
+        # The module you locally document uses a None
+        'reda': None,
+        # External python modules use their documentation websites
+        'matplotlib': 'http://matplotlib.org',
+        'numpy': 'http://docs.scipy.org/doc/numpy',
+        'pandas': 'https://pandas.pydata.org/pandas-docs/stable/'
+    },
+
+    # Don't report time of fast scripts (< 10 sec)
+    "min_reported_time": 10,
+
+    # path where to store your example linker templates
+    'backreferences_dir': '_api',
+
+    # Your documented modules. You can use a string or a list of strings
+    'doc_module': 'reda'
+}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
 
@@ -59,12 +84,14 @@ source_suffix = '.rst'
 # The encoding of source files.
 # source_encoding = 'utf-8-sig'
 
+autosummary_generate = True
+
 # The master toctree document.
 master_doc = 'index'
 
 # General information about the project.
 project = u'REDA'
-copyright = u'2017, 2018, Weigand, M. and Wagner F.M. and others'
+copyright = u'2017, 2018, M. Weigand and F. M. Wagner and others'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -113,28 +140,19 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 # keep_warnings = False
 
-
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'reda'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {
-    "github_user": "geophysics-ubonn",
-    "github_repo": "reda",
-    "description": "Reproducible Electrical Data Analysis",
-    "github_banner": True,
-    "travis_button": True,
-    "show_powered_by": False,
-    "fixed_sidebar": True,
-}
+html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
-# html_theme_path = []
+html_theme_path = ["_themes"]
 
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
@@ -233,13 +251,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-    (
-        'index',
-        'REDA.tex',
-        u'REDA Documentation',
-        u'Weigand and Wagner',
-        'manual'
-    ),
+    ('index', 'REDA.tex', u'REDA Documentation', u'Weigand and Wagner',
+     'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -262,19 +275,15 @@ latex_documents = [
 # If false, no module index is generated.
 # latex_domain_indices = True
 
-
 # -- Options for manual page output ---------------------------------------
 
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
-man_pages = [
-    ('index', 'REDA', u'REDA Documentation',
-     [u'Weigand, M. and Wagner F.M.'], 1)
-]
+man_pages = [('index', 'REDA', u'REDA Documentation',
+              [u'Weigand, M. and Wagner F.M.'], 1)]
 
 # If true, show URL addresses after external links.
 # man_show_urls = False
-
 
 # -- Options for Texinfo output -------------------------------------------
 
@@ -282,15 +291,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (
-        'index',
-        'REDA',
-        u'REDA Documentation',
-        u'Weigand, M. and Wagner F.M.',
-        'REDA',
-        ' Reproducible Electrical Data Analysis ',
-        'Miscellaneous'
-    ),
+    ('index', 'REDA', u'REDA Documentation', u'Weigand, M. and Wagner, F.M.',
+     'REDA', ' Reproducible Electrical Data Analysis ', 'Miscellaneous'),
 ]
 
 # Documents to append as an appendix to all manuals.
