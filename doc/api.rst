@@ -10,12 +10,23 @@ API documentation
 .. autosummary::
   :template: module.rst
 
-  .. configs
+  configs
   containers
-  .. eis
+  eis
   exporters
   importers
-  .. main
+  main
   plotters
   testing
   utils
+
+
+.. toctree::
+  :hidden:
+
+  _api/reda
+
+.. note::
+
+  Here, only the main reda modules are shown. For a full overview with
+  submodules, click here: :doc:`_api/reda`
