@@ -1,19 +1,25 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
-"""
-Tests for converter functions
+""" Tests for converter functions
 
 Run with
 
 nosetests test_convert.py -s -v
 """
-from nose.tools import *
+import pytest
+# from nose.tools import *
 import numpy as np
 import reda.eis.convert as sip_convert
 import numpy.testing
+from_keys = sip_convert.from_converters.keys()
+# print(from_keys)
+# for x in from_keys:
+#     print(x)
+# import IPython
+# IPython.embed()
+# exit()
 
 
-class test_input_styles(object):
+class TestClass_input_styles(object):
     """
     Test the three input styles:
 
@@ -59,7 +65,7 @@ class test_input_styles(object):
                 (False, True, False)):
             data_converted = sip_convert.convert('cmag_cpha', 'rmag_rpha',
                                                  data, one_spec)
-            assert_equal(data.shape, data_converted.shape)
+            assert data.shape == data_converted.shape
             data_backconverted = sip_convert.convert('rmag_rpha', 'cmag_cpha',
                                                      data_converted, one_spec)
             numpy.testing.assert_almost_equal(
@@ -67,7 +73,7 @@ class test_input_styles(object):
                 decimal=4)
 
 
-class test_converters():
+class TestClass_test_converters():
     @classmethod
     def teardown(self):
         pass
@@ -107,7 +113,8 @@ class test_converters():
         diffs = np.abs(true_result - output_data.flatten())
         for term in diffs:
             # check to within 8 places
-            assert_almost_equal(term, 0, 8)
+            assert term == pytest.approx(0, abs=1e-8)
+            # assert_almost_equal(term, 0, 8)
 
     def check_to_function(self, func, output1, output2):
         output_data = func(self.cre, self.cim)
@@ -115,7 +122,8 @@ class test_converters():
         diffs = np.abs(true_result - output_data.flatten())
         for term in diffs:
             # check to within 8 places
-            assert_almost_equal(term, 0, 8)
+            # assert_almost_equal(term, 0, 8)
+            assert term == pytest.approx(0, abs=1e-8)
 
     def test_from_cre_cim(self):
         self.check_from_function(sip_convert.from_cre_cim, self.cre, self.cim)
@@ -160,6 +168,7 @@ class test_converters():
         can compare those outputs to the hardcoded values.
         """
         from_keys = sip_convert.from_converters.keys()
+        from_keys = list(from_keys)
 
         # we know that the first key is rmag_rpha
         initial_values = np.hstack((self.rmag, self.rpha))
@@ -167,12 +176,14 @@ class test_converters():
 
         for nr, from_key in enumerate(from_keys):
             to = (nr + 1) % len(from_keys)
-            output_data = sip_convert.convert(from_keys[nr], from_keys[to],
-                                              start_values)
+            output_data = sip_convert.convert(
+                from_keys[nr], from_keys[to], start_values
+            )
             start_values = output_data
 
         diffs = start_values - initial_values
 
         for term in diffs.flatten():
             # check to within 3 places
-            assert_almost_equal(term, 0, 3)
+            # assert_almost_equal(term, 0, 3)
+            assert term == pytest.approx(0, abs=1e-3)
