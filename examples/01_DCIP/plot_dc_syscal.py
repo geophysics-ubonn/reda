@@ -4,24 +4,10 @@
 Importing Syscal data
 =====================
 
-test
-
 """
-
-import IPython
-IPython
-# import sys
-# import IPython.core.ultratb as ultratb
-# sys.excepthook = ultratb.VerboseTB(
-#     call_pdb=True,
-# )
-
-import pandas as pd
-pd.set_option('display.width', 1000)
-
 import reda
 container = reda.ERT()
-# IPython.embed()
+
 container.import_syscal_txt('data_normal.txt')
 container.import_syscal_txt('data_reciprocal.txt', reciprocals=48)
 
