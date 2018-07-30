@@ -44,10 +44,12 @@ def import_sip04_data(data_filename):
     frequency          Measurement frequency
     Temp_1             Temperature sensor 1 (optional)
     Temp_2             Temperature sensor 2 (optional)
-    Zt                 Complex Transfer Impedance (the measurement), mean value
-    Zt_1               Complex Transfer Impedance, first repetition
-    Zt_2               Complex Transfer Impedance, second repetition
-    Zt_3               Complex Transfer Impedance, third repetition
+    zt                 Complex Transfer Impedance (the measurement), mean value
+    r                  Magnitude of mean measurements (=|zt|)
+    rpha               Resistance phase [mrad]
+    zt_1               Complex Transfer Impedance, first repetition
+    zt_2               Complex Transfer Impedance, second repetition
+    zt_3               Complex Transfer Impedance, third repetition
     ContactResistance  Contact resistance (mean value)
     ShuntResistance    Shunt resistance used [Ohm]
     ================== ========================================================
@@ -74,6 +76,8 @@ def import_sip04_data(data_filename):
         'Zg_m',
         'zt',
         'Rs',
+        'r',
+        'rpha',
     ]
     df = df_all[columns_to_keep]
     df = df.rename(columns={
@@ -227,6 +231,9 @@ def _import_mat_file(mat_filename):
     df['m'] = 2
     df['n'] = 3
     df['zt'] = df['Zm_m']
+    # compute magnitude and phase [in mrad]
+    df['r'] = np.abs(df['zt'])
+    df['rpha'] = np.arctan2(df['zt'].imag, df['zt'].real) * 1000
     df['frequency'] = df['fm']
 
     return df
@@ -368,6 +375,11 @@ def _import_csv_file(csv_filename):
     df_merged['n'] = 3
 
     df_merged['zt'] = df_merged['Zm_m']
+
+    # compute magnitude and phase [in mrad]
+    df['r'] = np.abs(df['zt'])
+    df['rpha'] = np.arctan2(df['zt'].imag, df['zt'].real) * 1000
+
     df_merged['frequency'] = df_merged['fm']
 
     return df_merged
