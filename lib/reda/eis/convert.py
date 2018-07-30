@@ -178,7 +178,7 @@ def to_rmag_rpha(cre, cim):
 
 def to_log10rmag_rpha(cre, cim):
     rmag_rpha = to_rmag_rpha(cre, cim)
-    mag_slice = slice(0, rmag_rpha.shape[1] / 2)
+    mag_slice = slice(0, int(rmag_rpha.shape[1] / 2))
     log10rmag_rpha = rmag_rpha
     log10rmag_rpha[:, mag_slice] = np.log10(rmag_rpha[:, mag_slice])
     return log10rmag_rpha
@@ -186,7 +186,7 @@ def to_log10rmag_rpha(cre, cim):
 
 def to_lnrmag_rpha(cre, cim):
     rmag_rpha = to_rmag_rpha(cre, cim)
-    mag_slice = slice(0, rmag_rpha.shape[1] / 2)
+    mag_slice = slice(0, int(rmag_rpha.shape[1] / 2))
     lnrmag_rpha = rmag_rpha
     lnrmag_rpha[:, mag_slice] = np.log(rmag_rpha[:, mag_slice])
     return lnrmag_rpha
@@ -200,6 +200,7 @@ def to_rcomplex(cre, cim):
     Y = cre + 1j * cim
     Z = 1.0 / Y
     return Z
+
 
 # store the converter functions in dicts
 from_converters = {
