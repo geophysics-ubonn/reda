@@ -1,5 +1,6 @@
 #!/bin/bash
 # delete and recreate the virtualenv "reda"
+source /usr/share/virtualenvwrapper/virtualenvwrapper.sh
 
 rmvirtualenv reda
 mkvirtualenv --python /usr/bin/python3 reda
