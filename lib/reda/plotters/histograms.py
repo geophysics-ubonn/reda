@@ -1,9 +1,11 @@
 """Histogram functions for raw data."""
 
 import pandas as pd
-import pylab as plt
-import matplotlib as mpl
-mpl.rcParams['font.size'] = 8.0
+import reda.utils.mpl
+plt, mpl = reda.utils.mpl.setup()
+# import pylab as plt
+# import matplotlib as mpl
+# mpl.rcParams['font.size'] = 8.0
 import numpy as np
 
 import reda.main.units as units
