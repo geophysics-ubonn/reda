@@ -167,12 +167,11 @@ class TestClass_test_converters():
         conversion then converts back to the initial data format, and thus we
         can compare those outputs to the hardcoded values.
         """
-        from_keys = sip_convert.from_converters.keys()
-        from_keys = list(from_keys)
+        from_keys = list(sorted(sip_convert.from_converters.keys()))
 
-        # we know that the first key is rmag_rpha
+        # we know (require) that the first key is rmag_rpha
         initial_values = np.hstack((self.rmag, self.rpha))
-        start_values = initial_values
+        start_values = initial_values.copy()
 
         for nr, from_key in enumerate(from_keys):
             to = (nr + 1) % len(from_keys)
