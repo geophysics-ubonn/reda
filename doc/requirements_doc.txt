@@ -2,4 +2,3 @@ sphinx
 numpydoc
 Pillow
 sphinx-gallery
-crtomo-tools
