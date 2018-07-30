@@ -57,6 +57,7 @@ sphinx_gallery_conf = {
         '../examples',
         '../examples/01_DCIP',
         '../examples/02_SIP04',
+        '../examples/02_sEIT',
     ],
     'gallery_dirs': ['_examples'],
     'filename_pattern': 'plot_',

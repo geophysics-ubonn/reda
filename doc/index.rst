@@ -27,7 +27,5 @@ community are highly welcome.
     data_containers.rst
     _examples/index.rst
     importers.rst
-    syscal.rst
-    seit.rst
     api.rst
     Source code <https://github.com/geophysics-ubonn/reda>
