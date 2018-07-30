@@ -29,16 +29,16 @@ def plot_histograms(ertobj, keys, **kwargs):
 
     Parameters
     ----------
-    ertobj: container instance or :class:`pandas.DataFrame`
+    ertobj : container instance or :class:`pandas.DataFrame`
         data object which contains the data.
-    keys: list of strings
+    keys : list of strings
         which keys (column names) to plot
-    merge: bool, optional
+    merge : bool, optional
         if True, then generate only one figure with all key-plots as columns
         (default True)
-    log10plot: bool, optional
+    log10plot : bool, optional
         default: True
-    extra_dims: list, optional
+    extra_dims : list, optional
 
     Examples
     --------
@@ -49,7 +49,7 @@ def plot_histograms(ertobj, keys, **kwargs):
 
     Returns
     -------
-    figures: dict
+    figures : dict
         dictionary with the generated histogram figures
     """
     # you can either provide a DataFrame or an ERT object
@@ -128,6 +128,17 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
 
     Parameters
     ----------
+    dataobj : :py:class:`pandas.DataFrame` or reda container
+        The data container/data frame which holds the data
+    keys : list
+        List of column names to plot
+    subquery : string, optional
+        ?
+    log10plot : bool optional
+        ?
+    Nx : int, optional
+        ?
+
 
     Examples
     --------
