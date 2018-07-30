@@ -1,4 +1,4 @@
 .. _examples:
 
-Examples
-========
+Examples of importing variouns data types
+=========================================
