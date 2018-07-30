@@ -83,7 +83,7 @@ def mpl_get_cb_bound_next_to_plot(ax):
     >>> from reda.utils.mpl import mpl_get_cb_bound_next_to_plot
     >>> fig, ax = plt.subplots()
     >>> fig.subplots_adjust(right=0.8)
-    >>> ax.plot([1, 2, 3], [1, 2, 3], '.-')
+    >>> plt_obj = ax.plot([1, 2, 3], [1, 2, 3], '.-')
     >>> cb_pos = mpl_get_cb_bound_next_to_plot(ax)
     >>> ax1 = fig.add_axes(cb_pos, frame_on=True)
     >>> cmap = mpl.cm.jet_r
