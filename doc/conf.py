@@ -53,7 +53,11 @@ intersphinx_mapping = {
 
 # Gallery conf
 sphinx_gallery_conf = {
-    'examples_dirs': ['../examples'],
+    'examples_dirs': [
+        '../examples',
+        '../examples/01_DCIP',
+        '../examples/02_SIP04',
+    ],
     'gallery_dirs': ['_examples'],
     'filename_pattern': 'plot_',
     'abort_on_example_error': True,
