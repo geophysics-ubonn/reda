@@ -37,7 +37,7 @@ after_success: |
       cp -r ../doc/_build/html/ reda/documentation
       cd reda
       git status
-      git add documentation
+      git add -A documentation
       git commit -m "[by travis] update documentation"
       # # Make sure to make the output quiet, or else the API token will leak!
       # # This works because the API key can replace your password.
