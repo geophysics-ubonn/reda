@@ -96,7 +96,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'REDA'
-copyright = u'2017, 2018, M. Weigand and F. M. Wagner and others'
+copyright = u'2018, M. Weigand and F. M. Wagner and others'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -167,8 +167,10 @@ html_sidebars = {
 html_theme_options = {
     'github_user': 'geophysics-ubonn',
     'github_repo': 'reda',
-    'logo': '_static/reda_logo.png',
+    'github_button': False,
     'logo_name': False,
+    'description': 'Reproducible electrical data analysis',
+    'logo': 'reda_logo.png',
     'travis_button': True,
     'page_width': '1200px',
     'fixed_sidebar': True,
@@ -186,7 +188,7 @@ html_theme_path = ["_themes"]
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-html_logo = "_static/reda_logo.png"
+# html_logo = "_static/reda_logo.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
