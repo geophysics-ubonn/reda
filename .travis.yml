@@ -22,38 +22,17 @@ notifications:
     on_success: change  # options: [always|never|change] default: always
     on_failure: always  # options: [always|never|change] default: always
     on_start: always    # options: [always|never|change] default: always
-# not used, but could be interesting:
-# https://docs.travis-ci.com/user/deployment/pages/
-# loosely after:
-# https://stackoverflow.com/questions/23277391/how-to-publish-to-github-pages-from-travis-ci#33125422
-# after_success: |
-#   if [ -n "$GITHUB_API_KEY" ]; then
-#     if [ `python -c "import platform; print(platform.python_version()[0:3])"` == "3.6" ]; then
-#       cd "$TRAVIS_BUILD_DIR"
-#       mkdir ghpages
-#       cd ghpages
-#       git clone --depth=2 --branch=gh-pages https://github.com/geophysics-ubonn/reda.git
-#       rm -r reda/documentation
-#       cp -r ../doc/_build/html/ reda/documentation
-#       cd reda
-#       git status
-#       git add -Af documentation
-#       git commit -m "[by travis] update documentation"
-#       # # Make sure to make the output quiet, or else the API token will leak!
-#       # # This works because the API key can replace your password.
-#       git push -f -q https://m-weigand:$GITHUB_API_KEY@github.com/geophysics-ubonn/reda.git gh-pages &2>/dev/null
-#       cd "$TRAVIS_BUILD_DIR"
-#     fi
-#   fi
+
 deploy:
   project-name: reda
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_API_KEY
-  keep-history: true
+  keep-history: false
   local-dir: doc/_build/html
   committer-from-gh: true
   name: Reda Travis
   verbose: true
   on:
     branch: master
+    condition: $TRAVIS_PYTHON_VERSION = "3.6"
