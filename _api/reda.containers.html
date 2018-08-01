@@ -1,0 +1,819 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reda.containers package &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/css/reda.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="reda.eis package" href="reda.eis.html" />
+    <link rel="prev" title="reda.configs package" href="reda.configs.html" />
+         
+        <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+        
+        <link href='//fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Noto+Sans:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Roboto+Mono:400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    
+  </head><body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-reda.containers">
+<span id="reda-containers-package"></span><h1>reda.containers package<a class="headerlink" href="#module-reda.containers" title="Permalink to this headline">¶</a></h1>
+<p>Different data containers available in REDA</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reda.containers.ERT">
+<span id="reda-containers-ert-module"></span><h2>reda.containers.ERT module<a class="headerlink" href="#module-reda.containers.ERT" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reda.containers.ERT.ERT">
+<em class="property">class </em><code class="descclassname">reda.containers.ERT.</code><code class="descname">ERT</code><span class="sig-paren">(</span><em>data=None</em>, <em>electrode_positions=None</em>, <em>topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.ERT.LoggingClass" title="reda.containers.ERT.LoggingClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.LoggingClass</span></code></a>, <a class="reference internal" href="#reda.containers.ERT.Importers" title="reda.containers.ERT.Importers"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.Importers</span></code></a>, <a class="reference internal" href="#reda.containers.ERT.Exporters" title="reda.containers.ERT.Exporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.Exporters</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.check_dataframe" title="reda.containers.ERT.ERT.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(dataframe)</td>
+<td>Check the given dataframe for the required type and columns</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.ERT.compute_K_analytical" title="reda.containers.ERT.ERT.compute_K_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code></a>(spacing)</td>
+<td>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.compute_reciprocal_errors" title="reda.containers.ERT.ERT.compute_reciprocal_errors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_reciprocal_errors</span></code></a>([key])</td>
+<td>Compute reciprocal erros following LaBrecque et al.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.ERT.filter" title="reda.containers.ERT.ERT.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>(query[,&nbsp;inplace])</td>
+<td>Use a query statement to filter data.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
+<td>Setup a logger</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<td>Apply a filter to subset of the data</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="69%" />
+<col width="31%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>export_bert</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>export_pygimli</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>print_data_journal</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>print_log</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.ERT.ERT.check_dataframe">
+<code class="descname">check_dataframe</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the given dataframe for the required type and columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.ERT.compute_K_analytical">
+<code class="descname">compute_K_analytical</code><span class="sig-paren">(</span><em>spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute geometrical factors over the homogeneous half-space with a
+constant electrode spacing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.ERT.compute_reciprocal_errors">
+<code class="descname">compute_reciprocal_errors</code><span class="sig-paren">(</span><em>key='R'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.compute_reciprocal_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.compute_reciprocal_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute reciprocal erros following LaBrecque et al. (1996) according
+to:</p>
+<div class="math notranslate nohighlight">
+\[\epsilon = \left|\frac{2(|R_n| - |R_r|)}{|R_n| + |R_r|}\right|\]</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>key</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">Parameter to calculate the reciprocal error for (default is “R”).</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">norrec</span><span class="o">.</span><span class="n">get_test_df</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">95</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">105</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;ABMNR&quot;</span><span class="p">)</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">compute_reciprocal_errors</span><span class="p">()</span>
+<span class="go">generating ids</span>
+<span class="go">assigning ids</span>
+<span class="go">Could not find reciprocals for 0 configurations</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;error&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span> <span class="o">==</span> <span class="mf">0.1</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.ERT.filter">
+<code class="descname">filter</code><span class="sig-paren">(</span><em>query</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a query statement to filter data. Note that you specify the data
+to be removed!</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>query</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">The query string to be evaluated. Is directly provided to
+pandas.DataFrame.query</p>
+</dd>
+<dt><strong>inplace</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">if True, change the container dataframe in place (defaults to True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+397.g5d661c8.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">DataFrame that contains the result of the filter application</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.ERT.sub_filter">
+<code class="descname">sub_filter</code><span class="sig-paren">(</span><em>subset</em>, <em>filter</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.sub_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.sub_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a filter to subset of the data</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">subquery</span><span class="p">(</span>
+    <span class="s1">&#39;timestep == 2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;R &gt; 4&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.ERT.Exporters">
+<em class="property">class </em><code class="descclassname">reda.containers.ERT.</code><code class="descname">Exporters</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#Exporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Exporters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class provides wrappers for most of the exporter functions and is
+meant to be inherited by the ERT data container.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reda.containers.ERT.Importers" title="reda.containers.ERT.Importers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Importers</span></code></a></p>
+</div>
+<p class="rubric">Methods</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="64%" />
+<col width="36%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>export_bert</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>export_pygimli</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.ERT.Exporters.export_bert">
+<code class="descname">export_bert</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Exporters.export_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Exporters.export_bert" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.Exporters.export_pygimli">
+<code class="descname">export_pygimli</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Exporters.export_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Exporters.export_pygimli" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.ERT.Importers">
+<em class="property">class </em><code class="descclassname">reda.containers.ERT.</code><code class="descname">Importers</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class provides wrappers for most of the importer functions and is
+meant to be inherited by the ERT data container.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><a class="reference internal" href="#reda.containers.ERT.Exporters" title="reda.containers.ERT.Exporters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exporters</span></code></a></p>
+</div>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.Importers.import_bert" title="reda.containers.ERT.Importers.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.Importers.import_pygimli" title="reda.containers.ERT.Importers.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_txt" title="reda.containers.ERT.Importers.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.ERT.Importers.import_bert">
+<code class="descname">import_bert</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_bert" title="Permalink to this definition">¶</a></dt>
+<dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename: string</strong></dt>
+<dd><p class="first last">File path to .ohm file</p>
+</dd>
+<dt><strong>verbose: bool, optional</strong></dt>
+<dd><p class="first last">Enables extended debug output</p>
+</dd>
+<dt><strong>reciprocals: int, optional</strong></dt>
+<dd><p class="first last">if provided, then assume that this is a reciprocal measurements where
+only the electrode cables were switched. The provided number N is
+treated as the maximum electrode number, and denotations are renamed
+according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data: :class:`pandas.DataFrame`</strong></dt>
+<dd><p class="first last">The measurement data</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.Importers.import_pygimli">
+<code class="descname">import_pygimli</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_pygimli" title="Permalink to this definition">¶</a></dt>
+<dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename: string</strong></dt>
+<dd><p class="first last">File path to .ohm file</p>
+</dd>
+<dt><strong>verbose: bool, optional</strong></dt>
+<dd><p class="first last">Enables extended debug output</p>
+</dd>
+<dt><strong>reciprocals: int, optional</strong></dt>
+<dd><p class="first last">if provided, then assume that this is a reciprocal measurements where
+only the electrode cables were switched. The provided number N is
+treated as the maximum electrode number, and denotations are renamed
+according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data: :class:`pandas.DataFrame`</strong></dt>
+<dd><p class="first last">The measurement data</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.Importers.import_syscal_txt">
+<code class="descname">import_syscal_txt</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syscal import</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>timestep: int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></dt>
+<dd>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</dd>
+</dl>
+<p>Import Syscal measurements from a text file, exported as ‘Spreadsheet’.</p>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename: string</strong></dt>
+<dd><p class="first last">input filename</p>
+</dd>
+<dt><strong>x0: float</strong></dt>
+<dd><p class="first last">position of first electrode. If not given, then use the smallest
+x-position in the data as the first electrode.</p>
+</dd>
+<dt><strong>spacing: float</strong></dt>
+<dd><p class="first last">electrode spacing. This is important if not all electrodes are used in
+a given measurement setup. If not given, then the smallest distance
+between electrodes is assumed to be the electrode spacing. Naturally,
+this requires measurements (or injections) with subsequent electrodes.</p>
+</dd>
+<dt><strong>reciprocals: int, optional</strong></dt>
+<dd><p class="first last">if provided, then assume that this is a reciprocal measurements where
+only the electrode cables were switched. The provided number N is
+treated as the maximum electrode number, and denotations are renamed
+according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data: :class:`pandas.DataFrame`</strong></dt>
+<dd><p class="first last">Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes: :class:`pandas.DataFrame`</strong></dt>
+<dd><p class="first last">Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography: None</strong></dt>
+<dd><p class="first last">No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Notes</p>
+<ul class="simple">
+<li>TODO: we could try to infer electrode spacing from the file itself</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.ERT.ListHandler">
+<em class="property">class </em><code class="descclassname">reda.containers.ERT.</code><code class="descname">ListHandler</code><span class="sig-paren">(</span><em>log_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ListHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ListHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Handler" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>name</strong></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">acquire</span></code>()</td>
+<td>Acquire the I/O thread lock.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">addFilter</span></code>(filter)</td>
+<td>Add the specified filter to this handler.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</td>
+<td>Tidy up any resources used by the handler.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">createLock</span></code>()</td>
+<td>Acquire a thread lock for serializing access to the underlying I/O.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ListHandler.emit" title="reda.containers.ERT.ListHandler.emit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">emit</span></code></a>(record)</td>
+<td>Do whatever it takes to actually log the specified logging record.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(record)</td>
+<td>Determine if a record is loggable by consulting all the filters.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code>()</td>
+<td>Ensure all logging output has been flushed.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code>(record)</td>
+<td>Format the specified record.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">handle</span></code>(record)</td>
+<td>Conditionally emit the specified logging record.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">handleError</span></code>(record)</td>
+<td>Handle errors which occur during an emit() call.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">release</span></code>()</td>
+<td>Release the I/O thread lock.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeFilter</span></code>(filter)</td>
+<td>Remove the specified filter from this handler.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFormatter</span></code>(fmt)</td>
+<td>Set the formatter for this handler.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLevel</span></code>(level)</td>
+<td>Set the logging level of this handler.</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="55%" />
+<col width="45%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>get_name</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>set_name</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.ERT.ListHandler.emit">
+<code class="descname">emit</code><span class="sig-paren">(</span><em>record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ListHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ListHandler.emit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do whatever it takes to actually log the specified logging record.</p>
+<p>This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.ERT.LogDataChanges">
+<em class="property">class </em><code class="descclassname">reda.containers.ERT.</code><code class="descname">LogDataChanges</code><span class="sig-paren">(</span><em>container</em>, <em>filter_action='default'</em>, <em>filter_query=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#LogDataChanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.LogDataChanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Context manager that observes the DataFrame of a data container for
+changes in the number of rows.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="k">import</span> <span class="n">ERTContainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="k">import</span> <span class="n">LogDataChanges</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># now change the data</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;R &lt; 10&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ERTContainer</span><span class="o">.</span><span class="n">print_log</span><span class="p">()</span>
+<span class="go">2... - root - INFO - Data change from 22 to 21</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.ERT.LoggingClass">
+<em class="property">class </em><code class="descclassname">reda.containers.ERT.</code><code class="descname">LoggingClass</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#LoggingClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.LoggingClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Set up logging facilities for the containers</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.LoggingClass.setup_logger" title="reda.containers.ERT.LoggingClass.setup_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code></a>()</td>
+<td>Setup a logger</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="69%" />
+<col width="31%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>print_data_journal</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>print_log</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.ERT.LoggingClass.print_data_journal">
+<code class="descname">print_data_journal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#LoggingClass.print_data_journal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.LoggingClass.print_data_journal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.LoggingClass.print_log">
+<code class="descname">print_log</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#LoggingClass.print_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.LoggingClass.print_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.LoggingClass.setup_logger">
+<code class="descname">setup_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#LoggingClass.setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.LoggingClass.setup_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup a logger</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.containers.ERT.append_doc_of">
+<code class="descclassname">reda.containers.ERT.</code><code class="descname">append_doc_of</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#append_doc_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.append_doc_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reda.containers.ERT.prepend_doc_of">
+<code class="descclassname">reda.containers.ERT.</code><code class="descname">prepend_doc_of</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#prepend_doc_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.prepend_doc_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reda.containers.SIP">
+<span id="reda-containers-sip-module"></span><h2>reda.containers.SIP module<a class="headerlink" href="#module-reda.containers.SIP" title="Permalink to this headline">¶</a></h2>
+<p>Container for Spectral Induced Polarization (SIP) measurements</p>
+<dl class="class">
+<dt id="reda.containers.SIP.SIP">
+<em class="property">class </em><code class="descclassname">reda.containers.SIP.</code><code class="descname">SIP</code><span class="sig-paren">(</span><em>data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.SIP.importers" title="reda.containers.SIP.importers"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.SIP.importers</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.SIP.SIP.check_dataframe" title="reda.containers.SIP.SIP.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(dataframe)</td>
+<td>Check the given dataframe for the required type and columns</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code>(filename[,&nbsp;timestep])</td>
+<td>SIP04 data import</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.SIP.SIP.reduce_duplicate_frequencies" title="reda.containers.SIP.SIP.reduce_duplicate_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reduce_duplicate_frequencies</span></code></a>()</td>
+<td>In case multiple frequencies were measured, average them and compute std, min, max values for zt.</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.SIP.SIP.check_dataframe">
+<code class="descname">check_dataframe</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the given dataframe for the required type and columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.SIP.SIP.reduce_duplicate_frequencies">
+<code class="descname">reduce_duplicate_frequencies</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP.reduce_duplicate_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP.reduce_duplicate_frequencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>In case multiple frequencies were measured, average them and compute
+std, min, max values for zt.</p>
+<p>In case timesteps were added (i.e., multiple separate measurements),
+group over those and average for each timestep.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">reda</span>
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+    <span class="n">reda</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="s1">&#39;sip04_fs_06&#39;</span><span class="p">,</span> <span class="n">fid</span><span class="p">)</span>
+    <span class="n">sip</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">SIP</span><span class="p">()</span>
+    <span class="n">sip</span><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="n">fid</span> <span class="o">+</span> <span class="s1">&#39;/sip_dataA.mat&#39;</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="c1"># well, add the spectrum again as another timestep</span>
+    <span class="n">sip</span><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="n">fid</span> <span class="o">+</span> <span class="s1">&#39;/sip_dataA.mat&#39;</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">sip</span><span class="o">.</span><span class="n">reduce_duplicate_frequencies</span><span class="p">()</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.SIP.importers">
+<em class="property">class </em><code class="descclassname">reda.containers.SIP.</code><code class="descname">importers</code><a class="reference internal" href="../_modules/reda/containers/SIP.html#importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.importers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class provides wrappers for most of the importer functions, and is
+meant to be inherited by the data containers</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.SIP.importers.import_sip04" title="reda.containers.SIP.importers.import_sip04"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code></a>(filename[,&nbsp;timestep])</td>
+<td>SIP04 data import</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.SIP.importers.import_sip04">
+<code class="descname">import_sip04</code><span class="sig-paren">(</span><em>filename</em>, <em>timestep=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#importers.import_sip04"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.importers.import_sip04" title="Permalink to this definition">¶</a></dt>
+<dd><p>SIP04 data import</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename: string</strong></dt>
+<dd><p class="first last">Path to .mat or .csv file containing SIP-04 measurement results</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">reda</span>
+<span class="k">with</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">TemporaryDirectory</span><span class="p">()</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+    <span class="n">reda</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">download_data</span><span class="p">(</span><span class="s1">&#39;sip04_fs_01&#39;</span><span class="p">,</span> <span class="n">fid</span><span class="p">)</span>
+    <span class="n">sip</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">SIP</span><span class="p">()</span>
+    <span class="n">sip</span><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="n">fid</span> <span class="o">+</span> <span class="s1">&#39;/sip_dataA.mat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.containers.sEIT">
+<span id="reda-containers-seit-module"></span><h2>reda.containers.sEIT module<a class="headerlink" href="#module-reda.containers.sEIT" title="Permalink to this headline">¶</a></h2>
+<p>spectral electrical impedance tomography (sEIT) container</p>
+<dl class="class">
+<dt id="reda.containers.sEIT.importers">
+<em class="property">class </em><code class="descclassname">reda.containers.sEIT.</code><code class="descname">importers</code><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class provides wrappers for most of the importer functions, and is
+meant to be inherited by the data containers</p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit160" title="reda.containers.sEIT.importers.import_eit160"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit160</span></code></a>(filename,&nbsp;configfile)</td>
+<td>EIT160 data import</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit40" title="reda.containers.sEIT.importers.import_eit40"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit40</span></code></a>(filename,&nbsp;configfile[,&nbsp;…])</td>
+<td>EIT40 data import</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.sEIT.importers.import_eit160">
+<code class="descname">import_eit160</code><span class="sig-paren">(</span><em>filename</em>, <em>configfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit160"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit160" title="Permalink to this definition">¶</a></dt>
+<dd><p>EIT160 data import</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.importers.import_eit40">
+<code class="descname">import_eit40</code><span class="sig-paren">(</span><em>filename</em>, <em>configfile</em>, <em>correction_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit40"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit40" title="Permalink to this definition">¶</a></dt>
+<dd><p>EIT40 data import</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.sEIT.sEIT">
+<em class="property">class </em><code class="descclassname">reda.containers.sEIT.</code><code class="descname">sEIT</code><span class="sig-paren">(</span><em>dataframe=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.sEIT.importers" title="reda.containers.sEIT.importers"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.sEIT.importers</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.check_dataframe" title="reda.containers.sEIT.sEIT.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(dataframe)</td>
+<td>Check the given dataframe for the required columns</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit160</span></code>(filename,&nbsp;configfile)</td>
+<td>EIT160 data import</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit40</span></code>(filename,&nbsp;configfile[,&nbsp;…])</td>
+<td>EIT40 data import</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
+<td>State what you want to keep</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
+<td>Remove frequencies from the dataset</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<td><p class="rubric">Examples</p>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.check_dataframe">
+<code class="descname">check_dataframe</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the given dataframe for the required columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.query">
+<code class="descname">query</code><span class="sig-paren">(</span><em>query</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.query" title="Permalink to this definition">¶</a></dt>
+<dd><p>State what you want to keep</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.remove_frequencies">
+<code class="descname">remove_frequencies</code><span class="sig-paren">(</span><em>fmin</em>, <em>fmax</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.remove_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove frequencies from the dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.subquery">
+<code class="descname">subquery</code><span class="sig-paren">(</span><em>subset</em>, <em>filter</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.subquery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.subquery" title="Permalink to this definition">¶</a></dt>
+<dd><p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subquery</span><span class="p">(</span>
+    <span class="s1">&#39;timestep == 2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;R &gt; 4&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+        <aside>
+
+            
+            <a href="../index.html" id="logo" title=REDA><img class="logo" src="../_static/reda_logo.png" width="80%" title=REDA /></a>
+            
+
+            <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </aside>
+    
+      <div class="clearer"></div>
+    </div>
+        <div class="footer">
+            <i class="fas fa-copyright"></i> 2018 by M. Weigand, F. Wagner, and <a target="_blank" href="https://github.com/geophysics-ubonn/reda/graphs/contributors">others.</a>
+        </div>
+  </body>
+</html>

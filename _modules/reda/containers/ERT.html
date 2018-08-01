@@ -1,0 +1,475 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reda.containers.ERT &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/css/reda.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+         
+        <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+        
+        <link href='//fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Noto+Sans:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Roboto+Mono:400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    
+  </head><body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.containers.ERT</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">functools</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">reda.importers.iris_syscal_pro</span> <span class="k">as</span> <span class="nn">reda_syscal</span>
+<span class="kn">import</span> <span class="nn">reda.importers.bert</span> <span class="k">as</span> <span class="nn">reda_bert_import</span>
+<span class="kn">import</span> <span class="nn">reda.exporters.bert</span> <span class="k">as</span> <span class="nn">reda_bert_export</span>
+
+<span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">redaK</span>
+<span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">redafixK</span>
+<span class="kn">from</span> <span class="nn">reda.utils.norrec</span> <span class="k">import</span> <span class="n">assign_norrec_to_df</span><span class="p">,</span> <span class="n">average_repetitions</span>
+
+
+<div class="viewcode-block" id="LogDataChanges"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.LogDataChanges">[docs]</a><span class="k">class</span> <span class="nc">LogDataChanges</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Context manager that observes the DataFrame of a data container for</span>
+<span class="sd">    changes in the number of rows.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">    &gt;&gt;&gt; from reda.testing.containers import ERTContainer</span>
+<span class="sd">    &gt;&gt;&gt; from reda.containers.ERT import LogDataChanges</span>
+<span class="sd">    &gt;&gt;&gt; with LogDataChanges(ERTContainer):</span>
+<span class="sd">    ...     # now change the data</span>
+<span class="sd">    ...     ERTContainer.data.loc[0, &quot;R&quot;] = 22</span>
+<span class="sd">    ...     ERTContainer.data.query(&quot;R &lt; 10&quot;, inplace=True)</span>
+<span class="sd">    &gt;&gt;&gt; ERTContainer.print_log()</span>
+<span class="sd">    2... - root - INFO - Data change from 22 to 21</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;default&#39;</span><span class="p">,</span>
+                 <span class="n">filter_query</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">,</span> <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">container</span> <span class="o">=</span> <span class="n">container</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">container</span><span class="o">.</span><span class="n">logger</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_action</span> <span class="o">=</span> <span class="n">filter_action</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_size_before</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_size_after</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filter_query</span> <span class="o">=</span> <span class="n">filter_query</span>
+
+    <span class="k">def</span> <span class="nf">__enter__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_size_before</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data_size_before</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">return</span> <span class="kc">None</span>
+
+    <span class="k">def</span> <span class="nf">__exit__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_size_after</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s1">&#39;Data change from </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data_size_before</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_size_after</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">extra</span><span class="o">=</span><span class="p">{</span>
+                <span class="s1">&#39;filter_action&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_action</span><span class="p">,</span>
+                <span class="s1">&#39;df_size_before&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_size_before</span><span class="p">,</span>
+                <span class="s1">&#39;df_size_after&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_size_after</span><span class="p">,</span>
+                <span class="s1">&#39;filter_query&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">filter_query</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="append_doc_of"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.append_doc_of">[docs]</a><span class="k">def</span> <span class="nf">append_doc_of</span><span class="p">(</span><span class="n">fun</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">fun</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="k">return</span> <span class="n">f</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+<div class="viewcode-block" id="prepend_doc_of"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.prepend_doc_of">[docs]</a><span class="k">def</span> <span class="nf">prepend_doc_of</span><span class="p">(</span><span class="n">fun</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="n">fun</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+</span> <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span>
+        <span class="k">return</span> <span class="n">f</span>
+    <span class="k">return</span> <span class="n">decorator</span></div>
+
+
+<div class="viewcode-block" id="Importers"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Importers">[docs]</a><span class="k">class</span> <span class="nc">Importers</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the importer functions and is</span>
+<span class="sd">    meant to be inherited by the ERT data container.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    Exporters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">df</span><span class="p">),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span>
+
+    <span class="k">def</span> <span class="nf">_describe_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df_to_use</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<div class="viewcode-block" id="Importers.import_syscal_txt"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Importers.import_syscal_txt">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_txt</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_syscal_txt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Syscal import</span>
+
+<span class="sd">        timestep: int or :class:`datetime.datetime`</span>
+<span class="sd">            if provided use this value to set the &#39;timestep&#39; column of the</span>
+<span class="sd">            produced dataframe. Default: 0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IRIS Syscal Pro text import&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_txt</span><span class="p">(</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Importers.import_bert"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Importers.import_bert">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_bert_import</span><span class="o">.</span><span class="n">import_ohm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_bert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;BERT .ohm file import&quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;BERT .ohm file import&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">,</span>
+                            <span class="n">filter_query</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">reda_bert_import</span><span class="o">.</span><span class="n">import_ohm</span><span class="p">(</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrodes</span>  <span class="c1"># See issue #22</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Importers.import_pygimli"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Importers.import_pygimli">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">import_bert</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_pygimli</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">import_bert</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="Exporters"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Exporters">[docs]</a><span class="k">class</span> <span class="nc">Exporters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the exporter functions and is</span>
+<span class="sd">    meant to be inherited by the ERT data container.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    Importers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="Exporters.export_bert"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Exporters.export_bert">[docs]</a>    <span class="k">def</span> <span class="nf">export_bert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="n">reda_bert_export</span><span class="o">.</span><span class="n">export_bert</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Exporters.export_pygimli"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Exporters.export_pygimli">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">export_bert</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">export_pygimli</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_bert</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ListHandler"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ListHandler">[docs]</a><span class="k">class</span> <span class="nc">ListHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>  <span class="c1"># Inherit from logging.Handler</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">log_list</span><span class="p">):</span>
+        <span class="c1"># run the regular Handler __init__</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># Our custom argument</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_list</span> <span class="o">=</span> <span class="n">log_list</span>
+
+<div class="viewcode-block" id="ListHandler.emit"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ListHandler.emit">[docs]</a>    <span class="k">def</span> <span class="nf">emit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">record</span><span class="p">):</span>
+        <span class="c1"># record.message is the log message</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">record</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="LoggingClass"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.LoggingClass">[docs]</a><span class="k">class</span> <span class="nc">LoggingClass</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Set up logging facilities for the containers</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="LoggingClass.setup_logger"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.LoggingClass.setup_logger">[docs]</a>    <span class="k">def</span> <span class="nf">setup_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Setup a logger</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">log_list</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">handler</span> <span class="o">=</span> <span class="n">ListHandler</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">log_list</span><span class="p">)</span>
+
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+        <span class="n">handler</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">handler</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">handler</span> <span class="o">=</span> <span class="n">handler</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span></div>
+
+<div class="viewcode-block" id="LoggingClass.print_log"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.LoggingClass.print_log">[docs]</a>    <span class="k">def</span> <span class="nf">print_log</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_list</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">handler</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">record</span><span class="p">))</span></div>
+
+<div class="viewcode-block" id="LoggingClass.print_data_journal"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.LoggingClass.print_data_journal">[docs]</a>    <span class="k">def</span> <span class="nf">print_data_journal</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- Data Journal Start ---&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()))</span>
+        <span class="k">for</span> <span class="n">record</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_list</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">record</span><span class="p">,</span> <span class="s1">&#39;filter_action&#39;</span><span class="p">):</span>
+                <span class="c1"># print(record)</span>
+                <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">filter_action</span> <span class="o">==</span> <span class="s1">&#39;import&#39;</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s1">&#39;Data was imported from file </span><span class="si">{0}</span><span class="s1"> &#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">record</span><span class="o">.</span><span class="n">filter_query</span>
+                        <span class="p">)</span> <span class="o">+</span>
+                        <span class="s1">&#39;(</span><span class="si">{0}</span><span class="s1"> data points)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">record</span><span class="o">.</span><span class="n">df_size_after</span> <span class="o">-</span> <span class="n">record</span><span class="o">.</span><span class="n">df_size_before</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+                <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">filter_action</span> <span class="o">==</span> <span class="s1">&#39;filter&#39;</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s1">&#39;A filter was applied with query &quot;</span><span class="si">{0}</span><span class="s1">&quot;.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">record</span><span class="o">.</span><span class="n">filter_query</span>
+                        <span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; In total </span><span class="si">{0}</span><span class="s1"> records were removed&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="o">-</span> <span class="n">record</span><span class="o">.</span><span class="n">df_size_after</span> <span class="o">+</span> <span class="n">record</span><span class="o">.</span><span class="n">df_size_before</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- Data Journal End ---&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ERT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT">[docs]</a><span class="k">class</span> <span class="nc">ERT</span><span class="p">(</span><span class="n">LoggingClass</span><span class="p">,</span> <span class="n">Importers</span><span class="p">,</span> <span class="n">Exporters</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">topography</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            If not None, then the provided DataFrame is assumed to contain</span>
+<span class="sd">            valid data previously prepared elsewhere. Required columns are:</span>
+<span class="sd">                &quot;A&quot;, &quot;B&quot;, &quot;M&quot;, &quot;N&quot;, &quot;R&quot;.</span>
+<span class="sd">        electrodes : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            If set, this is expected to be a DataFrame which contains electrode</span>
+<span class="sd">            positions with columns: &quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;.</span>
+<span class="sd">        topography : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            If set, this is expected to a DataFrame which contains topography</span>
+<span class="sd">            information with columns: &quot;X&quot;, &quot;Y&quot;, &quot;Z&quot;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topography</span> <span class="o">=</span> <span class="n">topography</span>
+
+<div class="viewcode-block" id="ERT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required type and columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># is this a DataFrame</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;The provided dataframe object is not a pandas.DataFrame&#39;</span>
+            <span class="p">)</span>
+
+        <span class="n">required_columns</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;A&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;B&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;M&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;N&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;R&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">required_columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Required column not in dataframe: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">column</span>
+                <span class="p">))</span>
+        <span class="k">return</span> <span class="n">dataframe</span></div>
+
+<div class="viewcode-block" id="ERT.sub_filter"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.sub_filter">[docs]</a>    <span class="k">def</span> <span class="nf">sub_filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Apply a filter to subset of the data</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            .subquery(</span>
+<span class="sd">                &#39;timestep == 2&#39;,</span>
+<span class="sd">                &#39;R &gt; 4&#39;,</span>
+<span class="sd">            )</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># build the full query</span>
+        <span class="n">full_query</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+            <span class="s1">&#39;not (&#39;</span><span class="p">,</span>
+            <span class="n">subset</span><span class="p">,</span>
+            <span class="s1">&#39;) or not (&#39;</span><span class="p">,</span>
+            <span class="nb">filter</span><span class="p">,</span>
+            <span class="s1">&#39;)&#39;</span><span class="p">,</span>
+        <span class="p">))</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="n">filter_query</span><span class="o">=</span><span class="nb">filter</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">full_query</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="n">inplace</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="ERT.filter"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use a query statement to filter data. Note that you specify the data</span>
+<span class="sd">        to be removed!</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : string</span>
+<span class="sd">            The query string to be evaluated. Is directly provided to</span>
+<span class="sd">            pandas.DataFrame.query</span>
+<span class="sd">        inplace : bool</span>
+<span class="sd">            if True, change the container dataframe in place (defaults to True)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        result : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            DataFrame that contains the result of the filter application</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="n">filter_query</span><span class="o">=</span><span class="n">query</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+                <span class="s1">&#39;not (</span><span class="si">{0}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query</span><span class="p">),</span>
+                <span class="n">inplace</span><span class="o">=</span><span class="n">inplace</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
+<div class="viewcode-block" id="ERT.compute_K_analytical"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.compute_K_analytical">[docs]</a>    <span class="k">def</span> <span class="nf">compute_K_analytical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Compute geometrical factors over the homogeneous half-space with a</span>
+<span class="sd">        constant electrode spacing</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">redaK</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="n">spacing</span><span class="p">)</span>
+        <span class="n">redafixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERT.compute_reciprocal_errors"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.compute_reciprocal_errors">[docs]</a>    <span class="k">def</span> <span class="nf">compute_reciprocal_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;R&quot;</span><span class="p">):</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute reciprocal erros following LaBrecque et al. (1996) according</span>
+<span class="sd">        to:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \epsilon = \left|\frac{2(|R_n| - |R_r|)}{|R_n| + |R_r|}\right|</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : str</span>
+<span class="sd">            Parameter to calculate the reciprocal error for (default is &quot;R&quot;).</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; import reda</span>
+<span class="sd">        &gt;&gt;&gt; ert = reda.ERT()</span>
+<span class="sd">        &gt;&gt;&gt; ert.data = reda.utils.norrec.get_test_df()</span>
+<span class="sd">        &gt;&gt;&gt; ert.data = pd.DataFrame([</span>
+<span class="sd">        ...     [1,2,3,4,95],</span>
+<span class="sd">        ...     [3,4,2,1,-105]], columns=list(&quot;ABMNR&quot;)</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; ert.compute_reciprocal_errors()</span>
+<span class="sd">        generating ids</span>
+<span class="sd">        assigning ids</span>
+<span class="sd">        Could not find reciprocals for 0 configurations</span>
+<span class="sd">        &gt;&gt;&gt; ert.data[&quot;error&quot;].mean() == 0.1</span>
+<span class="sd">        True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Assign norrec ids if not already present</span>
+        <span class="k">if</span> <span class="s2">&quot;id&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="n">assign_norrec_to_df</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># Average repititions</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">average_repetitions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get configurations with reciprocals</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="ow">not</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not find reciprocals for </span><span class="si">%d</span><span class="s2"> configurations&quot;</span> <span class="o">%</span> <span class="n">n</span><span class="p">)</span>
+
+        <span class="c1"># Calc reciprocal error</span>
+        <span class="n">grouped</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_error</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+            <span class="n">R_n</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">R_r</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s2">&quot;R&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">R_n</span><span class="p">)</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">R_r</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">R_n</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">R_r</span><span class="p">)))</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_error</span><span class="p">)</span>
+        <span class="n">error</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">error</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span>
+                             <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        <aside>
+
+            
+            <a href="../../../index.html" id="logo" title=REDA><img class="logo" src="../../../_static/reda_logo.png" width="80%" title=REDA /></a>
+            
+
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </aside>
+    
+      <div class="clearer"></div>
+    </div>
+        <div class="footer">
+            <i class="fas fa-copyright"></i> 2018 by M. Weigand, F. Wagner, and <a target="_blank" href="https://github.com/geophysics-ubonn/reda/graphs/contributors">others.</a>
+        </div>
+  </body>
+</html>

@@ -1,0 +1,177 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reda.utils.geometric_factors &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/css/reda.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+         
+        <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+        
+        <link href='//fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Noto+Sans:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Roboto+Mono:400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    
+  </head><body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.utils.geometric_factors</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">select and execute functions to compute geometric factors according to the</span>
+<span class="sd">rcParams variable.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">reda</span>
+
+
+<div class="viewcode-block" id="apply_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K">[docs]</a><span class="k">def</span> <span class="nf">apply_K</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply the geometric factors to the dataset and compute (apparent)</span>
+<span class="sd">    resistivities/conductivities</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;K&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sigma_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s1">&#39;Zt&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a_complex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="compute_K_numerical"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_numerical">[docs]</a><span class="k">def</span> <span class="nf">compute_K_numerical</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Use a finite-element modeling code to infer geometric factors for meshes</span>
+<span class="sd">    with topography or irregular electrode spacings.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataframe: pandas.DataFrame</span>
+<span class="sd">        the data frame that contains the data</span>
+<span class="sd">    settings: dict</span>
+<span class="sd">        The settings required to compute the geometric factors. See examples</span>
+<span class="sd">        down below for more information in the required content.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    K: :class:`numpy.ndarray`</span>
+<span class="sd">        K factors (are also directly written to the dataframe)</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    ::</span>
+
+<span class="sd">        settings = {</span>
+<span class="sd">            &#39;rho&#39;: 100,</span>
+<span class="sd">            &#39;elem&#39;: &#39;elem.dat&#39;,</span>
+<span class="sd">            &#39;elec&#39;: &#39;elec.dat&#39;,</span>
+<span class="sd">        }</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">inversion_code</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;geom_factor.inversion_code&#39;</span><span class="p">,</span> <span class="s1">&#39;crtomo&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">inversion_code</span> <span class="o">==</span> <span class="s1">&#39;crtomo&#39;</span><span class="p">:</span>
+        <span class="kn">import</span> <span class="nn">reda.utils.geom_fac_crtomo</span> <span class="k">as</span> <span class="nn">geom_fac_crtomo</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">geom_fac_crtomo</span><span class="o">.</span><span class="n">compute_K</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s1">&#39;Inversion code </span><span class="si">{0}</span><span class="s1"> not implemented for K computation&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">inversion_code</span>
+            <span class="p">))</span>
+    <span class="k">return</span> <span class="n">K</span></div>
+
+
+<div class="viewcode-block" id="compute_K_analytical"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical">[docs]</a><span class="k">def</span> <span class="nf">compute_K_analytical</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given an electrode spacing, compute geometrical factors using the</span>
+<span class="sd">    equation for the homogeneous half-space (Neumann-equation)</span>
+
+<span class="sd">    If a dataframe is given, use the column (A, B, M, N). Otherwise, expect an</span>
+<span class="sd">    Nx4 arrray.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dataframe: pandas.DataFrame or numpy.ndarray</span>
+<span class="sd">        Configurations, either as DataFrame</span>
+<span class="sd">    spacing: float or numpy.ndarray</span>
+<span class="sd">        distance between electrodes. If array, then these are the x-coordinates</span>
+<span class="sd">        of the electrodes</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="n">dataframe</span>
+
+    <span class="c1"># r_am = np.abs(dataframe[&#39;A&#39;] - dataframe[&#39;M&#39;]) * spacing</span>
+    <span class="c1"># r_an = np.abs(dataframe[&#39;A&#39;] - dataframe[&#39;N&#39;]) * spacing</span>
+    <span class="c1"># r_bm = np.abs(dataframe[&#39;B&#39;] - dataframe[&#39;M&#39;]) * spacing</span>
+    <span class="c1"># r_bn = np.abs(dataframe[&#39;B&#39;] - dataframe[&#39;N&#39;]) * spacing</span>
+    <span class="n">r_am</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">spacing</span>
+    <span class="n">r_an</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="n">spacing</span>
+    <span class="n">r_bm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">spacing</span>
+    <span class="n">r_bn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="n">spacing</span>
+
+    <span class="n">K</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">/</span> <span class="n">r_am</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_an</span> <span class="o">-</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_bm</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">r_bn</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span>
+
+    <span class="k">return</span> <span class="n">K</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        <aside>
+
+            
+            <a href="../../../index.html" id="logo" title=REDA><img class="logo" src="../../../_static/reda_logo.png" width="80%" title=REDA /></a>
+            
+
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </aside>
+    
+      <div class="clearer"></div>
+    </div>
+        <div class="footer">
+            <i class="fas fa-copyright"></i> 2018 by M. Weigand, F. Wagner, and <a target="_blank" href="https://github.com/geophysics-ubonn/reda/graphs/contributors">others.</a>
+        </div>
+  </body>
+</html>

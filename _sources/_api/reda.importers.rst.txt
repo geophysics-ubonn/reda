@@ -1,0 +1,84 @@
+reda.importers package
+======================
+
+.. automodule:: reda.importers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+Submodules
+----------
+
+reda.importers.bert module
+--------------------------
+
+.. automodule:: reda.importers.bert
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.eit160 module
+----------------------------
+
+.. automodule:: reda.importers.eit160
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.eit40 module
+---------------------------
+
+.. automodule:: reda.importers.eit40
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.eit\_fzj module
+------------------------------
+
+.. automodule:: reda.importers.eit_fzj
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.geotom module
+----------------------------
+
+.. automodule:: reda.importers.geotom
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.iris\_syscal\_pro module
+---------------------------------------
+
+.. automodule:: reda.importers.iris_syscal_pro
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.radic\_sip256c module
+------------------------------------
+
+.. automodule:: reda.importers.radic_sip256c
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.res2dinv module
+------------------------------
+
+.. automodule:: reda.importers.res2dinv
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.sip04 module
+---------------------------
+
+.. automodule:: reda.importers.sip04
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+

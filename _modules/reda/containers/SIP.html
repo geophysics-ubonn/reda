@@ -1,0 +1,231 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>reda.containers.SIP &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/css/reda.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+         
+        <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+        
+        <link href='//fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Noto+Sans:300,400,700' rel='stylesheet' type='text/css'>
+        <link href='//fonts.googleapis.com/css?family=Roboto+Mono:400,500,700' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
+    
+  </head><body>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.containers.SIP</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Container for Spectral Induced Polarization (SIP) measurements</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">reda.importers.sip04</span> <span class="k">as</span> <span class="nn">reda_sip04</span>
+
+
+<div class="viewcode-block" id="importers"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.importers">[docs]</a><span class="k">class</span> <span class="nc">importers</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the importer functions, and is</span>
+<span class="sd">    meant to be inherited by the data containers</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">df</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span>
+
+    <span class="k">def</span> <span class="nf">_describe_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">df_to_use</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_columns</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<div class="viewcode-block" id="importers.import_sip04"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.importers.import_sip04">[docs]</a>    <span class="k">def</span> <span class="nf">import_sip04</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;SIP04 data import</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename: string</span>
+<span class="sd">            Path to .mat or .csv file containing SIP-04 measurement results</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            import tempfile</span>
+<span class="sd">            import reda</span>
+<span class="sd">            with tempfile.TemporaryDirectory() as fid:</span>
+<span class="sd">                reda.data.download_data(&#39;sip04_fs_01&#39;, fid)</span>
+<span class="sd">                sip = reda.SIP()</span>
+<span class="sd">                sip.import_sip04(fid + &#39;/sip_dataA.mat&#39;)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">reda_sip04</span><span class="o">.</span><span class="n">import_sip04_data</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;adding timestep&#39;</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="SIP"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP">[docs]</a><span class="k">class</span> <span class="nc">SIP</span><span class="p">(</span><span class="n">importers</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;n&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;zt&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">plot_columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;zt&#39;</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="SIP.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required type and columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># is this a DataFrame</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;The provided dataframe object is not a pandas.DataFrame&#39;</span>
+            <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Required column not in dataframe: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">column</span>
+                <span class="p">))</span>
+        <span class="k">return</span> <span class="n">dataframe</span></div>
+
+<div class="viewcode-block" id="SIP.reduce_duplicate_frequencies"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP.reduce_duplicate_frequencies">[docs]</a>    <span class="k">def</span> <span class="nf">reduce_duplicate_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;In case multiple frequencies were measured, average them and compute</span>
+<span class="sd">        std, min, max values for zt.</span>
+
+<span class="sd">        In case timesteps were added (i.e., multiple separate measurements),</span>
+<span class="sd">        group over those and average for each timestep.</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+
+<span class="sd">        ::</span>
+
+<span class="sd">            import tempfile</span>
+<span class="sd">            import reda</span>
+<span class="sd">            with tempfile.TemporaryDirectory() as fid:</span>
+<span class="sd">                reda.data.download_data(&#39;sip04_fs_06&#39;, fid)</span>
+<span class="sd">                sip = reda.SIP()</span>
+<span class="sd">                sip.import_sip04(fid + &#39;/sip_dataA.mat&#39;, timestep=0)</span>
+<span class="sd">                # well, add the spectrum again as another timestep</span>
+<span class="sd">                sip.import_sip04(fid + &#39;/sip_dataA.mat&#39;, timestep=1)</span>
+<span class="sd">            df = sip.reduce_duplicate_frequencies()</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">group_keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="p">]</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">group_keys</span> <span class="o">=</span> <span class="n">group_keys</span> <span class="o">+</span> <span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="p">]</span>
+
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_keys</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">group_apply</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="n">y</span> <span class="o">=</span> <span class="n">item</span><span class="p">[[</span><span class="s1">&#39;zt_1&#39;</span><span class="p">,</span> <span class="s1">&#39;zt_2&#39;</span><span class="p">,</span> <span class="s1">&#39;zt_3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+            <span class="n">zt_imag_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+            <span class="n">zt_real_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+            <span class="n">zt_imag_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+            <span class="n">zt_real_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+            <span class="n">zt_imag_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+            <span class="n">zt_real_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+            <span class="n">zt_imag_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
+            <span class="n">zt_real_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+            <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+                <span class="p">{</span>
+                    <span class="s1">&#39;zt_real_mean&#39;</span><span class="p">:</span> <span class="n">zt_real_mean</span><span class="p">,</span>
+                    <span class="s1">&#39;zt_real_std&#39;</span><span class="p">:</span> <span class="n">zt_real_std</span><span class="p">,</span>
+                    <span class="s1">&#39;zt_real_min&#39;</span><span class="p">:</span> <span class="n">zt_real_min</span><span class="p">,</span>
+                    <span class="s1">&#39;zt_real_max&#39;</span><span class="p">:</span> <span class="n">zt_real_max</span><span class="p">,</span>
+                    <span class="s1">&#39;zt_imag_mean&#39;</span><span class="p">:</span> <span class="n">zt_imag_mean</span><span class="p">,</span>
+                    <span class="s1">&#39;zt_imag_std&#39;</span><span class="p">:</span> <span class="n">zt_imag_std</span><span class="p">,</span>
+                    <span class="s1">&#39;zt_imag_min&#39;</span><span class="p">:</span> <span class="n">zt_imag_min</span><span class="p">,</span>
+                    <span class="s1">&#39;zt_imag_max&#39;</span><span class="p">:</span> <span class="n">zt_imag_max</span><span class="p">,</span>
+                <span class="p">},</span>
+                <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">]</span>
+            <span class="p">)</span>
+
+            <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+            <span class="n">dfn</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;index&#39;</span>
+            <span class="k">return</span> <span class="n">dfn</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">group_apply</span><span class="p">)</span>
+        <span class="n">p</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">swaplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">p</span></div></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+        <aside>
+
+            
+            <a href="../../../index.html" id="logo" title=REDA><img class="logo" src="../../../_static/reda_logo.png" width="80%" title=REDA /></a>
+            
+
+            <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </aside>
+    
+      <div class="clearer"></div>
+    </div>
+        <div class="footer">
+            <i class="fas fa-copyright"></i> 2018 by M. Weigand, F. Wagner, and <a target="_blank" href="https://github.com/geophysics-ubonn/reda/graphs/contributors">others.</a>
+        </div>
+  </body>
+</html>
