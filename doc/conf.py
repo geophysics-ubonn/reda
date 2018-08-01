@@ -149,12 +149,30 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'reda'
+# html_theme = 'reda'
+html_theme = 'alabaster'
+html_sidebars = {
+    '**': [
+        'about.html',
+        'navigation.html',
+        'relations.html',
+        'searchbox.html',
+        'donate.html',
+    ]
+}
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {}
+html_theme_options = {
+    'github_user': 'geophysics-ubonn',
+    'github_repo': 'reda',
+    'logo': '_static/reda_logo.png',
+    'logo_name': False,
+    'travis_button': True,
+    'page_width': '1200px',
+    'fixed_sidebar': True,
+}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = ["_themes"]
