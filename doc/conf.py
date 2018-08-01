@@ -15,7 +15,6 @@
 # import sys
 # import os
 import matplotlib
-
 matplotlib.use("Agg")
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -61,10 +60,8 @@ sphinx_gallery_conf = {
         '../examples/03_sEIT',
     ],
     'gallery_dirs': ['_examples'],
-    'filename_pattern':
-    'plot_',
-    'abort_on_example_error':
-    True,
+    'filename_pattern': 'plot_',
+    'abort_on_example_error': True,
     'reference_url': {
         # The module you locally document uses a None
         'reda': None,
@@ -75,16 +72,13 @@ sphinx_gallery_conf = {
     },
 
     # Don't report time of fast scripts (< 10 sec)
-    "min_reported_time":
-    10,
+    "min_reported_time": 10,
 
     # path where to store your example linker templates
-    'backreferences_dir':
-    '_api',
+    'backreferences_dir': '_api',
 
     # Your documented modules. You can use a string or a list of strings
-    'doc_module':
-    'reda'
+    'doc_module': 'reda'
 }
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -155,30 +149,12 @@ pygments_style = 'sphinx'
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-# html_theme = 'reda'
-html_theme = 'alabaster'
-html_sidebars = {
-    '**': [
-        'about.html',
-        'navigation.html',
-        'relations.html',
-        'searchbox.html',
-        'donate.html',
-    ]
-}
+html_theme = 'reda'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
-html_theme_options = {
-    'github_user': 'geophysics-ubonn',
-    'github_repo': 'reda',
-    'logo': '_static/reda_logo.png',
-    'logo_name': False,
-    'travis_button': True,
-    'page_width': '1200px',
-    'fixed_sidebar': True,
-}
+html_theme_options = {}
 
 # Add any paths that contain custom themes here, relative to this directory.
 html_theme_path = ["_themes"]
