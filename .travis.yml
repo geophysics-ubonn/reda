@@ -28,7 +28,7 @@ deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GITHUB_API_KEY
-  keep-history: false
+  keep-history: true
   local-dir: doc/_build/html
   committer-from-gh: true
   name: Reda Travis
