@@ -1,8 +1,8 @@
 Data Importers
---------------
+==============
 
 Introduction
-^^^^^^^^^^^^
+------------
 
 Importer functions are managed in :py:mod:`reda.importers`. An importer module
 must provide the following functionality:
@@ -13,7 +13,7 @@ must provide the following functionality:
 * import topography into a `pandas.DataFrame`, if available in this data format
 
 Internal structure (for developers)
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------------------
 
 * All import functions should start *import_*. Multiple `import_*` functions in
   an import module are allowed, i.e. to import variations of a given data

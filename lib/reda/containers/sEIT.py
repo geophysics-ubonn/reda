@@ -1,10 +1,10 @@
 """spectral electrical impedance tomography (sEIT) container
 """
 import pandas as pd
-import reda.main.init as redai
 
 import reda.importers.eit40 as reda_eit40
 import reda.importers.eit160 as reda_eit160
+import reda.importers.radic_sip256c as reda_sip256c
 import reda.utils.norrec as redanr
 
 
@@ -13,17 +13,30 @@ class importers(object):
     meant to be inherited by the data containers
     """
     def _add_to_container(self, df):
-        if self.df is None:
-            self.df = pd.concat((self.df, df))
+        if self.data is None:
+            self.data = pd.concat((self.data, df))
         else:
-            self.df = df
+            self.data = df
 
     def _describe_data(self, df=None):
         if df is None:
-            df_to_use = self.df
+            df_to_use = self.data
         else:
             df_to_use = df
         print(df_to_use.describe())
+
+    def import_sip256c(self, filename, settings=None):
+        """Radic SIP256c data import"""
+        if settings is None:
+            settings = {}
+        df = reda_sip256c.parse_radic_file(filename, settings)
+
+        redanr.assign_norrec_to_df(df)
+        df = redanr.assign_norrec_diffs(df, ['r', 'rpha'])
+
+        self._add_to_container(df)
+        print('Summary:')
+        self._describe_data(df)
 
     def import_eit40(self, filename, configfile, correction_file=None):
         """EIT40 data import"""
@@ -35,7 +48,7 @@ class importers(object):
             reda_eit40.apply_correction_factors(df, correction_file)
 
         redanr.assign_norrec_to_df(df)
-        df = redanr.assign_norrec_diffs(df, ['R', 'rpha'])
+        df = redanr.assign_norrec_diffs(df, ['r', 'rpha'])
 
         self._add_to_container(df)
         print('Summary:')
@@ -59,19 +72,17 @@ class sEIT(importers):
         if dataframe is not None:
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
-        self.df = dataframe
-
-        redai.set_mpl_settings()
+        self.data = dataframe
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
         """
         required_columns = (
-            'A',
-            'B',
-            'M',
-            'N',
-            'R',
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
         )
         for column in required_columns:
             if column not in dataframe:
@@ -82,13 +93,15 @@ class sEIT(importers):
     def subquery(self, subset, filter, inplace=True):
         """
 
-        Usage
-        =====
+        Examples
+        --------
 
-        subquery(
-            'timestep == 2',
-            'R > 4',
-        )
+        ::
+
+            subquery(
+                'timestep == 2',
+                'R > 4',
+            )
 
         """
         # build the full query
@@ -99,7 +112,7 @@ class sEIT(importers):
             filter,
             ')',
         ))
-        result = self.df.query(full_query, inplace=inplace)
+        result = self.data.query(full_query, inplace=inplace)
         return result
 
     def query(self, query, inplace=True):
@@ -107,16 +120,16 @@ class sEIT(importers):
 
         """
         # TODO: add to queue
-        result = self.df.query(query, inplace=inplace)
+        result = self.data.query(query, inplace=inplace)
         return result
 
     def remove_frequencies(self, fmin, fmax):
         """Remove frequencies from the dataset
         """
-        self.df.query(
+        self.data.query(
             'frequency > {0} and frequency < {1}'.format(fmin, fmax),
             inplace=True
         )
-        g = self.df.groupby('frequency')
+        g = self.data.groupby('frequency')
         print('Remaining frequencies:')
         print(sorted(g.groups.keys()))

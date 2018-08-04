@@ -14,6 +14,9 @@ from reda.utils import opt_import
 CRbinaries = opt_import("crtomo.binaries")
 CRcfg = opt_import("crtomo.cfg")
 
+import reda.utils.mpl
+plt, mpl = reda.utils.mpl.setup()
+
 
 def _write_config_file(filename, dataframe):
     if isinstance(dataframe, pd.DataFrame):

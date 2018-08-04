@@ -15,7 +15,7 @@ def apply_K(df, K):
     if 'K' not in df.columns:
         df['K'] = K
 
-    df['rho_a'] = df['R'] * df['K']
+    df['rho_a'] = df['r'] * df['K']
     df['sigma_a'] = 1.0 / df['rho_a']
 
     if 'Zt' in df.columns:
@@ -72,7 +72,7 @@ def compute_K_analytical(dataframe, spacing):
     """Given an electrode spacing, compute geometrical factors using the
     equation for the homogeneous half-space (Neumann-equation)
 
-    If a dataframe is given, use the column (A, B, M, N). Otherwise, expect an
+    If a dataframe is given, use the column (a, b, m, n). Otherwise, expect an
     Nx4 arrray.
 
     Parameters
@@ -84,7 +84,7 @@ def compute_K_analytical(dataframe, spacing):
         of the electrodes
     """
     if isinstance(dataframe, pd.DataFrame):
-        configs = dataframe[['A', 'B', 'M', 'N']].values
+        configs = dataframe[['a', 'b', 'm', 'n']].values
     else:
         configs = dataframe
 

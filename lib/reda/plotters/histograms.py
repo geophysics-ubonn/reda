@@ -1,9 +1,11 @@
 """Histogram functions for raw data."""
 
 import pandas as pd
-import pylab as plt
-import matplotlib as mpl
-mpl.rcParams['font.size'] = 8.0
+import reda.utils.mpl
+plt, mpl = reda.utils.mpl.setup()
+# import pylab as plt
+# import matplotlib as mpl
+# mpl.rcParams['font.size'] = 8.0
 import numpy as np
 
 import reda.main.units as units
@@ -29,27 +31,27 @@ def plot_histograms(ertobj, keys, **kwargs):
 
     Parameters
     ----------
-    ertobj: container instance or :class:`pandas.DataFrame`
+    ertobj : container instance or :class:`pandas.DataFrame`
         data object which contains the data.
-    keys: list of strings
+    keys : list of strings
         which keys (column names) to plot
-    merge: bool, optional
+    merge : bool, optional
         if True, then generate only one figure with all key-plots as columns
         (default True)
-    log10plot: bool, optional
+    log10plot : bool, optional
         default: True
-    extra_dims: list, optional
+    extra_dims : list, optional
 
     Examples
     --------
     >>> from reda.plotters import plot_histograms
     >>> from reda.testing import ERTContainer
-    >>> figs_dict = plot_histograms(ERTContainer, "R", merge=False)
-    Generating histogram plot for key: R
+    >>> figs_dict = plot_histograms(ERTContainer, "r", merge=False)
+    Generating histogram plot for key: r
 
     Returns
     -------
-    figures: dict
+    figures : dict
         dictionary with the generated histogram figures
     """
     # you can either provide a DataFrame or an ERT object
@@ -135,14 +137,17 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
 
     Parameters
     ----------
-    dataobj: pandas.DataFrame or reda-Container
-        The object holding the data
+    dataobj : :py:class:`pandas.DataFrame` or reda container
+        The data container/data frame which holds the data
     keys:   list|tuple|iterable
         The keys (columns) of the dataobj to plot
-    subquery:
+    subquery : string, optional
+        ?
 
     log10plot: bool
         if True, generate linear and log10 versions of the histogram
+    Nx : int, optional
+        ?
 
     Returns
     -------
@@ -152,12 +157,12 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
     >>> import reda.testing.containers
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.histograms as RH
-    >>> fig = RH.plot_histograms_extra_dims(ert, ['R', ])
+    >>> fig = RH.plot_histograms_extra_dims(ert, ['r', ])
 
     >>> import reda.testing.containers
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.histograms as RH
-    >>> fig = RH.plot_histograms_extra_dims(ert, ['R', 'A'])
+    >>> fig = RH.plot_histograms_extra_dims(ert, ['r', 'a'])
     """
     if isinstance(dataobj, pd.DataFrame):
         df_raw = dataobj

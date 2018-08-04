@@ -5,13 +5,13 @@ import numpy as np
 import reda
 
 # construct a simple container using random numbers
-df = pd.DataFrame(columns=list("ABMNR"))
-df.A = np.arange(1, 23)
-df.B = df.A + 1
-df.M = df.A + 2
-df.N = df.B + 2
+df = pd.DataFrame(columns=list("abmnr"))
+df.a = np.arange(1, 23)
+df.b = df.a + 1
+df.m = df.a + 2
+df.n = df.b + 2
 np.random.seed(0)
-df.R = np.random.randn(len(df.R))
+df.r = np.random.randn(len(df.r))
 
 ERTContainer = reda.ERT(data=df)
 
@@ -44,14 +44,14 @@ df = pd.DataFrame(
     ],
     columns=[
         'timestep',
-        'A',
-        'B',
-        'M',
-        'N',
-        'R',
+        'a',
+        'b',
+        'm',
+        'n',
+        'r',
     ]
 )
 # now add gaussian noise to the reciprocals
-df.loc[10:20, 'R'] += np.random.randn(10)
+df.loc[10:20, 'r'] += np.random.randn(10)
 
 ERTContainer_nr = reda.ERT(data=df)

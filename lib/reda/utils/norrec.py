@@ -70,7 +70,7 @@ def compute_norrec_differences(df, keys_diff):
     # for frequencies, we could (I think) somehow prevent grouping by
     # frequencies...
     df = df.groupby(('timestep', 'frequency', 'id')).agg(agg_dict)
-    # df.rename(columns={'R': 'Rdiff'}, inplace=True)
+    # df.rename(columns={'r': 'Rdiff'}, inplace=True)
     df.reset_index()
     return df
 
@@ -102,7 +102,7 @@ def assign_norrec_to_df(df):
     """
     df['id'] = ''
     df['norrec'] = ''
-    c = df[['A', 'B', 'M', 'N']].values.copy()
+    c = df[['a', 'b', 'm', 'n']].values.copy()
     cu = np.unique(
         c.view(c.dtype.descr * 4)
     ).view(c.dtype).reshape(-1, 4)
@@ -173,26 +173,26 @@ def assign_norrec_to_df(df):
     print('assigning ids')
     for key, item in normal_ids.items():
         df.loc[
-            ((df.A == key[0]) & (df.B == key[1]) &
-             (df.M == key[2]) & (df.N == key[3])) |
-            ((df.A == key[1]) & (df.B == key[0]) &
-             (df.M == key[2]) & (df.N == key[3])) |
-            ((df.A == key[0]) & (df.B == key[1]) &
-             (df.M == key[3]) & (df.N == key[2])) |
-            ((df.A == key[1]) & (df.B == key[0]) &
-             (df.M == key[3]) & (df.N == key[2])),
+            ((df.a == key[0]) & (df.b == key[1]) &
+             (df.m == key[2]) & (df.n == key[3])) |
+            ((df.a == key[1]) & (df.b == key[0]) &
+             (df.m == key[2]) & (df.n == key[3])) |
+            ((df.a == key[0]) & (df.b == key[1]) &
+             (df.m == key[3]) & (df.n == key[2])) |
+            ((df.a == key[1]) & (df.b == key[0]) &
+             (df.m == key[3]) & (df.n == key[2])),
             ('id', 'norrec')
         ] = (item, 'nor')
     for key, item in reciprocal_ids.items():
         df.loc[
-            ((df.A == key[0]) & (df.B == key[1]) &
-             (df.M == key[2]) & (df.N == key[3])) |
-            ((df.A == key[1]) & (df.B == key[0]) &
-             (df.M == key[2]) & (df.N == key[3])) |
-            ((df.A == key[0]) & (df.B == key[1]) &
-             (df.M == key[3]) & (df.N == key[2])) |
-            ((df.A == key[1]) & (df.B == key[0]) &
-             (df.M == key[3]) & (df.N == key[2])),
+            ((df.a == key[0]) & (df.b == key[1]) &
+             (df.m == key[2]) & (df.n == key[3])) |
+            ((df.a == key[1]) & (df.b == key[0]) &
+             (df.m == key[2]) & (df.n == key[3])) |
+            ((df.a == key[0]) & (df.b == key[1]) &
+             (df.m == key[3]) & (df.n == key[2])) |
+            ((df.a == key[1]) & (df.b == key[0]) &
+             (df.m == key[3]) & (df.n == key[2])),
             ('id', 'norrec')
         ] = [item, 'rec']
 
@@ -217,11 +217,11 @@ def get_test_df():
 
         ],
         columns=[
-            'A',
-            'B',
-            'M',
-            'N',
-            'R',
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
         ]
     )
     return df
@@ -246,11 +246,11 @@ def get_test_df_advanced():
         columns=[
             'timestep',
             'frequency',
-            'A',
-            'B',
-            'M',
-            'N',
-            'R',
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
         ]
     )
     return df
@@ -303,9 +303,9 @@ def test_norrec_assignments1():
     import reda.utils.norrec as redanr
     df = redanr.get_test_df()
     redanr.assign_norrec_to_df(df)
-    df1 = redanr.average_repetitions(df, ['R', ])
+    df1 = redanr.average_repetitions(df, ['r', ])
     g = df1.groupby('id')
-    diffs_R = g['R'].diff()
+    diffs_R = g['r'].diff()
 
     def apply_nr_diff(row):
         return diffs_R.iloc[row['id']]
@@ -315,7 +315,7 @@ def test_norrec_assignments1():
 def test2():
     df = get_test_df_advanced()
     assign_norrec_to_df(df)
-    df1 = average_repetitions(df, ['R', ])
+    df1 = average_repetitions(df, ['r', ])
     g = df1.groupby(['timestep', 'frequency', 'id'])
 
     def subrow(row):
@@ -324,7 +324,7 @@ def test2():
         else:
             return np.nan
 
-    diff = g['R'].agg(subrow).reset_index()
+    diff = g['r'].agg(subrow).reset_index()
     cols = list(diff.columns)
     cols[-1] = 'Rdiff'
     diff.columns = cols
@@ -334,7 +334,7 @@ def test2():
     print('@')
     assert(
         df1.query(
-            'timestep == 1 and A == 1 and B == 2 and M == 3 and N == 4 ' +
+            'timestep == 1 and a == 1 and b == 2 and m == 3 and n == 4 ' +
             'and frequency == 0.3'
         )['Rdiff'].values == 5.0
     )

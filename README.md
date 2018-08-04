@@ -44,7 +44,7 @@ python setup.py install
 ### Documentation
 
 An online version of the docs can be found here:
-<https://geophysics-ubonn.github.io/reda/documentation/>
+<https://geophysics-ubonn.github.io/reda>
 
 ### Contributing
 

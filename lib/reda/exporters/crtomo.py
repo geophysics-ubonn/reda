@@ -17,18 +17,18 @@ def save_block_to_crt(filename, group, norrec='all', store_errors=False):
             bytes('{0}\n'.format(len(group)), 'UTF-8')
         )
 
-        AB = group['A'] * 1e4 + group['B']
-        MN = group['M'] * 1e4 + group['N']
+        AB = group['a'] * 1e4 + group['b']
+        MN = group['m'] * 1e4 + group['n']
         line = [
             AB.values.astype(int),
             MN.values.astype(int),
-            group['R'].values,
+            group['r'].values,
         ]
 
         if 'rpha' in group:
             line.append(group['rpha'].values)
         else:
-            line.append(group['R'].values * 0.0)
+            line.append(group['r'].values * 0.0)
 
         fmt = '%i %i %f %f'
         if store_errors:
