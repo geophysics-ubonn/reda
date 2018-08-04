@@ -65,25 +65,20 @@ def import_ohm(filename, verbose=False, reciprocals=False):
     data_reda = data.rename(
         index=str,
         columns={
-            'a': 'A',
-            'b': 'B',
-            'm': 'M',
-            'n': 'N',
             'rhoa': 'rho_a',
             'k': 'K',
-            'r': 'R',
             'u': 'U',
             'i': 'I'
         }
     )
-    if ('R' not in data_reda.keys()) and \
+    if ('r' not in data_reda.keys()) and \
        ('rho_a' in data_reda.keys() and 'K' in data_reda.keys()):
-        data_reda['R'] = data_reda['rho_a'] / data_reda['K']
+        data_reda['r'] = data_reda['rho_a'] / data_reda['K']
         print(
             "Calculating resistance from apparent resistivity and "
             "geometric factors. (R = rhoa_/K)")
 
-    for col in ('A', 'B', 'M', 'N'):
+    for col in ('a', 'b', 'm', 'n'):
         data_reda[col] = data_reda[col].astype(int)
 
     elecs = pd.DataFrame(elecs, columns=elecs_ix)
@@ -93,8 +88,8 @@ def import_ohm(filename, verbose=False, reciprocals=False):
     # rename electrode denotations
     if type(reciprocals) == int:
         print('renumbering electrode numbers')
-        data_reda[['A', 'B', 'M', 'N']] = reciprocals + 1 - data_reda[
-            ['A', 'B', 'M', 'N']]
+        data_reda[['a', 'b', 'm', 'n']] = reciprocals + 1 - data_reda[
+            ['a', 'b', 'm', 'n']]
 
     if verbose:
         print((_string_))

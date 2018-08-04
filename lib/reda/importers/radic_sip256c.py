@@ -22,7 +22,7 @@ def _get_nr_of_electrodes(header_group):
             return nr_of_electrodes
 
 
-def parse_readic_header(header_group, dipole_mode="all"):
+def _parse_radic_header(header_group, dipole_mode="all"):
     """
     Parameters
     ----------
@@ -96,7 +96,7 @@ def parse_readic_header(header_group, dipole_mode="all"):
     return reading_configs
 
 
-def parse_remote_unit(ru_block):
+def _parse_remote_unit(ru_block):
 
     # add header
     text_block = next(ru_block)
@@ -155,9 +155,9 @@ def parse_remote_unit(ru_block):
     df.columns = [
         'frequency_[Hz]',
         'rho',
-        'phi',
+        'rpha',
         'drho',
-        'dphi',
+        'drpha',
         'with_calib',
         'I',
         'K',
@@ -166,33 +166,33 @@ def parse_remote_unit(ru_block):
     ]
 
     # phase is in degree, convert to mrad
-    df['phi'] *= np.pi / 180.0 * 1000
+    df['rpha'] *= np.pi / 180.0 * 1000
 
-    df['|Z|'] = df['rho'] / df['K']
+    df['r'] = df['rho'] / df['K']
 
     # % RA error (Ohm m)
     errorar = df['drho'] * df['rho'] / df['K']
-    df['d|Z|'] = errorar
+    df['dr'] = errorar
 
     # % Error phase (mrad)
     try:
-        errorpha = df['dphi'] * np.pi / 180.0 * 1000
+        errorpha = df['drpha'] * np.pi / 180.0 * 1000
     except Exception as e:
         print('Exception', e)
         print(df['dphi'])
         print(df)
         print('raw', tmp_file.getvalue())
         exit()
-    df['dphi'] = errorpha
+    df['drpha'] = errorpha
 
     # % U(V)
-    voltage = df['I'] / 1000 * df['|Z|'] / df['K']
+    voltage = df['I'] / 1000 * df['r'] / df['K']
     df['U'] = voltage
 
     # rename some columns
     col_descriptions = {
         'rho': 'rho_[Ohm m]',
-        'phi': 'phi_[mrad]',
+        'rpha': 'rpha_[mrad]',
         'dphi': 'dphi_[mrad]',
         '|Z|': '|Z|_[Ohm]',
         'd|Z|': 'd|Z|_[Ohm]',
@@ -228,14 +228,14 @@ def parse_reading(reading_block):
             # IPython.embed()
             print(next(group).strip())
             # print(next(groups)[1])
-            df_sort = parse_remote_unit(next(groups)[1])
+            df_sort = _parse_remote_unit(next(groups)[1])
             # ru_reading[reading_nr] = df_sort
             ru_reading.append(df_sort)
         index += 1
     return ru_reading
 
 
-def decide_on_quadpole(config, settings):
+def _decide_on_quadpole(config, settings):
     """
 
     """
@@ -296,10 +296,10 @@ def compute_quadrupoles(reading_configs, readings, settings):
         # for configs_in_reading, reading in zip(reading_configs, readings):
         for nr, config in enumerate(configs_in_reading):
             df = reading[nr]
-            df['A'] = config[0].astype(int)
-            df['B'] = config[1].astype(int)
-            df['M'] = config[3].astype(int)
-            df['N'] = config[2].astype(int)
+            df['a'] = config[0].astype(int)
+            df['b'] = config[1].astype(int)
+            df['m'] = config[3].astype(int)
+            df['n'] = config[2].astype(int)
 
             # for now we only want configurations that are constructed out of
             # 'zero`d' electrodes in the "readings"-section of the config file
@@ -310,7 +310,7 @@ def compute_quadrupoles(reading_configs, readings, settings):
                 )
                 continue
 
-            if decide_on_quadpole(config, settings):
+            if _decide_on_quadpole(config, settings):
                 quadpole_data.append(df)
     return quadpole_data
 
@@ -330,13 +330,13 @@ def write_crmod_file(sipdata, directory):
         with open(filename, 'w') as fid:
             fid.write('{0}\n'.format(len(sipdata)))
             for df in sipdata:
-                AB = df.iloc[nr]['A'] * 1e4 + df.iloc[nr]['B']
-                MN = df.iloc[nr]['M'] * 1e4 + df.iloc[nr]['N']
+                AB = df.iloc[nr]['a'] * 1e4 + df.iloc[nr]['b']
+                MN = df.iloc[nr]['m'] * 1e4 + df.iloc[nr]['n']
                 line = '{0} {1} {2} {3}'.format(
                     int(AB),
                     int(MN),
-                    df.iloc[nr]['|Z|'],
-                    df.iloc[nr]['phi'] * 1000,
+                    df.iloc[nr]['r'],
+                    df.iloc[nr]['rpha'],
                 )
 
                 fid.write(line + '\n')
@@ -389,7 +389,7 @@ def parse_radic_file(filename, settings, selection_mode="after"):
 
     # parse header
     group = next(groups)
-    header_data = parse_readic_header(group, dipole_mode='between')
+    header_data = _parse_radic_header(group, dipole_mode='between')
 
     # parse readings
     reading_blocks = {}

@@ -6,7 +6,7 @@ the corresponding relations.
 """
 
 rel = {
-    'R': {
+    'r': {
         'full_name': '|Z|_[Ohm]',
         'label_latex': r'$|Z|~[\Omega]$',
         'unit': r'$\Ohm$',

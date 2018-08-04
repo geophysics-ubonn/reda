@@ -78,23 +78,23 @@ def _read_general_type(content, settings):
 
     print('xxx', df.ix[10, ['x1', 'x2', 'x3', 'x4']])
     # for now ignore the z coordinates and compute simple electrode denotations
-    df['A'] = df['x1'] / header['unit_spacing'] + 1
-    df['B'] = df['x2'] / header['unit_spacing'] + 1
-    df['M'] = df['x3'] / header['unit_spacing'] + 1
-    df['N'] = df['x4'] / header['unit_spacing'] + 1
-    print('AMBN', df.ix[10, ['A', 'B', 'M', 'N']])
+    df['a'] = df['x1'] / header['unit_spacing'] + 1
+    df['b'] = df['x2'] / header['unit_spacing'] + 1
+    df['m'] = df['x3'] / header['unit_spacing'] + 1
+    df['n'] = df['x4'] / header['unit_spacing'] + 1
+    print('abmn', df.ix[10, ['a', 'b', 'm', 'n']])
 
     # for now assume value in resistances
     df['R'] = df['value']
 
     # remove any nan values
-    df.dropna(axis=0, subset=['A', 'B', 'M', 'N', 'R'], inplace=True)
+    df.dropna(axis=0, subset=['a', 'b', 'm', 'n', 'r'], inplace=True)
 
     # ABMN are integers
-    df['A'] = df['A'].astype(int)
-    df['B'] = df['B'].astype(int)
-    df['M'] = df['M'].astype(int)
-    df['N'] = df['N'].astype(int)
+    df['a'] = df['a'].astype(int)
+    df['b'] = df['b'].astype(int)
+    df['m'] = df['m'].astype(int)
+    df['n'] = df['n'].astype(int)
 
     # drop unused columns
     df.drop(

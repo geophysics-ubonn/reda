@@ -151,7 +151,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         ))
         measurements = np.random.random(configs.shape[0])
         import pandas as pd
-        df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N'])
+        df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n'])
         df['measurements'] = measurements
 
         from reda.plotters.pseudoplots import plot_pseudosection_type2
@@ -178,7 +178,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         measurements2 = np.random.random(configs.shape[0])
 
         import pandas as pd
-        df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N'])
+        df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n'])
         df['measurements'] = measurements
         df['measurements2'] = measurements2
 
@@ -206,7 +206,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
 
     >>> from reda.testing.containers import ERTContainer_nr
     >>> import reda.plotters.pseudoplots as ps
-    >>> fig, axes, cb = ps.plot_pseudosection_type2(ERTContainer_nr, 'R')
+    >>> fig, axes, cb = ps.plot_pseudosection_type2(ERTContainer_nr, 'r')
 
     """
     if isinstance(dataobj, pd.DataFrame):
@@ -214,7 +214,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     else:
         df = dataobj.data
 
-    c = df[['A', 'B', 'M', 'N']].values
+    c = df[['a', 'b', 'm', 'n']].values
 
     AB_ids = _get_unique_identifiers(c[:, 0:2])
     MN_ids = _get_unique_identifiers(c[:, 2:4])
@@ -329,7 +329,7 @@ def plot_ps_extra(dataobj, key, **kwargs):
     >>> import reda.testing.containers
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.pseudoplots as PS
-    >>> fig = PS.plot_ps_extra(ert, key='R')
+    >>> fig = PS.plot_ps_extra(ert, key='r')
     """
     if isinstance(dataobj, pd.DataFrame):
         df_raw = dataobj

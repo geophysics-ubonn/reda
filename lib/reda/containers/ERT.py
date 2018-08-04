@@ -25,8 +25,8 @@ class LogDataChanges():
     >>> from reda.containers.ERT import LogDataChanges
     >>> with LogDataChanges(ERTContainer):
     ...     # now change the data
-    ...     ERTContainer.data.loc[0, "R"] = 22
-    ...     ERTContainer.data.query("R < 10", inplace=True)
+    ...     ERTContainer.data.loc[0, "r"] = 22
+    ...     ERTContainer.data.query("r < 10", inplace=True)
     >>> ERTContainer.print_log()
     2... - root - INFO - Data change from 22 to 21
 
@@ -269,11 +269,11 @@ class ERT(LoggingClass, Importers, Exporters):
             )
 
         required_columns = (
-            'A',
-            'B',
-            'M',
-            'N',
-            'R',
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
         )
         for column in required_columns:
             if column not in dataframe:
@@ -361,7 +361,7 @@ class ERT(LoggingClass, Importers, Exporters):
         >>> ert.data = reda.utils.norrec.get_test_df()
         >>> ert.data = pd.DataFrame([
         ...     [1,2,3,4,95],
-        ...     [3,4,2,1,-105]], columns=list("ABMNR")
+        ...     [3,4,2,1,-105]], columns=list("abmnr")
         ... )
         >>> ert.compute_reciprocal_errors()
         generating ids
@@ -375,8 +375,8 @@ class ERT(LoggingClass, Importers, Exporters):
         if "id" not in self.data.keys():
             assign_norrec_to_df(self.data)
 
-        # Average repititions
-        data = average_repetitions(self.data, "R")
+        # Average repetitions
+        data = average_repetitions(self.data, "r")
 
         # Get configurations with reciprocals
         data = data.groupby("id").filter(lambda b: not b.shape[0] == 1)
@@ -387,8 +387,8 @@ class ERT(LoggingClass, Importers, Exporters):
         grouped = data.groupby("id")
 
         def _error(group):
-            R_n = group["R"].iloc[0]
-            R_r = group["R"].iloc[1]
+            R_n = group["r"].iloc[0]
+            R_r = group["r"].iloc[1]
             return abs(2 * (abs(R_n) - abs(R_r)) / (abs(R_n) + abs(R_r)))
 
         error = grouped.apply(_error)

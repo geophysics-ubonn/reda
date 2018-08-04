@@ -80,17 +80,17 @@ def import_txt(filename, **kwargs):
     data_raw.columns = [x.strip() for x in data_raw.columns.tolist()]
 
     data = pd.DataFrame()
-    data['A'] = (data_raw['Spa.1'] - x0) / electrode_spacing + 1
-    data['B'] = (data_raw['Spa.2'] - x0) / electrode_spacing + 1
-    data['M'] = (data_raw['Spa.3'] - x0) / electrode_spacing + 1
-    data['N'] = (data_raw['Spa.4'] - x0) / electrode_spacing + 1
+    data['a'] = (data_raw['Spa.1'] - x0) / electrode_spacing + 1
+    data['b'] = (data_raw['Spa.2'] - x0) / electrode_spacing + 1
+    data['m'] = (data_raw['Spa.3'] - x0) / electrode_spacing + 1
+    data['n'] = (data_raw['Spa.4'] - x0) / electrode_spacing + 1
 
     # convert to integers
-    for col in (('A', 'B', 'M', 'N')):
+    for col in (('a', 'b', 'm', 'n')):
         data[col] = data[col].astype(int)
 
     # [mV] / [mA]
-    data['R'] = data_raw['Vp'] / data_raw['In']
+    data['r'] = data_raw['Vp'] / data_raw['In']
     data['Vmn'] = data_raw['Vp']
     data['Iab'] = data_raw['In']
 
@@ -98,6 +98,6 @@ def import_txt(filename, **kwargs):
     rec_max = kwargs.get('reciprocals', None)
     if rec_max is not None:
         print('renumbering electrode numbers')
-        data[['A', 'B', 'M', 'N']] = rec_max + 1 - data[['A', 'B', 'M', 'N']]
+        data[['a', 'b', 'm', 'n']] = rec_max + 1 - data[['a', 'b', 'm', 'n']]
 
     return data, None, None

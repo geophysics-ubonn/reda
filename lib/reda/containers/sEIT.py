@@ -48,7 +48,7 @@ class importers(object):
             reda_eit40.apply_correction_factors(df, correction_file)
 
         redanr.assign_norrec_to_df(df)
-        df = redanr.assign_norrec_diffs(df, ['R', 'rpha'])
+        df = redanr.assign_norrec_diffs(df, ['r', 'rpha'])
 
         self._add_to_container(df)
         print('Summary:')
@@ -78,11 +78,11 @@ class sEIT(importers):
         """Check the given dataframe for the required columns
         """
         required_columns = (
-            'A',
-            'B',
-            'M',
-            'N',
-            'R',
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
         )
         for column in required_columns:
             if column not in dataframe:

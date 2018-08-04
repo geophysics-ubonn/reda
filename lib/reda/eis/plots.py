@@ -72,8 +72,8 @@ class sip_response():
         axes: numpy.ndarray, 2x2
             A numpy array containing the four principal axes of an SIP plot
         dtype: string
-            Can be either 'rho' or 'R', indicating the type of data that is
-            plotted: 'rho' stands for resistivities/conductivities, 'R' stands
+            Can be either 'rho' or 'r', indicating the type of data that is
+            plotted: 'rho' stands for resistivities/conductivities, 'r' stands
             for impedances/condactances
 
         Returns
@@ -88,7 +88,7 @@ class sip_response():
             axes[0, 1].set_ylabel(r'$-\phi~[mrad]$')
             axes[1, 0].set_ylabel(r"$\sigma'~[S/m]$")
             axes[1, 1].set_ylabel(r"$\sigma''~[S/m]$")
-        elif dtype == 'R':
+        elif dtype == 'r':
             axes[0, 0].set_ylabel(r'$|R|~[\Omega]$')
             axes[0, 1].set_ylabel(r'$-\phi~[mrad]$')
             axes[1, 0].set_ylabel(r"$Y'~[S]$")
@@ -110,7 +110,7 @@ class sip_response():
             rmag_max, rpha_min, rpha_max, cre_min, cre_max, cim_min, cim_max
         dtype: string, optional
             Possible values: [rho|R]. Determines the label types. 'rho':
-                resistivity/conductivity, 'R': resistance/conductance
+                resistivity/conductivity, 'r': resistance/conductance
 
         Returns
         -------

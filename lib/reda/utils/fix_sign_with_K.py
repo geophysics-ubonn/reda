@@ -12,7 +12,7 @@ def fix_sign_with_K(dataframe):
     Affected parameters, at the moment, are:
 
         * K
-        * R
+        * r
         * Vmn
         * Zt
         * rho_a
@@ -31,23 +31,23 @@ def fix_sign_with_K(dataframe):
 
     """
     # check for required columns
-    if 'K' not in dataframe or 'R' not in dataframe:
-        raise Exception('K and R columns required!')
+    if 'K' not in dataframe or 'r' not in dataframe:
+        raise Exception('K and r columns required!')
 
-    indices_negative = (dataframe['K'] < 0) & (dataframe['R'] < 0)
+    indices_negative = (dataframe['K'] < 0) & (dataframe['r'] < 0)
 
-    dataframe.ix[indices_negative, ['K', 'R']] *= -1
+    dataframe.ix[indices_negative, ['K', 'r']] *= -1
 
     # switch potential electrodes
-    indices_switched_ab = indices_negative & (dataframe['A'] > dataframe['B'])
-    indices_switched_mn = indices_negative & (dataframe['A'] < dataframe['B'])
+    indices_switched_ab = indices_negative & (dataframe['a'] > dataframe['b'])
+    indices_switched_mn = indices_negative & (dataframe['a'] < dataframe['b'])
 
-    dataframe.ix[indices_switched_ab, ['A', 'B']] = dataframe.ix[
-        indices_switched_ab, ['B', 'A']
+    dataframe.ix[indices_switched_ab, ['a', 'b']] = dataframe.ix[
+        indices_switched_ab, ['b', 'a']
     ].values
 
-    dataframe.ix[indices_switched_mn, ['M', 'N']] = dataframe.ix[
-        indices_switched_mn, ['N', 'M']
+    dataframe.ix[indices_switched_mn, ['m', 'n']] = dataframe.ix[
+        indices_switched_mn, ['n', 'm']
     ].values
 
     # switch sign of voltages
@@ -58,7 +58,7 @@ def fix_sign_with_K(dataframe):
         dataframe.ix[indices_negative, 'Zt'] *= -1
 
     if 'rho_a' in dataframe:
-        dataframe['rho_a'] = dataframe['R'] * dataframe['K']
+        dataframe['rho_a'] = dataframe['r'] * dataframe['K']
 
     # recompute phase values
     if 'rpha' in dataframe:
@@ -79,8 +79,8 @@ def test_fix_sign_with_K():
         (1, 2, 3, 4, -10, -20),
         (1, 2, 4, 3, 10, 20),
     ))
-    df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N', 'R', 'K'])
-    df['rho_a'] = df['K'] * df['R']
+    df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n', 'r', 'K'])
+    df['rho_a'] = df['K'] * df['r']
     print('old')
     print(df)
     df = fix_sign_with_K(df)
