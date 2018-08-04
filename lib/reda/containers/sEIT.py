@@ -4,6 +4,7 @@ import pandas as pd
 
 import reda.importers.eit40 as reda_eit40
 import reda.importers.eit160 as reda_eit160
+import reda.importers.radic_sip256c as reda_sip256c
 import reda.utils.norrec as redanr
 
 
@@ -23,6 +24,19 @@ class importers(object):
         else:
             df_to_use = df
         print(df_to_use.describe())
+
+    def import_sip256c(self, filename, settings=None):
+        """Radic SIP256c data import"""
+        if settings is None:
+            settings = {}
+        df = reda_sip256c.parse_radic_file(filename, settings)
+
+        redanr.assign_norrec_to_df(df)
+        df = redanr.assign_norrec_diffs(df, ['r', 'rpha'])
+
+        self._add_to_container(df)
+        print('Summary:')
+        self._describe_data(df)
 
     def import_eit40(self, filename, configfile, correction_file=None):
         """EIT40 data import"""
