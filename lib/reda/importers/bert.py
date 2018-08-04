@@ -37,7 +37,7 @@ def import_ohm(filename, verbose=False, reciprocals=False):
 
     elecs = np.zeros((eleccount, elecs_dim), 'float')
     for i in range(eleccount):
-        line = file.readline().split("#")[0] # Account for comments
+        line = file.readline().split("#")[0]  # Account for comments
         elecs[i] = line.rsplit()
 
     datacount = int(file.readline().split("#")[0])
@@ -76,7 +76,7 @@ def import_ohm(filename, verbose=False, reciprocals=False):
             'i': 'I'
         }
     )
-    if (not 'R' in data_reda.keys()) and \
+    if ('R' not in data_reda.keys()) and \
        ('rho_a' in data_reda.keys() and 'K' in data_reda.keys()):
         data_reda['R'] = data_reda['rho_a'] / data_reda['K']
         print(
@@ -93,7 +93,8 @@ def import_ohm(filename, verbose=False, reciprocals=False):
     # rename electrode denotations
     if type(reciprocals) == int:
         print('renumbering electrode numbers')
-        data_reda[['A', 'B', 'M', 'N']] = reciprocals + 1 - data_reda[['A', 'B', 'M', 'N']]
+        data_reda[['A', 'B', 'M', 'N']] = reciprocals + 1 - data_reda[
+            ['A', 'B', 'M', 'N']]
 
     if verbose:
         print((_string_))
