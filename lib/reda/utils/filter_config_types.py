@@ -208,7 +208,7 @@ def filter(configs, settings):
 
     """
     if isinstance(configs, pd.DataFrame):
-        configs = configs[['A', 'B', 'M', 'N']].values
+        configs = configs[['a', 'b', 'm', 'n']].values
 
     # assign short labels to Python functions
     filter_funcs = {

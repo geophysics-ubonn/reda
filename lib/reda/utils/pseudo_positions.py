@@ -12,7 +12,7 @@ def get_xy_simple_dipole_dipole(dataframe, spacing=1, indices=None):
     """
     if indices is None:
         indices = slice(None)
-    abmn = dataframe.ix[indices, ['A', 'B', 'M', 'N']].values
+    abmn = dataframe.ix[indices, ['a', 'b', 'm', 'n']].values
     posx = np.mean(abmn[:, 0:4], axis=1)
     posz = np.abs(
         np.min(abmn[:, 0:2], axis=1) - np.max(abmn[:, 2:4], axis=1)

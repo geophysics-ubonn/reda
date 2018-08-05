@@ -27,13 +27,13 @@ def compute_correction_factors(
     frequency = 100
 
     data_onef = data.query('frequency == {}'.format(frequency))
-    rho_measured = data_onef['R'] * data_onef['K']
+    rho_measured = data_onef['r'] * data_onef['K']
 
     rho_true = 1 / true_conductivity * 1e4
     correction_factors = rho_true / rho_measured
 
     collection = np.hstack((
-        data_onef[['A', 'B', 'M', 'N']].values,
+        data_onef[['a', 'b', 'm', 'n']].values,
         np.abs(correction_factors)[:, np.newaxis]
     ))
 
