@@ -268,7 +268,7 @@ def plot_pseudosection(df, plot_key, spacing=1, ctypes=None, dd_merge=False,
         raise Exception('plotting of pseudosections not implemented for ' +
                         'Schlumberger configurations!')
 
-    configs = df[['A', 'B', 'M', 'N']].values
+    configs = df[['a', 'b', 'm', 'n']].values
     results = fT.filter(
         configs,
         settings={'only_types': only_types, }, )
