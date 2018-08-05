@@ -246,7 +246,7 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
 
 
 def plot_histograms_it_extra_dims(dataobj, keys, extra_dims, **kwargs):
-    """Produce histograms for each group of extra dimensions. **kwargs are
+    """Produce histograms for each group of extra dimensions. \*\*kwargs are
     directly passed on to plot_histograms().
 
 
