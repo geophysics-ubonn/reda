@@ -35,6 +35,9 @@ def fix_sign_with_K(dataframe):
         raise Exception('K and r columns required!')
 
     indices_negative = (dataframe['K'] < 0) & (dataframe['r'] < 0)
+    if np.where(indices_negative)[0].size == 0:
+        # nothing to do here
+        return
 
     dataframe.ix[indices_negative, ['K', 'r']] *= -1
 
@@ -62,10 +65,26 @@ def fix_sign_with_K(dataframe):
 
     # recompute phase values
     if 'rpha' in dataframe:
-        # recompute
-        dataframe['rpha'] = np.arctan2(
-            dataframe['Zt'].imag, dataframe['Zt'].real
-        ) * 1e3
+        if 'Zt' in dataframe:
+            # recompute
+            dataframe['rpha'] = np.arctan2(
+                dataframe['Zt'].imag, dataframe['Zt'].real
+            ) * 1e3
+        else:
+            raise Exception(
+                'Recomputation of phase without Zt not implemented yet. ' +
+                'See source code for more information'
+            )
+            """
+            when the complex number is located in the fourth sector instead of
+            the first, this corresponds to a phase shift by pi. For all values
+            where magnitude < 0 and phase < 3000 mrad reverse this shift by pi
+            by multiplying the complex number by -1:
+            new_value = - 1 * (Magnitude * exp(i phi))
+            Test this function by setting one measurement to
+            -85.02069 -183.25 in radic column 6 and 7, should get -58 mrad when
+            converted
+            """
 
     return dataframe
 
