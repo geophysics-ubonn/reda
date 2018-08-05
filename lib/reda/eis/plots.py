@@ -232,8 +232,62 @@ class sip_response():
         return fig, axes
 
     def plot(self, filename, title=None, reciprocal=None, limits=None,
-             dtype='rho'):
+             dtype='rho', return_fig=False):
         """Standard plot of spectrum
+
+        Parameters
+        ----------
+        filename: string
+            Output filename. Include the ending to specify the filetype
+            (usually .pdf or .png)
+        title: string, optional
+            Title for the plot
+        reciprocal: :class:`reda.eis.plots.sip_response`, optional
+            If another :class:`reda.eis.plots.sip_response` object is provided
+            here, use this as the reciprocal spectrum.
+        limits: dict, optional
+            A dictionary which contains plot limits. See code example below.
+        dtype: string, optional
+            Determines if the data plotted included geometric factors ('rho')
+            or not ('r'). Default: 'rho'
+        return_fig: bool, optional
+            If True, then do not delete the figure object after saving to file
+            and return the figure object. Default: False
+
+        Returns
+        -------
+        fig: :class:`matplotlib.Figure`
+            The figure object. Only returned if return_fig is set to True
+
+        Examples
+        --------
+        >>> from reda.eis.plots import sip_response
+        >>> import numpy as np
+        >>> frequencies = np.array([
+        ...     1.00000000e-03, 1.77827941e-03, 3.16227766e-03, 5.62341325e-03,
+        ...     1.00000000e-02, 1.77827941e-02, 3.16227766e-02, 5.62341325e-02,
+        ...     1.00000000e-01, 1.77827941e-01, 3.16227766e-01, 5.62341325e-01,
+        ...     1.00000000e+00, 1.77827941e+00, 3.16227766e+00, 5.62341325e+00,
+        ...     1.00000000e+01, 1.77827941e+01, 3.16227766e+01, 5.62341325e+01,
+        ...     1.00000000e+02, 1.77827941e+02, 3.16227766e+02, 5.62341325e+02,
+        ...     1.00000000e+03])
+        >>> rcomplex = np.array([
+        ...     49.34369772-0.51828971j, 49.11781581-0.59248806j,
+        ...     48.85819872-0.6331137j , 48.58762806-0.62835135j,
+        ...     48.33331113-0.57965851j, 48.11599009-0.50083533j,
+        ...     47.94405036-0.41005275j, 47.81528917-0.32210768j,
+        ...     47.72215469-0.24543425j, 47.65607773-0.18297794j,
+        ...     47.60962191-0.13433101j, 47.57706229-0.09755774j,
+        ...     47.55424286-0.07031682j, 47.53822912-0.05041399j,
+        ...     47.52697253-0.03601005j, 47.51904718-0.02565412j,
+        ...     47.51345965-0.01824266j, 47.50951606-0.01295546j,
+        ...     47.50673042-0.00919217j, 47.50476152-0.0065178j ,
+        ...     47.50336925-0.00461938j, 47.50238442-0.00327285j,
+        ...     47.50168762-0.00231829j, 47.50119454-0.00164187j,
+        ...     47.50084556-0.00116268j])
+        >>> spectrum = sip_response(frequencies=frequencies, rcomplex=rcomplex)
+        >>> fig = spectrum.plot('spectrum.pdf', return_fig=True)
+
         """
         fig, axes = self._plot(
             reciprocal=reciprocal,
@@ -242,7 +296,10 @@ class sip_response():
             dtype=dtype,
         )
         fig.savefig(filename, dpi=300)
-        plt.close(fig)
+        if return_fig:
+            return fig
+        else:
+            plt.close(fig)
 
 
 class multi_sip_response(object):
