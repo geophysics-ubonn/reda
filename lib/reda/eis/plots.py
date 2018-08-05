@@ -3,7 +3,7 @@ import pylab as plt
 import matplotlib as mpl
 
 from reda.eis.units import labels as sip_labels
-from reda.eis.convert import convert as SC
+from reda.eis.convert import convert
 
 
 class sip_response():
@@ -31,10 +31,10 @@ class sip_response():
 
         if rcomplex is not None:
             self.rcomplex = rcomplex
-            self.ccomplex = SC.convert('rcomplex', 'ccomplex', rcomplex)
+            self.ccomplex = convert('rcomplex', 'ccomplex', rcomplex)
         elif ccomplex is not None:
             self.ccomplex = ccomplex
-            self.rcomplex = SC.convert('ccomplex', 'rcomplex', ccomplex)
+            self.rcomplex = convert('ccomplex', 'rcomplex', ccomplex)
 
         self.rmag = np.abs(self.rcomplex)
         self.rpha = np.arctan2(
@@ -123,7 +123,7 @@ class sip_response():
             limits = {}
 
         fig, axes = plt.subplots(
-            2, 2, figsize=(10 / 2.54, 6 / 2.54), sharex=True
+            2, 2, figsize=(15 / 2.54, 6 / 2.54), sharex=True
         )
         if title is not None:
             fig.suptitle(title)
