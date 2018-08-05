@@ -1,9 +1,10 @@
 import numpy as np
-import pylab as plt
-import matplotlib as mpl
 
 from reda.eis.units import labels as sip_labels
 from reda.eis.convert import convert
+
+import reda.utils.mpl
+plt, mpl = reda.utils.mpl.setup()
 
 
 class sip_response():
