@@ -53,7 +53,7 @@ Status of REDA
       -
     * - Radic 256c
       - :orange:`untested`
-      -
+      - slow, but should be fairly robust.
     * - SIP 04
       - :orange:`untested`
       -
