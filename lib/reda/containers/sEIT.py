@@ -14,9 +14,9 @@ class importers(object):
     """
     def _add_to_container(self, df):
         if self.data is None:
-            self.data = pd.concat((self.data, df))
-        else:
             self.data = df
+        else:
+            self.data = pd.concat((self.data, df), sort=True)
 
     def _describe_data(self, df=None):
         if df is None:
@@ -25,16 +25,19 @@ class importers(object):
             df_to_use = df
         print(df_to_use.describe())
 
-    def import_sip256c(self, filename, settings=None):
+    def import_sip256c(self, filename, settings=None, reciprocal=None):
         """Radic SIP256c data import"""
         if settings is None:
             settings = {}
-        df = reda_sip256c.parse_radic_file(filename, settings)
-
-        redanr.assign_norrec_to_df(df)
-        df = redanr.assign_norrec_diffs(df, ['r', 'rpha'])
-
+        df = reda_sip256c.parse_radic_file(
+            filename, settings, reciprocal=reciprocal)
         self._add_to_container(df)
+
+        # clean any previous norrec-assignments
+        if 'norrec' and 'id' in self.data.columns:
+            self.data.drop(['norrec', 'id'], axis=1)
+        redanr.assign_norrec_to_df(self.data)
+        # self.datadf = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
         print('Summary:')
         self._describe_data(df)
 
