@@ -136,7 +136,7 @@ def compute_quadrupoles(df_emd, config_file):
         keep_cols = [
             'datetime',
             'frequency',
-            'A', 'B',
+            'a', 'b',
             'Zg1', 'Zg2', 'Zg3',
             'Is',
             'Il',
@@ -149,16 +149,16 @@ def compute_quadrupoles(df_emd, config_file):
         df4[keep_cols] = query_M[keep_cols]
         for col in diff_cols:
             df4[col] = query_M[col].values - query_N[col].values
-        df4['M'] = query_M['P'].values
-        df4['N'] = query_N['P'].values
+        df4['m'] = query_M['p'].values
+        df4['n'] = query_N['p'].values
 
         quadpole_list.append(df4)
 
     if quadpole_list:
         dfn = pd.concat(quadpole_list)
         Rsign = np.sign(dfn['Zt'].real)
-        dfn['R'] = Rsign * np.abs(dfn['Zt'])
-        dfn['Vmn'] = dfn['R'] * dfn['Iab']
+        dfn['r'] = Rsign * np.abs(dfn['Zt'])
+        dfn['Vmn'] = dfn['r'] * dfn['Iab']
         dfn['rpha'] = np.arctan2(
             np.imag(dfn['Zt'].values),
             np.real(dfn['Zt'].values)
@@ -200,7 +200,7 @@ def apply_correction_factors(df, correction_file):
         )
 
     df = df.reset_index()
-    gf = df.groupby(['A', 'B', 'M', 'N'])
+    gf = df.groupby(['a', 'b', 'm', 'n'])
     for key, item in gf.indices.items():
         # print('key', key)
         # print(item)
@@ -231,7 +231,7 @@ def apply_correction_factors(df, correction_file):
         #     IPython.embed()
         #     exit()
         # apply correction factor
-        for col in ('R', 'Zt', 'Vmn', 'rho_a'):
+        for col in ('r', 'Zt', 'Vmn', 'rho_a'):
             if col in df.columns:
                 df.ix[item, col] *= factor
         df.ix[item, 'corr_fac'] = factor

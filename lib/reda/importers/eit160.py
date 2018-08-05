@@ -51,7 +51,7 @@ def _add_rhoa(df, spacing):
     """a simple wrapper to compute K factors and add rhoa
     """
     df['K'] = redaK.compute_K_analytical(df, spacing=spacing)
-    df['rho_a'] = df['R'] * df['K']
+    df['rho_a'] = df['r'] * df['K']
     if 'Zt' in df.columns:
         df['rho_a_complex'] = df['Zt'] * df['K']
     return df
@@ -68,7 +68,7 @@ def import_medusa_data(mat_filename, config_file):
         are supported!
     config_file: string
         filename for configuration file. The configuration file contains N rows
-        with 4 columns each (A, B, M, N)
+        with 4 columns each (a, b, m, n)
 
     Returns
     -------
@@ -93,10 +93,10 @@ def import_medusa_data(mat_filename, config_file):
         B = np.max((Ar, Br))
 
         # first choice: correct ordering
-        query_M = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+        query_M = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
             A, B, M
         ))
-        query_N = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+        query_N = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
             A, B, N
         ))
 
@@ -109,7 +109,7 @@ def import_medusa_data(mat_filename, config_file):
         keep_cols = [
             'datetime',
             'frequency',
-            'A', 'B',
+            'a', 'b',
             'Zg1', 'Zg2', 'Zg3',
             'Is',
             'Il',
@@ -122,16 +122,16 @@ def import_medusa_data(mat_filename, config_file):
         df4[keep_cols] = query_M[keep_cols]
         for col in diff_cols:
             df4[col] = query_M[col].values - query_N[col].values
-        df4['M'] = query_M['P'].values
-        df4['N'] = query_N['P'].values
+        df4['m'] = query_M['p'].values
+        df4['n'] = query_N['p'].values
 
         quadpole_list.append(df4)
 
     if quadpole_list:
         dfn = pd.concat(quadpole_list)
         Rsign = np.sign(dfn['Zt'].real)
-        dfn['R'] = Rsign * np.abs(dfn['Zt'])
-        dfn['Vmn'] = dfn['R'] * dfn['Iab']
+        dfn['r'] = Rsign * np.abs(dfn['Zt'])
+        dfn['Vmn'] = dfn['r'] * dfn['Iab']
         dfn['rpha'] = np.arctan2(
             np.imag(dfn['Zt'].values),
             np.real(dfn['Zt'].values)
@@ -143,7 +143,7 @@ def import_medusa_data(mat_filename, config_file):
 
 
 def _read_mat_mnu0(filename):
-    """Import a .mat file with single potentials (A B M) into a pandas
+    """Import a .mat file with single potentials (a b m) into a pandas
     DataFrame
 
     Also export some variables of the MD struct into a separate structure
@@ -199,8 +199,8 @@ def _extract_md(mat):
         )
         df.columns = (
             'datetime',
-            'A',
-            'B',
+            'a',
+            'b',
             'Cl1',
             'Cl2',
             'Cl3',
@@ -228,8 +228,8 @@ def _extract_md(mat):
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
-        df['A'] = df['A'].astype(int)
-        df['B'] = df['B'].astype(int)
+        df['a'] = df['a'].astype(int)
+        df['b'] = df['b'].astype(int)
         df['Cl1'] = df['Cl1'].astype(complex)
         df['Cl2'] = df['Cl2'].astype(complex)
         df['Cl3'] = df['Cl3'].astype(complex)
@@ -331,9 +331,9 @@ def _extract_emd(mat, filename):
         )
         df.columns = (
             'datetime',
-            'A',
-            'B',
-            'P',
+            'a',
+            'b',
+            'p',
             'Z1',
             'Z2',
             'Z3',
@@ -370,9 +370,9 @@ def _extract_emd(mat, filename):
 
         # cast to correct type
         df['datetime'] = pd.to_datetime(df['datetime'])
-        df['A'] = df['A'].astype(int)
-        df['B'] = df['B'].astype(int)
-        df['P'] = df['P'].astype(int)
+        df['a'] = df['a'].astype(int)
+        df['b'] = df['b'].astype(int)
+        df['p'] = df['p'].astype(int)
 
         df['Z1'] = df['Z1'].astype(complex)
         df['Z2'] = df['Z2'].astype(complex)
@@ -414,8 +414,8 @@ def _extract_emd(mat, filename):
     # TODO
 
     # sort current injections
-    condition = df['A'] > df['B']
-    df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
+    condition = df['a'] > df['b']
+    df.loc[condition, ['a', 'b']] = df.loc[condition, ['b', 'a']].values
     # change sign because we changed A and B
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
 
@@ -423,7 +423,7 @@ def _extract_emd(mat, filename):
     df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
     # we need to keep the sign of the real part
     sign_re = df['Zt'].real / np.abs(df['Zt'].real)
-    df['R'] = np.abs(df['Zt']) * sign_re
+    df['r'] = np.abs(df['Zt']) * sign_re
     # df['Zt_std'] = np.std(df[['Z1', 'Z2', 'Z3']].values, axis=1)
 
     df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)

@@ -85,7 +85,7 @@ def _read_general_type(content, settings):
     print('abmn', df.ix[10, ['a', 'b', 'm', 'n']])
 
     # for now assume value in resistances
-    df['R'] = df['value']
+    df['r'] = df['value']
 
     # remove any nan values
     df.dropna(axis=0, subset=['a', 'b', 'm', 'n', 'r'], inplace=True)

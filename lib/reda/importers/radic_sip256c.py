@@ -88,7 +88,7 @@ def _parse_radic_header(header_group, dipole_mode="all"):
                     M = i - 2
                     N = j - 2
                     all_active = ((reading[i] == 0) and (reading[j] == 0))
-                    print('A', 'B', 'M, N', A, B, M, N, all_active)
+                    # print('a', 'b', 'm, n', A, B, M, N, all_active)
                     voltages.append((A, B, M, N, all_active))
                     break
 
@@ -153,7 +153,7 @@ def _parse_remote_unit(ru_block):
         print(tmp_file.getvalue())
 
     df.columns = [
-        'frequency_[Hz]',
+        'frequency',
         'rho',
         'rpha',
         'drho',
@@ -190,19 +190,19 @@ def _parse_remote_unit(ru_block):
     df['U'] = voltage
 
     # rename some columns
-    col_descriptions = {
-        'rho': 'rho_[Ohm m]',
-        'rpha': 'rpha_[mrad]',
-        'dphi': 'dphi_[mrad]',
-        '|Z|': '|Z|_[Ohm]',
-        'd|Z|': 'd|Z|_[Ohm]',
-        'U': 'U_[V]',
-    }
-    columns = df.columns.values.tolist()
-    for key in columns:
-        if key in col_descriptions:
-            columns[columns.index(key)] = col_descriptions[key]
-    df.columns = columns
+    # col_descriptions = {
+    #     'rho': 'rho_[Ohm m]',
+    #     'rpha': 'rpha_[mrad]',
+    #     'dphi': 'dphi_[mrad]',
+    #     '|Z|': '|Z|_[Ohm]',
+    #     'd|Z|': 'd|Z|_[Ohm]',
+    #     'U': 'U_[V]',
+    # }
+    # columns = df.columns.values.tolist()
+    # for key in columns:
+    #     if key in col_descriptions:
+    #         columns[columns.index(key)] = col_descriptions[key]
+    # df.columns = columns
 
     #
     df_sort = df.sort_index()
@@ -226,7 +226,7 @@ def parse_reading(reading_block):
             # reading_nr = ''.join(group)[13:].strip()
             # import IPython
             # IPython.embed()
-            print(next(group).strip())
+            # print(next(group).strip())
             # print(next(groups)[1])
             df_sort = _parse_remote_unit(next(groups)[1])
             # ru_reading[reading_nr] = df_sort
@@ -290,7 +290,7 @@ def compute_quadrupoles(reading_configs, readings, settings):
 
     quadpole_data = []
     for key in sorted(readings.keys()):
-        print('key', key, len(reading_configs), type(reading_configs))
+        # print('key', key, len(reading_configs), type(reading_configs))
         configs_in_reading = reading_configs[key]
         reading = readings[key]
         # for configs_in_reading, reading in zip(reading_configs, readings):
@@ -325,7 +325,7 @@ def write_crmod_file(sipdata, directory):
 
     np.savetxt('frequencies.dat', sipdata[0].index)
     for nr, frequency in enumerate(sipdata[0].index):
-        print('f', frequency)
+        # print('f', frequency)
         filename = 'volt_{0:02}_{1}Hz.crt'.format(nr, frequency)
         with open(filename, 'w') as fid:
             fid.write('{0}\n'.format(len(sipdata)))
@@ -344,34 +344,39 @@ def write_crmod_file(sipdata, directory):
     os.chdir(pwd)
 
 
-def parse_radic_file(filename, settings, selection_mode="after"):
+def parse_radic_file(filename, settings, selection_mode="after",
+                     reciprocal=None):
     """Import one result file as produced by the SIP256c SIP measuring device
     (Radic Research)
+
+    Full settings dictionary: ::
+
+        settings = {
+            'filter_skip': (integer) skip dipoles we are interested in
+            'quadrupole_mode': ['after'|'between'|'before'| 'all']
+                               which dipoles to use from the file
+        }
+
 
     Parameters
     ----------
     filename: string
         input filename, usually with the ending ".RES"
-
     settings: dict
-        ::
-
-            settings = {
-                'filter_skip': (integer) skip dipoles we are interested in
-                'quadrupole_mode': ['after'|'between'|'before'| 'all']
-                                   which dipoles to use from the file
-            }
-
+        Settings for the data import, see code snippet above
     selection_mode: dict
         which voltage dipoles should be returned. Possible choices:
-
-        * "all"
-        * "before"
-        * "after"
+        "all"|"before"|"after"
+    reciprocal: int|None
+        If this is an integer, then assume this was a reciprocal measurement
+        and the number denotes the largest RU number, N. Electrode numbers
+        (a,b,m,n) will then be transformed to (N1 - a, N1 - b, N1 - m, N1 - n),
+        with N1 = N + 1
 
     Returns
     -------
-
+    sip_data: :py:pandas:`pandas.DataFrame`
+        The data contained in a data frame
 
     """
     try:
@@ -397,7 +402,7 @@ def parse_radic_file(filename, settings, selection_mode="after"):
         # determine reading number
         line = next(group)
         reading_nr = int(line[8: line.find('/')].strip())
-        print('reading nr', reading_nr)
+        # print('reading nr', reading_nr)
         reading_blocks[reading_nr] = [x for x in next(groups)[1]]
         # print reading_blocks[reading_nr]
 
@@ -407,7 +412,7 @@ def parse_radic_file(filename, settings, selection_mode="after"):
     print('keys', sorted(reading_blocks.keys()))
     readings = {}
     for key in sorted(reading_blocks):
-        print('KEY/Reading', key)
+        # print('KEY/Reading', key)
         reading = reading_blocks[key]
         tmp = parse_reading(reading)
         # except Exception as e:
@@ -428,6 +433,12 @@ def parse_radic_file(filename, settings, selection_mode="after"):
     sip_data_raw = compute_quadrupoles(header_data, readings, settings)
 
     sip_data = pd.concat(sip_data_raw)
+
+    if reciprocal is not None and isinstance(reciprocal, int):
+        sip_data['a'] = (reciprocal + 1) - sip_data['a']
+        sip_data['b'] = (reciprocal + 1) - sip_data['b']
+        sip_data['m'] = (reciprocal + 1) - sip_data['m']
+        sip_data['n'] = (reciprocal + 1) - sip_data['n']
 
     return sip_data
 
@@ -456,16 +467,16 @@ if __name__ == '__main__':
     from crlab_py.mpl import *
     mpl.rcParams['font.size'] = 8.0
     for nr, subdata in enumerate(data):
-        print('plotting', nr)
+        # print('plotting', nr)
         fig, axes = plt.subplots(3, 1, figsize=(10 / 2.54, 10 / 2.54))
         ax = axes[0]
-        ax.semilogx(subdata.index, subdata['|Z|'], '.-')
+        ax.semilogx(subdata.index, subdata['r'], '.-')
         ax.set_title(
             'ABMN {0}, {1}, {2}, {3}'.format(
-                int(subdata['A'].values[0]),
-                int(subdata['B'].values[0]),
-                int(subdata['M'].values[0]),
-                int(subdata['N'].values[0]),
+                int(subdata['a'].values[0]),
+                int(subdata['b'].values[0]),
+                int(subdata['m'].values[0]),
+                int(subdata['n'].values[0]),
             ))
         ax.set_ylabel(r'$|Z|~[\Omega]$')
         ax.set_xlabel('frequencies [Hz]')

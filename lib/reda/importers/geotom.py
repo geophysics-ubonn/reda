@@ -37,7 +37,7 @@ def _parse_wenner_file(filename, settings):
         header=None,
         names=(
             'elec1_wenner',
-            'a',
+            'a_w',
             'rho_a',
             'c4',
             'c5',
@@ -50,21 +50,21 @@ def _parse_wenner_file(filename, settings):
     )
 
     # compute geometric factor using the Wenner formula
-    df['K'] = 2 * np.pi * df['a']
-    df['R'] = df['rho_a'] / df['K']
+    df['K'] = 2 * np.pi * df['a_w']
+    df['r'] = df['rho_a'] / df['K']
 
     Am = df['elec1_wenner']
-    Bm = df['elec1_wenner'] + df['a']
-    Mm = df['elec1_wenner'] + 3 * df['a']
-    Nm = df['elec1_wenner'] + 2 * df['a']
+    Bm = df['elec1_wenner'] + df['a_w']
+    Mm = df['elec1_wenner'] + 3 * df['a_w']
+    Nm = df['elec1_wenner'] + 2 * df['a_w']
 
-    df['A'] = Am / 2.0 + 1
-    df['B'] = Bm / 2.0 + 1
-    df['M'] = Mm / 2.0 + 1
-    df['N'] = Nm / 2.0 + 1
+    df['a'] = Am / 2.0 + 1
+    df['b'] = Bm / 2.0 + 1
+    df['m'] = Mm / 2.0 + 1
+    df['n'] = Nm / 2.0 + 1
 
     # remove any nan values
-    df.dropna(axis=0, subset=['A', 'B', 'M', 'N', 'R'], inplace=True)
+    df.dropna(axis=0, subset=['a', 'b', 'm', 'n', 'r'], inplace=True)
 
     return df
 

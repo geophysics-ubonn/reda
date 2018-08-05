@@ -48,8 +48,8 @@ def _extract_md(mat):
         )
         df.columns = (
             'datetime',
-            'A',
-            'B',
+            'a',
+            'b',
             'Cl1',
             'Cl2',
             'Cl3',
@@ -80,8 +80,8 @@ def _extract_md(mat):
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
-        df['A'] = df['A'].astype(int).apply(convert_electrode)
-        df['B'] = df['B'].astype(int).apply(convert_electrode)
+        df['a'] = df['a'].astype(int).apply(convert_electrode)
+        df['b'] = df['b'].astype(int).apply(convert_electrode)
 
         df['Cl1'] = df['Cl1'].astype(complex)
         df['Cl2'] = df['Cl2'].astype(complex)
@@ -186,9 +186,9 @@ def _extract_emd(mat):
         )
         df.columns = (
             'datetime',
-            'A',
-            'B',
-            'P',
+            'a',
+            'b',
+            'p',
             'Z1',
             'Z2',
             'Z3',
@@ -222,9 +222,9 @@ def _extract_emd(mat):
 
         # cast to correct type
         df['datetime'] = pd.to_datetime(df['datetime'])
-        df['A'] = df['A'].astype(int).apply(convert_electrode)
-        df['B'] = df['B'].astype(int).apply(convert_electrode)
-        df['P'] = df['P'].astype(int).apply(convert_electrode)
+        df['a'] = df['a'].astype(int).apply(convert_electrode)
+        df['b'] = df['b'].astype(int).apply(convert_electrode)
+        df['p'] = df['p'].astype(int).apply(convert_electrode)
 
         df['Z1'] = df['Z1'].astype(complex)
         df['Z2'] = df['Z2'].astype(complex)
@@ -274,8 +274,8 @@ def _extract_emd(mat):
     # TODO
 
     # sort current injections
-    condition = df['A'] > df['B']
-    df.loc[condition, ['A', 'B']] = df.loc[condition, ['B', 'A']].values
+    condition = df['a'] > df['b']
+    df.loc[condition, ['a', 'b']] = df.loc[condition, ['b', 'a']].values
     # change sign because we changed A and B
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
 
@@ -283,7 +283,7 @@ def _extract_emd(mat):
     df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
     # we need to keep the sign of the real part
     sign_re = df['Zt'].real / np.abs(df['Zt'].real)
-    df['R'] = np.abs(df['Zt']) * sign_re
+    df['r'] = np.abs(df['Zt']) * sign_re
     # df['Zt_std'] = np.std(df[['Z1', 'Z2', 'Z3']].values, axis=1)
 
     df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
