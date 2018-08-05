@@ -20,8 +20,8 @@ plt, mpl = reda.utils.mpl.setup()
 
 def _write_config_file(filename, dataframe):
     if isinstance(dataframe, pd.DataFrame):
-        AB = dataframe['A'].values * 1e4 + dataframe['B'].values
-        MN = dataframe['M'].values * 1e4 + dataframe['N'].values
+        AB = dataframe['a'].values * 1e4 + dataframe['b'].values
+        MN = dataframe['m'].values * 1e4 + dataframe['n'].values
     else:
         AB = dataframe[:, 0] * 1e4 + dataframe[:, 1]
         MN = dataframe[:, 2] * 1e4 + dataframe[:, 3]

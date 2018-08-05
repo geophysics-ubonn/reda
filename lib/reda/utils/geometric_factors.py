@@ -88,10 +88,6 @@ def compute_K_analytical(dataframe, spacing):
     else:
         configs = dataframe
 
-    # r_am = np.abs(dataframe['A'] - dataframe['M']) * spacing
-    # r_an = np.abs(dataframe['A'] - dataframe['N']) * spacing
-    # r_bm = np.abs(dataframe['B'] - dataframe['M']) * spacing
-    # r_bn = np.abs(dataframe['B'] - dataframe['N']) * spacing
     r_am = np.abs(configs[:, 0] - configs[:, 2]) * spacing
     r_an = np.abs(configs[:, 0] - configs[:, 3]) * spacing
     r_bm = np.abs(configs[:, 1] - configs[:, 2]) * spacing
