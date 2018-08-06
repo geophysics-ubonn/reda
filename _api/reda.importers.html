@@ -219,7 +219,7 @@ are supported!</p>
 </dd>
 <dt><strong>config_file: string</strong></dt>
 <dd><p class="first last">filename for configuration file. The configuration file contains N rows
-with 4 columns each (A, B, M, N)</p>
+with 4 columns each (a, b, m, n)</p>
 </dd>
 </dl>
 </td>
@@ -296,26 +296,87 @@ and Kemna, 2017, Biogeosciences, for detailed information.</p>
 <div class="section" id="module-reda.importers.eit_fzj">
 <span id="reda-importers-eit-fzj-module"></span><h2>reda.importers.eit_fzj module<a class="headerlink" href="#module-reda.importers.eit_fzj" title="Permalink to this headline">¶</a></h2>
 <p>Import data from the EIT-systems built at the Research Center Jülich (FZJ).</p>
-<p>This module is an attempt to unify and extend upon the modules eit40 and eit160</p>
+<p>As there is an increasing number of slightly different file formats in use,
+this module acts as an selector for the appropriate import functions.</p>
 <dl class="function">
-<dt id="reda.importers.eit_fzj.read_mat_file">
-<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">read_mat_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#read_mat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.read_mat_file" title="Permalink to this definition">¶</a></dt>
-<dd><p>High level import function that tries to determine the specific version
-of the data format used.</p>
-<table class="docutils field-list" frame="void" rules="none">
+<dt id="reda.importers.eit_fzj.apply_correction_factors">
+<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
+and Kemna, 2017, Biogeosciences, for detailed information.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.eit_fzj.compute_quadrupoles">
+<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">compute_quadrupoles</code><span class="sig-paren">(</span><em>df_emd</em>, <em>config_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_quadrupoles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_quadrupoles" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>filename: string</strong></dt>
-<dd><p class="first last">File path to a .mat matlab filename, as produced by the various
-versions of the emmt_pp.exe postprocessing program.</p>
+<dt><strong>df_emd: pandas.DataFrame</strong></dt>
+<dd><p class="first last">The EMD data, as imported from the .mat file (3P-data)</p>
+</dd>
+<dt><strong>config_file: string</strong></dt>
+<dd><p class="first last">filename for configuration file. The configuration file contains N rows
+with 4 columns each (A, B, M, N)</p>
 </dd>
 </dl>
 </td>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.eit_fzj.get_mnu0_data">
+<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">get_mnu0_data</code><span class="sig-paren">(</span><em>filename</em>, <em>configs</em>, <em>settings=None</em>, <em>return_3p=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#get_mnu0_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.get_mnu0_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import data postprocessed as 3P data (NMU0), i.e., measured towards
+common ground.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename: string (usually: eit_data_mnu0.mat)</strong></dt>
+<dd><p class="first last">filename of matlab file</p>
+</dd>
+<dt><strong>configs: Nx4 numpy.ndarray|filename</strong></dt>
+<dd><p class="first last">4P measurements configurations (ABMN) to generate out of the data</p>
+</dd>
+<dt><strong>settings: dict|None</strong></dt>
+<dd><p class="first last">file format specific settings that will be provided to the importer</p>
+</dd>
+<dt><strong>return_3p: bool</strong></dt>
+<dd><p class="first last">also return 3P data</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data_emd_4p: pandas.DataFrame</strong></dt>
+<dd><p class="first last">The generated 4P data</p>
+</dd>
+<dt><strong>data_md_raw: pandas.DataFrame|None</strong></dt>
+<dd><p class="first last">MD data (sometimes this data is not imported, then we return None here)</p>
+</dd>
+<dt><strong>data_emd_3p: pandas.DataFrame</strong></dt>
+<dd><p class="first last">The importet 3P data (only if return_3p==True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.importers.eit_version_2018a">
+<span id="reda-importers-eit-version-2018a-module"></span><h2>reda.importers.eit_version_2018a module<a class="headerlink" href="#module-reda.importers.eit_version_2018a" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reda.importers.eit_version_2018a.convert_electrode">
+<code class="descclassname">reda.importers.eit_version_2018a.</code><code class="descname">convert_electrode</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_version_2018a.html#convert_electrode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_version_2018a.convert_electrode" title="Permalink to this definition">¶</a></dt>
+<dd><p>With 3 multiplexers, electrode numbers are running from 1 - 120, in 30
+electrode increments. We need to convert those numberings back.</p>
 </dd></dl>
 
 </div>
@@ -415,60 +476,45 @@ return None</p>
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="reda.importers.radic_sip256c.decide_on_quadpole">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">decide_on_quadpole</code><span class="sig-paren">(</span><em>config</em>, <em>settings</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#decide_on_quadpole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.decide_on_quadpole" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
 <dt id="reda.importers.radic_sip256c.parse_radic_file">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">parse_radic_file</code><span class="sig-paren">(</span><em>filename</em>, <em>settings</em>, <em>selection_mode='after'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_radic_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_radic_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">parse_radic_file</code><span class="sig-paren">(</span><em>filename</em>, <em>settings</em>, <em>selection_mode='after'</em>, <em>reciprocal=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_radic_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_radic_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import one result file as produced by the SIP256c SIP measuring device
 (Radic Research)</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>filename: string</strong></dt>
-<dd><p class="first last">input filename, usually with the ending “.RES”</p>
-</dd>
-<dt><strong>settings: dict</strong></dt>
-<dd><div class="first last highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+<p>Full settings dictionary:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s1">&#39;filter_skip&#39;</span><span class="p">:</span> <span class="p">(</span><span class="n">integer</span><span class="p">)</span> <span class="n">skip</span> <span class="n">dipoles</span> <span class="n">we</span> <span class="n">are</span> <span class="n">interested</span> <span class="ow">in</span>
     <span class="s1">&#39;quadrupole_mode&#39;</span><span class="p">:</span> <span class="p">[</span><span class="s1">&#39;after&#39;</span><span class="o">|</span><span class="s1">&#39;between&#39;</span><span class="o">|</span><span class="s1">&#39;before&#39;</span><span class="o">|</span> <span class="s1">&#39;all&#39;</span><span class="p">]</span>
                        <span class="n">which</span> <span class="n">dipoles</span> <span class="n">to</span> <span class="n">use</span> <span class="kn">from</span> <span class="nn">the</span> <span class="n">file</span>
 <span class="p">}</span>
 </pre></div>
 </div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename: string</strong></dt>
+<dd><p class="first last">input filename, usually with the ending “.RES”</p>
+</dd>
+<dt><strong>settings: dict</strong></dt>
+<dd><p class="first last">Settings for the data import, see code snippet above</p>
 </dd>
 <dt><strong>selection_mode: dict</strong></dt>
-<dd><p class="first">which voltage dipoles should be returned. Possible choices:</p>
-<ul class="last simple">
-<li>“all”</li>
-<li>“before”</li>
-<li>“after”</li>
-</ul>
+<dd><p class="first last">which voltage dipoles should be returned. Possible choices:
+“all”|”before”|”after”</p>
+</dd>
+<dt><strong>reciprocal: int|None</strong></dt>
+<dd><p class="first last">If this is an integer, then assume this was a reciprocal measurement
+and the number denotes the largest RU number, N. Electrode numbers
+(a,b,m,n) will then be transformed to (N1 - a, N1 - b, N1 - m, N1 - n),
+with N1 = N + 1</p>
 </dd>
 </dl>
 </td>
 </tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="reda.importers.radic_sip256c.parse_readic_header">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">parse_readic_header</code><span class="sig-paren">(</span><em>header_group</em>, <em>dipole_mode='all'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_readic_header"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_readic_header" title="Permalink to this definition">¶</a></dt>
-<dd><table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>dipole_mode: Which dipoles should be extracted</strong></dt>
-<dd><p class="first last">“all”
-“before”
-“between”
-“after”</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>sip_data: :py:pandas:`pandas.DataFrame`</strong></dt>
+<dd><p class="first last">The data contained in a data frame</p>
 </dd>
 </dl>
 </td>
@@ -480,11 +526,6 @@ return None</p>
 <dl class="function">
 <dt id="reda.importers.radic_sip256c.parse_reading">
 <code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">parse_reading</code><span class="sig-paren">(</span><em>reading_block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_reading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_reading" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="reda.importers.radic_sip256c.parse_remote_unit">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">parse_remote_unit</code><span class="sig-paren">(</span><em>ru_block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_remote_unit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_remote_unit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
@@ -636,7 +677,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+397.g5d661c8.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+421.g028492d.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>
@@ -664,7 +705,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+397.g5d661c8.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+421.g028492d.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>

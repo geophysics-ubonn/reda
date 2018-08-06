@@ -109,9 +109,13 @@
 </div>
 <div class="sphx-glr-example-title section" id="sip-04-import">
 <span id="sphx-glr-examples-02-sip04-plot-sip04-py"></span><h1>SIP-04 Import<a class="headerlink" href="#sip-04-import" title="Permalink to this headline">¶</a></h1>
+<p>Create the SIP container</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
 <span class="n">sip</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">SIP</span><span class="p">()</span>
-<span class="n">sip</span><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="s1">&#39;sip_data.mat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Import the SIP data</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sip</span><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="s1">&#39;sip_data.mat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -128,8 +132,8 @@ min        0.010000  (81744.2584898-211.411957126j)
 max    45000.000000  (91671.2908895-2692.47746068j)
 </pre></div>
 </div>
+<p>show the data</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
-
 <span class="k">print</span><span class="p">(</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
 </pre></div>
 </div>
@@ -160,6 +164,18 @@ max    45000.000000  (91671.2908895-2692.47746068j)
 21  1  4  2  3   45000.00  83175.799742 -45.989948
 </pre></div>
 </div>
+<p>plot the spectrum</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.eis.plots</span> <span class="kn">import</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a>
+
+<span class="n">spectrum</span> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a><span class="p">(</span>
+    <span class="n">frequencies</span><span class="o">=</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">rcomplex</span><span class="o">=</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;spectrum.pdf&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_sip04_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_sip04_001.png" />
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-02-sip04-plot-sip04-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_sip04.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_sip04.py</span></code></a></div>

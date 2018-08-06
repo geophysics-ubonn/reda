@@ -114,7 +114,7 @@
 <span class="sd">    Affected parameters, at the moment, are:</span>
 
 <span class="sd">        * K</span>
-<span class="sd">        * R</span>
+<span class="sd">        * r</span>
 <span class="sd">        * Vmn</span>
 <span class="sd">        * Zt</span>
 <span class="sd">        * rho_a</span>
@@ -133,23 +133,26 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># check for required columns</span>
-    <span class="k">if</span> <span class="s1">&#39;K&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span> <span class="ow">or</span> <span class="s1">&#39;R&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;K and R columns required!&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s1">&#39;K&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span> <span class="ow">or</span> <span class="s1">&#39;r&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;K and r columns required!&#39;</span><span class="p">)</span>
 
-    <span class="n">indices_negative</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">indices_negative</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">indices_negative</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="c1"># nothing to do here</span>
+        <span class="k">return</span>
 
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_negative</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">]]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_negative</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="c1"># switch potential electrodes</span>
-    <span class="n">indices_switched_ab</span> <span class="o">=</span> <span class="n">indices_negative</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
-    <span class="n">indices_switched_mn</span> <span class="o">=</span> <span class="n">indices_negative</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">])</span>
+    <span class="n">indices_switched_ab</span> <span class="o">=</span> <span class="n">indices_negative</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
+    <span class="n">indices_switched_mn</span> <span class="o">=</span> <span class="n">indices_negative</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
 
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_switched_ab</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span>
-        <span class="n">indices_switched_ab</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">]</span>
+    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_switched_ab</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span>
+        <span class="n">indices_switched_ab</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">]</span>
     <span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_switched_mn</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span>
-        <span class="n">indices_switched_mn</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">]</span>
+    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_switched_mn</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span>
+        <span class="n">indices_switched_mn</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">]</span>
     <span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
     <span class="c1"># switch sign of voltages</span>
@@ -160,14 +163,30 @@
         <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_negative</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">if</span> <span class="s1">&#39;rho_a&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
-        <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+        <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
 
     <span class="c1"># recompute phase values</span>
     <span class="k">if</span> <span class="s1">&#39;rpha&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
-        <span class="c1"># recompute</span>
-        <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
-            <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
-        <span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span>
+        <span class="k">if</span> <span class="s1">&#39;Zt&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
+            <span class="c1"># recompute</span>
+            <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
+                <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+            <span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;Recomputation of phase without Zt not implemented yet. &#39;</span> <span class="o">+</span>
+                <span class="s1">&#39;See source code for more information&#39;</span>
+            <span class="p">)</span>
+            <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            when the complex number is located in the fourth sector instead of</span>
+<span class="sd">            the first, this corresponds to a phase shift by pi. For all values</span>
+<span class="sd">            where magnitude &lt; 0 and phase &lt; 3000 mrad reverse this shift by pi</span>
+<span class="sd">            by multiplying the complex number by -1:</span>
+<span class="sd">            new_value = - 1 * (Magnitude * exp(i phi))</span>
+<span class="sd">            Test this function by setting one measurement to</span>
+<span class="sd">            -85.02069 -183.25 in radic column 6 and 7, should get -58 mrad when</span>
+<span class="sd">            converted</span>
+<span class="sd">            &quot;&quot;&quot;</span>
 
     <span class="k">return</span> <span class="n">dataframe</span></div>
 
@@ -181,8 +200,8 @@
         <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="o">-</span><span class="mi">20</span><span class="p">),</span>
         <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
     <span class="p">))</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">])</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;K&#39;</span><span class="p">])</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;old&#39;</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">fix_sign_with_K</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>

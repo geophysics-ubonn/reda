@@ -41,6 +41,14 @@ reda.importers.eit\_fzj module
     :undoc-members:
     :show-inheritance:
 
+reda.importers.eit\_version\_2018a module
+-----------------------------------------
+
+.. automodule:: reda.importers.eit_version_2018a
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reda.importers.geotom module
 ----------------------------
 

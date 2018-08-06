@@ -104,6 +104,7 @@
 <span class="sd">select and execute functions to compute geometric factors according to the</span>
 <span class="sd">rcParams variable.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">reda</span>
@@ -116,7 +117,7 @@
     <span class="k">if</span> <span class="s1">&#39;K&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sigma_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="s1">&#39;Zt&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -124,7 +125,7 @@
     <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="compute_K_numerical"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_numerical">[docs]</a><span class="k">def</span> <span class="nf">compute_K_numerical</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_K_numerical"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_numerical">[docs]</a><span class="k">def</span> <span class="nf">compute_K_numerical</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">keep_dir</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Use a finite-element modeling code to infer geometric factors for meshes</span>
 <span class="sd">    with topography or irregular electrode spacings.</span>
 
@@ -135,6 +136,8 @@
 <span class="sd">    settings: dict</span>
 <span class="sd">        The settings required to compute the geometric factors. See examples</span>
 <span class="sd">        down below for more information in the required content.</span>
+<span class="sd">    keep_dir: path</span>
+<span class="sd">        if not None, copy modeling dir here</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -155,7 +158,10 @@
     <span class="n">inversion_code</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">rcParams</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;geom_factor.inversion_code&#39;</span><span class="p">,</span> <span class="s1">&#39;crtomo&#39;</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">inversion_code</span> <span class="o">==</span> <span class="s1">&#39;crtomo&#39;</span><span class="p">:</span>
         <span class="kn">import</span> <span class="nn">reda.utils.geom_fac_crtomo</span> <span class="k">as</span> <span class="nn">geom_fac_crtomo</span>
-        <span class="n">K</span> <span class="o">=</span> <span class="n">geom_fac_crtomo</span><span class="o">.</span><span class="n">compute_K</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">keep_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">keep_dir</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">abspath</span><span class="p">(</span><span class="n">keep_dir</span><span class="p">)</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="n">geom_fac_crtomo</span><span class="o">.</span><span class="n">compute_K</span><span class="p">(</span>
+            <span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">keep_dir</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
             <span class="s1">&#39;Inversion code </span><span class="si">{0}</span><span class="s1"> not implemented for K computation&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
@@ -168,7 +174,7 @@
     <span class="sd">&quot;&quot;&quot;Given an electrode spacing, compute geometrical factors using the</span>
 <span class="sd">    equation for the homogeneous half-space (Neumann-equation)</span>
 
-<span class="sd">    If a dataframe is given, use the column (A, B, M, N). Otherwise, expect an</span>
+<span class="sd">    If a dataframe is given, use the column (a, b, m, n). Otherwise, expect an</span>
 <span class="sd">    Nx4 arrray.</span>
 
 <span class="sd">    Parameters</span>
@@ -180,14 +186,10 @@
 <span class="sd">        of the electrodes</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-        <span class="n">configs</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">configs</span> <span class="o">=</span> <span class="n">dataframe</span>
 
-    <span class="c1"># r_am = np.abs(dataframe[&#39;A&#39;] - dataframe[&#39;M&#39;]) * spacing</span>
-    <span class="c1"># r_an = np.abs(dataframe[&#39;A&#39;] - dataframe[&#39;N&#39;]) * spacing</span>
-    <span class="c1"># r_bm = np.abs(dataframe[&#39;B&#39;] - dataframe[&#39;M&#39;]) * spacing</span>
-    <span class="c1"># r_bn = np.abs(dataframe[&#39;B&#39;] - dataframe[&#39;N&#39;]) * spacing</span>
     <span class="n">r_am</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">spacing</span>
     <span class="n">r_an</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">*</span> <span class="n">spacing</span>
     <span class="n">r_bm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">*</span> <span class="n">spacing</span>

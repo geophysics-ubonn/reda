@@ -122,8 +122,8 @@
 
 <span class="k">def</span> <span class="nf">_write_config_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
-        <span class="n">AB</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">MN</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">AB</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">MN</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">AB</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">dataframe</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span>
         <span class="n">MN</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">dataframe</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span>
@@ -172,22 +172,29 @@
         <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
         <span class="s1">&#39;elem&#39;</span><span class="p">:</span> <span class="s1">&#39;elem.dat&#39;</span><span class="p">,</span>
         <span class="s1">&#39;elec&#39;</span><span class="p">:</span> <span class="s1">&#39;elec.dat&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;sink_node&#39;</span><span class="p">:</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;2D&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
     <span class="p">}</span></div>
 
 
-<div class="viewcode-block" id="compute_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geom_fac_crtomo.compute_K">[docs]</a><span class="k">def</span> <span class="nf">compute_K</span><span class="p">(</span>
-        <span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geom_fac_crtomo.compute_K">[docs]</a><span class="k">def</span> <span class="nf">compute_K</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">keep_dir</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    dataframe: dataframe that contains the data</span>
-<span class="sd">    settings: dict with required settings, see below</span>
+<span class="sd">    dataframe: pandas.DataFrame</span>
+<span class="sd">        dataframe that contains the data</span>
+<span class="sd">    settings: dict</span>
+<span class="sd">        with required settings, see below</span>
+<span class="sd">    keep_dir: path</span>
+<span class="sd">        if not None, copy modeling dir here</span>
+
 
 <span class="sd">    settings = {</span>
 <span class="sd">        &#39;rho&#39;: 100,  # resistivity to use for homogeneous model, [Ohm m]</span>
 <span class="sd">        &#39;elem&#39;</span>
 <span class="sd">        &#39;elec&#39;</span>
 <span class="sd">        &#39;2D&#39; : True|False</span>
+<span class="sd">        &#39;sink_node&#39;: &#39;100&#39;,</span>
 <span class="sd">    }</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -278,9 +285,9 @@
         <span class="n">K</span> <span class="o">=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">modeled_resistances</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span>
         <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
             <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span>
-
-        <span class="c1"># debug</span>
-        <span class="c1"># shutil.copytree(&#39;.&#39;, pwd + os.sep + &#39;indir&#39;)</span>
+        <span class="k">if</span> <span class="n">keep_dir</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">keep_dir</span><span class="p">):</span>
+            <span class="n">shutil</span><span class="o">.</span><span class="n">copytree</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">keep_dir</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Copy of modeling dir stored here: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">keep_dir</span><span class="p">))</span>
 
     <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span>
     <span class="k">return</span> <span class="n">K</span></div>

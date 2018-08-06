@@ -17,6 +17,14 @@ reda.utils.data module
     :undoc-members:
     :show-inheritance:
 
+reda.utils.eit\_fzj\_utils module
+---------------------------------
+
+.. automodule:: reda.utils.eit_fzj_utils
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reda.utils.filter\_config\_types module
 ---------------------------------------
 

@@ -119,18 +119,18 @@
             <span class="nb">bytes</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">group</span><span class="p">)),</span> <span class="s1">&#39;UTF-8&#39;</span><span class="p">)</span>
         <span class="p">)</span>
 
-        <span class="n">AB</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span>
-        <span class="n">MN</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span>
+        <span class="n">AB</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+        <span class="n">MN</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">group</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
         <span class="n">line</span> <span class="o">=</span> <span class="p">[</span>
             <span class="n">AB</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
             <span class="n">MN</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">),</span>
-            <span class="n">group</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+            <span class="n">group</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
         <span class="p">]</span>
 
         <span class="k">if</span> <span class="s1">&#39;rpha&#39;</span> <span class="ow">in</span> <span class="n">group</span><span class="p">:</span>
             <span class="n">line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
-            <span class="n">line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">group</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">*</span> <span class="mf">0.0</span><span class="p">)</span>
 
         <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%i</span><span class="s1"> </span><span class="si">%i</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1">&#39;</span>
         <span class="k">if</span> <span class="n">store_errors</span><span class="p">:</span>

@@ -18,7 +18,7 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Data Importers" href="../../importers.html" />
+    <link rel="next" title="Importing Radic SIP256c data" href="plot_radic_sip256c.html" />
     <link rel="prev" title="SIP-04 Import" href="../02_SIP04/plot_sip04.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -78,7 +78,7 @@
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Examples</a><ul>
       <li>Previous: <a href="../02_SIP04/plot_sip04.html" title="previous chapter">SIP-04 Import</a></li>
-      <li>Next: <a href="../../importers.html" title="next chapter">Data Importers</a></li>
+      <li>Next: <a href="plot_radic_sip256c.html" title="next chapter">Importing Radic SIP256c data</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -139,7 +139,7 @@ separated by spaces or tabs. Each line denotes one measurement:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>read_mag_single_file: data_EIT40_v_EZ-2017/eit_data_mnu0.mat
 constructing four-point measurements
 Summary:
-          frequency           A      ...                Vmn          rpha
+          frequency           a      ...                Vmn          rpha
 count  16280.000000  16280.0000      ...       16280.000000  16280.000000
 mean    1328.935406     10.5250      ...          -0.009054   1232.306629
 std     2885.893725      5.8096      ...         106.236678   1823.550170
@@ -217,7 +217,25 @@ Raw data plots (execute before applying the filters):</p>
 <a href="../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory" title="View documentation for reda.exporters.crtomo.write_files_to_directory"><span class="n">redaex</span><span class="o">.</span><span class="n">write_files_to_directory</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;crt_results&#39;</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Total running time of the script:</strong> ( 0 minutes  45.578 seconds)</p>
+<p>Plot pseudosections of all frequencies</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="kn">as</span> <span class="nn">PS</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+
+<span class="n">g</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">20</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
+    <span class="n">sharex</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
+<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: {} Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_eit40_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit40_001.png" />
+<p><strong>Total running time of the script:</strong> ( 0 minutes  53.466 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit40-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_eit40.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit40.py</span></code></a></div>

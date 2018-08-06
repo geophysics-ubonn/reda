@@ -25,7 +25,7 @@ Importing Syscal data
  .. code-block:: none
 
     renumbering electrode numbers
-    Generating histogram plot for key: R
+    Generating histogram plot for key: r
     Generating histogram plot for key: rho_a
     Generating histogram plot for key: Iab
 
@@ -48,7 +48,7 @@ Importing Syscal data
     edfK.apply_K(container.data, K)
 
     import reda.plotters as plotters
-    plotters.histograms.plot_histograms(container, ['R', 'rho_a', 'Iab', ])
+    plotters.histograms.plot_histograms(container, ['r', 'rho_a', 'Iab', ])
 
 
 .. _sphx_glr_download__examples_01_ERT_plot_dc_syscal.py:

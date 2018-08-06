@@ -134,6 +134,16 @@
 </dd></dl>
 
 </div>
+<div class="section" id="module-reda.utils.eit_fzj_utils">
+<span id="reda-utils-eit-fzj-utils-module"></span><h2>reda.utils.eit_fzj_utils module<a class="headerlink" href="#module-reda.utils.eit_fzj_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reda.utils.eit_fzj_utils.compute_correction_factors">
+<code class="descclassname">reda.utils.eit_fzj_utils.</code><code class="descname">compute_correction_factors</code><span class="sig-paren">(</span><em>*</em>, <em>data</em>, <em>true_conductivity</em>, <em>elem_file</em>, <em>elec_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#compute_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.compute_correction_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute correction factors for 2D rhizotron geometries, following
+Weigand and Kemna, 2017, Biogeosciences</p>
+</dd></dl>
+
+</div>
 <div class="section" id="module-reda.utils.filter_config_types">
 <span id="reda-utils-filter-config-types-module"></span><h2>reda.utils.filter_config_types module<a class="headerlink" href="#module-reda.utils.filter_config_types" title="Permalink to this headline">¶</a></h2>
 <p>Sort configurations into four-point spread types.</p>
@@ -193,7 +203,7 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 <blockquote>
 <div><ul class="simple">
 <li>K</li>
-<li>R</li>
+<li>r</li>
 <li>Vmn</li>
 <li>Zt</li>
 <li>rho_a</li>
@@ -234,21 +244,27 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 <p>Compute geometric factors (also referred to as K) using CRMod/CRTomo</p>
 <dl class="function">
 <dt id="reda.utils.geom_fac_crtomo.compute_K">
-<code class="descclassname">reda.utils.geom_fac_crtomo.</code><code class="descname">compute_K</code><span class="sig-paren">(</span><em>dataframe</em>, <em>settings</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geom_fac_crtomo.html#compute_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geom_fac_crtomo.compute_K" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.utils.geom_fac_crtomo.</code><code class="descname">compute_K</code><span class="sig-paren">(</span><em>dataframe</em>, <em>settings</em>, <em>keep_dir=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geom_fac_crtomo.html#compute_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geom_fac_crtomo.compute_K" title="Permalink to this definition">¶</a></dt>
 <dd><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>dataframe: dataframe that contains the data</strong></dt>
-<dd></dd>
-<dt><strong>settings: dict with required settings, see below</strong></dt>
-<dd></dd>
+<dt><strong>dataframe: pandas.DataFrame</strong></dt>
+<dd><p class="first last">dataframe that contains the data</p>
+</dd>
+<dt><strong>settings: dict</strong></dt>
+<dd><p class="first last">with required settings, see below</p>
+</dd>
+<dt><strong>keep_dir: path</strong></dt>
+<dd><p class="first last">if not None, copy modeling dir here</p>
+</dd>
 <dt><strong>settings = {</strong></dt>
 <dd><p class="first last">‘rho’: 100,  # resistivity to use for homogeneous model, [Ohm m]
 ‘elem’
 ‘elec’
-‘2D’ : True|False</p>
+‘2D’ : True|False
+‘sink_node’: ‘100’,</p>
 </dd>
 <dt><strong>}</strong></dt>
 <dd></dd>
@@ -281,7 +297,7 @@ resistivities/conductivities</p>
 <code class="descclassname">reda.utils.geometric_factors.</code><code class="descname">compute_K_analytical</code><span class="sig-paren">(</span><em>dataframe</em>, <em>spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an electrode spacing, compute geometrical factors using the
 equation for the homogeneous half-space (Neumann-equation)</p>
-<p>If a dataframe is given, use the column (A, B, M, N). Otherwise, expect an
+<p>If a dataframe is given, use the column (a, b, m, n). Otherwise, expect an
 Nx4 arrray.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -304,7 +320,7 @@ of the electrodes</p>
 
 <dl class="function">
 <dt id="reda.utils.geometric_factors.compute_K_numerical">
-<code class="descclassname">reda.utils.geometric_factors.</code><code class="descname">compute_K_numerical</code><span class="sig-paren">(</span><em>dataframe</em>, <em>settings=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_numerical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_numerical" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.utils.geometric_factors.</code><code class="descname">compute_K_numerical</code><span class="sig-paren">(</span><em>dataframe</em>, <em>settings=None</em>, <em>keep_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_numerical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_numerical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use a finite-element modeling code to infer geometric factors for meshes
 with topography or irregular electrode spacings.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -318,6 +334,9 @@ with topography or irregular electrode spacings.</p>
 <dt><strong>settings: dict</strong></dt>
 <dd><p class="first last">The settings required to compute the geometric factors. See examples
 down below for more information in the required content.</p>
+</dd>
+<dt><strong>keep_dir: path</strong></dt>
+<dd><p class="first last">if not None, copy modeling dir here</p>
 </dd>
 </dl>
 </td>
@@ -487,11 +506,14 @@ a ‘latex’ binary is found in the system.</p>
 </div>
 <div class="section" id="module-reda.utils.norrec">
 <span id="reda-utils-norrec-module"></span><h2>reda.utils.norrec module<a class="headerlink" href="#module-reda.utils.norrec" title="Permalink to this headline">¶</a></h2>
+<p>Normal-reciprocal functionality</p>
 <dl class="function">
 <dt id="reda.utils.norrec.assign_norrec_diffs">
 <code class="descclassname">reda.utils.norrec.</code><code class="descname">assign_norrec_diffs</code><span class="sig-paren">(</span><em>df</em>, <em>diff_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#assign_norrec_diffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.assign_norrec_diffs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute and write the difference between normal and reciprocal values
 for all columns specified in the diff_list parameter.</p>
+<p>Note that the DataFrame is directly written to. That is, it is changed
+during the call of this function. No need to use the returned object.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -507,8 +529,9 @@ for all columns specified in the diff_list parameter.</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df_new</strong></dt>
-<dd></dd>
+<dt><strong>df_new: pandas.DataFrame</strong></dt>
+<dd><p class="first last">The data with added columns</p>
+</dd>
 </dl>
 </td>
 </tr>
@@ -519,7 +542,28 @@ for all columns specified in the diff_list parameter.</p>
 <dl class="function">
 <dt id="reda.utils.norrec.assign_norrec_to_df">
 <code class="descclassname">reda.utils.norrec.</code><code class="descname">assign_norrec_to_df</code><span class="sig-paren">(</span><em>df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#assign_norrec_to_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.assign_norrec_to_df" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Determine normal-reciprocal pairs for a given dataframe.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>df: pandas.DataFrame</strong></dt>
+<dd><p class="first last">The data</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>df: pandas.DataFrame</strong></dt>
+<dd><p class="first last">The data with two new columns: “id” and “norrec”</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="reda.utils.norrec.average_repetitions">
@@ -548,12 +592,7 @@ used.</p>
 <dl class="function">
 <dt id="reda.utils.norrec.compute_norrec_differences">
 <code class="descclassname">reda.utils.norrec.</code><code class="descname">compute_norrec_differences</code><span class="sig-paren">(</span><em>df</em>, <em>keys_diff</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#compute_norrec_differences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.compute_norrec_differences" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="function">
-<dt id="reda.utils.norrec.first">
-<code class="descclassname">reda.utils.norrec.</code><code class="descname">first</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#first"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.first" title="Permalink to this definition">¶</a></dt>
-<dd><p>return the first item of the supplied Series</p>
+<dd><p>DO NOT USE ANY MORE - DEPRECIATED!</p>
 </dd></dl>
 
 <dl class="function">
@@ -566,12 +605,6 @@ used.</p>
 <dt id="reda.utils.norrec.get_test_df_advanced">
 <code class="descclassname">reda.utils.norrec.</code><code class="descname">get_test_df_advanced</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#get_test_df_advanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.get_test_df_advanced" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a test dataframe suitable to test the normal-reciprocal functions</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="reda.utils.norrec.normalize_abmn">
-<code class="descclassname">reda.utils.norrec.</code><code class="descname">normalize_abmn</code><span class="sig-paren">(</span><em>abmn</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#normalize_abmn"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.normalize_abmn" title="Permalink to this definition">¶</a></dt>
-<dd><p>return a normalized version of abmn</p>
 </dd></dl>
 
 <dl class="function">

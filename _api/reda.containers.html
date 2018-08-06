@@ -212,7 +212,7 @@ to:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">norrec</span><span class="o">.</span><span class="n">get_test_df</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
 <span class="gp">... </span>    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">95</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">105</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;ABMNR&quot;</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="o">-</span><span class="mi">105</span><span class="p">]],</span> <span class="n">columns</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="s2">&quot;abmnr&quot;</span><span class="p">)</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">compute_reciprocal_errors</span><span class="p">()</span>
 <span class="go">generating ids</span>
@@ -245,7 +245,7 @@ pandas.DataFrame.query</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+397.g5d661c8.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+421.g028492d.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
@@ -570,8 +570,8 @@ changes in the number of rows.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="k">import</span> <span class="n">LogDataChanges</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="c1"># now change the data</span>
-<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>
-<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;R &lt; 10&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;r &lt; 10&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ERTContainer</span><span class="o">.</span><span class="n">print_log</span><span class="p">()</span>
 <span class="go">2... - root - INFO - Data change from 22 to 21</span>
 </pre></div>
@@ -763,6 +763,9 @@ meant to be inherited by the data containers</p>
 <tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit40" title="reda.containers.sEIT.importers.import_eit40"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit40</span></code></a>(filename,&nbsp;configfile[,&nbsp;…])</td>
 <td>EIT40 data import</td>
 </tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_sip256c" title="reda.containers.sEIT.importers.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
+<td>Radic SIP256c data import</td>
+</tr>
 </tbody>
 </table>
 <dl class="method">
@@ -775,6 +778,12 @@ meant to be inherited by the data containers</p>
 <dt id="reda.containers.sEIT.importers.import_eit40">
 <code class="descname">import_eit40</code><span class="sig-paren">(</span><em>filename</em>, <em>configfile</em>, <em>correction_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit40"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit40" title="Permalink to this definition">¶</a></dt>
 <dd><p>EIT40 data import</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.importers.import_sip256c">
+<code class="descname">import_sip256c</code><span class="sig-paren">(</span><em>filename</em>, <em>settings=None</em>, <em>reciprocal=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_sip256c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_sip256c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Radic SIP256c data import</p>
 </dd></dl>
 
 </dd></dl>
@@ -799,13 +808,16 @@ meant to be inherited by the data containers</p>
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit40</span></code>(filename,&nbsp;configfile[,&nbsp;…])</td>
 <td>EIT40 data import</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
+<td>Radic SIP256c data import</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
 <td>State what you want to keep</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
 <td>Remove frequencies from the dataset</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td><p class="rubric">Examples</p>
 </td>
 </tr>

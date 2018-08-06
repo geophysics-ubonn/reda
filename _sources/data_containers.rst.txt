@@ -24,17 +24,22 @@ Required data columns
 Each data container requires a minimal set of data variables (columns) that any
 importer must return.
 
+.. warning::
+
+    We are in the process of unifying the column names across containers. In
+    the future the default will be to use lower case column names.
+
 ERT
 ^^^
 
 ====== ======================================
 column description
 ====== ======================================
-A      First current electrode of quadpole
-B      Second current electrode of quadpole
-M      First potential electrode of quadpole
-N      Second potential electrode of quadpole
-R      Measured resistance [Ohm]
+a      First current electrode of quadpole
+b      Second current electrode of quadpole
+m      First potential electrode of quadpole
+n      Second potential electrode of quadpole
+r      Measured resistance [Ohm]
 ====== ======================================
 
 Optional columns can be named arbitrarily, but the following are usually used:
@@ -42,7 +47,7 @@ Optional columns can be named arbitrarily, but the following are usually used:
 ========= ======================================
 column    description
 ========= ======================================
-k         Geometric factor [m]
+K         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
 
@@ -67,7 +72,7 @@ Optional columns can be named arbitrarily, but the following are usually used:
 ========= ======================================
 column    description
 ========= ======================================
-k         Geometric factor [m]
+K         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
 
@@ -92,7 +97,7 @@ Optional columns can be named arbitrarily, but the following are usually used:
 ========= ======================================
 column    description
 ========= ======================================
-k         Geometric factor [m]
+K         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
 

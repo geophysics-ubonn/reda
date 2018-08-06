@@ -9,7 +9,7 @@ configs = np.array((
 ))
 measurements = np.random.random(configs.shape[0])
 import pandas as pd
-df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N'])
+df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n'])
 df['measurements'] = measurements
 
 from reda.plotters.pseudoplots import plot_pseudosection_type2

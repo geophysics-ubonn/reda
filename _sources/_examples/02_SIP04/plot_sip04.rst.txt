@@ -12,12 +12,29 @@ SIP-04 Import
 
 
 
+Create the SIP container
+
+
 
 .. code-block:: python
 
     import reda
     sip = reda.SIP()
+
+
+
+
+
+
+
+Import the SIP data
+
+
+
+.. code-block:: python
+
     sip.import_sip04('sip_data.mat')
+
 
 
 
@@ -41,12 +58,15 @@ SIP-04 Import
     max    45000.000000  (91671.2908895-2692.47746068j)
 
 
+show the data
+
+
 
 .. code-block:: python
 
     print(type(sip.data))
-
     print(sip.data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
+
 
 
 
@@ -81,6 +101,30 @@ SIP-04 Import
     19  1  4  2  3   10000.00  82085.647708  -3.090301
     20  1  4  2  3   20000.00  82641.939514 -13.275897
     21  1  4  2  3   45000.00  83175.799742 -45.989948
+
+
+plot the spectrum
+
+
+
+.. code-block:: python
+
+    from reda.eis.plots import sip_response
+
+    spectrum = sip_response(
+        frequencies=sip.data['frequency'].values,
+        rcomplex=sip.data['zt'].values,
+    )
+
+    fig = spectrum.plot(filename='spectrum.pdf', dtype='r', return_fig=True)
+
+
+
+
+.. image:: /_examples/02_SIP04/images/sphx_glr_plot_sip04_001.png
+    :class: sphx-glr-single-img
+
+
 
 
 

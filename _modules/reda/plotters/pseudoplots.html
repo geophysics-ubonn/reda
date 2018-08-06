@@ -253,7 +253,7 @@
 <span class="sd">        ))</span>
 <span class="sd">        measurements = np.random.random(configs.shape[0])</span>
 <span class="sd">        import pandas as pd</span>
-<span class="sd">        df = pd.DataFrame(configs, columns=[&#39;A&#39;, &#39;B&#39;, &#39;M&#39;, &#39;N&#39;])</span>
+<span class="sd">        df = pd.DataFrame(configs, columns=[&#39;a&#39;, &#39;b&#39;, &#39;m&#39;, &#39;n&#39;])</span>
 <span class="sd">        df[&#39;measurements&#39;] = measurements</span>
 
 <span class="sd">        from reda.plotters.pseudoplots import plot_pseudosection_type2</span>
@@ -280,7 +280,7 @@
 <span class="sd">        measurements2 = np.random.random(configs.shape[0])</span>
 
 <span class="sd">        import pandas as pd</span>
-<span class="sd">        df = pd.DataFrame(configs, columns=[&#39;A&#39;, &#39;B&#39;, &#39;M&#39;, &#39;N&#39;])</span>
+<span class="sd">        df = pd.DataFrame(configs, columns=[&#39;a&#39;, &#39;b&#39;, &#39;m&#39;, &#39;n&#39;])</span>
 <span class="sd">        df[&#39;measurements&#39;] = measurements</span>
 <span class="sd">        df[&#39;measurements2&#39;] = measurements2</span>
 
@@ -308,7 +308,7 @@
 
 <span class="sd">    &gt;&gt;&gt; from reda.testing.containers import ERTContainer_nr</span>
 <span class="sd">    &gt;&gt;&gt; import reda.plotters.pseudoplots as ps</span>
-<span class="sd">    &gt;&gt;&gt; fig, axes, cb = ps.plot_pseudosection_type2(ERTContainer_nr, &#39;R&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; fig, axes, cb = ps.plot_pseudosection_type2(ERTContainer_nr, &#39;r&#39;)</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataobj</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
@@ -316,7 +316,7 @@
     <span class="k">else</span><span class="p">:</span>
         <span class="n">df</span> <span class="o">=</span> <span class="n">dataobj</span><span class="o">.</span><span class="n">data</span>
 
-    <span class="n">c</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">c</span> <span class="o">=</span> <span class="n">df</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
 
     <span class="n">AB_ids</span> <span class="o">=</span> <span class="n">_get_unique_identifiers</span><span class="p">(</span><span class="n">c</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
     <span class="n">MN_ids</span> <span class="o">=</span> <span class="n">_get_unique_identifiers</span><span class="p">(</span><span class="n">c</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span>
@@ -431,7 +431,7 @@
 <span class="sd">    &gt;&gt;&gt; import reda.testing.containers</span>
 <span class="sd">    &gt;&gt;&gt; ert = reda.testing.containers.ERTContainer_nr</span>
 <span class="sd">    &gt;&gt;&gt; import reda.plotters.pseudoplots as PS</span>
-<span class="sd">    &gt;&gt;&gt; fig = PS.plot_ps_extra(ert, key=&#39;R&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; fig = PS.plot_ps_extra(ert, key=&#39;r&#39;)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataobj</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">df_raw</span> <span class="o">=</span> <span class="n">dataobj</span>

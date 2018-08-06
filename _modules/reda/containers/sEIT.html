@@ -106,6 +106,7 @@
 
 <span class="kn">import</span> <span class="nn">reda.importers.eit40</span> <span class="k">as</span> <span class="nn">reda_eit40</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit160</span> <span class="k">as</span> <span class="nn">reda_eit160</span>
+<span class="kn">import</span> <span class="nn">reda.importers.radic_sip256c</span> <span class="k">as</span> <span class="nn">reda_sip256c</span>
 <span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="k">as</span> <span class="nn">redanr</span>
 
 
@@ -115,9 +116,9 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">df</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">df</span><span class="p">),</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="k">def</span> <span class="nf">_describe_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
@@ -125,6 +126,22 @@
         <span class="k">else</span><span class="p">:</span>
             <span class="n">df_to_use</span> <span class="o">=</span> <span class="n">df</span>
         <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<div class="viewcode-block" id="importers.import_sip256c"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_sip256c">[docs]</a>    <span class="k">def</span> <span class="nf">import_sip256c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Radic SIP256c data import&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">settings</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">reda_sip256c</span><span class="o">.</span><span class="n">parse_radic_file</span><span class="p">(</span>
+            <span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="n">reciprocal</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+        <span class="c1"># clean any previous norrec-assignments</span>
+        <span class="k">if</span> <span class="s1">&#39;norrec&#39;</span> <span class="ow">and</span> <span class="s1">&#39;id&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;norrec&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_to_df</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="c1"># self.datadf = redanr.assign_norrec_diffs(self.data, [&#39;r&#39;, &#39;rpha&#39;])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="importers.import_eit40"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_eit40">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit40</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;EIT40 data import&quot;&quot;&quot;</span>
@@ -136,7 +153,7 @@
             <span class="n">reda_eit40</span><span class="o">.</span><span class="n">apply_correction_factors</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">)</span>
 
         <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_to_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_diffs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">])</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_diffs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">])</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
@@ -166,11 +183,11 @@
         <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required columns</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">required_columns</span> <span class="o">=</span> <span class="p">(</span>
-            <span class="s1">&#39;A&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;B&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;M&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;N&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;R&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;n&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;r&#39;</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">required_columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>

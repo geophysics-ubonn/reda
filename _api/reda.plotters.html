@@ -123,7 +123,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>ertobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier">container instance or <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+397.g5d661c8.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>ertobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier">container instance or <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+421.g028492d.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">data object which contains the data.</p>
 </dd>
 <dt><strong>keys</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of strings</span></dt>
@@ -153,8 +153,8 @@
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.plotters</span> <span class="k">import</span> <span class="n">plot_histograms</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing</span> <span class="k">import</span> <span class="n">ERTContainer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">figs_dict</span> <span class="o">=</span> <span class="n">plot_histograms</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">,</span> <span class="s2">&quot;R&quot;</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-<span class="go">Generating histogram plot for key: R</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">figs_dict</span> <span class="o">=</span> <span class="n">plot_histograms</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="go">Generating histogram plot for key: r</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -162,23 +162,28 @@
 <dl class="function">
 <dt id="reda.plotters.histograms.plot_histograms_extra_dims">
 <code class="descclassname">reda.plotters.histograms.</code><code class="descname">plot_histograms_extra_dims</code><span class="sig-paren">(</span><em>dataobj</em>, <em>keys</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/histograms.html#plot_histograms_extra_dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.histograms.plot_histograms_extra_dims" title="Permalink to this definition">¶</a></dt>
-<dd><p>Produce histograms grouped by the extra dims.</p>
+<dd><p>Produce histograms grouped by the extra dimensions.</p>
+<p>Extra dimensions are:</p>
+<ul class="simple">
+<li>timesteps</li>
+<li>frequency</li>
+</ul>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>dataobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+397.g5d661c8.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or reda container</span></dt>
+<dt><strong>dataobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+421.g028492d.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or reda container</span></dt>
 <dd><p class="first last">The data container/data frame which holds the data</p>
 </dd>
-<dt><strong>keys</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list</span></dt>
-<dd><p class="first last">List of column names to plot</p>
+<dt><strong>keys:   list|tuple|iterable</strong></dt>
+<dd><p class="first last">The keys (columns) of the dataobj to plot</p>
 </dd>
 <dt><strong>subquery</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string, optional</span></dt>
 <dd><p class="first last">?</p>
 </dd>
-<dt><strong>log10plot</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool optional</span></dt>
-<dd><p class="first last">?</p>
+<dt><strong>log10plot: bool</strong></dt>
+<dd><p class="first last">if True, generate linear and log10 versions of the histogram</p>
 </dd>
 <dt><strong>Nx</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
 <dd><p class="first last">?</p>
@@ -192,15 +197,22 @@
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.histograms</span> <span class="k">as</span> <span class="nn">RH</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">RH</span><span class="o">.</span><span class="n">plot_histograms_extra_dims</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">RH</span><span class="o">.</span><span class="n">plot_histograms_extra_dims</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.histograms</span> <span class="k">as</span> <span class="nn">RH</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">RH</span><span class="o">.</span><span class="n">plot_histograms_extra_dims</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;R&#39;</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">RH</span><span class="o">.</span><span class="n">plot_histograms_extra_dims</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">])</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.plotters.histograms.plot_histograms_it_extra_dims">
+<code class="descclassname">reda.plotters.histograms.</code><code class="descname">plot_histograms_it_extra_dims</code><span class="sig-paren">(</span><em>dataobj</em>, <em>keys</em>, <em>extra_dims</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/histograms.html#plot_histograms_it_extra_dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.histograms.plot_histograms_it_extra_dims" title="Permalink to this definition">¶</a></dt>
+<dd><p>Produce histograms for each group of extra dimensions. **kwargs are
+directly passed on to plot_histograms().</p>
 </dd></dl>
 
 </div>
@@ -403,7 +415,7 @@ etc)</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">PS</span><span class="o">.</span><span class="n">plot_ps_extra</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;R&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">PS</span><span class="o">.</span><span class="n">plot_ps_extra</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
@@ -507,7 +519,7 @@ colored “red”</p>
 <span class="p">))</span>
 <span class="n">measurements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">configs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">])</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;measurements&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">measurements</span>
 
 <span class="kn">from</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="kn">import</span> <span class="n">plot_pseudosection_type2</span>
@@ -535,7 +547,7 @@ colored “red”</p>
 <span class="n">measurements2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(</span><span class="n">configs</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">,</span> <span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;N&#39;</span><span class="p">])</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">])</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;measurements&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">measurements</span>
 <span class="n">df</span><span class="p">[</span><span class="s1">&#39;measurements2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">measurements2</span>
 
@@ -568,7 +580,7 @@ colored “red”</p>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="k">import</span> <span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">ps</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span><span class="p">(</span><span class="n">ERTContainer_nr</span><span class="p">,</span> <span class="s1">&#39;R&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span><span class="p">(</span><span class="n">ERTContainer_nr</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>

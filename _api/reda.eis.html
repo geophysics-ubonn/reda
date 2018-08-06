@@ -371,8 +371,76 @@ plots</p>
 </table>
 <dl class="method">
 <dt id="reda.eis.plots.sip_response.plot">
-<code class="descname">plot</code><span class="sig-paren">(</span><em>filename</em>, <em>title=None</em>, <em>reciprocal=None</em>, <em>limits=None</em>, <em>dtype='rho'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.eis.plots.sip_response.plot" title="Permalink to this definition">¶</a></dt>
+<code class="descname">plot</code><span class="sig-paren">(</span><em>filename</em>, <em>title=None</em>, <em>reciprocal=None</em>, <em>limits=None</em>, <em>dtype='rho'</em>, <em>return_fig=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response.plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.eis.plots.sip_response.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Standard plot of spectrum</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename: string</strong></dt>
+<dd><p class="first last">Output filename. Include the ending to specify the filetype
+(usually .pdf or .png)</p>
+</dd>
+<dt><strong>title: string, optional</strong></dt>
+<dd><p class="first last">Title for the plot</p>
+</dd>
+<dt><strong>reciprocal: :class:`reda.eis.plots.sip_response`, optional</strong></dt>
+<dd><p class="first last">If another <a class="reference internal" href="#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.eis.plots.sip_response</span></code></a> object is provided
+here, use this as the reciprocal spectrum.</p>
+</dd>
+<dt><strong>limits: dict, optional</strong></dt>
+<dd><p class="first last">A dictionary which contains plot limits. See code example below.</p>
+</dd>
+<dt><strong>dtype: string, optional</strong></dt>
+<dd><p class="first last">Determines if the data plotted included geometric factors (‘rho’)
+or not (‘r’). Default: ‘rho’</p>
+</dd>
+<dt><strong>return_fig: bool, optional</strong></dt>
+<dd><p class="first last">If True, then do not delete the figure object after saving to file
+and return the figure object. Default: False</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>fig: :class:`matplotlib.Figure`</strong></dt>
+<dd><p class="first last">The figure object. Only returned if return_fig is set to True</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.eis.plots</span> <span class="k">import</span> <span class="n">sip_response</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="mf">1.00000000e-03</span><span class="p">,</span> <span class="mf">1.77827941e-03</span><span class="p">,</span> <span class="mf">3.16227766e-03</span><span class="p">,</span> <span class="mf">5.62341325e-03</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">1.00000000e-02</span><span class="p">,</span> <span class="mf">1.77827941e-02</span><span class="p">,</span> <span class="mf">3.16227766e-02</span><span class="p">,</span> <span class="mf">5.62341325e-02</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">1.00000000e-01</span><span class="p">,</span> <span class="mf">1.77827941e-01</span><span class="p">,</span> <span class="mf">3.16227766e-01</span><span class="p">,</span> <span class="mf">5.62341325e-01</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">1.00000000e+00</span><span class="p">,</span> <span class="mf">1.77827941e+00</span><span class="p">,</span> <span class="mf">3.16227766e+00</span><span class="p">,</span> <span class="mf">5.62341325e+00</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">1.00000000e+01</span><span class="p">,</span> <span class="mf">1.77827941e+01</span><span class="p">,</span> <span class="mf">3.16227766e+01</span><span class="p">,</span> <span class="mf">5.62341325e+01</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">1.00000000e+02</span><span class="p">,</span> <span class="mf">1.77827941e+02</span><span class="p">,</span> <span class="mf">3.16227766e+02</span><span class="p">,</span> <span class="mf">5.62341325e+02</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">1.00000000e+03</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rcomplex</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
+<span class="gp">... </span>    <span class="mf">49.34369772</span><span class="o">-</span><span class="mf">0.51828971</span><span class="n">j</span><span class="p">,</span> <span class="mf">49.11781581</span><span class="o">-</span><span class="mf">0.59248806</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">48.85819872</span><span class="o">-</span><span class="mf">0.6331137</span><span class="n">j</span> <span class="p">,</span> <span class="mf">48.58762806</span><span class="o">-</span><span class="mf">0.62835135</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">48.33331113</span><span class="o">-</span><span class="mf">0.57965851</span><span class="n">j</span><span class="p">,</span> <span class="mf">48.11599009</span><span class="o">-</span><span class="mf">0.50083533</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.94405036</span><span class="o">-</span><span class="mf">0.41005275</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.81528917</span><span class="o">-</span><span class="mf">0.32210768</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.72215469</span><span class="o">-</span><span class="mf">0.24543425</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.65607773</span><span class="o">-</span><span class="mf">0.18297794</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.60962191</span><span class="o">-</span><span class="mf">0.13433101</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.57706229</span><span class="o">-</span><span class="mf">0.09755774</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.55424286</span><span class="o">-</span><span class="mf">0.07031682</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.53822912</span><span class="o">-</span><span class="mf">0.05041399</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.52697253</span><span class="o">-</span><span class="mf">0.03601005</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.51904718</span><span class="o">-</span><span class="mf">0.02565412</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.51345965</span><span class="o">-</span><span class="mf">0.01824266</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.50951606</span><span class="o">-</span><span class="mf">0.01295546</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.50673042</span><span class="o">-</span><span class="mf">0.00919217</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.50476152</span><span class="o">-</span><span class="mf">0.0065178</span><span class="n">j</span> <span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.50336925</span><span class="o">-</span><span class="mf">0.00461938</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.50238442</span><span class="o">-</span><span class="mf">0.00327285</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.50168762</span><span class="o">-</span><span class="mf">0.00231829</span><span class="n">j</span><span class="p">,</span> <span class="mf">47.50119454</span><span class="o">-</span><span class="mf">0.00164187</span><span class="n">j</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="mf">47.50084556</span><span class="o">-</span><span class="mf">0.00116268</span><span class="n">j</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">spectrum</span> <span class="o">=</span> <span class="n">sip_response</span><span class="p">(</span><span class="n">frequencies</span><span class="o">=</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">rcomplex</span><span class="o">=</span><span class="n">rcomplex</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;spectrum.pdf&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

@@ -11,7 +11,7 @@ measurements = np.random.random(configs.shape[0])
 measurements2 = np.random.random(configs.shape[0])
 
 import pandas as pd
-df = pd.DataFrame(configs, columns=['A', 'B', 'M', 'N'])
+df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n'])
 df['measurements'] = measurements
 df['measurements2'] = measurements2
 

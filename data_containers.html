@@ -120,6 +120,11 @@ Tomography (frequency domain complex electrical impedance) measurement data.</li
 <h2>Required data columns<a class="headerlink" href="#required-data-columns" title="Permalink to this headline">¶</a></h2>
 <p>Each data container requires a minimal set of data variables (columns) that any
 importer must return.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">We are in the process of unifying the column names across containers. In
+the future the default will be to use lower case column names.</p>
+</div>
 <div class="section" id="ert">
 <h3>ERT<a class="headerlink" href="#ert" title="Permalink to this headline">¶</a></h3>
 <table border="1" class="docutils">
@@ -133,19 +138,19 @@ importer must return.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>A</td>
+<tr class="row-even"><td>a</td>
 <td>First current electrode of quadpole</td>
 </tr>
-<tr class="row-odd"><td>B</td>
+<tr class="row-odd"><td>b</td>
 <td>Second current electrode of quadpole</td>
 </tr>
-<tr class="row-even"><td>M</td>
+<tr class="row-even"><td>m</td>
 <td>First potential electrode of quadpole</td>
 </tr>
-<tr class="row-odd"><td>N</td>
+<tr class="row-odd"><td>n</td>
 <td>Second potential electrode of quadpole</td>
 </tr>
-<tr class="row-even"><td>R</td>
+<tr class="row-even"><td>r</td>
 <td>Measured resistance [Ohm]</td>
 </tr>
 </tbody>
@@ -162,7 +167,7 @@ importer must return.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>k</td>
+<tr class="row-even"><td>K</td>
 <td>Geometric factor [m]</td>
 </tr>
 <tr class="row-odd"><td>rhoa</td>
@@ -222,7 +227,7 @@ importer must return.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>k</td>
+<tr class="row-even"><td>K</td>
 <td>Geometric factor [m]</td>
 </tr>
 <tr class="row-odd"><td>rhoa</td>
@@ -282,7 +287,7 @@ importer must return.</p>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>k</td>
+<tr class="row-even"><td>K</td>
 <td>Geometric factor [m]</td>
 </tr>
 <tr class="row-odd"><td>rhoa</td>

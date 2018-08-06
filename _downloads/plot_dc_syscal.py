@@ -16,4 +16,4 @@ K = edfK.compute_K_analytical(container.data, spacing=0.25)
 edfK.apply_K(container.data, K)
 
 import reda.plotters as plotters
-plotters.histograms.plot_histograms(container, ['R', 'rho_a', 'Iab', ])
+plotters.histograms.plot_histograms(container, ['r', 'rho_a', 'Iab', ])

@@ -101,11 +101,12 @@
             
   <h1>Source code for reda.eis.plots</h1><div class="highlight"><pre>
 <span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
 
 <span class="kn">from</span> <span class="nn">reda.eis.units</span> <span class="k">import</span> <span class="n">labels</span> <span class="k">as</span> <span class="n">sip_labels</span>
-<span class="kn">from</span> <span class="nn">reda.eis.convert</span> <span class="k">import</span> <span class="n">convert</span> <span class="k">as</span> <span class="n">SC</span>
+<span class="kn">from</span> <span class="nn">reda.eis.convert</span> <span class="k">import</span> <span class="n">convert</span>
+
+<span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 
 <div class="viewcode-block" id="sip_response"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.sip_response">[docs]</a><span class="k">class</span> <span class="nc">sip_response</span><span class="p">():</span>
@@ -133,10 +134,10 @@
 
         <span class="k">if</span> <span class="n">rcomplex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span> <span class="o">=</span> <span class="n">rcomplex</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span> <span class="o">=</span> <span class="n">SC</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;rcomplex&#39;</span><span class="p">,</span> <span class="s1">&#39;ccomplex&#39;</span><span class="p">,</span> <span class="n">rcomplex</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s1">&#39;rcomplex&#39;</span><span class="p">,</span> <span class="s1">&#39;ccomplex&#39;</span><span class="p">,</span> <span class="n">rcomplex</span><span class="p">)</span>
         <span class="k">elif</span> <span class="n">ccomplex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span> <span class="o">=</span> <span class="n">ccomplex</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span> <span class="o">=</span> <span class="n">SC</span><span class="o">.</span><span class="n">convert</span><span class="p">(</span><span class="s1">&#39;ccomplex&#39;</span><span class="p">,</span> <span class="s1">&#39;rcomplex&#39;</span><span class="p">,</span> <span class="n">ccomplex</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s1">&#39;ccomplex&#39;</span><span class="p">,</span> <span class="s1">&#39;rcomplex&#39;</span><span class="p">,</span> <span class="n">ccomplex</span><span class="p">)</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">rmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">rpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
@@ -174,8 +175,8 @@
 <span class="sd">        axes: numpy.ndarray, 2x2</span>
 <span class="sd">            A numpy array containing the four principal axes of an SIP plot</span>
 <span class="sd">        dtype: string</span>
-<span class="sd">            Can be either &#39;rho&#39; or &#39;R&#39;, indicating the type of data that is</span>
-<span class="sd">            plotted: &#39;rho&#39; stands for resistivities/conductivities, &#39;R&#39; stands</span>
+<span class="sd">            Can be either &#39;rho&#39; or &#39;r&#39;, indicating the type of data that is</span>
+<span class="sd">            plotted: &#39;rho&#39; stands for resistivities/conductivities, &#39;r&#39; stands</span>
 <span class="sd">            for impedances/condactances</span>
 
 <span class="sd">        Returns</span>
@@ -190,7 +191,7 @@
             <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$-\phi~[mrad]$&#39;</span><span class="p">)</span>
             <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;~[S/m]$&quot;</span><span class="p">)</span>
             <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;&#39;~[S/m]$&quot;</span><span class="p">)</span>
-        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;R&#39;</span><span class="p">:</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
             <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$|R|~[\Omega]$&#39;</span><span class="p">)</span>
             <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$-\phi~[mrad]$&#39;</span><span class="p">)</span>
             <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$Y&#39;~[S]$&quot;</span><span class="p">)</span>
@@ -212,7 +213,7 @@
 <span class="sd">            rmag_max, rpha_min, rpha_max, cre_min, cre_max, cim_min, cim_max</span>
 <span class="sd">        dtype: string, optional</span>
 <span class="sd">            Possible values: [rho|R]. Determines the label types. &#39;rho&#39;:</span>
-<span class="sd">                resistivity/conductivity, &#39;R&#39;: resistance/conductance</span>
+<span class="sd">                resistivity/conductivity, &#39;r&#39;: resistance/conductance</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
@@ -225,7 +226,7 @@
             <span class="n">limits</span> <span class="o">=</span> <span class="p">{}</span>
 
         <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
-            <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">6</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span>
+            <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">6</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
@@ -334,8 +335,62 @@
         <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span>
 
 <div class="viewcode-block" id="sip_response.plot"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.sip_response.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-             <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;rho&#39;</span><span class="p">):</span>
+             <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Standard plot of spectrum</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename: string</span>
+<span class="sd">            Output filename. Include the ending to specify the filetype</span>
+<span class="sd">            (usually .pdf or .png)</span>
+<span class="sd">        title: string, optional</span>
+<span class="sd">            Title for the plot</span>
+<span class="sd">        reciprocal: :class:`reda.eis.plots.sip_response`, optional</span>
+<span class="sd">            If another :class:`reda.eis.plots.sip_response` object is provided</span>
+<span class="sd">            here, use this as the reciprocal spectrum.</span>
+<span class="sd">        limits: dict, optional</span>
+<span class="sd">            A dictionary which contains plot limits. See code example below.</span>
+<span class="sd">        dtype: string, optional</span>
+<span class="sd">            Determines if the data plotted included geometric factors (&#39;rho&#39;)</span>
+<span class="sd">            or not (&#39;r&#39;). Default: &#39;rho&#39;</span>
+<span class="sd">        return_fig: bool, optional</span>
+<span class="sd">            If True, then do not delete the figure object after saving to file</span>
+<span class="sd">            and return the figure object. Default: False</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fig: :class:`matplotlib.Figure`</span>
+<span class="sd">            The figure object. Only returned if return_fig is set to True</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; from reda.eis.plots import sip_response</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; frequencies = np.array([</span>
+<span class="sd">        ...     1.00000000e-03, 1.77827941e-03, 3.16227766e-03, 5.62341325e-03,</span>
+<span class="sd">        ...     1.00000000e-02, 1.77827941e-02, 3.16227766e-02, 5.62341325e-02,</span>
+<span class="sd">        ...     1.00000000e-01, 1.77827941e-01, 3.16227766e-01, 5.62341325e-01,</span>
+<span class="sd">        ...     1.00000000e+00, 1.77827941e+00, 3.16227766e+00, 5.62341325e+00,</span>
+<span class="sd">        ...     1.00000000e+01, 1.77827941e+01, 3.16227766e+01, 5.62341325e+01,</span>
+<span class="sd">        ...     1.00000000e+02, 1.77827941e+02, 3.16227766e+02, 5.62341325e+02,</span>
+<span class="sd">        ...     1.00000000e+03])</span>
+<span class="sd">        &gt;&gt;&gt; rcomplex = np.array([</span>
+<span class="sd">        ...     49.34369772-0.51828971j, 49.11781581-0.59248806j,</span>
+<span class="sd">        ...     48.85819872-0.6331137j , 48.58762806-0.62835135j,</span>
+<span class="sd">        ...     48.33331113-0.57965851j, 48.11599009-0.50083533j,</span>
+<span class="sd">        ...     47.94405036-0.41005275j, 47.81528917-0.32210768j,</span>
+<span class="sd">        ...     47.72215469-0.24543425j, 47.65607773-0.18297794j,</span>
+<span class="sd">        ...     47.60962191-0.13433101j, 47.57706229-0.09755774j,</span>
+<span class="sd">        ...     47.55424286-0.07031682j, 47.53822912-0.05041399j,</span>
+<span class="sd">        ...     47.52697253-0.03601005j, 47.51904718-0.02565412j,</span>
+<span class="sd">        ...     47.51345965-0.01824266j, 47.50951606-0.01295546j,</span>
+<span class="sd">        ...     47.50673042-0.00919217j, 47.50476152-0.0065178j ,</span>
+<span class="sd">        ...     47.50336925-0.00461938j, 47.50238442-0.00327285j,</span>
+<span class="sd">        ...     47.50168762-0.00231829j, 47.50119454-0.00164187j,</span>
+<span class="sd">        ...     47.50084556-0.00116268j])</span>
+<span class="sd">        &gt;&gt;&gt; spectrum = sip_response(frequencies=frequencies, rcomplex=rcomplex)</span>
+<span class="sd">        &gt;&gt;&gt; fig = spectrum.plot(&#39;spectrum.pdf&#39;, return_fig=True)</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plot</span><span class="p">(</span>
             <span class="n">reciprocal</span><span class="o">=</span><span class="n">reciprocal</span><span class="p">,</span>
@@ -344,7 +399,10 @@
             <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div></div>
+        <span class="k">if</span> <span class="n">return_fig</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">fig</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="multi_sip_response"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response">[docs]</a><span class="k">class</span> <span class="nc">multi_sip_response</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
