@@ -16,23 +16,30 @@ seit = reda.sEIT()
 
 ###############################################################################
 # import the data
-seit.import_sip256c('data_Radic_256c/01_normal.res')
-seit.import_sip256c('data_Radic_256c/02_reciprocal.res', reciprocal=49)
+# seit.import_sip256c('data_Radic_256c/01_normal.res')
+# seit.import_sip256c('data_Radic_256c/02_reciprocal.res', reciprocal=49)
+seit.import_sip256c('data_Radic_256c/dipdip_skip0_nor.res')
+seit.import_sip256c('data_Radic_256c/dipdip_skip0_rec.res', reciprocal=49)
 
 ###############################################################################
-# compute K factors (electrode spacing was 0.25 m)
+# compute K factors (electrode spacing was 3 m)
 import reda.utils.geometric_factors as redaK
-K = redaK.compute_K_analytical(seit.data, spacing=0.25)
+K = redaK.compute_K_analytical(seit.data, spacing=3)
 redaK.apply_K(seit.data, K)
 
 ###############################################################################
 # fix signs/pi-shifts caused by negative geometric factors
 import reda.utils.fix_sign_with_K as redaFixK
 redaFixK.fix_sign_with_K(seit.data)
+###############################################################################
+# Plot histograms of raw data
+
+# TODO
 
 ###############################################################################
 # filter the data a bit
 seit.query('r > 0')
+seit.query('rpha > -50 and rpha < 30')
 
 ###############################################################################
 # group the data into frequencies
@@ -70,7 +77,7 @@ fig.savefig('pseudosections_radic.pdf')
 
 ###############################################################################
 # plotting of SIP/EIS spectra is still somewhat cumbersome, but will be
-# improved i the future
+# improved in the future
 import reda.eis.plots as eis_plot
 import numpy as np
 
