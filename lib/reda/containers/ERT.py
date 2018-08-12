@@ -97,6 +97,30 @@ class Importers(object):
             df_to_use = df
         print(df_to_use.describe())
 
+    @append_doc_of(reda_syscal.import_bin)
+    def import_syscal_bin(self, filename, **kwargs):
+        """Syscal import
+
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del(kwargs['timestep'])
+        self.logger.info('IRIS Syscal Pro text import')
+        with LogDataChanges(self, filter_action='import'):
+            data, electrodes, topography = reda_syscal.import_bin(
+                filename, **kwargs
+            )
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
     @append_doc_of(reda_syscal.import_txt)
     def import_syscal_txt(self, filename, **kwargs):
         """Syscal import
