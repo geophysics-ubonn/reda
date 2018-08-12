@@ -5,6 +5,7 @@ rcParams = {}
 rcParams['geom_factor.inversion_code'] = 'crtomo'
 
 from .containers.ERT import ERT
+from .containers.TDIP import TDIP
 from .containers.sEIT import sEIT
 from .containers.SIP import SIP
 from .testing import test
