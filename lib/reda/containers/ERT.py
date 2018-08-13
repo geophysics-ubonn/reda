@@ -90,6 +90,10 @@ class Importers(object):
                                   sort=True)
         else:
             self.data = df
+        # recompute normal/reciprocal pairs
+        if 'id' in self.data and 'norrec' in self.data:
+            self.data.drop(['id', 'norrec'], axis=1, inplace=True)
+        assign_norrec_to_df(self.data)
 
     def _describe_data(self, df=None):
         if df is None:
