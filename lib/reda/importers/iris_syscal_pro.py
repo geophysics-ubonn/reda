@@ -12,11 +12,42 @@ import pandas as pd
 import numpy as np
 
 
-def _convert_coords_to_abmn(data, **kwargs):
-    """The syscal only stores positions for the electrodes.
+def _convert_coords_to_abmn_X(data, **kwargs):
+    """The syscal only stores positions for the electrodes. Yet, we need to
+    infer electrode numbers for (a,b,m,n) by means of some heuristics. This
+    heuristic uses the x-coordinates to infer an electrode spacing (y/z
+    coordinates are ignored). We also assume a constant spacing of electrodes
+    (i.e., a gap in electrode positions would indicate unused electrodes). This
+    is usually a good estimate as hardly anybody does change the electrode
+    positions stored in the Syscal system (talk to us if you do).
+
+    Note that this function can use user input to simplify the process by using
+    a user-supplied x0 value for the smallest electrode position (corresponding
+    to electrode 1) and a user-supplied spacing (removing the need to infer
+    from the positions).
+
+    Parameters
+    ----------
+    data: Nx4 array|Nx4 :py:class:`pandas.DataFrame`
+        The x positions of a, b, m, n electrodes. N is the number of
+        measurements
+    x0: float, optional
+        position of first electrode. If not given, then use the smallest
+        x-position in the data as the first electrode.
+    spacing: float
+        electrode spacing. This is important if not all electrodes are used in
+        a given measurement setup. If not given, then the smallest distance
+        between electrodes is assumed to be the electrode spacing. Naturally,
+        this requires measurements (or injections) with subsequent electrodes.
+
+    Returns
+    -------
+    data_new: Nx4 :py:class:`pandas.DataFrame`
+        The electrode number columns a,b,m,n
 
     """
-    print(data)
+    assert data.shape[1] == 4, 'data variable must only contain four columns'
+
     x0 = kwargs.get(
         'x0',
         data.min().min()
@@ -39,8 +70,6 @@ def _convert_coords_to_abmn(data, **kwargs):
     # convert to integers
     for col in (('a', 'b', 'm', 'n')):
         data_new[col] = data_new[col].astype(int)
-
-    print('data_new', data_new)
 
     return data_new
 
@@ -105,7 +134,7 @@ def import_txt(filename, **kwargs):
     data_raw.columns = [x.strip() for x in data_raw.columns.tolist()]
 
     # generate electrode positions
-    data = _convert_coords_to_abmn(
+    data = _convert_coords_to_abmn_X(
         data_raw[['Spa.1', 'Spa.2', 'Spa.3', 'Spa.4']],
         **kwargs
     )
