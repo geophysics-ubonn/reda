@@ -195,19 +195,37 @@ def import_bin(filename, **kwargs):
 
     """
     metadata, data_raw = _import_bin(filename)
-    data = _convert_coords_to_abmn(
+
+    if kwargs.get('check_meas_nums', True):
+        # check that first number is 0
+        if data_raw['measurement_num'].iloc[0] != 0:
+            print('WARNING: Measurement numbers do not start with 0 ' +
+                  '(did you download ALL data?)')
+
+        # now check if there is a jump in measurement numbers somewhere
+        # ignore first entry as this will always be nan
+        diff = data_raw['measurement_num'].diff()[1:]
+        jump = np.where(diff != 1)[0]
+        if len(jump) > 0:
+            print('WARNING: Jump detected at index: {}'.format(jump))
+            print('Removing all subsequent data points')
+            data_raw = data_raw.iloc[0:jump[0], :]
+
+    data = _convert_coords_to_abmn_X(
         data_raw[['x_a', 'x_b', 'x_m', 'x_n']],
         **kwargs
     )
     # [mV] / [mA]
     data['r'] = data_raw['vp'] / data_raw['Iab']
     data['Vmn'] = data_raw['vp']
+    data['vab'] = data_raw['vab']
     data['Iab'] = data_raw['Iab']
 
     data['mdelay'] = data_raw['mdelay']
     data['Tm'] = data_raw['Tm']
     data['Mx'] = data_raw['Mx']
     data['chargeability'] = data_raw['m']
+    data['q'] = data_raw['q']
 
     # rename electrode denotations
     rec_max = kwargs.get('reciprocals', None)
@@ -415,11 +433,10 @@ def _import_bin(filename):
             'batTX': batTX,
             'batRX': batRX,
             'temperature': temperature,
+            'measurement_num': measurement_num,
         })
 
         counter += 1
-        if counter == 3:
-            break
 
     # create a dataframe with all primary data
     df = pd.DataFrame(
