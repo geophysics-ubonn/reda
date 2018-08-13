@@ -16,8 +16,6 @@ seit = reda.sEIT()
 
 ###############################################################################
 # import the data
-# seit.import_sip256c('data_Radic_256c/01_normal.res')
-# seit.import_sip256c('data_Radic_256c/02_reciprocal.res', reciprocal=49)
 seit.import_sip256c('data_Radic_256c/dipdip_skip0_nor.res')
 seit.import_sip256c('data_Radic_256c/dipdip_skip0_rec.res', reciprocal=49)
 
