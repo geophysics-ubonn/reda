@@ -16,6 +16,7 @@ def _convert_coords_to_abmn(data, **kwargs):
     """The syscal only stores positions for the electrodes.
 
     """
+    print(data)
     x0 = kwargs.get(
         'x0',
         data.min().min()
@@ -38,6 +39,8 @@ def _convert_coords_to_abmn(data, **kwargs):
     # convert to integers
     for col in (('a', 'b', 'm', 'n')):
         data_new[col] = data_new[col].astype(int)
+
+    print('data_new', data_new)
 
     return data_new
 
@@ -157,7 +160,7 @@ def import_bin(filename, **kwargs):
     data['mdelay'] = data_raw['mdelay']
     data['Tm'] = data_raw['Tm']
     data['Mx'] = data_raw['Mx']
-    data['m'] = data_raw['m']
+    data['chargeability'] = data_raw['m']
 
     # rename electrode denotations
     rec_max = kwargs.get('reciprocals', None)
