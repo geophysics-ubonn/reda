@@ -86,7 +86,8 @@ class Importers(object):
     """
     def _add_to_container(self, df):
         if self.data is not None:
-            self.data = pd.concat((self.data, df), ignore_index=True)
+            self.data = pd.concat((self.data, df), ignore_index=True,
+                                  sort=True)
         else:
             self.data = df
 
