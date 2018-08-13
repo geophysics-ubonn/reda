@@ -28,13 +28,13 @@ def _convert_coords_to_abmn_X(data, **kwargs):
 
     Parameters
     ----------
-    data: Nx4 array|Nx4 :py:class:`pandas.DataFrame`
+    data : Nx4 array|Nx4 :py:class:`pandas.DataFrame`
         The x positions of a, b, m, n electrodes. N is the number of
         measurements
-    x0: float, optional
+    x0 : float, optional
         position of first electrode. If not given, then use the smallest
         x-position in the data as the first electrode.
-    spacing: float
+    spacing : float
         electrode spacing. This is important if not all electrodes are used in
         a given measurement setup. If not given, then the smallest distance
         between electrodes is assumed to be the electrode spacing. Naturally,
@@ -42,7 +42,7 @@ def _convert_coords_to_abmn_X(data, **kwargs):
 
     Returns
     -------
-    data_new: Nx4 :py:class:`pandas.DataFrame`
+    data_new : Nx4 :py:class:`pandas.DataFrame`
         The electrode number columns a,b,m,n
 
     """
@@ -162,22 +162,22 @@ def import_bin(filename, **kwargs):
 
     Parameters
     ----------
-    filename: string
-        Path to input filename
-    x0: float, optional
+    filename : string
+        path to input filename
+    x0 : float, optional
         position of first electrode. If not given, then use the smallest
         x-position in the data as the first electrode.
-    spacing: float
+    spacing : float
         electrode spacing. This is important if not all electrodes are used in
         a given measurement setup. If not given, then the smallest distance
         between electrodes is assumed to be the electrode spacing. Naturally,
         this requires measurements (or injections) with subsequent electrodes.
-    reciprocals: int, optional
+    reciprocals : int, optional
         if provided, then assume that this is a reciprocal measurements where
         only the electrode cables were switched. The provided number N is
         treated as the maximum electrode number, and denotations are renamed
         according to the equation :math:`X_n = N - (X_a - 1)`
-    check_meas_nums: bool
+    check_meas_nums : bool
         if True, then check that the measurement numbers are consecutive. Don't
         return data after a jump to smaller measurement numbers (this usually
         indicates that more data points were downloaded than are part of a
@@ -185,11 +185,11 @@ def import_bin(filename, **kwargs):
 
     Returns
     -------
-    data: :py:class:`pandas.DataFrame`
+    data : :py:class:`pandas.DataFrame`
         Contains the measurement data
-    electrodes: :py:class:`pandas.DataFrame`
+    electrodes : :py:class:`pandas.DataFrame`
         Contains electrode positions (None at the moment)
-    topography: None
+    topography : None
         No topography information is contained in the text files, so we always
         return None
 
@@ -242,14 +242,14 @@ def _import_bin(filename):
 
     Parameters
     ----------
-    filename: string
+    filename : string
         Path to input filename
 
     Returns
     -------
-    metadata: dict
+    metadata : dict
         General information on the measurement
-    df: :py:class:`pandas.DataFrame`
+    df : :py:class:`pandas.DataFrame`
         dataframe containing all measurement data
 
     """
