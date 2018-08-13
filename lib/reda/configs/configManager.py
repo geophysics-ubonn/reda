@@ -530,7 +530,7 @@ class ConfigManager(object):
         configs = []
         for i in range(1, self.nr_electrodes - 3 * a + 1):
             configs.append(
-                (i, i + a, i + 2 * a, i + 3 * a),
+                (i, i + 3 * a, i + 1 * a, i + 2 * a),
             )
         configs = np.array(configs)
         self.add_to_configs(configs)
