@@ -12,7 +12,23 @@ plt, mpl = reda.utils.mpl.setup()
 class TDIP(ERT):
     pass
 
-    def plot_decay_curve(self, index):
+    def plot_decay_curve(self, index_nor=None, index_rec=None,
+                         nr_id=None, abmn=None,
+                         return_fig=False):
+        """Plot decay curve
+
+        Input scheme: The function
+
+        Parameters
+        ----------
+
+        Returns
+        -------
+        fig: :class:`matplotlib.Figure`
+            Figure object, only returned if return_fig=True
+
+        """
+        index = index_nor
         mdelay = self.data.loc[index, 'mdelay']
         times = self.data.loc[index, 'Tm']
         data = self.data.loc[index, 'Mx']
@@ -52,5 +68,8 @@ class TDIP(ERT):
 
         fig.tight_layout()
         fig.savefig('decay_curve.png', dpi=300)
-        fig.clf()
-        plt.close(fig)
+        if return_fig:
+            return fig
+        else:
+            fig.clf()
+            plt.close(fig)
