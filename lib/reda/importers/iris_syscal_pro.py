@@ -164,6 +164,24 @@ def import_bin(filename, **kwargs):
     ----------
     filename: string
         Path to input filename
+    x0: float, optional
+        position of first electrode. If not given, then use the smallest
+        x-position in the data as the first electrode.
+    spacing: float
+        electrode spacing. This is important if not all electrodes are used in
+        a given measurement setup. If not given, then the smallest distance
+        between electrodes is assumed to be the electrode spacing. Naturally,
+        this requires measurements (or injections) with subsequent electrodes.
+    reciprocals: int, optional
+        if provided, then assume that this is a reciprocal measurements where
+        only the electrode cables were switched. The provided number N is
+        treated as the maximum electrode number, and denotations are renamed
+        according to the equation :math:`X_n = N - (X_a - 1)`
+    check_meas_nums: bool
+        if True, then check that the measurement numbers are consecutive. Don't
+        return data after a jump to smaller measurement numbers (this usually
+        indicates that more data points were downloaded than are part of a
+        specific measurement. Default: True
 
     Returns
     -------
