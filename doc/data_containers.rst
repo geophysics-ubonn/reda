@@ -12,6 +12,12 @@ Available data containers:
   container stored electrical measurements targeted at imaging processing. This
   implies lots of measurements (hundreds to thousands).
 
+* `reda.containers.TDIP`: Time-domain induced polarization container (derived
+  from the ERT container)
+
+* `reda.containers.CR`: Complex resistivity container (derived from the ERT
+  container)
+
 * `reda.containers.sEIT`: (experimental) Stores spectral Electrical Impedance
   Tomography (frequency domain complex electrical impedance) measurement data.
 
@@ -50,6 +56,38 @@ column    description
 K         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
+
+TDIP
+^^^^
+
+============= ======================================
+column        description
+============= ======================================
+a             First current electrode of quadpole
+b             Second current electrode of quadpole
+m             First potential electrode of quadpole
+n             Second potential electrode of quadpole
+r             Measured resistance [Ohm]
+chargeability Global chargeability
+============= ======================================
+
+..note ::
+
+    Tm, Mx optional?
+
+Optional columns can be named arbitrarily, but the following are usually used:
+
+========= ======================================
+column    description
+========= ======================================
+K         Geometric factor [m]
+rhoa      Apparent resistivity, k * r, [Ohm m]
+========= ======================================
+
+CR
+^^
+
+TODO
 
 SIP
 ^^^
