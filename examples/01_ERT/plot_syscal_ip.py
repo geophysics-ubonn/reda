@@ -23,7 +23,10 @@ else:
     with open(pfile, 'wb') as fid:
         pickle.dump(ip, fid)
 
+
 print(ip.data[['a', 'b', 'm', 'n', 'id', 'norrec']])
+import IPython
+IPython.embed()
 
 ###############################################################################
 # plot a decay curve by specifying the index
