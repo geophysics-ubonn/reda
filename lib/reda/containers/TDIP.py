@@ -2,6 +2,7 @@
 """
 from reda.containers.ERT import ERT
 import numpy as np
+import pandas as pd
 
 import reda.utils.mpl
 
@@ -10,7 +11,32 @@ plt, mpl = reda.utils.mpl.setup()
 
 
 class TDIP(ERT):
-    pass
+    def check_dataframe(self, dataframe):
+        """Check the given dataframe for the required type and columns
+        """
+        if dataframe is None:
+            return None
+
+        # is this a DataFrame
+        if not isinstance(dataframe, pd.DataFrame):
+            raise Exception(
+                'The provided dataframe object is not a pandas.DataFrame'
+            )
+
+        required_columns = (
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
+            'chargeability',
+        )
+        for column in required_columns:
+            if column not in dataframe:
+                raise Exception('Required column not in dataframe: {0}'.format(
+                    column
+                ))
+        return dataframe
 
     def plot_decay_curve(self, filename=None, index_nor=None, index_rec=None,
                          nr_id=None, abmn=None,
