@@ -163,19 +163,20 @@ class TDIP(ERT):
             plt.close(fig)
 
     def to_cr(self):
-        """
+        """Convert container to a complex resistivity container, using the
+        CPA-conversion.
 
-        - Kemna, 2000
+        * Kemna, 2000
 
-        - COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY
+        * COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY
         Van Voorhis, G. D.; Nelson, P. H.; Drake, T. L.
         Geophysics (1973 Jan 1) 38 (1): 49-60.
 
-        - Application of complex resistivity tomography to field data from
+        * Application of complex resistivity tomography to field data from
         a kerosene-contaminated siteGold Open Access Authors: A. Kemna, E.
         Räkers and A. Binley DOI: 10.3997/2214-4609.201407300
 
-        - Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and
+        * Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and
         Aurélie Gazoty (2012). ”Time-domain-induced polarization:
         Full-decay forward modeling and 1D laterally constrained inversion
         of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.

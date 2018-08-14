@@ -25,8 +25,6 @@ else:
 
 
 print(ip.data[['a', 'b', 'm', 'n', 'id', 'norrec']])
-import IPython
-IPython.embed()
 
 ###############################################################################
 # plot a decay curve by specifying the index
