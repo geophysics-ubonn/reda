@@ -5,6 +5,7 @@ import functools
 
 import pandas as pd
 
+import reda
 import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.bert as reda_bert_import
 import reda.exporters.bert as reda_bert_export
@@ -284,6 +285,15 @@ class ERT(LoggingClass, Importers, Exporters):
         self.data = self.check_dataframe(data)
         self.electrode_positions = electrode_positions
         self.topography = topography
+
+    def to_ip(self):
+        """Return of copy of the data inside a TDIP container
+        """
+        if 'chargeability' in self.data.columns:
+            tdip = reda.TDIP(data=self.data)
+        else:
+            raise Exception('Missing column "chargeability"')
+        return tdip
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
