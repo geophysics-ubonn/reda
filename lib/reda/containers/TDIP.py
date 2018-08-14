@@ -161,3 +161,28 @@ class TDIP(ERT):
         else:
             fig.clf()
             plt.close(fig)
+
+    def to_cr(self):
+        """
+
+        - Kemna, 2000
+
+        - COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY
+        Van Voorhis, G. D.; Nelson, P. H.; Drake, T. L.
+        Geophysics (1973 Jan 1) 38 (1): 49-60.
+
+        - Application of complex resistivity tomography to field data from
+        a kerosene-contaminated siteGold Open Access Authors: A. Kemna, E.
+        Räkers and A. Binley DOI: 10.3997/2214-4609.201407300
+
+        - Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and
+        Aurélie Gazoty (2012). ”Time-domain-induced polarization:
+        Full-decay forward modeling and 1D laterally constrained inversion
+        of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
+        https://doi.org/10.1190/geo2011-0217.1
+
+        """
+        data_new = self.data.copy()
+        data_new['rpha'] = -1.5 * data_new['chargeability']
+        cr = reda.CR(data=data_new)
+        return cr
