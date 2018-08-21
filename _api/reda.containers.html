@@ -68,6 +68,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -111,6 +113,84 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
+<div class="section" id="module-reda.containers.CR">
+<span id="reda-containers-cr-module"></span><h2>reda.containers.CR module<a class="headerlink" href="#module-reda.containers.CR" title="Permalink to this headline">¶</a></h2>
+<p>Complex-resistivity container</p>
+<dl class="class">
+<dt id="reda.containers.CR.CR">
+<em class="property">class </em><code class="descclassname">reda.containers.CR.</code><code class="descname">CR</code><span class="sig-paren">(</span><em>data=None</em>, <em>electrode_positions=None</em>, <em>topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.TDIP.TDIP" title="reda.containers.TDIP.TDIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.TDIP.TDIP</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code>(dataframe)</td>
+<td>Check the given dataframe for the required type and columns</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(spacing)</td>
+<td>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_reciprocal_errors</span></code>([key])</td>
+<td>Compute reciprocal erros following LaBrecque et al.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(query[,&nbsp;inplace])</td>
+<td>Use a query statement to filter data.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code>([filename,&nbsp;index_nor,&nbsp;…])</td>
+<td>Plot decay curve</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
+<td>Setup a logger</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<td>Apply a filter to subset of the data</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code>()</td>
+<td>Convert container to a complex resistivity container, using the CPA-conversion.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>()</td>
+<td>Return of copy of the data inside a TDIP container</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="69%" />
+<col width="31%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>export_bert</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>export_pygimli</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>print_data_journal</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>print_log</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
 <div class="section" id="module-reda.containers.ERT">
 <span id="reda-containers-ert-module"></span><h2>reda.containers.ERT module<a class="headerlink" href="#module-reda.containers.ERT" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
@@ -142,14 +222,20 @@
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
 <td>Setup a logger</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td>Apply a filter to subset of the data</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.to_ip" title="reda.containers.ERT.ERT.to_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code></a>()</td>
+<td>Return of copy of the data inside a TDIP container</td>
 </tr>
 </tbody>
 </table>
@@ -245,7 +331,7 @@ pandas.DataFrame.query</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+466.gf7f266c.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+495.g68273a7.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
@@ -266,6 +352,12 @@ pandas.DataFrame.query</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.ERT.to_ip">
+<code class="descname">to_ip</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.to_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.to_ip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return of copy of the data inside a TDIP container</p>
 </dd></dl>
 
 </dd></dl>
@@ -330,7 +422,10 @@ meant to be inherited by the ERT data container.</p>
 <tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.Importers.import_pygimli" title="reda.containers.ERT.Importers.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_txt" title="reda.containers.ERT.Importers.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_bin" title="reda.containers.ERT.Importers.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_txt" title="reda.containers.ERT.Importers.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
 </tbody>
@@ -406,6 +501,73 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd></dl>
 
 <dl class="method">
+<dt id="reda.containers.ERT.Importers.import_syscal_bin">
+<code class="descname">import_syscal_bin</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syscal import</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>timestep: int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></dt>
+<dd>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</dd>
+</dl>
+<p>Read a .bin file generated by the IRIS Instruments Syscal Pro System and</p>
+</div></blockquote>
+<p>return a curated dataframe for further processing. This dataframe contains
+only information currently deemed important. Use the function
+reda.importers.iris_syscal_pro_binary._import_bin to extract ALL
+information from a given .bin file.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">path to input filename</p>
+</dd>
+<dt><strong>x0</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float, optional</span></dt>
+<dd><p class="first last">position of first electrode. If not given, then use the smallest
+x-position in the data as the first electrode.</p>
+</dd>
+<dt><strong>spacing</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">electrode spacing. This is important if not all electrodes are used in
+a given measurement setup. If not given, then the smallest distance
+between electrodes is assumed to be the electrode spacing. Naturally,
+this requires measurements (or injections) with subsequent electrodes.</p>
+</dd>
+<dt><strong>reciprocals</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">if provided, then assume that this is a reciprocal measurements where
+only the electrode cables were switched. The provided number N is
+treated as the maximum electrode number, and denotations are renamed
+according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
+</dd>
+<dt><strong>check_meas_nums</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">if True, then check that the measurement numbers are consecutive. Don’t
+return data after a jump to smaller measurement numbers (this usually
+indicates that more data points were downloaded than are part of a
+specific measurement. Default: True</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+495.g68273a7.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+495.g68273a7.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
+<dd><p class="first last">No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="reda.containers.ERT.Importers.import_syscal_txt">
 <code class="descname">import_syscal_txt</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syscal import</p>
@@ -425,7 +587,7 @@ produced dataframe. Default: 0</dd>
 <dt><strong>filename: string</strong></dt>
 <dd><p class="first last">input filename</p>
 </dd>
-<dt><strong>x0: float</strong></dt>
+<dt><strong>x0: float, optional</strong></dt>
 <dd><p class="first last">position of first electrode. If not given, then use the smallest
 x-position in the data as the first electrode.</p>
 </dd>
@@ -445,10 +607,10 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data: :class:`pandas.DataFrame`</strong></dt>
+<dt><strong>data: :py:class:`pandas.DataFrame`</strong></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes: :class:`pandas.DataFrame`</strong></dt>
+<dt><strong>electrodes: :py:class:`pandas.DataFrame`</strong></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography: None</strong></dt>
@@ -741,6 +903,152 @@ meant to be inherited by the data containers</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-reda.containers.TDIP">
+<span id="reda-containers-tdip-module"></span><h2>reda.containers.TDIP module<a class="headerlink" href="#module-reda.containers.TDIP" title="Permalink to this headline">¶</a></h2>
+<p>Time-domain IP (induced polarization) container</p>
+<dl class="class">
+<dt id="reda.containers.TDIP.TDIP">
+<em class="property">class </em><code class="descclassname">reda.containers.TDIP.</code><code class="descname">TDIP</code><span class="sig-paren">(</span><em>data=None</em>, <em>electrode_positions=None</em>, <em>topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ERT</span></code></a></p>
+<p class="rubric">Methods</p>
+<table border="1" class="longtable docutils">
+<colgroup>
+<col width="10%" />
+<col width="90%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.TDIP.TDIP.check_dataframe" title="reda.containers.TDIP.TDIP.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(dataframe)</td>
+<td>Check the given dataframe for the required type and columns</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(spacing)</td>
+<td>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_reciprocal_errors</span></code>([key])</td>
+<td>Compute reciprocal erros following LaBrecque et al.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(query[,&nbsp;inplace])</td>
+<td>Use a query statement to filter data.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
+<td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<td>Syscal import</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>([filename,&nbsp;index_nor,&nbsp;…])</td>
+<td>Plot decay curve</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
+<td>Setup a logger</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<td>Apply a filter to subset of the data</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.TDIP.TDIP.to_cr" title="reda.containers.TDIP.TDIP.to_cr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code></a>()</td>
+<td>Convert container to a complex resistivity container, using the CPA-conversion.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>()</td>
+<td>Return of copy of the data inside a TDIP container</td>
+</tr>
+</tbody>
+</table>
+<table border="1" class="docutils">
+<colgroup>
+<col width="69%" />
+<col width="31%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td><strong>export_bert</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>export_pygimli</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-odd"><td><strong>print_data_journal</strong></td>
+<td>&#160;</td>
+</tr>
+<tr class="row-even"><td><strong>print_log</strong></td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.TDIP.TDIP.check_dataframe">
+<code class="descname">check_dataframe</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the given dataframe for the required type and columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.TDIP.TDIP.plot_decay_curve">
+<code class="descname">plot_decay_curve</code><span class="sig-paren">(</span><em>filename=None</em>, <em>index_nor=None</em>, <em>index_rec=None</em>, <em>nr_id=None</em>, <em>abmn=None</em>, <em>return_fig=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.plot_decay_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot decay curve</p>
+<p>Input scheme: We recognize three ways to specify the quadrupoles to
+plot (in descending priority):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>indices for normal/reciprocal</li>
+<li>by specifying the id</li>
+<li>by specifying abmn (note that here the exact quadrupole must be
+present. For example, when (1,2,4,3) is requested, (2,1,4,3)
+will not be used).</li>
+</ol>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string, optional</span></dt>
+<dd><p class="first last">If given, filename to plot to.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>fig</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.Figure</span></code></span></dt>
+<dd><p class="first last">Figure object, only returned if return_fig=True</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.TDIP.TDIP.to_cr">
+<code class="descname">to_cr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.to_cr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.to_cr" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert container to a complex resistivity container, using the
+CPA-conversion.</p>
+<ul class="simple">
+<li>Kemna, 2000</li>
+<li>COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY</li>
+</ul>
+<p>Van Voorhis, G. D.; Nelson, P. H.; Drake, T. L.
+Geophysics (1973 Jan 1) 38 (1): 49-60.</p>
+<ul class="simple">
+<li>Application of complex resistivity tomography to field data from</li>
+</ul>
+<p>a kerosene-contaminated siteGold Open Access Authors: A. Kemna, E.
+Räkers and A. Binley DOI: 10.3997/2214-4609.201407300</p>
+<ul class="simple">
+<li>Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and</li>
+</ul>
+<p>Aurélie Gazoty (2012). ”Time-domain-induced polarization:
+Full-decay forward modeling and 1D laterally constrained inversion
+of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
+<a class="reference external" href="https://doi.org/10.1190/geo2011-0217.1">https://doi.org/10.1190/geo2011-0217.1</a></p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 <div class="section" id="module-reda.containers.sEIT">
 <span id="reda-containers-seit-module"></span><h2>reda.containers.sEIT module<a class="headerlink" href="#module-reda.containers.sEIT" title="Permalink to this headline">¶</a></h2>
 <p>spectral electrical impedance tomography (sEIT) container</p>
@@ -869,7 +1177,7 @@ meant to be inherited by the data containers</p>
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |

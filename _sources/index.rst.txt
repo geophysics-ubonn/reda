@@ -18,6 +18,11 @@ community are highly welcome.
     REDA is a work in progress. Please get in touch if you are interested in
     using REDA for your work and have encountered any problems.
 
+.. note::
+
+    The best way to get an idea on the current capabilities of reda is to look
+    at the example section!
+
 .. toctree::
     :maxdepth: 1
     :hidden:
@@ -27,5 +32,7 @@ community are highly welcome.
     data_containers.rst
     _examples/index.rst
     importers.rst
+    test_data.rst
+    debugging.rst
     api.rst
     Source code <https://github.com/geophysics-ubonn/reda>

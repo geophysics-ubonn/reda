@@ -1,0 +1,282 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_ip.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr__examples_01_ERT_plot_syscal_ip.py:
+
+
+Importing Syscal IP data
+========================
+
+
+
+
+.. code-block:: python
+
+    import reda
+
+
+
+
+
+
+
+a hack to prevent large loading times...
+
+
+
+.. code-block:: python
+
+
+    # import os
+    # import pickle
+    # pfile = 'ip.pickle'
+    # if os.path.isfile(pfile):
+    #     with open(pfile, 'rb') as fid:
+    #         ip = pickle.load(fid)
+    # else:
+    #     ip = reda.TDIP()
+    #     ip.import_syscal_bin('data_syscal_ip/data_normal.bin')
+    #     ip.import_syscal_bin(
+    #       'data_syscal_ip/data_reciprocal.bin', reciprocals=48)
+    #     with open(pfile, 'wb') as fid:
+    #         pickle.dump(ip, fid)
+
+
+
+
+
+
+
+
+.. code-block:: python
+
+    ip = reda.TDIP()
+    ip.import_syscal_bin('data_syscal_ip/data_normal.bin')
+    ip.import_syscal_bin('data_syscal_ip/data_reciprocal.bin', reciprocals=48)
+
+
+    print(ip.data[['a', 'b', 'm', 'n', 'id', 'norrec']])
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    WARNING: Jump detected at index: [989]
+    Removing all subsequent data points
+    generating ids
+    assigning ids
+    renumbering electrode numbers
+    generating ids
+    assigning ids
+           a   b   m   n    id norrec
+    0      1   2   4   5   170    nor
+    1      1   2   5   6   211    nor
+    2      1   2   6   7   252    nor
+    3      1   2   7   8   293    nor
+    4      1   2   8   9   334    nor
+    5      1   2   9  10   375    nor
+    6      1   2  10  11   416    nor
+    7      1   2  11  12   457    nor
+    8      1   2  12  13   498    nor
+    9      1   2  13  14   539    nor
+    10     1   2  14  15   580    nor
+    11     1   2  15  16   621    nor
+    12     1   2  16  17   662    nor
+    13     1   2  17  18   703    nor
+    14     1   2  18  19   744    nor
+    15     1   2  19  20   785    nor
+    16     1   2  20  21   826    nor
+    17     1   2  21  22   867    nor
+    18     1   2  22  23   908    nor
+    19     1   2  23  24   949    nor
+    20     1   2  24  25   990    nor
+    21     1   2  25  26  1031    nor
+    22     1   2  26  27  1072    nor
+    23     1   2  27  28  1113    nor
+    24     1   2  28  29  1154    nor
+    25     1   2  29  30  1195    nor
+    26     1   2  30  31  1236    nor
+    27     1   2  31  32  1277    nor
+    28     1   2  32  33  1318    nor
+    29     1   2  33  34  1359    nor
+    ...   ..  ..  ..  ..   ...    ...
+    1949  12  11   3   2   458    rec
+    1950  12  11   2   1   457    rec
+    1951  11  10   8   7   422    rec
+    1952  11  10   7   6   421    rec
+    1953  11  10   6   5   420    rec
+    1954  11  10   5   4   419    rec
+    1955  11  10   4   3   418    rec
+    1956  11  10   3   2   417    rec
+    1957  11  10   2   1   416    rec
+    1958  10   9   7   6   380    rec
+    1959  10   9   6   5   379    rec
+    1960  10   9   5   4   378    rec
+    1961  10   9   4   3   377    rec
+    1962  10   9   3   2   376    rec
+    1963  10   9   2   1   375    rec
+    1964   9   8   6   5   338    rec
+    1965   9   8   5   4   337    rec
+    1966   9   8   4   3   336    rec
+    1967   9   8   3   2   335    rec
+    1968   9   8   2   1   334    rec
+    1969   8   7   5   4   296    rec
+    1970   8   7   4   3   295    rec
+    1971   8   7   3   2   294    rec
+    1972   8   7   2   1   293    rec
+    1973   7   6   4   3   254    rec
+    1974   7   6   3   2   253    rec
+    1975   7   6   2   1   252    rec
+    1976   6   5   3   2   212    rec
+    1977   6   5   2   1   211    rec
+    1978   5   4   2   1   170    rec
+
+    [1979 rows x 6 columns]
+
+
+plot a decay curve by specifying the index
+note that no file will be saved to disk if filename parameter is not provided
+
+
+
+.. code-block:: python
+
+    ip.plot_decay_curve(filename='decay_curve.png',
+                        index_nor=0, index_rec=1978, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_001.png
+    :class: sphx-glr-single-img
+
+
+
+
+you can also specify only one index
+this will only return a figure object, but will not save to file:
+
+
+
+.. code-block:: python
+
+    ip.plot_decay_curve(filename='decay_curve.png',
+                        index_nor=0, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_002.png
+    :class: sphx-glr-single-img
+
+
+
+
+it does not matter if you choose normal or reciprocal
+
+
+
+.. code-block:: python
+
+    ip.plot_decay_curve(index_rec=0, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_003.png
+    :class: sphx-glr-single-img
+
+
+
+
+plot a decay curve by specifying the index
+
+
+
+.. code-block:: python
+
+    ip.plot_decay_curve(nr_id=170, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_004.png
+    :class: sphx-glr-single-img
+
+
+
+
+a  b  m  n
+0     1  2  4  5
+1978  5  4  2  1
+
+
+
+.. code-block:: python
+
+    ip.plot_decay_curve(abmn=(1, 2, 4, 5), return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_005.png
+    :class: sphx-glr-single-img
+
+
+
+
+reciprocal is also ok
+
+
+
+.. code-block:: python
+
+    ip.plot_decay_curve(abmn=(5, 4, 2, 1), return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_006.png
+    :class: sphx-glr-single-img
+
+
+
+
+**Total running time of the script:** ( 0 minutes  33.774 seconds)
+
+
+.. _sphx_glr_download__examples_01_ERT_plot_syscal_ip.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: plot_syscal_ip.py <plot_syscal_ip.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_syscal_ip.ipynb <plot_syscal_ip.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.readthedocs.io>`_

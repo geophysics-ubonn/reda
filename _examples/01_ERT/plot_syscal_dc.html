@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Importing Syscal data &#8212; REDA 0.1.0 documentation</title>
+    <title>Importing Syscal ERT data &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
@@ -18,7 +18,7 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="SIP-04 Import" href="../02_SIP04/plot_sip04.html" />
+    <link rel="next" title="Importing Syscal IP data" href="plot_syscal_ip.html" />
     <link rel="prev" title="Plotting a pseudosection" href="../exmple_file.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -68,6 +68,8 @@
 <li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -78,7 +80,7 @@
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Examples</a><ul>
       <li>Previous: <a href="../exmple_file.html" title="previous chapter">Plotting a pseudosection</a></li>
-      <li>Next: <a href="../02_SIP04/plot_sip04.html" title="next chapter">SIP-04 Import</a></li>
+      <li>Next: <a href="plot_syscal_ip.html" title="next chapter">Importing Syscal IP data</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -105,13 +107,17 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-01-ert-plot-dc-syscal-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-01-ert-plot-syscal-dc-py"><span class="std std-ref">here</span></a> to download the full example code</p>
 </div>
-<div class="sphx-glr-example-title section" id="importing-syscal-data">
-<span id="sphx-glr-examples-01-ert-plot-dc-syscal-py"></span><h1>Importing Syscal data<a class="headerlink" href="#importing-syscal-data" title="Permalink to this headline">¶</a></h1>
-<img alt="../../_images/sphx_glr_plot_dc_syscal_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_dc_syscal_001.png" />
+<div class="sphx-glr-example-title section" id="importing-syscal-ert-data">
+<span id="sphx-glr-examples-01-ert-plot-syscal-dc-py"></span><h1>Importing Syscal ERT data<a class="headerlink" href="#importing-syscal-ert-data" title="Permalink to this headline">¶</a></h1>
+<img alt="../../_images/sphx_glr_plot_syscal_dc_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_dc_001.png" />
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>renumbering electrode numbers
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
+assigning ids
+renumbering electrode numbers
+generating ids
+assigning ids
 Generating histogram plot for key: r
 Generating histogram plot for key: rho_a
 Generating histogram plot for key: Iab
@@ -123,8 +129,9 @@ Generating histogram plot for key: Iab
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
 <span class="n">container</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
 
-<span class="n">container</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_normal.txt&#39;</span><span class="p">)</span>
-<span class="n">container</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_reciprocal.txt&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+<span class="n">container</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_syscal_ert/data_normal.txt&#39;</span><span class="p">)</span>
+<span class="n">container</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span>
+    <span class="s1">&#39;data_syscal_ert/data_reciprocal.txt&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="kn">as</span> <span class="nn">edfK</span>
 <span class="n">K</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">edfK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
@@ -134,11 +141,12 @@ Generating histogram plot for key: Iab
 <span class="n">plotters</span><span class="o">.</span><span class="n">histograms</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-dc-syscal-py">
+<p><strong>Total running time of the script:</strong> ( 0 minutes  33.109 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-dc-py">
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../../_downloads/plot_dc_syscal.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_dc_syscal.py</span></code></a></div>
+<a class="reference download internal" href="../../_downloads/plot_syscal_dc.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_dc.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../../_downloads/plot_dc_syscal.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_dc_syscal.ipynb</span></code></a></div>
+<a class="reference download internal" href="../../_downloads/plot_syscal_dc.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_dc.ipynb</span></code></a></div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
@@ -154,11 +162,11 @@ Generating histogram plot for key: Iab
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
-      <a href="../../_sources/_examples/01_ERT/plot_dc_syscal.rst.txt"
+      <a href="../../_sources/_examples/01_ERT/plot_syscal_dc.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

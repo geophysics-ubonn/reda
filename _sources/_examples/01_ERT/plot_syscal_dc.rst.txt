@@ -1,20 +1,20 @@
 .. note::
     :class: sphx-glr-download-link-note
 
-    Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_dc_syscal.py>` to download the full example code
+    Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_dc.py>` to download the full example code
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr__examples_01_ERT_plot_dc_syscal.py:
+.. _sphx_glr__examples_01_ERT_plot_syscal_dc.py:
 
 
-Importing Syscal data
-=====================
+Importing Syscal ERT data
+=========================
 
 
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_dc_syscal_001.png
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_dc_001.png
     :class: sphx-glr-single-img
 
 
@@ -24,7 +24,11 @@ Importing Syscal data
 
  .. code-block:: none
 
+    generating ids
+    assigning ids
     renumbering electrode numbers
+    generating ids
+    assigning ids
     Generating histogram plot for key: r
     Generating histogram plot for key: rho_a
     Generating histogram plot for key: Iab
@@ -40,8 +44,9 @@ Importing Syscal data
     import reda
     container = reda.ERT()
 
-    container.import_syscal_txt('data_normal.txt')
-    container.import_syscal_txt('data_reciprocal.txt', reciprocals=48)
+    container.import_syscal_txt('data_syscal_ert/data_normal.txt')
+    container.import_syscal_txt(
+        'data_syscal_ert/data_reciprocal.txt', reciprocals=48)
 
     import reda.utils.geometric_factors as edfK
     K = edfK.compute_K_analytical(container.data, spacing=0.25)
@@ -50,8 +55,10 @@ Importing Syscal data
     import reda.plotters as plotters
     plotters.histograms.plot_histograms(container, ['r', 'rho_a', 'Iab', ])
 
+**Total running time of the script:** ( 0 minutes  33.109 seconds)
 
-.. _sphx_glr_download__examples_01_ERT_plot_dc_syscal.py:
+
+.. _sphx_glr_download__examples_01_ERT_plot_syscal_dc.py:
 
 
 .. only :: html
@@ -63,13 +70,13 @@ Importing Syscal data
 
   .. container:: sphx-glr-download
 
-     :download:`Download Python source code: plot_dc_syscal.py <plot_dc_syscal.py>`
+     :download:`Download Python source code: plot_syscal_dc.py <plot_syscal_dc.py>`
 
 
 
   .. container:: sphx-glr-download
 
-     :download:`Download Jupyter notebook: plot_dc_syscal.ipynb <plot_dc_syscal.ipynb>`
+     :download:`Download Jupyter notebook: plot_syscal_dc.ipynb <plot_syscal_dc.ipynb>`
 
 
 .. only:: html

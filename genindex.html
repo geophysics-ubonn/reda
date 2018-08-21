@@ -67,6 +67,8 @@
 <li class="toctree-l1"><a class="reference internal" href="data_containers.html">Data Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -161,6 +163,8 @@
       <ul>
         <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP.check_dataframe">(reda.containers.SIP.SIP method)</a>
 </li>
+        <li><a href="_api/reda.containers.html#reda.containers.TDIP.TDIP.check_dataframe">(reda.containers.TDIP.TDIP method)</a>
+</li>
         <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.check_dataframe">(reda.containers.sEIT.sEIT method)</a>
 </li>
       </ul></li>
@@ -199,6 +203,8 @@
       <li><a href="_api/reda.eis.html#reda.eis.convert.convert">convert() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_version_2018a.convert_electrode">convert_electrode() (in module reda.importers.eit_version_2018a)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.CR.CR">CR (class in reda.containers.CR)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -316,6 +322,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.containers.html#reda.containers.ERT.Importers.import_bert">import_bert() (reda.containers.ERT.Importers method)</a>
 </li>
+      <li><a href="_api/reda.importers.html#reda.importers.iris_syscal_pro.import_bin">import_bin() (in module reda.importers.iris_syscal_pro)</a>
+</li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.importers.import_eit160">import_eit160() (reda.containers.sEIT.importers method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.importers.import_eit40">import_eit40() (reda.containers.sEIT.importers method)</a>
@@ -339,6 +347,8 @@
       <li><a href="_api/reda.importers.html#reda.importers.sip04.import_sip04_data_all">import_sip04_data_all() (in module reda.importers.sip04)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.importers.import_sip256c">import_sip256c() (reda.containers.sEIT.importers method)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.ERT.Importers.import_syscal_bin">import_syscal_bin() (reda.containers.ERT.Importers method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.ERT.Importers.import_syscal_txt">import_syscal_txt() (reda.containers.ERT.Importers method)</a>
 </li>
@@ -420,6 +430,8 @@
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_cre">plot_cre() (reda.eis.plots.multi_sip_response method)</a>
 </li>
+      <li><a href="_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve">plot_decay_curve() (reda.containers.TDIP.TDIP method)</a>
+</li>
       <li><a href="_api/reda.plotters.html#reda.plotters.histograms.plot_histograms">plot_histograms() (in module reda.plotters.histograms)</a>
 </li>
       <li><a href="_api/reda.plotters.html#reda.plotters.histograms.plot_histograms_extra_dims">plot_histograms_extra_dims() (in module reda.plotters.histograms)</a>
@@ -478,11 +490,15 @@
 </li>
       <li><a href="_api/reda.containers.html#module-reda.containers">reda.containers (module)</a>
 </li>
+      <li><a href="_api/reda.containers.html#module-reda.containers.CR">reda.containers.CR (module)</a>
+</li>
       <li><a href="_api/reda.containers.html#module-reda.containers.ERT">reda.containers.ERT (module)</a>
 </li>
       <li><a href="_api/reda.containers.html#module-reda.containers.sEIT">reda.containers.sEIT (module)</a>
 </li>
       <li><a href="_api/reda.containers.html#module-reda.containers.SIP">reda.containers.SIP (module)</a>
+</li>
+      <li><a href="_api/reda.containers.html#module-reda.containers.TDIP">reda.containers.TDIP (module)</a>
 </li>
       <li><a href="_api/reda.eis.html#module-reda.eis">reda.eis (module)</a>
 </li>
@@ -518,10 +534,10 @@
 </li>
       <li><a href="_api/reda.importers.html#module-reda.importers.iris_syscal_pro">reda.importers.iris_syscal_pro (module)</a>
 </li>
-      <li><a href="_api/reda.importers.html#module-reda.importers.radic_sip256c">reda.importers.radic_sip256c (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.importers.html#module-reda.importers.radic_sip256c">reda.importers.radic_sip256c (module)</a>
+</li>
       <li><a href="_api/reda.importers.html#module-reda.importers.res2dinv">reda.importers.res2dinv (module)</a>
 </li>
       <li><a href="_api/reda.importers.html#module-reda.importers.sip04">reda.importers.sip04 (module)</a>
@@ -624,6 +640,8 @@
 <h2 id="T">T</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.containers.html#reda.containers.TDIP.TDIP">TDIP (class in reda.containers.TDIP)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.teardown">teardown() (reda.eis.test_convert.TestClass_test_converters class method)</a>
 </li>
       <li><a href="_api/reda.testing.html#reda.testing.test">test() (in module reda.testing)</a>
@@ -656,10 +674,10 @@
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cre_cim">test_to_cre_cim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cre_mim">test_to_cre_mim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_rre_rim">test_to_rre_rim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_input_styles">TestClass_input_styles (class in reda.eis.test_convert)</a>
@@ -672,9 +690,13 @@
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.to_complex">to_complex() (in module reda.eis.convert)</a>
 </li>
+      <li><a href="_api/reda.containers.html#reda.containers.TDIP.TDIP.to_cr">to_cr() (reda.containers.TDIP.TDIP method)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.to_cre_cim">to_cre_cim() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.to_cre_cmim">to_cre_cmim() (in module reda.eis.convert)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.ERT.ERT.to_ip">to_ip() (reda.containers.ERT.ERT method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.to_lnrmag_rpha">to_lnrmag_rpha() (in module reda.eis.convert)</a>
 </li>
@@ -727,7 +749,7 @@
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>

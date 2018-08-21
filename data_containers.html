@@ -68,6 +68,8 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Data Containers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -112,6 +114,10 @@ It also stores the data and associated metadata.</p>
 <li><cite>reda.containers.ERT</cite>: The ERT (Electrical Resistivity Tomography) data
 container stored electrical measurements targeted at imaging processing. This
 implies lots of measurements (hundreds to thousands).</li>
+<li><cite>reda.containers.TDIP</cite>: Time-domain induced polarization container (derived
+from the ERT container)</li>
+<li><cite>reda.containers.CR</cite>: Complex resistivity container (derived from the ERT
+container)</li>
 <li><cite>reda.containers.sEIT</cite>: (experimental) Stores spectral Electrical Impedance
 Tomography (frequency domain complex electrical impedance) measurement data.</li>
 <li><cite>reda.containers.SIP</cite>: Stores spectral spectral induced polarization data.</li>
@@ -175,6 +181,68 @@ the future the default will be to use lower case column names.</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="tdip">
+<h3>TDIP<a class="headerlink" href="#tdip" title="Permalink to this headline">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="75%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">column</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>a</td>
+<td>First current electrode of quadpole</td>
+</tr>
+<tr class="row-odd"><td>b</td>
+<td>Second current electrode of quadpole</td>
+</tr>
+<tr class="row-even"><td>m</td>
+<td>First potential electrode of quadpole</td>
+</tr>
+<tr class="row-odd"><td>n</td>
+<td>Second potential electrode of quadpole</td>
+</tr>
+<tr class="row-even"><td>r</td>
+<td>Measured resistance [Ohm]</td>
+</tr>
+<tr class="row-odd"><td>chargeability</td>
+<td>Global chargeability</td>
+</tr>
+</tbody>
+</table>
+<p>..note</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Tm, Mx optional?
+</pre></div>
+</div>
+<p>Optional columns can be named arbitrarily, but the following are usually used:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">column</th>
+<th class="head">description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>K</td>
+<td>Geometric factor [m]</td>
+</tr>
+<tr class="row-odd"><td>rhoa</td>
+<td>Apparent resistivity, k * r, [Ohm m]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="cr">
+<h3>CR<a class="headerlink" href="#cr" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
 </div>
 <div class="section" id="sip">
 <h3>SIP<a class="headerlink" href="#sip" title="Permalink to this headline">¶</a></h3>
@@ -310,7 +378,7 @@ the future the default will be to use lower case column names.</p>
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.6</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.7</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |

@@ -37,13 +37,13 @@ Usage of the ERT container
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal data">
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data">
 
 .. only:: html
 
-    .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_dc_syscal_thumb.png
+    .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_dc_thumb.png
 
-        :ref:`sphx_glr__examples_01_ERT_plot_dc_syscal.py`
+        :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py`
 
 .. raw:: html
 
@@ -53,7 +53,27 @@ Usage of the ERT container
 .. toctree::
    :hidden:
 
-   /_examples/01_ERT/plot_dc_syscal
+   /_examples/01_ERT/plot_syscal_dc
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal IP data">
+
+.. only:: html
+
+    .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
+
+        :ref:`sphx_glr__examples_01_ERT_plot_syscal_ip.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/01_ERT/plot_syscal_ip
 .. raw:: html
 
     <div style='clear:both'></div>

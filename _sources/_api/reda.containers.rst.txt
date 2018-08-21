@@ -9,6 +9,14 @@ reda.containers package
 Submodules
 ----------
 
+reda.containers.CR module
+-------------------------
+
+.. automodule:: reda.containers.CR
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reda.containers.ERT module
 --------------------------
 
@@ -21,6 +29,14 @@ reda.containers.SIP module
 --------------------------
 
 .. automodule:: reda.containers.SIP
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.containers.TDIP module
+---------------------------
+
+.. automodule:: reda.containers.TDIP
     :members:
     :undoc-members:
     :show-inheritance:
