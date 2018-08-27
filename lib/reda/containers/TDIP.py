@@ -93,9 +93,18 @@ class TDIP(ERT):
             subquery = self.data.query(
                 'a == {} and b == {} and m == {} and n == {}'.format(*abmn)
             )
+            # print(abmn)
+            # print('subquery', subquery)
+            # import IPython
+            # IPython.embed()
             if subquery.shape[0] > 0:
                 self.data.reset_index(drop=True, inplace=True)
                 indices = get_indices_for_id(subquery['id'].values[0])
+            else:
+                raise Exception(
+                    'configuration not found. Perhaps electrodes were ' +
+                    'switched due to negative geometric factors?'
+                )
         else:
             raise Exception('No selection method successful!')
 
