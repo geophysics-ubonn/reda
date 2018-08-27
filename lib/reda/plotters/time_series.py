@@ -15,7 +15,7 @@ def plot_quadpole_evolution(dataobj, quadpole, cols, threshold,
         df = dataobj.data
 
     subquery = df.query(
-        'A == {0} and B == {1} and M == {2} and N == {3}'.format(*quadpole)
+        'a == {0} and b == {1} and m == {2} and n == {3}'.format(*quadpole)
     )
     # rhoa = subquery['rho_a'].values
     # rhoa[30] = 300
