@@ -36,7 +36,7 @@ class importers(object):
         # clean any previous norrec-assignments
         if 'norrec' and 'id' in self.data.columns:
             self.data.drop(['norrec', 'id'], axis=1)
-        redanr.assign_norrec_to_df(self.data)
+        self.data = redanr.assign_norrec_to_df(self.data)
         # self.datadf = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
         print('Summary:')
         self._describe_data(df)
