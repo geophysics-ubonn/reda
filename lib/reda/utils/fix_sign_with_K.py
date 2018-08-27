@@ -63,6 +63,15 @@ def fix_sign_with_K(dataframe):
     if 'rho_a' in dataframe:
         dataframe['rho_a'] = dataframe['r'] * dataframe['K']
 
+    if 'Mx' in dataframe:
+        # for now we have to loop here because we store numpy arrays within
+        # each cell
+        for index in np.where(indices_negative)[0]:
+            # import IPython
+            # IPython.embed()
+            # exit()
+            dataframe.at[index, 'Mx'] *= -1
+
     # recompute phase values
     if 'rpha' in dataframe:
         if 'Zt' in dataframe:
