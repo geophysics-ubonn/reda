@@ -28,7 +28,7 @@ class LogDataChanges():
     ...     # now change the data
     ...     ERTContainer.data.loc[0, "r"] = 22
     ...     ERTContainer.data.query("r < 10", inplace=True)
-    >>> ERTContainer.print_log()
+    >>> # ERTContainer.print_log()
     2... - root - INFO - Data change from 22 to 21
 
     """
@@ -94,7 +94,7 @@ class Importers(object):
         # recompute normal/reciprocal pairs
         if 'id' in self.data and 'norrec' in self.data:
             self.data.drop(['id', 'norrec'], axis=1, inplace=True)
-        assign_norrec_to_df(self.data)
+        self.data = assign_norrec_to_df(self.data)
 
     def _describe_data(self, df=None):
         if df is None:
@@ -412,7 +412,7 @@ class ERT(LoggingClass, Importers, Exporters):
 
         # Assign norrec ids if not already present
         if "id" not in self.data.keys():
-            assign_norrec_to_df(self.data)
+            self.data = assign_norrec_to_df(self.data)
 
         # Average repetitions
         data = average_repetitions(self.data, "r")
