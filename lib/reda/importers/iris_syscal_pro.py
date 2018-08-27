@@ -342,9 +342,11 @@ def _import_bin(filename):
         # print('q', q)
         # timing windows
         Tm = fget(fid, '20f', 20 * 4)
+        Tm = np.array(Tm)
         # print('Tm', Tm)
         # chargeabilities
         Mx = fget(fid, '20f', 20 * 4)
+        Mx = np.array(Mx)
         # print('Mx', Mx)
         # this is 4 bytes used to store information on the measured channel
         # Channel + NbChannel
