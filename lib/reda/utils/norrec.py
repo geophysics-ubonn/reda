@@ -96,29 +96,29 @@ def assign_norrec_to_df(df):
 
     Returns
     -------
-    df: pandas.DataFrame
+    df_new: pandas.DataFrame
         The data with two new columns: "id" and "norrec"
 
     """
-    df['id'] = ''
-    df['norrec'] = ''
     c = df[['a', 'b', 'm', 'n']].values.copy()
-    cu = np.unique(
-        c.view(c.dtype.descr * 4)
-    ).view(c.dtype).reshape(-1, 4)
+    # unique injections
+    cu = np.unique(c, axis=0)
 
     print('generating ids')
     # now assign unique IDs to each config in normal and reciprocal
     running_index = 0
     normal_ids = {}
     reciprocal_ids = {}
+    # loop through all configurations
     for i in range(0, cu.shape[0]):
         # print('testing', cu[i], i, cu.shape[0])
+        # normalize configuration
         cu_norm = _normalize_abmn(cu[i, :]).squeeze()
         if tuple(cu_norm) in normal_ids:
             # print('already indexed')
             continue
 
+        # find pairs
         indices = np.where((
             # current electrodes
             (
@@ -140,6 +140,7 @@ def assign_norrec_to_df(df):
             )
         ))[0]
 
+        # we found no pair
         if len(indices) == 0:
             # print('no reciprocals, continuing')
             if not tuple(cu_norm) in normal_ids:
@@ -169,8 +170,73 @@ def assign_norrec_to_df(df):
             reciprocal_ids[tuple(cu_norm)] = running_index
         running_index += 1
 
-    # now assign to all measurements
     print('assigning ids')
+    # now convert the indices into a dataframe so we can use pd.merge
+    # note that this code was previously written in another way, so the
+    # conversion is quite cumbersome
+    # at one point we need to rewrite everything here...
+    df_nor = {item: key for key, item in normal_ids.items()}
+    df_nor = pd.DataFrame(df_nor).T.reset_index().rename(
+        {'index': 'id'}, axis=1)
+    df_nor['norrec'] = 'nor'
+    df_nor.columns = ('id', 'a', 'b', 'm', 'n', 'norrec')
+    df_nor2 = df_nor.copy()
+    df_nor2.columns = ('id', 'b', 'a', 'm', 'n', 'norrec')
+    df_nor3 = df_nor.copy()
+    df_nor3.columns = ('id', 'b', 'a', 'n', 'm', 'norrec')
+    df_nor4 = df_nor.copy()
+    df_nor4.columns = ('id', 'a', 'b', 'n', 'm', 'norrec')
+
+    if len(reciprocal_ids) > 0:
+        df_rec = {item: key for key, item in reciprocal_ids.items()}
+        df_rec = pd.DataFrame(df_rec).T.reset_index().rename(
+            {'index': 'id'}, axis=1)
+        df_rec['norrec'] = 'rec'
+        df_rec.columns = ('id', 'a', 'b', 'm', 'n', 'norrec')
+        df_rec2 = df_rec.copy()
+        df_rec2.columns = ('id', 'b', 'a', 'm', 'n', 'norrec')
+        df_rec3 = df_rec.copy()
+        df_rec3.columns = ('id', 'b', 'a', 'n', 'm', 'norrec')
+        df_rec4 = df_rec.copy()
+        df_rec4.columns = ('id', 'a', 'b', 'n', 'm', 'norrec')
+
+    df_ids = pd.concat(
+        (
+            df_nor,
+            df_nor2,
+            df_nor3,
+            df_nor4,
+        ),
+        sort=True
+    )
+    if len(reciprocal_ids) > 0:
+        df_ids = pd.concat(
+            (
+                df_ids,
+                df_rec,
+                df_rec2,
+                df_rec3,
+                df_rec4,
+            ),
+            sort=True
+        )
+
+    df_new = pd.merge(df, df_ids, how='left', on=('a', 'b', 'm', 'n'))
+    df_new.rename(
+        {'id_y': 'id',
+         'norrec_y': 'norrec'
+         }, axis=1,
+        inplace=True
+    )
+    return df_new
+    import IPython
+    IPython.embed()
+    exit()
+
+    df_new[['a', 'b', 'm', 'n', 'id_y', 'norrec_y']]
+    # x.iloc[[0, 1978], :]
+
+    # now assign to all measurements
     for key, item in normal_ids.items():
         df.loc[
             ((df.a == key[0]) & (df.b == key[1]) &
