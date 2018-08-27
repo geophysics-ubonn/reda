@@ -734,7 +734,7 @@ changes in the number of rows.</p>
 <span class="gp">... </span>    <span class="c1"># now change the data</span>
 <span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>
 <span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;r &lt; 10&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">ERTContainer</span><span class="o">.</span><span class="n">print_log</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ERTContainer.print_log()</span>
 <span class="go">2... - root - INFO - Data change from 22 to 21</span>
 </pre></div>
 </div>
@@ -1026,21 +1026,15 @@ will not be used).</li>
 <code class="descname">to_cr</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.to_cr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.to_cr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert container to a complex resistivity container, using the
 CPA-conversion.</p>
-<ul class="simple">
-<li>Kemna, 2000</li>
-<li>COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY</li>
-</ul>
-<p>Van Voorhis, G. D.; Nelson, P. H.; Drake, T. L.
+<p>Kemna, 2000</p>
+<p>COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY
+Van Voorhis, G. D.; Nelson, P. H.; Drake, T. L.
 Geophysics (1973 Jan 1) 38 (1): 49-60.</p>
-<ul class="simple">
-<li>Application of complex resistivity tomography to field data from</li>
-</ul>
-<p>a kerosene-contaminated siteGold Open Access Authors: A. Kemna, E.
+<p>Application of complex resistivity tomography to field data from
+a kerosene-contaminated siteGold Open Access Authors: A. Kemna, E.
 Räkers and A. Binley DOI: 10.3997/2214-4609.201407300</p>
-<ul class="simple">
-<li>Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and</li>
-</ul>
-<p>Aurélie Gazoty (2012). ”Time-domain-induced polarization:
+<p>Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and
+Aurélie Gazoty (2012). ”Time-domain-induced polarization:
 Full-decay forward modeling and 1D laterally constrained inversion
 of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
 <a class="reference external" href="https://doi.org/10.1190/geo2011-0217.1">https://doi.org/10.1190/geo2011-0217.1</a></p>

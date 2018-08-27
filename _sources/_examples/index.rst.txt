@@ -6,26 +6,6 @@ Examples
 ========
 
 
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="In this example we show how to plot different forms of pseudosections.">
-
-.. only:: html
-
-    .. figure:: /_examples/images/thumb/sphx_glr_exmple_file_thumb.png
-
-        :ref:`sphx_glr__examples_exmple_file.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/exmple_file
 .. raw:: html
 
     <div style='clear:both'></div>

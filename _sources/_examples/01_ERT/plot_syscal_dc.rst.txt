@@ -55,8 +55,6 @@ Importing Syscal ERT data
     import reda.plotters as plotters
     plotters.histograms.plot_histograms(container, ['r', 'rho_a', 'Iab', ])
 
-**Total running time of the script:** ( 0 minutes  32.071 seconds)
-
 
 .. _sphx_glr_download__examples_01_ERT_plot_syscal_dc.py:
 

@@ -446,9 +446,11 @@
         <span class="c1"># print(&#39;q&#39;, q)</span>
         <span class="c1"># timing windows</span>
         <span class="n">Tm</span> <span class="o">=</span> <span class="n">fget</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;20f&#39;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">Tm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Tm</span><span class="p">)</span>
         <span class="c1"># print(&#39;Tm&#39;, Tm)</span>
         <span class="c1"># chargeabilities</span>
         <span class="n">Mx</span> <span class="o">=</span> <span class="n">fget</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="s1">&#39;20f&#39;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">Mx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Mx</span><span class="p">)</span>
         <span class="c1"># print(&#39;Mx&#39;, Mx)</span>
         <span class="c1"># this is 4 bytes used to store information on the measured channel</span>
         <span class="c1"># Channel + NbChannel</span>

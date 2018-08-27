@@ -50,16 +50,27 @@ a hack to prevent large loading times...
 
 
 
+normal loading of tdip data
+
+
 
 .. code-block:: python
 
     ip = reda.TDIP()
+    # import pprofile
+    # profiler = pprofile.Profile()
+    # with profiler():
     ip.import_syscal_bin('data_syscal_ip/data_normal.bin')
+    # profile.print_stats()
+    # exit()
     ip.import_syscal_bin('data_syscal_ip/data_reciprocal.bin', reciprocals=48)
 
 
     print(ip.data[['a', 'b', 'm', 'n', 'id', 'norrec']])
 
+    # import IPython
+    # IPython.embed()
+    # exit()
 
 
 
@@ -143,6 +154,22 @@ a hack to prevent large loading times...
     [1979 rows x 6 columns]
 
 
+
+.. code-block:: python
+
+    import reda.utils.geometric_factors as geomK
+    K = geomK.compute_K_analytical(ip.data, spacing=0.25)
+    geomK.apply_K(ip.data, K)
+
+    import reda.utils.fix_sign_with_K as fixK
+    ip.data = fixK.fix_sign_with_K(ip.data)
+
+
+
+
+
+
+
 plot a decay curve by specifying the index
 note that no file will be saved to disk if filename parameter is not provided
 
@@ -223,7 +250,7 @@ a  b  m  n
 
 .. code-block:: python
 
-    ip.plot_decay_curve(abmn=(1, 2, 4, 5), return_fig=True)
+    ip.plot_decay_curve(abmn=(1, 2, 5, 4), return_fig=True)
 
 
 
@@ -240,8 +267,7 @@ reciprocal is also ok
 
 .. code-block:: python
 
-    ip.plot_decay_curve(abmn=(5, 4, 2, 1), return_fig=True)
-
+    ip.plot_decay_curve(abmn=(4, 5, 2, 1), return_fig=True)
 
 
 
@@ -250,8 +276,6 @@ reciprocal is also ok
 
 
 
-
-**Total running time of the script:** ( 0 minutes  32.554 seconds)
 
 
 .. _sphx_glr_download__examples_01_ERT_plot_syscal_ip.py:

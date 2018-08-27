@@ -197,9 +197,18 @@
             <span class="n">subquery</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
                 <span class="s1">&#39;a == </span><span class="si">{}</span><span class="s1"> and b == </span><span class="si">{}</span><span class="s1"> and m == </span><span class="si">{}</span><span class="s1"> and n == </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">abmn</span><span class="p">)</span>
             <span class="p">)</span>
+            <span class="c1"># print(abmn)</span>
+            <span class="c1"># print(&#39;subquery&#39;, subquery)</span>
+            <span class="c1"># import IPython</span>
+            <span class="c1"># IPython.embed()</span>
             <span class="k">if</span> <span class="n">subquery</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
                 <span class="n">indices</span> <span class="o">=</span> <span class="n">get_indices_for_id</span><span class="p">(</span><span class="n">subquery</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s1">&#39;configuration not found. Perhaps electrodes were &#39;</span> <span class="o">+</span>
+                    <span class="s1">&#39;switched due to negative geometric factors?&#39;</span>
+                <span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No selection method successful!&#39;</span><span class="p">)</span>
 
@@ -270,17 +279,17 @@
         <span class="sd">&quot;&quot;&quot;Convert container to a complex resistivity container, using the</span>
 <span class="sd">        CPA-conversion.</span>
 
-<span class="sd">        * Kemna, 2000</span>
+<span class="sd">        Kemna, 2000</span>
 
-<span class="sd">        * COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY</span>
+<span class="sd">        COMPLEX RESISTIVITY COPPER MlNERALlZATlONt SPECTRA OF PORPHYRY</span>
 <span class="sd">        Van Voorhis, G. D.; Nelson, P. H.; Drake, T. L.</span>
 <span class="sd">        Geophysics (1973 Jan 1) 38 (1): 49-60.</span>
 
-<span class="sd">        * Application of complex resistivity tomography to field data from</span>
+<span class="sd">        Application of complex resistivity tomography to field data from</span>
 <span class="sd">        a kerosene-contaminated siteGold Open Access Authors: A. Kemna, E.</span>
 <span class="sd">        Räkers and A. Binley DOI: 10.3997/2214-4609.201407300</span>
 
-<span class="sd">        * Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and</span>
+<span class="sd">        Gianluca Fiandaca, Esben Auken, Anders Vest Christiansen, and</span>
 <span class="sd">        Aurélie Gazoty (2012). ”Time-domain-induced polarization:</span>
 <span class="sd">        Full-decay forward modeling and 1D laterally constrained inversion</span>
 <span class="sd">        of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.</span>
