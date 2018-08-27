@@ -44,7 +44,7 @@ redafixK.fix_sign_with_K(seit.data)
 ##############################################################################
 # Compute normal and reciprocal pairs
 import reda.utils.norrec as norrec
-norrec.assign_norrec_to_df(seit.data)
+seit.data = norrec.assign_norrec_to_df(seit.data)
 
 ##############################################################################
 # filter data

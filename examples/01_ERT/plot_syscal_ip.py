@@ -25,12 +25,30 @@ import reda
 #         pickle.dump(ip, fid)
 
 ###############################################################################
+# normal loading of tdip data
 ip = reda.TDIP()
+# import pprofile
+# profiler = pprofile.Profile()
+# with profiler():
 ip.import_syscal_bin('data_syscal_ip/data_normal.bin')
+# profile.print_stats()
+# exit()
 ip.import_syscal_bin('data_syscal_ip/data_reciprocal.bin', reciprocals=48)
 
 
 print(ip.data[['a', 'b', 'm', 'n', 'id', 'norrec']])
+
+# import IPython
+# IPython.embed()
+# exit()
+###############################################################################
+#
+import reda.utils.geometric_factors as geomK
+K = geomK.compute_K_analytical(ip.data, spacing=0.25)
+geomK.apply_K(ip.data, K)
+
+import reda.utils.fix_sign_with_K as fixK
+ip.data = fixK.fix_sign_with_K(ip.data)
 
 ###############################################################################
 # plot a decay curve by specifying the index
@@ -56,9 +74,8 @@ ip.plot_decay_curve(nr_id=170, return_fig=True)
 # a  b  m  n
 # 0     1  2  4  5
 # 1978  5  4  2  1
-ip.plot_decay_curve(abmn=(1, 2, 4, 5), return_fig=True)
+ip.plot_decay_curve(abmn=(1, 2, 5, 4), return_fig=True)
 
 ###############################################################################
 # reciprocal is also ok
-ip.plot_decay_curve(abmn=(5, 4, 2, 1), return_fig=True)
-
+ip.plot_decay_curve(abmn=(4, 5, 2, 1), return_fig=True)
