@@ -3,10 +3,15 @@
 As there is an increasing number of slightly different file formats in use,
 this module acts as an selector for the appropriate import functions.
 """
+import os
+
 import numpy as np
 import pandas as pd
 import scipy.io as sio
-import reda.importers.eit40 as eit
+
+import reda.importers.eit_version_2010 as eit_version_2010
+import reda.importers.eit_version_2013 as eit_version_2013
+import reda.importers.eit_version_2017 as eit_version_2017
 import reda.importers.eit_version_2018a as eit_version_2018a
 
 # data file formats differ slightly between versions. Version numbers do not
@@ -15,7 +20,9 @@ import reda.importers.eit_version_2018a as eit_version_2018a
 mat_version_importers = {
     # this is the file version used for the 160 channel multiplexer system
     'FZJ-EZ-2018A': eit_version_2018a,
-
+    'FZJ-EZ-2017': eit_version_2017,
+    'FZJ-EZ-09.11.2010': eit_version_2010,
+    'FZJ-EZ-14.02.2013': eit_version_2013,
 }
 
 def _get_file_version(filename):
@@ -41,7 +48,7 @@ def _get_file_version(filename):
     return version
 
 
-def get_mnu0_data(filename, configs, settings=None, return_3p=False):
+def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
     """Import data postprocessed as 3P data (NMU0), i.e., measured towards
     common ground.
 
@@ -51,10 +58,10 @@ def get_mnu0_data(filename, configs, settings=None, return_3p=False):
         filename of matlab file
     configs: Nx4 numpy.ndarray|filename
         4P measurements configurations (ABMN) to generate out of the data
-    settings: dict|None
-        file format specific settings that will be provided to the importer
-    return_3p: bool
+    return_3p: bool, optional
         also return 3P data
+    **kwargs: dict, optional
+        all other parameters will be handled down to the extract functions
 
     Returns
     -------
@@ -63,14 +70,17 @@ def get_mnu0_data(filename, configs, settings=None, return_3p=False):
     data_md_raw: pandas.DataFrame|None
         MD data (sometimes this data is not imported, then we return None here)
     data_emd_3p: pandas.DataFrame
-        The importet 3P data (only if return_3p==True)
+        The imported 3P data (only if return_3p==True)
     """
+    if not os.path.isfile(filename):
+        print('File not found: {}'.format(filename))
+        exit()
     version = _get_file_version(filename)
     importer = mat_version_importers.get(version, None)
     if importer is not None:
         mat = sio.loadmat(filename, squeeze_me=True)
-        data_md_raw = importer._extract_md(mat)
-        data_emd_3p = importer._extract_emd(mat)
+        data_md_raw = importer._extract_md(mat, **kwargs)
+        data_emd_3p = importer._extract_emd(mat, **kwargs)
         data_emd_4p = compute_quadrupoles(data_emd_3p, configs)
 
     # if version == 'FZJ-EZ-14.02.2013':
@@ -120,10 +130,10 @@ def compute_quadrupoles(df_emd, config_file):
         B = np.max((Ar, Br))
 
         # first choice: correct ordering
-        query_M = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+        query_M = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
             A, B, M
         ))
-        query_N = df_emd.query('A=={0} and B=={1} and P=={2}'.format(
+        query_N = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
             A, B, N
         ))
 

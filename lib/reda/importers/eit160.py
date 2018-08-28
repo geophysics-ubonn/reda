@@ -39,6 +39,7 @@ Open questions:
 * should we provide a time delta between the two measurements?
 
 """
+print('WARNING: DONt use this module anymore!. Use the eit_fzj module!')
 import numpy as np
 import scipy.io as sio
 import pandas as pd
@@ -85,47 +86,49 @@ def import_medusa_data(mat_filename, config_file):
     # construct four-point measurements via superposition
     print('constructing four-point measurements')
     quadpole_list = []
-    index = 0
-    for Ar, Br, M, N in configs:
-        # print('constructing', Ar, Br, M, N)
-        # the order of A and B doesn't concern us
-        A = np.min((Ar, Br))
-        B = np.max((Ar, Br))
 
-        # first choice: correct ordering
-        query_M = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
-            A, B, M
-        ))
-        query_N = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
-            A, B, N
-        ))
+    if df_emd is not None:
+        index = 0
+        for Ar, Br, M, N in configs:
+            # print('constructing', Ar, Br, M, N)
+            # the order of A and B doesn't concern us
+            A = np.min((Ar, Br))
+            B = np.max((Ar, Br))
 
-        if query_M.size == 0 or query_N.size == 0:
-            continue
+            # first choice: correct ordering
+            query_M = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
+                A, B, M
+            ))
+            query_N = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
+                A, B, N
+            ))
 
-        index += 1
+            if query_M.size == 0 or query_N.size == 0:
+                continue
 
-        # keep these columns as they are (no subtracting)
-        keep_cols = [
-            'datetime',
-            'frequency',
-            'a', 'b',
-            'Zg1', 'Zg2', 'Zg3',
-            'Is',
-            'Il',
-            'Zg',
-            'Iab',
-        ]
+            index += 1
 
-        df4 = pd.DataFrame()
-        diff_cols = ['Zt', ]
-        df4[keep_cols] = query_M[keep_cols]
-        for col in diff_cols:
-            df4[col] = query_M[col].values - query_N[col].values
-        df4['m'] = query_M['p'].values
-        df4['n'] = query_N['p'].values
+            # keep these columns as they are (no subtracting)
+            keep_cols = [
+                'datetime',
+                'frequency',
+                'a', 'b',
+                'Zg1', 'Zg2', 'Zg3',
+                'Is',
+                'Il',
+                'Zg',
+                'Iab',
+            ]
 
-        quadpole_list.append(df4)
+            df4 = pd.DataFrame()
+            diff_cols = ['Zt', ]
+            df4[keep_cols] = query_M[keep_cols]
+            for col in diff_cols:
+                df4[col] = query_M[col].values - query_N[col].values
+            df4['m'] = query_M['p'].values
+            df4['n'] = query_N['p'].values
+
+            quadpole_list.append(df4)
 
     if quadpole_list:
         dfn = pd.concat(quadpole_list)
@@ -152,9 +155,11 @@ def _read_mat_mnu0(filename):
 
     mat = sio.loadmat(filename, squeeze_me=True)
     # check the version
-    if mat['MP']['Version'].item() != 'FZJ-EZ-2017':
+    version = mat['MP']['Version'].item()
+    if version != 'FZJ-EZ-2017':
         raise Exception(
-            'This data format is not supported (expected: FZJ-EZ-2017)'
+            'This data format is not supported (expected: FZJ-EZ-2017)' +
+            ' got: {}'.format(version)
         )
 
     df_emd = _extract_emd(mat, filename=filename)
@@ -408,6 +413,8 @@ def _extract_emd(mat, filename):
 
         dfl.append(df)
 
+    if len(dfl) == 0:
+        return None
     df = pd.concat(dfl)
 
     # average swapped current injections here!

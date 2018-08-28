@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
+# medusa data file format: FZJ-EZ-2017
 import datetime
 import pandas as pd
 import numpy as np
-
-
-def convert_electrode(i):
-    """With 3 multiplexers, electrode numbers are running from 1 - 120, in 30
-    electrode increments. We need to convert those numberings back.
-    """
-    return int(np.floor((i - 1) / 4) + 1)
 
 
 def _extract_md(mat, **kwargs):
@@ -36,8 +30,7 @@ def _extract_md(mat, **kwargs):
                 timestamp,
                 fdata['cni'],
                 fdata['Cl3'],
-                fdata['Zg3'][:, 0, :].squeeze(),
-                fdata['Zg3'][:, 1, :].squeeze(),
+                fdata['Zg3'],
                 fdata['As3'][:, 0, :].squeeze(),
                 fdata['As3'][:, 1, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
@@ -53,12 +46,9 @@ def _extract_md(mat, **kwargs):
             'Cl1',
             'Cl2',
             'Cl3',
-            'Zg1_2',
-            'Zg2_2',
-            'Zg3_2',
-            'Zg1_4',
-            'Zg2_4',
-            'Zg3_4',
+            'Zg1',
+            'Zg2',
+            'Zg3',
             'ShuntVoltage1_1',
             'ShuntVoltage1_2',
             'ShuntVoltage1_3',
@@ -80,26 +70,14 @@ def _extract_md(mat, **kwargs):
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
-        # determine multiplexer group
-        df['multiplexer_group'] = df['a'] % 4
-        df['a'] = df['a'].astype(int).apply(convert_electrode)
-        df['b'] = df['b'].astype(int).apply(convert_electrode)
-
+        df['a'] = df['a'].astype(int)
+        df['b'] = df['b'].astype(int)
         df['Cl1'] = df['Cl1'].astype(complex)
         df['Cl2'] = df['Cl2'].astype(complex)
         df['Cl3'] = df['Cl3'].astype(complex)
-
-        df['Zg1_2'] = df['Zg1_2'].astype(complex)
-        df['Zg2_2'] = df['Zg2_2'].astype(complex)
-        df['Zg3_2'] = df['Zg3_2'].astype(complex)
-
-        df['Zg1_4'] = df['Zg1_4'].astype(complex)
-        df['Zg2_4'] = df['Zg2_4'].astype(complex)
-        df['Zg3_4'] = df['Zg3_4'].astype(complex)
-
-        df['Zg1'] = np.mean((df['Zg1_2'], df['Zg1_4']), axis=0)
-        df['Zg2'] = np.mean((df['Zg2_2'], df['Zg2_4']), axis=0)
-        df['Zg3'] = np.mean((df['Zg3_2'], df['Zg3_4']), axis=0)
+        df['Zg1'] = df['Zg1'].astype(complex)
+        df['Zg2'] = df['Zg2'].astype(complex)
+        df['Zg3'] = df['Zg3'].astype(complex)
 
         df['Yl1'] = df['Yl1'].astype(complex)
         df['Yl2'] = df['Yl2'].astype(complex)
@@ -136,15 +114,9 @@ def _extract_md(mat, **kwargs):
         dfl.append(df)
 
     df = pd.concat(dfl)
-    # select multiplexer group
-    multiplexer_group = kwargs.get('multiplexer_group', None)
-    if multiplexer_group in (1, 2, 3):
-        print('selecting multiplexer group {}'.format(multiplexer_group))
-        df.query('multiplexer_group == {}'.format(multiplexer_group),
-                 inplace=True
-                 )
 
     return df
+
 
 def _extract_emd(mat, **kwargs):
     """Extract the data from the EMD substruct, given a medusa-created MNU0-mat
@@ -171,12 +143,11 @@ def _extract_emd(mat, **kwargs):
         fdata = emd[f_id]
         # some consistency checks
         if len(fdata['nu']) == 2 and fdata['nu'].shape[1] == 2:
-            raise Exception('Need MNU0 data (3P), not quadpole (4P) data!')
+            raise Exception('Need MNU0 file, not a quadpole .mat file:')
 
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in fdata['Time'].squeeze()]
         ).T
-
         df = pd.DataFrame(
             np.hstack((
                 timestamp,
@@ -185,12 +156,13 @@ def _extract_emd(mat, **kwargs):
                 fdata['Zt3'],
                 fdata['Is3'],
                 fdata['Il3'],
-                fdata['Zg3'][:, 0, :].squeeze(),
-                fdata['Zg3'][:, 1, :].squeeze(),
+                fdata['Zg3'],
                 fdata['As3'][:, 0, :].squeeze(),
                 fdata['As3'][:, 1, :].squeeze(),
                 fdata['As3'][:, 2, :].squeeze(),
                 fdata['As3'][:, 3, :].squeeze(),
+                fdata['Yg13'],
+                fdata['Yg23'],
             )),
         )
         df.columns = (
@@ -207,12 +179,9 @@ def _extract_emd(mat, **kwargs):
             'Il1',
             'Il2',
             'Il3',
-            'Zg1_2',
-            'Zg2_2',
-            'Zg3_2',
-            'Zg1_4',
-            'Zg2_4',
-            'Zg3_4',
+            'Zg1',
+            'Zg2',
+            'Zg3',
             'ShuntVoltage1_1',
             'ShuntVoltage1_2',
             'ShuntVoltage1_3',
@@ -225,34 +194,29 @@ def _extract_emd(mat, **kwargs):
             'ShuntVoltage4_1',
             'ShuntVoltage4_2',
             'ShuntVoltage4_3',
+            'Yg13_1',
+            'Yg13_2',
+            'Yg13_3',
+            'Yg23_1',
+            'Yg23_2',
+            'Yg23_3',
         )
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
 
         # cast to correct type
         df['datetime'] = pd.to_datetime(df['datetime'])
-        # determine multiplexer group
-        df['multiplexer_group'] = df['a'] % 4
-
-        df['a'] = df['a'].astype(int).apply(convert_electrode)
-        df['b'] = df['b'].astype(int).apply(convert_electrode)
-        df['p'] = df['p'].astype(int).apply(convert_electrode)
+        df['a'] = df['a'].astype(int)
+        df['b'] = df['b'].astype(int)
+        df['p'] = df['p'].astype(int)
 
         df['Z1'] = df['Z1'].astype(complex)
         df['Z2'] = df['Z2'].astype(complex)
         df['Z3'] = df['Z3'].astype(complex)
 
-        df['Zg1_2'] = df['Zg1_2'].astype(complex)
-        df['Zg2_2'] = df['Zg2_2'].astype(complex)
-        df['Zg3_2'] = df['Zg3_2'].astype(complex)
-
-        df['Zg1_4'] = df['Zg1_4'].astype(complex)
-        df['Zg2_4'] = df['Zg2_4'].astype(complex)
-        df['Zg3_4'] = df['Zg3_4'].astype(complex)
-
-        df['Zg1'] = np.mean((df['Zg1_2'], df['Zg1_4']), axis=0)
-        df['Zg2'] = np.mean((df['Zg2_2'], df['Zg2_4']), axis=0)
-        df['Zg3'] = np.mean((df['Zg3_2'], df['Zg3_4']), axis=0)
+        df['Zg1'] = df['Zg1'].astype(complex)
+        df['Zg2'] = df['Zg2'].astype(complex)
+        df['Zg3'] = df['Zg3'].astype(complex)
 
         df['Is1'] = df['Is1'].astype(complex)
         df['Is2'] = df['Is2'].astype(complex)
@@ -282,15 +246,7 @@ def _extract_emd(mat, **kwargs):
 
     df = pd.concat(dfl)
 
-    # select multiplexer group
-    multiplexer_group = kwargs.get('multiplexer_group', None)
-    if multiplexer_group in (1, 2, 3):
-        print('selecting multiplexer group {}'.format(multiplexer_group))
-        df.query('multiplexer_group == {}'.format(multiplexer_group),
-                 inplace=True
-                 )
-
-    # average swapped current injections here (if required)!
+    # average swapped current injections here!
     # TODO
 
     # sort current injections

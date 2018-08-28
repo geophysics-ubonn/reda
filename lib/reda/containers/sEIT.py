@@ -2,8 +2,9 @@
 """
 import pandas as pd
 
-import reda.importers.eit40 as reda_eit40
-import reda.importers.eit160 as reda_eit160
+import reda.importers.eit_fzj as eit_fzj
+# import reda.importers.eit40 as reda_eit40
+# import reda.importers.eit160 as reda_eit160
 import reda.importers.radic_sip256c as reda_sip256c
 import reda.utils.norrec as redanr
 
@@ -41,32 +42,25 @@ class importers(object):
         print('Summary:')
         self._describe_data(df)
 
-    def import_eit40(self, filename, configfile, correction_file=None):
-        """EIT40 data import"""
-        df = reda_eit40.import_medusa_data(
+    def import_eit_fzj(self, filename, configfile, correction_file=None,
+                       timestep=None):
+        """EIT data import for FZJ Medusa systems"""
+        df_emd, df_md = eit_fzj.get_mnu0_data(
             filename,
             configfile,
         )
         if correction_file is not None:
-            reda_eit40.apply_correction_factors(df, correction_file)
+            reda_eit40.apply_correction_factors(df_emd, correction_file)
 
-        redanr.assign_norrec_to_df(df)
-        df = redanr.assign_norrec_diffs(df, ['r', 'rpha'])
+        if timestep is not None:
+            df_emd['timestep'] = timestep
 
-        self._add_to_container(df)
+        self._add_to_container(df_emd)
+        self.data = redanr.assign_norrec_to_df(self.data)
+        self.data = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
+
         print('Summary:')
-        self._describe_data(df)
-
-    def import_eit160(self, filename, configfile):
-        """EIT160 data import"""
-        df_emd, df_md = reda_eit160.import_medusa_data(
-            filename,
-            configfile,
-        )
-        df = df_emd
-        self._add_to_container(df)
-        print('Summary:')
-        self._describe_data(df)
+        self._describe_data(df_emd)
 
 
 class sEIT(importers):
@@ -92,6 +86,9 @@ class sEIT(importers):
                 raise Exception('Required column not in dataframe: {0}'.format(
                     column
                 ))
+
+    def abmn(self):
+        return self.data.groupby(['a', 'b', 'm', 'n'])
 
     def subquery(self, subset, filter, inplace=True):
         """
