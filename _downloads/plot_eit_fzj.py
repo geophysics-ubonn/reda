@@ -29,12 +29,6 @@ seit.import_eit_fzj(
 )
 
 ##############################################################################
-# quadrupoles can be directly accessed using a pandas grouper
-print(seit.abmn)
-quadpole_data = seit.abmn.get_group((10, 29, 34, 15))
-print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
-
-##############################################################################
 # Compute geometric factors
 import reda.utils.geometric_factors as redaK
 import reda.utils.fix_sign_with_K as redafixK
@@ -47,6 +41,13 @@ redafixK.fix_sign_with_K(seit.data)
 # Compute normal and reciprocal pairs
 import reda.utils.norrec as norrec
 seit.data = norrec.assign_norrec_to_df(seit.data)
+
+##############################################################################
+# quadrupoles can be directly accessed using a pandas grouper
+print(seit.abmn)
+quadpole_data = seit.abmn.get_group((10, 29, 15, 34))
+print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
+
 
 ##############################################################################
 # filter data

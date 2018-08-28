@@ -150,28 +150,6 @@ max    10000.000000     21.0000      ...         351.066301   3141.580651
 [8 rows x 16 columns]
 </pre></div>
 </div>
-<p>quadrupoles can be directly accessed using a pandas grouper</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
-<span class="n">quadpole_data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">quadpole_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b43c766b630&gt;
-       a   b   m   n     frequency         r         rpha
-9417  10  29  34  15      0.100000 -7.356375  3136.387111
-9419  10  29  34  15      0.314465 -7.323810  3134.689617
-9421  10  29  34  15      1.000000 -7.282164  3134.350259
-9423  10  29  34  15      3.125000 -7.239073  3135.259656
-9425  10  29  34  15     10.000000 -7.199660  3129.511640
-9427  10  29  34  15     31.250000 -7.176920  3138.459835
-9429  10  29  34  15    110.000000 -7.170031 -3136.633765
-9431  10  29  34  15    312.500000 -7.211899 -3132.921591
-9433  10  29  34  15   1000.000000 -7.325287  3139.162781
-9435  10  29  34  15   3150.000000 -7.313380  3103.699927
-9437  10  29  34  15  10000.000000 -7.035541  3040.687830
-</pre></div>
-</div>
 <p>Compute geometric factors</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="kn">as</span> <span class="nn">redaK</span>
 <span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="kn">as</span> <span class="nn">redafixK</span>
@@ -189,6 +167,28 @@ max    10000.000000     21.0000      ...         351.066301   3141.580651
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
 assigning ids
+</pre></div>
+</div>
+<p>quadrupoles can be directly accessed using a pandas grouper</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
+<span class="n">quadpole_data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">quadpole_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b48ef4fe358&gt;
+          a     b   m   n     frequency         r        rpha
+749    10.0  29.0  15  34      0.100000  7.356375   -5.205543
+2229   10.0  29.0  15  34      0.314465  7.323810   -6.903037
+3709   10.0  29.0  15  34      1.000000  7.282164   -7.242394
+5189   10.0  29.0  15  34      3.125000  7.239073   -6.332998
+6669   10.0  29.0  15  34     10.000000  7.199660  -12.081013
+8149   10.0  29.0  15  34     31.250000  7.176920   -3.132819
+9629   10.0  29.0  15  34    110.000000  7.170031    4.958888
+11109  10.0  29.0  15  34    312.500000  7.211899    8.671063
+12589  10.0  29.0  15  34   1000.000000  7.325287   -2.429873
+14069  10.0  29.0  15  34   3150.000000  7.313380  -37.892727
+15549  10.0  29.0  15  34  10000.000000  7.035541 -100.904824
 </pre></div>
 </div>
 <p>filter data</p>
@@ -255,7 +255,7 @@ Raw data plots (execute before applying the filters):</p>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
-<p><strong>Total running time of the script:</strong> ( 0 minutes  24.954 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  26.335 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" href="../../_downloads/plot_eit_fzj.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></div>

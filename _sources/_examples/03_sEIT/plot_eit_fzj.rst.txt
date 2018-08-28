@@ -75,41 +75,6 @@ Initialize an sEIT container
     [8 rows x 16 columns]
 
 
-quadrupoles can be directly accessed using a pandas grouper
-
-
-
-.. code-block:: python
-
-    print(seit.abmn)
-    quadpole_data = seit.abmn.get_group((10, 29, 34, 15))
-    print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
-
-
-
-
-
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b43c766b630>
-           a   b   m   n     frequency         r         rpha
-    9417  10  29  34  15      0.100000 -7.356375  3136.387111
-    9419  10  29  34  15      0.314465 -7.323810  3134.689617
-    9421  10  29  34  15      1.000000 -7.282164  3134.350259
-    9423  10  29  34  15      3.125000 -7.239073  3135.259656
-    9425  10  29  34  15     10.000000 -7.199660  3129.511640
-    9427  10  29  34  15     31.250000 -7.176920  3138.459835
-    9429  10  29  34  15    110.000000 -7.170031 -3136.633765
-    9431  10  29  34  15    312.500000 -7.211899 -3132.921591
-    9433  10  29  34  15   1000.000000 -7.325287  3139.162781
-    9435  10  29  34  15   3150.000000 -7.313380  3103.699927
-    9437  10  29  34  15  10000.000000 -7.035541  3040.687830
-
-
 Compute geometric factors
 
 
@@ -150,6 +115,42 @@ Compute normal and reciprocal pairs
 
     generating ids
     assigning ids
+
+
+quadrupoles can be directly accessed using a pandas grouper
+
+
+
+.. code-block:: python
+
+    print(seit.abmn)
+    quadpole_data = seit.abmn.get_group((10, 29, 15, 34))
+    print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
+
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b48ef4fe358>
+              a     b   m   n     frequency         r        rpha
+    749    10.0  29.0  15  34      0.100000  7.356375   -5.205543
+    2229   10.0  29.0  15  34      0.314465  7.323810   -6.903037
+    3709   10.0  29.0  15  34      1.000000  7.282164   -7.242394
+    5189   10.0  29.0  15  34      3.125000  7.239073   -6.332998
+    6669   10.0  29.0  15  34     10.000000  7.199660  -12.081013
+    8149   10.0  29.0  15  34     31.250000  7.176920   -3.132819
+    9629   10.0  29.0  15  34    110.000000  7.170031    4.958888
+    11109  10.0  29.0  15  34    312.500000  7.211899    8.671063
+    12589  10.0  29.0  15  34   1000.000000  7.325287   -2.429873
+    14069  10.0  29.0  15  34   3150.000000  7.313380  -37.892727
+    15549  10.0  29.0  15  34  10000.000000  7.035541 -100.904824
 
 
 filter data
@@ -261,7 +262,7 @@ Plot pseudosections of all frequencies
 
 
 
-**Total running time of the script:** ( 0 minutes  24.954 seconds)
+**Total running time of the script:** ( 0 minutes  26.335 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:
