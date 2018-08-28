@@ -41,6 +41,30 @@ reda.importers.eit\_fzj module
     :undoc-members:
     :show-inheritance:
 
+reda.importers.eit\_version\_2010 module
+----------------------------------------
+
+.. automodule:: reda.importers.eit_version_2010
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.eit\_version\_2013 module
+----------------------------------------
+
+.. automodule:: reda.importers.eit_version_2013
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
+reda.importers.eit\_version\_2017 module
+----------------------------------------
+
+.. automodule:: reda.importers.eit_version_2017
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reda.importers.eit\_version\_2018a module
 -----------------------------------------
 

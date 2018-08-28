@@ -143,6 +143,7 @@
 <span class="sd">* should we provide a time delta between the two measurements?</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: DONt use this module anymore!. Use the eit_fzj module!&#39;</span><span class="p">)</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -189,47 +190,49 @@
     <span class="c1"># construct four-point measurements via superposition</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;constructing four-point measurements&#39;</span><span class="p">)</span>
     <span class="n">quadpole_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">:</span>
-        <span class="c1"># print(&#39;constructing&#39;, Ar, Br, M, N)</span>
-        <span class="c1"># the order of A and B doesn&#39;t concern us</span>
-        <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">((</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">))</span>
-        <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">((</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">))</span>
 
-        <span class="c1"># first choice: correct ordering</span>
-        <span class="n">query_M</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span>
-        <span class="p">))</span>
-        <span class="n">query_N</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-            <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span>
-        <span class="p">))</span>
+    <span class="k">if</span> <span class="n">df_emd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">:</span>
+            <span class="c1"># print(&#39;constructing&#39;, Ar, Br, M, N)</span>
+            <span class="c1"># the order of A and B doesn&#39;t concern us</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">((</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">))</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">((</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">))</span>
 
-        <span class="k">if</span> <span class="n">query_M</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">query_N</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="k">continue</span>
+            <span class="c1"># first choice: correct ordering</span>
+            <span class="n">query_M</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span>
+            <span class="p">))</span>
+            <span class="n">query_N</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span>
+            <span class="p">))</span>
 
-        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">query_M</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">query_N</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
 
-        <span class="c1"># keep these columns as they are (no subtracting)</span>
-        <span class="n">keep_cols</span> <span class="o">=</span> <span class="p">[</span>
-            <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Zg1&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg2&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg3&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Is&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Il&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Zg&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;Iab&#39;</span><span class="p">,</span>
-        <span class="p">]</span>
+            <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
 
-        <span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
-        <span class="n">diff_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="p">]</span>
-        <span class="n">df4</span><span class="p">[</span><span class="n">keep_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="n">keep_cols</span><span class="p">]</span>
-        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">diff_cols</span><span class="p">:</span>
-            <span class="n">df4</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">query_N</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_N</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="c1"># keep these columns as they are (no subtracting)</span>
+            <span class="n">keep_cols</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Zg1&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg2&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg3&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Is&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Il&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Zg&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Iab&#39;</span><span class="p">,</span>
+            <span class="p">]</span>
 
-        <span class="n">quadpole_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df4</span><span class="p">)</span>
+            <span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="n">diff_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="p">]</span>
+            <span class="n">df4</span><span class="p">[</span><span class="n">keep_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="n">keep_cols</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">diff_cols</span><span class="p">:</span>
+                <span class="n">df4</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">query_N</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_N</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+            <span class="n">quadpole_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df4</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">quadpole_list</span><span class="p">:</span>
         <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">quadpole_list</span><span class="p">)</span>
@@ -256,9 +259,11 @@
 
     <span class="n">mat</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
     <span class="c1"># check the version</span>
-    <span class="k">if</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;MP&#39;</span><span class="p">][</span><span class="s1">&#39;Version&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span> <span class="o">!=</span> <span class="s1">&#39;FZJ-EZ-2017&#39;</span><span class="p">:</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;MP&#39;</span><span class="p">][</span><span class="s1">&#39;Version&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s1">&#39;FZJ-EZ-2017&#39;</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-            <span class="s1">&#39;This data format is not supported (expected: FZJ-EZ-2017)&#39;</span>
+            <span class="s1">&#39;This data format is not supported (expected: FZJ-EZ-2017)&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39; got: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
         <span class="p">)</span>
 
     <span class="n">df_emd</span> <span class="o">=</span> <span class="n">_extract_emd</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
@@ -512,6 +517,8 @@
 
         <span class="n">dfl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
 
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span>
 
     <span class="c1"># average swapped current injections here!</span>

@@ -1,19 +1,15 @@
 .. note::
     :class: sphx-glr-download-link-note
 
-    Click :ref:`here <sphx_glr_download__examples_03_sEIT_plot_eit40.py>` to download the full example code
+    Click :ref:`here <sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py>` to download the full example code
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr__examples_03_sEIT_plot_eit40.py:
+.. _sphx_glr__examples_03_sEIT_plot_eit_fzj.py:
 
 
 Importing EIT40/EIT160 data
 ===========================
 
-.. warning::
-
-    This example requires the installation of crtomo-tools, as well as a
-    working installation of CRTomo.
 
 The configs.dat file contains the four-point spreads to be imported from the
 measurement. This file is a text file with four columns (A, B, M, N),
@@ -47,7 +43,7 @@ Initialize an sEIT container
     seit = reda.sEIT()
 
     # Import the data
-    seit.import_eit160(
+    seit.import_eit_fzj(
         filename='data_EIT40_v_EZ-2017/eit_data_mnu0.mat',
         configfile='data_EIT40_v_EZ-2017/configs_large_dipoles_norrec.dat'
     )
@@ -62,8 +58,9 @@ Initialize an sEIT container
 
  .. code-block:: none
 
-    read_mag_single_file: data_EIT40_v_EZ-2017/eit_data_mnu0.mat
     constructing four-point measurements
+    generating ids
+    assigning ids
     Summary:
               frequency           a      ...                Vmn          rpha
     count  16280.000000  16280.0000      ...       16280.000000  16280.000000
@@ -76,6 +73,41 @@ Initialize an sEIT container
     max    10000.000000     21.0000      ...         351.066301   3141.580651
 
     [8 rows x 16 columns]
+
+
+quadrupoles can be directly accessed using a pandas grouper
+
+
+
+.. code-block:: python
+
+    print(seit.abmn)
+    quadpole_data = seit.abmn.get_group((10, 29, 34, 15))
+    print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b43c766b630>
+           a   b   m   n     frequency         r         rpha
+    9417  10  29  34  15      0.100000 -7.356375  3136.387111
+    9419  10  29  34  15      0.314465 -7.323810  3134.689617
+    9421  10  29  34  15      1.000000 -7.282164  3134.350259
+    9423  10  29  34  15      3.125000 -7.239073  3135.259656
+    9425  10  29  34  15     10.000000 -7.199660  3129.511640
+    9427  10  29  34  15     31.250000 -7.176920  3138.459835
+    9429  10  29  34  15    110.000000 -7.170031 -3136.633765
+    9431  10  29  34  15    312.500000 -7.211899 -3132.921591
+    9433  10  29  34  15   1000.000000 -7.325287  3139.162781
+    9435  10  29  34  15   3150.000000 -7.313380  3103.699927
+    9437  10  29  34  15  10000.000000 -7.035541  3040.687830
 
 
 Compute geometric factors
@@ -223,16 +255,16 @@ Plot pseudosections of all frequencies
 
 
 
-.. image:: /_examples/03_sEIT/images/sphx_glr_plot_eit40_001.png
+.. image:: /_examples/03_sEIT/images/sphx_glr_plot_eit_fzj_001.png
     :class: sphx-glr-single-img
 
 
 
 
-**Total running time of the script:** ( 0 minutes  27.177 seconds)
+**Total running time of the script:** ( 0 minutes  24.954 seconds)
 
 
-.. _sphx_glr_download__examples_03_sEIT_plot_eit40.py:
+.. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:
 
 
 .. only :: html
@@ -244,13 +276,13 @@ Plot pseudosections of all frequencies
 
   .. container:: sphx-glr-download
 
-     :download:`Download Python source code: plot_eit40.py <plot_eit40.py>`
+     :download:`Download Python source code: plot_eit_fzj.py <plot_eit_fzj.py>`
 
 
 
   .. container:: sphx-glr-download
 
-     :download:`Download Jupyter notebook: plot_eit40.ipynb <plot_eit40.ipynb>`
+     :download:`Download Jupyter notebook: plot_eit_fzj.ipynb <plot_eit_fzj.ipynb>`
 
 
 .. only:: html

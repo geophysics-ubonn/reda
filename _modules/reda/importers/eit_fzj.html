@@ -107,10 +107,15 @@
 <span class="sd">As there is an increasing number of slightly different file formats in use,</span>
 <span class="sd">this module acts as an selector for the appropriate import functions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
-<span class="kn">import</span> <span class="nn">reda.importers.eit40</span> <span class="k">as</span> <span class="nn">eit</span>
+
+<span class="kn">import</span> <span class="nn">reda.importers.eit_version_2010</span> <span class="k">as</span> <span class="nn">eit_version_2010</span>
+<span class="kn">import</span> <span class="nn">reda.importers.eit_version_2013</span> <span class="k">as</span> <span class="nn">eit_version_2013</span>
+<span class="kn">import</span> <span class="nn">reda.importers.eit_version_2017</span> <span class="k">as</span> <span class="nn">eit_version_2017</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2018a</span> <span class="k">as</span> <span class="nn">eit_version_2018a</span>
 
 <span class="c1"># data file formats differ slightly between versions. Version numbers do not</span>
@@ -119,7 +124,9 @@
 <span class="n">mat_version_importers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="c1"># this is the file version used for the 160 channel multiplexer system</span>
     <span class="s1">&#39;FZJ-EZ-2018A&#39;</span><span class="p">:</span> <span class="n">eit_version_2018a</span><span class="p">,</span>
-
+    <span class="s1">&#39;FZJ-EZ-2017&#39;</span><span class="p">:</span> <span class="n">eit_version_2017</span><span class="p">,</span>
+    <span class="s1">&#39;FZJ-EZ-09.11.2010&#39;</span><span class="p">:</span> <span class="n">eit_version_2010</span><span class="p">,</span>
+    <span class="s1">&#39;FZJ-EZ-14.02.2013&#39;</span><span class="p">:</span> <span class="n">eit_version_2013</span><span class="p">,</span>
 <span class="p">}</span>
 
 <span class="k">def</span> <span class="nf">_get_file_version</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -145,7 +152,7 @@
     <span class="k">return</span> <span class="n">version</span>
 
 
-<div class="viewcode-block" id="get_mnu0_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.get_mnu0_data">[docs]</a><span class="k">def</span> <span class="nf">get_mnu0_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">configs</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_3p</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="get_mnu0_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.get_mnu0_data">[docs]</a><span class="k">def</span> <span class="nf">get_mnu0_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">configs</span><span class="p">,</span> <span class="n">return_3p</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Import data postprocessed as 3P data (NMU0), i.e., measured towards</span>
 <span class="sd">    common ground.</span>
 
@@ -155,10 +162,10 @@
 <span class="sd">        filename of matlab file</span>
 <span class="sd">    configs: Nx4 numpy.ndarray|filename</span>
 <span class="sd">        4P measurements configurations (ABMN) to generate out of the data</span>
-<span class="sd">    settings: dict|None</span>
-<span class="sd">        file format specific settings that will be provided to the importer</span>
-<span class="sd">    return_3p: bool</span>
+<span class="sd">    return_3p: bool, optional</span>
 <span class="sd">        also return 3P data</span>
+<span class="sd">    **kwargs: dict, optional</span>
+<span class="sd">        all other parameters will be handled down to the extract functions</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -167,14 +174,17 @@
 <span class="sd">    data_md_raw: pandas.DataFrame|None</span>
 <span class="sd">        MD data (sometimes this data is not imported, then we return None here)</span>
 <span class="sd">    data_emd_3p: pandas.DataFrame</span>
-<span class="sd">        The importet 3P data (only if return_3p==True)</span>
+<span class="sd">        The imported 3P data (only if return_3p==True)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;File not found: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+        <span class="n">exit</span><span class="p">()</span>
     <span class="n">version</span> <span class="o">=</span> <span class="n">_get_file_version</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
     <span class="n">importer</span> <span class="o">=</span> <span class="n">mat_version_importers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">importer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">mat</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-        <span class="n">data_md_raw</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_md</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
-        <span class="n">data_emd_3p</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_emd</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+        <span class="n">data_md_raw</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_md</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">data_emd_3p</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_emd</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">data_emd_4p</span> <span class="o">=</span> <span class="n">compute_quadrupoles</span><span class="p">(</span><span class="n">data_emd_3p</span><span class="p">,</span> <span class="n">configs</span><span class="p">)</span>
 
     <span class="c1"># if version == &#39;FZJ-EZ-14.02.2013&#39;:</span>
@@ -224,10 +234,10 @@
         <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">((</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">))</span>
 
         <span class="c1"># first choice: correct ordering</span>
-        <span class="n">query_M</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;A==</span><span class="si">{0}</span><span class="s1"> and B==</span><span class="si">{1}</span><span class="s1"> and P==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">query_M</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span>
         <span class="p">))</span>
-        <span class="n">query_N</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;A==</span><span class="si">{0}</span><span class="s1"> and B==</span><span class="si">{1}</span><span class="s1"> and P==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+        <span class="n">query_N</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span>
         <span class="p">))</span>
 

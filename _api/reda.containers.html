@@ -1059,27 +1059,18 @@ meant to be inherited by the data containers</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit160" title="reda.containers.sEIT.importers.import_eit160"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit160</span></code></a>(filename,&nbsp;configfile)</td>
-<td>EIT160 data import</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit_fzj" title="reda.containers.sEIT.importers.import_eit_fzj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code></a>(filename,&nbsp;configfile[,&nbsp;…])</td>
+<td>EIT data import for FZJ Medusa systems</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit40" title="reda.containers.sEIT.importers.import_eit40"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit40</span></code></a>(filename,&nbsp;configfile[,&nbsp;…])</td>
-<td>EIT40 data import</td>
-</tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_sip256c" title="reda.containers.sEIT.importers.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_sip256c" title="reda.containers.sEIT.importers.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
 <td>Radic SIP256c data import</td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="reda.containers.sEIT.importers.import_eit160">
-<code class="descname">import_eit160</code><span class="sig-paren">(</span><em>filename</em>, <em>configfile</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit160"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit160" title="Permalink to this definition">¶</a></dt>
-<dd><p>EIT160 data import</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.sEIT.importers.import_eit40">
-<code class="descname">import_eit40</code><span class="sig-paren">(</span><em>filename</em>, <em>configfile</em>, <em>correction_file=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit40"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit40" title="Permalink to this definition">¶</a></dt>
-<dd><p>EIT40 data import</p>
+<dt id="reda.containers.sEIT.importers.import_eit_fzj">
+<code class="descname">import_eit_fzj</code><span class="sig-paren">(</span><em>filename</em>, <em>configfile</em>, <em>correction_file=None</em>, <em>timestep=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
+<dd><p>EIT data import for FZJ Medusa systems</p>
 </dd></dl>
 
 <dl class="method">
@@ -1094,6 +1085,18 @@ meant to be inherited by the data containers</p>
 <dt id="reda.containers.sEIT.sEIT">
 <em class="property">class </em><code class="descclassname">reda.containers.sEIT.</code><code class="descname">sEIT</code><span class="sig-paren">(</span><em>dataframe=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.sEIT.importers" title="reda.containers.sEIT.importers"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.sEIT.importers</span></code></a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Attributes:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>abmn</strong></dt>
+<dd></dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
 <p class="rubric">Methods</p>
 <table border="1" class="longtable docutils">
 <colgroup>
@@ -1104,27 +1107,29 @@ meant to be inherited by the data containers</p>
 <tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.check_dataframe" title="reda.containers.sEIT.sEIT.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(dataframe)</td>
 <td>Check the given dataframe for the required columns</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit160</span></code>(filename,&nbsp;configfile)</td>
-<td>EIT160 data import</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code>(filename,&nbsp;configfile[,&nbsp;…])</td>
+<td>EIT data import for FZJ Medusa systems</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit40</span></code>(filename,&nbsp;configfile[,&nbsp;…])</td>
-<td>EIT40 data import</td>
-</tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
 <td>Radic SIP256c data import</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
 <td>State what you want to keep</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
 <td>Remove frequencies from the dataset</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td><p class="rubric">Examples</p>
 </td>
 </tr>
 </tbody>
 </table>
+<dl class="attribute">
+<dt id="reda.containers.sEIT.sEIT.abmn">
+<code class="descname">abmn</code><a class="headerlink" href="#reda.containers.sEIT.sEIT.abmn" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="method">
 <dt id="reda.containers.sEIT.sEIT.check_dataframe">
 <code class="descname">check_dataframe</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.check_dataframe" title="Permalink to this definition">¶</a></dt>

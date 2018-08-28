@@ -18,8 +18,8 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Importing Radic SIP256c data" href="plot_radic_sip256c.html" />
-    <link rel="prev" title="SIP-04 Import" href="../02_SIP04/plot_sip04.html" />
+    <link rel="next" title="Data Importers" href="../../importers.html" />
+    <link rel="prev" title="Importing Radic SIP256c data" href="plot_radic_sip256c.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -79,8 +79,8 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Examples</a><ul>
-      <li>Previous: <a href="../02_SIP04/plot_sip04.html" title="previous chapter">SIP-04 Import</a></li>
-      <li>Next: <a href="plot_radic_sip256c.html" title="next chapter">Importing Radic SIP256c data</a></li>
+      <li>Previous: <a href="plot_radic_sip256c.html" title="previous chapter">Importing Radic SIP256c data</a></li>
+      <li>Next: <a href="../../importers.html" title="next chapter">Data Importers</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -107,15 +107,10 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="first admonition-title">Note</p>
-<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-eit40-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-eit-fzj-py"><span class="std std-ref">here</span></a> to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="importing-eit40-eit160-data">
-<span id="sphx-glr-examples-03-seit-plot-eit40-py"></span><h1>Importing EIT40/EIT160 data<a class="headerlink" href="#importing-eit40-eit160-data" title="Permalink to this headline">¶</a></h1>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">This example requires the installation of crtomo-tools, as well as a
-working installation of CRTomo.</p>
-</div>
+<span id="sphx-glr-examples-03-seit-plot-eit-fzj-py"></span><h1>Importing EIT40/EIT160 data<a class="headerlink" href="#importing-eit40-eit160-data" title="Permalink to this headline">¶</a></h1>
 <p>The configs.dat file contains the four-point spreads to be imported from the
 measurement. This file is a text file with four columns (A, B, M, N),
 separated by spaces or tabs. Each line denotes one measurement:</p>
@@ -131,15 +126,16 @@ separated by spaces or tabs. Each line denotes one measurement:</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
 
 <span class="c1"># Import the data</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">import_eit160</span><span class="p">(</span>
+<span class="n">seit</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
     <span class="n">configfile</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/configs_large_dipoles_norrec.dat&#39;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>read_mag_single_file: data_EIT40_v_EZ-2017/eit_data_mnu0.mat
-constructing four-point measurements
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
+generating ids
+assigning ids
 Summary:
           frequency           a      ...                Vmn          rpha
 count  16280.000000  16280.0000      ...       16280.000000  16280.000000
@@ -152,6 +148,28 @@ min        0.100000      1.0000      ...        -376.749333  -3141.584482
 max    10000.000000     21.0000      ...         351.066301   3141.580651
 
 [8 rows x 16 columns]
+</pre></div>
+</div>
+<p>quadrupoles can be directly accessed using a pandas grouper</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
+<span class="n">quadpole_data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">15</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">quadpole_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b43c766b630&gt;
+       a   b   m   n     frequency         r         rpha
+9417  10  29  34  15      0.100000 -7.356375  3136.387111
+9419  10  29  34  15      0.314465 -7.323810  3134.689617
+9421  10  29  34  15      1.000000 -7.282164  3134.350259
+9423  10  29  34  15      3.125000 -7.239073  3135.259656
+9425  10  29  34  15     10.000000 -7.199660  3129.511640
+9427  10  29  34  15     31.250000 -7.176920  3138.459835
+9429  10  29  34  15    110.000000 -7.170031 -3136.633765
+9431  10  29  34  15    312.500000 -7.211899 -3132.921591
+9433  10  29  34  15   1000.000000 -7.325287  3139.162781
+9435  10  29  34  15   3150.000000 -7.313380  3103.699927
+9437  10  29  34  15  10000.000000 -7.035541  3040.687830
 </pre></div>
 </div>
 <p>Compute geometric factors</p>
@@ -236,13 +254,13 @@ Raw data plots (execute before applying the filters):</p>
 <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-<img alt="../../_images/sphx_glr_plot_eit40_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit40_001.png" />
-<p><strong>Total running time of the script:</strong> ( 0 minutes  27.177 seconds)</p>
-<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit40-py">
+<img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
+<p><strong>Total running time of the script:</strong> ( 0 minutes  24.954 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../../_downloads/plot_eit40.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit40.py</span></code></a></div>
+<a class="reference download internal" href="../../_downloads/plot_eit_fzj.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../../_downloads/plot_eit40.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit40.ipynb</span></code></a></div>
+<a class="reference download internal" href="../../_downloads/plot_eit_fzj.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj.ipynb</span></code></a></div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
@@ -262,7 +280,7 @@ Raw data plots (execute before applying the filters):</p>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
       |
-      <a href="../../_sources/_examples/03_sEIT/plot_eit40.rst.txt"
+      <a href="../../_sources/_examples/03_sEIT/plot_eit_fzj.rst.txt"
           rel="nofollow">Page source</a>
     </div>
 

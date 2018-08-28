@@ -106,8 +106,9 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">import</span> <span class="nn">reda.importers.eit40</span> <span class="k">as</span> <span class="nn">reda_eit40</span>
-<span class="kn">import</span> <span class="nn">reda.importers.eit160</span> <span class="k">as</span> <span class="nn">reda_eit160</span>
+<span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
+<span class="c1"># import reda.importers.eit40 as reda_eit40</span>
+<span class="c1"># import reda.importers.eit160 as reda_eit160</span>
 <span class="kn">import</span> <span class="nn">reda.importers.radic_sip256c</span> <span class="k">as</span> <span class="nn">reda_sip256c</span>
 <span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="k">as</span> <span class="nn">redanr</span>
 
@@ -145,32 +146,25 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="importers.import_eit40"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_eit40">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit40</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;EIT40 data import&quot;&quot;&quot;</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">reda_eit40</span><span class="o">.</span><span class="n">import_medusa_data</span><span class="p">(</span>
+<div class="viewcode-block" id="importers.import_eit_fzj"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_eit_fzj">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit_fzj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                       <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;EIT data import for FZJ Medusa systems&quot;&quot;&quot;</span>
+        <span class="n">df_emd</span><span class="p">,</span> <span class="n">df_md</span> <span class="o">=</span> <span class="n">eit_fzj</span><span class="o">.</span><span class="n">get_mnu0_data</span><span class="p">(</span>
             <span class="n">filename</span><span class="p">,</span>
             <span class="n">configfile</span><span class="p">,</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">correction_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">reda_eit40</span><span class="o">.</span><span class="n">apply_correction_factors</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">)</span>
+            <span class="n">reda_eit40</span><span class="o">.</span><span class="n">apply_correction_factors</span><span class="p">(</span><span class="n">df_emd</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">)</span>
 
-        <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_to_df</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_diffs</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">])</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">df_emd</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
 
-        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df_emd</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_to_df</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_diffs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">])</span>
+
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
-
-<div class="viewcode-block" id="importers.import_eit160"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_eit160">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit160</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;EIT160 data import&quot;&quot;&quot;</span>
-        <span class="n">df_emd</span><span class="p">,</span> <span class="n">df_md</span> <span class="o">=</span> <span class="n">reda_eit160</span><span class="o">.</span><span class="n">import_medusa_data</span><span class="p">(</span>
-            <span class="n">filename</span><span class="p">,</span>
-            <span class="n">configfile</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">df_emd</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df_emd</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="sEIT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT">[docs]</a><span class="k">class</span> <span class="nc">sEIT</span><span class="p">(</span><span class="n">importers</span><span class="p">):</span>
@@ -196,6 +190,10 @@
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Required column not in dataframe: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">column</span>
                 <span class="p">))</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">abmn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">])</span>
 
 <div class="viewcode-block" id="sEIT.subquery"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.subquery">[docs]</a>    <span class="k">def</span> <span class="nf">subquery</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">subset</span><span class="p">,</span> <span class="nb">filter</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
