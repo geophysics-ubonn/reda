@@ -45,7 +45,7 @@ seit.data = norrec.assign_norrec_to_df(seit.data)
 ##############################################################################
 # quadrupoles can be directly accessed using a pandas grouper
 print(seit.abmn)
-quadpole_data = seit.abmn.get_group((10, 29, 34, 15))
+quadpole_data = seit.abmn.get_group((10, 29, 15, 34))
 print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
 
 
