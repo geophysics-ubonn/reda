@@ -50,7 +50,10 @@ def compute_K_numerical(dataframe, settings=None, keep_dir=None):
             'rho': 100,
             'elem': 'elem.dat',
             'elec': 'elec.dat',
+            'sink_node': '100',
+            '2D': False,
         }
+
 
     """
     inversion_code = reda.rcParams.get('geom_factor.inversion_code', 'crtomo')
