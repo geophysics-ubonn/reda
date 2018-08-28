@@ -4,10 +4,6 @@
 Importing EIT40/EIT160 data
 ===========================
 
-.. warning::
-
-    This example requires the installation of crtomo-tools, as well as a
-    working installation of CRTomo.
 
 The configs.dat file contains the four-point spreads to be imported from the
 measurement. This file is a text file with four columns (A, B, M, N),
@@ -27,10 +23,16 @@ import reda
 seit = reda.sEIT()
 
 # Import the data
-seit.import_eit160(
+seit.import_eit_fzj(
     filename='data_EIT40_v_EZ-2017/eit_data_mnu0.mat',
     configfile='data_EIT40_v_EZ-2017/configs_large_dipoles_norrec.dat'
 )
+
+##############################################################################
+# quadrupoles can be directly accessed using a pandas grouper
+print(seit.abmn)
+quadpole_data = seit.abmn.get_group((10, 29, 34, 15))
+print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
 
 ##############################################################################
 # Compute geometric factors
