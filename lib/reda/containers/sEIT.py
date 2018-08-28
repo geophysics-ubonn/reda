@@ -87,6 +87,7 @@ class sEIT(importers):
                     column
                 ))
 
+    @property
     def abmn(self):
         return self.data.groupby(['a', 'b', 'm', 'n'])
 
