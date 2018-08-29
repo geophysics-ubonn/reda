@@ -251,6 +251,8 @@ def _extract_emd(mat, **kwargs):
 
         dfl.append(df)
 
+    if len(dfl) == 0:
+        return None
     df = pd.concat(dfl)
 
     # average swapped current injections here!

@@ -81,10 +81,10 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
         mat = sio.loadmat(filename, squeeze_me=True)
         data_md_raw = importer._extract_md(mat, **kwargs)
         data_emd_3p = importer._extract_emd(mat, **kwargs)
-        data_emd_4p = compute_quadrupoles(data_emd_3p, configs)
-
-    # if version == 'FZJ-EZ-14.02.2013':
-    #     df_emd = eit.read_emd_ez_20140214(filename, configs)
+        if data_emd_3p:
+            data_emd_4p = compute_quadrupoles(data_emd_3p, configs)
+        else:
+            data_emd_4p = None
     else:
         raise Exception(
             'The file version "{}" is not supported yet.'.format(
