@@ -37,6 +37,7 @@ def _extract_md(mat, **kwargs):
                 fdata['As3'][:, 3, :].squeeze(),
                 fdata['Is3'],
                 fdata['Yl3'],
+                fdata['Il3'],
             ))
         )
         df.columns = (
@@ -67,6 +68,9 @@ def _extract_md(mat, **kwargs):
             'Yl1',
             'Yl2',
             'Yl3',
+            'Il1',
+            'Il2',
+            'Il3',
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
@@ -82,6 +86,9 @@ def _extract_md(mat, **kwargs):
         df['Yl1'] = df['Yl1'].astype(complex)
         df['Yl2'] = df['Yl2'].astype(complex)
         df['Yl3'] = df['Yl3'].astype(complex)
+
+        for key in ('Il1', 'Il2', 'Il3'):
+            df[key] = df[key].astype(complex)
 
         df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
         df['ShuntVoltage1_2'] = df['ShuntVoltage1_2'].astype(complex)
