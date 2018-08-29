@@ -43,11 +43,12 @@ class importers(object):
         self._describe_data(df)
 
     def import_eit_fzj(self, filename, configfile, correction_file=None,
-                       timestep=None):
+                       timestep=None, **kwargs):
         """EIT data import for FZJ Medusa systems"""
         df_emd, df_md = eit_fzj.get_mnu0_data(
             filename,
             configfile,
+            **kwargs
         )
         if correction_file is not None:
             reda_eit40.apply_correction_factors(df_emd, correction_file)
