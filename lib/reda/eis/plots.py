@@ -97,7 +97,8 @@ class sip_response():
         else:
             raise Exception('dtype not known: {}'.format(dtype))
 
-    def _plot(self, title=None, reciprocal=None, limits=None, dtype='rho'):
+    def _plot(self, title=None, reciprocal=None, limits=None, dtype='rho',
+              **kwargs):
         """Standard plot of spectrum
 
         Parameters
@@ -112,6 +113,10 @@ class sip_response():
         dtype: string, optional
             Possible values: [rho|R]. Determines the label types. 'rho':
                 resistivity/conductivity, 'r': resistance/conductance
+        label_nor:
+            label for normal data (default: "normal")
+        label_rec:
+            label for reciprocal data (default: "reciprocal")
 
         Returns
         -------
@@ -136,7 +141,7 @@ class sip_response():
         ax = axes[0, 0]
         ax.semilogx(
             self.frequencies, self.rmag, '.-', color='k',
-            label='normal',
+            label=kwargs.get('label_nor', 'normal'),
         )
         ax.set_ylim(
             limits.get('rmag_min', None),
@@ -194,7 +199,7 @@ class sip_response():
                 '.-',
                 color='k',
                 linestyle='dashed',
-                label='reciprocal',
+                label=kwargs.get('label_rec', 'reciprocal'),
             )
             axes[0, 1].semilogx(
                 reciprocal.frequencies,
@@ -233,7 +238,7 @@ class sip_response():
         return fig, axes
 
     def plot(self, filename, title=None, reciprocal=None, limits=None,
-             dtype='rho', return_fig=False):
+             dtype='rho', return_fig=False, **kwargs):
         """Standard plot of spectrum
 
         Parameters
@@ -254,6 +259,8 @@ class sip_response():
         return_fig: bool, optional
             If True, then do not delete the figure object after saving to file
             and return the figure object. Default: False
+        **kwargs: dict
+            kwargs is piped through to the _plot function
 
         Returns
         -------
@@ -295,6 +302,7 @@ class sip_response():
             limits=limits,
             title=title,
             dtype=dtype,
+            **kwargs
         )
         fig.savefig(filename, dpi=300)
         if return_fig:
