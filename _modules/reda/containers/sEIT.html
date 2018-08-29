@@ -147,11 +147,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="importers.import_eit_fzj"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_eit_fzj">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit_fzj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-                       <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+                       <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;EIT data import for FZJ Medusa systems&quot;&quot;&quot;</span>
         <span class="n">df_emd</span><span class="p">,</span> <span class="n">df_md</span> <span class="o">=</span> <span class="n">eit_fzj</span><span class="o">.</span><span class="n">get_mnu0_data</span><span class="p">(</span>
             <span class="n">filename</span><span class="p">,</span>
             <span class="n">configfile</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">correction_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">reda_eit40</span><span class="o">.</span><span class="n">apply_correction_factors</span><span class="p">(</span><span class="n">df_emd</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">)</span>
@@ -250,7 +251,7 @@
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.7</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
       
     </div>
