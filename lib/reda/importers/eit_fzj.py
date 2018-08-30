@@ -81,7 +81,7 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
         mat = sio.loadmat(filename, squeeze_me=True)
         data_md_raw = importer._extract_md(mat, **kwargs)
         data_emd_3p = importer._extract_emd(mat, **kwargs)
-        if data_emd_3p:
+        if data_emd_3p is not None:
             data_emd_4p = compute_quadrupoles(data_emd_3p, configs)
         else:
             data_emd_4p = None
