@@ -37,7 +37,7 @@ def fix_sign_with_K(dataframe):
     indices_negative = (dataframe['K'] < 0) & (dataframe['r'] < 0)
     if np.where(indices_negative)[0].size == 0:
         # nothing to do here
-        return
+        return dataframe
 
     dataframe.ix[indices_negative, ['K', 'r']] *= -1
 
