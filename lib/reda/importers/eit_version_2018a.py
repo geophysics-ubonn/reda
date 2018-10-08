@@ -12,7 +12,7 @@ def convert_electrode(i):
 
 
 def _extract_md(mat, **kwargs):
-    md = mat['MD'].squeeze()
+    md = np.atleast_1d(mat['MD'].squeeze())
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
@@ -35,7 +35,10 @@ def _extract_md(mat, **kwargs):
             np.hstack((
                 timestamp,
                 fdata['cni'],
+                fdata['U0'][:, np.newaxis],
                 fdata['Cl3'],
+                fdata['Cg3'][:, 0, :].squeeze(),
+                fdata['Cg3'][:, 1, :].squeeze(),
                 fdata['Zg3'][:, 0, :].squeeze(),
                 fdata['Zg3'][:, 1, :].squeeze(),
                 fdata['As3'][:, 0, :].squeeze(),
@@ -44,15 +47,23 @@ def _extract_md(mat, **kwargs):
                 fdata['As3'][:, 3, :].squeeze(),
                 fdata['Is3'],
                 fdata['Yl3'],
+
             ))
         )
         df.columns = (
             'datetime',
             'a',
             'b',
+            'U0',
             'Cl1',
             'Cl2',
             'Cl3',
+            'Cg1_1',
+            'Cg2_1',
+            'Cg3_1',
+            'Cg1_2',
+            'Cg2_2',
+            'Cg3_2',
             'Zg1_2',
             'Zg2_2',
             'Zg3_2',
@@ -84,6 +95,9 @@ def _extract_md(mat, **kwargs):
         df['multiplexer_group'] = df['a'] % 4
         df['a'] = df['a'].astype(int).apply(convert_electrode)
         df['b'] = df['b'].astype(int).apply(convert_electrode)
+
+        for col in ('Cg1_1', 'Cg2_1', 'Cg3_1', 'Cg1_2', 'Cg2_2', 'Cg3_2'):
+            df[col] = df[col].astype(complex)
 
         df['Cl1'] = df['Cl1'].astype(complex)
         df['Cl2'] = df['Cl2'].astype(complex)
@@ -156,7 +170,7 @@ def _extract_emd(mat, **kwargs):
     mat: matlab-imported struct
 
     """
-    emd = mat['EMD'].squeeze()
+    emd = np.atleast_1d(mat['EMD'].squeeze())
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
