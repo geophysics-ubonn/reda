@@ -1,12 +1,25 @@
 """spectral electrical impedance tomography (sEIT) container
 """
+# import functools
+from numbers import Number
+
 import pandas as pd
 
 import reda.importers.eit_fzj as eit_fzj
-# import reda.importers.eit40 as reda_eit40
+import reda.importers.eit40 as reda_eit40
 # import reda.importers.eit160 as reda_eit160
 import reda.importers.radic_sip256c as reda_sip256c
+import reda.importers.crtomo as reda_crtomo_exporter
 import reda.utils.norrec as redanr
+import reda.utils.geometric_factors as geometric_factors
+from reda.utils.fix_sign_with_K import fix_sign_with_K
+
+
+def append_doc_of(fun):
+    def decorator(f):
+        f.__doc__ += fun.__doc__
+        return f
+    return decorator
 
 
 class importers(object):
@@ -17,14 +30,36 @@ class importers(object):
         if self.data is None:
             self.data = df
         else:
-            self.data = pd.concat((self.data, df), sort=True)
+            try:
+                self.data = pd.concat((self.data, df), sort=True)
+                pass
+            except Exception as e:
+                import IPython
+                IPython.embed()
+        # clean any previous norrec-assignments
+        if 'norrec' and 'id' in self.data.columns:
+            self.data.drop(['norrec', 'id'], axis=1, inplace=True)
+        self.data = redanr.assign_norrec_to_df(self.data)
+        self.data = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
 
     def _describe_data(self, df=None):
+        return
         if df is None:
             df_to_use = self.data
         else:
             df_to_use = df
         print(df_to_use.describe())
+
+    @append_doc_of(reda_crtomo_exporter.load_seit_data)
+    def import_crtomo(self, directory, frequency_file='frequencies.dat',
+                      data_prefix='volt_'):
+        """CRTomo importer"""
+        df = reda_crtomo_exporter.load_seit_data(
+            directory, frequency_file, data_prefix)
+        self._add_to_container(df)
+
+        print('Summary:')
+        self._describe_data(df)
 
     def import_sip256c(self, filename, settings=None, reciprocal=None):
         """Radic SIP256c data import"""
@@ -34,11 +69,6 @@ class importers(object):
             filename, settings, reciprocal=reciprocal)
         self._add_to_container(df)
 
-        # clean any previous norrec-assignments
-        if 'norrec' and 'id' in self.data.columns:
-            self.data.drop(['norrec', 'id'], axis=1)
-        self.data = redanr.assign_norrec_to_df(self.data)
-        # self.datadf = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
         print('Summary:')
         self._describe_data(df)
 
@@ -57,8 +87,6 @@ class importers(object):
             df_emd['timestep'] = timestep
 
         self._add_to_container(df_emd)
-        self.data = redanr.assign_norrec_to_df(self.data)
-        self.data = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
 
         print('Summary:')
         self._describe_data(df_emd)
@@ -135,3 +163,25 @@ class sEIT(importers):
         g = self.data.groupby('frequency')
         print('Remaining frequencies:')
         print(sorted(g.groups.keys()))
+
+    def gen_geometric_factors_analytical(self, spacing):
+        """Assuming an equal electrode spacing, compute the K-factor over a
+        homogeneous half-space.
+
+        For more complex grids, please refer to the module:
+        reda.utils.geometric_factors
+
+        Parameters
+        ----------
+        spacing: float
+            Electrode spacing
+
+        """
+        assert isinstance(spacing, Number)
+        K = geometric_factors.compute_K_analytical(self.data, spacing)
+        self.data = geometric_factors.apply_K(self.data, K)
+
+    @append_doc_of(fix_sign_with_K)
+    def fix_sign_with_K(self):
+        """ """
+        fix_sign_with_K(self.data)
