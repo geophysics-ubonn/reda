@@ -43,15 +43,24 @@ def save_block_to_crt(filename, group, norrec='all', store_errors=False):
 
 
 def write_files_to_directory(df, directory, **kwargs):
-    """
+    """Write sEIT data ta files. Data of each frequency is written in a
+    separate file that conforms to the CRMod/CRTomo standard, and can directly
+    be used for inversions using CRTomo.
 
-    ::
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Data
+    directory : string
+        Output directory. Will be created if not existant
 
-        kwargs = {
-            'store_errors': [True|False] store the device generated errors in
-                            the output files (as additional columns)
-            'norrec': all|nor|rec which normal-reciprocal data set to use
-        }
+    Other Parameters
+    ----------------
+    store_errors: bool, optional
+        store the device generated errors in the output files (as additional
+        columns). Default: False
+    norrec: string, optional
+        all|nor|rec which normal-reciprocal data set to use. Default: all
 
     """
     if 'frequency' in df.columns:
