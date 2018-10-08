@@ -171,6 +171,10 @@ def assign_norrec_to_df(df):
         running_index += 1
 
     print('assigning ids')
+    # print(df.shape)
+    # print(df.columns)
+    # print('normal_ids', normal_ids)
+    # print('reciprocal_ids', reciprocal_ids)
     # now convert the indices into a dataframe so we can use pd.merge
     # note that this code was previously written in another way, so the
     # conversion is quite cumbersome
@@ -179,13 +183,26 @@ def assign_norrec_to_df(df):
     df_nor = pd.DataFrame(df_nor).T.reset_index().rename(
         {'index': 'id'}, axis=1)
     df_nor['norrec'] = 'nor'
-    df_nor.columns = ('id', 'a', 'b', 'm', 'n', 'norrec')
-    df_nor2 = df_nor.copy()
-    df_nor2.columns = ('id', 'b', 'a', 'm', 'n', 'norrec')
-    df_nor3 = df_nor.copy()
-    df_nor3.columns = ('id', 'b', 'a', 'n', 'm', 'norrec')
-    df_nor4 = df_nor.copy()
-    df_nor4.columns = ('id', 'a', 'b', 'n', 'm', 'norrec')
+
+    if len(normal_ids) > 0:
+        df_nor.columns = ('id', 'a', 'b', 'm', 'n', 'norrec')
+        df_nor2 = df_nor.copy()
+        df_nor2.columns = ('id', 'b', 'a', 'm', 'n', 'norrec')
+        df_nor3 = df_nor.copy()
+        df_nor3.columns = ('id', 'b', 'a', 'n', 'm', 'norrec')
+        df_nor4 = df_nor.copy()
+        df_nor4.columns = ('id', 'a', 'b', 'n', 'm', 'norrec')
+        df_ids = pd.concat(
+            (
+                df_nor,
+                df_nor2,
+                df_nor3,
+                df_nor4,
+            ),
+            sort=True
+        )
+    else:
+        df_ids = pd.DataFrame()
 
     if len(reciprocal_ids) > 0:
         df_rec = {item: key for key, item in reciprocal_ids.items()}
@@ -200,16 +217,6 @@ def assign_norrec_to_df(df):
         df_rec4 = df_rec.copy()
         df_rec4.columns = ('id', 'a', 'b', 'n', 'm', 'norrec')
 
-    df_ids = pd.concat(
-        (
-            df_nor,
-            df_nor2,
-            df_nor3,
-            df_nor4,
-        ),
-        sort=True
-    )
-    if len(reciprocal_ids) > 0:
         df_ids = pd.concat(
             (
                 df_ids,
@@ -396,8 +403,8 @@ def test2():
     diff.columns = cols
     df1 = df1.merge(diff)
     df1 = df1.sort_values(['timestep', 'frequency'])
-    print(df1)
-    print('@')
+    # print(df1)
+    # print('@')
     assert(
         df1.query(
             'timestep == 1 and a == 1 and b == 2 and m == 3 and n == 4 ' +
