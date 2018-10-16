@@ -10,20 +10,26 @@ plt, mpl = reda.utils.mpl.setup()
 class sip_response():
     """ Hold one SIP spectrum and return it in various formats
     """
-    def __init__(self, frequencies, rcomplex=None, ccomplex=None):
+    def __init__(self, frequencies, rcomplex=None, ccomplex=None,
+                 rmag=None, rpha=None):
         """
 
         Parameters
         ----------
-        frequencies: :class:`numpy.ndarray`
+        frequencies : :class:`numpy.ndarray`
             Array of size N containing N frequencies in ascending order
-        rcomplex: :class:`numpy.ndarray`, optional
+        rcomplex : :class:`numpy.ndarray`, optional
             Complex values resistance/resistivity values (size N)
-        ccomplex: :class:`numpy.ndarray`, optional
+        ccomplex : :class:`numpy.ndarray`, optional
             Complex values conductance/conductivity values (size N)
+        rmag : :class:`numpy.ndarray`, optional
+            Real valued resistance/resistivity magnitude values (size N)
+        rpha : :class:`numpy.ndarray`, optional
+            Real valued resistance/resistivity phase values (size N)
 
         """
-        if rcomplex is None and ccomplex is None:
+        if rcomplex is None and ccomplex is None and (
+                rmag is None or rpha is None):
             raise Exception('One initialization array is allowed!')
         if rcomplex is not None and ccomplex is not None:
             raise Exception('Only one initialization array is allowed!')
@@ -36,6 +42,9 @@ class sip_response():
         elif ccomplex is not None:
             self.ccomplex = ccomplex
             self.rcomplex = convert('ccomplex', 'rcomplex', ccomplex)
+        elif rmag is not None and rpha is not None:
+            self.rcomplex = rmag * np.exp(1j * rpha / 1000.0)
+            self.ccomplex = convert('rcomplex', 'ccomplex', rcomplex)
 
         self.rmag = np.abs(self.rcomplex)
         self.rpha = np.arctan2(
