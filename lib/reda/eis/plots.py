@@ -44,7 +44,7 @@ class sip_response():
             self.rcomplex = convert('ccomplex', 'rcomplex', ccomplex)
         elif rmag is not None and rpha is not None:
             self.rcomplex = rmag * np.exp(1j * rpha / 1000.0)
-            self.ccomplex = convert('rcomplex', 'ccomplex', rcomplex)
+            self.ccomplex = convert('rcomplex', 'ccomplex', self.rcomplex)
 
         self.rmag = np.abs(self.rcomplex)
         self.rpha = np.arctan2(
@@ -94,15 +94,15 @@ class sip_response():
             ax.set_xlabel('frequency [Hz]')
 
         if dtype == 'rho':
-            axes[0, 0].set_ylabel(r'$|\rho|~[\Omega m]$')
-            axes[0, 1].set_ylabel(r'$-\phi~[mrad]$')
-            axes[1, 0].set_ylabel(r"$\sigma'~[S/m]$")
-            axes[1, 1].set_ylabel(r"$\sigma''~[S/m]$")
+            axes[0, 0].set_ylabel(r'$|\rho| [\Omega m]$')
+            axes[0, 1].set_ylabel(r'$-\phi [mrad]$')
+            axes[1, 0].set_ylabel(r"$\sigma' [S/m]$")
+            axes[1, 1].set_ylabel(r"$\sigma'' [S/m]$")
         elif dtype == 'r':
-            axes[0, 0].set_ylabel(r'$|R|~[\Omega]$')
-            axes[0, 1].set_ylabel(r'$-\phi~[mrad]$')
-            axes[1, 0].set_ylabel(r"$Y'~[S]$")
-            axes[1, 1].set_ylabel(r"$Y''~[S]$")
+            axes[0, 0].set_ylabel(r'$|R| [\Omega]$')
+            axes[0, 1].set_ylabel(r'$-\phi [mrad]$')
+            axes[1, 0].set_ylabel(r"$Y' [S]$")
+            axes[1, 1].set_ylabel(r"$Y'' [S]$")
         else:
             raise Exception('dtype not known: {}'.format(dtype))
 
