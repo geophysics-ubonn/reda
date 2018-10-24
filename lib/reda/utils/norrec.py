@@ -366,7 +366,9 @@ def assign_norrec_diffs(df, diff_list):
         cols[-1] = diffcol + 'diff'
         diff.columns = cols
 
-        df = df.merge(diff)
+        df = df.drop(
+            cols[-1], axis=1, errors='ignore'
+        ).merge(diff, on=extra_dims, how='outer')
 
     df = df.sort_values(extra_dims)
     return df
