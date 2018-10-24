@@ -78,11 +78,12 @@ def write_files_to_directory(df, directory, **kwargs):
 
     if group_key is not None:
         g = df.groupby(group_key)
-        frequencies = g.first().index.values
-        np.savetxt('frequencies.dat', frequencies)
 
         nr = 1
+        frequencies_used = []
         for frequency, group in g:
+            if group.shape[0] > 0:
+                frequencies_used.append(frequency)
             filename = 'volt_{0:02}_{1:.6}Hz.crt'.format(nr, frequency)
             save_block_to_crt(
                 filename,
@@ -92,6 +93,7 @@ def write_files_to_directory(df, directory, **kwargs):
             )
 
             nr += 1
+        np.savetxt('frequencies.dat', frequencies_used)
     else:
         save_block_to_crt(
             'volt.dat',
