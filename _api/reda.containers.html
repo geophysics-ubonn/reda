@@ -9,12 +9,12 @@
     <title>reda.containers package &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -52,7 +52,7 @@
     
 
 <p>
-<a href="https://travis-ci.org/geophysics-ubonn/reda">
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
     <img
         alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
         src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
@@ -99,6 +99,14 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -331,7 +339,7 @@ pandas.DataFrame.query</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+523.gbf67634.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+800.gf928b46.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
@@ -550,10 +558,10 @@ specific measurement. Default: True</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+523.gbf67634.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+800.gf928b46.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+523.gbf67634.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+800.gf928b46.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -1046,6 +1054,11 @@ of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
 <div class="section" id="module-reda.containers.sEIT">
 <span id="reda-containers-seit-module"></span><h2>reda.containers.sEIT module<a class="headerlink" href="#module-reda.containers.sEIT" title="Permalink to this headline">¶</a></h2>
 <p>spectral electrical impedance tomography (sEIT) container</p>
+<dl class="function">
+<dt id="reda.containers.sEIT.append_doc_of">
+<code class="descclassname">reda.containers.sEIT.</code><code class="descname">append_doc_of</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#append_doc_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.append_doc_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="class">
 <dt id="reda.containers.sEIT.importers">
 <em class="property">class </em><code class="descclassname">reda.containers.sEIT.</code><code class="descname">importers</code><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers" title="Permalink to this definition">¶</a></dt>
@@ -1059,14 +1072,53 @@ meant to be inherited by the data containers</p>
 <col width="90%" />
 </colgroup>
 <tbody valign="top">
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit_fzj" title="reda.containers.sEIT.importers.import_eit_fzj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code></a>(filename,&nbsp;configfile[,&nbsp;…])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_crtomo" title="reda.containers.sEIT.importers.import_crtomo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo</span></code></a>(directory[,&nbsp;frequency_file,&nbsp;…])</td>
+<td>CRTomo importerLoad sEIT data from data directory.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit_fzj" title="reda.containers.sEIT.importers.import_eit_fzj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code></a>(filename,&nbsp;configfile[,&nbsp;…])</td>
 <td>EIT data import for FZJ Medusa systems</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_sip256c" title="reda.containers.sEIT.importers.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.importers.import_sip256c" title="reda.containers.sEIT.importers.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
 <td>Radic SIP256c data import</td>
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="reda.containers.sEIT.importers.import_crtomo">
+<code class="descname">import_crtomo</code><span class="sig-paren">(</span><em>directory</em>, <em>frequency_file='frequencies.dat'</em>, <em>data_prefix='volt_'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_crtomo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_crtomo" title="Permalink to this definition">¶</a></dt>
+<dd><p>CRTomo importerLoad sEIT data from data directory. This function loads data previously
+exported from reda using reda.exporters.crtomo.write_files_to_directory</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>directory</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">input directory</p>
+</dd>
+<dt><strong>frequency_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string, optional</span></dt>
+<dd><p class="first last">file (located in directory) that contains the frequencies</p>
+</dd>
+<dt><strong>data_prefix: string, optional</strong></dt>
+<dd><p class="first last">for each frequency a corresponding data file must be present in the
+input directory. Frequencies and files are matched by sorting the
+frequencies AND the filenames, retrieved using glob and the
+data_prefix</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
+<dd><p class="first last">A DataFrame suitable for the sEIT container</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
 <dl class="method">
 <dt id="reda.containers.sEIT.importers.import_eit_fzj">
 <code class="descname">import_eit_fzj</code><span class="sig-paren">(</span><em>filename</em>, <em>configfile</em>, <em>correction_file=None</em>, <em>timestep=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
@@ -1107,17 +1159,29 @@ meant to be inherited by the data containers</p>
 <tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.check_dataframe" title="reda.containers.sEIT.sEIT.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(dataframe)</td>
 <td>Check the given dataframe for the required columns</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code>(filename,&nbsp;configfile[,&nbsp;…])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.fix_sign_with_K" title="reda.containers.sEIT.sEIT.fix_sign_with_K"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_sign_with_K</span></code></a>()</td>
+<td>Swap electrode denotations so that geometrical (K) factors become positive.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.gen_geometric_factors_analytical" title="reda.containers.sEIT.sEIT.gen_geometric_factors_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_geometric_factors_analytical</span></code></a>(spacing)</td>
+<td>Assuming an equal electrode spacing, compute the K-factor over a homogeneous half-space.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo</span></code>(directory[,&nbsp;frequency_file,&nbsp;…])</td>
+<td>CRTomo importerLoad sEIT data from data directory.</td>
+</tr>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code>(filename,&nbsp;configfile[,&nbsp;…])</td>
 <td>EIT data import for FZJ Medusa systems</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
 <td>Radic SIP256c data import</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
 <td>State what you want to keep</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
 <td>Remove frequencies from the dataset</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>([filename])</td>
+<td>Create a scatter plots for all diff pairs</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td><p class="rubric">Examples</p>
@@ -1137,6 +1201,66 @@ meant to be inherited by the data containers</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="reda.containers.sEIT.sEIT.fix_sign_with_K">
+<code class="descname">fix_sign_with_K</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swap electrode denotations so that geometrical (K) factors become
+positive. Also, swap signs of all parameters affected by this process.</p>
+<p>Affected parameters, at the moment, are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>K</li>
+<li>r</li>
+<li>Vmn</li>
+<li>Zt</li>
+<li>rho_a</li>
+<li>rpha</li>
+</ul>
+</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>dataframe: pandas.DateFrame</strong></dt>
+<dd><p class="first last">dataframe holding the data</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dataframe: pandas.DateFrame</strong></dt>
+<dd><p class="first last">the fixed dataframe</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.gen_geometric_factors_analytical">
+<code class="descname">gen_geometric_factors_analytical</code><span class="sig-paren">(</span><em>spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.gen_geometric_factors_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.gen_geometric_factors_analytical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Assuming an equal electrode spacing, compute the K-factor over a
+homogeneous half-space.</p>
+<p>For more complex grids, please refer to the module:
+reda.utils.geometric_factors</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>spacing: float</strong></dt>
+<dd><p class="first last">Electrode spacing</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
 <dt id="reda.containers.sEIT.sEIT.query">
 <code class="descname">query</code><span class="sig-paren">(</span><em>query</em>, <em>inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.query" title="Permalink to this definition">¶</a></dt>
 <dd><p>State what you want to keep</p>
@@ -1146,6 +1270,35 @@ meant to be inherited by the data containers</p>
 <dt id="reda.containers.sEIT.sEIT.remove_frequencies">
 <code class="descname">remove_frequencies</code><span class="sig-paren">(</span><em>fmin</em>, <em>fmax</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.remove_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove frequencies from the dataset</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.scatter_norrec">
+<code class="descname">scatter_norrec</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.scatter_norrec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a scatter plots for all diff pairs</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string, optional</span></dt>
+<dd><p class="first last">if given, save plot to file</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>fig</strong> <span class="classifier-delimiter">:</span> <span class="classifier">matplotlib.Figure</span></dt>
+<dd><p class="first last">the figure object</p>
+</dd>
+<dt><strong>axes</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of matplotlib.axes</span></dt>
+<dd><p class="first last">the individual axes</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -1176,8 +1329,8 @@ meant to be inherited by the data containers</p>
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="../_sources/_api/reda.containers.rst.txt"

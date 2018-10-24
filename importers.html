@@ -9,12 +9,12 @@
     <title>Data Importers &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,7 +52,7 @@
     
 
 <p>
-<a href="https://travis-ci.org/geophysics-ubonn/reda">
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
     <img
         alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
         src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
@@ -95,6 +95,14 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -110,7 +118,7 @@
 <p>Importer functions are managed in <a class="reference internal" href="_api/reda.importers.html#module-reda.importers" title="reda.importers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reda.importers</span></code></a>. An importer module
 must provide the following functionality:</p>
 <ul class="simple">
-<li>import a given data format into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+523.gbf67634.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></li>
+<li>import a given data format into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+800.gf928b46.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></li>
 <li>import electrode positions into a <cite>pandas.DataFrame</cite>, if available in this
 data format</li>
 <li>import topography into a <cite>pandas.DataFrame</cite>, if available in this data format</li>
@@ -146,8 +154,8 @@ classes for the importers, they can be built upon the import functions.</p>
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="_sources/importers.rst.txt"

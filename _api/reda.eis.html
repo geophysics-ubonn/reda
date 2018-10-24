@@ -9,12 +9,12 @@
     <title>reda.eis package &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../_static/jquery.js"></script>
     <script type="text/javascript" src="../_static/underscore.js"></script>
     <script type="text/javascript" src="../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -52,7 +52,7 @@
     
 
 <p>
-<a href="https://travis-ci.org/geophysics-ubonn/reda">
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
     <img
         alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
         src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
@@ -99,6 +99,14 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -353,7 +361,7 @@ plots</p>
 
 <dl class="class">
 <dt id="reda.eis.plots.sip_response">
-<em class="property">class </em><code class="descclassname">reda.eis.plots.</code><code class="descname">sip_response</code><span class="sig-paren">(</span><em>frequencies</em>, <em>rcomplex=None</em>, <em>ccomplex=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.eis.plots.sip_response" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="descclassname">reda.eis.plots.</code><code class="descname">sip_response</code><span class="sig-paren">(</span><em>frequencies</em>, <em>rcomplex=None</em>, <em>ccomplex=None</em>, <em>rmag=None</em>, <em>rpha=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.eis.plots.sip_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Hold one SIP spectrum and return it in various formats</p>
 <p class="rubric">Methods</p>
@@ -721,8 +729,8 @@ set</p>
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="../_sources/_api/reda.eis.rst.txt"

@@ -10,12 +10,12 @@
     <title>Index &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="#" />
     <link rel="search" title="Search" href="search.html" />
@@ -51,7 +51,7 @@
     
 
 <p>
-<a href="https://travis-ci.org/geophysics-ubonn/reda">
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
     <img
         alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
         src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
@@ -92,6 +92,14 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -137,7 +145,11 @@
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.add_to_configs">add_to_configs() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.ERT.append_doc_of">append_doc_of() (in module reda.containers.ERT)</a>
+
+      <ul>
+        <li><a href="_api/reda.containers.html#reda.containers.sEIT.append_doc_of">(in module reda.containers.sEIT)</a>
 </li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.importers.html#reda.importers.eit40.apply_correction_factors">apply_correction_factors() (in module reda.importers.eit40)</a>
@@ -251,7 +263,11 @@
 </li>
       </ul></li>
       <li><a href="_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K">fix_sign_with_K() (in module reda.utils.fix_sign_with_K)</a>
+
+      <ul>
+        <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.fix_sign_with_K">(reda.containers.sEIT.sEIT method)</a>
 </li>
+      </ul></li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_ccomplex">from_ccomplex() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_cmag_cpha">from_cmag_cpha() (in module reda.eis.convert)</a>
@@ -288,16 +304,18 @@
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_dipole_dipole">gen_dipole_dipole() (reda.configs.configManager.ConfigManager method)</a>
 </li>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.gen_geometric_factors_analytical">gen_geometric_factors_analytical() (reda.containers.sEIT.sEIT method)</a>
+</li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_gradient">gen_gradient() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_reciprocals">gen_reciprocals() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_schlumberger">gen_schlumberger() (reda.configs.configManager.ConfigManager method)</a>
 </li>
-      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_wenner">gen_wenner() (reda.configs.configManager.ConfigManager method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_wenner">gen_wenner() (reda.configs.configManager.ConfigManager method)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.generic_magpha_to_reim">generic_magpha_to_reim() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.utils.html#reda.utils.geom_fac_crtomo.get_default_settings">get_default_settings() (in module reda.utils.geom_fac_crtomo)</a>
@@ -325,6 +343,8 @@
       <li><a href="_api/reda.containers.html#reda.containers.ERT.Importers.import_bert">import_bert() (reda.containers.ERT.Importers method)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.iris_syscal_pro.import_bin">import_bin() (in module reda.importers.iris_syscal_pro)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.importers.import_crtomo">import_crtomo() (reda.containers.sEIT.importers method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.importers.import_eit_fzj">import_eit_fzj() (reda.containers.sEIT.importers method)</a>
 </li>
@@ -374,9 +394,13 @@
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_config">load_crmod_config() (reda.configs.configManager.ConfigManager method)</a>
 </li>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_volt">load_crmod_volt() (reda.configs.configManager.ConfigManager method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_volt">load_crmod_volt() (reda.configs.configManager.ConfigManager method)</a>
+      <li><a href="_api/reda.importers.html#reda.importers.crtomo.load_mod_file">load_mod_file() (in module reda.importers.crtomo)</a>
+</li>
+      <li><a href="_api/reda.importers.html#reda.importers.crtomo.load_seit_data">load_seit_data() (in module reda.importers.crtomo)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.ERT.LogDataChanges">LogDataChanges (class in reda.containers.ERT)</a>
 </li>
@@ -522,6 +546,8 @@
 </li>
       <li><a href="_api/reda.importers.html#module-reda.importers.bert">reda.importers.bert (module)</a>
 </li>
+      <li><a href="_api/reda.importers.html#module-reda.importers.crtomo">reda.importers.crtomo (module)</a>
+</li>
       <li><a href="_api/reda.importers.html#module-reda.importers.eit160">reda.importers.eit160 (module)</a>
 </li>
       <li><a href="_api/reda.importers.html#module-reda.importers.eit40">reda.importers.eit40 (module)</a>
@@ -536,10 +562,10 @@
 </li>
       <li><a href="_api/reda.importers.html#module-reda.importers.eit_version_2018a">reda.importers.eit_version_2018a (module)</a>
 </li>
-      <li><a href="_api/reda.importers.html#module-reda.importers.geotom">reda.importers.geotom (module)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.importers.html#module-reda.importers.geotom">reda.importers.geotom (module)</a>
+</li>
       <li><a href="_api/reda.importers.html#module-reda.importers.iris_syscal_pro">reda.importers.iris_syscal_pro (module)</a>
 </li>
       <li><a href="_api/reda.importers.html#module-reda.importers.radic_sip256c">reda.importers.radic_sip256c (module)</a>
@@ -604,6 +630,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.exporters.html#reda.exporters.crtomo.save_block_to_crt">save_block_to_crt() (in module reda.exporters.crtomo)</a>
 </li>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.scatter_norrec">scatter_norrec() (reda.containers.sEIT.sEIT method)</a>
+</li>
       <li><a href="_api/reda.utils.html#reda.utils.helper_functions.search">search() (in module reda.utils.helper_functions)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT">sEIT (class in reda.containers.sEIT)</a>
@@ -618,14 +646,14 @@
         <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.setup">(reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.main.html#reda.main.logger.setup_logger">setup_logger() (in module reda.main.logger)</a>
 
       <ul>
         <li><a href="_api/reda.containers.html#reda.containers.ERT.LoggingClass.setup_logger">(reda.containers.ERT.LoggingClass method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP">SIP (class in reda.containers.SIP)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.sip_response">sip_response (class in reda.eis.plots)</a>
@@ -755,8 +783,8 @@
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 

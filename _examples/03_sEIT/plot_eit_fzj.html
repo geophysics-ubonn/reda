@@ -9,12 +9,12 @@
     <title>Importing EIT40/EIT160 data &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -52,7 +52,7 @@
     
 
 <p>
-<a href="https://travis-ci.org/geophysics-ubonn/reda">
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
     <img
         alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
         src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
@@ -97,6 +97,14 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -137,17 +145,6 @@ separated by spaces or tabs. Each line denotes one measurement:</p>
 generating ids
 assigning ids
 Summary:
-          frequency           a      ...                Vmn          rpha
-count  16280.000000  16280.0000      ...       16280.000000  16280.000000
-mean    1328.935406     10.5250      ...          -0.009054   1232.306629
-std     2885.893725      5.8096      ...         106.236678   1823.550170
-min        0.100000      1.0000      ...        -376.749333  -3141.584482
-25%        1.000000      5.7500      ...         -26.804515     -9.388102
-50%       31.250000     10.5000      ...           0.167722     -1.038730
-75%     1000.000000     15.2500      ...          27.824750   3132.171261
-max    10000.000000     21.0000      ...         351.066301   3141.580651
-
-[8 rows x 16 columns]
 </pre></div>
 </div>
 <p>Compute geometric factors</p>
@@ -176,7 +173,7 @@ assigning ids
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2ade67b562e8&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b781f37a748&gt;
           a     b   m   n     frequency         r        rpha
 749    10.0  29.0  15  34      0.100000  7.356375   -5.205543
 2229   10.0  29.0  15  34      0.314465  7.323810   -6.903037
@@ -255,12 +252,12 @@ Raw data plots (execute before applying the filters):</p>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
-<p><strong>Total running time of the script:</strong> ( 0 minutes  29.482 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  25.648 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../../_downloads/plot_eit_fzj.py" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></div>
+<a class="reference download internal" download="" href="../../_downloads/332eb6762fd44a5648b0c62b99f8e03f/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></div>
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" href="../../_downloads/plot_eit_fzj.ipynb" download=""><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj.ipynb</span></code></a></div>
+<a class="reference download internal" download="" href="../../_downloads/9a64d11fe4d164a415c4fde278b80bc0/plot_eit_fzj.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj.ipynb</span></code></a></div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
@@ -276,8 +273,8 @@ Raw data plots (execute before applying the filters):</p>
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
       <a href="../../_sources/_examples/03_sEIT/plot_eit_fzj.rst.txt"

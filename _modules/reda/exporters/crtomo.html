@@ -9,12 +9,12 @@
     <title>reda.exporters.crtomo &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/gallery.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
     <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
     <script type="text/javascript" src="../../../_static/jquery.js"></script>
     <script type="text/javascript" src="../../../_static/underscore.js"></script>
     <script type="text/javascript" src="../../../_static/doctools.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -50,7 +50,7 @@
     
 
 <p>
-<a href="https://travis-ci.org/geophysics-ubonn/reda">
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
     <img
         alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
         src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
@@ -93,6 +93,14 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
         </div>
       </div>
       <div class="documentwrapper">
@@ -147,15 +155,24 @@
 
 
 <div class="viewcode-block" id="write_files_to_directory"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory">[docs]</a><span class="k">def</span> <span class="nf">write_files_to_directory</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
+    <span class="sd">&quot;&quot;&quot;Write sEIT data ta files. Data of each frequency is written in a</span>
+<span class="sd">    separate file that conforms to the CRMod/CRTomo standard, and can directly</span>
+<span class="sd">    be used for inversions using CRTomo.</span>
 
-<span class="sd">    ::</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        Data</span>
+<span class="sd">    directory : string</span>
+<span class="sd">        Output directory. Will be created if not existant</span>
 
-<span class="sd">        kwargs = {</span>
-<span class="sd">            &#39;store_errors&#39;: [True|False] store the device generated errors in</span>
-<span class="sd">                            the output files (as additional columns)</span>
-<span class="sd">            &#39;norrec&#39;: all|nor|rec which normal-reciprocal data set to use</span>
-<span class="sd">        }</span>
+<span class="sd">    Other Parameters</span>
+<span class="sd">    ----------------</span>
+<span class="sd">    store_errors: bool, optional</span>
+<span class="sd">        store the device generated errors in the output files (as additional</span>
+<span class="sd">        columns). Default: False</span>
+<span class="sd">    norrec: string, optional</span>
+<span class="sd">        all|nor|rec which normal-reciprocal data set to use. Default: all</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s1">&#39;frequency&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
@@ -173,11 +190,12 @@
 
     <span class="k">if</span> <span class="n">group_key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">g</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">group_key</span><span class="p">)</span>
-        <span class="n">frequencies</span> <span class="o">=</span> <span class="n">g</span><span class="o">.</span><span class="n">first</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">)</span>
 
         <span class="n">nr</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">frequencies_used</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">group</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">frequencies_used</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">frequency</span><span class="p">)</span>
             <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;volt_</span><span class="si">{0:02}</span><span class="s1">_</span><span class="si">{1:.6}</span><span class="s1">Hz.crt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span>
             <span class="n">save_block_to_crt</span><span class="p">(</span>
                 <span class="n">filename</span><span class="p">,</span>
@@ -187,6 +205,7 @@
             <span class="p">)</span>
 
             <span class="n">nr</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span> <span class="n">frequencies_used</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">save_block_to_crt</span><span class="p">(</span>
             <span class="s1">&#39;volt.dat&#39;</span><span class="p">,</span>
@@ -208,8 +227,8 @@
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.7.8</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.11</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
 

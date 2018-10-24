@@ -17,6 +17,14 @@ reda.importers.bert module
     :undoc-members:
     :show-inheritance:
 
+reda.importers.crtomo module
+----------------------------
+
+.. automodule:: reda.importers.crtomo
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reda.importers.eit160 module
 ----------------------------
 
