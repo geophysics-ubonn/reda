@@ -1,6 +1,7 @@
 """spectral electrical impedance tomography (sEIT) container
 """
 # import functools
+import os
 from numbers import Number
 
 import numpy as np
@@ -14,6 +15,7 @@ import reda.importers.crtomo as reda_crtomo_exporter
 import reda.utils.norrec as redanr
 import reda.utils.geometric_factors as geometric_factors
 from reda.utils.fix_sign_with_K import fix_sign_with_K
+import reda.eis.plots as eis_plot
 
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
@@ -250,3 +252,97 @@ class sEIT(importers):
         fig.tight_layout()
         return fig, axes
 
+    def get_spectrum(self, nr_id=None, abmn=None, plot_filename=None):
+        """Return a spectrum and its reciprocal counter part, if present in the
+        dataset. Optimally, refer to the spectrum by its normal-reciprocal id.
+
+        Returns
+        -------
+        spectrum_nor : :py:class:`reda.utils.eis.plots.sip_spectrum` |None
+            Normal spectrum. None if no normal spectrum is available
+        spectrum_rec : :py:class:`reda.utils.eis.plots.sip_spectrum` |None
+            Reciprocal spectrum. None if no reciprocal spectrum is available
+        fig : :py:class:`matplotlib.Figure.Figure` , optional
+            Figure object (only if plot_filename is set)
+
+        """
+        assert nr_id is None or abmn is None
+        # determine nr_id for given abmn tuple
+        if abmn is not None:
+            subdata = self.data.query(
+                'a == {} and b == {} and m == {} and n == {}'.format(*abmn)
+            ).sort_values('frequency')
+
+            # determine the norrec-id of this spectrum
+            nr_id = subdata['id'].iloc[0]
+
+        # get spectra
+        subdata_nor = self.data.query(
+            'id == {} and norrec=="nor"'.format(nr_id)
+        ).sort_values('frequency')
+
+        subdata_rec = self.data.query(
+            'id == {} and norrec=="rec"'.format(nr_id)
+        ).sort_values('frequency')
+
+        # create spectrum objects
+        spectrum_nor = None
+        spectrum_rec = None
+
+        if subdata_nor.shape[0] > 0:
+            spectrum_nor = eis_plot.sip_response(
+                frequencies=subdata_nor['frequency'].values,
+                rmag=subdata_nor['r'],
+                rpha=subdata_nor['rpha'],
+            )
+        if subdata_rec.shape[0] > 0:
+            spectrum_rec = eis_plot.sip_response(
+                frequencies=subdata_rec['frequency'].values,
+                rmag=subdata_rec['r'],
+                rpha=subdata_rec['rpha'],
+            )
+        if plot_filename is not None:
+            if spectrum_nor is not None:
+                fig = spectrum_nor.plot(
+                    plot_filename,
+                    reciprocal=spectrum_rec,
+                    return_fig=True,
+                    title='a: {} b: {} m: {}: n: {}'.format(
+                        *subdata_nor[['a', 'b', 'm', 'n']].values[0, :]
+                    )
+                )
+                return spectrum_nor, spectrum_rec, fig
+        return spectrum_nor, spectrum_rec
+
+    def plot_all_spectra(self, outdir):
+        """This is a convenience function to plot ALL spectra currently
+        stored in the container. It is useful to asses whether data filters
+        do perform correctly.
+
+        Note that the function just iterates over all ids and plots the
+        corresponding spectra, thus it is slow.
+
+        Spectra a named using the format: \%.2i_spectrum_id_\{\}.png.
+
+        Parameters
+        ----------
+        outdir : string
+            Output directory to store spectra in. Created if it does not
+            exist.
+        """
+        os.makedirs(outdir, exist_ok=True)
+
+        g = self.data.groupby('id')
+        for nr, (name, item) in enumerate(g):
+            print(
+                'Plotting spectrum with id {} ({} / {})'.format(
+                    name, nr, len(g.groups.keys()))
+            )
+            plot_filename = ''.join((
+                outdir + os.sep,
+                '{:04}_spectrum_id_{}.png'.format(nr, name)
+            ))
+            self.get_spectrum(
+                nr_id=name,
+                plot_filename=plot_filename
+            )
