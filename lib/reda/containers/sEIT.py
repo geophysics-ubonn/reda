@@ -3,6 +3,7 @@
 # import functools
 from numbers import Number
 
+import numpy as np
 import pandas as pd
 
 import reda.importers.eit_fzj as eit_fzj
@@ -13,6 +14,9 @@ import reda.importers.crtomo as reda_crtomo_exporter
 import reda.utils.norrec as redanr
 import reda.utils.geometric_factors as geometric_factors
 from reda.utils.fix_sign_with_K import fix_sign_with_K
+
+import reda.utils.mpl
+plt, mpl = reda.utils.mpl.setup()
 
 
 def append_doc_of(fun):
@@ -185,3 +189,64 @@ class sEIT(importers):
     def fix_sign_with_K(self):
         """ """
         fix_sign_with_K(self.data)
+
+    def scatter_norrec(self, filename=None):
+        """Create a scatter plots for all diff pairs
+
+        Parameters
+        ----------
+
+        filename : string, optional
+            if given, save plot to file
+
+        Returns
+        -------
+        fig : matplotlib.Figure
+            the figure object
+        axes : list of matplotlib.axes
+            the individual axes
+
+        """
+        # if not otherwise specified, use these column pairs:
+        std_diff_labels = {
+            'r': 'rdiff',
+            'rpha': 'rphadiff',
+        }
+
+        diff_labels = std_diff_labels
+
+        # check which columns are present in the data
+        labels_to_use = {}
+        for key, item in diff_labels.items():
+            # only use if BOTH columns are present
+            if key in self.data.columns and item in self.data.columns:
+                labels_to_use[key] = item
+
+        g_freq = self.data.groupby('frequency')
+        frequencies = list(sorted(g_freq.groups.keys()))
+
+        Nx = len(labels_to_use.keys())
+        Ny = len(frequencies)
+        fig, axes = plt.subplots(
+            Ny, Nx,
+            figsize=(Nx * 2.5, Ny * 2.5)
+        )
+
+        for row, (name, item) in enumerate(g_freq):
+            axes_row = axes[row, :]
+            # loop over the various columns
+            for col_nr, (key, diff_column) in enumerate(
+                    sorted(labels_to_use.items())):
+                indices = np.where(~np.isnan(item[diff_column]))[0]
+                ax = axes_row[col_nr]
+                ax.scatter(
+                    item[key],
+                    item[diff_column],
+                )
+                ax.set_xlabel(key)
+                ax.set_ylabel(diff_column)
+                ax.set_title('N: {}'.format(len(indices)))
+
+        fig.tight_layout()
+        return fig, axes
+
