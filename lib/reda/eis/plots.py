@@ -1,3 +1,4 @@
+# *-* coding: utf-8 *-*
 import numpy as np
 
 from reda.eis.units import labels as sip_labels
@@ -8,7 +9,7 @@ plt, mpl = reda.utils.mpl.setup()
 
 
 class sip_response():
-    """ Hold one SIP spectrum and return it in various formats
+    """Hold one SIP spectrum and return it in various formats
     """
     def __init__(self, frequencies, rcomplex=None, ccomplex=None,
                  rmag=None, rpha=None):
