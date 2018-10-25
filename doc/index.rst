@@ -30,6 +30,7 @@ community are highly welcome.
     about.rst
     installation.rst
     data_containers.rst
+    filtering.rst
     _examples/index.rst
     importers.rst
     test_data.rst
