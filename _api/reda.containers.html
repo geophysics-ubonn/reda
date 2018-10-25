@@ -339,7 +339,7 @@ pandas.DataFrame.query</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+800.gf928b46.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+808.g1c26375.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
@@ -558,10 +558,10 @@ specific measurement. Default: True</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+800.gf928b46.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+808.g1c26375.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+800.gf928b46.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+808.g1c26375.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -1159,11 +1159,17 @@ data_prefix</p>
 <tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.check_dataframe" title="reda.containers.sEIT.sEIT.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(dataframe)</td>
 <td>Check the given dataframe for the required columns</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.fix_sign_with_K" title="reda.containers.sEIT.sEIT.fix_sign_with_K"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_sign_with_K</span></code></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.filter_incomplete_spectra" title="reda.containers.sEIT.sEIT.filter_incomplete_spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter_incomplete_spectra</span></code></a>([flimit,&nbsp;percAccept])</td>
+<td>Remove all data points that belong to spectra that did not retain at least <strong>percAccept</strong> percent of the number of data points.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.fix_sign_with_K" title="reda.containers.sEIT.sEIT.fix_sign_with_K"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_sign_with_K</span></code></a>()</td>
 <td>Swap electrode denotations so that geometrical (K) factors become positive.</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.gen_geometric_factors_analytical" title="reda.containers.sEIT.sEIT.gen_geometric_factors_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_geometric_factors_analytical</span></code></a>(spacing)</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.gen_geometric_factors_analytical" title="reda.containers.sEIT.sEIT.gen_geometric_factors_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_geometric_factors_analytical</span></code></a>(spacing)</td>
 <td>Assuming an equal electrode spacing, compute the K-factor over a homogeneous half-space.</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.get_spectrum" title="reda.containers.sEIT.sEIT.get_spectrum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spectrum</span></code></a>([nr_id,&nbsp;abmn,&nbsp;plot_filename])</td>
+<td>Return a spectrum and its reciprocal counter part, if present in the dataset.</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo</span></code>(directory[,&nbsp;frequency_file,&nbsp;…])</td>
 <td>CRTomo importerLoad sEIT data from data directory.</td>
@@ -1174,16 +1180,19 @@ data_prefix</p>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(filename[,&nbsp;settings,&nbsp;reciprocal])</td>
 <td>Radic SIP256c data import</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_all_spectra" title="reda.containers.sEIT.sEIT.plot_all_spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_all_spectra</span></code></a>(outdir)</td>
+<td>This is a convenience function to plot ALL spectra currently stored in the container.</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(query[,&nbsp;inplace])</td>
 <td>State what you want to keep</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
 <td>Remove frequencies from the dataset</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>([filename])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>([filename])</td>
 <td>Create a scatter plots for all diff pairs</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td><p class="rubric">Examples</p>
 </td>
 </tr>
@@ -1198,6 +1207,18 @@ data_prefix</p>
 <dt id="reda.containers.sEIT.sEIT.check_dataframe">
 <code class="descname">check_dataframe</code><span class="sig-paren">(</span><em>dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.filter_incomplete_spectra">
+<code class="descname">filter_incomplete_spectra</code><span class="sig-paren">(</span><em>flimit=1000</em>, <em>percAccept=85</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.filter_incomplete_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.filter_incomplete_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all data points that belong to spectra that did not retain at
+least <strong>percAccept</strong> percent of the number of data points.</p>
+<p>..warning:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>This function does not honor additional dimensions (e.g.,
+timesteps) yet!
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
@@ -1252,6 +1273,57 @@ reda.utils.geometric_factors</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
 <dt><strong>spacing: float</strong></dt>
 <dd><p class="first last">Electrode spacing</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.get_spectrum">
+<code class="descname">get_spectrum</code><span class="sig-paren">(</span><em>nr_id=None</em>, <em>abmn=None</em>, <em>plot_filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.get_spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.get_spectrum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a spectrum and its reciprocal counter part, if present in the
+dataset. Optimally, refer to the spectrum by its normal-reciprocal id.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>spectrum_nor</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference internal" href="reda.eis.html#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.eis.plots.sip_response</span></code></a></span></dt>
+<dd><p class="first last">Normal spectrum. None if no normal spectrum is available</p>
+</dd>
+<dt><strong>spectrum_rec</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference internal" href="reda.eis.html#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.eis.plots.sip_response</span></code></a> or None</span></dt>
+<dd><p class="first last">Reciprocal spectrum. None if no reciprocal spectrum is available</p>
+</dd>
+<dt><strong>fig</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.Figure.Figure</span></code> , optional</span></dt>
+<dd><p class="first last">Figure object (only if plot_filename is set)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEIT.plot_all_spectra">
+<code class="descname">plot_all_spectra</code><span class="sig-paren">(</span><em>outdir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_all_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_all_spectra" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a convenience function to plot ALL spectra currently
+stored in the container. It is useful to asses whether data filters
+do perform correctly.</p>
+<p>Note that the function just iterates over all ids and plots the
+corresponding spectra, thus it is slow.</p>
+<p>Spectra a named using the format: %.2i_spectrum_id_{}.png.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>outdir</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">Output directory to store spectra in. Created if it does not
+exist.</p>
 </dd>
 </dl>
 </td>

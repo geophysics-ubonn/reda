@@ -110,7 +110,8 @@
           <div class="body" role="main">
             
   <h1>Source code for reda.eis.plots</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span></span><span class="c1"># *-* coding: utf-8 *-*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">reda.eis.units</span> <span class="k">import</span> <span class="n">labels</span> <span class="k">as</span> <span class="n">sip_labels</span>
 <span class="kn">from</span> <span class="nn">reda.eis.convert</span> <span class="k">import</span> <span class="n">convert</span>
@@ -120,7 +121,7 @@
 
 
 <div class="viewcode-block" id="sip_response"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.sip_response">[docs]</a><span class="k">class</span> <span class="nc">sip_response</span><span class="p">():</span>
-    <span class="sd">&quot;&quot;&quot; Hold one SIP spectrum and return it in various formats</span>
+    <span class="sd">&quot;&quot;&quot;Hold one SIP spectrum and return it in various formats</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">rcomplex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ccomplex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                  <span class="n">rmag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
