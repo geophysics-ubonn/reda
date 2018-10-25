@@ -346,3 +346,54 @@ class sEIT(importers):
                 nr_id=name,
                 plot_filename=plot_filename
             )
+
+    def filter_incomplete_spectra(self, flimit=1000, percAccept=85):
+        """Remove all data points that belong to spectra that did not retain at
+        least **percAccept** percent of the number of data points.
+
+        ..warning::
+
+            This function does not honor additional dimensions (e.g.,
+            timesteps) yet!
+
+        """
+        assert percAccept > 0 and percAccept < 100
+
+        def _retain_only_complete_spectra(item, fmax, acceptN):
+            """Function called using pd.filter, applied to all spectra in the
+            data set. Return true if the number of data points <= **fmax** in
+            item is equal, or larger, than **acceptN**.
+
+            Parameters
+            ----------
+            item : :py:class:`pandas.DataFrame`
+                dataframe containing one spectrum
+            fmax : float
+                maximum frequency up to which data points are counted
+            acceptN : int
+                the number of data points required to pass this test
+
+            Returns
+            -------
+            true : bool
+                if enough data points are present
+            false : bool
+                if not enough data points are present
+            """
+            frequencies = item['frequency'].loc[item['frequency'] < fmax]
+            fN = frequencies.size
+            if fN >= acceptN:
+                return True
+            return False
+
+        group_abmn = self.data.groupby(['a', 'b', 'm', 'n'])
+        frequencies = np.array(
+            list(sorted(self.data.groupby('frequency').groups.keys()))
+        )
+        assert flimit >= frequencies.min() and flimit <= frequencies.max()
+        Nlimit = len(np.where(frequencies <= flimit)[0])
+        Naccept = np.ceil(Nlimit * percAccept / 100.0)
+        self.data = group_abmn.filter(
+            _retain_only_complete_spectra, fmax=flimit, acceptN=Naccept
+        ).copy()
+
