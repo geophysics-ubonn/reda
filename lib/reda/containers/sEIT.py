@@ -262,8 +262,6 @@ class sEIT(importers):
             Normal spectrum. None if no normal spectrum is available
         spectrum_rec : :py:class:`reda.eis.plots.sip_response` or None
             Reciprocal spectrum. None if no reciprocal spectrum is available
-        fig : :py:class:`matplotlib.Figure.Figure` , optional
-            Figure object (only if plot_filename is set)
 
         """
         assert nr_id is None or abmn is None
@@ -311,7 +309,7 @@ class sEIT(importers):
                         *subdata_nor[['a', 'b', 'm', 'n']].values[0, :]
                     )
                 )
-                return spectrum_nor, spectrum_rec, fig
+                plt.close(fig)
         return spectrum_nor, spectrum_rec
 
     def plot_all_spectra(self, outdir):

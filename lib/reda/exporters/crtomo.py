@@ -81,7 +81,7 @@ def write_files_to_directory(df, directory, **kwargs):
 
         nr = 1
         frequencies_used = []
-        for frequency, group in g:
+        for frequency, group in sorted(g):
             if group.shape[0] > 0:
                 frequencies_used.append(frequency)
             filename = 'volt_{0:02}_{1:.6}Hz.crt'.format(nr, frequency)
