@@ -340,7 +340,7 @@ pandas.DataFrame.query</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+826.g88a57c9.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1028.gdb2066b7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
@@ -559,10 +559,10 @@ specific measurement. Default: True</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+826.g88a57c9.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1028.gdb2066b7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+826.g88a57c9.dirty)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1028.gdb2066b7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -1190,7 +1190,7 @@ data_prefix</p>
 <tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(fmin,&nbsp;fmax)</td>
 <td>Remove frequencies from the dataset</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>([filename])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>([filename,&nbsp;individual])</td>
 <td>Create a scatter plots for all diff pairs</td>
 </tr>
 <tr class="row-odd"><td><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
@@ -1344,7 +1344,7 @@ exist.</p>
 
 <dl class="method">
 <dt id="reda.containers.sEIT.sEIT.scatter_norrec">
-<code class="descname">scatter_norrec</code><span class="sig-paren">(</span><em>filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.scatter_norrec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="Permalink to this definition">¶</a></dt>
+<code class="descname">scatter_norrec</code><span class="sig-paren">(</span><em>filename=None</em>, <em>individual=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.scatter_norrec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a scatter plots for all diff pairs</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -1354,12 +1354,15 @@ exist.</p>
 <dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string, optional</span></dt>
 <dd><p class="first last">if given, save plot to file</p>
 </dd>
+<dt><strong>individual</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">if set to True, return one figure for each row</p>
+</dd>
 </dl>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>fig</strong> <span class="classifier-delimiter">:</span> <span class="classifier">matplotlib.Figure</span></dt>
-<dd><p class="first last">the figure object</p>
+<dt><strong>fig</strong> <span class="classifier-delimiter">:</span> <span class="classifier">matplotlib.Figure or list of <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.Figure.Figure</span></code></span></dt>
+<dd><p class="first last">objects the figure object</p>
 </dd>
 <dt><strong>axes</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of matplotlib.axes</span></dt>
 <dd><p class="first last">the individual axes</p>
@@ -1399,7 +1402,7 @@ exist.</p>
       &copy;2018, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
