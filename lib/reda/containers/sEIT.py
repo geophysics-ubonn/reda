@@ -192,7 +192,7 @@ class sEIT(importers):
         """ """
         fix_sign_with_K(self.data)
 
-    def scatter_norrec(self, filename=None):
+    def scatter_norrec(self, filename=None, individual=False):
         """Create a scatter plots for all diff pairs
 
         Parameters
@@ -200,11 +200,13 @@ class sEIT(importers):
 
         filename : string, optional
             if given, save plot to file
+        individual : bool, optional
+            if set to True, return one figure for each row
 
         Returns
         -------
-        fig : matplotlib.Figure
-            the figure object
+        fig : matplotlib.Figure or list of :py:class:`matplotlib.Figure.Figure`
+            objects the figure object
         axes : list of matplotlib.axes
             the individual axes
 
@@ -227,15 +229,23 @@ class sEIT(importers):
         g_freq = self.data.groupby('frequency')
         frequencies = list(sorted(g_freq.groups.keys()))
 
-        Nx = len(labels_to_use.keys())
-        Ny = len(frequencies)
-        fig, axes = plt.subplots(
-            Ny, Nx,
-            figsize=(Nx * 2.5, Ny * 2.5)
-        )
+        if individual:
+            figures = {}
+            axes_all = {}
+        else:
+            Nx = len(labels_to_use.keys())
+            Ny = len(frequencies)
+            fig, axes = plt.subplots(
+                Ny, Nx,
+                figsize=(Nx * 2.5, Ny * 2.5)
+            )
 
         for row, (name, item) in enumerate(g_freq):
-            axes_row = axes[row, :]
+            if individual:
+                fig, axes_row = plt.subplots(
+                    1, 2, figsize=(16 / 2.54, 6 / 2.54))
+            else:
+                axes_row = axes[row, :]
             # loop over the various columns
             for col_nr, (key, diff_column) in enumerate(
                     sorted(labels_to_use.items())):
@@ -248,9 +258,16 @@ class sEIT(importers):
                 ax.set_xlabel(key)
                 ax.set_ylabel(diff_column)
                 ax.set_title('N: {}'.format(len(indices)))
+            if individual:
+                fig.tight_layout()
+                figures[name] = fig
+                axes_all[name] = axes_row
 
-        fig.tight_layout()
-        return fig, axes
+        if individual:
+            return figures, axes_all
+        else:
+            fig.tight_layout()
+            return fig, axes
 
     def get_spectrum(self, nr_id=None, abmn=None, plot_filename=None):
         """Return a spectrum and its reciprocal counter part, if present in the
@@ -271,8 +288,11 @@ class sEIT(importers):
                 'a == {} and b == {} and m == {} and n == {}'.format(*abmn)
             ).sort_values('frequency')
 
+            if subdata.shape[0] == 0:
+                return None, None
             # determine the norrec-id of this spectrum
             nr_id = subdata['id'].iloc[0]
+            print('nr_id', nr_id)
 
         # get spectra
         subdata_nor = self.data.query(
