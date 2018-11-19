@@ -273,7 +273,7 @@ class ERT(LoggingClass, Importers, Exporters):
             If not None, then the provided DataFrame is assumed to contain
             valid data previously prepared elsewhere. Required columns are:
                 "A", "B", "M", "N", "R".
-        electrodes : :py:class:`pandas.DataFrame`
+        electrode_positions : :py:class:`pandas.DataFrame`
             If set, this is expected to be a DataFrame which contains electrode
             positions with columns: "X", "Y", "Z".
         topography : :py:class:`pandas.DataFrame`
