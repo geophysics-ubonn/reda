@@ -111,7 +111,12 @@
           <div class="body" role="main">
             
   <h1>Source code for reda.importers.res2dinv</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot; Importer for RES2DINV files &quot;&quot;&quot;</span>
+<span></span><span class="sd">&quot;&quot;&quot;Importer for RES2DINV files</span>
+
+<span class="sd">Please note that this importer is very rudimentary at the moment. We need test</span>
+<span class="sd">data and real usage to improve upon this.</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="k">import</span> <span class="n">ERT</span>
@@ -121,10 +126,17 @@
     <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Read a res2dinv-file and return the header</span>
 
-<span class="sd">    Retuns</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : string</span>
+<span class="sd">        Data filename</span>
+
+<span class="sd">    Returns</span>
 <span class="sd">    ------</span>
-<span class="sd">    type: type of array extracted from header</span>
-<span class="sd">    file_data: content of file as a StringIO object</span>
+<span class="sd">    type : int</span>
+<span class="sd">        type of array extracted from header</span>
+<span class="sd">    file_data : :py:class:`StringIO.StringIO`</span>
+<span class="sd">        content of file in a StringIO object</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># read data</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid2</span><span class="p">:</span>
@@ -145,6 +157,19 @@
 
 
 <span class="k">def</span> <span class="nf">_read_general_type</span><span class="p">(</span><span class="n">content</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Read a type 11 (general type) RES2DINV data block</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    content : :py:class:`StringIO.StringIO`</span>
+<span class="sd">        Content of data file</span>
+<span class="sd">    settings : dict</span>
+<span class="sd">        Settings for the importer. Not used at the moment</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">header_raw</span> <span class="o">=</span> <span class="p">[]</span>
     <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="k">while</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
@@ -189,13 +214,13 @@
         <span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;xxx&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;x1&#39;</span><span class="p">,</span> <span class="s1">&#39;x2&#39;</span><span class="p">,</span> <span class="s1">&#39;x3&#39;</span><span class="p">,</span> <span class="s1">&#39;x4&#39;</span><span class="p">]])</span>
+    <span class="c1"># print(&#39;xxx&#39;, df.ix[10, [&#39;x1&#39;, &#39;x2&#39;, &#39;x3&#39;, &#39;x4&#39;]])</span>
     <span class="c1"># for now ignore the z coordinates and compute simple electrode denotations</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x1&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x2&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x3&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x4&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;abmn&#39;</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]])</span>
+    <span class="c1"># print(&#39;abmn&#39;, df.ix[10, [&#39;a&#39;, &#39;b&#39;, &#39;m&#39;, &#39;n&#39;]])</span>
 
     <span class="c1"># for now assume value in resistances</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>
@@ -224,8 +249,7 @@
 
 
 <div class="viewcode-block" id="add_dat_file"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.res2dinv.add_dat_file">[docs]</a><span class="k">def</span> <span class="nf">add_dat_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    Read a RES2DINV-style file produced by the ABEM export program.</span>
+    <span class="sd">&quot;&quot;&quot; Read a RES2DINV-style file produced by the ABEM export program.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># each type is read by a different function</span>
     <span class="n">importers</span> <span class="o">=</span> <span class="p">{</span>
@@ -250,7 +274,7 @@
     <span class="k">if</span> <span class="n">container</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
         <span class="n">container</span> <span class="o">=</span> <span class="n">ERT</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">container</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">container</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+        <span class="n">container</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
 
     <span class="k">return</span> <span class="n">container</span></div>
 </pre></div>

@@ -127,7 +127,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b51aece5748>
+    <pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b5a34fc0ac8>
               a     b   m   n     frequency         r        rpha
     749    10.0  29.0  15  34      0.100000  7.356375   -5.205543
     2229   10.0  29.0  15  34      0.314465  7.323810   -6.903037
@@ -251,7 +251,7 @@ Plot pseudosections of all frequencies
 
 
 
-**Total running time of the script:** ( 0 minutes  25.403 seconds)
+**Total running time of the script:** ( 0 minutes  27.300 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:

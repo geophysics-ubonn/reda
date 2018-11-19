@@ -120,17 +120,47 @@ functions, and processing functionality that is useful to a given data type.
 It also stores the data and associated metadata.</p>
 <p>Available data containers:</p>
 <ul class="simple">
-<li><cite>reda.containers.ERT</cite>: The ERT (Electrical Resistivity Tomography) data
-container stored electrical measurements targeted at imaging processing. This
-implies lots of measurements (hundreds to thousands).</li>
-<li><cite>reda.containers.TDIP</cite>: Time-domain induced polarization container (derived
-from the ERT container)</li>
-<li><cite>reda.containers.CR</cite>: Complex resistivity container (derived from the ERT
-container)</li>
-<li><cite>reda.containers.sEIT</cite>: (experimental) Stores spectral Electrical Impedance
-Tomography (frequency domain complex electrical impedance) measurement data.</li>
-<li><cite>reda.containers.SIP</cite>: Stores spectral spectral induced polarization data.</li>
+<li><a class="reference internal" href="_api/reda.containers.html#module-reda.containers.ERT" title="reda.containers.ERT"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT</span></code></a>: The ERT (Electrical Resistivity Tomography)
+data container stored electrical measurements targeted at imaging processing.
+This implies lots of measurements (hundreds to thousands).</li>
+<li><a class="reference internal" href="_api/reda.containers.html#module-reda.containers.TDIP" title="reda.containers.TDIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.TDIP</span></code></a>: Time-domain induced polarization container
+(derived from the ERT container)</li>
+<li><a class="reference internal" href="_api/reda.containers.html#module-reda.containers.CR" title="reda.containers.CR"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.CR</span></code></a>: Complex resistivity container (derived from
+the ERT container)</li>
+<li><a class="reference internal" href="_api/reda.containers.html#module-reda.containers.sEIT" title="reda.containers.sEIT"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.sEIT</span></code></a>: (experimental) Stores spectral Electrical
+Impedance Tomography (frequency domain complex electrical impedance)
+measurement data.</li>
+<li><a class="reference internal" href="_api/reda.containers.html#module-reda.containers.SIP" title="reda.containers.SIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.SIP</span></code></a>: Stores spectral spectral induced
+polarization data.</li>
 </ul>
+<div class="section" id="electrode-numbers-and-positions">
+<h2>Electrode numbers and positions<a class="headerlink" href="#electrode-numbers-and-positions" title="Permalink to this headline">¶</a></h2>
+<p>By default we deal with logical electrode numbers in the columns <strong>a</strong>, <strong>b</strong>,
+<strong>m</strong>, <strong>n</strong>. That is, electrode positions must be declared separately. This
+has some advantages, but also disadvantages:</p>
+<ul class="simple">
+<li>we can easily create new measurement configurations without needing to know
+the exact electrode positions</li>
+<li>some analysis steps can be simplified if we do not take electrode positions
+into account</li>
+<li>consistency: we also support measurement modes that do not have an inherent
+spatial aspect (SIP) in the sense of a distributed measurement. Here we only
+have four electrodes used to measure one (complex) resistance.</li>
+<li>disadvantage: we need to be careful that data keeps consistent if new data is
+added.</li>
+</ul>
+</div>
+<div class="section" id="container-basics">
+<h2>Container basics<a class="headerlink" href="#container-basics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>If not otherwise stated, a container stores measurement data in a pandas
+DataFrame located in <cite>container.data</cite>.</li>
+<li>Electrode positions (if available) are stored in a pandas DataFrame in
+<cite>container.electrode_positions</cite> (columns <strong>x</strong>, <strong>y</strong>, <strong>z</strong>).</li>
+<li>Topograhy nodes (if available) are stored in a pandas DataFrame in
+<cite>container.topography</cite> (columns <strong>x</strong>, <strong>y</strong>, <strong>z</strong>).</li>
+</ul>
+</div>
 <div class="section" id="required-data-columns">
 <h2>Required data columns<a class="headerlink" href="#required-data-columns" title="Permalink to this headline">¶</a></h2>
 <p>Each data container requires a minimal set of data variables (columns) that any
@@ -224,9 +254,9 @@ the future the default will be to use lower case column names.</p>
 </tr>
 </tbody>
 </table>
-<p>..note</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Tm, Mx optional?
-</pre></div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Tm, Mx optional?</p>
 </div>
 <p>Optional columns can be named arbitrarily, but the following are usually used:</p>
 <table border="1" class="docutils">
