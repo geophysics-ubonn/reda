@@ -7,10 +7,11 @@ Introduction
 Importer functions are managed in :py:mod:`reda.importers`. An importer module
 must provide the following functionality:
 
-* import a given data format into a :class:`pandas.DataFrame`
-* import electrode positions into a `pandas.DataFrame`, if available in this
+* import a given data format into a :py:class:`pandas.DataFrame`
+* import electrode positions into a :py:class:`pandas.DataFrame`, if available
+  in this data format
+* import topography into a :py:class:`pandas.DataFrame`, if available in this
   data format
-* import topography into a `pandas.DataFrame`, if available in this data format
 
 Internal structure (for developers)
 -----------------------------------

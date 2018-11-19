@@ -1,4 +1,5 @@
-import numpy as np
+# import numpy as np
+
 
 def export_bert(data, electrodes, filename):
     """Save DataFrame to the unified data format used by BERT and pyGIMLi."""

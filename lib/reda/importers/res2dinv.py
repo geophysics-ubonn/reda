@@ -1,4 +1,9 @@
-""" Importer for RES2DINV files """
+"""Importer for RES2DINV files
+
+Please note that this importer is very rudimentary at the moment. We need test
+data and real usage to improve upon this.
+
+"""
 from io import StringIO
 import pandas as pd
 from reda.containers.ERT import ERT
@@ -8,10 +13,17 @@ def _read_file(filename):
     """
     Read a res2dinv-file and return the header
 
-    Retuns
+    Parameters
+    ----------
+    filename : string
+        Data filename
+
+    Returns
     ------
-    type: type of array extracted from header
-    file_data: content of file as a StringIO object
+    type : int
+        type of array extracted from header
+    file_data : :py:class:`StringIO.StringIO`
+        content of file in a StringIO object
     """
     # read data
     with open(filename, 'r') as fid2:
@@ -32,6 +44,19 @@ def _read_file(filename):
 
 
 def _read_general_type(content, settings):
+    """Read a type 11 (general type) RES2DINV data block
+
+    Parameters
+    ----------
+    content : :py:class:`StringIO.StringIO`
+        Content of data file
+    settings : dict
+        Settings for the importer. Not used at the moment
+
+    Returns
+    -------
+
+    """
     header_raw = []
     index = 0
     while index < 9:
@@ -76,13 +101,13 @@ def _read_general_type(content, settings):
         ),
     )
 
-    print('xxx', df.ix[10, ['x1', 'x2', 'x3', 'x4']])
+    # print('xxx', df.ix[10, ['x1', 'x2', 'x3', 'x4']])
     # for now ignore the z coordinates and compute simple electrode denotations
     df['a'] = df['x1'] / header['unit_spacing'] + 1
     df['b'] = df['x2'] / header['unit_spacing'] + 1
     df['m'] = df['x3'] / header['unit_spacing'] + 1
     df['n'] = df['x4'] / header['unit_spacing'] + 1
-    print('abmn', df.ix[10, ['a', 'b', 'm', 'n']])
+    # print('abmn', df.ix[10, ['a', 'b', 'm', 'n']])
 
     # for now assume value in resistances
     df['r'] = df['value']
@@ -111,8 +136,7 @@ def _read_general_type(content, settings):
 
 
 def add_dat_file(filename, settings, container=None):
-    """
-    Read a RES2DINV-style file produced by the ABEM export program.
+    """ Read a RES2DINV-style file produced by the ABEM export program.
     """
     # each type is read by a different function
     importers = {
@@ -137,6 +161,6 @@ def add_dat_file(filename, settings, container=None):
     if container is None:
         container = ERT(data)
     else:
-        container.df = pd.concat((container.df, data))
+        container.data = pd.concat((container.data, data))
 
     return container

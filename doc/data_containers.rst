@@ -8,21 +8,49 @@ It also stores the data and associated metadata.
 
 Available data containers:
 
-* `reda.containers.ERT`: The ERT (Electrical Resistivity Tomography) data
-  container stored electrical measurements targeted at imaging processing. This
-  implies lots of measurements (hundreds to thousands).
+* :py:class:`reda.containers.ERT`: The ERT (Electrical Resistivity Tomography)
+  data container stored electrical measurements targeted at imaging processing.
+  This implies lots of measurements (hundreds to thousands).
 
-* `reda.containers.TDIP`: Time-domain induced polarization container (derived
-  from the ERT container)
+* :py:class:`reda.containers.TDIP`: Time-domain induced polarization container
+  (derived from the ERT container)
 
-* `reda.containers.CR`: Complex resistivity container (derived from the ERT
-  container)
+* :py:class:`reda.containers.CR`: Complex resistivity container (derived from
+  the ERT container)
 
-* `reda.containers.sEIT`: (experimental) Stores spectral Electrical Impedance
-  Tomography (frequency domain complex electrical impedance) measurement data.
+* :py:class:`reda.containers.sEIT`: (experimental) Stores spectral Electrical
+  Impedance Tomography (frequency domain complex electrical impedance)
+  measurement data.
 
-* `reda.containers.SIP`: Stores spectral spectral induced polarization data.
+* :py:class:`reda.containers.SIP`: Stores spectral spectral induced
+  polarization data.
 
+Electrode numbers and positions
+-------------------------------
+
+By default we deal with logical electrode numbers in the columns **a**, **b**,
+**m**, **n**. That is, electrode positions must be declared separately. This
+has some advantages, but also disadvantages:
+
+* we can easily create new measurement configurations without needing to know
+  the exact electrode positions
+* some analysis steps can be simplified if we do not take electrode positions
+  into account
+* consistency: we also support measurement modes that do not have an inherent
+  spatial aspect (SIP) in the sense of a distributed measurement. Here we only
+  have four electrodes used to measure one (complex) resistance.
+* disadvantage: we need to be careful that data keeps consistent if new data is
+  added.
+
+Container basics
+----------------
+
+* If not otherwise stated, a container stores measurement data in a pandas
+  DataFrame located in `container.data`.
+* Electrode positions (if available) are stored in a pandas DataFrame in
+  `container.electrode_positions` (columns **x**, **y**, **z**).
+* Topograhy nodes (if available) are stored in a pandas DataFrame in
+  `container.topography` (columns **x**, **y**, **z**).
 
 Required data columns
 ---------------------
@@ -71,7 +99,7 @@ r             Measured resistance [Ohm]
 chargeability Global chargeability
 ============= ======================================
 
-..note ::
+.. note ::
 
     Tm, Mx optional?
 
