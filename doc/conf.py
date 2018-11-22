@@ -49,6 +49,7 @@ intersphinx_mapping = {
     'numpy': ('http://docs.scipy.org/doc/numpy/', None),
     'scipy': ('http://docs.scipy.org/doc/scipy/reference/', None),
     'pandas': ('http://pandas-docs.github.io/pandas-docs-travis/', None),
+    'matplotlib': ('https://matplotlib.org/', None),
 }
 
 # Gallery conf
@@ -66,7 +67,7 @@ sphinx_gallery_conf = {
         # The module you locally document uses a None
         'reda': None,
         # External python modules use their documentation websites
-        'matplotlib': 'http://matplotlib.org',
+        # 'matplotlib': 'https://matplotlib.org',
         'numpy': 'http://docs.scipy.org/doc/numpy',
         'pandas': 'https://pandas.pydata.org/pandas-docs/stable/'
     },
