@@ -1,0 +1,214 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Checking FZJ-EIT data from a test board &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Importing Radic SIP256c data" href="plot_radic_sip256c.html" />
+    <link rel="prev" title="SIP-04 Import" href="../02_SIP04/plot_sip04.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="../02_SIP04/plot_sip04.html" title="previous chapter">SIP-04 Import</a></li>
+      <li>Next: <a href="plot_radic_sip256c.html" title="next chapter">Importing Radic SIP256c data</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-eit-fzj-check-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="checking-fzj-eit-data-from-a-test-board">
+<span id="sphx-glr-examples-03-seit-plot-eit-fzj-check-py"></span><h1>Checking FZJ-EIT data from a test board<a class="headerlink" href="#checking-fzj-eit-data-from-a-test-board" title="Permalink to this headline">¶</a></h1>
+<p>There exist multiple hardware and software versions of the of the EIT
+system developed by Zimmermann et al. 2008
+(<a class="reference external" href="http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta">http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta</a>). To
+check basic system function a test board was built with multiple resistors
+attached to for connectors each. Measurements can thus be validated against
+known electrical (ohmic) resistances.</p>
+<p>At this point we only support 3-point data, i.e., data which uses two
+electrodes to inject current, and then uses all electrodes to measure the
+resulting potential distribution against system ground. Classical four-point
+configurations are then computed using superposition.</p>
+<p>Required are two files: a data file (usually <strong>eit_data_mnu0.mat</strong> and a text
+file (usually <strong>resistor_check.dat</strong> containing the measurement configurations
+to extract, and the expected measurement resistances.</p>
+<p>The resistor_check.dat file contains the four-point spreads to be imported from
+the measurement. This file is a text file with four columns (A, B, M, N),
+separated by spaces or tabs. Each line denotes one measurement and its expected
+resistance, the allowed variation, and its allow difference towards its
+reciprocal counterpart:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">1000</span>    <span class="mi">1</span>    <span class="mi">20</span>
+<span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">2</span>   <span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">1</span>    <span class="mi">20</span>
+<span class="o">...</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_eit_fzj_check_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_check_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
+generating ids
+assigning ids
+Summary:
+0 [  1   4   2   3 980  10  20]
+1 [  2   3   1   4 980  10  20]
+2 [   5    8    6    7 1200   10   20]
+3 [   6    7    5    8 1200   10   20]
+4 [   9   12   10   11 1450   10   20]
+5 [  10   11    9   12 1450   10   20]
+6 [  13   16   14   15 1660   10   20]
+     not passing [  13   16   14   15 1660   10   20]
+     1650 1670
+     1645.62941951
+7 [  14   15   13   16 1660   10   20]
+     not passing [  14   15   13   16 1660   10   20]
+     1650 1670
+     1639.19367558
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.eit_fzj_utils</span> <span class="kn">as</span> <span class="nn">eit_fzj_utils</span>
+
+<span class="n">fig</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="View documentation for reda.utils.eit_fzj_utils.check_resistor_board_measurements"><span class="n">eit_fzj_utils</span><span class="o">.</span><span class="n">check_resistor_board_measurements</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_eit_fzj_check/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data_eit_fzj_check/resistances.dat&#39;</span>
+<span class="p">)</span>
+<span class="c1"># The resulting matplotlib figure can now be plotted to visualize the</span>
+<span class="c1"># measurement data and the expected outcomes</span>
+<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;eit_fzj_resistor_check.pdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-check-py">
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../../_downloads/1530786975c99c6dc389e6c8539183da/plot_eit_fzj_check.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj_check.py</span></code></a></div>
+<div class="sphx-glr-download docutils container">
+<a class="reference download internal" download="" href="../../_downloads/b51c33a99a70254607f5ad2a618594aa/plot_eit_fzj_check.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj_check.ipynb</span></code></a></div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2018, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/03_sEIT/plot_eit_fzj_check.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

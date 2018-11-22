@@ -6,6 +6,13 @@ reda.importers package
     :undoc-members:
     :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+
+    reda.importers.legacy
+
 Submodules
 ----------
 
@@ -21,22 +28,6 @@ reda.importers.crtomo module
 ----------------------------
 
 .. automodule:: reda.importers.crtomo
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-reda.importers.eit160 module
-----------------------------
-
-.. automodule:: reda.importers.eit160
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
-reda.importers.eit40 module
----------------------------
-
-.. automodule:: reda.importers.eit40
     :members:
     :undoc-members:
     :show-inheritance:

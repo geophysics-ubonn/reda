@@ -111,7 +111,7 @@
           <div class="body" role="main">
             
   <h1>Source code for reda.containers.sEIT</h1><div class="highlight"><pre>
-<span></span><span class="sd">&quot;&quot;&quot;spectral electrical impedance tomography (sEIT) container</span>
+<span></span><span class="sd">&quot;&quot;&quot;spectral Electrical Impedance Tomography (sEIT) container</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="c1"># import functools</span>
 <span class="kn">import</span> <span class="nn">os</span>
@@ -121,10 +121,9 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
-<span class="kn">import</span> <span class="nn">reda.importers.eit40</span> <span class="k">as</span> <span class="nn">reda_eit40</span>
-<span class="c1"># import reda.importers.eit160 as reda_eit160</span>
 <span class="kn">import</span> <span class="nn">reda.importers.radic_sip256c</span> <span class="k">as</span> <span class="nn">reda_sip256c</span>
 <span class="kn">import</span> <span class="nn">reda.importers.crtomo</span> <span class="k">as</span> <span class="nn">reda_crtomo_exporter</span>
+<span class="kn">import</span> <span class="nn">reda.utils.eit_fzj_utils</span> <span class="k">as</span> <span class="nn">eit_fzj_utils</span>
 <span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="k">as</span> <span class="nn">redanr</span>
 <span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geometric_factors</span>
 <span class="kn">from</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">import</span> <span class="n">fix_sign_with_K</span>
@@ -200,7 +199,7 @@
             <span class="o">**</span><span class="n">kwargs</span>
         <span class="p">)</span>
         <span class="k">if</span> <span class="n">correction_file</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">reda_eit40</span><span class="o">.</span><span class="n">apply_correction_factors</span><span class="p">(</span><span class="n">df_emd</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">)</span>
+            <span class="n">eit_fzj_utils</span><span class="o">.</span><span class="n">apply_correction_factors</span><span class="p">(</span><span class="n">df_emd</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">df_emd</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>

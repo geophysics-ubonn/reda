@@ -18,7 +18,7 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="reda.main package" href="reda.main.html" />
+    <link rel="next" title="reda.importers.legacy package" href="reda.importers.legacy.html" />
     <link rel="prev" title="reda.exporters package" href="reda.exporters.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
@@ -82,7 +82,7 @@
   <li><a href="../api.html">API documentation</a><ul>
   <li><a href="reda.html">reda package</a><ul>
       <li>Previous: <a href="reda.exporters.html" title="previous chapter">reda.exporters package</a></li>
-      <li>Next: <a href="reda.main.html" title="next chapter">reda.main package</a></li>
+      <li>Next: <a href="reda.importers.legacy.html" title="next chapter">reda.importers.legacy package</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -119,6 +119,19 @@
   <div class="section" id="module-reda.importers">
 <span id="reda-importers-package"></span><h1>reda.importers package<a class="headerlink" href="#module-reda.importers" title="Permalink to this headline">¶</a></h1>
 <p>Importers for different measurement devices</p>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reda.importers.legacy.html">reda.importers.legacy package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reda.importers.legacy.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.importers.legacy.html#module-reda.importers.legacy.eit160">reda.importers.legacy.eit160 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.importers.legacy.html#module-reda.importers.legacy.eit40">reda.importers.legacy.eit40 module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
@@ -241,148 +254,6 @@ data_prefix</p>
 </tbody>
 </table>
 </dd></dl>
-
-</div>
-<div class="section" id="module-reda.importers.eit160">
-<span id="reda-importers-eit160-module"></span><h2>reda.importers.eit160 module<a class="headerlink" href="#module-reda.importers.eit160" title="Permalink to this headline">¶</a></h2>
-<p>Work with result files from the EIT-40/160 tomograph (also called medusa).</p>
-<p>Data structure of .mat files:</p>
-<blockquote>
-<div>EMD(n).fm frequency
-EMD(n).Time point of time of this measurement
-EMD(n).ni number of the two excitation electrodes (not the channel number)
-EMD(n).nu number of the two potential electrodes (not the channel number)
-EMD(n).Zt3 array with the transfer impedances (repetition measurement)
-EMD(n).nni number of injection
-EMD(n).cni number of channels used to inject current
-EMD(n).cnu number of channels used to measure voltage
-EMD(n).Is3 injected current (A) (calibrated)
-EMD(n).II3 leakage current (A)
-EMD(n).Yg1 Admitance of first injection path
-EMD(n).Yg2 Admitance of second injection path
-EMD(n).As3 Voltages at shunt resistors (defined in .mcf files: NA1 - NA2)
-EMD(n).Zg3 Impedance between injection electrodes</div></blockquote>
-<p>Import pipeline:</p>
-<ul>
-<li><p class="first">read single-potentials from .mat file</p>
-</li>
-<li><p class="first">read quadrupoles from separate file or provide numpy array</p>
-</li>
-<li><p class="first">compute mean of three impedance measurement repetitions (Z1-Z3) for each ABM</p>
-</li>
-<li><p class="first">compute quadrupole impedance via superposition using</p>
-<blockquote>
-<div><ul class="simple">
-<li><ol class="first loweralpha">
-<li>averaged Z-values</li>
-</ol>
-</li>
-<li><ol class="first loweralpha" start="2">
-<li>the single repetitions Z1-Z3</li>
-</ol>
-</li>
-</ul>
-</div></blockquote>
-</li>
-<li><p class="first">(I think we don’t need the next step because of np.arctan2)
-check for correct quadrant in phase values, correct if necessary (is this
-required if we use the arctan2 function?)</p>
-</li>
-<li><p class="first">compute variance/standard deviation from the repetition values</p>
-</li>
-</ul>
-<p>Open questions:</p>
-<ul class="simple">
-<li>should we provide a time delta between the two measurements?</li>
-</ul>
-<dl class="function">
-<dt id="reda.importers.eit160.import_medusa_data">
-<code class="descclassname">reda.importers.eit160.</code><code class="descname">import_medusa_data</code><span class="sig-paren">(</span><em>mat_filename</em>, <em>config_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit160.html#import_medusa_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit160.import_medusa_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Import measurement data (a .mat file) of the FZJ EIT160 system. This
-data format is identified as ‘FZJ-EZ-2017’.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>mat_filename: string</strong></dt>
-<dd><p class="first last">filename to the .mat data file. Note that only MNU0 single-potentials
-are supported!</p>
-</dd>
-<dt><strong>config_file: string</strong></dt>
-<dd><p class="first last">filename for configuration file. The configuration file contains N rows
-with 4 columns each (a, b, m, n)</p>
-</dd>
-</dl>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-</div>
-<div class="section" id="module-reda.importers.eit40">
-<span id="reda-importers-eit40-module"></span><h2>reda.importers.eit40 module<a class="headerlink" href="#module-reda.importers.eit40" title="Permalink to this headline">¶</a></h2>
-<p>Work with result files from the EIT-40 tomograph (also called medusa).</p>
-<p>NOTE that the results for EIT40 and EIT160 are, at this time, slightly
-different.</p>
-<p>Data structure of .mat files:</p>
-<blockquote>
-<div>EMD(n).fm frequency
-EMD(n).Time point of time of this measurement
-EMD(n).ni number of the two excitation electrodes (not the channel number)
-EMD(n).nu number of the two potential electrodes (not the channel number)
-EMD(n).Zt3 array with the transfer impedances (repetition measurement)
-EMD(n).nni number of injection
-EMD(n).cni number of channels used to inject current
-EMD(n).cnu number of channels used to measure voltage
-EMD(n).Is3 injected current (A) (calibrated)
-EMD(n).II3 leakage current (A)
-EMD(n).Yg1 Admitance of first injection path
-EMD(n).Yg2 Admitance of second injection path
-EMD(n).As3 Voltages at shunt resistors (defined in .mcf files: NA1 - NA2)
-EMD(n).Zg3 Impedance between injection electrodes</div></blockquote>
-<p>Import pipeline:</p>
-<ul>
-<li><p class="first">read single-potentials from .mat file</p>
-</li>
-<li><p class="first">read quadrupoles from separate file or provide numpy array</p>
-</li>
-<li><p class="first">compute mean of three impedance measurement repetitions (Z1-Z3) for each ABM</p>
-</li>
-<li><p class="first">compute quadrupole impedance via superposition using</p>
-<blockquote>
-<div><ul class="simple">
-<li><ol class="first loweralpha">
-<li>averaged Z-values</li>
-</ol>
-</li>
-<li><ol class="first loweralpha" start="2">
-<li>the single repetitions Z1-Z3</li>
-</ol>
-</li>
-</ul>
-</div></blockquote>
-</li>
-</ul>
-<ul class="simple">
-<li>(I think we don’t need the next step because of np.arctan2)
-check for correct quadrant in phase values, correct if necessary (is this
-required if we use the arctan2 function?)</li>
-<li>compute variance/standard deviation from the repetition values</li>
-<li>should we provide a time delta between the two measurements?</li>
-</ul>
-<dl class="function">
-<dt id="reda.importers.eit40.apply_correction_factors">
-<code class="descclassname">reda.importers.eit40.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit40.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit40.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
-and Kemna, 2017, Biogeosciences, for detailed information.</p>
-</dd></dl>
-
-<dl class="function">
-<dt id="reda.importers.eit40.import_medusa_data">
-<code class="descclassname">reda.importers.eit40.</code><code class="descname">import_medusa_data</code><span class="sig-paren">(</span><em>mat_filename</em>, <em>configs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit40.html#import_medusa_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit40.import_medusa_data" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 </div>
 <div class="section" id="module-reda.importers.eit_fzj">
@@ -559,10 +430,10 @@ specific measurement. Default: True</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1056.g2946745a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1089.g20ae4543)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1056.g2946745a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1089.g20ae4543)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -841,7 +712,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1056.g2946745a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1089.g20ae4543)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>
@@ -869,7 +740,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1056.g2946745a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1089.g20ae4543)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>

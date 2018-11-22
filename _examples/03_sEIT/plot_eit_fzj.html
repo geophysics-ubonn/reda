@@ -120,6 +120,16 @@
 </div>
 <div class="sphx-glr-example-title section" id="importing-eit40-eit160-data">
 <span id="sphx-glr-examples-03-seit-plot-eit-fzj-py"></span><h1>Importing EIT40/EIT160 data<a class="headerlink" href="#importing-eit40-eit160-data" title="Permalink to this headline">¶</a></h1>
+<p>This example shows how to import data from the various versions of the EIT
+system developed by Zimmermann et al. 2008
+(<a class="reference external" href="http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta">http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta</a>).</p>
+<p>At this point we only support 3-point data, i.e., data which uses two
+electrodes to inject current, and then uses all electrodes to measure the
+resulting potential distribution against system ground. Classical four-point
+configurations are then computed using superposition.</p>
+<p>Required are two files: a data file (usually <strong>eit_data_mnu0.mat</strong> and a text
+file (usually <strong>configs.dat</strong> containing the measurement configurations to
+extract.</p>
 <p>The configs.dat file contains the four-point spreads to be imported from the
 measurement. This file is a text file with four columns (A, B, M, N),
 separated by spaces or tabs. Each line denotes one measurement:</p>
@@ -157,7 +167,8 @@ Summary:
 <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">redafixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Compute normal and reciprocal pairs</p>
+<p>Compute normal and reciprocal pairs
+Note that this is usually done on import once.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="kn">as</span> <span class="nn">norrec</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.norrec.assign_norrec_to_df" title="View documentation for reda.utils.norrec.assign_norrec_to_df"><span class="n">norrec</span><span class="o">.</span><span class="n">assign_norrec_to_df</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
@@ -174,7 +185,7 @@ assigning ids
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2aecb5949630&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2b7812961c18&gt;
           a     b   m   n     frequency         r        rpha
 749    10.0  29.0  15  34      0.100000  7.356375   -5.205543
 2229   10.0  29.0  15  34      0.314465  7.323810   -6.903037
@@ -253,7 +264,7 @@ Raw data plots (execute before applying the filters):</p>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
-<p><strong>Total running time of the script:</strong> ( 0 minutes  26.706 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  28.938 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" download="" href="../../_downloads/332eb6762fd44a5648b0c62b99f8e03f/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></div>

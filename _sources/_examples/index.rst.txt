@@ -93,6 +93,26 @@ Importing spectral impedance data (sEIT)
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="There exist multiple hardware and software versions of the of the EIT system developed by Zimme...">
+
+.. only:: html
+
+    .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_eit_fzj_check_thumb.png
+
+        :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj_check.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/03_sEIT/plot_eit_fzj_check
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="    The SIP256c importer is incredibly slow at the moment. Sorry for that.">
 
 .. only:: html
@@ -113,7 +133,7 @@ Importing spectral impedance data (sEIT)
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip=" The configs.dat file contains the four-point spreads to be imported from the measurement. This...">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to import data from the various versions of the EIT system developed by ...">
 
 .. only:: html
 

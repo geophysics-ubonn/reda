@@ -148,10 +148,119 @@
 <div class="section" id="module-reda.utils.eit_fzj_utils">
 <span id="reda-utils-eit-fzj-utils-module"></span><h2>reda.utils.eit_fzj_utils module<a class="headerlink" href="#module-reda.utils.eit_fzj_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
+<dt id="reda.utils.eit_fzj_utils.apply_correction_factors">
+<code class="descclassname">reda.utils.eit_fzj_utils.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
+and Kemna, 2017, Biogeosciences, for more information:</p>
+<p><a class="reference external" href="https://doi.org/10.5194/bg-14-921-2017">https://doi.org/10.5194/bg-14-921-2017</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1089.g20ae4543)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">Data container</p>
+</dd>
+<dt><strong>correction_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">Path to correction file. The file must have 5 columns:
+a,b,m,n,correction_factor</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>corr_data</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Nx5 <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt>
+<dd><p class="first last">Correction files as imported from the file. Columns:
+a,b,m,n,correction_factor</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.eit_fzj_utils.check_resistor_board_measurements">
+<code class="descclassname">reda.utils.eit_fzj_utils.</code><code class="descname">check_resistor_board_measurements</code><span class="sig-paren">(</span><em>data_file</em>, <em>reference_data_file</em>, <em>create_plot=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#check_resistor_board_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="Permalink to this definition">¶</a></dt>
+<dd><p>To check basic system function a test board was built with multiple
+resistors attached to for connectors each. Measurements can thus be
+validated against known electrical (ohmic) resistances.</p>
+<p>Note that the normal-reciprocal difference is not yet analyzed!</p>
+<p>The referenc_data_file should have the following structure:
+The file contains the four-point spreads to be imported from
+the measurement. This file is a text file with four columns (A, B, M, N),
+separated by spaces or tabs. Each line denotes one measurement and its
+expected resistance, the allowed variation, and its allow difference
+towards its reciprocal counterpart:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">1000</span>    <span class="mi">1</span>    <span class="mi">20</span>
+<span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">2</span>   <span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">1</span>    <span class="mi">20</span>
+</pre></div>
+</div>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>data_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">path to mnu0 data file</p>
+</dd>
+<dt><strong>reference_data_file: string</strong></dt>
+<dd><p class="first last">path to reference data file with structure as describe above</p>
+</dd>
+<dt><strong>create_plot</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">if True, create a plot with measured and expected resistances</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>fig</strong> <span class="classifier-delimiter">:</span> <span class="classifier">figure object, optional</span></dt>
+<dd><p class="first last">if create_plot is True, return a matplotlib figure</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="reda.utils.eit_fzj_utils.compute_correction_factors">
-<code class="descclassname">reda.utils.eit_fzj_utils.</code><code class="descname">compute_correction_factors</code><span class="sig-paren">(</span><em>*</em>, <em>data</em>, <em>true_conductivity</em>, <em>elem_file</em>, <em>elec_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#compute_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.compute_correction_factors" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.utils.eit_fzj_utils.</code><code class="descname">compute_correction_factors</code><span class="sig-paren">(</span><em>data</em>, <em>true_conductivity</em>, <em>elem_file</em>, <em>elec_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#compute_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.compute_correction_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute correction factors for 2D rhizotron geometries, following
 Weigand and Kemna, 2017, Biogeosciences</p>
+<p><a class="reference external" href="https://doi.org/10.5194/bg-14-921-2017">https://doi.org/10.5194/bg-14-921-2017</a></p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1089.g20ae4543)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">measured data</p>
+</dd>
+<dt><strong>true_conductivity</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Conductivity in S/m</p>
+</dd>
+<dt><strong>elem_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">path to CRTomo FE mesh file (elem.dat)</p>
+</dd>
+<dt><strong>elec_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">path to CRTomo FE electrode file (elec.dat)</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>correction_factors</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Nx5 :py:class.`numpy.ndarray`</span></dt>
+<dd><p class="first last">measurement configurations and correction factors
+(a,b,m,n,correction_factor)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </div>

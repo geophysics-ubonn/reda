@@ -6,20 +6,20 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>reda.importers.eit160 &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
-    <script type="text/javascript" id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
-    <script type="text/javascript" src="../../../_static/jquery.js"></script>
-    <script type="text/javascript" src="../../../_static/underscore.js"></script>
-    <script type="text/javascript" src="../../../_static/doctools.js"></script>
+    <title>reda.importers.legacy.eit160 &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../../../_static/doctools.js"></script>
     <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="author" title="About these documents" href="../../../about.html" />
-    <link rel="index" title="Index" href="../../../genindex.html" />
-    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="author" title="About these documents" href="../../../../about.html" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
    
-  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
   
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
@@ -30,8 +30,8 @@
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
 <p class="logo">
-  <a href="../../../index.html">
-    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/reda_logo.png" alt="Logo"/>
     
   </a>
 </p>
@@ -61,23 +61,23 @@
 
 <h3>Navigation</h3>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
 
 <div class="relations">
 <h3>Related Topics</h3>
 <ul>
-  <li><a href="../../../index.html">Documentation overview</a><ul>
-  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
   </ul></li>
   </ul></li>
 </ul>
@@ -85,7 +85,7 @@
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
-    <form class="search" action="../../../search.html" method="get">
+    <form class="search" action="../../../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
       <input type="hidden" name="check_keywords" value="yes" />
@@ -110,7 +110,7 @@
 
           <div class="body" role="main">
             
-  <h1>Source code for reda.importers.eit160</h1><div class="highlight"><pre>
+  <h1>Source code for reda.importers.legacy.eit160</h1><div class="highlight"><pre>
 <span></span><span class="c1"># -*- coding: utf-8 -*-</span>
 <span class="sd">&quot;&quot;&quot; Work with result files from the EIT-40/160 tomograph (also called medusa).</span>
 
@@ -171,7 +171,7 @@
     <span class="k">return</span> <span class="n">df</span>
 
 
-<div class="viewcode-block" id="import_medusa_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit160.import_medusa_data">[docs]</a><span class="k">def</span> <span class="nf">import_medusa_data</span><span class="p">(</span><span class="n">mat_filename</span><span class="p">,</span> <span class="n">config_file</span><span class="p">):</span>
+<div class="viewcode-block" id="import_medusa_data"><a class="viewcode-back" href="../../../../_api/reda.importers.legacy.html#reda.importers.legacy.eit160.import_medusa_data">[docs]</a><span class="k">def</span> <span class="nf">import_medusa_data</span><span class="p">(</span><span class="n">mat_filename</span><span class="p">,</span> <span class="n">config_file</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Import measurement data (a .mat file) of the FZJ EIT160 system. This</span>
 <span class="sd">    data format is identified as &#39;FZJ-EZ-2017&#39;.</span>
 

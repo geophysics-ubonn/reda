@@ -4,6 +4,18 @@
 Importing EIT40/EIT160 data
 ===========================
 
+This example shows how to import data from the various versions of the EIT
+system developed by Zimmermann et al. 2008
+(http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta).
+
+At this point we only support 3-point data, i.e., data which uses two
+electrodes to inject current, and then uses all electrodes to measure the
+resulting potential distribution against system ground. Classical four-point
+configurations are then computed using superposition.
+
+Required are two files: a data file (usually **eit_data_mnu0.mat** and a text
+file (usually **configs.dat** containing the measurement configurations to
+extract.
 
 The configs.dat file contains the four-point spreads to be imported from the
 measurement. This file is a text file with four columns (A, B, M, N),
@@ -39,6 +51,7 @@ redafixK.fix_sign_with_K(seit.data)
 
 ##############################################################################
 # Compute normal and reciprocal pairs
+# Note that this is usually done on import once.
 import reda.utils.norrec as norrec
 seit.data = norrec.assign_norrec_to_df(seit.data)
 
