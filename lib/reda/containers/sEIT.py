@@ -1,4 +1,4 @@
-"""spectral electrical impedance tomography (sEIT) container
+"""spectral Electrical Impedance Tomography (sEIT) container
 """
 # import functools
 import os
@@ -8,10 +8,9 @@ import numpy as np
 import pandas as pd
 
 import reda.importers.eit_fzj as eit_fzj
-import reda.importers.eit40 as reda_eit40
-# import reda.importers.eit160 as reda_eit160
 import reda.importers.radic_sip256c as reda_sip256c
 import reda.importers.crtomo as reda_crtomo_exporter
+import reda.utils.eit_fzj_utils as eit_fzj_utils
 import reda.utils.norrec as redanr
 import reda.utils.geometric_factors as geometric_factors
 from reda.utils.fix_sign_with_K import fix_sign_with_K
@@ -87,7 +86,7 @@ class importers(object):
             **kwargs
         )
         if correction_file is not None:
-            reda_eit40.apply_correction_factors(df_emd, correction_file)
+            eit_fzj_utils.apply_correction_factors(df_emd, correction_file)
 
         if timestep is not None:
             df_emd['timestep'] = timestep
