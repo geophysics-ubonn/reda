@@ -1,6 +1,10 @@
 # various utility functions used in conjunction with the FZ EIT systems
 import numpy as np
+import pandas as pd
 
+import pylab as plt
+
+import reda
 import reda.utils.geometric_factors as geometric_factors
 import reda.utils.fix_sign_with_K as fixK
 
@@ -126,3 +130,121 @@ def apply_correction_factors(df, correction_file):
             if col in df.columns:
                 df.ix[item, col] *= factor
     return corr_data
+
+
+def check_resistor_board_measurements(data_file, reference_data_file,
+                                      create_plot=True):
+    """ To check basic system function a test board was built with multiple
+    resistors attached to for connectors each. Measurements can thus be
+    validated against known electrical (ohmic) resistances.
+
+    Note that the normal-reciprocal difference is not yet analyzed!
+
+    The referenc_data_file should have the following structure:
+    The file contains the four-point spreads to be imported from
+    the measurement. This file is a text file with four columns (A, B, M, N),
+    separated by spaces or tabs. Each line denotes one measurement and its
+    expected resistance, the allowed variation, and its allow difference
+    towards its reciprocal counterpart: ::
+
+        1   2   4   3   1000    1    20
+        4   3   2   1   1000    1    20
+
+    Parameters
+    ----------
+    data_file : string
+        path to mnu0 data file
+    reference_data_file: string
+        path to reference data file with structure as describe above
+    create_plot : bool, optional
+        if True, create a plot with measured and expected resistances
+
+    Returns
+    -------
+    fig : figure object, optional
+        if create_plot is True, return a matplotlib figure
+    """
+    # reference_data = np.loadtxt(reference_data_file)
+    # configs = reference_data[:, 0:4]
+    ref_data = pd.read_csv(
+        reference_data_file,
+        names=[
+            'a', 'b', 'm', 'n', 'expected_r', 'variation_r', 'variation_diffr'
+        ],
+        delim_whitespace=True,
+    )
+    configs = ref_data[['a', 'b', 'm', 'n']].values.astype(int)
+
+    seit = reda.sEIT()
+    seit.import_eit_fzj(data_file, configs)
+    seit.data = seit.data.merge(ref_data, on=('a', 'b', 'm', 'n'))
+
+    # iterate through the test configurations
+    test_frequency = 1
+    failing = []
+    for nr, row in enumerate(ref_data.values):
+        print(nr, row)
+        key = tuple(row[0:4].astype(int))
+        item = seit.abmn.get_group(key)
+        expected_r = row[4]
+        allowed_variation = row[5]
+        # expected_r_diff = row[6]
+
+        measured_r, measured_rdiff = item.query(
+            'frequency == {}'.format(test_frequency)
+        )[['r', 'rdiff']].values.squeeze()
+        minr = expected_r - allowed_variation
+        maxr = expected_r + allowed_variation
+        if not (minr <= measured_r and maxr >= measured_r):
+            print('    ', 'not passing', row)
+            print('    ', minr, maxr)
+            print('    ', measured_r)
+            failing.append((nr, measured_r))
+    failing = np.atleast_2d(np.array(failing))
+
+    if create_plot:
+        fig, ax = plt.subplots(1, 1, figsize=(16 / 2.54, 8 / 2.54))
+        data = seit.data.query('frequency == 1')
+        x = np.arange(0, data.shape[0])
+
+        ax.plot(
+            x,
+            data['r'],
+            '.-',
+            label='data',
+        )
+        ax.fill_between(
+            x,
+            data['expected_r'] - data['variation_r'],
+            data['expected_r'] + data['variation_r'],
+            color='green',
+            alpha=0.8,
+            label='allowed limits',
+        )
+        ax.scatter(
+            failing[:, 0],
+            failing[:, 1],
+            color='r',
+            label='not passing',
+            s=40,
+        )
+
+        ax.legend()
+        ax.set_xticks(x)
+        xticklabels = [
+            '{}-{} {}-{}'.format(*row) for row
+            in data[['a', 'b', 'm', 'n']].values.astype(int)
+        ]
+        ax.set_xticklabels(xticklabels, rotation=45)
+
+        ax.set_ylabel('resistance $[\Omega]$')
+        ax.set_xlabel('configuration a-b m-n')
+        if len(failing) == 0:
+            suffix = ' PASSED'
+        else:
+            suffix = ''
+        ax.set_title('Resistor-check for FZJ-EIT systems' + suffix)
+
+        fig.tight_layout()
+        # fig.savefig('out.pdf')
+        return fig
