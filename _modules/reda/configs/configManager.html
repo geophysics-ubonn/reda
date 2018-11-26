@@ -122,11 +122,6 @@
 <span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
 <span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span>
-    <span class="s1">&#39;WARNING: This module is subject to rapid changes as we &#39;</span>
-    <span class="s1">&#39;adapt the naming schemes!&#39;</span>
-<span class="p">)</span>
-
 
 <div class="viewcode-block" id="ConfigManager"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager">[docs]</a><span class="k">class</span> <span class="nc">ConfigManager</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;The class`ConfigManager` manages four-point measurement configurations.</span>
@@ -501,14 +496,14 @@
         <span class="n">all_quadpoles</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">idipole</span> <span class="ow">in</span> <span class="n">injections</span><span class="p">:</span>
             <span class="c1"># sort current electrodes and convert to array indices</span>
-            <span class="n">I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">idipole</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+            <span class="n">Ipoles</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">idipole</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
 
             <span class="c1"># voltage electrodes</span>
             <span class="n">velecs</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">N</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))</span>
 
             <span class="c1"># remove current electrodes</span>
-            <span class="k">del</span><span class="p">(</span><span class="n">velecs</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
-            <span class="k">del</span><span class="p">(</span><span class="n">velecs</span><span class="p">[</span><span class="n">I</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">velecs</span><span class="p">[</span><span class="n">Ipoles</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+            <span class="k">del</span><span class="p">(</span><span class="n">velecs</span><span class="p">[</span><span class="n">Ipoles</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
 
             <span class="c1"># permutate remaining</span>
             <span class="n">voltages</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">permutations</span><span class="p">(</span><span class="n">velecs</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>

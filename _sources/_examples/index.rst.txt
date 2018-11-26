@@ -154,6 +154,37 @@ Importing spectral impedance data (sEIT)
 
     <div style='clear:both'></div>
 
+Creating measurement configurations
+-----------------------------------
+
+Measurement configurations (A-B M-N)-tuples can be created using the
+:py:class:`reda.ConfigManager` class.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Various ways to create measurement configurations">
+
+.. only:: html
+
+    .. figure:: /_examples/04_configurations/images/thumb/sphx_glr_plot_configurations_thumb.png
+
+        :ref:`sphx_glr__examples_04_configurations_plot_configurations.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/04_configurations/plot_configurations
+.. raw:: html
+
+    <div style='clear:both'></div>
+
 
 
 .. only :: html
