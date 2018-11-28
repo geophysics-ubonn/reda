@@ -3,6 +3,7 @@ import datetime
 import numpy as np
 import pandas as pd
 
+
 def _average_swapped_current_injections(df):
     AB = df[['a', 'b']].values
 
@@ -84,6 +85,7 @@ def _average_swapped_current_injections(df):
 
 def _extract_md(mat, **kwargs):
     return None
+
 
 def _extract_emd(mat, **kwargs):
     emd = mat['EMD'].squeeze()

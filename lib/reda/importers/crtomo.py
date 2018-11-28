@@ -38,12 +38,12 @@ def load_mod_file(filename):
         df = cexp.load_mod_file('volt_01_0.1Hz.crt')
         ert = reda.ERT(data=df)
 
-
     """
     df_raw = pd.read_csv(
         filename, skiprows=1, delim_whitespace=True,
         names=['ab', 'mn', 'r', 'rpha']
     )
+    df_raw['Zt'] = df_raw['r'] * np.exp(1j * df_raw['rpha'] / 1000.0)
     df_raw['a'] = np.floor(df_raw['ab'] / 1e4).astype(int)
     df_raw['b'] = (df_raw['ab'] % 1e4).astype(int)
     df_raw['m'] = np.floor(df_raw['mn'] / 1e4).astype(int)

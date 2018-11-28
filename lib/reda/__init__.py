@@ -12,6 +12,7 @@ from .containers.SIP import SIP
 from .testing import test
 from .utils.helper_functions import search
 import reda.utils.data as data
+from .configs.configManager import ConfigManager
 
 ERT
 TDIP
@@ -21,3 +22,4 @@ sEIT
 test
 search
 data
+ConfigManager

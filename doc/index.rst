@@ -9,9 +9,12 @@ It offers functionality to import, analyze, process, visualize, and export
 geoelectrical data with particular emphasis on time-lapse functionality and
 reproducibility. The latter is realized in the form of a logging system, which
 keeps track of each individual processing step applied to particular data set
-in a human-readable journal. REDA is platform compatible, tested and
-open-source under the permissive MIT license. Any contributions from the
-community are highly welcome.
+in a human-readable journal. There is also limited functionality to create
+measurements configurations, and export those files to various system specific
+file formats.
+
+REDA is platform compatible, tested and open-source under the permissive MIT
+license. Any contributions from the community are highly welcome.
 
 .. note::
 
@@ -30,6 +33,7 @@ community are highly welcome.
     about.rst
     installation.rst
     data_containers.rst
+    filtering.rst
     _examples/index.rst
     importers.rst
     test_data.rst

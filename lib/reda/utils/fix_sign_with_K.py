@@ -20,14 +20,13 @@ def fix_sign_with_K(dataframe):
 
     Parameters
     ----------
-    dataframe: pandas.DateFrame
+    dataframe : pandas.DateFrame
         dataframe holding the data
 
     Returns
     -------
-    dataframe: pandas.DateFrame
+    dataframe : pandas.DateFrame
         the fixed dataframe
-
 
     """
     # check for required columns

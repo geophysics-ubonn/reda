@@ -9,11 +9,6 @@ from reda.utils import opt_import
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
 
-print(
-    'WARNING: This module is subject to rapid changes as we '
-    'adapt the naming schemes!'
-)
-
 
 class ConfigManager(object):
     """The class`ConfigManager` manages four-point measurement configurations.
@@ -388,14 +383,14 @@ class ConfigManager(object):
         all_quadpoles = []
         for idipole in injections:
             # sort current electrodes and convert to array indices
-            I = np.sort(idipole) - 1
+            Ipoles = np.sort(idipole) - 1
 
             # voltage electrodes
             velecs = list(range(1, N + 1))
 
             # remove current electrodes
-            del(velecs[I[1]])
-            del(velecs[I[0]])
+            del(velecs[Ipoles[1]])
+            del(velecs[Ipoles[0]])
 
             # permutate remaining
             voltages = itertools.permutations(velecs, 2)
