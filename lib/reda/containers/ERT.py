@@ -9,6 +9,7 @@ import reda
 import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.bert as reda_bert_import
 import reda.exporters.bert as reda_bert_export
+import reda.exporters.crtomo as reda_crtomo_export
 
 import reda.utils.geometric_factors as redaK
 import reda.utils.fix_sign_with_K as redafixK
@@ -192,6 +193,9 @@ class Exporters(object):
     @functools.wraps(export_bert)
     def export_pygimli(self, *args, **kargs):
         self.export_bert(*args, **kargs)
+
+    def export_crtomo(self, filename):
+        reda_crtomo_export.save_block_to_crt(filename, self.data)
 
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
