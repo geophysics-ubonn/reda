@@ -122,6 +122,7 @@
 <span class="kn">import</span> <span class="nn">reda.importers.iris_syscal_pro</span> <span class="k">as</span> <span class="nn">reda_syscal</span>
 <span class="kn">import</span> <span class="nn">reda.importers.bert</span> <span class="k">as</span> <span class="nn">reda_bert_import</span>
 <span class="kn">import</span> <span class="nn">reda.exporters.bert</span> <span class="k">as</span> <span class="nn">reda_bert_export</span>
+<span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">reda_crtomo_export</span>
 
 <span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">redaK</span>
 <span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">redafixK</span>
@@ -304,7 +305,10 @@
 
 <div class="viewcode-block" id="Exporters.export_pygimli"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Exporters.export_pygimli">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">export_bert</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">export_pygimli</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">export_bert</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">export_bert</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Exporters.export_crtomo"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Exporters.export_crtomo">[docs]</a>    <span class="k">def</span> <span class="nf">export_crtomo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="n">reda_crtomo_export</span><span class="o">.</span><span class="n">save_block_to_crt</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="ListHandler"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ListHandler">[docs]</a><span class="k">class</span> <span class="nc">ListHandler</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">Handler</span><span class="p">):</span>  <span class="c1"># Inherit from logging.Handler</span>

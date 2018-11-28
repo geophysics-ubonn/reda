@@ -381,7 +381,7 @@
             <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
             <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span></div>
 
-<div class="viewcode-block" id="sEIT.get_spectrum"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.get_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">get_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nr_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">abmn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nr_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">abmn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a spectrum and its reciprocal counter part, if present in the</span>
 <span class="sd">        dataset. Optimally, refer to the spectrum by its normal-reciprocal id.</span>
 
@@ -442,9 +442,9 @@
                     <span class="p">)</span>
                 <span class="p">)</span>
                 <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">spectrum_nor</span><span class="p">,</span> <span class="n">spectrum_rec</span></div>
+        <span class="k">return</span> <span class="n">spectrum_nor</span><span class="p">,</span> <span class="n">spectrum_rec</span>
 
-<div class="viewcode-block" id="sEIT.plot_all_spectra"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.plot_all_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">plot_all_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outdir</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">plot_all_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outdir</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;This is a convenience function to plot ALL spectra currently</span>
 <span class="sd">        stored in the container. It is useful to asses whether data filters</span>
 <span class="sd">        do perform correctly.</span>
@@ -475,7 +475,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">get_spectrum</span><span class="p">(</span>
                 <span class="n">nr_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">plot_filename</span><span class="o">=</span><span class="n">plot_filename</span>
-            <span class="p">)</span></div>
+            <span class="p">)</span>
 
 <div class="viewcode-block" id="sEIT.filter_incomplete_spectra"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.filter_incomplete_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">filter_incomplete_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">flimit</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">percAccept</span><span class="o">=</span><span class="mi">85</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Remove all data points that belong to spectra that did not retain at</span>
@@ -525,8 +525,102 @@
         <span class="n">Naccept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">Nlimit</span> <span class="o">*</span> <span class="n">percAccept</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">group_abmn</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span>
             <span class="n">_retain_only_complete_spectra</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="n">flimit</span><span class="p">,</span> <span class="n">acceptN</span><span class="o">=</span><span class="n">Naccept</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div></div>
+        <span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
+<div class="viewcode-block" id="sEIT.get_spectrum"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.get_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">get_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nr_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">abmn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a spectrum and its reciprocal counter part, if present in the</span>
+<span class="sd">        dataset. Optimally, refer to the spectrum by its normal-reciprocal id.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        spectrum_nor : :py:class:`reda.eis.plots.sip_response`</span>
+<span class="sd">            Normal spectrum. None if no normal spectrum is available</span>
+<span class="sd">        spectrum_rec : :py:class:`reda.eis.plots.sip_response` or None</span>
+<span class="sd">            Reciprocal spectrum. None if no reciprocal spectrum is available</span>
+<span class="sd">        fig : :py:class:`matplotlib.Figure.Figure` , optional</span>
+<span class="sd">            Figure object (only if plot_filename is set)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">nr_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">abmn</span> <span class="ow">is</span> <span class="kc">None</span>
+        <span class="c1"># determine nr_id for given abmn tuple</span>
+        <span class="k">if</span> <span class="n">abmn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">subdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+                <span class="s1">&#39;a == </span><span class="si">{}</span><span class="s1"> and b == </span><span class="si">{}</span><span class="s1"> and m == </span><span class="si">{}</span><span class="s1"> and n == </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">abmn</span><span class="p">)</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+
+            <span class="c1"># determine the norrec-id of this spectrum</span>
+            <span class="n">nr_id</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># get spectra</span>
+        <span class="n">subdata_nor</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+            <span class="s1">&#39;id == </span><span class="si">{}</span><span class="s1"> and norrec==&quot;nor&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr_id</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+
+        <span class="n">subdata_rec</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+            <span class="s1">&#39;id == </span><span class="si">{}</span><span class="s1"> and norrec==&quot;rec&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr_id</span><span class="p">)</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+
+        <span class="c1"># create spectrum objects</span>
+        <span class="n">spectrum_nor</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">spectrum_rec</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">subdata_nor</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">spectrum_nor</span> <span class="o">=</span> <span class="n">eis_plot</span><span class="o">.</span><span class="n">sip_response</span><span class="p">(</span>
+                <span class="n">frequencies</span><span class="o">=</span><span class="n">subdata_nor</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">rmag</span><span class="o">=</span><span class="n">subdata_nor</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">],</span>
+                <span class="n">rpha</span><span class="o">=</span><span class="n">subdata_nor</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">subdata_rec</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">spectrum_rec</span> <span class="o">=</span> <span class="n">eis_plot</span><span class="o">.</span><span class="n">sip_response</span><span class="p">(</span>
+                <span class="n">frequencies</span><span class="o">=</span><span class="n">subdata_rec</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">rmag</span><span class="o">=</span><span class="n">subdata_rec</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">],</span>
+                <span class="n">rpha</span><span class="o">=</span><span class="n">subdata_rec</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">plot_filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">spectrum_nor</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">fig</span> <span class="o">=</span> <span class="n">spectrum_nor</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+                    <span class="n">plot_filename</span><span class="p">,</span>
+                    <span class="n">reciprocal</span><span class="o">=</span><span class="n">spectrum_rec</span><span class="p">,</span>
+                    <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="n">title</span><span class="o">=</span><span class="s1">&#39;a: </span><span class="si">{}</span><span class="s1"> b: </span><span class="si">{}</span><span class="s1"> m: </span><span class="si">{}</span><span class="s1">: n: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="o">*</span><span class="n">subdata_nor</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:]</span>
+                    <span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">return</span> <span class="n">spectrum_nor</span><span class="p">,</span> <span class="n">spectrum_rec</span><span class="p">,</span> <span class="n">fig</span>
+        <span class="k">return</span> <span class="n">spectrum_nor</span><span class="p">,</span> <span class="n">spectrum_rec</span></div>
+
+<div class="viewcode-block" id="sEIT.plot_all_spectra"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.plot_all_spectra">[docs]</a>    <span class="k">def</span> <span class="nf">plot_all_spectra</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outdir</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;This is a convenience function to plot ALL spectra currently</span>
+<span class="sd">        stored in the container. It is useful to asses whether data filters</span>
+<span class="sd">        do perform correctly.</span>
+
+<span class="sd">        Note that the function just iterates over all ids and plots the</span>
+<span class="sd">        corresponding spectra, thus it is slow.</span>
+
+<span class="sd">        Spectra a named using the format: \%.2i_spectrum_id_\{\}.png.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        outdir : string</span>
+<span class="sd">            Output directory to store spectra in. Created if it does not</span>
+<span class="sd">            exist.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">outdir</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;id&#39;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">g</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span>
+                <span class="s1">&#39;Plotting spectrum with id </span><span class="si">{}</span><span class="s1"> (</span><span class="si">{}</span><span class="s1"> / </span><span class="si">{}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">name</span><span class="p">,</span> <span class="n">nr</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+            <span class="p">)</span>
+            <span class="n">plot_filename</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="n">outdir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span>
+                <span class="s1">&#39;</span><span class="si">{:04}</span><span class="s1">_spectrum_id_</span><span class="si">{}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
+            <span class="p">))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">get_spectrum</span><span class="p">(</span>
+                <span class="n">nr_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
+                <span class="n">plot_filename</span><span class="o">=</span><span class="n">plot_filename</span>
+            <span class="p">)</span></div></div>
 </pre></div>
 
           </div>
