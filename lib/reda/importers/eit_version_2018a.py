@@ -160,6 +160,7 @@ def _extract_md(mat, **kwargs):
 
     return df
 
+
 def _extract_emd(mat, **kwargs):
     """Extract the data from the EMD substruct, given a medusa-created MNU0-mat
     file
