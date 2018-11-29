@@ -180,6 +180,9 @@ def compute_K(dataframe, settings, keep_dir=False):
         changed_sign = (config_orig[:, 1] == modeled_resistances[:, 1])
         modeled_resistances[~changed_sign, 2] *= -1
 
+        if settings.get('norm_factor', None) is not None:
+            modeled_resistances[:, 2] /= settings.get('norm_factor')
+
         K = settings['rho'] / modeled_resistances[:, 2]
         if isinstance(dataframe, pd.DataFrame):
             dataframe['K'] = K
