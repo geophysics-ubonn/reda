@@ -776,29 +776,32 @@
 
 <div class="viewcode-block" id="ConfigManager.gen_configs_permutate"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_configs_permutate">[docs]</a>    <span class="k">def</span> <span class="nf">gen_configs_permutate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">injections_raw</span><span class="p">,</span>
                               <span class="n">only_same_dipole_length</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
-                              <span class="n">ignore_crossed_dipoles</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">        Create measurement configurations out of a pool of current injections.</span>
-<span class="sd">        Use only the provided dipoles for potential dipole selection. This</span>
-<span class="sd">        means that we have always reciprocal measurements.</span>
+                              <span class="n">ignore_crossed_dipoles</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                              <span class="n">silent</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Create measurement configurations out of a pool of current</span>
+<span class="sd">        injections.  Use only the provided dipoles for potential dipole</span>
+<span class="sd">        selection. This means that we have always reciprocal measurements.</span>
 
 <span class="sd">        Remove quadpoles where electrodes are used both as current and voltage</span>
 <span class="sd">        dipoles.</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        injections_raw: Nx2 array</span>
+<span class="sd">        injections_raw : Nx2 array</span>
 <span class="sd">            current injections</span>
-<span class="sd">        only_same_dipole_length: bool, optional</span>
+<span class="sd">        only_same_dipole_length : bool, optional</span>
 <span class="sd">            if True, only generate permutations for the same dipole length</span>
-<span class="sd">        ignore_crossed_dipoles: bool, optional</span>
+<span class="sd">        ignore_crossed_dipoles : bool, optional</span>
 <span class="sd">            If True, potential dipoles will be ignored that lie between current</span>
 <span class="sd">            dipoles,  e.g. 1-4 3-5. In this case it is possible to not have</span>
 <span class="sd">            full normal-reciprocal coverage.</span>
+<span class="sd">        silent: bool, optional</span>
+<span class="sd">            if True, do not print information on ignored configs (default:</span>
+<span class="sd">            False)</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        configs: Nx4 array</span>
+<span class="sd">        configs : Nx4 array</span>
 <span class="sd">            quadrupoles generated out of the current injections</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -833,10 +836,12 @@
                     <span class="c1"># ascending!</span>
                     <span class="k">if</span><span class="p">(</span><span class="n">quadpole</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">quadpole</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span>
                        <span class="n">quadpole</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">quadpole</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A - ignoring&#39;</span><span class="p">,</span> <span class="n">quadpole</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">silent</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A - ignoring&#39;</span><span class="p">,</span> <span class="n">quadpole</span><span class="p">)</span>
                     <span class="k">elif</span><span class="p">(</span><span class="n">quadpole</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">quadpole</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">and</span>
                          <span class="n">quadpole</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">quadpole</span><span class="p">[</span><span class="mi">1</span><span class="p">]):</span>
-                        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;B - ignoring&#39;</span><span class="p">,</span> <span class="n">quadpole</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="ow">not</span> <span class="n">silent</span><span class="p">:</span>
+                            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;B - ignoring&#39;</span><span class="p">,</span> <span class="n">quadpole</span><span class="p">)</span>
                     <span class="k">else</span><span class="p">:</span>
                         <span class="n">measurements</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">quadpole</span><span class="p">)</span>
                 <span class="k">else</span><span class="p">:</span>
@@ -847,9 +852,11 @@
         <span class="n">filtered</span> <span class="o">=</span> <span class="p">[]</span>
         <span class="k">for</span> <span class="n">quadpole</span> <span class="ow">in</span> <span class="n">measurements</span><span class="p">:</span>
             <span class="k">if</span> <span class="p">(</span><span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="n">quadpole</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span><span class="o">.</span><span class="n">isdisjoint</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">quadpole</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]))):</span>
-                <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Ignoring quadrupole because of repeated electrode use:&#39;</span><span class="p">,</span>
-                      <span class="n">quadpole</span><span class="p">)</span>
-                <span class="k">pass</span>
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">silent</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s1">&#39;Ignoring quadrupole because of &#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;repeated electrode use:&#39;</span><span class="p">,</span> <span class="n">quadpole</span>
+                    <span class="p">)</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="n">filtered</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">quadpole</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_to_configs</span><span class="p">(</span><span class="n">filtered</span><span class="p">)</span>

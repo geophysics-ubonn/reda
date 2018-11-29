@@ -158,7 +158,7 @@ and Kemna, 2017, Biogeosciences, for more information:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1134.g0e7cf481)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1151.gd887927d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Data container</p>
 </dd>
 <dt><strong>correction_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
@@ -182,7 +182,7 @@ a,b,m,n,correction_factor</p>
 
 <dl class="function">
 <dt id="reda.utils.eit_fzj_utils.check_resistor_board_measurements">
-<code class="descclassname">reda.utils.eit_fzj_utils.</code><code class="descname">check_resistor_board_measurements</code><span class="sig-paren">(</span><em>data_file</em>, <em>reference_data_file</em>, <em>create_plot=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#check_resistor_board_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.utils.eit_fzj_utils.</code><code class="descname">check_resistor_board_measurements</code><span class="sig-paren">(</span><em>data_file</em>, <em>reference_data_file=None</em>, <em>create_plot=True</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#check_resistor_board_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="Permalink to this definition">¶</a></dt>
 <dd><p>To check basic system function a test board was built with multiple
 resistors attached to for connectors each. Measurements can thus be
 validated against known electrical (ohmic) resistances.</p>
@@ -205,11 +205,15 @@ towards its reciprocal counterpart:</p>
 <dt><strong>data_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
 <dd><p class="first last">path to mnu0 data file</p>
 </dd>
-<dt><strong>reference_data_file: string</strong></dt>
-<dd><p class="first last">path to reference data file with structure as describe above</p>
+<dt><strong>reference_data_file: string, optional</strong></dt>
+<dd><p class="first last">path to reference data file with structure as describe above. Default
+data is used if set to None</p>
 </dd>
 <dt><strong>create_plot</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
 <dd><p class="first last">if True, create a plot with measured and expected resistances</p>
+</dd>
+<dt><strong>**kwargs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional</span></dt>
+<dd><p class="first last"><a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs will be redirected to the sEIT.import_eit_fzj call</p>
 </dd>
 </dl>
 </td>
@@ -236,7 +240,7 @@ Weigand and Kemna, 2017, Biogeosciences</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1134.g0e7cf481)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1151.gd887927d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">measured data</p>
 </dd>
 <dt><strong>true_conductivity</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
@@ -424,10 +428,10 @@ Nx4 arrray.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>dataframe: pandas.DataFrame or numpy.ndarray</strong></dt>
+<dt><strong>dataframe</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame or numpy.ndarray</span></dt>
 <dd><p class="first last">Configurations, either as DataFrame</p>
 </dd>
-<dt><strong>spacing: float or numpy.ndarray</strong></dt>
+<dt><strong>spacing</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float or numpy.ndarray</span></dt>
 <dd><p class="first last">distance between electrodes. If array, then these are the x-coordinates
 of the electrodes</p>
 </dd>
@@ -448,21 +452,21 @@ with topography or irregular electrode spacings.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>dataframe: pandas.DataFrame</strong></dt>
+<dt><strong>dataframe</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
 <dd><p class="first last">the data frame that contains the data</p>
 </dd>
-<dt><strong>settings: dict</strong></dt>
+<dt><strong>settings</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict</span></dt>
 <dd><p class="first last">The settings required to compute the geometric factors. See examples
 down below for more information in the required content.</p>
 </dd>
-<dt><strong>keep_dir: path</strong></dt>
+<dt><strong>keep_dir</strong> <span class="classifier-delimiter">:</span> <span class="classifier">path</span></dt>
 <dd><p class="first last">if not None, copy modeling dir here</p>
 </dd>
 </dl>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>K: :class:`numpy.ndarray`</strong></dt>
+<dt><strong>K</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.15)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt>
 <dd><p class="first last">K factors (are also directly written to the dataframe)</p>
 </dd>
 </dl>

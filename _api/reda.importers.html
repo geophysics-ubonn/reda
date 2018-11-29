@@ -262,6 +262,13 @@ data_prefix</p>
 <p>As there is an increasing number of slightly different file formats in use,
 this module acts as an selector for the appropriate import functions.</p>
 <dl class="function">
+<dt id="reda.importers.eit_fzj.MD_ConfigsPermutate">
+<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">MD_ConfigsPermutate</code><span class="sig-paren">(</span><em>df_md</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#MD_ConfigsPermutate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.MD_ConfigsPermutate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a MD DataFrame, return a Nx4 array which permutes the current
+injection dipoles.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="reda.importers.eit_fzj.apply_correction_factors">
 <code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
@@ -293,36 +300,38 @@ with 4 columns each (A, B, M, N)</p>
 <dl class="function">
 <dt id="reda.importers.eit_fzj.get_mnu0_data">
 <code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">get_mnu0_data</code><span class="sig-paren">(</span><em>filename</em>, <em>configs</em>, <em>return_3p=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#get_mnu0_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.get_mnu0_data" title="Permalink to this definition">¶</a></dt>
-<dd><p>Import data postprocessed as 3P data (NMU0), i.e., measured towards
+<dd><p>Import data post-processed as 3P data (NMU0), i.e., measured towards
 common ground.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>filename: string (usually: eit_data_mnu0.mat)</strong></dt>
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string (usually: eit_data_mnu0.mat)</span></dt>
 <dd><p class="first last">filename of matlab file</p>
 </dd>
-<dt><strong>configs: Nx4 numpy.ndarray|filename</strong></dt>
-<dd><p class="first last">4P measurements configurations (ABMN) to generate out of the data</p>
+<dt><strong>configs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Nx4 numpy.ndarray|filename|function</span></dt>
+<dd><p class="first last">4P measurements configurations (ABMN) to generate out of the data. If
+this parameter is a callable, then call it with the MD DataFrame as its
+sole parameter and expect a Nx4 numpy.ndarray as return value</p>
 </dd>
-<dt><strong>return_3p: bool, optional</strong></dt>
+<dt><strong>return_3p</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
 <dd><p class="first last">also return 3P data</p>
 </dd>
-<dt><strong>**kwargs: dict, optional</strong></dt>
+<dt><strong>**kwargs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional</span></dt>
 <dd><p class="first last">all other parameters will be handled down to the extract functions</p>
 </dd>
 </dl>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data_emd_4p: pandas.DataFrame</strong></dt>
+<dt><strong>data_emd_4p</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
 <dd><p class="first last">The generated 4P data</p>
 </dd>
-<dt><strong>data_md_raw: pandas.DataFrame|None</strong></dt>
+<dt><strong>data_md_raw</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame|None</span></dt>
 <dd><p class="first last">MD data (sometimes this data is not imported, then we return None here)</p>
 </dd>
-<dt><strong>data_emd_3p: pandas.DataFrame</strong></dt>
+<dt><strong>data_emd_3p</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
 <dd><p class="first last">The imported 3P data (only if return_3p==True)</p>
 </dd>
 </dl>
@@ -430,10 +439,10 @@ specific measurement. Default: True</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1134.g0e7cf481)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1151.gd887927d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1134.g0e7cf481)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1151.gd887927d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -712,7 +721,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1134.g0e7cf481)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1151.gd887927d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>
@@ -740,7 +749,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1134.g0e7cf481)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1151.gd887927d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>

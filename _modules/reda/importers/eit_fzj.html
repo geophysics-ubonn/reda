@@ -127,6 +127,8 @@
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2017</span> <span class="k">as</span> <span class="nn">eit_version_2017</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2018a</span> <span class="k">as</span> <span class="nn">eit_version_2018a</span>
 
+<span class="kn">from</span> <span class="nn">reda.configs.configManager</span> <span class="k">import</span> <span class="n">ConfigManager</span>
+
 <span class="c1"># data file formats differ slightly between versions. Version numbers do not</span>
 <span class="c1"># follow a consistent naming scheme. Therefore we introduce this dict to map</span>
 <span class="c1"># the version numbers found in the .mat files to the reda python modules.</span>
@@ -137,6 +139,7 @@
     <span class="s1">&#39;FZJ-EZ-09.11.2010&#39;</span><span class="p">:</span> <span class="n">eit_version_2010</span><span class="p">,</span>
     <span class="s1">&#39;FZJ-EZ-14.02.2013&#39;</span><span class="p">:</span> <span class="n">eit_version_2013</span><span class="p">,</span>
 <span class="p">}</span>
+
 
 <span class="k">def</span> <span class="nf">_get_file_version</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;High level import function that tries to determine the specific version</span>
@@ -161,28 +164,41 @@
     <span class="k">return</span> <span class="n">version</span>
 
 
+<div class="viewcode-block" id="MD_ConfigsPermutate"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate">[docs]</a><span class="k">def</span> <span class="nf">MD_ConfigsPermutate</span><span class="p">(</span><span class="n">df_md</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a MD DataFrame, return a Nx4 array which permutes the current</span>
+<span class="sd">    injection dipoles.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">g_current_injections</span> <span class="o">=</span> <span class="n">df_md</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+    <span class="n">ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">g_current_injections</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="n">config_mgr</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="n">ab</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+    <span class="n">config_mgr</span><span class="o">.</span><span class="n">gen_configs_permutate</span><span class="p">(</span><span class="n">ab</span><span class="p">,</span> <span class="n">silent</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">config_mgr</span><span class="o">.</span><span class="n">configs</span></div>
+
+
 <div class="viewcode-block" id="get_mnu0_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.get_mnu0_data">[docs]</a><span class="k">def</span> <span class="nf">get_mnu0_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">configs</span><span class="p">,</span> <span class="n">return_3p</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Import data postprocessed as 3P data (NMU0), i.e., measured towards</span>
+    <span class="sd">&quot;&quot;&quot;Import data post-processed as 3P data (NMU0), i.e., measured towards</span>
 <span class="sd">    common ground.</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    filename: string (usually: eit_data_mnu0.mat)</span>
+<span class="sd">    filename : string (usually: eit_data_mnu0.mat)</span>
 <span class="sd">        filename of matlab file</span>
-<span class="sd">    configs: Nx4 numpy.ndarray|filename</span>
-<span class="sd">        4P measurements configurations (ABMN) to generate out of the data</span>
-<span class="sd">    return_3p: bool, optional</span>
+<span class="sd">    configs : Nx4 numpy.ndarray|filename|function</span>
+<span class="sd">        4P measurements configurations (ABMN) to generate out of the data. If</span>
+<span class="sd">        this parameter is a callable, then call it with the MD DataFrame as its</span>
+<span class="sd">        sole parameter and expect a Nx4 numpy.ndarray as return value</span>
+<span class="sd">    return_3p : bool, optional</span>
 <span class="sd">        also return 3P data</span>
-<span class="sd">    **kwargs: dict, optional</span>
+<span class="sd">    **kwargs : dict, optional</span>
 <span class="sd">        all other parameters will be handled down to the extract functions</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    data_emd_4p: pandas.DataFrame</span>
+<span class="sd">    data_emd_4p : pandas.DataFrame</span>
 <span class="sd">        The generated 4P data</span>
-<span class="sd">    data_md_raw: pandas.DataFrame|None</span>
+<span class="sd">    data_md_raw : pandas.DataFrame|None</span>
 <span class="sd">        MD data (sometimes this data is not imported, then we return None here)</span>
-<span class="sd">    data_emd_3p: pandas.DataFrame</span>
+<span class="sd">    data_emd_3p : pandas.DataFrame</span>
 <span class="sd">        The imported 3P data (only if return_3p==True)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -194,8 +210,15 @@
         <span class="n">mat</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
         <span class="n">data_md_raw</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_md</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
         <span class="n">data_emd_3p</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_emd</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># check configs</span>
+        <span class="k">if</span> <span class="n">callable</span><span class="p">(</span><span class="n">configs</span><span class="p">):</span>
+            <span class="n">configs_abmn</span> <span class="o">=</span> <span class="n">configs</span><span class="p">(</span><span class="n">data_md_raw</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">configs_abmn</span> <span class="o">=</span> <span class="n">configs</span>
+
         <span class="k">if</span> <span class="n">data_emd_3p</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">data_emd_4p</span> <span class="o">=</span> <span class="n">compute_quadrupoles</span><span class="p">(</span><span class="n">data_emd_3p</span><span class="p">,</span> <span class="n">configs</span><span class="p">)</span>
+            <span class="n">data_emd_4p</span> <span class="o">=</span> <span class="n">compute_quadrupoles</span><span class="p">(</span><span class="n">data_emd_3p</span><span class="p">,</span> <span class="n">configs_abmn</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">data_emd_4p</span> <span class="o">=</span> <span class="kc">None</span>
     <span class="k">else</span><span class="p">:</span>

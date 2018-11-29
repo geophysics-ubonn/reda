@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Importing EIT40/EIT160 data &#8212; REDA 0.1.0 documentation</title>
+    <title>Importing FZJ EIT40/EIT160 data &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
@@ -118,8 +118,8 @@
 <p class="first admonition-title">Note</p>
 <p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-eit-fzj-py"><span class="std std-ref">here</span></a> to download the full example code</p>
 </div>
-<div class="sphx-glr-example-title section" id="importing-eit40-eit160-data">
-<span id="sphx-glr-examples-03-seit-plot-eit-fzj-py"></span><h1>Importing EIT40/EIT160 data<a class="headerlink" href="#importing-eit40-eit160-data" title="Permalink to this headline">¶</a></h1>
+<div class="sphx-glr-example-title section" id="importing-fzj-eit40-eit160-data">
+<span id="sphx-glr-examples-03-seit-plot-eit-fzj-py"></span><h1>Importing FZJ EIT40/EIT160 data<a class="headerlink" href="#importing-fzj-eit40-eit160-data" title="Permalink to this headline">¶</a></h1>
 <p>This example shows how to import data from the various versions of the EIT
 system developed by Zimmermann et al. 2008
 (<a class="reference external" href="http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta">http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta</a>).</p>
@@ -137,6 +137,11 @@ separated by spaces or tabs. Each line denotes one measurement:</p>
 <span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">5</span>   <span class="mi">6</span>
 </pre></div>
 </div>
+<p>An alternative to the config.dat file is to permute all current injection
+dipoles as voltage dipoles, resulting in a fully normal-reciprocal
+configuration set. This set can be automatically generated from the measurement
+data by providing a special function as the config-parameter in the import
+function. This is explained below.</p>
 <p>Import reda</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
 </pre></div>
@@ -144,10 +149,31 @@ separated by spaces or tabs. Each line denotes one measurement:</p>
 <p>Initialize an sEIT container</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
 
-<span class="c1"># Import the data</span>
+<span class="c1"># import the data</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
     <span class="n">configfile</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/configs_large_dipoles_norrec.dat&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
+generating ids
+assigning ids
+Summary:
+</pre></div>
+</div>
+<p>an alternative would be to automatically create measurement configurations
+from the current injection dipoles:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.importers.eit_fzj</span> <span class="kn">import</span> <a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
+
+<span class="c1"># initialize an sEIT container</span>
+<span class="n">seit_not_used</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+
+<span class="c1"># import the data</span>
+<span class="n">seit_not_used</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
+    <span class="n">configfile</span><span class="o">=</span><a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -167,8 +193,8 @@ Summary:
 <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">redafixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Compute normal and reciprocal pairs
-Note that this is usually done on import once.</p>
+<p>compute normal and reciprocal pairs
+note that this is usually done on import once.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="kn">as</span> <span class="nn">norrec</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.norrec.assign_norrec_to_df" title="View documentation for reda.utils.norrec.assign_norrec_to_df"><span class="n">norrec</span><span class="o">.</span><span class="n">assign_norrec_to_df</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
@@ -185,7 +211,7 @@ assigning ids
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2ad479ef9e10&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.groupby.DataFrameGroupBy object at 0x2abbfbd01cc0&gt;
           a     b   m   n     frequency         r        rpha
 749    10.0  29.0  15  34      0.100000  7.356375   -5.205543
 2229   10.0  29.0  15  34      0.314465  7.323810   -6.903037
@@ -264,7 +290,7 @@ Raw data plots (execute before applying the filters):</p>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
-<p><strong>Total running time of the script:</strong> ( 0 minutes  26.947 seconds)</p>
+<p><strong>Total running time of the script:</strong> ( 0 minutes  51.611 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
 <a class="reference download internal" download="" href="../../_downloads/332eb6762fd44a5648b0c62b99f8e03f/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></div>

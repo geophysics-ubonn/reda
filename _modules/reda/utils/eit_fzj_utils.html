@@ -245,8 +245,16 @@
     <span class="k">return</span> <span class="n">corr_data</span></div>
 
 
-<div class="viewcode-block" id="check_resistor_board_measurements"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements">[docs]</a><span class="k">def</span> <span class="nf">check_resistor_board_measurements</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">reference_data_file</span><span class="p">,</span>
-                                      <span class="n">create_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="c1"># this is data for the first test board. As far as I know nobody else has such</span>
+<span class="c1"># an EIT system, and therefore I think it&#39;s ok to include the data here.</span>
+<span class="n">_resistor_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">980</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">980</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+<span class="p">))</span>
+
+
+<div class="viewcode-block" id="check_resistor_board_measurements"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements">[docs]</a><span class="k">def</span> <span class="nf">check_resistor_board_measurements</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">reference_data_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                      <span class="n">create_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot; To check basic system function a test board was built with multiple</span>
 <span class="sd">    resistors attached to for connectors each. Measurements can thus be</span>
 <span class="sd">    validated against known electrical (ohmic) resistances.</span>
@@ -267,10 +275,13 @@
 <span class="sd">    ----------</span>
 <span class="sd">    data_file : string</span>
 <span class="sd">        path to mnu0 data file</span>
-<span class="sd">    reference_data_file: string</span>
-<span class="sd">        path to reference data file with structure as describe above</span>
+<span class="sd">    reference_data_file: string, optional</span>
+<span class="sd">        path to reference data file with structure as describe above. Default</span>
+<span class="sd">        data is used if set to None</span>
 <span class="sd">    create_plot : bool, optional</span>
 <span class="sd">        if True, create a plot with measured and expected resistances</span>
+<span class="sd">    **kwargs : dict, optional</span>
+<span class="sd">        **kwargs will be redirected to the sEIT.import_eit_fzj call</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -279,17 +290,22 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># reference_data = np.loadtxt(reference_data_file)</span>
     <span class="c1"># configs = reference_data[:, 0:4]</span>
-    <span class="n">ref_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
-        <span class="n">reference_data_file</span><span class="p">,</span>
-        <span class="n">names</span><span class="o">=</span><span class="p">[</span>
-            <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;expected_r&#39;</span><span class="p">,</span> <span class="s1">&#39;variation_r&#39;</span><span class="p">,</span> <span class="s1">&#39;variation_diffr&#39;</span>
-        <span class="p">],</span>
-        <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;expected_r&#39;</span><span class="p">,</span> <span class="s1">&#39;variation_r&#39;</span><span class="p">,</span> <span class="s1">&#39;variation_diffr&#39;</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="n">reference_data_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ref_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">_resistor_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">column_names</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ref_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+            <span class="n">reference_data_file</span><span class="p">,</span>
+            <span class="n">names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span>
+            <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ref_data</span><span class="p">)</span>
     <span class="n">configs</span> <span class="o">=</span> <span class="n">ref_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
-    <span class="n">seit</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">configs</span><span class="p">)</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">configs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
     <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ref_data</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span>
 
     <span class="c1"># iterate through the test configurations</span>
@@ -313,7 +329,10 @@
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    &#39;</span><span class="p">,</span> <span class="n">minr</span><span class="p">,</span> <span class="n">maxr</span><span class="p">)</span>
             <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    &#39;</span><span class="p">,</span> <span class="n">measured_r</span><span class="p">)</span>
             <span class="n">failing</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nr</span><span class="p">,</span> <span class="n">measured_r</span><span class="p">))</span>
-    <span class="n">failing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">failing</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failing</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">failing</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">failing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">failing</span><span class="p">))</span>
 
     <span class="k">if</span> <span class="n">create_plot</span><span class="p">:</span>
         <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">8</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
@@ -334,13 +353,14 @@
             <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="s1">&#39;allowed limits&#39;</span><span class="p">,</span>
         <span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
-            <span class="n">failing</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
-            <span class="n">failing</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
-            <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
-            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;not passing&#39;</span><span class="p">,</span>
-            <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
-        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">failing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                <span class="n">failing</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="n">failing</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;not passing&#39;</span><span class="p">,</span>
+                <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+            <span class="p">)</span>
 
         <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
@@ -352,7 +372,7 @@
 
         <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;resistance $[\Omega]$&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;configuration a-b m-n&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failing</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">failing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39; PASSED&#39;</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>

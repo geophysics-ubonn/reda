@@ -305,10 +305,10 @@ configurations into normal and reciprocal measurements.</p>
 
 <dl class="method">
 <dt id="reda.configs.configManager.ConfigManager.gen_configs_permutate">
-<code class="descname">gen_configs_permutate</code><span class="sig-paren">(</span><em>injections_raw</em>, <em>only_same_dipole_length=False</em>, <em>ignore_crossed_dipoles=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/configs/configManager.html#ConfigManager.gen_configs_permutate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.configs.configManager.ConfigManager.gen_configs_permutate" title="Permalink to this definition">¶</a></dt>
-<dd><p>Create measurement configurations out of a pool of current injections.
-Use only the provided dipoles for potential dipole selection. This
-means that we have always reciprocal measurements.</p>
+<code class="descname">gen_configs_permutate</code><span class="sig-paren">(</span><em>injections_raw</em>, <em>only_same_dipole_length=False</em>, <em>ignore_crossed_dipoles=False</em>, <em>silent=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/configs/configManager.html#ConfigManager.gen_configs_permutate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.configs.configManager.ConfigManager.gen_configs_permutate" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create measurement configurations out of a pool of current
+injections.  Use only the provided dipoles for potential dipole
+selection. This means that we have always reciprocal measurements.</p>
 <p>Remove quadpoles where electrodes are used both as current and voltage
 dipoles.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -316,22 +316,26 @@ dipoles.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>injections_raw: Nx2 array</strong></dt>
+<dt><strong>injections_raw</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Nx2 array</span></dt>
 <dd><p class="first last">current injections</p>
 </dd>
-<dt><strong>only_same_dipole_length: bool, optional</strong></dt>
+<dt><strong>only_same_dipole_length</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
 <dd><p class="first last">if True, only generate permutations for the same dipole length</p>
 </dd>
-<dt><strong>ignore_crossed_dipoles: bool, optional</strong></dt>
+<dt><strong>ignore_crossed_dipoles</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
 <dd><p class="first last">If True, potential dipoles will be ignored that lie between current
 dipoles,  e.g. 1-4 3-5. In this case it is possible to not have
 full normal-reciprocal coverage.</p>
+</dd>
+<dt><strong>silent: bool, optional</strong></dt>
+<dd><p class="first last">if True, do not print information on ignored configs (default:
+False)</p>
 </dd>
 </dl>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>configs: Nx4 array</strong></dt>
+<dt><strong>configs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Nx4 array</span></dt>
 <dd><p class="first last">quadrupoles generated out of the current injections</p>
 </dd>
 </dl>

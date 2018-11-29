@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # *-* coding: utf-8 *-*
 """
-Importing EIT40/EIT160 data
-===========================
+Importing FZJ EIT40/EIT160 data
+===============================
 
 This example shows how to import data from the various versions of the EIT
 system developed by Zimmermann et al. 2008
@@ -24,6 +24,12 @@ separated by spaces or tabs. Each line denotes one measurement: ::
     1   2   4   3
     2   3   5   6
 
+An alternative to the config.dat file is to permute all current injection
+dipoles as voltage dipoles, resulting in a fully normal-reciprocal
+configuration set. This set can be automatically generated from the measurement
+data by providing a special function as the config-parameter in the import
+function. This is explained below.
+
 """
 
 ##############################################################################
@@ -34,10 +40,23 @@ import reda
 # Initialize an sEIT container
 seit = reda.sEIT()
 
-# Import the data
+# import the data
 seit.import_eit_fzj(
     filename='data_EIT40_v_EZ-2017/eit_data_mnu0.mat',
     configfile='data_EIT40_v_EZ-2017/configs_large_dipoles_norrec.dat'
+)
+##############################################################################
+# an alternative would be to automatically create measurement configurations
+# from the current injection dipoles:
+from reda.importers.eit_fzj import MD_ConfigsPermutate
+
+# initialize an sEIT container
+seit_not_used = reda.sEIT()
+
+# import the data
+seit_not_used.import_eit_fzj(
+    filename='data_EIT40_v_EZ-2017/eit_data_mnu0.mat',
+    configfile=MD_ConfigsPermutate
 )
 
 ##############################################################################
@@ -50,8 +69,8 @@ redaK.apply_K(seit.data, K)
 redafixK.fix_sign_with_K(seit.data)
 
 ##############################################################################
-# Compute normal and reciprocal pairs
-# Note that this is usually done on import once.
+# compute normal and reciprocal pairs
+# note that this is usually done on import once.
 import reda.utils.norrec as norrec
 seit.data = norrec.assign_norrec_to_df(seit.data)
 
@@ -60,7 +79,6 @@ seit.data = norrec.assign_norrec_to_df(seit.data)
 print(seit.abmn)
 quadpole_data = seit.abmn.get_group((10, 29, 15, 34))
 print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
-
 
 ##############################################################################
 # filter data
