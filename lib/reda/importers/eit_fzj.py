@@ -14,6 +14,8 @@ import reda.importers.eit_version_2013 as eit_version_2013
 import reda.importers.eit_version_2017 as eit_version_2017
 import reda.importers.eit_version_2018a as eit_version_2018a
 
+from reda.configs.configManager import ConfigManager
+
 # data file formats differ slightly between versions. Version numbers do not
 # follow a consistent naming scheme. Therefore we introduce this dict to map
 # the version numbers found in the .mat files to the reda python modules.
@@ -24,6 +26,7 @@ mat_version_importers = {
     'FZJ-EZ-09.11.2010': eit_version_2010,
     'FZJ-EZ-14.02.2013': eit_version_2013,
 }
+
 
 def _get_file_version(filename):
     """High level import function that tries to determine the specific version
@@ -48,28 +51,41 @@ def _get_file_version(filename):
     return version
 
 
+def MD_ConfigsPermutate(df_md):
+    """Given a MD DataFrame, return a Nx4 array which permutes the current
+    injection dipoles.
+    """
+    g_current_injections = df_md.groupby(['a', 'b'])
+    ab = np.array(list(g_current_injections.groups.keys()))
+    config_mgr = ConfigManager(nr_of_electrodes=ab.max())
+    config_mgr.gen_configs_permutate(ab, silent=True)
+    return config_mgr.configs
+
+
 def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
-    """Import data postprocessed as 3P data (NMU0), i.e., measured towards
+    """Import data post-processed as 3P data (NMU0), i.e., measured towards
     common ground.
 
     Parameters
     ----------
-    filename: string (usually: eit_data_mnu0.mat)
+    filename : string (usually: eit_data_mnu0.mat)
         filename of matlab file
-    configs: Nx4 numpy.ndarray|filename
-        4P measurements configurations (ABMN) to generate out of the data
-    return_3p: bool, optional
+    configs : Nx4 numpy.ndarray|filename|function
+        4P measurements configurations (ABMN) to generate out of the data. If
+        this parameter is a callable, then call it with the MD DataFrame as its
+        sole parameter and expect a Nx4 numpy.ndarray as return value
+    return_3p : bool, optional
         also return 3P data
-    **kwargs: dict, optional
+    **kwargs : dict, optional
         all other parameters will be handled down to the extract functions
 
     Returns
     -------
-    data_emd_4p: pandas.DataFrame
+    data_emd_4p : pandas.DataFrame
         The generated 4P data
-    data_md_raw: pandas.DataFrame|None
+    data_md_raw : pandas.DataFrame|None
         MD data (sometimes this data is not imported, then we return None here)
-    data_emd_3p: pandas.DataFrame
+    data_emd_3p : pandas.DataFrame
         The imported 3P data (only if return_3p==True)
     """
     if not os.path.isfile(filename):
@@ -81,8 +97,15 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
         mat = sio.loadmat(filename, squeeze_me=True)
         data_md_raw = importer._extract_md(mat, **kwargs)
         data_emd_3p = importer._extract_emd(mat, **kwargs)
+
+        # check configs
+        if callable(configs):
+            configs_abmn = configs(data_md_raw)
+        else:
+            configs_abmn = configs
+
         if data_emd_3p is not None:
-            data_emd_4p = compute_quadrupoles(data_emd_3p, configs)
+            data_emd_4p = compute_quadrupoles(data_emd_3p, configs_abmn)
         else:
             data_emd_4p = None
     else:
