@@ -663,29 +663,32 @@ class ConfigManager(object):
 
     def gen_configs_permutate(self, injections_raw,
                               only_same_dipole_length=False,
-                              ignore_crossed_dipoles=False):
-        """
-        Create measurement configurations out of a pool of current injections.
-        Use only the provided dipoles for potential dipole selection. This
-        means that we have always reciprocal measurements.
+                              ignore_crossed_dipoles=False,
+                              silent=False):
+        """ Create measurement configurations out of a pool of current
+        injections.  Use only the provided dipoles for potential dipole
+        selection. This means that we have always reciprocal measurements.
 
         Remove quadpoles where electrodes are used both as current and voltage
         dipoles.
 
         Parameters
         ----------
-        injections_raw: Nx2 array
+        injections_raw : Nx2 array
             current injections
-        only_same_dipole_length: bool, optional
+        only_same_dipole_length : bool, optional
             if True, only generate permutations for the same dipole length
-        ignore_crossed_dipoles: bool, optional
+        ignore_crossed_dipoles : bool, optional
             If True, potential dipoles will be ignored that lie between current
             dipoles,  e.g. 1-4 3-5. In this case it is possible to not have
             full normal-reciprocal coverage.
+        silent: bool, optional
+            if True, do not print information on ignored configs (default:
+            False)
 
         Returns
         -------
-        configs: Nx4 array
+        configs : Nx4 array
             quadrupoles generated out of the current injections
 
         """
@@ -720,10 +723,12 @@ class ConfigManager(object):
                     # ascending!
                     if(quadpole[2] > quadpole[0] and
                        quadpole[2] < quadpole[1]):
-                        print('A - ignoring', quadpole)
+                        if not silent:
+                            print('A - ignoring', quadpole)
                     elif(quadpole[3] > quadpole[0] and
                          quadpole[3] < quadpole[1]):
-                        print('B - ignoring', quadpole)
+                        if not silent:
+                            print('B - ignoring', quadpole)
                     else:
                         measurements.append(quadpole)
                 else:
@@ -734,9 +739,11 @@ class ConfigManager(object):
         filtered = []
         for quadpole in measurements:
             if (not set(quadpole[0:2]).isdisjoint(set(quadpole[2:4]))):
-                print('Ignoring quadrupole because of repeated electrode use:',
-                      quadpole)
-                pass
+                if not silent:
+                    print(
+                        'Ignoring quadrupole because of ',
+                        'repeated electrode use:', quadpole
+                    )
             else:
                 filtered.append(quadpole)
         self.add_to_configs(filtered)
