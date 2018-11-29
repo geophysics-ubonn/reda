@@ -29,17 +29,17 @@ def compute_K_numerical(dataframe, settings=None, keep_dir=None):
 
     Parameters
     ----------
-    dataframe: pandas.DataFrame
+    dataframe : pandas.DataFrame
         the data frame that contains the data
-    settings: dict
+    settings : dict
         The settings required to compute the geometric factors. See examples
         down below for more information in the required content.
-    keep_dir: path
+    keep_dir : path
         if not None, copy modeling dir here
 
     Returns
     -------
-    K: :class:`numpy.ndarray`
+    K : :class:`numpy.ndarray`
         K factors (are also directly written to the dataframe)
 
     Examples
@@ -80,9 +80,9 @@ def compute_K_analytical(dataframe, spacing):
 
     Parameters
     ----------
-    dataframe: pandas.DataFrame or numpy.ndarray
+    dataframe : pandas.DataFrame or numpy.ndarray
         Configurations, either as DataFrame
-    spacing: float or numpy.ndarray
+    spacing : float or numpy.ndarray
         distance between electrodes. If array, then these are the x-coordinates
         of the electrodes
     """
