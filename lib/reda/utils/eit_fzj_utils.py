@@ -132,8 +132,16 @@ def apply_correction_factors(df, correction_file):
     return corr_data
 
 
-def check_resistor_board_measurements(data_file, reference_data_file,
-                                      create_plot=True):
+# this is data for the first test board. As far as I know nobody else has such
+# an EIT system, and therefore I think it's ok to include the data here.
+_resistor_data = np.array((
+    (1, 4, 2, 3, 980, 10, 20),
+    (2, 3, 1, 4, 980, 10, 20),
+))
+
+
+def check_resistor_board_measurements(data_file, reference_data_file=None,
+                                      create_plot=True, **kwargs):
     """ To check basic system function a test board was built with multiple
     resistors attached to for connectors each. Measurements can thus be
     validated against known electrical (ohmic) resistances.
@@ -154,10 +162,13 @@ def check_resistor_board_measurements(data_file, reference_data_file,
     ----------
     data_file : string
         path to mnu0 data file
-    reference_data_file: string
-        path to reference data file with structure as describe above
+    reference_data_file: string, optional
+        path to reference data file with structure as describe above. Default
+        data is used if set to None
     create_plot : bool, optional
         if True, create a plot with measured and expected resistances
+    **kwargs : dict, optional
+        **kwargs will be redirected to the sEIT.import_eit_fzj call
 
     Returns
     -------
@@ -166,17 +177,22 @@ def check_resistor_board_measurements(data_file, reference_data_file,
     """
     # reference_data = np.loadtxt(reference_data_file)
     # configs = reference_data[:, 0:4]
-    ref_data = pd.read_csv(
-        reference_data_file,
-        names=[
-            'a', 'b', 'm', 'n', 'expected_r', 'variation_r', 'variation_diffr'
-        ],
-        delim_whitespace=True,
-    )
+    column_names = [
+        'a', 'b', 'm', 'n', 'expected_r', 'variation_r', 'variation_diffr'
+    ]
+    if reference_data_file is None:
+        ref_data = pd.DataFrame(_resistor_data, columns=column_names)
+    else:
+        ref_data = pd.read_csv(
+            reference_data_file,
+            names=column_names,
+            delim_whitespace=True,
+        )
+    print(ref_data)
     configs = ref_data[['a', 'b', 'm', 'n']].values.astype(int)
 
     seit = reda.sEIT()
-    seit.import_eit_fzj(data_file, configs)
+    seit.import_eit_fzj(data_file, configs, **kwargs)
     seit.data = seit.data.merge(ref_data, on=('a', 'b', 'm', 'n'))
 
     # iterate through the test configurations
@@ -200,7 +216,10 @@ def check_resistor_board_measurements(data_file, reference_data_file,
             print('    ', minr, maxr)
             print('    ', measured_r)
             failing.append((nr, measured_r))
-    failing = np.atleast_2d(np.array(failing))
+    if len(failing) == 0:
+        failing = None
+    else:
+        failing = np.atleast_2d(np.array(failing))
 
     if create_plot:
         fig, ax = plt.subplots(1, 1, figsize=(16 / 2.54, 8 / 2.54))
@@ -221,13 +240,14 @@ def check_resistor_board_measurements(data_file, reference_data_file,
             alpha=0.8,
             label='allowed limits',
         )
-        ax.scatter(
-            failing[:, 0],
-            failing[:, 1],
-            color='r',
-            label='not passing',
-            s=40,
-        )
+        if failing is not None:
+            ax.scatter(
+                failing[:, 0],
+                failing[:, 1],
+                color='r',
+                label='not passing',
+                s=40,
+            )
 
         ax.legend()
         ax.set_xticks(x)
@@ -239,7 +259,7 @@ def check_resistor_board_measurements(data_file, reference_data_file,
 
         ax.set_ylabel('resistance $[\Omega]$')
         ax.set_xlabel('configuration a-b m-n')
-        if len(failing) == 0:
+        if failing is None:
             suffix = ' PASSED'
         else:
             suffix = ''
