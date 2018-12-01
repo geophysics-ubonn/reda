@@ -307,6 +307,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">data_new</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
         <span class="n">data_new</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="mf">1.5</span> <span class="o">*</span> <span class="n">data_new</span><span class="p">[</span><span class="s1">&#39;chargeability&#39;</span><span class="p">]</span>
+        <span class="c1"># now that we have magnitude and phase, compute the impedance Zt</span>
+        <span class="n">data_new</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_new</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">data_new</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">1</span><span class="n">j</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span>
         <span class="n">cr</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">CR</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data_new</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">cr</span></div></div>
 </pre></div>
