@@ -14,6 +14,9 @@ from .utils.helper_functions import search
 import reda.utils.data as data
 from .configs.configManager import ConfigManager
 
+import reda.importers.utils.transforms as transforms
+
+# this is just to silence pep8/flake errors
 ERT
 TDIP
 CR
@@ -23,3 +26,4 @@ test
 search
 data
 ConfigManager
+transforms
