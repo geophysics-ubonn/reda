@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
-import pandas as pd
-import numpy as np
-from reda.containers.ERT import ERT
 from io import StringIO
 
+import pandas as pd
+import numpy as np
 
+from reda.containers.ERT import ERT
+from reda.importers.utils.decorators import enable_result_transforms
+
+
+@enable_result_transforms
 def _parse_wenner_file(filename, settings):
     """Parse a Geotom .wen (Wenner configuration) file
 
