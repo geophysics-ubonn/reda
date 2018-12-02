@@ -4,7 +4,10 @@ dc2dinvres."""
 import pandas as pd
 import numpy as np
 
+from reda.importers.utils.decorators import enable_result_transforms
 
+
+@enable_result_transforms
 def import_ohm(filename, verbose=False, reciprocals=False):
     """Construct pandas data frame from BERT`s unified data format (.ohm).
 
