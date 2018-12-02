@@ -57,21 +57,27 @@ class importers(object):
 
     @append_doc_of(reda_crtomo_exporter.load_seit_data)
     def import_crtomo(self, directory, frequency_file='frequencies.dat',
-                      data_prefix='volt_'):
+                      data_prefix='volt_', **kwargs):
         """CRTomo importer"""
-        df = reda_crtomo_exporter.load_seit_data(
-            directory, frequency_file, data_prefix)
+
+        # we get not electrode positions (dummy1) and no topography data
+        # (dummy2)
+        df, dummy1, dumm2 = reda_crtomo_exporter.load_seit_data(
+            directory, frequency_file, data_prefix, **kwargs)
         self._add_to_container(df)
 
         print('Summary:')
         self._describe_data(df)
 
-    def import_sip256c(self, filename, settings=None, reciprocal=None):
+    def import_sip256c(self, filename, settings=None, reciprocal=None,
+                       **kwargs):
         """Radic SIP256c data import"""
         if settings is None:
             settings = {}
-        df = reda_sip256c.parse_radic_file(
-            filename, settings, reciprocal=reciprocal)
+        # we get not electrode positions (dummy1) and no topography data
+        # (dummy2)
+        df, dummy1, dummy2 = reda_sip256c.parse_radic_file(
+            filename, settings, reciprocal=reciprocal, **kwargs)
         self._add_to_container(df)
 
         print('Summary:')
@@ -80,7 +86,9 @@ class importers(object):
     def import_eit_fzj(self, filename, configfile, correction_file=None,
                        timestep=None, **kwargs):
         """EIT data import for FZJ Medusa systems"""
-        df_emd, df_md = eit_fzj.get_mnu0_data(
+        # we get not electrode positions (dummy1) and no topography data
+        # (dummy2)
+        df_emd, dummy1, dummy2 = eit_fzj.read_3p_data(
             filename,
             configfile,
             **kwargs
