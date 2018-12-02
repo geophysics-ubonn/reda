@@ -7,6 +7,8 @@ from glob import glob
 import numpy as np
 import pandas as pd
 
+from reda.importers.utils.decorators import enable_result_transforms
+
 
 def load_mod_file(filename):
     """Load a .mod file (sometimes also called volt.dat or data.crt). This file
@@ -53,6 +55,7 @@ def load_mod_file(filename):
     return df
 
 
+@enable_result_transforms
 def load_seit_data(directory, frequency_file='frequencies.dat',
                    data_prefix='volt_'):
     """Load sEIT data from data directory. This function loads data previously
@@ -74,6 +77,10 @@ def load_seit_data(directory, frequency_file='frequencies.dat',
     -------
     df : pandas.DataFrame
         A DataFrame suitable for the sEIT container
+    electrodes : None
+        No electrode data is imported
+    topography : None
+        No topography data is imported
 
     """
     frequencies = np.loadtxt(directory + os.sep + frequency_file)
@@ -90,4 +97,4 @@ def load_seit_data(directory, frequency_file='frequencies.dat',
         subdata['frequency'] = frequency
         data_list.append(subdata)
     df = pd.concat(data_list)
-    return df
+    return df, None, None
