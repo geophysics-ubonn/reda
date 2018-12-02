@@ -10,20 +10,24 @@ def import_ohm(filename, verbose=False, reciprocals=False):
 
     Parameters
     ----------
-    filename: string
+    filename : string
         File path to .ohm file
-    verbose: bool, optional
+    verbose : bool, optional
         Enables extended debug output
-    reciprocals: int, optional
-        if provided, then assume that this is a reciprocal measurements where
+    reciprocals : int, optional
+        if provided, then assume that this is a reciprocal measurement where
         only the electrode cables were switched. The provided number N is
         treated as the maximum electrode number, and denotations are renamed
         according to the equation :math:`X_n = N - (X_a - 1)`
 
     Returns
     -------
-    data: :class:`pandas.DataFrame`
+    data : :class:`pandas.DataFrame`
        The measurement data
+    elecs : :class:`pandas.DataFrame`
+        Electrode positions (columns: X, Y, Z)
+    topography : None
+        No topography information is provided at the moment
 
     """
     if verbose:
