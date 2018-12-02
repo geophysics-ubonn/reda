@@ -3,6 +3,7 @@
 As there is an increasing number of slightly different file formats in use,
 this module acts as an selector for the appropriate import functions.
 """
+import functools
 import os
 
 import numpy as np
@@ -13,6 +14,8 @@ import reda.importers.eit_version_2010 as eit_version_2010
 import reda.importers.eit_version_2013 as eit_version_2013
 import reda.importers.eit_version_2017 as eit_version_2017
 import reda.importers.eit_version_2018a as eit_version_2018a
+
+from reda.importers.utils.decorators import enable_result_transforms
 
 from reda.configs.configManager import ConfigManager
 
@@ -118,6 +121,15 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
         return data_emd_4p, data_md_raw, data_emd_3p
     else:
         return data_emd_4p, data_md_raw
+
+
+@enable_result_transforms
+@functools.wraps(get_mnu0_data)
+def read_3p_data(*args, **kwargs):
+    # this is a wrapper that conforms to the importer standards
+    results = get_mnu0_data(*args, **kwargs)
+    df_emd = results[0]
+    return df_emd, None, None
 
 
 def compute_quadrupoles(df_emd, config_file):
