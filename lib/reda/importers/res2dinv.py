@@ -5,8 +5,11 @@ data and real usage to improve upon this.
 
 """
 from io import StringIO
+
 import pandas as pd
+
 from reda.containers.ERT import ERT
+from reda.importers.utils.decorators import enable_result_transforms
 
 
 def _read_file(filename):
@@ -135,7 +138,8 @@ def _read_general_type(content, settings):
     return header, df
 
 
-def add_dat_file(filename, settings, container=None):
+@enable_result_transforms
+def add_dat_file(filename, settings, container=None, **kwargs):
     """ Read a RES2DINV-style file produced by the ABEM export program.
     """
     # each type is read by a different function
