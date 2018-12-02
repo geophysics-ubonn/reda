@@ -8,6 +8,8 @@ from io import StringIO
 import os
 import logging
 
+from reda.importers.utils.decorators import enable_result_transforms
+
 
 def _get_nr_of_electrodes(header_group):
     groups = itertools.groupby(
@@ -344,6 +346,7 @@ def write_crmod_file(sipdata, directory):
     os.chdir(pwd)
 
 
+@enable_result_transforms
 def parse_radic_file(filename, settings, selection_mode="after",
                      reciprocal=None):
     """Import one result file as produced by the SIP256c SIP measuring device
@@ -377,6 +380,10 @@ def parse_radic_file(filename, settings, selection_mode="after",
     -------
     sip_data: :py:pandas:`pandas.DataFrame`
         The data contained in a data frame
+    electrodes : None
+        No electrode positions are imported
+    topography : None
+        No topography is imported
 
     """
     try:
@@ -440,7 +447,7 @@ def parse_radic_file(filename, settings, selection_mode="after",
         sip_data['m'] = (reciprocal + 1) - sip_data['m']
         sip_data['n'] = (reciprocal + 1) - sip_data['n']
 
-    return sip_data
+    return sip_data, None, None
 
 
 if __name__ == '__main__':
