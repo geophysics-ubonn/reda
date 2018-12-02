@@ -57,7 +57,7 @@ def load_mod_file(filename):
 
 @enable_result_transforms
 def load_seit_data(directory, frequency_file='frequencies.dat',
-                   data_prefix='volt_'):
+                   data_prefix='volt_', **kwargs):
     """Load sEIT data from data directory. This function loads data previously
     exported from reda using reda.exporters.crtomo.write_files_to_directory
 
