@@ -189,12 +189,14 @@ class Exporters(object):
     --------
     Importers
     """
+    @functools.wraps(reda_bert_export.export_bert)
     def export_bert(self, filename):
         reda_bert_export.export_bert(
             self.data, self.electrode_positions, filename)
 
     @functools.wraps(export_bert)
     def export_pygimli(self, *args, **kargs):
+        """Same as .export_bert"""
         self.export_bert(*args, **kargs)
 
     def export_crtomo(self, filename):
