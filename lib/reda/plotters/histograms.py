@@ -33,7 +33,7 @@ def plot_histograms(ertobj, keys, **kwargs):
     ----------
     ertobj : container instance or :class:`pandas.DataFrame`
         data object which contains the data.
-    keys : list of strings
+    keys : str or list of strings
         which keys (column names) to plot
     merge : bool, optional
         if True, then generate only one figure with all key-plots as columns
@@ -62,6 +62,9 @@ def plot_histograms(ertobj, keys, **kwargs):
 
     if df.shape[0] == 0:
         raise Exception('No data present, cannot plot')
+
+    if isinstance(keys, str):
+        keys = [keys, ]
 
     figures = {}
     merge_figs = kwargs.get('merge', True)
