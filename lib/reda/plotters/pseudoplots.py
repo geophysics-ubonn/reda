@@ -239,13 +239,16 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         ),
         return_counts=True,
     )
+    # import IPython
+    # IPython.embed()
+    # exit()
     if np.any(counts > 1):
         print('found duplicate coordinates!')
-        duplicate_configs = np.where(counts > 1)[0]
-        print('duplicate configs:')
-        print('A B M N')
-        for i in duplicate_configs:
-            print(c[i, :])
+        # duplicate_configs = np.where(counts > 1)[0]
+        # print('duplicate configs:')
+        # print('A B M N')
+        # for i in duplicate_configs:
+        #     print(c[i, :])
 
     # prepare matrix
     plot_values = np.squeeze(df[column].values)
