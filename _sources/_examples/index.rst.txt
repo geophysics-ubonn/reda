@@ -17,6 +17,26 @@ Usage of the ERT container
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data from roll">
+
+.. only:: html
+
+    .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_rollalong_thumb.png
+
+        :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/01_ERT/plot_syscal_rollalong
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data">
 
 .. only:: html

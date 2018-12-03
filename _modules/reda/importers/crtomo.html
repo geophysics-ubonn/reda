@@ -120,6 +120,8 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="k">import</span> <span class="n">enable_result_transforms</span>
+
 
 <div class="viewcode-block" id="load_mod_file"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.crtomo.load_mod_file">[docs]</a><span class="k">def</span> <span class="nf">load_mod_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load a .mod file (sometimes also called volt.dat or data.crt). This file</span>
@@ -166,8 +168,9 @@
     <span class="k">return</span> <span class="n">df</span></div>
 
 
-<div class="viewcode-block" id="load_seit_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.crtomo.load_seit_data">[docs]</a><span class="k">def</span> <span class="nf">load_seit_data</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">frequency_file</span><span class="o">=</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span>
-                   <span class="n">data_prefix</span><span class="o">=</span><span class="s1">&#39;volt_&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="load_seit_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.crtomo.load_seit_data">[docs]</a><span class="nd">@enable_result_transforms</span>
+<span class="k">def</span> <span class="nf">load_seit_data</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">frequency_file</span><span class="o">=</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span>
+                   <span class="n">data_prefix</span><span class="o">=</span><span class="s1">&#39;volt_&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Load sEIT data from data directory. This function loads data previously</span>
 <span class="sd">    exported from reda using reda.exporters.crtomo.write_files_to_directory</span>
 
@@ -187,6 +190,10 @@
 <span class="sd">    -------</span>
 <span class="sd">    df : pandas.DataFrame</span>
 <span class="sd">        A DataFrame suitable for the sEIT container</span>
+<span class="sd">    electrodes : None</span>
+<span class="sd">        No electrode data is imported</span>
+<span class="sd">    topography : None</span>
+<span class="sd">        No topography data is imported</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">frequency_file</span><span class="p">)</span>
@@ -203,7 +210,7 @@
         <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frequency</span>
         <span class="n">data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subdata</span><span class="p">)</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">df</span></div>
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
 </pre></div>
 
           </div>

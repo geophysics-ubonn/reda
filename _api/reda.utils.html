@@ -158,7 +158,7 @@ and Kemna, 2017, Biogeosciences, for more information:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1169.g5b0610b8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Data container</p>
 </dd>
 <dt><strong>correction_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
@@ -240,7 +240,7 @@ Weigand and Kemna, 2017, Biogeosciences</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1169.g5b0610b8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">measured data</p>
 </dd>
 <dt><strong>true_conductivity</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
@@ -265,6 +265,26 @@ Weigand and Kemna, 2017, Biogeosciences</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.enter_directory">
+<span id="reda-utils-enter-directory-module"></span><h2>reda.utils.enter_directory module<a class="headerlink" href="#module-reda.utils.enter_directory" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reda.utils.enter_directory.CreateEnterDirectory">
+<em class="property">class </em><code class="descclassname">reda.utils.enter_directory.</code><code class="descname">CreateEnterDirectory</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#CreateEnterDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.enter_directory.CreateEnterDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.utils.enter_directory.EnterDirectory" title="reda.utils.enter_directory.EnterDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.utils.enter_directory.EnterDirectory</span></code></a></p>
+<p>This is a context manager that enters a given directory and returns to
+the initial current directory after finishing. If the target directory does
+not exist, create it.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.utils.enter_directory.EnterDirectory">
+<em class="property">class </em><code class="descclassname">reda.utils.enter_directory.</code><code class="descname">EnterDirectory</code><span class="sig-paren">(</span><em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#EnterDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.enter_directory.EnterDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This is a context manager that enters a given directory and returns to
+the initial current directory after finishing</p>
 </dd></dl>
 
 </div>

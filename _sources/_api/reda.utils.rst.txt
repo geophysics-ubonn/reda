@@ -25,6 +25,14 @@ reda.utils.eit\_fzj\_utils module
     :undoc-members:
     :show-inheritance:
 
+reda.utils.enter\_directory module
+----------------------------------
+
+.. automodule:: reda.utils.enter_directory
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reda.utils.filter\_config\_types module
 ---------------------------------------
 

@@ -116,6 +116,7 @@
 <span class="sd">As there is an increasing number of slightly different file formats in use,</span>
 <span class="sd">this module acts as an selector for the appropriate import functions.</span>
 <span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">functools</span>
 <span class="kn">import</span> <span class="nn">os</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -126,6 +127,8 @@
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2013</span> <span class="k">as</span> <span class="nn">eit_version_2013</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2017</span> <span class="k">as</span> <span class="nn">eit_version_2017</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2018a</span> <span class="k">as</span> <span class="nn">eit_version_2018a</span>
+
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="k">import</span> <span class="n">enable_result_transforms</span>
 
 <span class="kn">from</span> <span class="nn">reda.configs.configManager</span> <span class="k">import</span> <span class="n">ConfigManager</span>
 
@@ -231,6 +234,15 @@
         <span class="k">return</span> <span class="n">data_emd_4p</span><span class="p">,</span> <span class="n">data_md_raw</span><span class="p">,</span> <span class="n">data_emd_3p</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="k">return</span> <span class="n">data_emd_4p</span><span class="p">,</span> <span class="n">data_md_raw</span></div>
+
+
+<div class="viewcode-block" id="read_3p_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.read_3p_data">[docs]</a><span class="nd">@enable_result_transforms</span>
+<span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">get_mnu0_data</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">read_3p_data</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="c1"># this is a wrapper that conforms to the importer standards</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">get_mnu0_data</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">df_emd</span> <span class="o">=</span> <span class="n">results</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df_emd</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
 
 
 <div class="viewcode-block" id="compute_quadrupoles"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.compute_quadrupoles">[docs]</a><span class="k">def</span> <span class="nf">compute_quadrupoles</span><span class="p">(</span><span class="n">df_emd</span><span class="p">,</span> <span class="n">config_file</span><span class="p">):</span>

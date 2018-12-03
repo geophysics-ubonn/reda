@@ -146,7 +146,7 @@
 <span class="sd">    ----------</span>
 <span class="sd">    ertobj : container instance or :class:`pandas.DataFrame`</span>
 <span class="sd">        data object which contains the data.</span>
-<span class="sd">    keys : list of strings</span>
+<span class="sd">    keys : str or list of strings</span>
 <span class="sd">        which keys (column names) to plot</span>
 <span class="sd">    merge : bool, optional</span>
 <span class="sd">        if True, then generate only one figure with all key-plots as columns</span>
@@ -175,6 +175,9 @@
 
     <span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;No data present, cannot plot&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">keys</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="n">keys</span><span class="p">,</span> <span class="p">]</span>
 
     <span class="n">figures</span> <span class="o">=</span> <span class="p">{}</span>
     <span class="n">merge_figs</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;merge&#39;</span><span class="p">,</span> <span class="kc">True</span><span class="p">)</span>

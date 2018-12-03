@@ -12,6 +12,7 @@ Subpackages
 .. toctree::
 
     reda.importers.legacy
+    reda.importers.utils
 
 Submodules
 ----------

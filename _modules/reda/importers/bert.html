@@ -117,26 +117,33 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="k">import</span> <span class="n">enable_result_transforms</span>
 
-<div class="viewcode-block" id="import_ohm"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.bert.import_ohm">[docs]</a><span class="k">def</span> <span class="nf">import_ohm</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+
+<div class="viewcode-block" id="import_ohm"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.bert.import_ohm">[docs]</a><span class="nd">@enable_result_transforms</span>
+<span class="k">def</span> <span class="nf">import_ohm</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Construct pandas data frame from BERT`s unified data format (.ohm).</span>
 
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
-<span class="sd">    filename: string</span>
+<span class="sd">    filename : string</span>
 <span class="sd">        File path to .ohm file</span>
-<span class="sd">    verbose: bool, optional</span>
+<span class="sd">    verbose : bool, optional</span>
 <span class="sd">        Enables extended debug output</span>
-<span class="sd">    reciprocals: int, optional</span>
-<span class="sd">        if provided, then assume that this is a reciprocal measurements where</span>
+<span class="sd">    reciprocals : int, optional</span>
+<span class="sd">        if provided, then assume that this is a reciprocal measurement where</span>
 <span class="sd">        only the electrode cables were switched. The provided number N is</span>
 <span class="sd">        treated as the maximum electrode number, and denotations are renamed</span>
 <span class="sd">        according to the equation :math:`X_n = N - (X_a - 1)`</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
-<span class="sd">    data: :class:`pandas.DataFrame`</span>
+<span class="sd">    data : :class:`pandas.DataFrame`</span>
 <span class="sd">       The measurement data</span>
+<span class="sd">    elecs : :class:`pandas.DataFrame`</span>
+<span class="sd">        Electrode positions (columns: X, Y, Z)</span>
+<span class="sd">    topography : None</span>
+<span class="sd">        No topography information is provided at the moment</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>

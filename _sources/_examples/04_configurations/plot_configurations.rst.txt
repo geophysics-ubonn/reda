@@ -12,6 +12,21 @@ Various ways to create measurement configurations
 
 
 
+.. code-block:: python
+
+    from reda import ConfigManager
+
+    configs = ConfigManager(nr_of_electrodes=32)
+
+    configs.gen_gradient(skip=10, step=8, vskip=5)
+    configs.gen_dipole_dipole(skipc=1)
+    configs.gen_gradient()
+    configs.gen_schlumberger(15, 16)
+
+    print(configs.configs)
+
+
+
 
 
 .. rst-class:: sphx-glr-script-out
@@ -23,31 +38,28 @@ Various ways to create measurement configurations
     [[ 1 12  2  8]
      [ 1 12  3  9]
      [ 1 12  4 10]
-     [ 1 12  5 11]
-     [ 9 20 10 16]
-     [ 9 20 11 17]
-     [ 9 20 12 18]
-     [ 9 20 13 19]
-     [17 28 18 24]
-     [17 28 19 25]
-     [17 28 20 26]
-     [17 28 21 27]]
+     ..., 
+     [ 3 28 15 16]
+     [ 2 29 15 16]
+     [ 1 30 15 16]]
 
 
+export mechanisms:
 
-
-|
 
 
 .. code-block:: python
 
-    from reda import ConfigManager
+    import reda
+    with reda.CreateEnterDirectory('exported_configs'):
+        configs.to_iris_syscal('syscal_configs.txt')
+        configs.write_configs('abmn.dat')
+        configs.write_crmod_config('config.dat')
 
-    configs = ConfigManager(nr_of_electrodes=32)
 
-    configs.gen_gradient(skip=10, step=8, vskip=5)
 
-    print(configs.configs)
+
+
 
 
 .. _sphx_glr_download__examples_04_configurations_plot_configurations.py:

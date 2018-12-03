@@ -352,13 +352,16 @@
         <span class="p">),</span>
         <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
     <span class="p">)</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
+    <span class="c1"># exit()</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">any</span><span class="p">(</span><span class="n">counts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;found duplicate coordinates!&#39;</span><span class="p">)</span>
-        <span class="n">duplicate_configs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">counts</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;duplicate configs:&#39;</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A B M N&#39;</span><span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">duplicate_configs</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="n">c</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="c1"># duplicate_configs = np.where(counts &gt; 1)[0]</span>
+        <span class="c1"># print(&#39;duplicate configs:&#39;)</span>
+        <span class="c1"># print(&#39;A B M N&#39;)</span>
+        <span class="c1"># for i in duplicate_configs:</span>
+        <span class="c1">#     print(c[i, :])</span>
 
     <span class="c1"># prepare matrix</span>
     <span class="n">plot_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="n">column</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>

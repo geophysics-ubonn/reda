@@ -129,6 +129,12 @@
 <li class="toctree-l2"><a class="reference internal" href="reda.importers.legacy.html#module-reda.importers.legacy.eit40">reda.importers.legacy.eit40 module</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="reda.importers.utils.html">reda.importers.utils package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reda.importers.utils.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.importers.utils.html#module-reda.importers.utils.decorators">reda.importers.utils.decorators module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.importers.utils.html#module-reda.importers.utils.transforms">reda.importers.utils.transforms module</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -148,14 +154,14 @@ dc2dinvres.</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>filename: string</strong></dt>
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
 <dd><p class="first last">File path to .ohm file</p>
 </dd>
-<dt><strong>verbose: bool, optional</strong></dt>
+<dt><strong>verbose</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
 <dd><p class="first last">Enables extended debug output</p>
 </dd>
-<dt><strong>reciprocals: int, optional</strong></dt>
-<dd><p class="first last">if provided, then assume that this is a reciprocal measurements where
+<dt><strong>reciprocals</strong> <span class="classifier-delimiter">:</span> <span class="classifier">int, optional</span></dt>
+<dd><p class="first last">if provided, then assume that this is a reciprocal measurement where
 only the electrode cables were switched. The provided number N is
 treated as the maximum electrode number, and denotations are renamed
 according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
@@ -164,8 +170,14 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data: :class:`pandas.DataFrame`</strong></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The measurement data</p>
+</dd>
+<dt><strong>elecs</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">Electrode positions (columns: X, Y, Z)</p>
+</dd>
+<dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
+<dd><p class="first last">No topography information is provided at the moment</p>
 </dd>
 </dl>
 </td>
@@ -221,7 +233,7 @@ ert = reda.ERT(data=df)</p>
 
 <dl class="function">
 <dt id="reda.importers.crtomo.load_seit_data">
-<code class="descclassname">reda.importers.crtomo.</code><code class="descname">load_seit_data</code><span class="sig-paren">(</span><em>directory</em>, <em>frequency_file='frequencies.dat'</em>, <em>data_prefix='volt_'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/crtomo.html#load_seit_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.crtomo.load_seit_data" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.importers.crtomo.</code><code class="descname">load_seit_data</code><span class="sig-paren">(</span><em>directory</em>, <em>frequency_file='frequencies.dat'</em>, <em>data_prefix='volt_'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/crtomo.html#load_seit_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.crtomo.load_seit_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load sEIT data from data directory. This function loads data previously
 exported from reda using reda.exporters.crtomo.write_files_to_directory</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -247,6 +259,12 @@ data_prefix</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
 <dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
 <dd><p class="first last">A DataFrame suitable for the sEIT container</p>
+</dd>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
+<dd><p class="first last">No electrode data is imported</p>
+</dd>
+<dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
+<dd><p class="first last">No topography data is imported</p>
 </dd>
 </dl>
 </td>
@@ -300,6 +318,50 @@ with 4 columns each (A, B, M, N)</p>
 <dl class="function">
 <dt id="reda.importers.eit_fzj.get_mnu0_data">
 <code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">get_mnu0_data</code><span class="sig-paren">(</span><em>filename</em>, <em>configs</em>, <em>return_3p=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#get_mnu0_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.get_mnu0_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import data post-processed as 3P data (NMU0), i.e., measured towards
+common ground.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string (usually: eit_data_mnu0.mat)</span></dt>
+<dd><p class="first last">filename of matlab file</p>
+</dd>
+<dt><strong>configs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">Nx4 numpy.ndarray|filename|function</span></dt>
+<dd><p class="first last">4P measurements configurations (ABMN) to generate out of the data. If
+this parameter is a callable, then call it with the MD DataFrame as its
+sole parameter and expect a Nx4 numpy.ndarray as return value</p>
+</dd>
+<dt><strong>return_3p</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool, optional</span></dt>
+<dd><p class="first last">also return 3P data</p>
+</dd>
+<dt><strong>**kwargs</strong> <span class="classifier-delimiter">:</span> <span class="classifier">dict, optional</span></dt>
+<dd><p class="first last">all other parameters will be handled down to the extract functions</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data_emd_4p</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
+<dd><p class="first last">The generated 4P data</p>
+</dd>
+<dt><strong>data_md_raw</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame|None</span></dt>
+<dd><p class="first last">MD data (sometimes this data is not imported, then we return None here)</p>
+</dd>
+<dt><strong>data_emd_3p</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
+<dd><p class="first last">The imported 3P data (only if return_3p==True)</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.eit_fzj.read_3p_data">
+<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">read_3p_data</code><span class="sig-paren">(</span><em>filename</em>, <em>configs</em>, <em>return_3p=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#read_3p_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.read_3p_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import data post-processed as 3P data (NMU0), i.e., measured towards
 common ground.</p>
 <table class="docutils field-list" frame="void" rules="none">
@@ -439,10 +501,10 @@ specific measurement. Default: True</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1169.g5b0610b8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1169.g5b0610b8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -558,6 +620,12 @@ with N1 = N + 1</p>
 <dt><strong>sip_data: :py:pandas:`pandas.DataFrame`</strong></dt>
 <dd><p class="first last">The data contained in a data frame</p>
 </dd>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
+<dd><p class="first last">No electrode positions are imported</p>
+</dd>
+<dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
+<dd><p class="first last">No topography is imported</p>
+</dd>
 </dl>
 </td>
 </tr>
@@ -583,7 +651,7 @@ with N1 = N + 1</p>
 data and real usage to improve upon this.</p>
 <dl class="function">
 <dt id="reda.importers.res2dinv.add_dat_file">
-<code class="descclassname">reda.importers.res2dinv.</code><code class="descname">add_dat_file</code><span class="sig-paren">(</span><em>filename</em>, <em>settings</em>, <em>container=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/res2dinv.html#add_dat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.res2dinv.add_dat_file" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.importers.res2dinv.</code><code class="descname">add_dat_file</code><span class="sig-paren">(</span><em>filename</em>, <em>settings</em>, <em>container=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/res2dinv.html#add_dat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.res2dinv.add_dat_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a RES2DINV-style file produced by the ABEM export program.</p>
 </dd></dl>
 
@@ -721,7 +789,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1169.g5b0610b8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>
@@ -749,7 +817,7 @@ file!</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1169.g5b0610b8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df_all</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0.dev0+1191.gb7bdf7cd)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The data, contained in a DataFrame</p>
 </dd>
 </dl>

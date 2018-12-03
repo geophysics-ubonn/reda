@@ -194,16 +194,19 @@
 <tr class="row-odd"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal" title="reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_into_normal_and_reciprocal</span></code></a>([pad,&nbsp;…])</td>
 <td>Split the stored configurations into normal and reciprocal measurements</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_pg_scheme" title="reda.configs.configManager.ConfigManager.to_pg_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pg_scheme</span></code></a>([container,&nbsp;positions])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_iris_syscal" title="reda.configs.configManager.ConfigManager.to_iris_syscal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_iris_syscal</span></code></a>(filename)</td>
+<td>Export to IRIS Instrument configuration file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_pg_scheme" title="reda.configs.configManager.ConfigManager.to_pg_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pg_scheme</span></code></a>([container,&nbsp;positions])</td>
 <td>Convert the configuration to a pygimli measurement scheme</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_configs" title="reda.configs.configManager.ConfigManager.write_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_configs</span></code></a>(filename)</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_configs" title="reda.configs.configManager.ConfigManager.write_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_configs</span></code></a>(filename)</td>
 <td>Write configs to file in four columns</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_config" title="reda.configs.configManager.ConfigManager.write_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_config</span></code></a>(filename)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_config" title="reda.configs.configManager.ConfigManager.write_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_config</span></code></a>(filename)</td>
 <td>Write the configurations to a configuration file in the CRMod format All configurations are merged into one previor to writing to file</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_volt" title="reda.configs.configManager.ConfigManager.write_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_volt</span></code></a>(filename,&nbsp;mid)</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_volt" title="reda.configs.configManager.ConfigManager.write_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_volt</span></code></a>(filename,&nbsp;mid)</td>
 <td>Write the measurements to the output file in the volt.dat file format that can be read by CRTomo.</td>
 </tr>
 </tbody>
@@ -645,6 +648,25 @@ returned if return_indices is True.</p>
 <dt><strong>rec_indices: numpy.ndarray, optional</strong></dt>
 <dd><p class="first last">Nrx1 array containing the indices of normal measurements. Only
 returned if return_indices is True.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.configs.configManager.ConfigManager.to_iris_syscal">
+<code class="descname">to_iris_syscal</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/configs/configManager.html#ConfigManager.to_iris_syscal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.configs.configManager.ConfigManager.to_iris_syscal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export to IRIS Instrument configuration file</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
+<dd><p class="first last">Path to output filename</p>
 </dd>
 </dl>
 </td>

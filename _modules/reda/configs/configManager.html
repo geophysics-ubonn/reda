@@ -932,7 +932,31 @@
             <span class="n">data</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">data</span><span class="p">(</span><span class="n">token</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
 
         <span class="c1"># np.vstack([data.get(x).array() for x in (&quot;abmn&quot;)]).T</span>
-        <span class="k">return</span> <span class="n">data</span></div></div>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+<div class="viewcode-block" id="ConfigManager.to_iris_syscal"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.to_iris_syscal">[docs]</a>    <span class="k">def</span> <span class="nf">to_iris_syscal</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export to IRIS Instrument configuration file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : string</span>
+<span class="sd">            Path to output filename</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="c1"># fprintf(fod, &#39;#\t X\t Y\t Z\n&#39;);</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#</span><span class="se">\t</span><span class="s1"> X</span><span class="se">\t</span><span class="s1"> Y</span><span class="se">\t</span><span class="s1"> Z</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="c1"># fprintf(fod, &#39;%d\t %.1f\t %d\t %d\n&#39;, D&#39;);</span>
+            <span class="c1"># loop over electrodes and assign increasing x-positions</span>
+            <span class="c1"># TODO: use proper electrode positions, if available</span>
+            <span class="k">for</span> <span class="n">nr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="o">.</span><span class="n">max</span><span class="p">()):</span>
+                <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">   </span><span class="si">{}</span><span class="s1">  0   0</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nr</span><span class="p">))</span>
+
+            <span class="c1"># fprintf(fod, &#39;#\t A\t B\t M\t N\n&#39;);</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;#</span><span class="se">\t</span><span class="s1"> A</span><span class="se">\t</span><span class="s1"> B</span><span class="se">\t</span><span class="s1"> M</span><span class="se">\t</span><span class="s1"> N</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+            <span class="c1"># fprintf(fod, &#39;%d\t %d\t %d\t %d\t %d\n&#39;, C&#39;);</span>
+            <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">):</span>
+                <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">  </span><span class="si">{}</span><span class="s1">  </span><span class="si">{}</span><span class="s1">  </span><span class="si">{}</span><span class="s1">  </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="o">*</span><span class="n">config</span><span class="p">))</span></div></div>
 </pre></div>
 
           </div>

@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Importing Syscal IP data" href="plot_syscal_ip.html" />
-    <link rel="prev" title="Examples" href="../index.html" />
+    <link rel="prev" title="Importing Syscal ERT data from roll-a-long scheme" href="plot_syscal_rollalong.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -80,7 +80,7 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Examples</a><ul>
-      <li>Previous: <a href="../index.html" title="previous chapter">Examples</a></li>
+      <li>Previous: <a href="plot_syscal_rollalong.html" title="previous chapter">Importing Syscal ERT data from roll-a-long scheme</a></li>
       <li>Next: <a href="plot_syscal_ip.html" title="next chapter">Importing Syscal IP data</a></li>
   </ul></li>
   </ul></li>
@@ -120,34 +120,59 @@
 </div>
 <div class="sphx-glr-example-title section" id="importing-syscal-ert-data">
 <span id="sphx-glr-examples-01-ert-plot-syscal-dc-py"></span><h1>Importing Syscal ERT data<a class="headerlink" href="#importing-syscal-ert-data" title="Permalink to this headline">¶</a></h1>
-<img alt="../../_images/sphx_glr_plot_syscal_dc_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_dc_001.png" />
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>data import:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># note that you should prefer importing the binary data (the importer can</span>
+<span class="c1"># import more data)</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_syscal_ert/data_normal.txt&#39;</span><span class="p">)</span>
+
+<span class="c1"># the second data set was measured in a reciprocal configuration by switching</span>
+<span class="c1"># the 24-electrode cables on the Syscal Pro input connectors. The parameter</span>
+<span class="c1"># &quot;reciprocals&quot; changes electrode notations.</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span>
+    <span class="s1">&#39;data_syscal_ert/data_reciprocal.txt&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+
+<span class="c1"># compute geometrical factors using the analytical half-space equation for a</span>
+<span class="c1"># spacing of 0.25 m</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+</pre></div>
+</div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
 assigning ids
 renumbering electrode numbers
 generating ids
 assigning ids
-Generating histogram plot for key: r
+</pre></div>
+</div>
+<p>create some plots in a subdirectory</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;plots&#39;</span><span class="p">):</span>
+    <span class="n">ert</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
+        <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosection_log10_r.pdf&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="n">ert</span><span class="o">.</span><span class="n">histogram</span><span class="p">([</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">],</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;histograms.pdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img alt="../../_images/sphx_glr_plot_syscal_dc_001.png" class="sphx-glr-multi-img first" src="../../_images/sphx_glr_plot_syscal_dc_001.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_syscal_dc_002.png" class="sphx-glr-multi-img first" src="../../_images/sphx_glr_plot_syscal_dc_002.png" />
+</li>
+</ul>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Generating histogram plot for key: r
 Generating histogram plot for key: rho_a
 Generating histogram plot for key: Iab
 </pre></div>
 </div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
-<span class="n">container</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
-
-<span class="n">container</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_syscal_ert/data_normal.txt&#39;</span><span class="p">)</span>
-<span class="n">container</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span>
-    <span class="s1">&#39;data_syscal_ert/data_reciprocal.txt&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="kn">as</span> <span class="nn">edfK</span>
-<span class="n">K</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">edfK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">edfK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
-
-<span class="kn">import</span> <span class="nn">reda.plotters</span> <span class="kn">as</span> <span class="nn">plotters</span>
-<span class="n">plotters</span><span class="o">.</span><span class="n">histograms</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="n">container</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">])</span>
+<p>export to various data files</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;data_export&#39;</span><span class="p">):</span>
+    <span class="c1"># TODO: seems broken</span>
+    <span class="c1"># ert.export_bert(&#39;data.ohm&#39;)</span>
+    <span class="c1"># ert.export_pygimli(&#39;data.pygimli&#39;)</span>
+    <span class="n">ert</span><span class="o">.</span><span class="n">export_crtomo</span><span class="p">(</span><span class="s1">&#39;volt.dat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-dc-py">
