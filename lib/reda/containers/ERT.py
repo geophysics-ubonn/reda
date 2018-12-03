@@ -387,7 +387,7 @@ class ERT(LoggingClass, Importers, Exporters):
         self.data = redaK.apply_K(self.data, K)
         redafixK.fix_sign_with_K(self.data)
 
-    def compute_reciprocal_errors(self, key="R"):
+    def compute_reciprocal_errors(self, key="r"):
         r"""
         Compute reciprocal erros following LaBrecque et al. (1996) according
         to:
@@ -399,7 +399,7 @@ class ERT(LoggingClass, Importers, Exporters):
         Parameters
         ----------
         key : str
-            Parameter to calculate the reciprocal error for (default is "R").
+            Parameter to calculate the reciprocal error for (default is "r").
 
         Examples
         --------
