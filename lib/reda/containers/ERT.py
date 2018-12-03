@@ -199,6 +199,7 @@ class Exporters(object):
         """Same as .export_bert"""
         self.export_bert(*args, **kargs)
 
+    @functools.wraps(reda_crtomo_export.save_block_to_crt)
     def export_crtomo(self, filename):
         reda_crtomo_export.save_block_to_crt(filename, self.data)
 
