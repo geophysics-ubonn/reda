@@ -829,7 +829,7 @@ class ConfigManager(object):
         filename : string
             Path to output filename
         """
-        with open(filename, 'r') as fid:
+        with open(filename, 'w') as fid:
             # fprintf(fod, '#\t X\t Y\t Z\n');
             fid.write('#\t X\t Y\t Z\n')
             # fprintf(fod, '%d\t %.1f\t %d\t %d\n', D');
@@ -843,4 +843,4 @@ class ConfigManager(object):
 
             # fprintf(fod, '%d\t %d\t %d\t %d\t %d\n', C');
             for nr, config in enumerate(self.configs):
-                print('{}  {}  {}  {}  {}\n'.format(nr + 1, *config))
+                fid.write('{}  {}  {}  {}  {}\n'.format(nr + 1, *config))
