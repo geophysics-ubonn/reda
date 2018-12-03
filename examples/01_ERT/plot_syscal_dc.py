@@ -6,15 +6,14 @@ Importing Syscal ERT data
 
 """
 import reda
-container = reda.ERT()
+ert = reda.ERT()
 
-container.import_syscal_txt('data_syscal_ert/data_normal.txt')
-container.import_syscal_txt(
+# note that you should prefer importing the binary data (the importer can
+# import more data)
+ert.import_syscal_txt('data_syscal_ert/data_normal.txt')
+ert.import_syscal_txt(
     'data_syscal_ert/data_reciprocal.txt', reciprocals=48)
 
-import reda.utils.geometric_factors as edfK
-K = edfK.compute_K_analytical(container.data, spacing=0.25)
-edfK.apply_K(container.data, K)
+ert.compute_K_analytical(spacing=0.25)
 
-import reda.plotters as plotters
-plotters.histograms.plot_histograms(container, ['r', 'rho_a', 'Iab', ])
+ert.histogram(['r', 'rho_a', 'Iab', ])
