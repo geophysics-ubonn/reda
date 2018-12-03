@@ -194,5 +194,7 @@ class TDIP(ERT):
         """
         data_new = self.data.copy()
         data_new['rpha'] = -1.5 * data_new['chargeability']
+        # now that we have magnitude and phase, compute the impedance Zt
+        data_new['Zt'] = data_new['r'] * np.exp(data_new['rpha'] * 1j / 1000.0)
         cr = reda.CR(data=data_new)
         return cr
