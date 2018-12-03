@@ -12,7 +12,11 @@ ert_p1 = reda.ERT()
 ert_p1.import_syscal_bin(
     'data_syscal_rollalong/profile_1.bin'
 )
-ert_p1.pseudosection('r', log10=True)
+ert_p1.compute_K_analytical(spacing=0.2)
+ert_p1.pseudosection(
+    filename='profile1_pseudosection.pdf',
+    column='r', log10=True
+)
 
 ###############################################################################
 # create an ERT container and import second dataset
@@ -20,7 +24,12 @@ ert_p2 = reda.ERT()
 ert_p2.import_syscal_bin(
     'data_syscal_rollalong/profile_2.bin',
 )
-ert_p2.pseudosection('r', log10=True)
+ert_p2.compute_K_analytical(spacing=0.2)
+ert_p2.pseudosection(
+    filename='profile2_pseudosection.pdf',
+    column='r',
+    log10=True
+)
 
 ###############################################################################
 # create an ERT container and jointly import the first and second dataset,
@@ -43,8 +52,8 @@ ert.import_syscal_bin(
 # compute geometric factors
 ert.compute_K_analytical(spacing=0.2)
 
-ert.pseudosection(column='r', log10=True)
+ert.pseudosection(filename='pseudosection_both_profiles.pdf',
+                  column='r', log10=True)
 
-ert.histogram(['r', 'rho_a', 'Iab', ])
-# import IPython
-# IPython.embed()
+ert.histogram(filename='hist_both_profiles.pdf',
+              column=['r', 'rho_a', 'Iab', ])

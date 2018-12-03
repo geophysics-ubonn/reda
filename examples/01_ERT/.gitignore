@@ -4,3 +4,7 @@ ip.pickle
 
 data_export/
 plots/
+hist_both_profiles.pdf
+profile1_pseudosection.pdf
+profile2_pseudosection.pdf
+pseudosection_both_profiles.pdf
