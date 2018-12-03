@@ -15,6 +15,9 @@ import reda.utils.geometric_factors as redaK
 import reda.utils.fix_sign_with_K as redafixK
 from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
+import reda.plotters.pseudoplots as PS
+import reda.plotters.histograms as HS
+
 
 class LogDataChanges():
     """Context manager that observes the DataFrame of a data container for
@@ -439,3 +442,41 @@ class ERT(LoggingClass, Importers, Exporters):
         error.name = "error"
         self.data = pd.merge(self.data, error.to_frame().reset_index(),
                              how='outer', on='id')
+
+    def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
+        """Plot a pseudosection of the given column. Note that this function
+        only works with dipole-dipole data at the moment.
+
+        Parameters
+        ----------
+        column : string, optional
+            Column to plot into the pseudosection, default: r
+        filename : string, optional
+            if not None, save the resulting figure directory to disc
+        log10 : bool, optional
+            if True, then plot values in log10, default: False
+        **kwargs : dict
+            all additional parameters are directly provided to
+            :py:func:`reda.plotters.pseudoplots.PS.plot_pseudosection_type2`
+
+        Returns
+        -------
+        fig : :class:`matplotlib.Figure`
+            matplotlib figure object
+            ax : :class:`matplotlib.axes`
+            matplotlib axes object
+        cb : colorbar object
+            matplotlib colorbar object
+        """
+        fig, ax, cb = PS.plot_pseudosection_type2(
+            self.data, column=column, log10=log10, **kwargs)
+        if filename is not None:
+            fig.savefig(filename, dpi=300)
+        return fig, ax, cb
+
+    def histogram(self, column='r', filename=None, log10=False, **kwargs):
+        return_dict = HS.plot_histograms(self.data, column)
+        if filename is not None:
+            return_dict['all'].savefig(filename, dpi=300)
+        return return_dict
+
