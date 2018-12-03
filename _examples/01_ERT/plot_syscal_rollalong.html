@@ -18,8 +18,8 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Importing Syscal ERT data" href="plot_syscal_dc.html" />
-    <link rel="prev" title="Examples" href="../index.html" />
+    <link rel="next" title="Importing Syscal IP data" href="plot_syscal_ip.html" />
+    <link rel="prev" title="Importing Syscal ERT data" href="plot_syscal_dc.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -80,8 +80,8 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Examples</a><ul>
-      <li>Previous: <a href="../index.html" title="previous chapter">Examples</a></li>
-      <li>Next: <a href="plot_syscal_dc.html" title="next chapter">Importing Syscal ERT data</a></li>
+      <li>Previous: <a href="plot_syscal_dc.html" title="previous chapter">Importing Syscal ERT data</a></li>
+      <li>Next: <a href="plot_syscal_ip.html" title="next chapter">Importing Syscal IP data</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -128,7 +128,11 @@
 <span class="n">ert_p1</span><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span>
     <span class="s1">&#39;data_syscal_rollalong/profile_1.bin&#39;</span>
 <span class="p">)</span>
-<span class="n">ert_p1</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ert_p1</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">ert_p1</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;profile1_pseudosection.pdf&#39;</span><span class="p">,</span>
+    <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_rollalong_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_rollalong_001.png" />
@@ -143,7 +147,12 @@ found duplicate coordinates!
 <span class="n">ert_p2</span><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span>
     <span class="s1">&#39;data_syscal_rollalong/profile_2.bin&#39;</span><span class="p">,</span>
 <span class="p">)</span>
-<span class="n">ert_p2</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ert_p2</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="n">ert_p2</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;profile2_pseudosection.pdf&#39;</span><span class="p">,</span>
+    <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+    <span class="n">log10</span><span class="o">=</span><span class="bp">True</span>
+<span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_rollalong_002.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_rollalong_002.png" />
@@ -173,11 +182,11 @@ thereby shifting electrode notations of the second dataset by 24 electrodes</p>
 <span class="c1"># compute geometric factors</span>
 <span class="n">ert</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
-<span class="n">ert</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span><span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosection_both_profiles.pdf&#39;</span><span class="p">,</span>
+                  <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
 
-<span class="n">ert</span><span class="o">.</span><span class="n">histogram</span><span class="p">([</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">])</span>
-<span class="c1"># import IPython</span>
-<span class="c1"># IPython.embed()</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;hist_both_profiles.pdf&#39;</span><span class="p">,</span>
+              <span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
 <ul class="sphx-glr-horizontal">
