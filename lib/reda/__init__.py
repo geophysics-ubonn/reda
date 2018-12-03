@@ -16,7 +16,12 @@ from .configs.configManager import ConfigManager
 
 import reda.importers.utils.transforms as transforms
 
+from reda.utils.enter_directory import EnterDirectory
+from reda.utils.enter_directory import CreateEnterDirectory
+
 # this is just to silence pep8/flake errors
+EnterDirectory
+CreateEnterDirectory
 ERT
 TDIP
 CR
