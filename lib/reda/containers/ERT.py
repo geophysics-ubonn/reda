@@ -380,7 +380,8 @@ class ERT(LoggingClass, Importers, Exporters):
         """Compute geometrical factors over the homogeneous half-space with a
         constant electrode spacing
         """
-        redaK.compute_K_analytical(self.data, spacing=spacing)
+        K = redaK.compute_K_analytical(self.data, spacing=spacing)
+        self.data = redaK.apply_K(self.data, K)
         redafixK.fix_sign_with_K(self.data)
 
     def compute_reciprocal_errors(self, key="R"):
