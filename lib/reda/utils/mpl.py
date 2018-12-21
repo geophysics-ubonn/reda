@@ -46,7 +46,6 @@ def setup(use_latex=False, overwrite=False):
         mpl.rcParams['mathtext.default'] = 'regular'
     if latex and use_latex:
         mpl.rcParams['text.usetex'] = True
-        mpl.rcParams['text.latex.unicode'] = True
 
         mpl.rc(
             'text.latex',
@@ -60,7 +59,6 @@ def setup(use_latex=False, overwrite=False):
         )
     else:
         mpl.rcParams['text.usetex'] = False
-        mpl.rcParams['text.latex.unicode'] = False
 
     import matplotlib.pyplot as plt
     return plt, mpl
