@@ -159,7 +159,6 @@
         <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;mathtext.default&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;regular&#39;</span>
     <span class="k">if</span> <span class="n">latex</span> <span class="ow">and</span> <span class="n">use_latex</span><span class="p">:</span>
         <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-        <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.unicode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
 
         <span class="n">mpl</span><span class="o">.</span><span class="n">rc</span><span class="p">(</span>
             <span class="s1">&#39;text.latex&#39;</span><span class="p">,</span>
@@ -173,7 +172,6 @@
         <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.usetex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
-        <span class="n">mpl</span><span class="o">.</span><span class="n">rcParams</span><span class="p">[</span><span class="s1">&#39;text.latex.unicode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">False</span>
 
     <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
     <span class="k">return</span> <span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span></div>
