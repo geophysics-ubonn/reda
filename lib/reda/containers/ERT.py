@@ -162,7 +162,7 @@ class Importers(object):
         if 'timestep' in kwargs:
             del(kwargs['timestep'])
 
-        self.logger.info('BERT .ohm file import')
+        self.logger.info('Unified data format (BERT/pyGIMLi) file import')
         with LogDataChanges(self, filter_action='import',
                             filter_query=os.path.basename(filename)):
             data, electrodes, topography = reda_bert_import.import_ohm(
@@ -482,4 +482,3 @@ class ERT(LoggingClass, Importers, Exporters):
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
         return return_dict
-

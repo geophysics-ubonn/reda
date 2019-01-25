@@ -162,7 +162,7 @@ def _parse_remote_unit(ru_block):
         'drpha',
         'with_calib',
         'I',
-        'K',
+        'k',
         'time',
         'date'
     ]
@@ -170,10 +170,10 @@ def _parse_remote_unit(ru_block):
     # phase is in degree, convert to mrad
     df['rpha'] *= np.pi / 180.0 * 1000
 
-    df['r'] = df['rho'] / df['K']
+    df['r'] = df['rho'] / df['k']
 
     # % RA error (Ohm m)
-    errorar = df['drho'] * df['rho'] / df['K']
+    errorar = df['drho'] * df['rho'] / df['k']
     df['dr'] = errorar
 
     # % Error phase (mrad)
@@ -188,7 +188,7 @@ def _parse_remote_unit(ru_block):
     df['drpha'] = errorpha
 
     # % U(V)
-    voltage = df['I'] / 1000 * df['r'] / df['K']
+    voltage = df['I'] / 1000 * df['r'] / df['k']
     df['U'] = voltage
 
     # rename some columns

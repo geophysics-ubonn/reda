@@ -99,6 +99,6 @@ def compute_K_analytical(dataframe, spacing):
     K = 2 * np.pi / (1 / r_am - 1 / r_an - 1 / r_bm + 1 / r_bn)
 
     if isinstance(dataframe, pd.DataFrame):
-        dataframe['K'] = K
+        dataframe['k'] = K
 
     return K

@@ -22,10 +22,7 @@ def _get_unique_identifiers(ee_raw):
     ).view(ee_s.dtype).reshape(-1, 2)
 
     # sort according to first electrode number
-    eeu_s = eeu[
-        np.argsort(eeu[:, 0]),
-        :
-    ]
+    eeu_s = eeu[np.argsort(eeu[:, 0]), :]
 
     # differences
     eeu_diff = np.abs(eeu_s[:, 0] - eeu_s[:, 1])

@@ -185,7 +185,7 @@ def compute_K(dataframe, settings, keep_dir=False):
 
         K = settings['rho'] / modeled_resistances[:, 2]
         if isinstance(dataframe, pd.DataFrame):
-            dataframe['K'] = K
+            dataframe['k'] = K
         if keep_dir is not None and not os.path.isdir(keep_dir):
             shutil.copytree('.', keep_dir)
             print('Copy of modeling dir stored here: {}'.format(keep_dir))

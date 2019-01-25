@@ -52,10 +52,10 @@ import reda.utils.geometric_factors as redaK
 def _add_rhoa(df, spacing):
     """a simple wrapper to compute K factors and add rhoa
     """
-    df['K'] = redaK.compute_K_analytical(df, spacing=spacing)
-    df['rho_a'] = df['r'] * df['K']
+    df['k'] = redaK.compute_K_analytical(df, spacing=spacing)
+    df['rho_a'] = df['r'] * df['k']
     if 'Zt' in df.columns:
-        df['rho_a_complex'] = df['Zt'] * df['K']
+        df['rho_a_complex'] = df['Zt'] * df['k']
     return df
 
 

@@ -49,7 +49,7 @@ def compute_correction_factors(data, true_conductivity, elem_file, elec_file):
     frequency = 100
 
     data_onef = data.query('frequency == {}'.format(frequency))
-    rho_measured = data_onef['r'] * data_onef['K']
+    rho_measured = data_onef['r'] * data_onef['k']
 
     rho_true = 1 / true_conductivity * 1e4
     correction_factors = rho_true / rho_measured

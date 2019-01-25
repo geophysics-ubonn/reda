@@ -54,8 +54,8 @@ def _parse_wenner_file(filename, settings):
     )
 
     # compute geometric factor using the Wenner formula
-    df['K'] = 2 * np.pi * df['a_w']
-    df['r'] = df['rho_a'] / df['K']
+    df['k'] = 2 * np.pi * df['a_w']
+    df['r'] = df['rho_a'] / df['k']
 
     Am = df['elec1_wenner']
     Bm = df['elec1_wenner'] + df['a_w']

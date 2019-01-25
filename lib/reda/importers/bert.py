@@ -73,14 +73,14 @@ def import_ohm(filename, verbose=False, reciprocals=False):
         index=str,
         columns={
             'rhoa': 'rho_a',
-            'k': 'K',
+            'k': 'k',
             'u': 'U',
             'i': 'I'
         }
     )
     if ('r' not in data_reda.keys()) and \
-       ('rho_a' in data_reda.keys() and 'K' in data_reda.keys()):
-        data_reda['r'] = data_reda['rho_a'] / data_reda['K']
+       ('rho_a' in data_reda.keys() and 'k' in data_reda.keys()):
+        data_reda['r'] = data_reda['rho_a'] / data_reda['k']
         print(
             "Calculating resistance from apparent resistivity and "
             "geometric factors. (R = rhoa_/K)")

@@ -30,15 +30,15 @@ def fix_sign_with_K(dataframe):
 
     """
     # check for required columns
-    if 'K' not in dataframe or 'r' not in dataframe:
+    if 'k' not in dataframe or 'r' not in dataframe:
         raise Exception('K and r columns required!')
 
-    indices_negative = (dataframe['K'] < 0) & (dataframe['r'] < 0)
+    indices_negative = (dataframe['k'] < 0) & (dataframe['r'] < 0)
     if np.where(indices_negative)[0].size == 0:
         # nothing to do here
         return dataframe
 
-    dataframe.ix[indices_negative, ['K', 'r']] *= -1
+    dataframe.ix[indices_negative, ['k', 'r']] *= -1
 
     # switch potential electrodes
     indices_switched_ab = indices_negative & (dataframe['a'] > dataframe['b'])
@@ -60,7 +60,7 @@ def fix_sign_with_K(dataframe):
         dataframe.ix[indices_negative, 'Zt'] *= -1
 
     if 'rho_a' in dataframe:
-        dataframe['rho_a'] = dataframe['r'] * dataframe['K']
+        dataframe['rho_a'] = dataframe['r'] * dataframe['k']
 
     if 'Mx' in dataframe:
         # for now we have to loop here because we store numpy arrays within
@@ -106,8 +106,8 @@ def test_fix_sign_with_K():
         (1, 2, 3, 4, -10, -20),
         (1, 2, 4, 3, 10, 20),
     ))
-    df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n', 'r', 'K'])
-    df['rho_a'] = df['K'] * df['r']
+    df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n', 'r', 'k'])
+    df['rho_a'] = df['k'] * df['r']
     print('old')
     print(df)
     df = fix_sign_with_K(df)

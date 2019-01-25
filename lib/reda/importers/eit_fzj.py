@@ -271,7 +271,7 @@ def apply_correction_factors(df, correction_file):
         #     print(key)
         #     print(factor)
         #     print(df['R'])
-        #     print(df['K'])
+        #     print(df['k'])
         #     import IPython
         #     IPython.embed()
         #     exit()
