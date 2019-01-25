@@ -18,7 +18,7 @@ open-source under the permissive MIT license. Any contributions from the
 community are highly welcome.
 
 <aside class="warning">
-REDA is a work-in-progress. Please get contact us if you wish to use it and feel lost or are missing functionality. A lot of things can be added easily, especially missing functionality.
+REDA is a work-in-progress. Please contact us if you wish to use it or miss a specific functionality.
 </aside>
 
 ### Installation
