@@ -79,3 +79,10 @@ def which(program):
 def search(what):
     """Utility function to search docstrings for string `what`."""
     np.lookfor(what, module="reda", import_modules=False)
+
+def has_multiple_timesteps(data):
+    """Return True if `data` container has multiple timesteps."""
+    if "timestep" in data.keys():
+        if len(np.unique(data["timestep"])) > 1:
+            return True
+    return False

@@ -1,22 +1,21 @@
-import os
 import datetime
-import logging
 import functools
+import logging
+import os
 
 import pandas as pd
 
 import reda
-import reda.importers.iris_syscal_pro as reda_syscal
-import reda.importers.bert as reda_bert_import
 import reda.exporters.bert as reda_bert_export
 import reda.exporters.crtomo as reda_crtomo_export
-
-import reda.utils.geometric_factors as redaK
-import reda.utils.fix_sign_with_K as redafixK
-from reda.utils.norrec import assign_norrec_to_df, average_repetitions
-
-import reda.plotters.pseudoplots as PS
+import reda.importers.bert as reda_bert_import
+import reda.importers.iris_syscal_pro as reda_syscal
 import reda.plotters.histograms as HS
+import reda.plotters.pseudoplots as PS
+import reda.utils.fix_sign_with_K as redafixK
+import reda.utils.geometric_factors as redaK
+from reda.utils import has_multiple_timesteps
+from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
 
 class LogDataChanges():
@@ -36,8 +35,13 @@ class LogDataChanges():
     2... - root - INFO - Data change from 22 to 21
 
     """
-    def __init__(self, container, filter_action='default',
-                 filter_query="", ):
+
+    def __init__(
+            self,
+            container,
+            filter_action='default',
+            filter_query="",
+    ):
         self.container = container
         self.logger = container.logger
         self.filter_action = filter_action
@@ -56,7 +60,8 @@ class LogDataChanges():
         self.data_size_after = self.container.data.shape[0]
         self.logger.info(
             'Data change from {0} to {1}'.format(
-                self.data_size_before, self.data_size_after,
+                self.data_size_before,
+                self.data_size_after,
             ),
             extra={
                 'filter_action': self.filter_action,
@@ -71,6 +76,7 @@ def append_doc_of(fun):
     def decorator(f):
         f.__doc__ += fun.__doc__
         return f
+
     return decorator
 
 
@@ -78,6 +84,7 @@ def prepend_doc_of(fun):
     def decorator(f):
         f.__doc__ = fun.__doc__ + f.__doc__
         return f
+
     return decorator
 
 
@@ -89,6 +96,7 @@ class Importers(object):
     --------
     Exporters
     """
+
     def _add_to_container(self, df):
         if self.data is not None:
             self.data = pd.concat((self.data, df), ignore_index=True,
@@ -118,12 +126,11 @@ class Importers(object):
         """
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
-            del(kwargs['timestep'])
+            del (kwargs['timestep'])
         self.logger.info('IRIS Syscal Pro text import')
         with LogDataChanges(self, filter_action='import'):
             data, electrodes, topography = reda_syscal.import_bin(
-                filename, **kwargs
-            )
+                filename, **kwargs)
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
@@ -142,12 +149,11 @@ class Importers(object):
         """
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
-            del(kwargs['timestep'])
+            del (kwargs['timestep'])
         self.logger.info('IRIS Syscal Pro text import')
         with LogDataChanges(self, filter_action='import'):
             data, electrodes, topography = reda_syscal.import_txt(
-                filename, **kwargs
-            )
+                filename, **kwargs)
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
@@ -160,14 +166,13 @@ class Importers(object):
         """BERT .ohm file import"""
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
-            del(kwargs['timestep'])
+            del (kwargs['timestep'])
 
         self.logger.info('Unified data format (BERT/pyGIMLi) file import')
         with LogDataChanges(self, filter_action='import',
                             filter_query=os.path.basename(filename)):
             data, electrodes, topography = reda_bert_import.import_ohm(
-                filename, **kwargs
-            )
+                filename, **kwargs)
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)
@@ -189,10 +194,11 @@ class Exporters(object):
     --------
     Importers
     """
+
     @functools.wraps(reda_bert_export.export_bert)
     def export_bert(self, filename):
-        reda_bert_export.export_bert(
-            self.data, self.electrode_positions, filename)
+        reda_bert_export.export_bert(self.data, self.electrode_positions,
+                                     filename)
 
     @functools.wraps(export_bert)
     def export_pygimli(self, *args, **kargs):
@@ -228,8 +234,7 @@ class LoggingClass(object):
         handler = ListHandler(self.log_list)
 
         formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-        )
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
         handler.setFormatter(formatter)
 
         logger = logging.getLogger()
@@ -252,30 +257,20 @@ class LoggingClass(object):
             if hasattr(record, 'filter_action'):
                 # print(record)
                 if record.filter_action == 'import':
-                    print(
-                        'Data was imported from file {0} '.format(
-                            record.filter_query
-                        ) +
-                        '({0} data points)'.format(
-                            record.df_size_after - record.df_size_before
-                        )
-                    )
+                    print('Data was imported from file {0} '.format(
+                        record.filter_query) + '({0} data points)'.format(
+                            record.df_size_after - record.df_size_before))
                 if record.filter_action == 'filter':
-                    print(
-                        'A filter was applied with query "{0}".'.format(
-                            record.filter_query
-                        ) + ' In total {0} records were removed'.format(
-                            - record.df_size_after + record.df_size_before
-                        )
-                    )
+                    print('A filter was applied with query "{0}".'.format(
+                        record.filter_query) +
+                          ' In total {0} records were removed'.format(
+                              -record.df_size_after + record.df_size_before))
         print('--- Data Journal End ---')
         print('')
 
 
 class ERT(LoggingClass, Importers, Exporters):
-
-    def __init__(self, data=None, electrode_positions=None,
-                 topography=None):
+    def __init__(self, data=None, electrode_positions=None, topography=None):
         """
         Parameters
         ----------
@@ -314,21 +309,13 @@ class ERT(LoggingClass, Importers, Exporters):
         # is this a DataFrame
         if not isinstance(dataframe, pd.DataFrame):
             raise Exception(
-                'The provided dataframe object is not a pandas.DataFrame'
-            )
+                'The provided dataframe object is not a pandas.DataFrame')
 
-        required_columns = (
-            'a',
-            'b',
-            'm',
-            'n',
-            'r',
-        )
+        required_columns = tuple("abmnr")
         for column in required_columns:
             if column not in dataframe:
-                raise Exception('Required column not in dataframe: {0}'.format(
-                    column
-                ))
+                raise Exception(
+                    'Required column not in dataframe: {0}'.format(column))
         return dataframe
 
     def sub_filter(self, subset, filter, inplace=True):
@@ -346,13 +333,7 @@ class ERT(LoggingClass, Importers, Exporters):
 
         """
         # build the full query
-        full_query = ''.join((
-            'not (',
-            subset,
-            ') or not (',
-            filter,
-            ')',
-        ))
+        full_query = ''.join(('not (', subset, ') or not (', filter, ')'))
         with LogDataChanges(self, filter_action='filter', filter_query=filter):
             result = self.data.query(full_query, inplace=inplace)
         return result
@@ -443,8 +424,9 @@ class ERT(LoggingClass, Importers, Exporters):
 
         error = grouped.apply(_error)
         error.name = "error"
-        self.data = pd.merge(self.data, error.to_frame().reset_index(),
-                             how='outer', on='id')
+        self.data = pd.merge(self.data,
+                             error.to_frame().reset_index(), how='outer',
+                             on='id')
 
     def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
         """Plot a pseudosection of the given column. Note that this function
@@ -471,8 +453,8 @@ class ERT(LoggingClass, Importers, Exporters):
         cb : colorbar object
             matplotlib colorbar object
         """
-        fig, ax, cb = PS.plot_pseudosection_type2(
-            self.data, column=column, log10=log10, **kwargs)
+        fig, ax, cb = PS.plot_pseudosection_type2(self.data, column=column,
+                                                  log10=log10, **kwargs)
         if filename is not None:
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
@@ -482,3 +464,7 @@ class ERT(LoggingClass, Importers, Exporters):
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
         return return_dict
+
+    def has_multiple_timesteps(self):
+        """Return True if container has multiple timesteps."""
+        return has_multiple_timesteps(self.data)
