@@ -93,6 +93,9 @@ def fix_sign_with_K(dataframe):
             -85.02069 -183.25 in radic column 6 and 7, should get -58 mrad when
             converted
             """
+    # Make sure a, b, m, n stay integers.
+    for col in ('a', 'b', 'm', 'n'):
+        dataframe[col] = dataframe[col].astype(int)
 
     return dataframe
 
