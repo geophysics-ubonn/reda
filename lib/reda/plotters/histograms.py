@@ -204,7 +204,8 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
 
     size_x = 5 * Nx / 2.54
     size_y = 5 * Ny / 2.54
-    fig, axes = plt.subplots(Ny, Nx, figsize=(size_x, size_y))
+    fig, axes = plt.subplots(Ny, Nx, figsize=(size_x, size_y), sharex=True,
+                             sharey=True)
     axes = np.atleast_2d(axes)
 
     index = 0
@@ -238,12 +239,15 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
                 ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(3))
                 ax.tick_params(axis='both', which='major', labelsize=6)
                 ax.tick_params(axis='both', which='minor', labelsize=6)
+                ax.set_title("timestep: %d" % ts_name)
 
                 index += 1
 
     # remove some labels
     for ax in axes[:, 1:].flat:
         ax.set_ylabel('')
+    for ax in axes[:-1, :].flat:
+        ax.set_xlabel('')
     fig.tight_layout()
     return fig
 
