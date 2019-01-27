@@ -276,7 +276,7 @@
         <span class="s1">&#39;drpha&#39;</span><span class="p">,</span>
         <span class="s1">&#39;with_calib&#39;</span><span class="p">,</span>
         <span class="s1">&#39;I&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;K&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;k&#39;</span><span class="p">,</span>
         <span class="s1">&#39;time&#39;</span><span class="p">,</span>
         <span class="s1">&#39;date&#39;</span>
     <span class="p">]</span>
@@ -284,10 +284,10 @@
     <span class="c1"># phase is in degree, convert to mrad</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span> <span class="o">*</span> <span class="mi">1000</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
 
     <span class="c1"># % RA error (Ohm m)</span>
-    <span class="n">errorar</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;drho&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+    <span class="n">errorar</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;drho&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorar</span>
 
     <span class="c1"># % Error phase (mrad)</span>
@@ -302,7 +302,7 @@
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;drpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorpha</span>
 
     <span class="c1"># % U(V)</span>
-    <span class="n">voltage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+    <span class="n">voltage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">voltage</span>
 
     <span class="c1"># rename some columns</span>

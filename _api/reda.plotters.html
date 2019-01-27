@@ -135,7 +135,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>ertobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier">container instance or <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>ertobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier">container instance or <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">data object which contains the data.</p>
 </dd>
 <dt><strong>keys</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str or list of strings</span></dt>
@@ -185,7 +185,7 @@
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>dataobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or reda container</span></dt>
+<dt><strong>dataobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> or reda container</span></dt>
 <dd><p class="first last">The data container/data frame which holds the data</p>
 </dd>
 <dt><strong>keys:   list|tuple|iterable</strong></dt>
@@ -607,8 +607,38 @@ colored “red”</p>
 <span id="reda-plotters-time-series-module"></span><h2>reda.plotters.time_series module<a class="headerlink" href="#module-reda.plotters.time_series" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="reda.plotters.time_series.plot_quadpole_evolution">
-<code class="descclassname">reda.plotters.time_series.</code><code class="descname">plot_quadpole_evolution</code><span class="sig-paren">(</span><em>dataobj</em>, <em>quadpole</em>, <em>cols</em>, <em>threshold</em>, <em>rolling=False</em>, <em>ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/time_series.html#plot_quadpole_evolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.time_series.plot_quadpole_evolution" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<code class="descclassname">reda.plotters.time_series.</code><code class="descname">plot_quadpole_evolution</code><span class="sig-paren">(</span><em>dataobj</em>, <em>quadpole</em>, <em>cols</em>, <em>threshold=5</em>, <em>rolling=False</em>, <em>ax=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/time_series.html#plot_quadpole_evolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.time_series.plot_quadpole_evolution" title="Permalink to this definition">¶</a></dt>
+<dd><p>Visualize time-lapse evolution of a single quadropole.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>dataobj</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">DataFrame containing the data. Please refer to the documentation for
+required columns.</p>
+</dd>
+<dt><strong>quadpole</strong> <span class="classifier-delimiter">:</span> <span class="classifier">list of integers</span></dt>
+<dd><p class="first last">Electrode numbers of the the quadropole.</p>
+</dd>
+<dt><strong>cols</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">The column/parameter to plot over time.</p>
+</dd>
+<dt><strong>threshold</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
+<dd><p class="first last">Allowed percentage deviation from the rolling standard deviation.</p>
+</dd>
+<dt><strong>rolling</strong> <span class="classifier-delimiter">:</span> <span class="classifier">bool</span></dt>
+<dd><p class="first last">Calculate rolling median values (the default is False).</p>
+</dd>
+<dt><strong>ax</strong> <span class="classifier-delimiter">:</span> <span class="classifier">mpl.axes</span></dt>
+<dd><p class="first last">Optional axes object to plot to.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 </div>
 </div>

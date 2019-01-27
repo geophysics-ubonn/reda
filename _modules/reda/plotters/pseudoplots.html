@@ -136,10 +136,7 @@
     <span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">ee_s</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
 
     <span class="c1"># sort according to first electrode number</span>
-    <span class="n">eeu_s</span> <span class="o">=</span> <span class="n">eeu</span><span class="p">[</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eeu</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span>
-        <span class="p">:</span>
-    <span class="p">]</span>
+    <span class="n">eeu_s</span> <span class="o">=</span> <span class="n">eeu</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">eeu</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="p">:]</span>
 
     <span class="c1"># differences</span>
     <span class="n">eeu_diff</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">eeu_s</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">eeu_s</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>

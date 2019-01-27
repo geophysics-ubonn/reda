@@ -193,6 +193,21 @@
 <div class="viewcode-block" id="search"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.search">[docs]</a><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">what</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Utility function to search docstrings for string `what`.&quot;&quot;&quot;</span>
     <span class="n">np</span><span class="o">.</span><span class="n">lookfor</span><span class="p">(</span><span class="n">what</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s2">&quot;reda&quot;</span><span class="p">,</span> <span class="n">import_modules</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="has_multiple_timesteps"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.has_multiple_timesteps">[docs]</a><span class="k">def</span> <span class="nf">has_multiple_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return True if `data` container has multiple timesteps.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;timestep&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="split_timesteps"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.split_timesteps">[docs]</a><span class="k">def</span> <span class="nf">split_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">consistent_abmn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Split data into multiple timesteps.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">has_multiple_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">grouped</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;timestep&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">group</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouped</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span></div>
 </pre></div>
 
           </div>

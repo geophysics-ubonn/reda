@@ -113,12 +113,24 @@
             
   <h1>Source code for reda.exporters.bert</h1><div class="highlight"><pre>
 <span></span><span class="c1"># import numpy as np</span>
-
+<span class="kn">from</span> <span class="nn">reda.utils</span> <span class="k">import</span> <span class="n">has_multiple_timesteps</span>
 
 <div class="viewcode-block" id="export_bert"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.ERT.export_bert">[docs]</a><span class="k">def</span> <span class="nf">export_bert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Save DataFrame to the unified data format used by BERT and pyGIMLi.&quot;&quot;&quot;</span>
-    <span class="c1"># TODO: Document parameters, make work for multiple timesteps</span>
+    <span class="sd">&quot;&quot;&quot;Export to unified data format used in pyGIMLi &amp; BERT.</span>
 
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : :py:class:`pandas.DataFrame`</span>
+<span class="sd">        DataFrame with at least a, b, m, n and r.</span>
+<span class="sd">    electrodes : :py:class:`pandas.DataFrame`</span>
+<span class="sd">        DataFrame with electrode positions.</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        String of the output filename.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Check for multiple timesteps</span>
+    <span class="k">if</span> <span class="n">has_multiple_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">electrodes</span><span class="p">))</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;# &quot;</span><span class="p">)</span>

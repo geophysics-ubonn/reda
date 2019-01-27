@@ -147,42 +147,45 @@
 <td>Compute reciprocal erros following LaBrecque et al.</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(query[,&nbsp;inplace])</td>
 <td>Use a query statement to filter data.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>()</td>
+<td>Return True if container has multiple timesteps.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code>([filename,&nbsp;index_nor,&nbsp;…])</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code>([filename,&nbsp;index_nor,&nbsp;…])</td>
 <td>Plot decay curve</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>([column,&nbsp;filename,&nbsp;log10])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>([column,&nbsp;filename,&nbsp;log10])</td>
 <td>Plot a pseudosection of the given column.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
 <td>Setup a logger</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td>Apply a filter to subset of the data</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code>()</td>
 <td>Convert container to a complex resistivity container, using the CPA-conversion.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>()</td>
 <td>Return of copy of the data inside a TDIP container</td>
 </tr>
 </tbody>
@@ -233,36 +236,39 @@
 <td>Compute reciprocal erros following LaBrecque et al.</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.ERT.filter" title="reda.containers.ERT.ERT.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>(query[,&nbsp;inplace])</td>
 <td>Use a query statement to filter data.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.has_multiple_timesteps" title="reda.containers.ERT.ERT.has_multiple_timesteps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code></a>()</td>
+<td>Return True if container has multiple timesteps.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.pseudosection" title="reda.containers.ERT.ERT.pseudosection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code></a>([column,&nbsp;filename,&nbsp;log10])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.ERT.pseudosection" title="reda.containers.ERT.ERT.pseudosection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code></a>([column,&nbsp;filename,&nbsp;log10])</td>
 <td>Plot a pseudosection of the given column.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
 <td>Setup a logger</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td>Apply a filter to subset of the data</td>
 </tr>
-<tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.ERT.to_ip" title="reda.containers.ERT.ERT.to_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code></a>()</td>
+<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.ERT.to_ip" title="reda.containers.ERT.ERT.to_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code></a>()</td>
 <td>Return of copy of the data inside a TDIP container</td>
 </tr>
 </tbody>
@@ -359,7 +365,7 @@ pandas.DataFrame.query</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>result</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
@@ -367,6 +373,12 @@ pandas.DataFrame.query</p>
 </tr>
 </tbody>
 </table>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.ERT.has_multiple_timesteps">
+<code class="descname">has_multiple_timesteps</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.has_multiple_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.has_multiple_timesteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if container has multiple timesteps.</p>
 </dd></dl>
 
 <dl class="method">
@@ -455,10 +467,10 @@ meant to be inherited by the ERT data container.</p>
 </colgroup>
 <tbody valign="top">
 <tr class="row-odd"><td><a class="reference internal" href="#reda.containers.ERT.Exporters.export_bert" title="reda.containers.ERT.Exporters.export_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code></a>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 <tr class="row-even"><td><a class="reference internal" href="#reda.containers.ERT.Exporters.export_pygimli" title="reda.containers.ERT.Exporters.export_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code></a>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 </tbody>
 </table>
@@ -476,7 +488,26 @@ meant to be inherited by the ERT data container.</p>
 <dl class="method">
 <dt id="reda.containers.ERT.Exporters.export_bert">
 <code class="descname">export_bert</code><span class="sig-paren">(</span><em>electrodes</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.ERT.Exporters.export_bert" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save DataFrame to the unified data format used by BERT and pyGIMLi.</p>
+<dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">DataFrame with at least a, b, m, n and r.</p>
+</dd>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">DataFrame with electrode positions.</p>
+</dd>
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">String of the output filename.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="method">
@@ -487,7 +518,26 @@ meant to be inherited by the ERT data container.</p>
 <dl class="method">
 <dt id="reda.containers.ERT.Exporters.export_pygimli">
 <code class="descname">export_pygimli</code><span class="sig-paren">(</span><em>electrodes</em>, <em>filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.ERT.Exporters.export_pygimli" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save DataFrame to the unified data format used by BERT and pyGIMLi.</p>
+<dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">DataFrame with at least a, b, m, n and r.</p>
+</dd>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dd><p class="first last">DataFrame with electrode positions.</p>
+</dd>
+<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
+<dd><p class="first last">String of the output filename.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 </dd></dl>
@@ -548,10 +598,10 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The measurement data</p>
 </dd>
-<dt><strong>elecs</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>elecs</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Electrode positions (columns: X, Y, Z)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -589,10 +639,10 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">The measurement data</p>
 </dd>
-<dt><strong>elecs</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>elecs</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Electrode positions (columns: X, Y, Z)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -655,10 +705,10 @@ specific measurement. Default: True</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong> <span class="classifier-delimiter">:</span> <span class="classifier">None</span></dt>
@@ -1032,42 +1082,45 @@ meant to be inherited by the data containers</p>
 <td>Compute reciprocal erros following LaBrecque et al.</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 <tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(electrodes,&nbsp;filename)</td>
-<td>Save DataFrame to the unified data format used by BERT and pyGIMLi.</td>
+<td>Export to unified data format used in pyGIMLi &amp; BERT.</td>
 </tr>
 <tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(query[,&nbsp;inplace])</td>
 <td>Use a query statement to filter data.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>()</td>
+<td>Return True if container has multiple timesteps.</td>
+</tr>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename,&nbsp;**kwargs)</td>
 <td>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename,&nbsp;**kwargs)</td>
 <td>Syscal import</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>([filename,&nbsp;index_nor,&nbsp;…])</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>([filename,&nbsp;index_nor,&nbsp;…])</td>
 <td>Plot decay curve</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>([column,&nbsp;filename,&nbsp;log10])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>([column,&nbsp;filename,&nbsp;log10])</td>
 <td>Plot a pseudosection of the given column.</td>
 </tr>
-<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
+<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>()</td>
 <td>Setup a logger</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset,&nbsp;filter[,&nbsp;inplace])</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset,&nbsp;filter[,&nbsp;inplace])</td>
 <td>Apply a filter to subset of the data</td>
 </tr>
-<tr class="row-odd"><td><a class="reference internal" href="#reda.containers.TDIP.TDIP.to_cr" title="reda.containers.TDIP.TDIP.to_cr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code></a>()</td>
+<tr class="row-even"><td><a class="reference internal" href="#reda.containers.TDIP.TDIP.to_cr" title="reda.containers.TDIP.TDIP.to_cr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code></a>()</td>
 <td>Convert container to a complex resistivity container, using the CPA-conversion.</td>
 </tr>
-<tr class="row-even"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>()</td>
+<tr class="row-odd"><td><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>()</td>
 <td>Return of copy of the data inside a TDIP container</td>
 </tr>
 </tbody>

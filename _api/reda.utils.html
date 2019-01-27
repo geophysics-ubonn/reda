@@ -159,7 +159,7 @@ and Kemna, 2017, Biogeosciences, for more information:</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">Data container</p>
 </dd>
 <dt><strong>correction_file</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
@@ -241,7 +241,7 @@ Weigand and Kemna, 2017, Biogeosciences</p>
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/api/generated/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0rc1+72.gf971b110)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
+<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+12.g2b16e2e6)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
 <dd><p class="first last">measured data</p>
 </dd>
 <dt><strong>true_conductivity</strong> <span class="classifier-delimiter">:</span> <span class="classifier">float</span></dt>
@@ -512,6 +512,12 @@ down below for more information in the required content.</p>
 <span id="reda-utils-helper-functions-module"></span><h2>reda.utils.helper_functions module<a class="headerlink" href="#module-reda.utils.helper_functions" title="Permalink to this headline">¶</a></h2>
 <p>Useful helper functions.</p>
 <dl class="function">
+<dt id="reda.utils.helper_functions.has_multiple_timesteps">
+<code class="descclassname">reda.utils.helper_functions.</code><code class="descname">has_multiple_timesteps</code><span class="sig-paren">(</span><em>data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#has_multiple_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.has_multiple_timesteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if <cite>data</cite> container has multiple timesteps.</p>
+</dd></dl>
+
+<dl class="function">
 <dt id="reda.utils.helper_functions.opt_import">
 <code class="descclassname">reda.utils.helper_functions.</code><code class="descname">opt_import</code><span class="sig-paren">(</span><em>module</em>, <em>requiredFor='use the full functionality'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#opt_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.opt_import" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import and return module only if it exists.
@@ -551,6 +557,12 @@ avoid repeated try/except statements.</p>
 <dt id="reda.utils.helper_functions.search">
 <code class="descclassname">reda.utils.helper_functions.</code><code class="descname">search</code><span class="sig-paren">(</span><em>what</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.search" title="Permalink to this definition">¶</a></dt>
 <dd><p>Utility function to search docstrings for string <cite>what</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.helper_functions.split_timesteps">
+<code class="descclassname">reda.utils.helper_functions.</code><code class="descname">split_timesteps</code><span class="sig-paren">(</span><em>data</em>, <em>consistent_abmn=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#split_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.split_timesteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split data into multiple timesteps.</p>
 </dd></dl>
 
 <dl class="function">

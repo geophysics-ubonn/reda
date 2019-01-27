@@ -187,20 +187,17 @@
         <span class="n">index</span><span class="o">=</span><span class="nb">str</span><span class="p">,</span>
         <span class="n">columns</span><span class="o">=</span><span class="p">{</span>
             <span class="s1">&#39;rhoa&#39;</span><span class="p">:</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;k&#39;</span><span class="p">:</span> <span class="s1">&#39;K&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;u&#39;</span><span class="p">:</span> <span class="s1">&#39;U&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;i&#39;</span><span class="p">:</span> <span class="s1">&#39;I&#39;</span>
+            <span class="c1"># &#39;k&#39;: &#39;k&#39;,</span>
+            <span class="c1"># &#39;u&#39;: &#39;U&#39;,</span>
+            <span class="c1"># &#39;i&#39;: &#39;I&#39;</span>
         <span class="p">}</span>
     <span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="ow">and</span> \
-       <span class="p">(</span><span class="s1">&#39;rho_a&#39;</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;K&#39;</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
-        <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+       <span class="p">(</span><span class="s1">&#39;rho_a&#39;</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;k&#39;</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
         <span class="nb">print</span><span class="p">(</span>
             <span class="s2">&quot;Calculating resistance from apparent resistivity and &quot;</span>
             <span class="s2">&quot;geometric factors. (R = rhoa_/K)&quot;</span><span class="p">)</span>
-
-    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">):</span>
-        <span class="n">data_reda</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_reda</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="n">elecs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">elecs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">elecs_ix</span><span class="p">)</span>
     <span class="c1"># Ensure uppercase labels (X, Y, Z) in electrode positions</span>
@@ -211,6 +208,9 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;renumbering electrode numbers&#39;</span><span class="p">)</span>
         <span class="n">data_reda</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">reciprocals</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">data_reda</span><span class="p">[</span>
             <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span>
+
+    <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">):</span>
+        <span class="n">data_reda</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_reda</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
 
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">((</span><span class="n">_string_</span><span class="p">))</span>
