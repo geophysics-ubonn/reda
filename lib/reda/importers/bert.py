@@ -73,9 +73,9 @@ def import_ohm(filename, verbose=False, reciprocals=False):
         index=str,
         columns={
             'rhoa': 'rho_a',
-            'k': 'k',
-            'u': 'U',
-            'i': 'I'
+            # 'k': 'k',
+            # 'u': 'U',
+            # 'i': 'I'
         }
     )
     if ('r' not in data_reda.keys()) and \
@@ -84,9 +84,6 @@ def import_ohm(filename, verbose=False, reciprocals=False):
         print(
             "Calculating resistance from apparent resistivity and "
             "geometric factors. (R = rhoa_/K)")
-
-    for col in ('a', 'b', 'm', 'n'):
-        data_reda[col] = data_reda[col].astype(int)
 
     elecs = pd.DataFrame(elecs, columns=elecs_ix)
     # Ensure uppercase labels (X, Y, Z) in electrode positions
@@ -97,6 +94,9 @@ def import_ohm(filename, verbose=False, reciprocals=False):
         print('renumbering electrode numbers')
         data_reda[['a', 'b', 'm', 'n']] = reciprocals + 1 - data_reda[
             ['a', 'b', 'm', 'n']]
+
+    for col in ('a', 'b', 'm', 'n'):
+        data_reda[col] = data_reda[col].astype(int)
 
     if verbose:
         print((_string_))

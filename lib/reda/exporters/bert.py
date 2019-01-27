@@ -1,10 +1,22 @@
 # import numpy as np
-
+from reda.utils import has_multiple_timesteps
 
 def export_bert(data, electrodes, filename):
-    """Save DataFrame to the unified data format used by BERT and pyGIMLi."""
-    # TODO: Document parameters, make work for multiple timesteps
+    """Export to unified data format used in pyGIMLi & BERT.
 
+    Parameters
+    ----------
+    data : :py:class:`pandas.DataFrame`
+        DataFrame with at least a, b, m, n and r.
+    electrodes : :py:class:`pandas.DataFrame`
+        DataFrame with electrode positions.
+    filename : str
+        String of the output filename.
+    """
+    # Check for multiple timesteps
+    if has_multiple_timesteps(data):
+        print("error")
+        return
     f = open(filename, 'w')
     f.write("%d\n" % len(electrodes))
     f.write("# ")

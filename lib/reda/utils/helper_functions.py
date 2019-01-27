@@ -86,3 +86,11 @@ def has_multiple_timesteps(data):
         if len(np.unique(data["timestep"])) > 1:
             return True
     return False
+
+def split_timesteps(data, consistent_abmn=False):
+    """Split data into multiple timesteps."""
+    if has_multiple_timesteps(data):
+        grouped = data.groupby("timestep")
+        return [group[1] for group in grouped]
+    else:
+        return data
