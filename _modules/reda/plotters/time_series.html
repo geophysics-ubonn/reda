@@ -165,7 +165,7 @@
     <span class="p">)</span>
     <span class="k">if</span> <span class="n">rolling</span><span class="p">:</span>
         <span class="c1"># rolling mean</span>
-        <span class="n">rolling_m</span> <span class="o">=</span> <span class="n">subquery</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+        <span class="n">rolling_m</span> <span class="o">=</span> <span class="n">subquery</span><span class="o">.</span><span class="n">rolling</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">center</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">min_periods</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
 
         <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
             <span class="n">rolling_m</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>

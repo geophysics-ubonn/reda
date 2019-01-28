@@ -86,7 +86,7 @@ seit.remove_frequencies(1e-3, 300)
 seit.query('rpha < 10')
 seit.query('rpha > -40')
 seit.query('rho_a > 15 and rho_a < 35')
-seit.query('K < 400')
+seit.query('k < 400')
 
 ###############################################################################
 # Plotting histograms

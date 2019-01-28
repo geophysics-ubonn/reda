@@ -113,7 +113,7 @@
             
   <h1>Source code for reda.exporters.bert</h1><div class="highlight"><pre>
 <span></span><span class="c1"># import numpy as np</span>
-<span class="kn">from</span> <span class="nn">reda.utils</span> <span class="k">import</span> <span class="n">has_multiple_timesteps</span>
+<span class="kn">from</span> <span class="nn">reda.utils</span> <span class="k">import</span> <span class="n">has_multiple_timesteps</span><span class="p">,</span> <span class="n">split_timesteps</span>
 
 <div class="viewcode-block" id="export_bert"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.ERT.export_bert">[docs]</a><span class="k">def</span> <span class="nf">export_bert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Export to unified data format used in pyGIMLi &amp; BERT.</span>
@@ -129,8 +129,16 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># Check for multiple timesteps</span>
     <span class="k">if</span> <span class="n">has_multiple_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;error&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">timestep</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">split_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">)):</span>
+            <span class="n">export_bert</span><span class="p">(</span><span class="n">timestep</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span>
+                        <span class="n">filename</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="s2">&quot;_</span><span class="si">%.3d</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">i</span><span class="p">))</span>
+
+        <span class="c1"># TODO: Make ABMN consistent</span>
+        <span class="c1"># index_full = ert.data.groupby(list(&quot;abmn&quot;)).groups.keys()</span>
+        <span class="c1"># g = ert.data.groupby(&#39;timestep&#39;)</span>
+        <span class="c1"># q = ert.data.pivot_table(values=&#39;r&#39;, index=list(&quot;abmn&quot;), columns=&quot;timestep&quot;, dropna=True)</span>
+        <span class="c1"># ert.data.reset_index(list(&quot;abmn&quot;))</span>
+
     <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="nb">len</span><span class="p">(</span><span class="n">electrodes</span><span class="p">))</span>
     <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;# &quot;</span><span class="p">)</span>

@@ -122,18 +122,21 @@
 <span class="kn">import</span> <span class="nn">reda</span>
 
 
-<div class="viewcode-block" id="apply_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K">[docs]</a><span class="k">def</span> <span class="nf">apply_K</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">K</span><span class="p">):</span>
+<div class="viewcode-block" id="apply_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K">[docs]</a><span class="k">def</span> <span class="nf">apply_K</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply the geometric factors to the dataset and compute (apparent)</span>
 <span class="sd">    resistivities/conductivities</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="s1">&#39;K&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">K</span>
+    <span class="k">if</span> <span class="s1">&#39;k&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
 
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sigma_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;rho_a&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="s1">&#39;sigma_a&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;sigma_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="s1">&#39;Zt&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a_complex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;K&#39;</span><span class="p">]</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a_complex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
     <span class="k">return</span> <span class="n">df</span></div>
 
 

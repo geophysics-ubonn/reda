@@ -145,7 +145,7 @@
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># check for required columns</span>
     <span class="k">if</span> <span class="s1">&#39;k&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span> <span class="ow">or</span> <span class="s1">&#39;r&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
-        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;K and r columns required!&#39;</span><span class="p">)</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;k and r columns required!&#39;</span><span class="p">)</span>
 
     <span class="n">indices_negative</span> <span class="o">=</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">indices_negative</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
