@@ -108,6 +108,13 @@ class Importers(object):
             self.data.drop(['id', 'norrec'], axis=1, inplace=True)
         self.data = assign_norrec_to_df(self.data)
 
+        # Put A, B, M, N in the front and ensure integers
+        for col in tuple("nmba"):
+            cols = list(self.data)
+            cols.insert(0, cols.pop(cols.index(col)))
+            self.data = self.data.ix[:, cols]
+            self.data[col] = self.data[col].astype(int)
+
     def _describe_data(self, df=None):
         if df is None:
             df_to_use = self.data
@@ -397,7 +404,6 @@ class ERT(LoggingClass, Importers, Exporters):
         >>> ert.compute_reciprocal_errors()
         generating ids
         assigning ids
-        Could not find reciprocals for 0 configurations
         >>> ert.data["error"].mean() == 0.1
         True
         """
@@ -412,7 +418,8 @@ class ERT(LoggingClass, Importers, Exporters):
         # Get configurations with reciprocals
         data = data.groupby("id").filter(lambda b: not b.shape[0] == 1)
         n = self.data.shape[0] - data.shape[0]
-        print("Could not find reciprocals for %d configurations" % n)
+        if n > 0:
+            print("Could not find reciprocals for %d configurations" % n)
 
         # Calc reciprocal error
         grouped = data.groupby("id")

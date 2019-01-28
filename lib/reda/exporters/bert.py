@@ -1,5 +1,5 @@
 # import numpy as np
-from reda.utils import has_multiple_timesteps
+from reda.utils import has_multiple_timesteps, split_timesteps
 
 def export_bert(data, electrodes, filename):
     """Export to unified data format used in pyGIMLi & BERT.
@@ -15,8 +15,16 @@ def export_bert(data, electrodes, filename):
     """
     # Check for multiple timesteps
     if has_multiple_timesteps(data):
-        print("error")
-        return
+        for i, timestep in enumerate(split_timesteps(data)):
+            export_bert(timestep, electrodes,
+                        filename.replace(".", "_%.3d." % i))
+
+        # TODO: Make ABMN consistent
+        # index_full = ert.data.groupby(list("abmn")).groups.keys()
+        # g = ert.data.groupby('timestep')
+        # q = ert.data.pivot_table(values='r', index=list("abmn"), columns="timestep", dropna=True)
+        # ert.data.reset_index(list("abmn"))
+
     f = open(filename, 'w')
     f.write("%d\n" % len(electrodes))
     f.write("# ")

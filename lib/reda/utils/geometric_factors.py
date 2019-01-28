@@ -8,18 +8,21 @@ import numpy as np
 import reda
 
 
-def apply_K(df, K):
+def apply_K(df, k):
     """Apply the geometric factors to the dataset and compute (apparent)
     resistivities/conductivities
     """
-    if 'K' not in df.columns:
-        df['K'] = K
+    if 'k' not in df.columns:
+        df['k'] = k
 
-    df['rho_a'] = df['r'] * df['K']
-    df['sigma_a'] = 1.0 / df['rho_a']
+    if 'rho_a' not in df.columns:
+        df['rho_a'] = df['r'] * df['k']
+
+    if 'sigma_a' not in df.columns:
+        df['sigma_a'] = 1.0 / df['rho_a']
 
     if 'Zt' in df.columns:
-        df['rho_a_complex'] = df['Zt'] * df['K']
+        df['rho_a_complex'] = df['Zt'] * df['k']
     return df
 
 

@@ -95,9 +95,6 @@ def import_ohm(filename, verbose=False, reciprocals=False):
         data_reda[['a', 'b', 'm', 'n']] = reciprocals + 1 - data_reda[
             ['a', 'b', 'm', 'n']]
 
-    for col in ('a', 'b', 'm', 'n'):
-        data_reda[col] = data_reda[col].astype(int)
-
     if verbose:
         print((_string_))
 

@@ -51,7 +51,7 @@ def plot_quadpole_evolution(dataobj, quadpole, cols, threshold=5, rolling=False,
     )
     if rolling:
         # rolling mean
-        rolling_m = subquery.rolling(13, center=True, min_periods=1).median()
+        rolling_m = subquery.rolling(3, center=True, min_periods=1).median()
 
         ax.plot(
             rolling_m['timestep'].values,
