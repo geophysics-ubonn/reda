@@ -31,7 +31,7 @@ def fix_sign_with_K(dataframe):
     """
     # check for required columns
     if 'k' not in dataframe or 'r' not in dataframe:
-        raise Exception('K and r columns required!')
+        raise Exception('k and r columns required!')
 
     indices_negative = (dataframe['k'] < 0) & (dataframe['r'] < 0)
     if np.where(indices_negative)[0].size == 0:
