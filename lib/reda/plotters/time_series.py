@@ -6,8 +6,8 @@ import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
 
 
-def plot_quadpole_evolution(dataobj, quadpole, cols, threshold=5, rolling=False,
-                            ax=None):
+def plot_quadpole_evolution(dataobj, quadpole, cols, threshold=5,
+                            rolling=False, ax=None):
     """Visualize time-lapse evolution of a single quadropole.
 
     Parameters
@@ -40,7 +40,7 @@ def plot_quadpole_evolution(dataobj, quadpole, cols, threshold=5, rolling=False,
     if ax is not None:
         fig = ax.get_figure()
     else:
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 6 / 2.54))
+        fig, ax = plt.subplots(1, 1, figsize=(20 / 2.54, 7 / 2.54))
 
     ax.plot(
         subquery['timestep'],
