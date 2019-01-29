@@ -99,8 +99,9 @@ class Importers(object):
 
     def _add_to_container(self, df):
         if self.data is not None:
-            self.data = pd.concat((self.data, df), ignore_index=True,
-                                  sort=True)
+            self.data = pd.concat(
+                (self.data, df), ignore_index=True, sort=True
+            )
         else:
             self.data = df
         # recompute normal/reciprocal pairs
@@ -108,12 +109,22 @@ class Importers(object):
             self.data.drop(['id', 'norrec'], axis=1, inplace=True)
         self.data = assign_norrec_to_df(self.data)
 
-        # Put A, B, M, N in the front and ensure integers
+        # Put a, b, m, n in the front and ensure integers
         for col in tuple("nmba"):
             cols = list(self.data)
             cols.insert(0, cols.pop(cols.index(col)))
             self.data = self.data.ix[:, cols]
             self.data[col] = self.data[col].astype(int)
+
+        if 'timestep' in self.data:
+            # make sure the timestep column is in the fifth position
+            col_order = ['a', 'b', 'm', 'n', 'timestep']
+            self.data = self.data.reindex(columns=(
+                col_order +
+                list(
+                    [key for key in self.data.columns if key not in col_order]
+                )
+            ))
 
     def _describe_data(self, df=None):
         if df is None:
