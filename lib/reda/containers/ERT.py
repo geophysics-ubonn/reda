@@ -268,10 +268,14 @@ class LoggingClass(object):
                         record.filter_query) + '({0} data points)'.format(
                             record.df_size_after - record.df_size_before))
                 if record.filter_action == 'filter':
-                    print('A filter was applied with query "{0}".'.format(
-                        record.filter_query) +
-                          ' In total {0} records were removed'.format(
-                              -record.df_size_after + record.df_size_before))
+                    print(
+                        'A filter was applied with query "{0}".'.format(
+                            record.filter_query
+                        ) +
+                        ' In total {0} records were removed'.format(
+                            -record.df_size_after + record.df_size_before
+                        )
+                    )
         print('--- Data Journal End ---')
         print('')
 
@@ -431,9 +435,11 @@ class ERT(LoggingClass, Importers, Exporters):
 
         error = grouped.apply(_error)
         error.name = "error"
-        self.data = pd.merge(self.data,
-                             error.to_frame().reset_index(), how='outer',
-                             on='id')
+        self.data = pd.merge(
+            self.data,
+            error.to_frame().reset_index(), how='outer',
+            on='id'
+        )
 
     def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
         """Plot a pseudosection of the given column. Note that this function
