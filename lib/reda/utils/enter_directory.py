@@ -7,7 +7,7 @@ class EnterDirectory(object):
     """
     def __init__(self, directory):
         self.pwd = os.getcwd()
-        self.directory = os.path.abspath(directory)
+        self.directory = os.path.abspath(str(directory))
 
     def __enter__(self):
         os.chdir(self.directory)
