@@ -81,7 +81,7 @@ Optional columns can be named arbitrarily, but the following are usually used:
 ========= ======================================
 column    description
 ========= ======================================
-K         Geometric factor [m]
+k         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
 
@@ -108,7 +108,7 @@ Optional columns can be named arbitrarily, but the following are usually used:
 ========= ======================================
 column    description
 ========= ======================================
-K         Geometric factor [m]
+k         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
 
@@ -138,7 +138,7 @@ Optional columns can be named arbitrarily, but the following are usually used:
 ========= ======================================
 column    description
 ========= ======================================
-K         Geometric factor [m]
+k         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
 
@@ -163,7 +163,7 @@ Optional columns can be named arbitrarily, but the following are usually used:
 ========= ======================================
 column    description
 ========= ======================================
-K         Geometric factor [m]
+k         Geometric factor [m]
 rhoa      Apparent resistivity, k * r, [Ohm m]
 ========= ======================================
 
