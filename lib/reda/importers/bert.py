@@ -83,7 +83,7 @@ def import_ohm(filename, verbose=False, reciprocals=False):
         data_reda['r'] = data_reda['rho_a'] / data_reda['k']
         print(
             "Calculating resistance from apparent resistivity and "
-            "geometric factors. (R = rhoa_/K)")
+            "geometric factors. (r = rhoa_ / k)")
 
     elecs = pd.DataFrame(elecs, columns=elecs_ix)
     # Ensure uppercase labels (X, Y, Z) in electrode positions
