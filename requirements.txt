@@ -3,3 +3,4 @@ matplotlib>=2
 pandas
 scipy
 pytest==3.6.4
+twine
