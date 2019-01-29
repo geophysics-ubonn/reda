@@ -17,4 +17,12 @@ reda.testing.containers module
     :undoc-members:
     :show-inheritance:
 
+reda.testing.test\_container\_ert module
+----------------------------------------
+
+.. automodule:: reda.testing.test_container_ert
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 
