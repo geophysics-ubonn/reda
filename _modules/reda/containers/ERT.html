@@ -382,10 +382,14 @@
                         <span class="n">record</span><span class="o">.</span><span class="n">filter_query</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;(</span><span class="si">{0}</span><span class="s1"> data points)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                             <span class="n">record</span><span class="o">.</span><span class="n">df_size_after</span> <span class="o">-</span> <span class="n">record</span><span class="o">.</span><span class="n">df_size_before</span><span class="p">))</span>
                 <span class="k">if</span> <span class="n">record</span><span class="o">.</span><span class="n">filter_action</span> <span class="o">==</span> <span class="s1">&#39;filter&#39;</span><span class="p">:</span>
-                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;A filter was applied with query &quot;</span><span class="si">{0}</span><span class="s1">&quot;.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                        <span class="n">record</span><span class="o">.</span><span class="n">filter_query</span><span class="p">)</span> <span class="o">+</span>
-                          <span class="s1">&#39; In total </span><span class="si">{0}</span><span class="s1"> records were removed&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
-                              <span class="o">-</span><span class="n">record</span><span class="o">.</span><span class="n">df_size_after</span> <span class="o">+</span> <span class="n">record</span><span class="o">.</span><span class="n">df_size_before</span><span class="p">))</span>
+                    <span class="nb">print</span><span class="p">(</span>
+                        <span class="s1">&#39;A filter was applied with query &quot;</span><span class="si">{0}</span><span class="s1">&quot;.&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="n">record</span><span class="o">.</span><span class="n">filter_query</span>
+                        <span class="p">)</span> <span class="o">+</span>
+                        <span class="s1">&#39; In total </span><span class="si">{0}</span><span class="s1"> records were removed&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                            <span class="o">-</span><span class="n">record</span><span class="o">.</span><span class="n">df_size_after</span> <span class="o">+</span> <span class="n">record</span><span class="o">.</span><span class="n">df_size_before</span>
+                        <span class="p">)</span>
+                    <span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;--- Data Journal End ---&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span></div></div>
 
@@ -545,9 +549,11 @@
 
         <span class="n">error</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_error</span><span class="p">)</span>
         <span class="n">error</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
-                             <span class="n">error</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span>
-                             <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span>
+            <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span>
+        <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ERT.pseudosection"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.pseudosection">[docs]</a>    <span class="k">def</span> <span class="nf">pseudosection</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Plot a pseudosection of the given column. Note that this function</span>
