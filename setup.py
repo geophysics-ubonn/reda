@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 # to create a windows installer
 
 version_short = '0.1'
-version_long = '0.1.2'
+version_long = '0.1.3'
 
 if __name__ == '__main__':
     setup(
@@ -16,7 +16,7 @@ if __name__ == '__main__':
         long_description=open('README.md', 'r').read(),
         long_description_content_type="text/markdown",
         author='Maximilian Weigand and Florian M. Wagner',
-        author_email='mweigand@geo.uni-bonn.de and wagner@geo.uni-bonn.de',
+        author_email='mweigand@geo.uni-bonn.de, wagner@geo.uni-bonn.de',
         license='MIT',
         url='https://github.com/geophysics-ubonn/reda',
         packages=find_packages("lib"),
