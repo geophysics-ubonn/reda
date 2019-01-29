@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 # to create a windows installer
 
 version_short = '0.1'
-version_long = '0.1.1'
+version_long = '0.1.2'
 
 if __name__ == '__main__':
     setup(
