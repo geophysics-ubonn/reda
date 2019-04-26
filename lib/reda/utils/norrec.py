@@ -100,6 +100,10 @@ def assign_norrec_to_df(df):
         The data with two new columns: "id" and "norrec"
 
     """
+    if df.shape[0] == 0:
+        # empty dataframe, just return a copy
+        return df.copy()
+
     c = df[['a', 'b', 'm', 'n']].values.copy()
     # unique injections
     cu = np.unique(c, axis=0)
