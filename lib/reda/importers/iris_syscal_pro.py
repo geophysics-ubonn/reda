@@ -206,6 +206,14 @@ def import_bin(filename, **kwargs):
             print('WARNING: Measurement numbers do not start with 0 ' +
                   '(did you download ALL data?)')
 
+        # check that all measurement numbers increase by one
+        if not np.all(np.diff(data_raw['measurement_num'])) == 1:
+            print(
+                'WARNING '
+                'Measurement numbers are not consecutive. '
+                'Perhaps the first measurement belongs to another measurement?'
+            )
+
         # now check if there is a jump in measurement numbers somewhere
         # ignore first entry as this will always be nan
         diff = data_raw['measurement_num'].diff()[1:]
@@ -214,6 +222,7 @@ def import_bin(filename, **kwargs):
             print('WARNING: Jump detected at index: {}'.format(jump))
             print('Removing all subsequent data points')
             data_raw = data_raw.iloc[0:jump[1], :]
+
 
     if data_raw.shape[0] == 0:
         # no data present, return a bare DataFrame
