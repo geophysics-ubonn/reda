@@ -502,3 +502,22 @@ class ERT(LoggingClass, Importers, Exporters):
     def has_multiple_timesteps(self):
         """Return True if container has multiple timesteps."""
         return has_multiple_timesteps(self.data)
+
+    def delete_measurements(self, row_or_rows):
+        """Delete one or more measurements by index of the DataFrame.
+
+        Resets the DataFrame index.
+
+        Parameters
+        ----------
+        row_or_rows : int or list of ints
+            Row numbers (starting with zero) of the data DataFrame (ert.data)
+            to delete
+
+        Returns
+        -------
+
+        None
+        """
+        self.data.drop(self.data.index[row_or_rows], inplace=True)
+        self.data = self.data.reset_index()
