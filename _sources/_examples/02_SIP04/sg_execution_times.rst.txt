@@ -1,0 +1,10 @@
+
+:orphan:
+
+.. _sphx_glr__examples_02_SIP04_sg_execution_times:
+
+Computation times
+=================
+**00:01.025** total execution time for **_examples_02_SIP04** files:
+
+- **00:01.025**: :ref:`sphx_glr__examples_02_SIP04_plot_sip04.py` (``plot_sip04.py``)

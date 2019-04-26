@@ -12,8 +12,7 @@ Importing Syscal IP data
 
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda
 
@@ -26,8 +25,7 @@ Importing Syscal IP data
 a hack to prevent large loading times...
 
 
-
-.. code-block:: python
+.. code-block:: default
 
 
     # import os
@@ -53,8 +51,7 @@ a hack to prevent large loading times...
 normal loading of tdip data
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ip = reda.TDIP()
     # import pprofile
@@ -155,7 +152,7 @@ normal loading of tdip data
 
 
 
-.. code-block:: python
+.. code-block:: default
 
     import reda.utils.geometric_factors as geomK
     K = geomK.compute_K_analytical(ip.data, spacing=0.25)
@@ -174,8 +171,7 @@ plot a decay curve by specifying the index
 note that no file will be saved to disk if filename parameter is not provided
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ip.plot_decay_curve(filename='decay_curve.png',
                         index_nor=0, index_rec=1978, return_fig=True)
@@ -193,8 +189,7 @@ you can also specify only one index
 this will only return a figure object, but will not save to file:
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ip.plot_decay_curve(filename='decay_curve.png',
                         index_nor=0, return_fig=True)
@@ -211,8 +206,7 @@ this will only return a figure object, but will not save to file:
 it does not matter if you choose normal or reciprocal
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ip.plot_decay_curve(index_rec=0, return_fig=True)
 
@@ -228,8 +222,7 @@ it does not matter if you choose normal or reciprocal
 plot a decay curve by specifying the index
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ip.plot_decay_curve(nr_id=170, return_fig=True)
 
@@ -247,8 +240,7 @@ a  b  m  n
 1978  5  4  2  1
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ip.plot_decay_curve(abmn=(1, 2, 5, 4), return_fig=True)
 
@@ -264,8 +256,7 @@ a  b  m  n
 reciprocal is also ok
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ip.plot_decay_curve(abmn=(4, 5, 2, 1), return_fig=True)
 

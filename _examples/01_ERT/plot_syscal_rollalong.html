@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Importing Syscal ERT data from roll-a-long scheme &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -93,8 +91,6 @@
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -116,23 +112,23 @@
           <div class="body" role="main">
             
   <div class="sphx-glr-download-link-note admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-01-ert-plot-syscal-rollalong-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-01-ert-plot-syscal-rollalong-py"><span class="std std-ref">here</span></a> to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="importing-syscal-ert-data-from-roll-a-long-scheme">
 <span id="sphx-glr-examples-01-ert-plot-syscal-rollalong-py"></span><h1>Importing Syscal ERT data from roll-a-long scheme<a class="headerlink" href="#importing-syscal-ert-data-from-roll-a-long-scheme" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
 </pre></div>
 </div>
 <p>create an ERT container and import first dataset</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ert_p1</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ert_p1</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
 <span class="n">ert_p1</span><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span>
     <span class="s1">&#39;data_syscal_rollalong/profile_1.bin&#39;</span>
 <span class="p">)</span>
 <span class="n">ert_p1</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 <span class="n">ert_p1</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;profile1_pseudosection.pdf&#39;</span><span class="p">,</span>
-    <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span>
+    <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -144,7 +140,7 @@ found duplicate coordinates!
 </pre></div>
 </div>
 <p>create an ERT container and import second dataset</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ert_p2</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ert_p2</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
 <span class="n">ert_p2</span><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span>
     <span class="s1">&#39;data_syscal_rollalong/profile_2.bin&#39;</span><span class="p">,</span>
 <span class="p">)</span>
@@ -152,7 +148,7 @@ found duplicate coordinates!
 <span class="n">ert_p2</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;profile2_pseudosection.pdf&#39;</span><span class="p">,</span>
     <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
-    <span class="n">log10</span><span class="o">=</span><span class="bp">True</span>
+    <span class="n">log10</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 </pre></div>
 </div>
@@ -165,7 +161,7 @@ found duplicate coordinates!
 </div>
 <p>create an ERT container and jointly import the first and second dataset,
 thereby shifting electrode notations of the second dataset by 24 electrodes</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
 
 <span class="c1"># first profile</span>
 <span class="n">ert</span><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span>
@@ -184,16 +180,16 @@ thereby shifting electrode notations of the second dataset by 24 electrodes</p>
 <span class="n">ert</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
 
 <span class="n">ert</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosection_both_profiles.pdf&#39;</span><span class="p">,</span>
-                  <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+                  <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
 <span class="n">ert</span><span class="o">.</span><span class="n">histogram</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;hist_both_profiles.pdf&#39;</span><span class="p">,</span>
               <span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
 <ul class="sphx-glr-horizontal">
-<li><img alt="../../_images/sphx_glr_plot_syscal_rollalong_003.png" class="sphx-glr-multi-img first" src="../../_images/sphx_glr_plot_syscal_rollalong_003.png" />
+<li><img alt="../../_images/sphx_glr_plot_syscal_rollalong_003.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_syscal_rollalong_003.png" />
 </li>
-<li><img alt="../../_images/sphx_glr_plot_syscal_rollalong_004.png" class="sphx-glr-multi-img first" src="../../_images/sphx_glr_plot_syscal_rollalong_004.png" />
+<li><img alt="../../_images/sphx_glr_plot_syscal_rollalong_004.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_syscal_rollalong_004.png" />
 </li>
 </ul>
 <p class="sphx-glr-script-out">Out:</p>
@@ -209,9 +205,11 @@ Generating histogram plot for key: Iab
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-rollalong-py">
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" download="" href="../../_downloads/3d0c3e64681de829cfb322390efd5d3d/plot_syscal_rollalong.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_rollalong.py</span></code></a></div>
+<p><a class="reference download internal" download="" href="../../_downloads/3d0c3e64681de829cfb322390efd5d3d/plot_syscal_rollalong.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_rollalong.py</span></code></a></p>
+</div>
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" download="" href="../../_downloads/d3daa9c23f3966862ee5eb2af11f7f63/plot_syscal_rollalong.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_rollalong.ipynb</span></code></a></div>
+<p><a class="reference download internal" download="" href="../../_downloads/d3daa9c23f3966862ee5eb2af11f7f63/plot_syscal_rollalong.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_rollalong.ipynb</span></code></a></p>
+</div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
@@ -227,7 +225,7 @@ Generating histogram plot for key: Iab
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

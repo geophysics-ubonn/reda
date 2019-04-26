@@ -1,5 +1,9 @@
 :orphan:
 
+
+
+.. _sphx_glr__examples:
+
 .. _examples:
 
 Examples
@@ -9,6 +13,10 @@ Examples
 .. raw:: html
 
     <div style='clear:both'></div>
+
+
+
+.. _sphx_glr__examples_01_ERT:
 
 Usage of the ERT container
 --------------------------
@@ -78,6 +86,10 @@ Usage of the ERT container
 
     <div style='clear:both'></div>
 
+
+
+.. _sphx_glr__examples_02_SIP04:
+
 Importing SIP04 data
 --------------------
 
@@ -105,6 +117,10 @@ Importing SIP04 data
 .. raw:: html
 
     <div style='clear:both'></div>
+
+
+
+.. _sphx_glr__examples_03_sEIT:
 
 Importing spectral impedance data (sEIT)
 ----------------------------------------
@@ -173,6 +189,10 @@ Importing spectral impedance data (sEIT)
 .. raw:: html
 
     <div style='clear:both'></div>
+
+
+
+.. _sphx_glr__examples_04_configurations:
 
 Creating measurement configurations
 -----------------------------------

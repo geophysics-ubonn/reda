@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Importing FZJ EIT40/EIT160 data &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -93,8 +91,6 @@
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -116,8 +112,8 @@
           <div class="body" role="main">
             
   <div class="sphx-glr-download-link-note admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-eit-fzj-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-eit-fzj-py"><span class="std std-ref">here</span></a> to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="importing-fzj-eit40-eit160-data">
 <span id="sphx-glr-examples-03-seit-plot-eit-fzj-py"></span><h1>Importing FZJ EIT40/EIT160 data<a class="headerlink" href="#importing-fzj-eit40-eit160-data" title="Permalink to this headline">¶</a></h1>
@@ -144,11 +140,11 @@ configuration set. This set can be automatically generated from the measurement
 data by providing a special function as the config-parameter in the import
 function. This is explained below.</p>
 <p>Import reda</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
 </pre></div>
 </div>
 <p>Initialize an sEIT container</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
 
 <span class="c1"># import the data</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
@@ -166,7 +162,7 @@ Summary:
 </div>
 <p>an alternative would be to automatically create measurement configurations
 from the current injection dipoles:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.importers.eit_fzj</span> <span class="kn">import</span> <a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">import</span> <a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
 
 <span class="c1"># initialize an sEIT container</span>
 <span class="n">seit_not_used</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
@@ -186,8 +182,8 @@ Summary:
 </pre></div>
 </div>
 <p>Compute geometric factors</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="kn">as</span> <span class="nn">redaK</span>
-<span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="kn">as</span> <span class="nn">redafixK</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">redaK</span>
+<span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">redafixK</span>
 
 <span class="n">K</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">redaK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">redaK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
@@ -196,7 +192,7 @@ Summary:
 </div>
 <p>compute normal and reciprocal pairs
 note that this is usually done on import once.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="kn">as</span> <span class="nn">norrec</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="k">as</span> <span class="nn">norrec</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.norrec.assign_norrec_to_df" title="View documentation for reda.utils.norrec.assign_norrec_to_df"><span class="n">norrec</span><span class="o">.</span><span class="n">assign_norrec_to_df</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -206,13 +202,13 @@ assigning ids
 </pre></div>
 </div>
 <p>quadrupoles can be directly accessed using a pandas grouper</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">print</span><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
 <span class="n">quadpole_data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
-<span class="k">print</span><span class="p">(</span><span class="n">quadpole_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">quadpole_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x2ae51345f320&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x2ac828f956d8&gt;
         a   b   m   n     frequency         r        rpha
 749    10  29  15  34      0.100000  7.356375   -5.205543
 2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -228,7 +224,7 @@ assigning ids
 </pre></div>
 </div>
 <p>filter data</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span><span class="o">.</span><span class="n">remove_frequencies</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span><span class="o">.</span><span class="n">remove_frequencies</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &lt; 10&#39;</span><span class="p">)</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &gt; -40&#39;</span><span class="p">)</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rho_a &gt; 15 and rho_a &lt; 35&#39;</span><span class="p">)</span>
@@ -242,7 +238,7 @@ assigning ids
 </div>
 <p>Plotting histograms
 Raw data plots (execute before applying the filters):</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
 <span class="c1"># import reda.plotters.histograms as redahist</span>
 
 <span class="c1"># if not os.path.isdir(&#39;hists_raw&#39;):</span>
@@ -269,34 +265,36 @@ Raw data plots (execute before applying the filters):</p>
 </pre></div>
 </div>
 <p>Now export the data to CRTomo-compatible files</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="kn">as</span> <span class="nn">redaex</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">redaex</span>
 <a href="../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory" title="View documentation for reda.exporters.crtomo.write_files_to_directory"><span class="n">redaex</span><span class="o">.</span><span class="n">write_files_to_directory</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;crt_results&#39;</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>Plot pseudosections of all frequencies</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="kn">as</span> <span class="nn">PS</span>
-<span class="kn">import</span> <span class="nn">pylab</span> <span class="kn">as</span> <span class="nn">plt</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="n">g</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
     <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
     <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">20</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
-    <span class="n">sharex</span><span class="o">=</span><span class="bp">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="bp">True</span>
+    <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
 <span class="p">)</span>
 <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
     <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: {} Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
 <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
-<p><strong>Total running time of the script:</strong> ( 1 minutes  6.822 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  8.980 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" download="" href="../../_downloads/332eb6762fd44a5648b0c62b99f8e03f/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></div>
+<p><a class="reference download internal" download="" href="../../_downloads/332eb6762fd44a5648b0c62b99f8e03f/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></p>
+</div>
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" download="" href="../../_downloads/9a64d11fe4d164a415c4fde278b80bc0/plot_eit_fzj.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj.ipynb</span></code></a></div>
+<p><a class="reference download internal" download="" href="../../_downloads/9a64d11fe4d164a415c4fde278b80bc0/plot_eit_fzj.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj.ipynb</span></code></a></p>
+</div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
@@ -312,7 +310,7 @@ Raw data plots (execute before applying the filters):</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

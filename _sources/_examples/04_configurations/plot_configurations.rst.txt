@@ -11,8 +11,7 @@ Various ways to create measurement configurations
 =================================================
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     from reda import ConfigManager
 
@@ -47,8 +46,7 @@ Various ways to create measurement configurations
 export mechanisms:
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda
     with reda.CreateEnterDirectory('exported_configs'):

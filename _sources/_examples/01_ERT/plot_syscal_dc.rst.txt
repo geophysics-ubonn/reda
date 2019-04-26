@@ -12,8 +12,7 @@ Importing Syscal ERT data
 
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda
     ert = reda.ERT()
@@ -27,8 +26,7 @@ Importing Syscal ERT data
 data import:
 
 
-
-.. code-block:: python
+.. code-block:: default
 
 
     # note that you should prefer importing the binary data (the importer can
@@ -65,8 +63,7 @@ data import:
 create some plots in a subdirectory
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     with reda.CreateEnterDirectory('plots'):
         ert.pseudosection(
@@ -104,8 +101,7 @@ create some plots in a subdirectory
 export to various data files
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     with reda.CreateEnterDirectory('data_export'):
         # TODO: seems broken

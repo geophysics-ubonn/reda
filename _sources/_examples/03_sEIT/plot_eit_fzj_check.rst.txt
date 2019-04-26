@@ -39,7 +39,6 @@ reciprocal counterpart: ::
 
 
 
-
 .. image:: /_examples/03_sEIT/images/sphx_glr_plot_eit_fzj_check_001.png
     :class: sphx-glr-single-img
 
@@ -84,7 +83,7 @@ reciprocal counterpart: ::
 |
 
 
-.. code-block:: python
+.. code-block:: default
 
     import reda.utils.eit_fzj_utils as eit_fzj_utils
 

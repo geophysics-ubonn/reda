@@ -15,12 +15,10 @@ Importing Radic SIP256c data
     The SIP256c importer is incredibly slow at the moment. Sorry for that.
 
 
-
 create the data container
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda
     seit = reda.sEIT()
@@ -34,8 +32,7 @@ create the data container
 import the data
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     seit.import_sip256c('data_Radic_256c/dipdip_skip0_nor.res')
     seit.import_sip256c('data_Radic_256c/dipdip_skip0_rec.res', reciprocal=49)
@@ -65,8 +62,7 @@ import the data
 compute K factors (electrode spacing was 3 m)
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.utils.geometric_factors as redaK
     K = redaK.compute_K_analytical(seit.data, spacing=3)
@@ -81,8 +77,7 @@ compute K factors (electrode spacing was 3 m)
 fix signs/pi-shifts caused by negative geometric factors
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.utils.fix_sign_with_K as redaFixK
     redaFixK.fix_sign_with_K(seit.data)
@@ -95,8 +90,7 @@ fix signs/pi-shifts caused by negative geometric factors
 Plot histograms of raw data
 
 
-
-.. code-block:: python
+.. code-block:: default
 
 
     # TODO
@@ -110,8 +104,7 @@ Plot histograms of raw data
 filter the data a bit
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     seit.query('r > 0')
     seit.query('rpha > -50 and rpha < 30')
@@ -125,8 +118,7 @@ filter the data a bit
 group the data into frequencies
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     g = seit.data.groupby('frequency')
 
@@ -139,8 +131,7 @@ group the data into frequencies
 Plot pseudosection for 10 Hz
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.plotters.pseudoplots as PS
     data_10hz = g.get_group(10)
@@ -171,8 +162,7 @@ Plot pseudosection for 10 Hz
 Plot pseudosections of all frequencies
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.plotters.pseudoplots as PS
     import pylab as plt
@@ -206,8 +196,7 @@ plotting of SIP/EIS spectra is still somewhat cumbersome, but will be
 improved in the future
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.eis.plots as eis_plot
     import numpy as np
@@ -239,7 +228,10 @@ improved in the future
 
 
 
-**Total running time of the script:** ( 0 minutes  51.874 seconds)
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** ( 0 minutes  54.756 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

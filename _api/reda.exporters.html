@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>reda.exporters package &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
@@ -95,8 +93,6 @@
     <form class="search" action="../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -129,25 +125,18 @@
 <dt id="reda.exporters.bert.export_bert">
 <code class="descclassname">reda.exporters.bert.</code><code class="descname">export_bert</code><span class="sig-paren">(</span><em>data</em>, <em>electrodes</em>, <em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/bert.html#export_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.exporters.bert.export_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>data</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0+6.gfd1c66c7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
-<dd><p class="first last">DataFrame with at least a, b, m, n and r.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+467.g65466f04)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
 </dd>
-<dt><strong>electrodes</strong> <span class="classifier-delimiter">:</span> <span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.24.0+6.gfd1c66c7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt>
-<dd><p class="first last">DataFrame with electrode positions.</p>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+467.g65466f04)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
 </dd>
-<dt><strong>filename</strong> <span class="classifier-delimiter">:</span> <span class="classifier">str</span></dt>
-<dd><p class="first last">String of the output filename.</p>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -165,34 +154,25 @@
 <dd><p>Write sEIT data ta files. Data of each frequency is written in a
 separate file that conforms to the CRMod/CRTomo standard, and can directly
 be used for inversions using CRTomo.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first docutils">
-<dt><strong>df</strong> <span class="classifier-delimiter">:</span> <span class="classifier">pandas.DataFrame</span></dt>
-<dd><p class="first last">Data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>Data</p>
 </dd>
-<dt><strong>directory</strong> <span class="classifier-delimiter">:</span> <span class="classifier">string</span></dt>
-<dd><p class="first last">Output directory. Will be created if not existant</p>
+<dt><strong>directory</strong><span class="classifier">string</span></dt><dd><p>Output directory. Will be created if not existant</p>
 </dd>
 </dl>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name" colspan="2">Other Parameters:</th></tr>
-<tr class="field-even field"><td>&#160;</td><td class="field-body"><dl class="first last docutils">
-<dt><strong>store_errors: bool, optional</strong></dt>
-<dd><p class="first last">store the device generated errors in the output files (as additional
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>store_errors: bool, optional</strong></dt><dd><p>store the device generated errors in the output files (as additional
 columns). Default: False</p>
 </dd>
-<dt><strong>norrec: string, optional</strong></dt>
-<dd><p class="first last">all|nor|rec which normal-reciprocal data set to use. Default: all</p>
+<dt><strong>norrec: string, optional</strong></dt><dd><p>all|nor|rec which normal-reciprocal data set to use. Default: all</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -204,22 +184,16 @@ columns). Default: False</p>
 <code class="descclassname">reda.exporters.syscal.</code><code class="descname">syscal_save_to_config_txt</code><span class="sig-paren">(</span><em>filename</em>, <em>configs</em>, <em>spacing=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/syscal.html#syscal_save_to_config_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.exporters.syscal.syscal_save_to_config_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write configurations to a Syscal ascii file that can be read by the
 Electre Pro program.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><dl class="first last docutils">
-<dt><strong>filename: string</strong></dt>
-<dd><p class="first last">output filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename: string</strong></dt><dd><p>output filename</p>
 </dd>
-<dt><strong>configs: numpy.ndarray</strong></dt>
-<dd><p class="first last">Nx4 array with measurement configurations A-B-M-N</p>
+<dt><strong>configs: numpy.ndarray</strong></dt><dd><p>Nx4 array with measurement configurations A-B-M-N</p>
 </dd>
 </dl>
-</td>
-</tr>
-</tbody>
-</table>
+</dd>
+</dl>
 </dd></dl>
 
 </div>
@@ -236,7 +210,7 @@ Electre Pro program.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

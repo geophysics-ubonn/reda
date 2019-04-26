@@ -12,8 +12,7 @@ Importing Syscal ERT data from roll-a-long scheme
 
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda
 
@@ -25,8 +24,7 @@ Importing Syscal ERT data from roll-a-long scheme
 create an ERT container and import first dataset
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ert_p1 = reda.ERT()
     ert_p1.import_syscal_bin(
@@ -59,8 +57,7 @@ create an ERT container and import first dataset
 create an ERT container and import second dataset
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ert_p2 = reda.ERT()
     ert_p2.import_syscal_bin(
@@ -95,8 +92,7 @@ create an ERT container and jointly import the first and second dataset,
 thereby shifting electrode notations of the second dataset by 24 electrodes
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     ert = reda.ERT()
 

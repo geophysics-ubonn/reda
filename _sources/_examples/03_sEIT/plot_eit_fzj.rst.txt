@@ -37,12 +37,10 @@ data by providing a special function as the config-parameter in the import
 function. This is explained below.
 
 
-
 Import reda
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda
 
@@ -55,8 +53,7 @@ Import reda
 Initialize an sEIT container
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     seit = reda.sEIT()
 
@@ -85,8 +82,7 @@ an alternative would be to automatically create measurement configurations
 from the current injection dipoles:
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     from reda.importers.eit_fzj import MD_ConfigsPermutate
 
@@ -118,8 +114,7 @@ from the current injection dipoles:
 Compute geometric factors
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.utils.geometric_factors as redaK
     import reda.utils.fix_sign_with_K as redafixK
@@ -138,8 +133,7 @@ compute normal and reciprocal pairs
 note that this is usually done on import once.
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.utils.norrec as norrec
     seit.data = norrec.assign_norrec_to_df(seit.data)
@@ -161,8 +155,7 @@ note that this is usually done on import once.
 quadrupoles can be directly accessed using a pandas grouper
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     print(seit.abmn)
     quadpole_data = seit.abmn.get_group((10, 29, 15, 34))
@@ -178,7 +171,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x2ae51345f320>
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x2ac828f956d8>
             a   b   m   n     frequency         r        rpha
     749    10  29  15  34      0.100000  7.356375   -5.205543
     2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -196,8 +189,7 @@ quadrupoles can be directly accessed using a pandas grouper
 filter data
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     seit.remove_frequencies(1e-3, 300)
     seit.query('rpha < 10')
@@ -223,8 +215,7 @@ Plotting histograms
 Raw data plots (execute before applying the filters):
 
 
-
-.. code-block:: python
+.. code-block:: default
 
 
     # import os
@@ -261,8 +252,7 @@ Raw data plots (execute before applying the filters):
 Now export the data to CRTomo-compatible files
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.exporters.crtomo as redaex
     redaex.write_files_to_directory(seit.data, 'crt_results', norrec='nor', )
@@ -276,8 +266,7 @@ Now export the data to CRTomo-compatible files
 Plot pseudosections of all frequencies
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda.plotters.pseudoplots as PS
     import pylab as plt
@@ -302,7 +291,10 @@ Plot pseudosections of all frequencies
 
 
 
-**Total running time of the script:** ( 1 minutes  6.822 seconds)
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** ( 1 minutes  8.980 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:

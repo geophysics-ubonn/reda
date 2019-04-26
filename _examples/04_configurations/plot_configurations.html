@@ -1,11 +1,9 @@
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
     <title>Various ways to create measurement configurations &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -93,8 +91,6 @@
     <form class="search" action="../../search.html" method="get">
       <input type="text" name="q" />
       <input type="submit" value="Go" />
-      <input type="hidden" name="check_keywords" value="yes" />
-      <input type="hidden" name="area" value="default" />
     </form>
     </div>
 </div>
@@ -116,12 +112,12 @@
           <div class="body" role="main">
             
   <div class="sphx-glr-download-link-note admonition note">
-<p class="first admonition-title">Note</p>
-<p class="last">Click <a class="reference internal" href="#sphx-glr-download-examples-04-configurations-plot-configurations-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-04-configurations-plot-configurations-py"><span class="std std-ref">here</span></a> to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="various-ways-to-create-measurement-configurations">
 <span id="sphx-glr-examples-04-configurations-plot-configurations-py"></span><h1>Various ways to create measurement configurations<a class="headerlink" href="#various-ways-to-create-measurement-configurations" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda</span> <span class="k">import</span> <span class="n">ConfigManager</span>
 
 <span class="n">configs</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
 
@@ -130,7 +126,7 @@
 <span class="n">configs</span><span class="o">.</span><span class="n">gen_gradient</span><span class="p">()</span>
 <span class="n">configs</span><span class="o">.</span><span class="n">gen_schlumberger</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 
-<span class="k">print</span><span class="p">(</span><span class="n">configs</span><span class="o">.</span><span class="n">configs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">configs</span><span class="o">.</span><span class="n">configs</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -144,7 +140,7 @@
 </pre></div>
 </div>
 <p>export mechanisms:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
 <span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;exported_configs&#39;</span><span class="p">):</span>
     <span class="n">configs</span><span class="o">.</span><span class="n">to_iris_syscal</span><span class="p">(</span><span class="s1">&#39;syscal_configs.txt&#39;</span><span class="p">)</span>
     <span class="n">configs</span><span class="o">.</span><span class="n">write_configs</span><span class="p">(</span><span class="s1">&#39;abmn.dat&#39;</span><span class="p">)</span>
@@ -153,9 +149,11 @@
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-04-configurations-plot-configurations-py">
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" download="" href="../../_downloads/4151c56cfa48bf743447563efc05604e/plot_configurations.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_configurations.py</span></code></a></div>
+<p><a class="reference download internal" download="" href="../../_downloads/4151c56cfa48bf743447563efc05604e/plot_configurations.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_configurations.py</span></code></a></p>
+</div>
 <div class="sphx-glr-download docutils container">
-<a class="reference download internal" download="" href="../../_downloads/87bd59f85adb626b89ec683823c9b418/plot_configurations.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_configurations.ipynb</span></code></a></div>
+<p><a class="reference download internal" download="" href="../../_downloads/87bd59f85adb626b89ec683823c9b418/plot_configurations.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_configurations.ipynb</span></code></a></p>
+</div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
 </div>
@@ -171,7 +169,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

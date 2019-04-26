@@ -11,12 +11,10 @@ SIP-04 Import
 =============
 
 
-
 Create the SIP container
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     import reda
     sip = reda.SIP()
@@ -30,8 +28,7 @@ Create the SIP container
 Import the SIP data
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     sip.import_sip04('sip_data.mat')
 
@@ -61,8 +58,7 @@ Import the SIP data
 show the data
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     print(type(sip.data))
     print(sip.data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
@@ -106,8 +102,7 @@ show the data
 plot the spectrum
 
 
-
-.. code-block:: python
+.. code-block:: default
 
     from reda.eis.plots import sip_response
 
