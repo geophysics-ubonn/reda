@@ -487,13 +487,15 @@ class ERT(LoggingClass, Importers, Exporters):
         cb : colorbar object
             matplotlib colorbar object
         """
-        fig, ax, cb = PS.plot_pseudosection_type2(self.data, column=column,
-                                                  log10=log10, **kwargs)
+        fig, ax, cb = PS.plot_pseudosection_type2(
+                self.data, column=column, log10=log10, **kwargs
+        )
         if filename is not None:
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
 
     def histogram(self, column='r', filename=None, log10=False, **kwargs):
+        """Plot a histogram of one data column"""
         return_dict = HS.plot_histograms(self.data, column)
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
