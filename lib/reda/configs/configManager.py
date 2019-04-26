@@ -5,8 +5,9 @@ import itertools
 
 import numpy as np
 
-from reda.utils import opt_import
 import reda.utils.mpl
+from reda.utils import opt_import
+
 plt, mpl = reda.utils.mpl.setup()
 
 
@@ -32,7 +33,7 @@ class ConfigManager(object):
         """Remove all configs. This implies deleting all measurements.
         """
         self.clear_measurements()
-        del(self.configs)
+        del (self.configs)
         self.configs = None
 
     @property
@@ -87,12 +88,8 @@ class ConfigManager(object):
         B = np.floor(configs[:, 0] / 1e4).astype(int)
         M = configs[:, 1] % 1e4
         N = np.floor(configs[:, 1] / 1e4).astype(int)
-        ABMN = np.hstack((
-            A[:, np.newaxis],
-            B[:, np.newaxis],
-            M[:, np.newaxis],
-            N[:, np.newaxis]
-        )).astype(int)
+        ABMN = np.hstack((A[:, np.newaxis], B[:, np.newaxis], M[:, np.newaxis],
+                          N[:, np.newaxis])).astype(int)
         return ABMN
 
     def load_configs(self, filename):
@@ -117,8 +114,7 @@ class ConfigManager(object):
             if nr_of_configs != configs.shape[0]:
                 raise Exception(
                     'indicated number of measurements does not equal ' +
-                    'to actual number of measurements'
-                )
+                    'to actual number of measurements')
             ABMN = self._crmod_to_abmn(configs[:, 0:2])
             self.configs = ABMN
 
@@ -141,8 +137,7 @@ class ConfigManager(object):
             if nr_of_configs != measurements.shape[0]:
                 raise Exception(
                     'indicated number of measurements does not equal ' +
-                    'to actual number of measurements'
-                )
+                    'to actual number of measurements')
         ABMN = self._crmod_to_abmn(measurements[:, 0:2])
         if self.configs is None:
             self.configs = ABMN
@@ -151,8 +146,7 @@ class ConfigManager(object):
             if not np.all(ABMN == self.configs):
                 raise Exception(
                     'previously stored configurations do not match new ' +
-                    'configurations'
-                )
+                    'configurations')
 
         # add data
         cid_mag = self.add_measurements(measurements[:, 2])
@@ -191,19 +185,14 @@ class ConfigManager(object):
             mag_data = self.measurements[mid]
             pha_data = np.zeros(mag_data.shape)
 
-        all_data = np.hstack((
-            ABMN,
-            mag_data[:, np.newaxis],
-            pha_data[:, np.newaxis]
-        ))
+        all_data = np.hstack((ABMN, mag_data[:, np.newaxis],
+                              pha_data[:, np.newaxis]))
 
         with open(filename, 'wb') as fid:
-            fid.write(
-                bytes(
-                    '{0}\n'.format(ABMN.shape[0]),
-                    'utf-8',
-                )
-            )
+            fid.write(bytes(
+                '{0}\n'.format(ABMN.shape[0]),
+                'utf-8',
+            ))
             np.savetxt(fid, all_data, fmt='%i %i %f %f')
 
     def write_crmod_config(self, filename):
@@ -218,17 +207,21 @@ class ConfigManager(object):
         ABMN = self._get_crmod_abmn()
 
         with open(filename, 'wb') as fid:
-            fid.write(
-                bytes(
-                    '{0}\n'.format(ABMN.shape[0]),
-                    'utf-8',
-                )
-            )
+            fid.write(bytes(
+                '{0}\n'.format(ABMN.shape[0]),
+                'utf-8',
+            ))
             np.savetxt(fid, ABMN.astype(int), fmt='%i %i')
 
-    def gen_dipole_dipole(
-            self, skipc, skipv=None, stepc=1, stepv=1, nr_voltage_dipoles=10,
-            before_current=False, start_skip=0, N=None):
+    def gen_dipole_dipole(self,
+                          skipc,
+                          skipv=None,
+                          stepc=1,
+                          stepv=1,
+                          nr_voltage_dipoles=10,
+                          before_current=False,
+                          start_skip=0,
+                          N=None):
         """Generate dipole-dipole configurations
 
         Parameters
@@ -389,15 +382,14 @@ class ConfigManager(object):
             velecs = list(range(1, N + 1))
 
             # remove current electrodes
-            del(velecs[Ipoles[1]])
-            del(velecs[Ipoles[0]])
+            del (velecs[Ipoles[1]])
+            del (velecs[Ipoles[0]])
 
             # permutate remaining
             voltages = itertools.permutations(velecs, 2)
             for voltage in voltages:
-                all_quadpoles.append(
-                    (idipole[0], idipole[1], voltage[0], voltage[1])
-                )
+                all_quadpoles.append((idipole[0], idipole[1], voltage[0],
+                                      voltage[1]))
         configs_unsorted = np.array(all_quadpoles)
         # sort AB and MN
         configs_sorted = np.hstack((
@@ -431,9 +423,8 @@ class ConfigManager(object):
         AB.sort(axis=1)
 
         # now we need to filter duplicates
-        AB = np.unique(
-            AB.view(AB.dtype.descr * 2)
-        ).view(AB.dtype).reshape(-1, 2)
+        AB = np.unique(AB.view(AB.dtype.descr * 2)).view(AB.dtype).reshape(
+            -1, 2)
 
         return AB
 
@@ -501,9 +492,7 @@ class ConfigManager(object):
         for i in range(0, min(nr_of_steps_left, nr_of_steps_right)):
             A = min(M, N) - (i + 1) * a
             B = max(M, N) + (i + 1) * a
-            configs.append(
-                (A, B, M, N)
-            )
+            configs.append((A, B, M, N))
         configs = np.array(configs)
         self.add_to_configs(configs)
         return configs
@@ -524,9 +513,7 @@ class ConfigManager(object):
         """
         configs = []
         for i in range(1, self.nr_electrodes - 3 * a + 1):
-            configs.append(
-                (i, i + 3 * a, i + 1 * a, i + 2 * a),
-            )
+            configs.append((i, i + 3 * a, i + 1 * a, i + 2 * a), )
         configs = np.array(configs)
         self.add_to_configs(configs)
         return configs
@@ -555,8 +542,8 @@ class ConfigManager(object):
             self.configs = np.vstack((self.configs, configs))
         return self.configs
 
-    def split_into_normal_and_reciprocal(
-            self, pad=False, return_indices=False):
+    def split_into_normal_and_reciprocal(self, pad=False,
+                                         return_indices=False):
         """Split the stored configurations into normal and reciprocal
         measurements
 
@@ -592,10 +579,8 @@ class ConfigManager(object):
 
         """
         # for simplicity, we create an array where AB and MN are sorted
-        configs = np.hstack((
-            np.sort(self.configs[:, 0:2], axis=1),
-            np.sort(self.configs[:, 2:4], axis=1)
-        ))
+        configs = np.hstack((np.sort(self.configs[:, 0:2], axis=1),
+                             np.sort(self.configs[:, 2:4], axis=1)))
 
         ab_min = configs[:, 0]
         mn_min = configs[:, 2]
@@ -621,8 +606,7 @@ class ConfigManager(object):
                 (configs[:, 0] == configs[index, 2]) &
                 (configs[:, 1] == configs[index, 3]) &
                 (configs[:, 2] == configs[index, 0]) &
-                (configs[:, 3] == configs[index, 1])
-            )[0]
+                (configs[:, 3] == configs[index, 1]))[0]
             if len(index_rec) == 0 and pad:
                 reciprocal.append(np.ones(4) * np.nan)
             elif len(index_rec) == 1:
@@ -653,15 +637,28 @@ class ConfigManager(object):
         else:
             return normals, reciprocals
 
-    def gen_reciprocals(self, quadrupoles):
-        """For a given set of quadrupoles, generate and return reciprocals
-        """
-        reciprocals = quadrupoles[:, ::-1].copy()
-        reciprocals[:, 0:2] = np.sort(reciprocals[:, 0:2], axis=1)
-        reciprocals[:, 2:4] = np.sort(reciprocals[:, 2:4], axis=1)
-        return reciprocals
+    def gen_reciprocals(self, append=False):
+        """ Generate reciprocal configurations, sort by AB, and optionally
+        append to configurations.
 
-    def gen_configs_permutate(self, injections_raw,
+        Parameters
+        ----------
+        append : bool
+            Append reciprocals to configs (the default is False).
+
+        """
+        # Switch AB and MN
+        reciprocals = self.configs.copy()[:, ::-1]
+
+        # Sort by current dipoles
+        ind = np.lexsort((reciprocals[:, 0], reciprocals[:, 1]))
+
+        if append:
+            self.configs = np.vstack((self.configs, reciprocals[ind]))
+        return reciprocals[ind]
+
+    def gen_configs_permutate(self,
+                              injections_raw,
                               only_same_dipole_length=False,
                               ignore_crossed_dipoles=False,
                               silent=False):
@@ -698,35 +695,28 @@ class ConfigManager(object):
         measurements = []
 
         for injection in range(0, N):
-            dipole_length = np.abs(
-                injections[injection][1] -
-                injections[injection][0]
-            )
+            dipole_length = np.abs(injections[injection][1] -
+                                   injections[injection][0])
 
             # select all dipole EXCEPT for the injection dipole
             for i in set(range(0, N)) - set([injection]):
-                test_dipole_length = np.abs(
-                    injections[i, :][1] - injections[i, :][0]
-                )
-                if(only_same_dipole_length and
-                   test_dipole_length != dipole_length):
+                test_dipole_length = np.abs(injections[i, :][1] -
+                                            injections[i, :][0])
+                if (only_same_dipole_length
+                        and test_dipole_length != dipole_length):
                     continue
                 quadpole = np.array(
-                    [
-                        injections[injection, :],
-                        injections[i, :]
-                    ]
-                ).flatten()
+                    [injections[injection, :], injections[i, :]]).flatten()
                 if ignore_crossed_dipoles is True:
                     # check if we need to ignore this dipole
                     # Note: this could be wrong if electrode number are not
                     # ascending!
-                    if(quadpole[2] > quadpole[0] and
-                       quadpole[2] < quadpole[1]):
+                    if (quadpole[2] > quadpole[0]
+                            and quadpole[2] < quadpole[1]):
                         if not silent:
                             print('A - ignoring', quadpole)
-                    elif(quadpole[3] > quadpole[0] and
-                         quadpole[3] < quadpole[1]):
+                    elif (quadpole[3] > quadpole[0]
+                          and quadpole[3] < quadpole[1]):
                         if not silent:
                             print('B - ignoring', quadpole)
                     else:
@@ -740,14 +730,23 @@ class ConfigManager(object):
         for quadpole in measurements:
             if (not set(quadpole[0:2]).isdisjoint(set(quadpole[2:4]))):
                 if not silent:
-                    print(
-                        'Ignoring quadrupole because of ',
-                        'repeated electrode use:', quadpole
-                    )
+                    print('Ignoring quadrupole because of ',
+                          'repeated electrode use:', quadpole)
             else:
                 filtered.append(quadpole)
         self.add_to_configs(filtered)
         return np.array(filtered)
+
+    def remove_max_dipole_sep(self, maxsep=10):
+        """Remove configurations with dipole separations higher than `maxsep`.
+
+        Parameters
+        ----------
+        maxsep : int
+            Maximum separation between both dipoles (the default is 10).
+        """
+        sep = np.abs(self.configs[:, 1] - self.configs[:, 2])
+        self.configs = self.configs[sep <= maxsep]
 
     def write_configs(self, filename):
         """Write configs to file in four columns
