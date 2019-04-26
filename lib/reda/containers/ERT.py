@@ -154,7 +154,7 @@ class Importers(object):
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
             del (kwargs['timestep'])
-        self.logger.info('IRIS Syscal Pro text import')
+        self.logger.info('IRIS Syscal Pro bin import')
         with LogDataChanges(self, filter_action='import'):
             data, electrodes, topography = reda_syscal.import_bin(
                 filename, **kwargs)
