@@ -56,7 +56,16 @@ class LogDataChanges():
             self.data_size_before = self.container.data.shape[0]
         return None
 
-    def __exit__(self, *args):
+    def __exit__(self, exc_type, exc_value, traceback):
+        # make sure we do not execute more code if an exception was raised in
+        # the context
+        # See:
+        # https://docs.python.org/3/reference/datamodel.html#object.__exit__
+        if(
+            exc_type is not None or
+            exc_value is not None or
+            traceback is not None):
+            return
         self.data_size_after = self.container.data.shape[0]
         self.logger.info(
             'Data change from {0} to {1}'.format(
