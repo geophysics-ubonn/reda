@@ -215,6 +215,10 @@ def import_bin(filename, **kwargs):
             print('Removing all subsequent data points')
             data_raw = data_raw.iloc[0:jump[0], :]
 
+    if data_raw.shape[0] == 0:
+        # no data present, return a bare DataFrame
+        return pd.DataFrame(columns=['a', 'b', 'm', 'n', 'r']), None, None
+
     data = _convert_coords_to_abmn_X(
         data_raw[['x_a', 'x_b', 'x_m', 'x_n']],
         **kwargs
