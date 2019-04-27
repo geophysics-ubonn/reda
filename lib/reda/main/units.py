@@ -10,8 +10,8 @@ import matplotlib as mpl
 rel = {
     'r': {
         'full_name': '|Z|_[Ohm]',
-        'label_mpl': r'$|Z| [\Omega]$',
         'label_latex': r'$|Z|~[\Omega]$',
+        'label_mpl': r'$|Z| [\Omega]$',
         'unit': r'$\Ohm$',
     },
     'rho_a': {
@@ -35,7 +35,7 @@ rel = {
     'log_rho': {
         'full_name': 'log_rho_[Ohm m]',
         'label_latex': r'$\log_{10}(|\rho|~[\Omega\mbox{m}])$',
-        'label_mpl': r'$\log_{10}(|\rho| [\Omega\mbox{m}])$',
+        'label_mpl': r'$\log_{10}(|\rho| [\Omega m])$',
         'unit': r'\Ohm m',
     },
     'rho': {
@@ -59,7 +59,7 @@ rel = {
     'log_imag': {
         'full_name': 'log_imag_[S/m]',
         'label_latex': r"$\log_{10}(|\sigma''|~[\mbox{S/m}])$",
-        'label_mpl': r"$\log_{10}(|\sigma''| [\mbox{S/m}])$",
+        'label_mpl': r"$\log_{10}(|\sigma''| [S/m])$",
         'unit': r'S/m',
     },
 }
