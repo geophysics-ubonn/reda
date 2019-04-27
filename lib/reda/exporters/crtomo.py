@@ -5,7 +5,18 @@ import numpy as np
 
 
 def save_block_to_crt(filename, group, norrec='all', store_errors=False):
-    """
+    """Save a dataset to a CRTomo-compatible .crt file
+
+    Parameters
+    ----------
+    filename : string
+        Output filename
+    group : pandas.group
+        Data group
+    norrec : string
+        Which data to export Possible values: all|nor|rec
+    store_errors : bool
+        If true, store errors of the data in a separate column
 
     """
     if norrec != 'all':
