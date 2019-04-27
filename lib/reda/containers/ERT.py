@@ -32,7 +32,7 @@ class LogDataChanges():
     ...     ERTContainer.data.loc[0, "r"] = 22
     ...     ERTContainer.data.query("r < 10", inplace=True)
     >>> # ERTContainer.print_log()
-    ... - root - INFO - Data change from 22 to 21
+    2... - root - INFO - Data change from 22 to 21
 
     """
 
