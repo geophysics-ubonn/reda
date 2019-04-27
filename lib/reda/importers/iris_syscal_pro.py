@@ -186,6 +186,9 @@ def import_bin(filename, **kwargs):
         return data after a jump to smaller measurement numbers (this usually
         indicates that more data points were downloaded than are part of a
         specific measurement. Default: True
+    skip_rows : int
+        Ignore this number of rows at the beginning, e.g., because they were
+        inadvertently imported from an earlier measurement. Default: 0
 
     Returns
     -------
@@ -200,6 +203,11 @@ def import_bin(filename, **kwargs):
     """
     metadata, data_raw = _import_bin(filename)
 
+    skip_rows = kwargs.get('skip_rows', 0)
+    if skip_rows > 0:
+        data_raw.drop(data_raw.index[range(0, skip_rows)], inplace=True)
+        data_raw = data_raw.reset_index()
+
     if kwargs.get('check_meas_nums', True):
         # check that first number is 0
         if data_raw['measurement_num'].iloc[0] != 0:
@@ -212,6 +220,7 @@ def import_bin(filename, **kwargs):
                 'WARNING '
                 'Measurement numbers are not consecutive. '
                 'Perhaps the first measurement belongs to another measurement?'
+                ' Use the skip_rows parameter to skip those measurements'
             )
 
         # now check if there is a jump in measurement numbers somewhere
@@ -219,10 +228,13 @@ def import_bin(filename, **kwargs):
         diff = data_raw['measurement_num'].diff()[1:]
         jump = np.where(diff != 1)[0]
         if len(jump) > 0:
-            print('WARNING: Jump detected at index: {}'.format(jump))
-            print('Removing all subsequent data points')
-            data_raw = data_raw.iloc[0:jump[0], :]
+            print('WARNING: One or more jumps in measurement numbers detected')
+            print('The jump indices are':)
+            for jump_nr in jump:
+                print(jump_nr)
 
+            print('Removing data points subsequent to the first jump')
+            data_raw = data_raw.iloc[0:jump[0] + 1, :]
 
     if data_raw.shape[0] == 0:
         # no data present, return a bare DataFrame
@@ -307,7 +319,6 @@ def _import_bin(filename):
         'version': version,
         'syscal_type': syscal_type,
         'comment': comment,
-
     }
 
     measurements = []
@@ -460,5 +471,5 @@ def _import_bin(filename):
     # create a dataframe with all primary data
     df = pd.DataFrame(
         measurements
-    )
+    ).reset_index()
     return metadata, df
