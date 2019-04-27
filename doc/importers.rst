@@ -28,3 +28,15 @@ Internal structure (for developers)
     We retained from introducing importer objects by means of classes to make
     usage as simple as possible. If at some point it will be necessary to use
     classes for the importers, they can be built upon the import functions.
+
+Test data
+---------
+
+We require at least one test data set for each importer in order to make sure
+the importer works, now and in the future.
+
+Test data should be stored in the separate testing repository,
+https://github.com/geophysics-ubonn/reda_testing, in order to keep the
+repository size of reda small. However, if data sets are not too large, one
+import/analysis example is fine for the documentation gallery (in the
+**examples/** subdirectory of the reda repository).
