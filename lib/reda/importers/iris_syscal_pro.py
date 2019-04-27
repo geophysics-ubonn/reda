@@ -221,7 +221,7 @@ def import_bin(filename, **kwargs):
         if len(jump) > 0:
             print('WARNING: Jump detected at index: {}'.format(jump))
             print('Removing all subsequent data points')
-            data_raw = data_raw.iloc[0:jump[1], :]
+            data_raw = data_raw.iloc[0:jump[0], :]
 
 
     if data_raw.shape[0] == 0:
