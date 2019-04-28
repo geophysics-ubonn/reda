@@ -506,3 +506,20 @@ class sEIT(LoggingClass, importers):
         exporter_crtomo.write_files_to_directory(
             self.data, directory, norrec=norrec
         )
+
+    def export_to_crtomo_seit_manager(self, grid):
+        """Return a ready-initialized seit-manager object from the CRTomo
+        tools. This function only works if the crtomo_tools are installed.
+        """
+        import crtomo
+        g = self.data.groupby('frequency')
+        seit_data = {}
+        for name, item in g:
+            print(name, item.shape, item.size)
+            if item.shape[0] > 0:
+                seit_data[name] = item[
+                    ['a', 'b', 'm', 'n', 'r', 'rpha']
+                ].values
+        seit = crtomo.eitMan(grid=grid, seit_data=seit_data)
+        return seit
+
