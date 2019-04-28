@@ -503,6 +503,6 @@ class sEIT(LoggingClass, importers):
             Which data to export. Default: norrec
 
         """
-        export_crtomo.write_files_to_directory(
+        exporter_crtomo.write_files_to_directory(
             self.data, directory, norrec=norrec
         )
