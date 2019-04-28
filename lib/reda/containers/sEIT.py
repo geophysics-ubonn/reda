@@ -228,7 +228,7 @@ class sEIT(LoggingClass, importers):
         fix_sign_with_K(self.data)
 
     def scatter_norrec(self, filename=None, individual=False):
-        """Create a scatter plots for all diff pairs
+        """Create a scatter plot for all diff pairs
 
         Parameters
         ----------
