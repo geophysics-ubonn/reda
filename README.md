@@ -19,8 +19,8 @@ community are highly welcome.
 
 <aside class="warning">
 REDA is a work-in-progress. Please contact us if you wish to use it or miss a
-specific functionality. Please see the [status page]
-(https://geophysics-ubonn.github.io/reda/about.html#status-of-reda) for more
+specific functionality. Please see the
+[status page](https://geophysics-ubonn.github.io/reda/about.html#status-of-reda) for more
 information.
 </aside>
 
