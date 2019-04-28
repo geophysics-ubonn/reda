@@ -386,3 +386,15 @@ class ERT(LoggingClass, Importers, Exporters):
         """
         self.data.drop(self.data.index[row_or_rows], inplace=True)
         self.data = self.data.reset_index()
+
+    def to_configs(self):
+        """Return a config object that contains the measurement configurations
+        (a,b,m,n) from the data
+
+        Returns
+        -------
+        config_obj : reda.ConfigManager
+        """
+        config_obj = reda.configs.configManager.ConfigManager()
+        config_obj.add_to_configs(self.data[['a', 'b', 'm', 'n']].values)
+        return config_obj
