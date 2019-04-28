@@ -116,10 +116,10 @@
 <p>Importer functions are managed in <a class="reference internal" href="_api/reda.importers.html#module-reda.importers" title="reda.importers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reda.importers</span></code></a>. An importer module
 must provide the following functionality:</p>
 <ul class="simple">
-<li><p>import a given data format into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+467.g65466f04)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></p></li>
-<li><p>import electrode positions into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+467.g65466f04)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>, if available
+<li><p>import a given data format into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+468.g64104ec3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></p></li>
+<li><p>import electrode positions into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+468.g64104ec3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>, if available
 in this data format</p></li>
-<li><p>import topography into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+467.g65466f04)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>, if available in this
+<li><p>import topography into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+468.g64104ec3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>, if available in this
 data format</p></li>
 </ul>
 </div>
@@ -139,6 +139,16 @@ if not available.</p></li>
 usage as simple as possible. If at some point it will be necessary to use
 classes for the importers, they can be built upon the import functions.</p>
 </div>
+</div>
+<div class="section" id="test-data">
+<h2>Test data<a class="headerlink" href="#test-data" title="Permalink to this headline">¶</a></h2>
+<p>We require at least one test data set for each importer in order to make sure
+the importer works, now and in the future.</p>
+<p>Test data should be stored in the separate testing repository,
+<a class="reference external" href="https://github.com/geophysics-ubonn/reda_testing">https://github.com/geophysics-ubonn/reda_testing</a>, in order to keep the
+repository size of reda small. However, if data sets are not too large, one
+import/analysis example is fine for the documentation gallery (in the
+<strong>examples/</strong> subdirectory of the reda repository).</p>
 </div>
 </div>
 

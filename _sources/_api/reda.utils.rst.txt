@@ -17,6 +17,14 @@ reda.utils.data module
     :undoc-members:
     :show-inheritance:
 
+reda.utils.decorators\_and\_managers module
+-------------------------------------------
+
+.. automodule:: reda.utils.decorators_and_managers
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 reda.utils.eit\_fzj\_utils module
 ---------------------------------
 

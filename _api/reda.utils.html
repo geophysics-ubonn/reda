@@ -136,6 +136,39 @@
 </dd></dl>
 
 </div>
+<div class="section" id="module-reda.utils.decorators_and_managers">
+<span id="reda-utils-decorators-and-managers-module"></span><h2>reda.utils.decorators_and_managers module<a class="headerlink" href="#module-reda.utils.decorators_and_managers" title="Permalink to this headline">¶</a></h2>
+<p>Utility class for context managers and decorators</p>
+<dl class="class">
+<dt id="reda.utils.decorators_and_managers.LogDataChanges">
+<em class="property">class </em><code class="descclassname">reda.utils.decorators_and_managers.</code><code class="descname">LogDataChanges</code><span class="sig-paren">(</span><em>container</em>, <em>filter_action='default'</em>, <em>filter_query=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#LogDataChanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.LogDataChanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Context manager that observes the DataFrame of a data container for
+changes in the number of rows.</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="k">import</span> <span class="n">ERTContainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="k">import</span> <span class="n">LogDataChanges</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># now change the data</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;r &lt; 10&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ERTContainer.print_log()</span>
+<span class="go">2... - root - INFO - Data change from 22 to 21</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.decorators_and_managers.append_doc_of">
+<code class="descclassname">reda.utils.decorators_and_managers.</code><code class="descname">append_doc_of</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#append_doc_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.append_doc_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.decorators_and_managers.prepend_doc_of">
+<code class="descclassname">reda.utils.decorators_and_managers.</code><code class="descname">prepend_doc_of</code><span class="sig-paren">(</span><em>fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#prepend_doc_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.prepend_doc_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
 <div class="section" id="module-reda.utils.eit_fzj_utils">
 <span id="reda-utils-eit-fzj-utils-module"></span><h2>reda.utils.eit_fzj_utils module<a class="headerlink" href="#module-reda.utils.eit_fzj_utils" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
@@ -147,7 +180,7 @@ and Kemna, 2017, Biogeosciences, for more information:</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+467.g65466f04)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Data container</p>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+468.g64104ec3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Data container</p>
 </dd>
 <dt><strong>correction_file</strong><span class="classifier">string</span></dt><dd><p>Path to correction file. The file must have 5 columns:
 a,b,m,n,correction_factor</p>
@@ -213,7 +246,7 @@ Weigand and Kemna, 2017, Biogeosciences</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+467.g65466f04)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>measured data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+468.g64104ec3)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>measured data</p>
 </dd>
 <dt><strong>true_conductivity</strong><span class="classifier">float</span></dt><dd><p>Conductivity in S/m</p>
 </dd>

@@ -117,6 +117,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
+<span class="kn">from</span> <span class="nn">reda.main.logger</span> <span class="k">import</span> <span class="n">LoggingClass</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
 <span class="kn">import</span> <span class="nn">reda.importers.radic_sip256c</span> <span class="k">as</span> <span class="nn">reda_sip256c</span>
 <span class="kn">import</span> <span class="nn">reda.importers.crtomo</span> <span class="k">as</span> <span class="nn">reda_crtomo_exporter</span>
@@ -126,15 +127,14 @@
 <span class="kn">from</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">import</span> <span class="n">fix_sign_with_K</span>
 <span class="kn">import</span> <span class="nn">reda.eis.plots</span> <span class="k">as</span> <span class="nn">eis_plot</span>
 
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="k">import</span> <span class="n">append_doc_of</span><span class="p">,</span> <span class="n">prepend_doc_of</span>
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="k">import</span> <span class="n">LogDataChanges</span>
+
+<span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">exporter_crtomo</span>
+
+<span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
 <span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
 <span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
-
-
-<div class="viewcode-block" id="append_doc_of"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.append_doc_of">[docs]</a><span class="k">def</span> <span class="nf">append_doc_of</span><span class="p">(</span><span class="n">fun</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">decorator</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
-        <span class="n">f</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">+=</span> <span class="n">fun</span><span class="o">.</span><span class="vm">__doc__</span>
-        <span class="k">return</span> <span class="n">f</span>
-    <span class="k">return</span> <span class="n">decorator</span></div>
 
 
 <div class="viewcode-block" id="importers"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers">[docs]</a><span class="k">class</span> <span class="nc">importers</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -215,13 +215,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df_emd</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="sEIT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT">[docs]</a><span class="k">class</span> <span class="nc">sEIT</span><span class="p">(</span><span class="n">importers</span><span class="p">):</span>
+<div class="viewcode-block" id="sEIT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT">[docs]</a><span class="k">class</span> <span class="nc">sEIT</span><span class="p">(</span><span class="n">LoggingClass</span><span class="p">,</span> <span class="n">importers</span><span class="p">):</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
         <span class="c1"># normal data (or full data, if reciprocals are not sorted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">dataframe</span>
+
 
 <div class="viewcode-block" id="sEIT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required columns</span>
@@ -276,6 +278,31 @@
         <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="n">inplace</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">result</span></div>
 
+<div class="viewcode-block" id="sEIT.filter"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.filter">[docs]</a>    <span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">query</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Use a query statement to filter data. Note that you specify the data</span>
+<span class="sd">        to be removed!</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        query : string</span>
+<span class="sd">            The query string to be evaluated. Is directly provided to</span>
+<span class="sd">            pandas.DataFrame.query</span>
+<span class="sd">        inplace : bool</span>
+<span class="sd">            if True, change the container dataframe in place (defaults to True)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        result : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            DataFrame that contains the result of the filter application</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="n">filter_query</span><span class="o">=</span><span class="n">query</span><span class="p">):</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+                <span class="s1">&#39;not (</span><span class="si">{0}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query</span><span class="p">),</span>
+                <span class="n">inplace</span><span class="o">=</span><span class="n">inplace</span><span class="p">,</span>
+            <span class="p">)</span>
+        <span class="k">return</span> <span class="n">result</span></div>
+
 <div class="viewcode-block" id="sEIT.remove_frequencies"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.remove_frequencies">[docs]</a>    <span class="k">def</span> <span class="nf">remove_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">fmax</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Remove frequencies from the dataset</span>
 <span class="sd">        &quot;&quot;&quot;</span>
@@ -287,7 +314,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Remaining frequencies:&#39;</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">g</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
 
-<div class="viewcode-block" id="sEIT.gen_geometric_factors_analytical"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.gen_geometric_factors_analytical">[docs]</a>    <span class="k">def</span> <span class="nf">gen_geometric_factors_analytical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+<div class="viewcode-block" id="sEIT.compute_K_analytical"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.compute_K_analytical">[docs]</a>    <span class="k">def</span> <span class="nf">compute_K_analytical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Assuming an equal electrode spacing, compute the K-factor over a</span>
 <span class="sd">        homogeneous half-space.</span>
 
@@ -302,7 +329,8 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">spacing</span><span class="p">,</span> <span class="n">Number</span><span class="p">)</span>
         <span class="n">K</span> <span class="o">=</span> <span class="n">geometric_factors</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">geometric_factors</span><span class="o">.</span><span class="n">apply_K</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">geometric_factors</span><span class="o">.</span><span class="n">apply_K</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+        <span class="n">fix_sign_with_K</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="sEIT.fix_sign_with_K"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.fix_sign_with_K">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">fix_sign_with_K</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">fix_sign_with_K</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
@@ -528,10 +556,66 @@
                 <span class="n">outdir</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span>
                 <span class="s1">&#39;</span><span class="si">{:04}</span><span class="s1">_spectrum_id_</span><span class="si">{}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">name</span><span class="p">)</span>
             <span class="p">))</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">get_spectrum</span><span class="p">(</span>
+            <span class="n">spec_nor</span><span class="p">,</span> <span class="n">spec_rec</span><span class="p">,</span> <span class="n">spec_fig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_spectrum</span><span class="p">(</span>
                 <span class="n">nr_id</span><span class="o">=</span><span class="n">name</span><span class="p">,</span>
                 <span class="n">plot_filename</span><span class="o">=</span><span class="n">plot_filename</span>
-            <span class="p">)</span></div></div>
+            <span class="p">)</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">spec_fig</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="sEIT.plot_pseudosections"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.plot_pseudosections">[docs]</a>    <span class="k">def</span> <span class="nf">plot_pseudosections</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a multi-plot with one pseudosection for each frequency.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        column : string</span>
+<span class="sd">            which column to plot</span>
+<span class="sd">        filename : None|string</span>
+<span class="sd">            output filename. If set to None, do not write to file. Default:</span>
+<span class="sd">            None</span>
+<span class="sd">        return_fig : bool</span>
+<span class="sd">            if True, return the generated figure object. Default: False</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fig : None|matplotlib.Figure</span>
+<span class="sd">            if return_fig is set to True, return the generated Figure object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+
+        <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+            <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+            <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">20</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
+            <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span><span class="p">(</span>
+                <span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span>
+            <span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">return_fig</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">fig</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="sEIT.export_to_directory_crtomo"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.export_to_directory_crtomo">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_directory_crtomo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;norrec&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export the sEIT data into data files that can be read by CRTomo.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        directory : string</span>
+<span class="sd">            output directory. will be created if required</span>
+<span class="sd">        norrec : string (nor|rec|norrec)</span>
+<span class="sd">            Which data to export. Default: norrec</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">export_crtomo</span><span class="o">.</span><span class="n">write_files_to_directory</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="n">norrec</span>
+        <span class="p">)</span></div></div>
 </pre></div>
 
           </div>

@@ -45,6 +45,9 @@ Status of REDA
     * - Syscal text import
       - :green:`working`
       -
+    * - Syscal binary import
+      - :green:`working`
+      -
     * - bert
       - :green:`working`
       -
