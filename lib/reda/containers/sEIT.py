@@ -7,6 +7,7 @@ from numbers import Number
 import numpy as np
 import pandas as pd
 
+from reda.main.logger import LoggingClass
 import reda.importers.eit_fzj as eit_fzj
 import reda.importers.radic_sip256c as reda_sip256c
 import reda.importers.crtomo as reda_crtomo_exporter
@@ -16,15 +17,14 @@ import reda.utils.geometric_factors as geometric_factors
 from reda.utils.fix_sign_with_K import fix_sign_with_K
 import reda.eis.plots as eis_plot
 
+from reda.utils.decorators_and_managers import append_doc_of, prepend_doc_of
+from reda.utils.decorators_and_managers import LogDataChanges
+
+import reda.exporters.crtomo as exporter_crtomo
+
+import reda.plotters.pseudoplots as PS
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
-
-
-def append_doc_of(fun):
-    def decorator(f):
-        f.__doc__ += fun.__doc__
-        return f
-    return decorator
 
 
 class importers(object):
@@ -105,13 +105,15 @@ class importers(object):
         self._describe_data(df_emd)
 
 
-class sEIT(importers):
+class sEIT(LoggingClass, importers):
 
     def __init__(self, dataframe=None):
+        self.setup_logger()
         if dataframe is not None:
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
         self.data = dataframe
+
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
@@ -166,6 +168,31 @@ class sEIT(importers):
         result = self.data.query(query, inplace=inplace)
         return result
 
+    def filter(self, query, inplace=True):
+        """Use a query statement to filter data. Note that you specify the data
+        to be removed!
+
+        Parameters
+        ----------
+        query : string
+            The query string to be evaluated. Is directly provided to
+            pandas.DataFrame.query
+        inplace : bool
+            if True, change the container dataframe in place (defaults to True)
+
+        Returns
+        -------
+        result : :py:class:`pandas.DataFrame`
+            DataFrame that contains the result of the filter application
+
+        """
+        with LogDataChanges(self, filter_action='filter', filter_query=query):
+            result = self.data.query(
+                'not ({0})'.format(query),
+                inplace=inplace,
+            )
+        return result
+
     def remove_frequencies(self, fmin, fmax):
         """Remove frequencies from the dataset
         """
@@ -177,7 +204,7 @@ class sEIT(importers):
         print('Remaining frequencies:')
         print(sorted(g.groups.keys()))
 
-    def gen_geometric_factors_analytical(self, spacing):
+    def compute_K_analytical(self, spacing):
         """Assuming an equal electrode spacing, compute the K-factor over a
         homogeneous half-space.
 
@@ -193,6 +220,7 @@ class sEIT(importers):
         assert isinstance(spacing, Number)
         K = geometric_factors.compute_K_analytical(self.data, spacing)
         self.data = geometric_factors.apply_K(self.data, K)
+        fix_sign_with_K(self.data)
 
     @append_doc_of(fix_sign_with_K)
     def fix_sign_with_K(self):
@@ -418,7 +446,63 @@ class sEIT(importers):
                 outdir + os.sep,
                 '{:04}_spectrum_id_{}.png'.format(nr, name)
             ))
-            self.get_spectrum(
+            spec_nor, spec_rec, spec_fig = self.get_spectrum(
                 nr_id=name,
                 plot_filename=plot_filename
             )
+            plt.close(spec_fig)
+
+    def plot_pseudosections(self, column, filename=None, return_fig=False):
+        """Create a multi-plot with one pseudosection for each frequency.
+
+        Parameters
+        ----------
+        column : string
+            which column to plot
+        filename : None|string
+            output filename. If set to None, do not write to file. Default:
+            None
+        return_fig : bool
+            if True, return the generated figure object. Default: False
+
+        Returns
+        -------
+        fig : None|matplotlib.Figure
+            if return_fig is set to True, return the generated Figure object
+        """
+        assert column in self.data.columns
+
+        g = self.data.groupby('frequency')
+        fig, axes = plt.subplots(
+            4, 2,
+            figsize=(15 / 2.54, 20 / 2.54),
+            sharex=True, sharey=True
+        )
+        for ax, (key, item) in zip(axes.flat, g):
+            fig, ax, cb = PS.plot_pseudosection_type2(
+                item, ax=ax, column=column
+            )
+            ax.set_title('f: {} Hz'.format(key))
+        fig.tight_layout()
+        if filename is not None:
+            fig.savefig(filename, dpi=300)
+
+        if return_fig:
+            return fig
+        else:
+            plt.close(fig)
+
+    def export_to_directory_crtomo(self, directory, norrec='norrec'):
+        """Export the sEIT data into data files that can be read by CRTomo.
+
+        Parameters
+        ----------
+        directory : string
+            output directory. will be created if required
+        norrec : string (nor|rec|norrec)
+            Which data to export. Default: norrec
+
+        """
+        export_crtomo.write_files_to_directory(
+            self.data, directory, norrec=norrec
+        )
