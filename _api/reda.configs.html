@@ -398,6 +398,19 @@ append to configurations.</p>
 </dl>
 </dd>
 </dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cfgs</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">nor</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">gen_dipole_dipole</span><span class="p">(</span><span class="n">skipc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">rec</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">gen_reciprocals</span><span class="p">(</span><span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cfgs</span><span class="o">.</span><span class="n">configs</span><span class="p">)</span>
+<span class="go">[[1 2 3 4]</span>
+<span class="go"> [1 2 4 5]</span>
+<span class="go"> [2 3 4 5]</span>
+<span class="go"> [3 4 1 2]</span>
+<span class="go"> [4 5 1 2]</span>
+<span class="go"> [4 5 2 3]]</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">
