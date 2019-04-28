@@ -18,20 +18,8 @@ import reda.utils.geometric_factors as redaK
 from reda.utils import has_multiple_timesteps
 from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
-def append_doc_of(fun):
-    def decorator(f):
-        f.__doc__ += fun.__doc__
-        return f
-
-    return decorator
-
-
-def prepend_doc_of(fun):
-    def decorator(f):
-        f.__doc__ = fun.__doc__ + f.__doc__
-        return f
-
-    return decorator
+from reda.utils.decorators_and_managers import append_doc_of, prepend_doc_of
+from reda.utils.decorators_and_managers import LogDataChanges
 
 
 class Importers(object):
