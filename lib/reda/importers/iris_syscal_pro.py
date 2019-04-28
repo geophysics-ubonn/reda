@@ -229,7 +229,7 @@ def import_bin(filename, **kwargs):
         jump = np.where(diff != 1)[0]
         if len(jump) > 0:
             print('WARNING: One or more jumps in measurement numbers detected')
-            print('The jump indices are':)
+            print('The jump indices are:')
             for jump_nr in jump:
                 print(jump_nr)
 
