@@ -646,16 +646,31 @@ class ConfigManager(object):
         append : bool
             Append reciprocals to configs (the default is False).
 
+        Examples
+        --------
+        >>> cfgs = ConfigManager(nr_of_electrodes=5)
+        >>> nor = cfgs.gen_dipole_dipole(skipc=0)
+        >>> rec = cfgs.gen_reciprocals(append=True)
+        >>> print(cfgs.configs)
+        [[1 2 3 4]
+         [1 2 4 5]
+         [2 3 4 5]
+         [3 4 1 2]
+         [4 5 1 2]
+         [4 5 2 3]]
         """
         # Switch AB and MN
         reciprocals = self.configs.copy()[:, ::-1]
-
-        # Sort by current dipoles
-        ind = np.lexsort((reciprocals[:, 0], reciprocals[:, 1]))
+        reciprocals[:, 0:2] = np.sort(reciprocals[:, 0:2], axis=1)
+        reciprocals[:, 2:4] = np.sort(reciprocals[:, 2:4], axis=1)
+        # # Sort by current dipoles
+        ind = np.lexsort((reciprocals[:, 3], reciprocals[:, 2],
+                          reciprocals[:, 1], reciprocals[:, 0]))
+        reciprocals = reciprocals[ind]
 
         if append:
-            self.configs = np.vstack((self.configs, reciprocals[ind]))
-        return reciprocals[ind]
+            self.configs = np.vstack((self.configs, reciprocals))
+        return reciprocals
 
     def gen_configs_permutate(self,
                               injections_raw,
