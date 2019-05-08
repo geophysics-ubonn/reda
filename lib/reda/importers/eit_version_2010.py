@@ -1,3 +1,5 @@
+"""Research Center Jülich - EIT40 system importer (2010 version)
+"""
 import datetime
 
 import numpy as np
@@ -174,6 +176,9 @@ def _extract_emd(mat, **kwargs):
     # sort current injections
     condition = df['a'] > df['b']
     df.loc[condition, ['a', 'b']] = df.loc[condition, ['b', 'a']].values
+    # for some reason we lose the integer casting of a and b here
+    df['a'] = df['a'].astype(int)
+    df['b'] = df['b'].astype(int)
     # change sign because we changed A and B
     df.loc[condition, ['Z1', 'Z2', 'Z3']] *= -1
 
