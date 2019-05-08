@@ -1,4 +1,7 @@
 #!/usr/bin/env python
+import os
+import glob
+
 from setuptools import setup, find_packages
 
 # under windows, run
@@ -7,6 +10,12 @@ from setuptools import setup, find_packages
 
 version_short = '0.1'
 version_long = '0.1.3'
+
+# package data
+os.chdir('lib/reda/testing')
+package_data = glob.glob('data/*')
+os.chdir('../../../')
+
 
 if __name__ == '__main__':
     setup(
@@ -21,6 +30,7 @@ if __name__ == '__main__':
         url='https://github.com/geophysics-ubonn/reda',
         packages=find_packages("lib"),
         package_dir={'': 'lib'},
+        package_data={'reda.testing': package_data},
         install_requires=['numpy', 'scipy', 'pandas', 'matplotlib'],
         classifiers=(
             "Programming Language :: Python :: 3",
