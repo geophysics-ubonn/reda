@@ -14,12 +14,13 @@ def save_block_to_crt(filename, group, norrec='all', store_errors=False):
     group : pandas.group
         Data group
     norrec : string
-        Which data to export Possible values: all|nor|rec
+        Which data to export Possible values: all|norrec|nor|rec
     store_errors : bool
         If true, store errors of the data in a separate column
 
     """
-    if norrec != 'all':
+    if norrec not in ('all', 'norrec'):
+        assert norrec in ('nor', 'rec')
         group = group.query('norrec == "{0}"'.format(norrec))
 
     # todo: we need to fix the global naming scheme for columns!
