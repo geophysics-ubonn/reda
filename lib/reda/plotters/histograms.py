@@ -170,13 +170,12 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
         timestep, frequency.
     subquery : string, optional
         ?
-
     log10 : bool
         Plot only log10 transformation of data (default: False)
     lin_and_log10 : bool
         Plot both linear and log10 representation of data (default: False)
     Nx : int, optional
-        ?
+        Number of subplots in x direction
 
     Returns
     -------
