@@ -544,24 +544,26 @@ class sEIT(LoggingClass, importers):
         return seit
 
     def plot_histograms(
-            self, column='r', filename=None, log10=False, **kwargs):
+            self, column='r', primary_dim=None, filename=None, **kwargs):
         """Plot a histograms for all frequencies of one data column
 
+        TODO: Check saving to file for more than one secondary dimension
         Parameters
         ----------
         """
-        return_dict = HS.plot_histograms(self.data, column)
+        dict_dimension, figs = HS.plot_histograms_extra_dims(
+            self.data, column, primary_dim, **kwargs)
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
-        return return_dict
+        return dict_dimension, figs
 
     @property
     def nr_frequencies(self):
         """Return the number of frequencies in the data set"""
         if self.data is None:
             return 0
-        N_f = len(self.data.groupby('frequency').groups.keys())
-        return N_f
+        group_f = self.data.groupby('frequency')
+        return group_f.ngroups
 
     @property
     def Nf(self):
@@ -575,3 +577,11 @@ class sEIT(LoggingClass, importers):
             return 0
         frequencies = sorted(self.data.groupby('frequency').groups.keys())
         return frequencies
+
+    @property
+    def nr_timesteps(self):
+        """Return the number of timesteps registered with this container"""
+        if self.data is None or 'timestep' not in self.data:
+            return 0
+        group_ts = self.data.groupby('timestep')
+        return group_ts.ngroups
