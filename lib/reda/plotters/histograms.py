@@ -130,25 +130,51 @@ def plot_histograms(ertobj, keys, **kwargs):
     return figures
 
 
-def plot_histograms_extra_dims(dataobj, keys, **kwargs):
-    """Produce histograms grouped by the extra dimensions.
+def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
+    """Produce histograms grouped by one extra dimensions. Produce additional
+    figures for all extra dimensions.
+
+    The dimension to spread out along subplots is called the primary extra
+    dimension.
 
     Extra dimensions are:
 
     * timesteps
     * frequency
 
+    If only "timesteps" are present, timesteps will be plotted as subplots.
+
+    If only "frequencies" are present, frequencies will be plotted as subplots.
+
+    If more than one extra dimensions is present, multiple figures will be
+    generated.
+
+    Test cases:
+
+    * not extra dims present (primary_dim=None, timestep, frequency)
+    * timestep (primary_dim=None, timestep, frequency)
+    * frequency (primary_dim=None, timestep, frequency)
+    * timestep + frequency (primary_dim=None, timestep, frequency)
+
+    check nr of returned figures.
+
     Parameters
     ----------
     dataobj : :py:class:`pandas.DataFrame` or reda container
         The data container/data frame which holds the data
-    keys:   list|tuple|iterable
+    keys :   string|list|tuple|iterable
         The keys (columns) of the dataobj to plot
+    primary_dim : string
+        primary extra dimension to plot along subplots. If None, the first
+        extra dimension found in the data set is used, in the following order:
+        timestep, frequency.
     subquery : string, optional
         ?
 
-    log10plot: bool
-        if True, generate linear and log10 versions of the histogram
+    log10 : bool
+        Plot only log10 transformation of data (default: False)
+    lin_and_log10 : bool
+        Plot both linear and log10 representation of data (default: False)
     Nx : int, optional
         ?
 
@@ -177,79 +203,143 @@ def plot_histograms_extra_dims(dataobj, keys, **kwargs):
     else:
         df = df_raw
 
-    split_timestamps = True
-    if split_timestamps:
-        group_timestamps = df.groupby('timestep')
-        N_ts = len(group_timestamps.groups.keys())
-    else:
-        group_timestamps = ('all', df)
-        N_ts = 1
+    # define some labels
+    edim_labels = {
+        'timestep': (
+            'time',
+            ''
+        ),
+        'frequency': (
+            'frequency',
+            'Hz',
+        ),
+    }
 
+    # prepare data columns to plot
+    if isinstance(keys, str):
+        keys = [keys, ]
     columns = keys
     N_c = len(columns)
 
-    plot_log10 = kwargs.get('log10plot', False)
-    if plot_log10:
+    # create log10 plots?
+    if kwargs.get('lin_and_log10', False):
         transformers = ['lin', 'log10']
-        N_log10 = 2
+        N_trafo = 2
+    elif kwargs.get('log10', False):
+        transformers = ['log10', ]
+        N_trafo = 1
     else:
         transformers = ['lin', ]
-        N_log10 = 1
+        N_trafo = 1
 
-    # determine layout of plots
-    Nx_max = kwargs.get('Nx', 4)
-    N = N_ts * N_c * N_log10
-    Nx = min(Nx_max, N)
-    Ny = int(np.ceil(N / Nx))
+    # available extra dimensions
+    extra_dims = ('timestep', 'frequency')
 
-    size_x = 5 * Nx / 2.54
-    size_y = 5 * Ny / 2.54
-    fig, axes = plt.subplots(Ny, Nx, figsize=(size_x, size_y), sharex=True,
-                             sharey=True)
-    axes = np.atleast_2d(axes)
+    # select dimension to plot into subplots
+    if primary_dim is None or primary_dim not in df.columns:
+        for extra_dim in extra_dims:
+            if extra_dim in df.columns:
+                primary_dim = extra_dim
+    # now primary_dim is either None (i.e., we don't have any extra dims to
+    # group), or it contains a valid column to group
 
-    index = 0
-    for ts_name, tgroup in group_timestamps:
-        for column in columns:
-            for transformer in transformers:
-                # print('{0}-{1}-{2}'.format(ts_name, column, transformer))
+    # now prepare the secondary dimensions for which we create extra figures
+    secondary_dimensions = []
+    for extra_dim in extra_dims:
+        if extra_dim in df.columns and extra_dim != primary_dim:
+            secondary_dimensions.append(extra_dim)
 
-                subdata_raw = tgroup[column].values
-                subdata = subdata_raw[~np.isnan(subdata_raw)]
-                subdata = subdata[np.isfinite(subdata)]
+    # group secondary dimensions, or create a tuple with all the data
+    if secondary_dimensions:
+        group_secondary = df.groupby(secondary_dimensions)
+    else:
+        group_secondary = ('all', df)
 
-                if transformer == 'log10':
-                    subdata_log10_with_nan = np.log10(subdata[subdata > 0])
-                    subdata_log10 = subdata_log10_with_nan[~np.isnan(
-                        subdata_log10_with_nan)
-                    ]
+    figures = {}
+    for sec_g_name, sec_g in group_secondary:
+        # group over primary dimension
+        if primary_dim is None:
+            group_primary = ('all', sec_g)
+            N_primary = 1
+        else:
+            group_primary = sec_g.groupby(primary_dim)
+            N_primary = group_primary.ngroups
 
-                    subdata_log10 = subdata_log10[np.isfinite(subdata_log10)]
-                    subdata = subdata_log10
+        # determine layout of Figure
+        Nx_max = kwargs.get('Nx', 4)
+        N = N_primary * N_c * N_trafo
+        Nx = min(Nx_max, N)
+        Ny = int(np.ceil(N / Nx))
 
-                ax = axes.flat[index]
-                ax.hist(
-                    subdata,
-                    _get_nr_bins(subdata.size),
-                )
-                ax.set_xlabel(
-                    units.get_label(column)
-                )
-                ax.set_ylabel('count')
-                ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(3))
-                ax.tick_params(axis='both', which='major', labelsize=6)
-                ax.tick_params(axis='both', which='minor', labelsize=6)
-                ax.set_title("timestep: %d" % ts_name)
+        size_x = 5 * Nx / 2.54
+        size_y = 5 * Ny / 2.54
+        fig, axes = plt.subplots(
+            Ny, Nx,
+            figsize=(size_x, size_y),
+            sharex=True,
+            sharey=True
+        )
+        axes = np.atleast_2d(axes)
 
-                index += 1
+        index = 0
+        for p_name, pgroup in group_primary:
+            for column in columns:
+                for transformer in transformers:
+                    # print('{0}-{1}-{2}'.format(ts_name, column, transformer))
 
-    # remove some labels
-    for ax in axes[:, 1:].flat:
-        ax.set_ylabel('')
-    for ax in axes[:-1, :].flat:
-        ax.set_xlabel('')
-    fig.tight_layout()
-    return fig
+                    subdata_raw = pgroup[column].values
+                    subdata = subdata_raw[~np.isnan(subdata_raw)]
+                    subdata = subdata[np.isfinite(subdata)]
+
+                    if transformer == 'log10':
+                        subdata_log10_with_nan = np.log10(subdata[subdata > 0])
+                        subdata_log10 = subdata_log10_with_nan[~np.isnan(
+                            subdata_log10_with_nan)
+                        ]
+
+                        subdata_log10 = subdata_log10[np.isfinite(subdata_log10)]
+                        subdata = subdata_log10
+
+                    ax = axes.flat[index]
+                    ax.hist(
+                        subdata,
+                        _get_nr_bins(subdata.size),
+                    )
+                    ax.set_xlabel(
+                        units.get_label(column)
+                    )
+                    ax.set_ylabel('count')
+                    ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(3))
+                    ax.tick_params(axis='both', which='major', labelsize=6)
+                    ax.tick_params(axis='both', which='minor', labelsize=6)
+                    # depending on the type of pname, change the format
+                    p_name_fmt = '{}'
+                    from numbers import Number
+                    if isinstance(p_name, Number):
+                        p_name_fmt = '{:.4f}'
+                    title_str = '{}: ' + p_name_fmt + ' {}'
+                    ax.set_title(
+                        title_str.format(
+                            edim_labels[primary_dim][0],
+                            p_name,
+                            edim_labels[primary_dim][1],
+                        ),
+                        fontsize=7.0,
+                    )
+
+                    index += 1
+
+        # remove some labels
+        for ax in axes[:, 1:].flat:
+            ax.set_ylabel('')
+        for ax in axes[:-1, :].flat:
+            ax.set_xlabel('')
+
+        fig.tight_layout()
+        for ax in axes.flat[index:]:
+            ax.set_visible(False)
+        figures[sec_g_name] = fig
+    return '_'.join(secondary_dimensions), figures
 
 
 def plot_histograms_it_extra_dims(dataobj, keys, extra_dims, **kwargs):
