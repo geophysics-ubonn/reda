@@ -23,6 +23,8 @@ from reda.utils.decorators_and_managers import LogDataChanges
 import reda.exporters.crtomo as exporter_crtomo
 
 import reda.plotters.pseudoplots as PS
+import reda.plotters.histograms as HS
+
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
 
@@ -48,40 +50,53 @@ class importers(object):
         self.data = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
 
     def _describe_data(self, df=None):
-        return
         if df is None:
             df_to_use = self.data
         else:
             df_to_use = df
-        print(df_to_use.describe())
+        cols = []
+        for test_col in self.required_data_columns:
+            if test_col in df_to_use.columns:
+                cols.append(test_col)
+        print(df_to_use[cols].describe())
 
     @append_doc_of(reda_crtomo_exporter.load_seit_data)
     def import_crtomo(self, directory, frequency_file='frequencies.dat',
                       data_prefix='volt_', **kwargs):
         """CRTomo importer"""
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
 
-        # we get not electrode positions (dummy1) and no topography data
+        # we get no electrode positions (dummy1) and no topography data
         # (dummy2)
-        df, dummy1, dumm2 = reda_crtomo_exporter.load_seit_data(
+        data, dummy1, dumm2 = reda_crtomo_exporter.load_seit_data(
             directory, frequency_file, data_prefix, **kwargs)
-        self._add_to_container(df)
+        if timestep is not None:
+            data['timestep'] = timestep
+        self._add_to_container(data)
 
         print('Summary:')
-        self._describe_data(df)
+        self._describe_data(data)
 
     def import_sip256c(self, filename, settings=None, reciprocal=None,
                        **kwargs):
         """Radic SIP256c data import"""
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
         if settings is None:
             settings = {}
         # we get not electrode positions (dummy1) and no topography data
         # (dummy2)
-        df, dummy1, dummy2 = reda_sip256c.parse_radic_file(
+        data, dummy1, dummy2 = reda_sip256c.parse_radic_file(
             filename, settings, reciprocal=reciprocal, **kwargs)
-        self._add_to_container(df)
+        if timestep is not None:
+            data['timestep'] = timestep
+        self._add_to_container(data)
 
         print('Summary:')
-        self._describe_data(df)
+        self._describe_data(data)
 
     def import_eit_fzj(self, filename, configfile, correction_file=None,
                        timestep=None, **kwargs):
@@ -113,6 +128,8 @@ class sEIT(LoggingClass, importers):
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
         self.data = dataframe
+
+        self.required_data_columns = ['r', 'rpha']
 
 
     def check_dataframe(self, dataframe):
@@ -347,6 +364,7 @@ class sEIT(LoggingClass, importers):
         frequencies = np.array(
             list(sorted(self.data.groupby('frequency').groups.keys()))
         )
+        assert frequencies.size > 0
         assert flimit >= frequencies.min() and flimit <= frequencies.max()
         Nlimit = len(np.where(frequencies <= flimit)[0])
         Naccept = np.ceil(Nlimit * percAccept / 100.0)
@@ -463,12 +481,14 @@ class sEIT(LoggingClass, importers):
             output filename. If set to None, do not write to file. Default:
             None
         return_fig : bool
-            if True, return the generated figure object. Default: False
+            if True, return the generated figure object, also if filename is
+            set. Default: False
 
         Returns
         -------
         fig : None|matplotlib.Figure
-            if return_fig is set to True, return the generated Figure object
+            if return_fig is set to True or filename is None, return the
+            generated Figure object
         """
         assert column in self.data.columns
 
@@ -482,12 +502,12 @@ class sEIT(LoggingClass, importers):
             fig, ax, cb = PS.plot_pseudosection_type2(
                 item, ax=ax, column=column
             )
-            ax.set_title('f: {} Hz'.format(key))
+            ax.set_title('f: {:.3f} Hz'.format(key))
         fig.tight_layout()
         if filename is not None:
             fig.savefig(filename, dpi=300)
 
-        if return_fig:
+        if return_fig or filename is None:
             return fig
         else:
             plt.close(fig)
@@ -523,3 +543,35 @@ class sEIT(LoggingClass, importers):
         seit = crtomo.eitMan(grid=grid, seit_data=seit_data)
         return seit
 
+    def plot_histograms(
+            self, column='r', filename=None, log10=False, **kwargs):
+        """Plot a histograms for all frequencies of one data column
+
+        Parameters
+        ----------
+        """
+        return_dict = HS.plot_histograms(self.data, column)
+        if filename is not None:
+            return_dict['all'].savefig(filename, dpi=300)
+        return return_dict
+
+    @property
+    def nr_frequencies(self):
+        """Return the number of frequencies in the data set"""
+        if self.data is None:
+            return 0
+        N_f = len(self.data.groupby('frequency').groups.keys())
+        return N_f
+
+    @property
+    def Nf(self):
+        """Shortcut for self.nr_frequencies"""
+        return self.nr_frequencies()
+
+    @property
+    def frequencies(self):
+        """Return the frequencies contained in the data set"""
+        if self.data is None:
+            return 0
+        frequencies = sorted(self.data.groupby('frequency').groups.keys())
+        return frequencies
