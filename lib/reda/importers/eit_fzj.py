@@ -214,28 +214,47 @@ def compute_quadrupoles(df_emd, config_file):
     return dfn
 
 
-def apply_correction_factors(df, correction_file):
+def apply_correction_factors(df, correction_data):
     """Apply correction factors for a pseudo-2D measurement setup. See Weigand
     and Kemna, 2017, Biogeosciences, for detailed information.
+
+    Parameters
+    ----------
+    df : :py:class:`pandas.DataFrame`
+        DataFrame containing the data
+    correction_data : string|iterable of strings|:py:class:`numpy.ndarray`
+        Correction data, either as a filename, a list of filenames to be
+        merged, or directly as a numpy array
+
+    Returns
+    -------
+    df : :py:class:`pandas.DataFrame`
+        Corrected data
+    corr_data : :py:class:`numpy.ndarray`
+        Correction factors used
+
     """
-    if isinstance(correction_file, (list, tuple)):
+    if isinstance(correction_data, (list, tuple)):
         corr_data_raw = np.vstack(
-            [np.loadtxt(x) for x in correction_file]
+            [np.loadtxt(x) for x in correction_data]
         )
+    elif isinstance(correction_data, np.ndarray):
+        corr_data_raw = correction_data
     else:
-        corr_data_raw = np.loadtxt(correction_file)
+        # assume only one data file
+        corr_data_raw = np.loadtxt(correction_data)
 
-        if corr_data_raw.shape[1] == 3:
-            A = (corr_data_raw[:, 0] / 1e4).astype(int)
-            B = (corr_data_raw[:, 0] % 1e4).astype(int)
-            M = (corr_data_raw[:, 1] / 1e4).astype(int)
-            N = (corr_data_raw[:, 1] % 1e4).astype(int)
-            corr_data = np.vstack((A, B, M, N, corr_data_raw[:, 2])).T
+    assert corr_data_raw.shape[1] in (3, 5)
+    # if required, convert from CRTomo electrode denotations in (a,b,m,n) style
+    if corr_data_raw.shape[1] == 3:
+        A = (corr_data_raw[:, 0] / 1e4).astype(int)
+        B = (corr_data_raw[:, 0] % 1e4).astype(int)
+        M = (corr_data_raw[:, 1] / 1e4).astype(int)
+        N = (corr_data_raw[:, 1] % 1e4).astype(int)
+        corr_data = np.vstack((A, B, M, N, corr_data_raw[:, 2])).T
+    else:
+        corr_data = corr_data_raw
 
-        elif corr_data_raw.shape[1] == 5:
-            corr_data = corr_data_raw
-        else:
-            raise Exception('error')
     corr_data[:, 0:2] = np.sort(corr_data[:, 0:2], axis=1)
     corr_data[:, 2:4] = np.sort(corr_data[:, 2:4], axis=1)
 
