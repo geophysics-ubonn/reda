@@ -119,22 +119,32 @@ seit.query('k < 400')
 
 ###############################################################################
 # Now export the data to CRTomo-compatible files
-import reda.exporters.crtomo as redaex
-redaex.write_files_to_directory(seit.data, 'crt_results', norrec='nor', )
+# this context manager executes all code within the given directory
+with reda.CreateEnterDirectory('output_eit_fzj_check'):
+    import reda.exporters.crtomo as redaex
+    redaex.write_files_to_directory(seit.data, 'crt_results', norrec='nor', )
 
 ###############################################################################
 # Plot pseudosections of all frequencies
 import reda.plotters.pseudoplots as PS
 import pylab as plt
 
-g = seit.data.groupby('frequency')
-fig, axes = plt.subplots(
-    4, 2,
-    figsize=(15 / 2.54, 20 / 2.54),
-    sharex=True, sharey=True
-)
-for ax, (key, item) in zip(axes.flat, g):
-    fig, ax, cb = PS.plot_pseudosection_type2(item, ax=ax, column='r')
-    ax.set_title('f: {} Hz'.format(key))
-fig.tight_layout()
-fig.savefig('pseudosections_eit40.pdf')
+with reda.CreateEnterDirectory('output_eit_fzj_check'):
+    g = seit.data.groupby('frequency')
+    fig, axes = plt.subplots(
+        4, 2,
+        figsize=(15 / 2.54, 20 / 2.54),
+        sharex=True, sharey=True
+    )
+    for ax, (key, item) in zip(axes.flat, g):
+        fig, ax, cb = PS.plot_pseudosection_type2(item, ax=ax, column='r')
+        ax.set_title('f: {} Hz'.format(key))
+    fig.tight_layout()
+    fig.savefig('pseudosections_eit40.pdf')
+
+###############################################################################
+# alternative
+with reda.CreateEnterDirectory('output_eit_fzj_check'):
+    seit.plot_pseudosections(
+        column='r', filename='pseudosections_eit40_v2.pdf'
+    )
