@@ -2,6 +2,7 @@
 set up the logger for EDF
 """
 import logging
+import datetime
 
 
 def setup_logger():
