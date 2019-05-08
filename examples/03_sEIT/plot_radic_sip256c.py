@@ -56,22 +56,23 @@ fig, ax, cb = PS.plot_pseudosection_type2(
 # Plot pseudosections of all frequencies
 import reda.plotters.pseudoplots as PS
 import pylab as plt
-fig, axes = plt.subplots(
-    7, 2,
-    figsize=(15 / 2.54, 25 / 2.54),
-    sharex=True, sharey=True
-)
-for ax, (key, item) in zip(axes.flat, g):
-    fig, ax, cb = PS.plot_pseudosection_type2(
-        item, ax=ax, column='r', log10=True)
-    ax.set_title('f: {} Hz'.format(key))
-fig.subplots_adjust(
-    hspace=1,
-    wspace=0.5,
-    right=0.9,
-    top=0.95,
-)
-fig.savefig('pseudosections_radic.pdf')
+with reda.CreateEnterDirectory('output_radic'):
+    fig, axes = plt.subplots(
+        7, 2,
+        figsize=(15 / 2.54, 25 / 2.54),
+        sharex=True, sharey=True
+    )
+    for ax, (key, item) in zip(axes.flat, g):
+        fig, ax, cb = PS.plot_pseudosection_type2(
+            item, ax=ax, column='r', log10=True)
+        ax.set_title('f: {} Hz'.format(key))
+    fig.subplots_adjust(
+        hspace=1,
+        wspace=0.5,
+        right=0.9,
+        top=0.95,
+    )
+    fig.savefig('pseudosections_radic.pdf')
 
 ###############################################################################
 # plotting of SIP/EIS spectra is still somewhat cumbersome, but will be
@@ -96,4 +97,5 @@ spectrum_rec = eis_plot.sip_response(
     frequencies=subdata_rec['frequency'].values,
     rcomplex=subdata_rec['r'] * np.exp(1j * subdata_rec['rpha'] / 1000)
 )
-spectrum_nor.plot('spectrum.pdf', reciprocal=spectrum_rec, return_fig=True)
+with reda.CreateEnterDirectory('output_radic'):
+    spectrum_nor.plot('spectrum.pdf', reciprocal=spectrum_rec, return_fig=True)
