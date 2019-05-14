@@ -168,8 +168,8 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
         primary extra dimension to plot along subplots. If None, the first
         extra dimension found in the data set is used, in the following order:
         timestep, frequency.
-    subquery : string, optional
-        ?
+    subquery : str, optional
+        if provided, apply this query statement to the data before plotting
     log10 : bool
         Plot only log10 transformation of data (default: False)
     lin_and_log10 : bool
@@ -179,18 +179,24 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
 
     Returns
     -------
+    dim_name : str
+        name of secondary dimensions, i.e. the dimensions for which separate
+        figures were created
+    figures : dict
+        dict containing the generated figures. The keys of the dict correspond
+        to the secondary dimension grouping keys
 
     Examples
     --------
     >>> import reda.testing.containers
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.histograms as RH
-    >>> fig = RH.plot_histograms_extra_dims(ert, ['r', ])
+    >>> dim_name, fig = RH.plot_histograms_extra_dims(ert, ['r', ])
 
     >>> import reda.testing.containers
     >>> ert = reda.testing.containers.ERTContainer_nr
     >>> import reda.plotters.histograms as RH
-    >>> fig = RH.plot_histograms_extra_dims(ert, ['r', 'a'])
+    >>> dim_name, fig = RH.plot_histograms_extra_dims(ert, ['r', 'a'])
     """
     if isinstance(dataobj, pd.DataFrame):
         df_raw = dataobj
@@ -252,13 +258,13 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
     if secondary_dimensions:
         group_secondary = df.groupby(secondary_dimensions)
     else:
-        group_secondary = ('all', df)
+        group_secondary = (('all', df), )
 
     figures = {}
     for sec_g_name, sec_g in group_secondary:
         # group over primary dimension
         if primary_dim is None:
-            group_primary = ('all', sec_g)
+            group_primary = (('all', sec_g), )
             N_primary = 1
         else:
             group_primary = sec_g.groupby(primary_dim)
