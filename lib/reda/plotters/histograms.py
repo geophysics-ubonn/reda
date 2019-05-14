@@ -345,25 +345,3 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
             ax.set_visible(False)
         figures[sec_g_name] = fig
     return '_'.join(secondary_dimensions), figures
-
-
-def plot_histograms_it_extra_dims(dataobj, keys, extra_dims, **kwargs):
-    """Produce histograms for each group of extra dimensions. \*\*kwargs are
-    directly passed on to plot_histograms().
-
-
-    """
-    if isinstance(dataobj, pd.DataFrame):
-        df = dataobj
-    else:
-        df = dataobj.df
-
-    g = df.groupby(extra_dims)
-
-    results = {}
-    for name in sorted(g.groups.keys()):
-        item = g.get_group(name)
-        plot_results = plot_histograms(item, keys, **kwargs)
-        results[name] = plot_results
-
-    return results
