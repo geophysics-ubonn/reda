@@ -91,3 +91,7 @@ def test_histogram_plotting():
     # expect 15 frequency plot, with four subplots each
     assert len(figs) == 12
     [plt.close(fig) for fig in figs.values()]
+
+    # take only the first timestep
+    seit.data = seit.data.query('timestep == 1 and frequency == 1')
+    name, figs = seit.plot_histograms('rho_a', 'timestep')
