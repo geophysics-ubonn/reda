@@ -512,7 +512,7 @@ class sEIT(LoggingClass, importers):
         else:
             plt.close(fig)
 
-    def export_to_directory_crtomo(self, directory, norrec='norrec'):
+    def export_to_crtomo_multi_frequency(self, directory, norrec='norrec'):
         """Export the sEIT data into data files that can be read by CRTomo.
 
         Parameters
@@ -527,9 +527,30 @@ class sEIT(LoggingClass, importers):
             self.data, directory, norrec=norrec
         )
 
+    def export_to_crtomo_one_frequency(
+            self, volt_file, frequency, norrec='norrec'):
+        """Export one frequency into a CRTomo volt.dat file
+
+        Parameters
+        ----------
+        volt_file : string
+            output file. Will be overwritten if it exists
+        frequency : float
+            frequency to export
+        norrec : string (nor|rec|norrec)
+            Which data to export. Default: norrec
+        """
+        assert isinstance(frequency, float)
+        frequency_data = self.data.query('frequency == {}'.format(frequency))
+        exporter_crtomo.save_block_to_crt(
+            volt_file, frequency_data, norrec=norrec
+        )
+
     def export_to_crtomo_seit_manager(self, grid):
         """Return a ready-initialized seit-manager object from the CRTomo
         tools. This function only works if the crtomo_tools are installed.
+
+        WARNING: Not timestep aware!
         """
         import crtomo
         g = self.data.groupby('frequency')
@@ -542,6 +563,19 @@ class sEIT(LoggingClass, importers):
                 ].values
         seit = crtomo.eitMan(grid=grid, seit_data=seit_data)
         return seit
+
+    def export_to_crtomo_td_manager(self, grid, frequency):
+        """Return a read-initialized tdman object from the CRTomo tools. Use
+        the given frequency data to initialize it.
+
+        WARNING: Not timestep aware!
+        """
+        import crtomo
+        data = self.data.query('frequency == {}'.format(frequency))[
+            ['a', 'b', 'm', 'n', 'r', 'rpha']
+        ]
+        tdman = crtomo.tdMan(grid=grid, volt_data=data)
+        return tdman
 
     def plot_histograms(
             self, column='r', primary_dim=None, filename=None, **kwargs):
