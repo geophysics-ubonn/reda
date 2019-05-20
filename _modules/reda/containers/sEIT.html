@@ -133,6 +133,8 @@
 <span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">exporter_crtomo</span>
 
 <span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
+<span class="kn">import</span> <span class="nn">reda.plotters.histograms</span> <span class="k">as</span> <span class="nn">HS</span>
+
 <span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
 <span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
@@ -158,40 +160,53 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">redanr</span><span class="o">.</span><span class="n">assign_norrec_diffs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">])</span>
 
     <span class="k">def</span> <span class="nf">_describe_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">return</span>
         <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">df_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">df_to_use</span> <span class="o">=</span> <span class="n">df</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+        <span class="n">cols</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">test_col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_data_columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">test_col</span> <span class="ow">in</span> <span class="n">df_to_use</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_col</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
 
 <div class="viewcode-block" id="importers.import_crtomo"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_crtomo">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_crtomo_exporter</span><span class="o">.</span><span class="n">load_seit_data</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">import_crtomo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">frequency_file</span><span class="o">=</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span>
                       <span class="n">data_prefix</span><span class="o">=</span><span class="s1">&#39;volt_&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;CRTomo importer&quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
 
-        <span class="c1"># we get not electrode positions (dummy1) and no topography data</span>
+        <span class="c1"># we get no electrode positions (dummy1) and no topography data</span>
         <span class="c1"># (dummy2)</span>
-        <span class="n">df</span><span class="p">,</span> <span class="n">dummy1</span><span class="p">,</span> <span class="n">dumm2</span> <span class="o">=</span> <span class="n">reda_crtomo_exporter</span><span class="o">.</span><span class="n">load_seit_data</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">dummy1</span><span class="p">,</span> <span class="n">dumm2</span> <span class="o">=</span> <span class="n">reda_crtomo_exporter</span><span class="o">.</span><span class="n">load_seit_data</span><span class="p">(</span>
             <span class="n">directory</span><span class="p">,</span> <span class="n">frequency_file</span><span class="p">,</span> <span class="n">data_prefix</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="importers.import_sip256c"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_sip256c">[docs]</a>    <span class="k">def</span> <span class="nf">import_sip256c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Radic SIP256c data import&quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
         <span class="k">if</span> <span class="n">settings</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">settings</span> <span class="o">=</span> <span class="p">{}</span>
         <span class="c1"># we get not electrode positions (dummy1) and no topography data</span>
         <span class="c1"># (dummy2)</span>
-        <span class="n">df</span><span class="p">,</span> <span class="n">dummy1</span><span class="p">,</span> <span class="n">dummy2</span> <span class="o">=</span> <span class="n">reda_sip256c</span><span class="o">.</span><span class="n">parse_radic_file</span><span class="p">(</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">dummy1</span><span class="p">,</span> <span class="n">dummy2</span> <span class="o">=</span> <span class="n">reda_sip256c</span><span class="o">.</span><span class="n">parse_radic_file</span><span class="p">(</span>
             <span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="n">reciprocal</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="importers.import_eit_fzj"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_eit_fzj">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit_fzj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -223,6 +238,8 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
         <span class="c1"># normal data (or full data, if reciprocals are not sorted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">dataframe</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">required_data_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]</span>
 
 
 <div class="viewcode-block" id="sEIT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
@@ -457,6 +474,7 @@
         <span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
             <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
         <span class="p">)</span>
+        <span class="k">assert</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span>
         <span class="k">assert</span> <span class="n">flimit</span> <span class="o">&gt;=</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="ow">and</span> <span class="n">flimit</span> <span class="o">&lt;=</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
         <span class="n">Nlimit</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">frequencies</span> <span class="o">&lt;=</span> <span class="n">flimit</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
         <span class="n">Naccept</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">Nlimit</span> <span class="o">*</span> <span class="n">percAccept</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span>
@@ -573,12 +591,14 @@
 <span class="sd">            output filename. If set to None, do not write to file. Default:</span>
 <span class="sd">            None</span>
 <span class="sd">        return_fig : bool</span>
-<span class="sd">            if True, return the generated figure object. Default: False</span>
+<span class="sd">            if True, return the generated figure object, also if filename is</span>
+<span class="sd">            set. Default: False</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        fig : None|matplotlib.Figure</span>
-<span class="sd">            if return_fig is set to True, return the generated Figure object</span>
+<span class="sd">            if return_fig is set to True or filename is None, return the</span>
+<span class="sd">            generated Figure object</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">assert</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span>
 
@@ -592,17 +612,17 @@
             <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span><span class="p">(</span>
                 <span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="n">column</span>
             <span class="p">)</span>
-            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{:.3f}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
         <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">return_fig</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">return_fig</span> <span class="ow">or</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="n">fig</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="sEIT.export_to_directory_crtomo"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.export_to_directory_crtomo">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_directory_crtomo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;norrec&#39;</span><span class="p">):</span>
+<div class="viewcode-block" id="sEIT.export_to_crtomo_multi_frequency"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.export_to_crtomo_multi_frequency">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_crtomo_multi_frequency</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;norrec&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Export the sEIT data into data files that can be read by CRTomo.</span>
 
 <span class="sd">        Parameters</span>
@@ -617,9 +637,30 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="n">norrec</span>
         <span class="p">)</span></div>
 
+<div class="viewcode-block" id="sEIT.export_to_crtomo_one_frequency"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.export_to_crtomo_one_frequency">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_crtomo_one_frequency</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">volt_file</span><span class="p">,</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;norrec&#39;</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export one frequency into a CRTomo volt.dat file</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        volt_file : string</span>
+<span class="sd">            output file. Will be overwritten if it exists</span>
+<span class="sd">        frequency : float</span>
+<span class="sd">            frequency to export</span>
+<span class="sd">        norrec : string (nor|rec|norrec)</span>
+<span class="sd">            Which data to export. Default: norrec</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">frequency</span><span class="p">,</span> <span class="nb">float</span><span class="p">)</span>
+        <span class="n">frequency_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency == </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frequency</span><span class="p">))</span>
+        <span class="n">exporter_crtomo</span><span class="o">.</span><span class="n">save_block_to_crt</span><span class="p">(</span>
+            <span class="n">volt_file</span><span class="p">,</span> <span class="n">frequency_data</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="n">norrec</span>
+        <span class="p">)</span></div>
+
 <div class="viewcode-block" id="sEIT.export_to_crtomo_seit_manager"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_crtomo_seit_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a ready-initialized seit-manager object from the CRTomo</span>
 <span class="sd">        tools. This function only works if the crtomo_tools are installed.</span>
+
+<span class="sd">        WARNING: Not timestep aware!</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="kn">import</span> <span class="nn">crtomo</span>
         <span class="n">g</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
@@ -631,8 +672,63 @@
                     <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]</span>
                 <span class="p">]</span><span class="o">.</span><span class="n">values</span>
         <span class="n">seit</span> <span class="o">=</span> <span class="n">crtomo</span><span class="o">.</span><span class="n">eitMan</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">seit_data</span><span class="o">=</span><span class="n">seit_data</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">seit</span></div></div>
+        <span class="k">return</span> <span class="n">seit</span></div>
 
+<div class="viewcode-block" id="sEIT.export_to_crtomo_td_manager"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.export_to_crtomo_td_manager">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_crtomo_td_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">frequency</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a read-initialized tdman object from the CRTomo tools. Use</span>
+<span class="sd">        the given frequency data to initialize it.</span>
+
+<span class="sd">        WARNING: Not timestep aware!</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">crtomo</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency == </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frequency</span><span class="p">))[</span>
+            <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]</span>
+        <span class="p">]</span>
+        <span class="n">tdman</span> <span class="o">=</span> <span class="n">crtomo</span><span class="o">.</span><span class="n">tdMan</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">volt_data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tdman</span></div>
+
+<div class="viewcode-block" id="sEIT.plot_histograms"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.plot_histograms">[docs]</a>    <span class="k">def</span> <span class="nf">plot_histograms</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">primary_dim</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Plot a histograms for all frequencies of one data column</span>
+
+<span class="sd">        TODO: Check saving to file for more than one secondary dimension</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">dict_dimension</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">HS</span><span class="o">.</span><span class="n">plot_histograms_extra_dims</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">column</span><span class="p">,</span> <span class="n">primary_dim</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">return_dict</span><span class="p">[</span><span class="s1">&#39;all&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">dict_dimension</span><span class="p">,</span> <span class="n">figs</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nr_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the number of frequencies in the data set&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">group_f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">group_f</span><span class="o">.</span><span class="n">ngroups</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">Nf</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Shortcut for self.nr_frequencies&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">nr_frequencies</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the frequencies contained in the data set&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">frequencies</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">return</span> <span class="n">frequencies</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">nr_timesteps</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the number of timesteps registered with this container&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
+            <span class="k">return</span> <span class="mi">0</span>
+        <span class="n">group_ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">group_ts</span><span class="o">.</span><span class="n">ngroups</span></div>
 </pre></div>
 
           </div>

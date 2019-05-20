@@ -18,7 +18,7 @@
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="Importing FZJ EIT40/EIT160 data" href="plot_eit_fzj.html" />
-    <link rel="prev" title="Checking FZJ-EIT data from a test board" href="plot_eit_fzj_check.html" />
+    <link rel="prev" title="Visualizing multi-dimensional sEIT data" href="plot_visualize_4d_data.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
   
@@ -79,7 +79,7 @@
 <ul>
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Examples</a><ul>
-      <li>Previous: <a href="plot_eit_fzj_check.html" title="previous chapter">Checking FZJ-EIT data from a test board</a></li>
+      <li>Previous: <a href="plot_visualize_4d_data.html" title="previous chapter">Visualizing multi-dimensional sEIT data</a></li>
       <li>Next: <a href="plot_eit_fzj.html" title="next chapter">Importing FZJ EIT40/EIT160 data</a></li>
   </ul></li>
   </ul></li>
@@ -137,11 +137,29 @@ keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 
 generating ids
 assigning ids
 Summary:
+                  r          rpha
+count  17296.000000  17296.000000
+mean       0.103359    -26.094259
+std        0.502375    158.399473
+min       -0.004810  -1519.275953
+25%        0.000402    -34.240087
+50%        0.001690    -12.370806
+75%        0.009303     -2.954275
+max        8.302502   1550.029178
 number of readings 47
 keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
 generating ids
 assigning ids
 Summary:
+                  r          rpha
+count  17296.000000  17296.000000
+mean       0.103662    -30.295630
+std        0.505864    109.403119
+min       -0.001106  -1501.807127
+25%        0.000394    -31.970330
+50%        0.001661    -12.980625
+75%        0.009241     -3.972588
+max        8.459530   1526.862201
 </pre></div>
 </div>
 <p>compute K factors (electrode spacing was 3 m)</p>
@@ -186,22 +204,23 @@ Summary:
 <p>Plot pseudosections of all frequencies</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
 <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
-    <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">25</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
-    <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span>
-        <span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span>
-    <span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
-    <span class="n">wspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
-    <span class="n">right</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
-    <span class="n">top</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_radic.pdf&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_radic&#39;</span><span class="p">):</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+        <span class="mi">7</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">25</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
+        <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span>
+            <span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span>
+        <span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+        <span class="n">wspace</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+        <span class="n">right</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+        <span class="n">top</span><span class="o">=</span><span class="mf">0.95</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_radic.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_radic_sip256c_003.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_radic_sip256c_003.png" />
@@ -227,11 +246,12 @@ improved in the future</p>
     <span class="n">frequencies</span><span class="o">=</span><span class="n">subdata_rec</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
     <span class="n">rcomplex</span><span class="o">=</span><span class="n">subdata_rec</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.exp.html#numpy.exp" title="View documentation for numpy.exp"><span class="n">np</span><span class="o">.</span><span class="n">exp</span></a><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">subdata_rec</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span><span class="p">)</span>
 <span class="p">)</span>
-<span class="n">spectrum_nor</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;spectrum.pdf&#39;</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="n">spectrum_rec</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_radic&#39;</span><span class="p">):</span>
+    <span class="n">spectrum_nor</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="s1">&#39;spectrum.pdf&#39;</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="n">spectrum_rec</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_radic_sip256c_004.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_radic_sip256c_004.png" />
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  50.790 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  54.862 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-radic-sip256c-py">
 <div class="sphx-glr-download docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/5fe42bf49d9e73269b9cff860e92a87a/plot_radic_sip256c.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_radic_sip256c.py</span></code></a></p>

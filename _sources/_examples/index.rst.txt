@@ -149,6 +149,26 @@ Importing spectral impedance data (sEIT)
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This is work in progress ">
+
+.. only:: html
+
+    .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
+
+        :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/03_sEIT/plot_visualize_4d_data
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="    The SIP256c importer is incredibly slow at the moment. Sorry for that.">
 
 .. only:: html

@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Visualizing multi-dimensional sEIT data &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Importing Radic SIP256c data" href="plot_radic_sip256c.html" />
+    <link rel="prev" title="Checking FZJ-EIT data from a test board" href="plot_eit_fzj_check.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="plot_eit_fzj_check.html" title="previous chapter">Checking FZJ-EIT data from a test board</a></li>
+      <li>Next: <a href="plot_radic_sip256c.html" title="next chapter">Importing Radic SIP256c data</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-visualize-4d-data-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="visualizing-multi-dimensional-seit-data">
+<span id="sphx-glr-examples-03-seit-plot-visualize-4d-data-py"></span><h1>Visualizing multi-dimensional sEIT data<a class="headerlink" href="#visualizing-multi-dimensional-seit-data" title="Permalink to this headline">¶</a></h1>
+<p>This is work in progress</p>
+<p>imports</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">reda</span>
+</pre></div>
+</div>
+<p>load the data set</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">nr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">import_crtomo</span><span class="p">(</span>
+        <span class="n">directory</span><span class="o">=</span><span class="s1">&#39;data_synthetic_4d/modV_0</span><span class="si">{}</span><span class="s1">_noisy/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span><span class="p">),</span>
+        <span class="n">timestep</span><span class="o">=</span><span class="n">nr</span>
+    <span class="p">)</span>
+<span class="n">seit</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
+assigning ids
+Summary:
+                  r          rpha
+count  21090.000000  21090.000000
+mean       0.380444     -0.416545
+std        1.092122      3.894778
+min        0.000582    -36.449777
+25%        0.003989      0.001337
+50%        0.017451      0.152537
+75%        0.096859      0.904502
+max        4.929787      9.153910
+generating ids
+assigning ids
+Summary:
+                  r          rpha
+count  21090.000000  21090.000000
+mean       0.382120     -0.271940
+std        1.096972      0.695746
+min        0.000581     -4.414486
+25%        0.003977     -0.263819
+50%        0.018224      0.001008
+75%        0.094652      0.042757
+max        4.873063      0.547236
+generating ids
+assigning ids
+Summary:
+                  r          rpha
+count  21090.000000  21090.000000
+mean       0.382134     -0.146598
+std        1.096921      0.262500
+min        0.000582     -1.449444
+25%        0.003977     -0.188202
+50%        0.018384     -0.020179
+75%        0.094662      0.002784
+max        4.874286      0.151707
+generating ids
+assigning ids
+Summary:
+                  r          rpha
+count  21090.000000  21090.000000
+mean       0.382134     -0.073887
+std        1.096924      0.130434
+min        0.000581     -0.711277
+25%        0.003982     -0.095615
+50%        0.018423     -0.007987
+75%        0.094654      0.001270
+max        4.872746      0.051985
+</pre></div>
+</div>
+<p>Plotting pseudosections</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_visualize_4d&#39;</span><span class="p">):</span>
+    <span class="k">pass</span>
+    <span class="nb">print</span><span class="p">(</span>
+        <span class="s1">&#39;at this point the plotting routines do not honor&#39;</span>
+        <span class="s1">&#39; timestep dimensionality&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>at this point the plotting routines do not honor timestep dimensionality
+</pre></div>
+</div>
+<p>Histograms</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.plotters.histograms</span> <span class="k">as</span> <span class="nn">redaH</span>
+<span class="c1"># just used to close the figures to save memory</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_visualize_4d&#39;</span><span class="p">):</span>
+    <span class="c1"># plot frequencies in one plot</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ts</span><span class="p">,</span> <span class="n">fig</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">figs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_lin_</span><span class="si">{}</span><span class="s1">.jpg&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+    <span class="c1"># plot in log10 representation</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">ts</span><span class="p">,</span> <span class="n">fig</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">figs</span><span class="o">.</span><span class="n">items</span><span class="p">()):</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_log10_</span><span class="si">{}</span><span class="s1">.jpg&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;timestep&#39;</span><span class="p">)</span>
+    <span class="c1"># plot only each third plot</span>
+    <span class="k">for</span> <span class="n">ts</span><span class="p">,</span> <span class="n">fig</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">figs</span><span class="o">.</span><span class="n">items</span><span class="p">())[</span><span class="mi">0</span><span class="p">::</span><span class="mi">3</span><span class="p">]:</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">name</span> <span class="o">+</span> <span class="s1">&#39;_</span><span class="si">{}</span><span class="s1">.jpg&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ts</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_001.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_001.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_002.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_002.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_003.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_003.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_004.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_004.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_005.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_005.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_006.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_006.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_007.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_007.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_008.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_008.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_009.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_009.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_visualize_4d_data_010.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_visualize_4d_data_010.png" />
+</li>
+</ul>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  29.430 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-visualize-4d-data-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/54921b45cb947aadeb6e453d1318ec9c/plot_visualize_4d_data.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_visualize_4d_data.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/fea90d7687b8107f7488ba3ff626a3e5/plot_visualize_4d_data.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_visualize_4d_data.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.readthedocs.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/03_sEIT/plot_visualize_4d_data.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

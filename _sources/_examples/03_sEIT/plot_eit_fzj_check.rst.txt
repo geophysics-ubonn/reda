@@ -8,7 +8,7 @@
 
 
 Checking FZJ-EIT data from a test board
-=======================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There exist multiple hardware and software versions of the of the EIT
 system developed by Zimmermann et al. 2008
@@ -37,6 +37,33 @@ reciprocal counterpart: ::
     ...
 
 
+imports
+
+
+.. code-block:: default
+
+    import reda
+    import reda.utils.eit_fzj_utils as eit_fzj_utils
+
+
+
+
+
+
+
+
+.. code-block:: default
+
+    fig = eit_fzj_utils.check_resistor_board_measurements(
+        'data_eit_fzj_check/eit_data_mnu0.mat',
+        'data_eit_fzj_check/resistances.dat'
+    )
+    # this context manager executes all code within the given directory
+    with reda.CreateEnterDirectory('output_eit_fzj_check'):
+        # The resulting matplotlib figure can now be plotted to visualize the
+        # measurement data and the expected outcomes
+        fig.savefig('eit_fzj_resistor_check.pdf')
+
 
 
 .. image:: /_examples/03_sEIT/images/sphx_glr_plot_eit_fzj_check_001.png
@@ -62,6 +89,15 @@ reciprocal counterpart: ::
     generating ids
     assigning ids
     Summary:
+                     r        rpha
+    count   232.000000  232.000000
+    mean   1317.964245  -10.974077
+    std     252.307820   23.327723
+    min     973.780054 -118.841378
+    25%    1126.688413   -8.896945
+    50%    1324.014577   -0.544584
+    75%    1502.235327   -0.055741
+    max    1647.043890    2.065788
     0 [  1   4   2   3 980  10  20]
     1 [  2   3   1   4 980  10  20]
     2 [   5    8    6    7 1200   10   20]
@@ -77,23 +113,6 @@ reciprocal counterpart: ::
          1650 1670
          1639.19367558
 
-
-
-
-|
-
-
-.. code-block:: default
-
-    import reda.utils.eit_fzj_utils as eit_fzj_utils
-
-    fig = eit_fzj_utils.check_resistor_board_measurements(
-        'data_eit_fzj_check/eit_data_mnu0.mat',
-        'data_eit_fzj_check/resistances.dat'
-    )
-    # The resulting matplotlib figure can now be plotted to visualize the
-    # measurement data and the expected outcomes
-    fig.savefig('eit_fzj_resistor_check.pdf')
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj_check.py:

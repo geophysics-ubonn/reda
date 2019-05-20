@@ -124,12 +124,13 @@
 <span class="sd">    group : pandas.group</span>
 <span class="sd">        Data group</span>
 <span class="sd">    norrec : string</span>
-<span class="sd">        Which data to export Possible values: all|nor|rec</span>
+<span class="sd">        Which data to export Possible values: all|norrec|nor|rec</span>
 <span class="sd">    store_errors : bool</span>
 <span class="sd">        If true, store errors of the data in a separate column</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="n">norrec</span> <span class="o">!=</span> <span class="s1">&#39;all&#39;</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">norrec</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="s1">&#39;norrec&#39;</span><span class="p">):</span>
+        <span class="k">assert</span> <span class="n">norrec</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="s1">&#39;rec&#39;</span><span class="p">)</span>
         <span class="n">group</span> <span class="o">=</span> <span class="n">group</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;norrec == &quot;</span><span class="si">{0}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">norrec</span><span class="p">))</span>
 
     <span class="c1"># todo: we need to fix the global naming scheme for columns!</span>

@@ -17,7 +17,7 @@
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="Importing Radic SIP256c data" href="plot_radic_sip256c.html" />
+    <link rel="next" title="Visualizing multi-dimensional sEIT data" href="plot_visualize_4d_data.html" />
     <link rel="prev" title="SIP-04 Import" href="../02_SIP04/plot_sip04.html" />
    
   <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
@@ -80,7 +80,7 @@
   <li><a href="../../index.html">Documentation overview</a><ul>
   <li><a href="../index.html">Examples</a><ul>
       <li>Previous: <a href="../02_SIP04/plot_sip04.html" title="previous chapter">SIP-04 Import</a></li>
-      <li>Next: <a href="plot_radic_sip256c.html" title="next chapter">Importing Radic SIP256c data</a></li>
+      <li>Next: <a href="plot_visualize_4d_data.html" title="next chapter">Visualizing multi-dimensional sEIT data</a></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -140,6 +140,22 @@ reciprocal counterpart:</p>
 <span class="o">...</span>
 </pre></div>
 </div>
+<p>imports</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<span class="kn">import</span> <span class="nn">reda.utils.eit_fzj_utils</span> <span class="k">as</span> <span class="nn">eit_fzj_utils</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="View documentation for reda.utils.eit_fzj_utils.check_resistor_board_measurements"><span class="n">eit_fzj_utils</span><span class="o">.</span><span class="n">check_resistor_board_measurements</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_eit_fzj_check/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;data_eit_fzj_check/resistances.dat&#39;</span>
+<span class="p">)</span>
+<span class="c1"># this context manager executes all code within the given directory</span>
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
+    <span class="c1"># The resulting matplotlib figure can now be plotted to visualize the</span>
+    <span class="c1"># measurement data and the expected outcomes</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;eit_fzj_resistor_check.pdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_check_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_check_001.png" />
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>a   b   m   n  expected_r  variation_r  variation_diffr
@@ -155,6 +171,15 @@ constructing four-point measurements
 generating ids
 assigning ids
 Summary:
+                 r        rpha
+count   232.000000  232.000000
+mean   1317.964245  -10.974077
+std     252.307820   23.327723
+min     973.780054 -118.841378
+25%    1126.688413   -8.896945
+50%    1324.014577   -0.544584
+75%    1502.235327   -0.055741
+max    1647.043890    2.065788
 0 [  1   4   2   3 980  10  20]
 1 [  2   3   1   4 980  10  20]
 2 [   5    8    6    7 1200   10   20]
@@ -169,20 +194,6 @@ Summary:
      not passing [  14   15   13   16 1660   10   20]
      1650 1670
      1639.19367558
-</pre></div>
-</div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.eit_fzj_utils</span> <span class="k">as</span> <span class="nn">eit_fzj_utils</span>
-
-<span class="n">fig</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="View documentation for reda.utils.eit_fzj_utils.check_resistor_board_measurements"><span class="n">eit_fzj_utils</span><span class="o">.</span><span class="n">check_resistor_board_measurements</span></a><span class="p">(</span>
-    <span class="s1">&#39;data_eit_fzj_check/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;data_eit_fzj_check/resistances.dat&#39;</span>
-<span class="p">)</span>
-<span class="c1"># The resulting matplotlib figure can now be plotted to visualize the</span>
-<span class="c1"># measurement data and the expected outcomes</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;eit_fzj_resistor_check.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-check-py">

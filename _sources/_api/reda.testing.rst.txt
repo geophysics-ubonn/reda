@@ -25,4 +25,12 @@ reda.testing.test\_container\_ert module
     :undoc-members:
     :show-inheritance:
 
+reda.testing.test\_container\_seit module
+-----------------------------------------
+
+.. automodule:: reda.testing.test_container_seit
+    :members:
+    :undoc-members:
+    :show-inheritance:
+
 

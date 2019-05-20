@@ -52,11 +52,29 @@ import the data
     generating ids
     assigning ids
     Summary:
+                      r          rpha
+    count  17296.000000  17296.000000
+    mean       0.103359    -26.094259
+    std        0.502375    158.399473
+    min       -0.004810  -1519.275953
+    25%        0.000402    -34.240087
+    50%        0.001690    -12.370806
+    75%        0.009303     -2.954275
+    max        8.302502   1550.029178
     number of readings 47
     keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
     generating ids
     assigning ids
     Summary:
+                      r          rpha
+    count  17296.000000  17296.000000
+    mean       0.103662    -30.295630
+    std        0.505864    109.403119
+    min       -0.001106  -1501.807127
+    25%        0.000394    -31.970330
+    50%        0.001661    -12.980625
+    75%        0.009241     -3.972588
+    max        8.459530   1526.862201
 
 
 compute K factors (electrode spacing was 3 m)
@@ -166,22 +184,23 @@ Plot pseudosections of all frequencies
 
     import reda.plotters.pseudoplots as PS
     import pylab as plt
-    fig, axes = plt.subplots(
-        7, 2,
-        figsize=(15 / 2.54, 25 / 2.54),
-        sharex=True, sharey=True
-    )
-    for ax, (key, item) in zip(axes.flat, g):
-        fig, ax, cb = PS.plot_pseudosection_type2(
-            item, ax=ax, column='r', log10=True)
-        ax.set_title('f: {} Hz'.format(key))
-    fig.subplots_adjust(
-        hspace=1,
-        wspace=0.5,
-        right=0.9,
-        top=0.95,
-    )
-    fig.savefig('pseudosections_radic.pdf')
+    with reda.CreateEnterDirectory('output_radic'):
+        fig, axes = plt.subplots(
+            7, 2,
+            figsize=(15 / 2.54, 25 / 2.54),
+            sharex=True, sharey=True
+        )
+        for ax, (key, item) in zip(axes.flat, g):
+            fig, ax, cb = PS.plot_pseudosection_type2(
+                item, ax=ax, column='r', log10=True)
+            ax.set_title('f: {} Hz'.format(key))
+        fig.subplots_adjust(
+            hspace=1,
+            wspace=0.5,
+            right=0.9,
+            top=0.95,
+        )
+        fig.savefig('pseudosections_radic.pdf')
 
 
 
@@ -218,7 +237,8 @@ improved in the future
         frequencies=subdata_rec['frequency'].values,
         rcomplex=subdata_rec['r'] * np.exp(1j * subdata_rec['rpha'] / 1000)
     )
-    spectrum_nor.plot('spectrum.pdf', reciprocal=spectrum_rec, return_fig=True)
+    with reda.CreateEnterDirectory('output_radic'):
+        spectrum_nor.plot('spectrum.pdf', reciprocal=spectrum_rec, return_fig=True)
 
 
 
@@ -231,7 +251,7 @@ improved in the future
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  50.790 seconds)
+   **Total running time of the script:** ( 0 minutes  54.862 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

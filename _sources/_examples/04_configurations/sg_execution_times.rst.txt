@@ -5,6 +5,6 @@
 
 Computation times
 =================
-**00:00.110** total execution time for **_examples_04_configurations** files:
+**00:00.132** total execution time for **_examples_04_configurations** files:
 
-- **00:00.110**: :ref:`sphx_glr__examples_04_configurations_plot_configurations.py` (``plot_configurations.py``)
+- **00:00.132**: :ref:`sphx_glr__examples_04_configurations_plot_configurations.py` (``plot_configurations.py``)

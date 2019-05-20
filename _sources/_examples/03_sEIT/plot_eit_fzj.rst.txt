@@ -76,6 +76,15 @@ Initialize an sEIT container
     generating ids
     assigning ids
     Summary:
+                      r          rpha
+    count  16280.000000  16280.000000
+    mean      -0.001539   1232.306629
+    std       22.939128   1823.550170
+    min      -78.975665  -3141.584482
+    25%       -5.791215     -9.388102
+    50%        0.034648     -1.038730
+    75%        5.972380   3132.171261
+    max       76.991777   3141.580651
 
 
 an alternative would be to automatically create measurement configurations
@@ -109,6 +118,15 @@ from the current injection dipoles:
     generating ids
     assigning ids
     Summary:
+                      r          rpha
+    count  16280.000000  16280.000000
+    mean       0.001539   1264.340068
+    std       22.939128   1809.580759
+    min      -76.991777  -3141.585829
+    25%       -5.972380     -9.200987
+    50%       -0.034648      1.460763
+    75%        5.791215   3132.397700
+    max       78.975665   3141.586023
 
 
 Compute geometric factors
@@ -171,7 +189,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x2b939a72bcc0>
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x2af4de6a40b8>
             a   b   m   n     frequency         r        rpha
     749    10  29  15  34      0.100000  7.356375   -5.205543
     2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -250,12 +268,14 @@ Raw data plots (execute before applying the filters):
 
 
 Now export the data to CRTomo-compatible files
+this context manager executes all code within the given directory
 
 
 .. code-block:: default
 
-    import reda.exporters.crtomo as redaex
-    redaex.write_files_to_directory(seit.data, 'crt_results', norrec='nor', )
+    with reda.CreateEnterDirectory('output_eit_fzj_check'):
+        import reda.exporters.crtomo as redaex
+        redaex.write_files_to_directory(seit.data, 'crt_results', norrec='nor', )
 
 
 
@@ -271,17 +291,19 @@ Plot pseudosections of all frequencies
     import reda.plotters.pseudoplots as PS
     import pylab as plt
 
-    g = seit.data.groupby('frequency')
-    fig, axes = plt.subplots(
-        4, 2,
-        figsize=(15 / 2.54, 20 / 2.54),
-        sharex=True, sharey=True
-    )
-    for ax, (key, item) in zip(axes.flat, g):
-        fig, ax, cb = PS.plot_pseudosection_type2(item, ax=ax, column='r')
-        ax.set_title('f: {} Hz'.format(key))
-    fig.tight_layout()
-    fig.savefig('pseudosections_eit40.pdf')
+    with reda.CreateEnterDirectory('output_eit_fzj_check'):
+        g = seit.data.groupby('frequency')
+        fig, axes = plt.subplots(
+            4, 2,
+            figsize=(15 / 2.54, 20 / 2.54),
+            sharex=True, sharey=True
+        )
+        for ax, (key, item) in zip(axes.flat, g):
+            fig, ax, cb = PS.plot_pseudosection_type2(item, ax=ax, column='r')
+            ax.set_title('f: {} Hz'.format(key))
+        fig.tight_layout()
+        fig.savefig('pseudosections_eit40.pdf')
+
 
 
 
@@ -291,10 +313,25 @@ Plot pseudosections of all frequencies
 
 
 
+alternative
+
+
+.. code-block:: default
+
+    with reda.CreateEnterDirectory('output_eit_fzj_check'):
+        seit.plot_pseudosections(
+            column='r', filename='pseudosections_eit40_v2.pdf'
+        )
+
+
+
+
+
+
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  3.026 seconds)
+   **Total running time of the script:** ( 1 minutes  9.116 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:

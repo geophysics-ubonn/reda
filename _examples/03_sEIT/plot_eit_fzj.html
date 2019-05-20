@@ -158,6 +158,15 @@ function. This is explained below.</p>
 generating ids
 assigning ids
 Summary:
+                  r          rpha
+count  16280.000000  16280.000000
+mean      -0.001539   1232.306629
+std       22.939128   1823.550170
+min      -78.975665  -3141.584482
+25%       -5.791215     -9.388102
+50%        0.034648     -1.038730
+75%        5.972380   3132.171261
+max       76.991777   3141.580651
 </pre></div>
 </div>
 <p>an alternative would be to automatically create measurement configurations
@@ -179,6 +188,15 @@ from the current injection dipoles:</p>
 generating ids
 assigning ids
 Summary:
+                  r          rpha
+count  16280.000000  16280.000000
+mean       0.001539   1264.340068
+std       22.939128   1809.580759
+min      -76.991777  -3141.585829
+25%       -5.972380     -9.200987
+50%       -0.034648      1.460763
+75%        5.791215   3132.397700
+max       78.975665   3141.586023
 </pre></div>
 </div>
 <p>Compute geometric factors</p>
@@ -208,7 +226,7 @@ assigning ids
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x2b939a72bcc0&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x2af4de6a40b8&gt;
         a   b   m   n     frequency         r        rpha
 749    10  29  15  34      0.100000  7.356375   -5.205543
 2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -264,30 +282,40 @@ Raw data plots (execute before applying the filters):</p>
 <span class="c1">#     )</span>
 </pre></div>
 </div>
-<p>Now export the data to CRTomo-compatible files</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">redaex</span>
-<a href="../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory" title="View documentation for reda.exporters.crtomo.write_files_to_directory"><span class="n">redaex</span><span class="o">.</span><span class="n">write_files_to_directory</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;crt_results&#39;</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="p">)</span>
+<p>Now export the data to CRTomo-compatible files
+this context manager executes all code within the given directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">redaex</span>
+    <a href="../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory" title="View documentation for reda.exporters.crtomo.write_files_to_directory"><span class="n">redaex</span><span class="o">.</span><span class="n">write_files_to_directory</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;crt_results&#39;</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>Plot pseudosections of all frequencies</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
 <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="n">g</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
-    <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
-    <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">20</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
-    <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
-<span class="p">)</span>
-<span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-<span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+        <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">20</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
+        <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  3.026 seconds)</p>
+<p>alternative</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">plot_pseudosections</span><span class="p">(</span>
+        <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosections_eit40_v2.pdf&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  9.116 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/332eb6762fd44a5648b0c62b99f8e03f/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></p>

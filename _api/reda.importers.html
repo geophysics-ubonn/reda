@@ -162,9 +162,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
 </dd>
-<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
+<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is provided at the moment</p>
 </dd>
@@ -259,9 +259,28 @@ injection dipoles.</p>
 
 <dl class="function">
 <dt id="reda.importers.eit_fzj.apply_correction_factors">
-<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
+<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
 and Kemna, 2017, Biogeosciences, for detailed information.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame containing the data</p>
+</dd>
+<dt><strong>correction_data</strong><span class="classifier">string|iterable of strings|:py:class:<cite>numpy.ndarray</cite></span></dt><dd><p>Correction data, either as a filename, a list of filenames to be
+merged, or directly as a numpy array</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Corrected data</p>
+</dd>
+<dt><strong>corr_data</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction factors used</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -349,6 +368,7 @@ sole parameter and expect a Nx4 numpy.ndarray as return value</p>
 </div>
 <div class="section" id="module-reda.importers.eit_version_2010">
 <span id="reda-importers-eit-version-2010-module"></span><h2>reda.importers.eit_version_2010 module<a class="headerlink" href="#module-reda.importers.eit_version_2010" title="Permalink to this headline">¶</a></h2>
+<p>Research Center Jülich - EIT40 system importer (2010 version)</p>
 </div>
 <div class="section" id="module-reda.importers.eit_version_2013">
 <span id="reda-importers-eit-version-2013-module"></span><h2>reda.importers.eit_version_2013 module<a class="headerlink" href="#module-reda.importers.eit_version_2013" title="Permalink to this headline">¶</a></h2>
@@ -433,9 +453,9 @@ inadvertently imported from an earlier measurement. Default: 0</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
 return None</p>
@@ -471,9 +491,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>data: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains the measurement data</p>
+<dt>data: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains the measurement data</p>
 </dd>
-<dt>electrodes: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains electrode positions (None at the moment)</p>
+<dt>electrodes: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains electrode positions (None at the moment)</p>
 </dd>
 <dt>topography: None</dt><dd><p>No topography information is contained in the text files, so we always
 return None</p>
@@ -691,7 +711,7 @@ file!</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
 </dd>
 </dl>
 </dd>
@@ -713,7 +733,7 @@ file!</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>df_all</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+473.g48ea04fe)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
+<dt><strong>df_all</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
 </dd>
 </dl>
 </dd>

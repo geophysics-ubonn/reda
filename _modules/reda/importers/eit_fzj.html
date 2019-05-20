@@ -324,28 +324,47 @@
     <span class="k">return</span> <span class="n">dfn</span></div>
 
 
-<div class="viewcode-block" id="apply_correction_factors"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.apply_correction_factors">[docs]</a><span class="k">def</span> <span class="nf">apply_correction_factors</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">):</span>
+<div class="viewcode-block" id="apply_correction_factors"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.apply_correction_factors">[docs]</a><span class="k">def</span> <span class="nf">apply_correction_factors</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">correction_data</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply correction factors for a pseudo-2D measurement setup. See Weigand</span>
 <span class="sd">    and Kemna, 2017, Biogeosciences, for detailed information.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : :py:class:`pandas.DataFrame`</span>
+<span class="sd">        DataFrame containing the data</span>
+<span class="sd">    correction_data : string|iterable of strings|:py:class:`numpy.ndarray`</span>
+<span class="sd">        Correction data, either as a filename, a list of filenames to be</span>
+<span class="sd">        merged, or directly as a numpy array</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : :py:class:`pandas.DataFrame`</span>
+<span class="sd">        Corrected data</span>
+<span class="sd">    corr_data : :py:class:`numpy.ndarray`</span>
+<span class="sd">        Correction factors used</span>
+
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">correction_file</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">correction_data</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
         <span class="n">corr_data_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
-            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">correction_file</span><span class="p">]</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">correction_data</span><span class="p">]</span>
         <span class="p">)</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">correction_data</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">corr_data_raw</span> <span class="o">=</span> <span class="n">correction_data</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">corr_data_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">correction_file</span><span class="p">)</span>
+        <span class="c1"># assume only one data file</span>
+        <span class="n">corr_data_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">correction_data</span><span class="p">)</span>
 
-        <span class="k">if</span> <span class="n">corr_data_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
-            <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-            <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-            <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-            <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-            <span class="n">corr_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]))</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">assert</span> <span class="n">corr_data_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">in</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="c1"># if required, convert from CRTomo electrode denotations in (a,b,m,n) style</span>
+    <span class="k">if</span> <span class="n">corr_data_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">corr_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]))</span><span class="o">.</span><span class="n">T</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">corr_data</span> <span class="o">=</span> <span class="n">corr_data_raw</span>
 
-        <span class="k">elif</span> <span class="n">corr_data_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
-            <span class="n">corr_data</span> <span class="o">=</span> <span class="n">corr_data_raw</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;error&#39;</span><span class="p">)</span>
     <span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 

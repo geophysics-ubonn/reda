@@ -2,7 +2,7 @@
 # *-* coding: utf-8 *-*
 """
 Checking FZJ-EIT data from a test board
-=======================================
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 There exist multiple hardware and software versions of the of the EIT
 system developed by Zimmermann et al. 2008
@@ -31,12 +31,18 @@ reciprocal counterpart: ::
     ...
 
 """
+###############################################################################
+# imports
+import reda
 import reda.utils.eit_fzj_utils as eit_fzj_utils
 
+###############################################################################
 fig = eit_fzj_utils.check_resistor_board_measurements(
     'data_eit_fzj_check/eit_data_mnu0.mat',
     'data_eit_fzj_check/resistances.dat'
 )
-# The resulting matplotlib figure can now be plotted to visualize the
-# measurement data and the expected outcomes
-fig.savefig('eit_fzj_resistor_check.pdf')
+# this context manager executes all code within the given directory
+with reda.CreateEnterDirectory('output_eit_fzj_check'):
+    # The resulting matplotlib figure can now be plotted to visualize the
+    # measurement data and the expected outcomes
+    fig.savefig('eit_fzj_resistor_check.pdf')
