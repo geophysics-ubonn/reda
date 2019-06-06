@@ -88,10 +88,10 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -118,7 +118,7 @@
 <p>Testing utilities</p>
 <dl class="function">
 <dt id="reda.testing.test">
-<code class="descclassname">reda.testing.</code><code class="descname">test</code><span class="sig-paren">(</span><em>target=None</em>, <em>show=False</em>, <em>onlydoctests=False</em>, <em>abort=False</em>, <em>verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.</code><code class="sig-name descname">test</code><span class="sig-paren">(</span><em class="sig-param">target=None</em>, <em class="sig-param">show=False</em>, <em class="sig-param">onlydoctests=False</em>, <em class="sig-param">abort=False</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run docstring examples and additional tests.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -144,19 +144,34 @@ fails.</p>
 <div class="section" id="module-reda.testing.containers">
 <span id="reda-testing-containers-module"></span><h2>reda.testing.containers module<a class="headerlink" href="#module-reda.testing.containers" title="Permalink to this headline">¶</a></h2>
 <p>Dummy data containers for testing purposes.</p>
+<dl class="data">
+<dt id="reda.testing.containers.ERTContainer">
+<code class="sig-prename descclassname">reda.testing.containers.</code><code class="sig-name descname">ERTContainer</code><em class="property"> = &lt;reda.containers.ERT.ERT object&gt;</em><a class="headerlink" href="#reda.testing.containers.ERTContainer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="reda.testing.containers.ERTContainer_nr">
+<code class="sig-prename descclassname">reda.testing.containers.</code><code class="sig-name descname">ERTContainer_nr</code><em class="property"> = &lt;reda.containers.ERT.ERT object&gt;</em><a class="headerlink" href="#reda.testing.containers.ERTContainer_nr" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="data">
+<dt id="reda.testing.containers.df">
+<code class="sig-prename descclassname">reda.testing.containers.</code><code class="sig-name descname">df</code><em class="property"> =     timestep  a  b  m  n         r 0          0  1  2  4  3  1.100000 1          0  1  2  5  4  1.200000 2          0  1  2  6  5  1.300000 3          0  1  2  7  6  1.400000 4          0  2  3  5  4  1.500000 5          0  2  3  6  5  1.600000 6          0  2  3  7  6  1.700000 7          0  3  4  6  5  1.800000 8          0  3  4  7  6  1.900000 9          0  4  5  7  6  2.000000 10         0  4  3  1  2  1.964436 11         0  5  4  1  2  0.457835 12         0  6  5  1  2  3.569755 13         0  7  6  1  2 -0.054366 14         0  5  4  2  3  1.545759 15         0  6  5  2  3  1.412816 16         0  7  6  2  3  3.232779 17         0  6  5  3  4  3.269359 18         0  7  6  3  4  2.054947 19         0  7  6  4  5  2.378163</em><a class="headerlink" href="#reda.testing.containers.df" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-reda.testing.test_container_ert">
 <span id="reda-testing-test-container-ert-module"></span><h2>reda.testing.test_container_ert module<a class="headerlink" href="#module-reda.testing.test_container_ert" title="Permalink to this headline">¶</a></h2>
 <p>Container tests</p>
 <dl class="function">
 <dt id="reda.testing.test_container_ert.test_init">
-<code class="descclassname">reda.testing.test_container_ert.</code><code class="descname">test_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.test_container_ert.</code><code class="sig-name descname">test_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init" title="Permalink to this definition">¶</a></dt>
 <dd><p>test initializing an empty ERT container</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="reda.testing.test_container_ert.test_init_with_data">
-<code class="descclassname">reda.testing.test_container_ert.</code><code class="descname">test_init_with_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init_with_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init_with_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.test_container_ert.</code><code class="sig-name descname">test_init_with_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init_with_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init_with_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>test initializing an ERT container an provide good data</p>
 </dd></dl>
 
@@ -165,12 +180,12 @@ fails.</p>
 <span id="reda-testing-test-container-seit-module"></span><h2>reda.testing.test_container_seit module<a class="headerlink" href="#module-reda.testing.test_container_seit" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="reda.testing.test_container_seit.load_data_into_container">
-<code class="descclassname">reda.testing.test_container_seit.</code><code class="descname">load_data_into_container</code><span class="sig-paren">(</span><em>datadir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#load_data_into_container"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.load_data_into_container" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">load_data_into_container</code><span class="sig-paren">(</span><em class="sig-param">datadir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#load_data_into_container"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.load_data_into_container" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="reda.testing.test_container_seit.prepare_4d_data">
-<code class="descclassname">reda.testing.test_container_seit.</code><code class="descname">prepare_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#prepare_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.prepare_4d_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">prepare_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#prepare_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.prepare_4d_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unzip included 4D data into a temp directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -184,17 +199,17 @@ fails.</p>
 
 <dl class="function">
 <dt id="reda.testing.test_container_seit.test_check_4d_data">
-<code class="descclassname">reda.testing.test_container_seit.</code><code class="descname">test_check_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_check_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_check_4d_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">test_check_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_check_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_check_4d_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="reda.testing.test_container_seit.test_histogram_plotting">
-<code class="descclassname">reda.testing.test_container_seit.</code><code class="descname">test_histogram_plotting</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_histogram_plotting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_histogram_plotting" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">test_histogram_plotting</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_histogram_plotting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_histogram_plotting" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="reda.testing.test_container_seit.test_load_4d_data">
-<code class="descclassname">reda.testing.test_container_seit.</code><code class="descname">test_load_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_load_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_load_4d_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">test_load_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_load_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_load_4d_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -211,7 +226,7 @@ fails.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

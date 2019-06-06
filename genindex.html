@@ -81,10 +81,10 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -127,13 +127,16 @@
  | <a href="#R"><strong>R</strong></a>
  | <a href="#S"><strong>S</strong></a>
  | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
  | <a href="#W"><strong>W</strong></a>
  
 </div>
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.abmn">abmn (reda.containers.sEIT.sEIT attribute)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.abmn">abmn() (reda.containers.sEIT.sEIT property)</a>
+</li>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.abmn_to_dataframe">abmn_to_dataframe() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.add">add() (reda.eis.plots.multi_sip_response method)</a>
 </li>
@@ -221,6 +224,10 @@
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.CR.CR">CR (class in reda.containers.CR)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.geom_fac_crtomo.CRbinaries">CRbinaries (in module reda.utils.geom_fac_crtomo)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.geom_fac_crtomo.CRcfg">CRcfg (in module reda.utils.geom_fac_crtomo)</a>
+</li>
       <li><a href="_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory">CreateEnterDirectory (class in reda.utils.enter_directory)</a>
 </li>
   </ul></td>
@@ -233,6 +240,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.testing.html#reda.testing.containers.df">df (in module reda.testing.containers)</a>
+</li>
       <li><a href="_api/reda.utils.html#reda.utils.data.download_data">download_data() (in module reda.utils.data)</a>
 </li>
   </ul></td>
@@ -248,6 +257,10 @@
       <li><a href="_api/reda.utils.html#reda.utils.enter_directory.EnterDirectory">EnterDirectory (class in reda.utils.enter_directory)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.ERT.ERT">ERT (class in reda.containers.ERT)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.containers.ERTContainer">ERTContainer (in module reda.testing.containers)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.containers.ERTContainer_nr">ERTContainer_nr (in module reda.testing.containers)</a>
 </li>
       <li><a href="_api/reda.exporters.html#reda.exporters.bert.export_bert">export_bert() (in module reda.exporters.bert)</a>
 
@@ -293,17 +306,21 @@
         <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.fix_sign_with_K">(reda.containers.sEIT.sEIT method)</a>
 </li>
       </ul></li>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.frequencies">frequencies (reda.containers.sEIT.sEIT attribute)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.frequencies">frequencies() (reda.containers.sEIT.sEIT property)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_ccomplex">from_ccomplex() (in module reda.eis.convert)</a>
 </li>
+      <li><a href="_api/reda.eis.html#reda.eis.convert.from_cmag_cpha">from_cmag_cpha() (in module reda.eis.convert)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.eis.html#reda.eis.convert.from_cmag_cpha">from_cmag_cpha() (in module reda.eis.convert)</a>
+      <li><a href="_api/reda.eis.html#reda.eis.convert.from_converters">from_converters (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_cre_cim">from_cre_cim() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_cre_cmim">from_cre_cmim() (in module reda.eis.convert)</a>
+</li>
+      <li><a href="_api/reda.eis.html#reda.eis.test_convert.from_keys">from_keys (in module reda.eis.test_convert)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_lnrmag_rpha">from_lnrmag_rpha() (in module reda.eis.convert)</a>
 </li>
@@ -425,22 +442,28 @@
         <li><a href="_api/reda.containers.html#reda.containers.SIP.importers">(class in reda.containers.SIP)</a>
 </li>
       </ul></li>
+      <li><a href="_api/reda.utils.html#reda.utils.data.inventory_filename">inventory_filename (in module reda.utils.data)</a>
+</li>
   </ul></td>
 </tr></table>
 
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.eis.html#reda.eis.units.labels">labels (in module reda.eis.units)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.mpl.latex">latex (in module reda.utils.mpl)</a>
+</li>
       <li><a href="_api/reda.main.html#reda.main.logger.ListHandler">ListHandler (class in reda.main.logger)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_configs">load_configs() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_config">load_crmod_config() (reda.configs.configManager.ConfigManager method)</a>
 </li>
-      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_volt">load_crmod_volt() (reda.configs.configManager.ConfigManager method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_volt">load_crmod_volt() (reda.configs.configManager.ConfigManager method)</a>
+</li>
       <li><a href="_api/reda.testing.html#reda.testing.test_container_seit.load_data_into_container">load_data_into_container() (in module reda.testing.test_container_seit)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.crtomo.load_mod_file">load_mod_file() (in module reda.importers.crtomo)</a>
@@ -457,10 +480,34 @@
 <h2 id="M">M</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.importers.html#reda.importers.eit_fzj.mat_version_importers">mat_version_importers (in module reda.importers.eit_fzj)</a>
+</li>
       <li><a href="_api/reda.plotters.html#reda.plotters.plots2d.matplot">matplot() (in module reda.plotters.plots2d)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate">MD_ConfigsPermutate() (in module reda.importers.eit_fzj)</a>
 </li>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.mpl">mpl (in module reda.configs.configManager)</a>
+
+      <ul>
+        <li><a href="_api/reda.containers.html#reda.containers.CR.mpl">(in module reda.containers.CR)</a>
+</li>
+        <li><a href="_api/reda.containers.html#reda.containers.TDIP.mpl">(in module reda.containers.TDIP)</a>
+</li>
+        <li><a href="_api/reda.containers.html#reda.containers.sEIT.mpl">(in module reda.containers.sEIT)</a>
+</li>
+        <li><a href="_api/reda.eis.html#reda.eis.plots.mpl">(in module reda.eis.plots)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.histograms.mpl">(in module reda.plotters.histograms)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.plots2d.mpl">(in module reda.plotters.plots2d)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.mpl">(in module reda.plotters.pseudoplots)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.time_series.mpl">(in module reda.plotters.time_series)</a>
+</li>
+        <li><a href="_api/reda.utils.html#reda.utils.geom_fac_crtomo.mpl">(in module reda.utils.geom_fac_crtomo)</a>
+</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.utils.html#reda.utils.mpl.mpl_get_cb_bound_below_plot">mpl_get_cb_bound_below_plot() (in module reda.utils.mpl)</a>
@@ -475,15 +522,15 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.Nf">Nf (reda.containers.sEIT.sEIT attribute)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.Nf">Nf() (reda.containers.sEIT.sEIT property)</a>
 </li>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_frequencies">nr_frequencies (reda.containers.sEIT.sEIT attribute)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_frequencies">nr_frequencies() (reda.containers.sEIT.sEIT property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.nr_of_configs">nr_of_configs (reda.configs.configManager.ConfigManager attribute)</a>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.nr_of_configs">nr_of_configs() (reda.configs.configManager.ConfigManager property)</a>
 </li>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_timesteps">nr_timesteps (reda.containers.sEIT.sEIT attribute)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_timesteps">nr_timesteps() (reda.containers.sEIT.sEIT property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -527,8 +574,6 @@
 </li>
       <li><a href="_api/reda.plotters.html#reda.plotters.plots2d.plot_pseudosection">plot_pseudosection() (in module reda.plotters.plots2d)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2">plot_pseudosection_type2() (in module reda.plotters.pseudoplots)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.plot_pseudosections">plot_pseudosections() (reda.containers.sEIT.sEIT method)</a>
@@ -539,8 +584,32 @@
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_rmag">plot_rmag() (reda.eis.plots.multi_sip_response method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_rpha">plot_rpha() (reda.eis.plots.multi_sip_response method)</a>
 </li>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.plt">plt (in module reda.configs.configManager)</a>
+
+      <ul>
+        <li><a href="_api/reda.containers.html#reda.containers.CR.plt">(in module reda.containers.CR)</a>
+</li>
+        <li><a href="_api/reda.containers.html#reda.containers.TDIP.plt">(in module reda.containers.TDIP)</a>
+</li>
+        <li><a href="_api/reda.containers.html#reda.containers.sEIT.plt">(in module reda.containers.sEIT)</a>
+</li>
+        <li><a href="_api/reda.eis.html#reda.eis.plots.plt">(in module reda.eis.plots)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.histograms.plt">(in module reda.plotters.histograms)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.plots2d.plt">(in module reda.plotters.plots2d)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.plt">(in module reda.plotters.pseudoplots)</a>
+</li>
+        <li><a href="_api/reda.plotters.html#reda.plotters.time_series.plt">(in module reda.plotters.time_series)</a>
+</li>
+        <li><a href="_api/reda.utils.html#reda.utils.geom_fac_crtomo.plt">(in module reda.utils.geom_fac_crtomo)</a>
+</li>
+      </ul></li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_input_styles.precompute_values">precompute_values() (reda.eis.test_convert.TestClass_input_styles method)</a>
 
       <ul>
@@ -571,6 +640,8 @@
 <h2 id="R">R</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.html#reda.rcParams">rcParams (in module reda)</a>
+</li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_fzj.read_3p_data">read_3p_data() (in module reda.importers.eit_fzj)</a>
 </li>
       <li><a href="_api/reda.html#module-reda">reda (module)</a>, <a href="api.html#module-reda">[1]</a>
@@ -637,10 +708,10 @@
 </li>
       <li><a href="_api/reda.importers.html#module-reda.importers.radic_sip256c">reda.importers.radic_sip256c (module)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.importers.html#module-reda.importers.res2dinv">reda.importers.res2dinv (module)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.importers.html#module-reda.importers.sip04">reda.importers.sip04 (module)</a>
 </li>
       <li><a href="_api/reda.importers.utils.html#module-reda.importers.utils">reda.importers.utils (module)</a>
@@ -701,11 +772,15 @@
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP.reduce_duplicate_frequencies">reduce_duplicate_frequencies() (reda.containers.SIP.SIP method)</a>
 </li>
+      <li><a href="_api/reda.main.html#reda.main.units.rel">rel (in module reda.main.units)</a>
+</li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.remove_duplicates">remove_duplicates() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.remove_frequencies">remove_frequencies() (reda.containers.sEIT.sEIT method)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.remove_max_dipole_sep">remove_max_dipole_sep() (reda.configs.configManager.ConfigManager method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.data.repository_url">repository_url (in module reda.utils.data)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -805,10 +880,10 @@
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cre_cim">test_to_cre_cim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cre_mim">test_to_cre_mim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_rre_rim">test_to_rre_rim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_input_styles">TestClass_input_styles (class in reda.eis.test_convert)</a>
@@ -822,6 +897,8 @@
       <li><a href="_api/reda.eis.html#reda.eis.convert.to_complex">to_complex() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.ERT.ERT.to_configs">to_configs() (reda.containers.ERT.ERT method)</a>
+</li>
+      <li><a href="_api/reda.eis.html#reda.eis.convert.to_converters">to_converters (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.TDIP.TDIP.to_cr">to_cr() (reda.containers.TDIP.TDIP method)</a>
 </li>
@@ -852,6 +929,14 @@
       <li><a href="_api/reda.importers.utils.html#reda.importers.utils.transforms.transform_electrodes_roll_along.transform">transform() (reda.importers.utils.transforms.transform_electrodes_roll_along method)</a>
 </li>
       <li><a href="_api/reda.importers.utils.html#reda.importers.utils.transforms.transform_electrodes_roll_along">transform_electrodes_roll_along (class in reda.importers.utils.transforms)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.utils.html#reda.utils.data.use_local_data_repository">use_local_data_repository (in module reda.utils.data)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -888,7 +973,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

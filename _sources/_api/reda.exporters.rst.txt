@@ -2,9 +2,9 @@ reda.exporters package
 ======================
 
 .. automodule:: reda.exporters
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -13,24 +13,21 @@ reda.exporters.bert module
 --------------------------
 
 .. automodule:: reda.exporters.bert
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 reda.exporters.crtomo module
 ----------------------------
 
 .. automodule:: reda.exporters.crtomo
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 reda.exporters.syscal module
 ----------------------------
 
 .. automodule:: reda.exporters.syscal
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 

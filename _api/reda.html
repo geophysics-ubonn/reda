@@ -86,10 +86,10 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -113,6 +113,11 @@
             
   <div class="section" id="module-reda">
 <span id="reda-package"></span><h1>reda package<a class="headerlink" href="#module-reda" title="Permalink to this headline">¶</a></h1>
+<dl class="data">
+<dt id="reda.rcParams">
+<code class="sig-prename descclassname">reda.</code><code class="sig-name descname">rcParams</code><em class="property"> = {'geom_factor.inversion_code': 'crtomo'}</em><a class="headerlink" href="#reda.rcParams" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <div class="section" id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -233,7 +238,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

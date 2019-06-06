@@ -88,10 +88,10 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -123,7 +123,7 @@
 <p>set up the logger for EDF</p>
 <dl class="class">
 <dt id="reda.main.logger.ListHandler">
-<em class="property">class </em><code class="descclassname">reda.main.logger.</code><code class="descname">ListHandler</code><span class="sig-paren">(</span><em>log_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.main.logger.</code><code class="sig-name descname">ListHandler</code><span class="sig-paren">(</span><em class="sig-param">log_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Handler" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
@@ -133,7 +133,7 @@
 </dd>
 </dl>
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-center">
+<table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -183,7 +183,7 @@
 </tr>
 </tbody>
 </table>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 55%" />
 <col style="width: 45%" />
@@ -199,7 +199,7 @@
 </table>
 <dl class="method">
 <dt id="reda.main.logger.ListHandler.emit">
-<code class="descname">emit</code><span class="sig-paren">(</span><em>self</em>, <em>record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler.emit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler.emit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do whatever it takes to actually log the specified logging record.</p>
 <p>This version is intended to be implemented by subclasses and so
 raises a NotImplementedError.</p>
@@ -209,11 +209,11 @@ raises a NotImplementedError.</p>
 
 <dl class="class">
 <dt id="reda.main.logger.LoggingClass">
-<em class="property">class </em><code class="descclassname">reda.main.logger.</code><code class="descname">LoggingClass</code><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.main.logger.</code><code class="sig-name descname">LoggingClass</code><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Set up logging facilities for the containers</p>
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-center">
+<table class="longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -224,7 +224,7 @@ raises a NotImplementedError.</p>
 </tr>
 </tbody>
 </table>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 69%" />
 <col style="width: 31%" />
@@ -240,17 +240,17 @@ raises a NotImplementedError.</p>
 </table>
 <dl class="method">
 <dt id="reda.main.logger.LoggingClass.print_data_journal">
-<code class="descname">print_data_journal</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_data_journal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_data_journal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">print_data_journal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_data_journal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_data_journal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="reda.main.logger.LoggingClass.print_log">
-<code class="descname">print_log</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_log" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">print_log</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_log" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="method">
 <dt id="reda.main.logger.LoggingClass.setup_logger">
-<code class="descname">setup_logger</code><span class="sig-paren">(</span><em>self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.setup_logger" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setup_logger</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.setup_logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Setup a logger</p>
 </dd></dl>
 
@@ -258,7 +258,7 @@ raises a NotImplementedError.</p>
 
 <dl class="function">
 <dt id="reda.main.logger.setup_logger">
-<code class="descclassname">reda.main.logger.</code><code class="descname">setup_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.setup_logger" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.main.logger.</code><code class="sig-name descname">setup_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.setup_logger" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -270,10 +270,15 @@ meaningful and physically correct identifiers are required. This file defines
 the corresponding relations.</p>
 <dl class="function">
 <dt id="reda.main.units.get_label">
-<code class="descclassname">reda.main.units.</code><code class="descname">get_label</code><span class="sig-paren">(</span><em>key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/units.html#get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.units.get_label" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.main.units.</code><code class="sig-name descname">get_label</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/units.html#get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.units.get_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convenience function: return the label (latex version) of a given key,
 if available. Otherwise, return the key itself.</p>
 </dd></dl>
+
+<dl class="data">
+<dt id="reda.main.units.rel">
+<code class="sig-prename descclassname">reda.main.units.</code><code class="sig-name descname">rel</code><em class="property"> = {'Iab': {'full_name': 'Iab_[mA]', 'label_latex': '$I_{ab}~[mA]$', 'label_mpl': '$I_{ab}$ [mA]', 'unit': 'mA'}, 'Vmn': {'full_name': 'Vmn_[mV]', 'label_latex': '$U_{mn}~[mV]$', 'label_mpl': '$U_{mn}$ [mV]', 'unit': 'mV'}, 'log_imag': {'full_name': 'log_imag_[S/m]', 'label_latex': &quot;$\\log_{10}(|\\sigma''|~[\\mbox{S/m}])$&quot;, 'label_mpl': &quot;$\\log_{10}(|\\sigma''| [S/m])$&quot;, 'unit': 'S/m'}, 'log_real': {'full_name': 'log_real_[S/m]', 'label_latex': &quot;$\\log_{10}(\\sigma'~[\\mbox{S/m}])$&quot;, 'label_mpl': &quot;$\\log_{10}$($\\sigma$' [S/m])&quot;, 'unit': 'S/m'}, 'log_rho': {'full_name': 'log_rho_[Ohm m]', 'label_latex': '$\\log_{10}(|\\rho|~[\\Omega\\mbox{m}])$', 'label_mpl': '$\\log_{10}(|\\rho| [\\Omega m])$', 'unit': '\\Ohm m'}, 'phi': {'full_name': 'phi_[mrad]', 'label_latex': '$\\phi~[\\mbox{mrad}]$', 'label_mpl': '$\\phi$ [mrad]', 'unit': 'mrad'}, 'r': {'full_name': '|Z|_[Ohm]', 'label_latex': '$|Z|~[\\Omega]$', 'label_mpl': '$|Z| [\\Omega]$', 'unit': '$\\Ohm$'}, 'rho': {'full_name': 'rho_[Ohm m]', 'label_latex': '$|\\rho|~[\\Omega\\mbox{m}]$', 'label_mpl': '$|\\rho|$ [$\\Omega$m]', 'unit': '\\Ohm m'}, 'rho_a': {'full_name': 'rhoa_[Ohm m]', 'label_latex': '$\\rho_a$~[$\\Omega$ m]', 'label_mpl': '$\\rho_a$ [$\\Omega$m]', 'unit': '$\\Ohm m$'}}</em><a class="headerlink" href="#reda.main.units.rel" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 </div>
@@ -289,7 +294,7 @@ if available. Otherwise, return the key itself.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

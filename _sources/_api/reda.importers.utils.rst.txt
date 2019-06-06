@@ -2,9 +2,9 @@ reda.importers.utils package
 ============================
 
 .. automodule:: reda.importers.utils
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Submodules
 ----------
@@ -13,16 +13,14 @@ reda.importers.utils.decorators module
 --------------------------------------
 
 .. automodule:: reda.importers.utils.decorators
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 reda.importers.utils.transforms module
 --------------------------------------
 
 .. automodule:: reda.importers.utils.transforms
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
+   :members:
+   :undoc-members:
+   :show-inheritance:
 

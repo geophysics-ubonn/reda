@@ -2,22 +2,21 @@ reda package
 ============
 
 .. automodule:: reda
-    :members:
-    :undoc-members:
-    :show-inheritance:
+   :members:
+   :undoc-members:
+   :show-inheritance:
 
 Subpackages
 -----------
 
 .. toctree::
 
-    reda.configs
-    reda.containers
-    reda.eis
-    reda.exporters
-    reda.importers
-    reda.main
-    reda.plotters
-    reda.testing
-    reda.utils
-
+   reda.configs
+   reda.containers
+   reda.eis
+   reda.exporters
+   reda.importers
+   reda.main
+   reda.plotters
+   reda.testing
+   reda.utils

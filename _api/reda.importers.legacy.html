@@ -90,10 +90,10 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -170,7 +170,7 @@ required if we use the arctan2 function?)</p></li>
 </ul>
 <dl class="function">
 <dt id="reda.importers.legacy.eit160.import_medusa_data">
-<code class="descclassname">reda.importers.legacy.eit160.</code><code class="descname">import_medusa_data</code><span class="sig-paren">(</span><em>mat_filename</em>, <em>config_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit160.html#import_medusa_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.legacy.eit160.import_medusa_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.legacy.eit160.</code><code class="sig-name descname">import_medusa_data</code><span class="sig-paren">(</span><em class="sig-param">mat_filename</em>, <em class="sig-param">config_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit160.html#import_medusa_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.legacy.eit160.import_medusa_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import measurement data (a .mat file) of the FZJ EIT160 system. This
 data format is identified as ‘FZJ-EZ-2017’.</p>
 <dl class="field-list simple">
@@ -239,14 +239,14 @@ required if we use the arctan2 function?)</p></li>
 </ul>
 <dl class="function">
 <dt id="reda.importers.legacy.eit40.apply_correction_factors">
-<code class="descclassname">reda.importers.legacy.eit40.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.legacy.eit40.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.legacy.eit40.</code><code class="sig-name descname">apply_correction_factors</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.legacy.eit40.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
 and Kemna, 2017, Biogeosciences, for detailed information.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="reda.importers.legacy.eit40.import_medusa_data">
-<code class="descclassname">reda.importers.legacy.eit40.</code><code class="descname">import_medusa_data</code><span class="sig-paren">(</span><em>mat_filename</em>, <em>configs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#import_medusa_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.legacy.eit40.import_medusa_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.legacy.eit40.</code><code class="sig-name descname">import_medusa_data</code><span class="sig-paren">(</span><em class="sig-param">mat_filename</em>, <em class="sig-param">configs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#import_medusa_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.legacy.eit40.import_medusa_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -263,7 +263,7 @@ and Kemna, 2017, Biogeosciences, for detailed information.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

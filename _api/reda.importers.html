@@ -88,10 +88,10 @@
 </ul>
 </div>
 <div id="searchbox" style="display: none" role="search">
-  <h3>Quick search</h3>
+  <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" />
+      <input type="text" name="q" aria-labelledby="searchlabel" />
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -144,7 +144,7 @@
 dc2dinvres.</p>
 <dl class="function">
 <dt id="reda.importers.bert.import_ohm">
-<code class="descclassname">reda.importers.bert.</code><code class="descname">import_ohm</code><span class="sig-paren">(</span><em>filename</em>, <em>verbose=False</em>, <em>reciprocals=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/bert.html#import_ohm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.bert.import_ohm" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.bert.</code><code class="sig-name descname">import_ohm</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">verbose=False</em>, <em class="sig-param">reciprocals=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/bert.html#import_ohm"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.bert.import_ohm" title="Permalink to this definition">¶</a></dt>
 <dd><p>Construct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -162,9 +162,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
 </dd>
-<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
+<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is provided at the moment</p>
 </dd>
@@ -179,7 +179,7 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 <p>Import data in the CRMod/CRTomo format</p>
 <dl class="function">
 <dt id="reda.importers.crtomo.load_mod_file">
-<code class="descclassname">reda.importers.crtomo.</code><code class="descname">load_mod_file</code><span class="sig-paren">(</span><em>filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/crtomo.html#load_mod_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.crtomo.load_mod_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.crtomo.</code><code class="sig-name descname">load_mod_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/crtomo.html#load_mod_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.crtomo.load_mod_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load a .mod file (sometimes also called volt.dat or data.crt). This file
 contains the number of measurements in the first line, and in the following
 lines measurements. Each line consists of 4 columns:</p>
@@ -214,7 +214,7 @@ ert = reda.ERT(data=df)</p>
 
 <dl class="function">
 <dt id="reda.importers.crtomo.load_seit_data">
-<code class="descclassname">reda.importers.crtomo.</code><code class="descname">load_seit_data</code><span class="sig-paren">(</span><em>directory</em>, <em>frequency_file='frequencies.dat'</em>, <em>data_prefix='volt_'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/crtomo.html#load_seit_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.crtomo.load_seit_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.crtomo.</code><code class="sig-name descname">load_seit_data</code><span class="sig-paren">(</span><em class="sig-param">directory</em>, <em class="sig-param">frequency_file='frequencies.dat'</em>, <em class="sig-param">data_prefix='volt_'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/crtomo.html#load_seit_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.crtomo.load_seit_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Load sEIT data from data directory. This function loads data previously
 exported from reda using reda.exporters.crtomo.write_files_to_directory</p>
 <dl class="field-list simple">
@@ -252,20 +252,20 @@ data_prefix</p>
 this module acts as an selector for the appropriate import functions.</p>
 <dl class="function">
 <dt id="reda.importers.eit_fzj.MD_ConfigsPermutate">
-<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">MD_ConfigsPermutate</code><span class="sig-paren">(</span><em>df_md</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#MD_ConfigsPermutate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.MD_ConfigsPermutate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">MD_ConfigsPermutate</code><span class="sig-paren">(</span><em class="sig-param">df_md</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#MD_ConfigsPermutate"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.MD_ConfigsPermutate" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given a MD DataFrame, return a Nx4 array which permutes the current
 injection dipoles.</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="reda.importers.eit_fzj.apply_correction_factors">
-<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">apply_correction_factors</code><span class="sig-paren">(</span><em>df</em>, <em>correction_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">apply_correction_factors</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">correction_data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
 and Kemna, 2017, Biogeosciences, for detailed information.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame containing the data</p>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame containing the data</p>
 </dd>
 <dt><strong>correction_data</strong><span class="classifier">string|iterable of strings|:py:class:<cite>numpy.ndarray</cite></span></dt><dd><p>Correction data, either as a filename, a list of filenames to be
 merged, or directly as a numpy array</p>
@@ -274,7 +274,7 @@ merged, or directly as a numpy array</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Corrected data</p>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Corrected data</p>
 </dd>
 <dt><strong>corr_data</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.16)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction factors used</p>
 </dd>
@@ -285,7 +285,7 @@ merged, or directly as a numpy array</p>
 
 <dl class="function">
 <dt id="reda.importers.eit_fzj.compute_quadrupoles">
-<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">compute_quadrupoles</code><span class="sig-paren">(</span><em>df_emd</em>, <em>config_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_quadrupoles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_quadrupoles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">compute_quadrupoles</code><span class="sig-paren">(</span><em class="sig-param">df_emd</em>, <em class="sig-param">config_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_quadrupoles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_quadrupoles" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -301,7 +301,7 @@ with 4 columns each (A, B, M, N)</p>
 
 <dl class="function">
 <dt id="reda.importers.eit_fzj.get_mnu0_data">
-<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">get_mnu0_data</code><span class="sig-paren">(</span><em>filename</em>, <em>configs</em>, <em>return_3p=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#get_mnu0_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.get_mnu0_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">get_mnu0_data</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">configs</em>, <em class="sig-param">return_3p=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#get_mnu0_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.get_mnu0_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import data post-processed as 3P data (NMU0), i.e., measured towards
 common ground.</p>
 <dl class="field-list simple">
@@ -332,9 +332,14 @@ sole parameter and expect a Nx4 numpy.ndarray as return value</p>
 </dl>
 </dd></dl>
 
+<dl class="data">
+<dt id="reda.importers.eit_fzj.mat_version_importers">
+<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">mat_version_importers</code><em class="property"> = {'FZJ-EZ-09.11.2010': &lt;module 'reda.importers.eit_version_2010' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/reda/importers/eit_version_2010.py'&gt;, 'FZJ-EZ-14.02.2013': &lt;module 'reda.importers.eit_version_2013' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/reda/importers/eit_version_2013.py'&gt;, 'FZJ-EZ-2017': &lt;module 'reda.importers.eit_version_2017' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/reda/importers/eit_version_2017.py'&gt;, 'FZJ-EZ-2018A': &lt;module 'reda.importers.eit_version_2018a' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/reda/importers/eit_version_2018a.py'&gt;}</em><a class="headerlink" href="#reda.importers.eit_fzj.mat_version_importers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="function">
 <dt id="reda.importers.eit_fzj.read_3p_data">
-<code class="descclassname">reda.importers.eit_fzj.</code><code class="descname">read_3p_data</code><span class="sig-paren">(</span><em>filename</em>, <em>configs</em>, <em>return_3p=False</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#read_3p_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.read_3p_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">read_3p_data</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">configs</em>, <em class="sig-param">return_3p=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#read_3p_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.read_3p_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import data post-processed as 3P data (NMU0), i.e., measured towards
 common ground.</p>
 <dl class="field-list simple">
@@ -380,7 +385,7 @@ sole parameter and expect a Nx4 numpy.ndarray as return value</p>
 <span id="reda-importers-eit-version-2018a-module"></span><h2>reda.importers.eit_version_2018a module<a class="headerlink" href="#module-reda.importers.eit_version_2018a" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="reda.importers.eit_version_2018a.convert_electrode">
-<code class="descclassname">reda.importers.eit_version_2018a.</code><code class="descname">convert_electrode</code><span class="sig-paren">(</span><em>i</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_version_2018a.html#convert_electrode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_version_2018a.convert_electrode" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.eit_version_2018a.</code><code class="sig-name descname">convert_electrode</code><span class="sig-paren">(</span><em class="sig-param">i</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_version_2018a.html#convert_electrode"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_version_2018a.convert_electrode" title="Permalink to this definition">¶</a></dt>
 <dd><p>With 3 multiplexers, electrode numbers are running from 1 - 120, in 30
 electrode increments. We need to convert those numberings back.</p>
 </dd></dl>
@@ -390,7 +395,7 @@ electrode increments. We need to convert those numberings back.</p>
 <span id="reda-importers-geotom-module"></span><h2>reda.importers.geotom module<a class="headerlink" href="#module-reda.importers.geotom" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="reda.importers.geotom.add_file">
-<code class="descclassname">reda.importers.geotom.</code><code class="descname">add_file</code><span class="sig-paren">(</span><em>filename</em>, <em>settings</em>, <em>container=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/geotom.html#add_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.geotom.add_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.geotom.</code><code class="sig-name descname">add_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">settings</em>, <em class="sig-param">container=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/geotom.html#add_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.geotom.add_file" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
@@ -417,7 +422,7 @@ electrode increments. We need to convert those numberings back.</p>
 electrode numbers.</p>
 <dl class="function">
 <dt id="reda.importers.iris_syscal_pro.import_bin">
-<code class="descclassname">reda.importers.iris_syscal_pro.</code><code class="descname">import_bin</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/iris_syscal_pro.html#import_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.iris_syscal_pro.import_bin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.iris_syscal_pro.</code><code class="sig-name descname">import_bin</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/iris_syscal_pro.html#import_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.iris_syscal_pro.import_bin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a .bin file generated by the IRIS Instruments Syscal Pro System and
 return a curated dataframe for further processing. This dataframe contains
 only information currently deemed important. Use the function
@@ -453,9 +458,9 @@ inadvertently imported from an earlier measurement. Default: 0</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
 return None</p>
@@ -467,7 +472,7 @@ return None</p>
 
 <dl class="function">
 <dt id="reda.importers.iris_syscal_pro.import_txt">
-<code class="descclassname">reda.importers.iris_syscal_pro.</code><code class="descname">import_txt</code><span class="sig-paren">(</span><em>filename</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/iris_syscal_pro.html#import_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.iris_syscal_pro.import_txt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.iris_syscal_pro.</code><code class="sig-name descname">import_txt</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/iris_syscal_pro.html#import_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.iris_syscal_pro.import_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import Syscal measurements from a text file, exported as ‘Spreadsheet’.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -491,9 +496,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>data: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains the measurement data</p>
+<dt>data: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains the measurement data</p>
 </dd>
-<dt>electrodes: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains electrode positions (None at the moment)</p>
+<dt>electrodes: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains electrode positions (None at the moment)</p>
 </dd>
 <dt>topography: None</dt><dd><p>No topography information is contained in the text files, so we always
 return None</p>
@@ -512,12 +517,12 @@ return None</p>
 <span id="reda-importers-radic-sip256c-module"></span><h2>reda.importers.radic_sip256c module<a class="headerlink" href="#module-reda.importers.radic_sip256c" title="Permalink to this headline">¶</a></h2>
 <dl class="function">
 <dt id="reda.importers.radic_sip256c.compute_quadrupoles">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">compute_quadrupoles</code><span class="sig-paren">(</span><em>reading_configs</em>, <em>readings</em>, <em>settings</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#compute_quadrupoles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.compute_quadrupoles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.radic_sip256c.</code><code class="sig-name descname">compute_quadrupoles</code><span class="sig-paren">(</span><em class="sig-param">reading_configs</em>, <em class="sig-param">readings</em>, <em class="sig-param">settings</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#compute_quadrupoles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.compute_quadrupoles" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="reda.importers.radic_sip256c.parse_radic_file">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">parse_radic_file</code><span class="sig-paren">(</span><em>filename</em>, <em>settings</em>, <em>selection_mode='after'</em>, <em>reciprocal=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_radic_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_radic_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.radic_sip256c.</code><code class="sig-name descname">parse_radic_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">settings</em>, <em class="sig-param">selection_mode='after'</em>, <em class="sig-param">reciprocal=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_radic_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_radic_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import one result file as produced by the SIP256c SIP measuring device
 (Radic Research)</p>
 <p>Full settings dictionary:</p>
@@ -560,12 +565,12 @@ with N1 = N + 1</p>
 
 <dl class="function">
 <dt id="reda.importers.radic_sip256c.parse_reading">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">parse_reading</code><span class="sig-paren">(</span><em>reading_block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_reading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_reading" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.radic_sip256c.</code><code class="sig-name descname">parse_reading</code><span class="sig-paren">(</span><em class="sig-param">reading_block</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#parse_reading"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.parse_reading" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="reda.importers.radic_sip256c.write_crmod_file">
-<code class="descclassname">reda.importers.radic_sip256c.</code><code class="descname">write_crmod_file</code><span class="sig-paren">(</span><em>sipdata</em>, <em>directory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#write_crmod_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.write_crmod_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.radic_sip256c.</code><code class="sig-name descname">write_crmod_file</code><span class="sig-paren">(</span><em class="sig-param">sipdata</em>, <em class="sig-param">directory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/radic_sip256c.html#write_crmod_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.radic_sip256c.write_crmod_file" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -576,7 +581,7 @@ with N1 = N + 1</p>
 data and real usage to improve upon this.</p>
 <dl class="function">
 <dt id="reda.importers.res2dinv.add_dat_file">
-<code class="descclassname">reda.importers.res2dinv.</code><code class="descname">add_dat_file</code><span class="sig-paren">(</span><em>filename</em>, <em>settings</em>, <em>container=None</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/res2dinv.html#add_dat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.res2dinv.add_dat_file" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.res2dinv.</code><code class="sig-name descname">add_dat_file</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">settings</em>, <em class="sig-param">container=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/res2dinv.html#add_dat_file"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.res2dinv.add_dat_file" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a RES2DINV-style file produced by the ABEM export program.</p>
 </dd></dl>
 
@@ -586,7 +591,7 @@ data and real usage to improve upon this.</p>
 <p>Importer functions for data files measured with the SIP-04 SIP system,
 developed at the research center Jülich.</p>
 <p>The result files contain a lot of different, sometimes redundant parameters.</p>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 15%" />
 <col style="width: 85%" />
@@ -637,12 +642,12 @@ developed at the research center Jülich.</p>
 </table>
 <dl class="function">
 <dt id="reda.importers.sip04.import_sip04_data">
-<code class="descclassname">reda.importers.sip04.</code><code class="descname">import_sip04_data</code><span class="sig-paren">(</span><em>data_filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/sip04.html#import_sip04_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.sip04.import_sip04_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.sip04.</code><code class="sig-name descname">import_sip04_data</code><span class="sig-paren">(</span><em class="sig-param">data_filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/sip04.html#import_sip04_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.sip04.import_sip04_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import RELEVANT data from the result files. Refer to the function
 <a class="reference internal" href="#reda.importers.sip04.import_sip04_data_all" title="reda.importers.sip04.import_sip04_data_all"><code class="xref py py-func docutils literal notranslate"><span class="pre">reda.importers.sip04.import_sip04_data_all()</span></code></a> for an importer that
 imports ALL data.</p>
 <p>Exported parameters:</p>
-<table class="docutils align-center">
+<table class="docutils align-default">
 <colgroup>
 <col style="width: 24%" />
 <col style="width: 76%" />
@@ -711,7 +716,7 @@ file!</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
 </dd>
 </dl>
 </dd>
@@ -720,7 +725,7 @@ file!</p>
 
 <dl class="function">
 <dt id="reda.importers.sip04.import_sip04_data_all">
-<code class="descclassname">reda.importers.sip04.</code><code class="descname">import_sip04_data_all</code><span class="sig-paren">(</span><em>data_filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/sip04.html#import_sip04_data_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.sip04.import_sip04_data_all" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.sip04.</code><code class="sig-name descname">import_sip04_data_all</code><span class="sig-paren">(</span><em class="sig-param">data_filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/sip04.html#import_sip04_data_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.sip04.import_sip04_data_all" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import ALL data from the result files</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -733,7 +738,7 @@ file!</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>df_all</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+594.gf5cc0789)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
+<dt><strong>df_all</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The data, contained in a DataFrame</p>
 </dd>
 </dl>
 </dd>
@@ -754,7 +759,7 @@ file!</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
