@@ -4,6 +4,7 @@
 import itertools
 
 import numpy as np
+import pandas as pd
 
 import reda.utils.mpl
 from reda.utils import opt_import
@@ -22,6 +23,17 @@ class ConfigManager(object):
         self.metadata = {}
         # number of electrodes
         self.nr_electrodes = nr_of_electrodes
+
+    def abmn_to_dataframe(self):
+        """Return a pandas.DataFrame containing the measurement configurations
+
+        Returns
+        -------
+        abmn_df : pandas.DataFrame
+            Configurations in a DataFrame (columns: a,b,m,n)
+        """
+        abmn_df = pd.DataFrame(self.configs, columns=['a', 'b', 'm', 'n'])
+        return abmn_df
 
     def _get_next_index(self):
         """
@@ -52,7 +64,7 @@ class ConfigManager(object):
             return self.configs.shape[0]
 
     def _crmod_to_abmn(self, configs):
-        """convert crmod-style configurations to a Nx4 array
+        r"""convert crmod-style configurations to a Nx4 array
 
         CRMod-style configurations merge A and B, and M and N, electrode
         numbers into one large integer each:
@@ -341,7 +353,7 @@ class ConfigManager(object):
         return configs
 
     def gen_all_voltages_for_injections(self, injections_raw):
-        """For a given set of current injections AB, generate all possible
+        r"""For a given set of current injections AB, generate all possible
         unique potential measurements.
 
         After Noel and Xu, 1991, for N electrodes, the number of possible
@@ -361,12 +373,12 @@ class ConfigManager(object):
 
         Parameters
         ----------
-        injections: numpy.ndarray
+        injections : numpy.ndarray
             Kx2 array holding K current injection dipoles A-B
 
         Returns
         -------
-        configs: numpy.ndarray
+        configs : numpy.ndarray
             Nax4 array holding all possible measurement configurations
 
         """
@@ -403,7 +415,7 @@ class ConfigManager(object):
         return configs
 
     def gen_all_current_dipoles(self):
-        """Generate all possible current dipoles for the given number of
+        r"""Generate all possible current dipoles for the given number of
         electrodes (self.nr_electrodes). Duplicates are removed in the process.
 
         After Noel and Xu, 1991, for N electrodes, the number of possible
@@ -413,7 +425,7 @@ class ConfigManager(object):
 
         Returns
         -------
-        configs: Nx2 numpy.ndarray
+        configs : Nx2 numpy.ndarray
             all possible current dipoles A-B
         """
         N = self.nr_electrodes
