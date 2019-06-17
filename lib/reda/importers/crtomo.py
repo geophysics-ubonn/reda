@@ -24,7 +24,7 @@ def load_mod_file(filename):
 
     Parameters
     ----------
-    filename : string
+    filename : str
         Path of filename to import
 
     Returns
