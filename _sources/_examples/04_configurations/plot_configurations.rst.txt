@@ -37,7 +37,7 @@ Various ways to create measurement configurations
     [[ 1 12  2  8]
      [ 1 12  3  9]
      [ 1 12  4 10]
-     ..., 
+     ...
      [ 3 28 15 16]
      [ 2 29 15 16]
      [ 1 30 15 16]]

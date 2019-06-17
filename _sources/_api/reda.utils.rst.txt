@@ -16,6 +16,7 @@ reda.utils.data module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.decorators\_and\_managers module
 -------------------------------------------
 
@@ -23,6 +24,7 @@ reda.utils.decorators\_and\_managers module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.eit\_fzj\_utils module
 ---------------------------------
 
@@ -30,6 +32,7 @@ reda.utils.eit\_fzj\_utils module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.enter\_directory module
 ----------------------------------
 
@@ -37,6 +40,7 @@ reda.utils.enter\_directory module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.filter\_config\_types module
 ---------------------------------------
 
@@ -44,6 +48,7 @@ reda.utils.filter\_config\_types module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.fix\_sign\_with\_K module
 ------------------------------------
 
@@ -51,6 +56,7 @@ reda.utils.fix\_sign\_with\_K module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.geom\_fac\_crtomo module
 -----------------------------------
 
@@ -58,6 +64,7 @@ reda.utils.geom\_fac\_crtomo module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.geometric\_factors module
 ------------------------------------
 
@@ -65,6 +72,7 @@ reda.utils.geometric\_factors module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.helper\_functions module
 -----------------------------------
 
@@ -72,6 +80,7 @@ reda.utils.helper\_functions module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.mpl module
 ---------------------
 
@@ -79,6 +88,7 @@ reda.utils.mpl module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.norrec module
 ------------------------
 
@@ -86,6 +96,7 @@ reda.utils.norrec module
    :members:
    :undoc-members:
    :show-inheritance:
+
 reda.utils.pseudo\_positions module
 -----------------------------------
 

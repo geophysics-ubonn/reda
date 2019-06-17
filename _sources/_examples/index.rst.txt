@@ -247,6 +247,58 @@ Measurement configurations (A-B M-N)-tuples can be created using the
 
 
 
+.. _sphx_glr__examples_05_crtomo:
+
+Importing measurements in CRTomo format
+---------------------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Import CRTomo-style single-frequency measurement data into a CR container">
+
+.. only:: html
+
+    .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_CR_thumb.png
+
+        :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/05_crtomo/plot_import_data_to_CR
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Import CRTomo-style multiy-frequency measurement data into a sEIT container">
+
+.. only:: html
+
+    .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_sEIT_thumb.png
+
+        :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/05_crtomo/plot_import_data_to_sEIT
+.. raw:: html
+
+    <div style='clear:both'></div>
+
+
+
 .. only :: html
 
  .. container:: sphx-glr-footer

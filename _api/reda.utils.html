@@ -135,21 +135,6 @@
 </dl>
 </dd></dl>
 
-<dl class="data">
-<dt id="reda.utils.data.inventory_filename">
-<code class="sig-prename descclassname">reda.utils.data.</code><code class="sig-name descname">inventory_filename</code><em class="property"> = 'inventory.dat'</em><a class="headerlink" href="#reda.utils.data.inventory_filename" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="reda.utils.data.repository_url">
-<code class="sig-prename descclassname">reda.utils.data.</code><code class="sig-name descname">repository_url</code><em class="property"> = 'https://raw.githubusercontent.com/geophysics-ubonn/reda_examples_mw/master/'</em><a class="headerlink" href="#reda.utils.data.repository_url" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="reda.utils.data.use_local_data_repository">
-<code class="sig-prename descclassname">reda.utils.data.</code><code class="sig-name descname">use_local_data_repository</code><em class="property"> = None</em><a class="headerlink" href="#reda.utils.data.use_local_data_repository" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-reda.utils.decorators_and_managers">
 <span id="reda-utils-decorators-and-managers-module"></span><h2>reda.utils.decorators_and_managers module<a class="headerlink" href="#module-reda.utils.decorators_and_managers" title="Permalink to this headline">¶</a></h2>
@@ -195,7 +180,7 @@ and Kemna, 2017, Biogeosciences, for more information:</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Data container</p>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Data container</p>
 </dd>
 <dt><strong>correction_file</strong><span class="classifier">string</span></dt><dd><p>Path to correction file. The file must have 5 columns:
 a,b,m,n,correction_factor</p>
@@ -261,7 +246,7 @@ Weigand and Kemna, 2017, Biogeosciences</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>measured data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>measured data</p>
 </dd>
 <dt><strong>true_conductivity</strong><span class="classifier">float</span></dt><dd><p>Conductivity in S/m</p>
 </dd>
@@ -387,16 +372,6 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 <div class="section" id="module-reda.utils.geom_fac_crtomo">
 <span id="reda-utils-geom-fac-crtomo-module"></span><h2>reda.utils.geom_fac_crtomo module<a class="headerlink" href="#module-reda.utils.geom_fac_crtomo" title="Permalink to this headline">¶</a></h2>
 <p>Compute geometric factors (also referred to as K) using CRMod/CRTomo</p>
-<dl class="data">
-<dt id="reda.utils.geom_fac_crtomo.CRbinaries">
-<code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">CRbinaries</code><em class="property"> = None</em><a class="headerlink" href="#reda.utils.geom_fac_crtomo.CRbinaries" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="reda.utils.geom_fac_crtomo.CRcfg">
-<code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">CRcfg</code><em class="property"> = &lt;module 'crtomo.cfg' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/crtomo/cfg.py'&gt;</em><a class="headerlink" href="#reda.utils.geom_fac_crtomo.CRcfg" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="function">
 <dt id="reda.utils.geom_fac_crtomo.compute_K">
 <code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">compute_K</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">settings</em>, <em class="sig-param">keep_dir=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geom_fac_crtomo.html#compute_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geom_fac_crtomo.compute_K" title="Permalink to this definition">¶</a></dt>
@@ -424,16 +399,6 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 <dl class="function">
 <dt id="reda.utils.geom_fac_crtomo.get_default_settings">
 <code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">get_default_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geom_fac_crtomo.html#get_default_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geom_fac_crtomo.get_default_settings" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="reda.utils.geom_fac_crtomo.mpl">
-<code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">mpl</code><em class="property"> = &lt;module 'matplotlib' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/__init__.py'&gt;</em><a class="headerlink" href="#reda.utils.geom_fac_crtomo.mpl" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="reda.utils.geom_fac_crtomo.plt">
-<code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">plt</code><em class="property"> = &lt;module 'matplotlib.pyplot' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/pyplot.py'&gt;</em><a class="headerlink" href="#reda.utils.geom_fac_crtomo.plt" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -574,11 +539,6 @@ To use this module, import * from it:</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 </pre></div>
 </div>
-<dl class="data">
-<dt id="reda.utils.mpl.latex">
-<code class="sig-prename descclassname">reda.utils.mpl.</code><code class="sig-name descname">latex</code><em class="property"> = None</em><a class="headerlink" href="#reda.utils.mpl.latex" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 <dl class="function">
 <dt id="reda.utils.mpl.mpl_get_cb_bound_below_plot">
 <code class="sig-prename descclassname">reda.utils.mpl.</code><code class="sig-name descname">mpl_get_cb_bound_below_plot</code><span class="sig-paren">(</span><em class="sig-param">ax</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/mpl.html#mpl_get_cb_bound_below_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.mpl.mpl_get_cb_bound_below_plot" title="Permalink to this definition">¶</a></dt>
@@ -771,7 +731,7 @@ used.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

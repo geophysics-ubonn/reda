@@ -111,6 +111,7 @@
 <span></span><span class="sd">&quot;&quot;&quot;Complex-resistivity container</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">from</span> <span class="nn">reda.containers.TDIP</span> <span class="k">import</span> <span class="n">TDIP</span>
+<span class="kn">from</span> <span class="nn">reda.importers.crtomo</span> <span class="k">import</span> <span class="n">load_mod_file</span>
 
 <span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
 
@@ -118,8 +119,29 @@
 <span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="CR"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CR">[docs]</a><span class="k">class</span> <span class="nc">CR</span><span class="p">(</span><span class="n">TDIP</span><span class="p">):</span>
-    <span class="k">pass</span></div>
+<div class="viewcode-block" id="ImportersCR"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.ImportersCR">[docs]</a><span class="k">class</span> <span class="nc">ImportersCR</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ImportersCR.import_crtomo_data"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.ImportersCR.import_crtomo_data">[docs]</a>    <span class="k">def</span> <span class="nf">import_crtomo_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Import a CRTomo-style measurement file (usually: volt.dat).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            path to data file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">load_mod_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="CR"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CR">[docs]</a><span class="k">class</span> <span class="nc">CR</span><span class="p">(</span><span class="n">TDIP</span><span class="p">,</span> <span class="n">ImportersCR</span><span class="p">):</span>
+<div class="viewcode-block" id="CR.export_to_crtomo_td_manager"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CR.export_to_crtomo_td_manager">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_crtomo_td_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return a ready-initialized tdman object from the CRTomo tools.</span>
+
+<span class="sd">        WARNING: Not timestep aware!</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="kn">import</span> <span class="nn">crtomo</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]]</span>
+        <span class="n">tdman</span> <span class="o">=</span> <span class="n">crtomo</span><span class="o">.</span><span class="n">tdMan</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">volt_data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">tdman</span></div></div>
 </pre></div>
 
           </div>
@@ -132,7 +154,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

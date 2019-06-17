@@ -132,16 +132,18 @@
 <span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="k">import</span> <span class="n">LogDataChanges</span>
 
 
-<div class="viewcode-block" id="Importers"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Importers">[docs]</a><span class="k">class</span> <span class="nc">Importers</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the importer functions and is</span>
-<span class="sd">    meant to be inherited by the ERT data container.</span>
-
-<span class="sd">    See Also</span>
-<span class="sd">    --------</span>
-<span class="sd">    Exporters</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-
+<div class="viewcode-block" id="ImportersBase"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ImportersBase">[docs]</a><span class="k">class</span> <span class="nc">ImportersBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Base class for all importer classes&quot;&quot;&quot;</span>
     <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a given DataFrame to the container</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : pandas.DataFrame</span>
+<span class="sd">            DataFrame, must adhere to the container contraints (i.e., must have</span>
+<span class="sd">            all required columns)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
                 <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">df</span><span class="p">),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span>
@@ -171,11 +173,29 @@
             <span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_describe_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Print statistics on a DataFrame by calling its .describe() function</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        df : None|pandas.DataFrame, optional</span>
+<span class="sd">            if not None, use this DataFrame. Otherwise use self.data</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">df_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">df_to_use</span> <span class="o">=</span> <span class="n">df</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span></div>
+
+
+<div class="viewcode-block" id="Importers"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Importers">[docs]</a><span class="k">class</span> <span class="nc">Importers</span><span class="p">(</span><span class="n">ImportersBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the importer functions and is</span>
+<span class="sd">    meant to be inherited by the ERT data container.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    Exporters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
 <div class="viewcode-block" id="Importers.import_syscal_bin"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.Importers.import_syscal_bin">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_bin</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">import_syscal_bin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -520,7 +540,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

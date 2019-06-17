@@ -125,7 +125,7 @@
 <dl class="class">
 <dt id="reda.containers.CR.CR">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">CR</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#reda.containers.TDIP.TDIP" title="reda.containers.TDIP.TDIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.TDIP.TDIP</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.TDIP.TDIP" title="reda.containers.TDIP.TDIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.TDIP.TDIP</span></code></a>, <a class="reference internal" href="#reda.containers.CR.ImportersCR" title="reda.containers.CR.ImportersCR"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.CR.ImportersCR</span></code></a></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -154,17 +154,23 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="reda.containers.CR.CR.export_to_crtomo_td_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_td_manager</span></code></a>(self, grid)</p></td>
+<td><p>Return a ready-initialized tdman object from the CRTomo tools.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
 <td><p>Use a query statement to filter data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
 <td><p>Return True if container has multiple timesteps.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code>(self, filename)</p></td>
+<td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
@@ -212,17 +218,46 @@
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="reda.containers.CR.CR.export_to_crtomo_td_manager">
+<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a ready-initialized tdman object from the CRTomo tools.</p>
+<p>WARNING: Not timestep aware!</p>
 </dd></dl>
 
-<dl class="data">
-<dt id="reda.containers.CR.mpl">
-<code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">mpl</code><em class="property"> = &lt;module 'matplotlib' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/__init__.py'&gt;</em><a class="headerlink" href="#reda.containers.CR.mpl" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+</dd></dl>
 
-<dl class="data">
-<dt id="reda.containers.CR.plt">
-<code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">plt</code><em class="property"> = &lt;module 'matplotlib.pyplot' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/pyplot.py'&gt;</em><a class="headerlink" href="#reda.containers.CR.plt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dl class="class">
+<dt id="reda.containers.CR.ImportersCR">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">ImportersCR</code><a class="reference internal" href="../_modules/reda/containers/CR.html#ImportersCR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.ImportersCR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.ImportersCR.import_crtomo_data" title="reda.containers.CR.ImportersCR.import_crtomo_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code></a>(self, filename)</p></td>
+<td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.CR.ImportersCR.import_crtomo_data">
+<code class="sig-name descname">import_crtomo_data</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#ImportersCR.import_crtomo_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.ImportersCR.import_crtomo_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import a CRTomo-style measurement file (usually: volt.dat).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>path to data file</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
 
 </div>
 <div class="section" id="module-reda.containers.ERT">
@@ -394,7 +429,7 @@ pandas.DataFrame.query</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>result</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame that contains the result of the filter application</p>
+<dt><strong>result</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
 </dd>
@@ -517,9 +552,9 @@ meant to be inherited by the ERT data container.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
 </dd>
-<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
 </dd>
 <dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
 </dd>
@@ -555,9 +590,9 @@ meant to be inherited by the ERT data container.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
 </dd>
-<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
 </dd>
 <dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
 </dd>
@@ -571,7 +606,7 @@ meant to be inherited by the ERT data container.</p>
 <dl class="class">
 <dt id="reda.containers.ERT.Importers">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">Importers</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.ERT.ImportersBase" title="reda.containers.ERT.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ImportersBase</span></code></a></p>
 <p>This class provides wrappers for most of the importer functions and is
 meant to be inherited by the ERT data container.</p>
 <div class="admonition seealso">
@@ -621,9 +656,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
 </dd>
-<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
+<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is provided at the moment</p>
 </dd>
@@ -652,9 +687,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
 </dd>
-<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
+<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is provided at the moment</p>
 </dd>
@@ -709,9 +744,9 @@ inadvertently imported from an earlier measurement. Default: 0</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
 return None</p>
@@ -755,9 +790,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>data: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains the measurement data</p>
+<dt>data: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains the measurement data</p>
 </dd>
-<dt>electrodes: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains electrode positions (None at the moment)</p>
+<dt>electrodes: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains electrode positions (None at the moment)</p>
 </dd>
 <dt>topography: None</dt><dd><p>No topography information is contained in the text files, so we always
 return None</p>
@@ -771,6 +806,13 @@ return None</p>
 </ul>
 </dd></dl>
 
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.ERT.ImportersBase">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">ImportersBase</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#ImportersBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ImportersBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for all importer classes</p>
 </dd></dl>
 
 </div>
@@ -1023,16 +1065,6 @@ of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
 
 </dd></dl>
 
-<dl class="data">
-<dt id="reda.containers.TDIP.mpl">
-<code class="sig-prename descclassname">reda.containers.TDIP.</code><code class="sig-name descname">mpl</code><em class="property"> = &lt;module 'matplotlib' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/__init__.py'&gt;</em><a class="headerlink" href="#reda.containers.TDIP.mpl" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="reda.containers.TDIP.plt">
-<code class="sig-prename descclassname">reda.containers.TDIP.</code><code class="sig-name descname">plt</code><em class="property"> = &lt;module 'matplotlib.pyplot' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/pyplot.py'&gt;</em><a class="headerlink" href="#reda.containers.TDIP.plt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
 </div>
 <div class="section" id="module-reda.containers.sEIT">
 <span id="reda-containers-seit-module"></span><h2>reda.containers.sEIT module<a class="headerlink" href="#module-reda.containers.sEIT" title="Permalink to this headline">¶</a></h2>
@@ -1106,16 +1138,6 @@ data_prefix</p>
 </dd></dl>
 
 </dd></dl>
-
-<dl class="data">
-<dt id="reda.containers.sEIT.mpl">
-<code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">mpl</code><em class="property"> = &lt;module 'matplotlib' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/__init__.py'&gt;</em><a class="headerlink" href="#reda.containers.sEIT.mpl" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
-
-<dl class="data">
-<dt id="reda.containers.sEIT.plt">
-<code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">plt</code><em class="property"> = &lt;module 'matplotlib.pyplot' from '/home/travis/virtualenv/python3.6.3/lib/python3.6/site-packages/matplotlib/pyplot.py'&gt;</em><a class="headerlink" href="#reda.containers.sEIT.plt" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
 
 <dl class="class">
 <dt id="reda.containers.sEIT.sEIT">
@@ -1324,7 +1346,7 @@ pandas.DataFrame.query</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>result</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+669.g891a419a)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame that contains the result of the filter application</p>
+<dt><strong>result</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+750.gbaa77c33)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame that contains the result of the filter application</p>
 </dd>
 </dl>
 </dd>
@@ -1532,7 +1554,7 @@ generated Figure object</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.0</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
