@@ -22,16 +22,18 @@ from reda.utils.decorators_and_managers import append_doc_of, prepend_doc_of
 from reda.utils.decorators_and_managers import LogDataChanges
 
 
-class Importers(object):
-    """This class provides wrappers for most of the importer functions and is
-    meant to be inherited by the ERT data container.
-
-    See Also
-    --------
-    Exporters
-    """
-
+class ImportersBase(object):
+    """Base class for all importer classes"""
     def _add_to_container(self, df):
+        """Add a given DataFrame to the container
+
+        Parameters
+        ----------
+        df : pandas.DataFrame
+            DataFrame, must adhere to the container contraints (i.e., must have
+            all required columns)
+
+        """
         if self.data is not None:
             self.data = pd.concat(
                 (self.data, df), ignore_index=True, sort=True
@@ -61,11 +63,29 @@ class Importers(object):
             ))
 
     def _describe_data(self, df=None):
+        """Print statistics on a DataFrame by calling its .describe() function
+
+        Parameters
+        ----------
+        df : None|pandas.DataFrame, optional
+            if not None, use this DataFrame. Otherwise use self.data
+
+        """
         if df is None:
             df_to_use = self.data
         else:
             df_to_use = df
         print(df_to_use.describe())
+
+
+class Importers(ImportersBase):
+    """This class provides wrappers for most of the importer functions and is
+    meant to be inherited by the ERT data container.
+
+    See Also
+    --------
+    Exporters
+    """
 
     @append_doc_of(reda_syscal.import_bin)
     def import_syscal_bin(self, filename, **kwargs):
