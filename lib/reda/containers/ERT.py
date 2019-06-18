@@ -44,7 +44,9 @@ class ImportersBase(object):
         if 'norrec' and 'id' in self.data.columns:
             self.data.drop(['norrec', 'id'], axis=1, inplace=True)
         self.data = assign_norrec_to_df(self.data)
-        self.data = assign_norrec_diffs(self.data, ['r', 'rpha'])
+        # note that columns not in the DataFrames are ignored, thus no problem
+        # to include rho_a and rpha
+        self.data = assign_norrec_diffs(self.data, ['r', 'rho_a', 'rpha'])
 
         # Put a, b, m, n in the front and ensure integers
         for col in tuple("nmba"):
