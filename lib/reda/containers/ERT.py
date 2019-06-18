@@ -378,7 +378,7 @@ class ERT(LoggingClass, Importers, Exporters):
             matplotlib colorbar object
         """
         fig, ax, cb = PS.plot_pseudosection_type2(
-                self.data, column=column, log10=log10, **kwargs
+            self.data, column=column, log10=log10, **kwargs
         )
         if filename is not None:
             fig.savefig(filename, dpi=300)
