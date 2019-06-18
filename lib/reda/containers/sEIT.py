@@ -103,7 +103,6 @@ class sEIT(LoggingClass, importers):
 
         self.required_data_columns = ['r', 'rpha']
 
-
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
         """
@@ -409,7 +408,7 @@ class sEIT(LoggingClass, importers):
         return spectrum_nor, spectrum_rec
 
     def plot_all_spectra(self, outdir):
-        """This is a convenience function to plot ALL spectra currently
+        r"""This is a convenience function to plot ALL spectra currently
         stored in the container. It is useful to asses whether data filters
         do perform correctly.
 
@@ -509,7 +508,7 @@ class sEIT(LoggingClass, importers):
             output file. Will be overwritten if it exists
         frequency : float
             frequency to export
-        norrec : string (nor|rec|norrec)
+        norrec : str (nor|rec|norrec)
             Which data to export. Default: norrec
         """
         assert isinstance(frequency, float)
@@ -552,6 +551,17 @@ class sEIT(LoggingClass, importers):
     def plot_histograms(
             self, column='r', primary_dim=None, filename=None, **kwargs):
         """Plot a histograms for all frequencies of one data column
+
+        Parameters
+        ----------
+        column : str, optional
+            data column to plot. defaults to "r" for resistance
+        primary_dim : None|str
+            ???
+        filename : None|str
+            Prefix for filename
+        **kwargs : dict
+            ???
 
         TODO: Check saving to file for more than one secondary dimension
         Parameters
