@@ -184,9 +184,11 @@ class Exporters(object):
         self.export_bert(*args, **kargs)
 
     @functools.wraps(reda_crtomo_export.save_block_to_crt)
-    def export_crtomo(self, filename):
+    def export_crtomo(self, filename, norrec='all', store_errors=False):
         """Export to CRTomo-compatible file"""
-        reda_crtomo_export.save_block_to_crt(filename, self.data)
+        reda_crtomo_export.save_block_to_crt(
+            filename, self.data, norrec, store_errors
+        )
 
 
 class ERT(LoggingClass, Importers, Exporters):
