@@ -5,19 +5,18 @@ import os
 from numbers import Number
 
 import numpy as np
-import pandas as pd
 
 from reda.main.logger import LoggingClass
+from reda.containers.ERT import ImportersBase
 import reda.importers.eit_fzj as eit_fzj
 import reda.importers.radic_sip256c as reda_sip256c
 import reda.importers.crtomo as reda_crtomo_exporter
 import reda.utils.eit_fzj_utils as eit_fzj_utils
-import reda.utils.norrec as redanr
 import reda.utils.geometric_factors as geometric_factors
 from reda.utils.fix_sign_with_K import fix_sign_with_K
 import reda.eis.plots as eis_plot
 
-from reda.utils.decorators_and_managers import append_doc_of, prepend_doc_of
+from reda.utils.decorators_and_managers import append_doc_of
 from reda.utils.decorators_and_managers import LogDataChanges
 
 import reda.exporters.crtomo as exporter_crtomo
@@ -29,37 +28,10 @@ import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
 
 
-class importers(object):
+class importers(ImportersBase):
     """This class provides wrappers for most of the importer functions, and is
     meant to be inherited by the data containers
     """
-    def _add_to_container(self, df):
-        if self.data is None:
-            self.data = df
-        else:
-            try:
-                self.data = pd.concat((self.data, df), sort=True)
-                pass
-            except Exception as e:
-                import IPython
-                IPython.embed()
-        # clean any previous norrec-assignments
-        if 'norrec' and 'id' in self.data.columns:
-            self.data.drop(['norrec', 'id'], axis=1, inplace=True)
-        self.data = redanr.assign_norrec_to_df(self.data)
-        self.data = redanr.assign_norrec_diffs(self.data, ['r', 'rpha'])
-
-    def _describe_data(self, df=None):
-        if df is None:
-            df_to_use = self.data
-        else:
-            df_to_use = df
-        cols = []
-        for test_col in self.required_data_columns:
-            if test_col in df_to_use.columns:
-                cols.append(test_col)
-        print(df_to_use[cols].describe())
-
     @append_doc_of(reda_crtomo_exporter.load_seit_data)
     def import_crtomo(self, directory, frequency_file='frequencies.dat',
                       data_prefix='volt_', **kwargs):
