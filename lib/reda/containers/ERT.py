@@ -15,8 +15,9 @@ import reda.utils.fix_sign_with_K as redafixK
 import reda.utils.geometric_factors as redaK
 from reda.utils import has_multiple_timesteps
 from reda.utils.norrec import assign_norrec_to_df, average_repetitions
+from reda.utils.norrec import assign_norrec_diffs
 
-from reda.utils.decorators_and_managers import append_doc_of, prepend_doc_of
+from reda.utils.decorators_and_managers import append_doc_of
 from reda.utils.decorators_and_managers import LogDataChanges
 
 
@@ -32,16 +33,18 @@ class ImportersBase(object):
             all required columns)
 
         """
-        if self.data is not None:
+        if self.data is None:
+            self.data = df
+        else:
             self.data = pd.concat(
                 (self.data, df), ignore_index=True, sort=True
             )
-        else:
-            self.data = df
-        # recompute normal/reciprocal pairs
-        if 'id' in self.data and 'norrec' in self.data:
-            self.data.drop(['id', 'norrec'], axis=1, inplace=True)
+
+        # clean any previous norrec-assignments
+        if 'norrec' and 'id' in self.data.columns:
+            self.data.drop(['norrec', 'id'], axis=1, inplace=True)
         self.data = assign_norrec_to_df(self.data)
+        self.data = assign_norrec_diffs(self.data, ['r', 'rpha'])
 
         # Put a, b, m, n in the front and ensure integers
         for col in tuple("nmba"):
@@ -73,7 +76,11 @@ class ImportersBase(object):
             df_to_use = self.data
         else:
             df_to_use = df
-        print(df_to_use.describe())
+        cols = []
+        for test_col in self.required_data_columns:
+            if test_col in df_to_use.columns:
+                cols.append(test_col)
+        print(df_to_use[cols].describe())
 
 
 class Importers(ImportersBase):
