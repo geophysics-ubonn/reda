@@ -46,6 +46,17 @@ def load_mod_file(filename):
         names=['ab', 'mn', 'r', 'rpha']
     )
     df_raw['Zt'] = df_raw['r'] * np.exp(1j * df_raw['rpha'] / 1000.0)
+    # ok, this is tricky: the preceding line, computing Zt, always makes sure
+    # that the resulting complex number is located in the upper right quadrant
+    # of the complex plane, thereby implicitly correcting for any negative
+    # K-factor. We do not want this to ensure data integrity (i.e., electrode
+    # numbers in the abmn columns would need to be changed, too). Therefore, if
+    # r < 0, switch the sign of Zt.
+    r_smaller_0 = df_raw['r'] < 0
+    df_raw.loc[r_smaller_0, 'Zt'] *= -1
+    # print('crtomo import')
+    # import IPython
+    # IPython.embed()
     df_raw['a'] = np.floor(df_raw['ab'] / 1e4).astype(int)
     df_raw['b'] = (df_raw['ab'] % 1e4).astype(int)
     df_raw['m'] = np.floor(df_raw['mn'] / 1e4).astype(int)
