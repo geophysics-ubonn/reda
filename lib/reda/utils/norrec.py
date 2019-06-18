@@ -364,6 +364,9 @@ def assign_norrec_diffs(df, diff_list):
             return np.nan
 
     for diffcol in diff_list:
+        # do nothing if the column does not exist
+        if diffcol not in df.columns:
+            continue
         diff = g[diffcol].agg(subrow).reset_index()
         # rename the column
         cols = list(diff.columns)
