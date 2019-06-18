@@ -167,8 +167,8 @@ def check_resistor_board_measurements(data_file, reference_data_file=None,
         data is used if set to None
     create_plot : bool, optional
         if True, create a plot with measured and expected resistances
-    **kwargs : dict, optional
-        **kwargs will be redirected to the sEIT.import_eit_fzj call
+    kwargs : dict, optional
+        kwargs will be redirected to the sEIT.import_eit_fzj call
 
     Returns
     -------
@@ -257,7 +257,7 @@ def check_resistor_board_measurements(data_file, reference_data_file=None,
         ]
         ax.set_xticklabels(xticklabels, rotation=45)
 
-        ax.set_ylabel('resistance $[\Omega]$')
+        ax.set_ylabel(r'resistance $[\Omega]$')
         ax.set_xlabel('configuration a-b m-n')
         if failing is None:
             suffix = ' PASSED'
