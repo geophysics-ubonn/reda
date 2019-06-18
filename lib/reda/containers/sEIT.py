@@ -589,7 +589,10 @@ class sEIT(LoggingClass, importers):
         dict_dimension, figs = HS.plot_histograms_extra_dims(
             self.data, column, primary_dim, **kwargs)
         if filename is not None:
-            return_dict['all'].savefig(filename, dpi=300)
+            for key, item in figs.items():
+                item.savefig(
+                    filename + '_{}.jpg'.format(key.replace('_', '-')), dpi=300
+                )
         return dict_dimension, figs
 
     @property
