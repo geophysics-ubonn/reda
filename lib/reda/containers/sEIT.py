@@ -517,14 +517,23 @@ class sEIT(LoggingClass, importers):
             volt_file, frequency_data, norrec=norrec
         )
 
-    def export_to_crtomo_seit_manager(self, grid):
+    def export_to_crtomo_seit_manager(self, grid, norrec='norrec'):
         """Return a ready-initialized seit-manager object from the CRTomo
         tools. This function only works if the crtomo_tools are installed.
 
         WARNING: Not timestep aware!
+
+        Parameters
+        ----------
+        grid : crtomo.crt_grid
+            A CRTomo grid instance
+        norrec : str (nor|rec|norrec)
+            Which data to export. Default: norrec (all)
+
         """
         import crtomo
-        g = self.data.groupby('frequency')
+        subdata = self.data.query('norrec == "{}"'.format(norrec))
+        g = subdata.groupby('frequency')
         seit_data = {}
         for name, item in g:
             print(name, item.shape, item.size)
@@ -535,14 +544,24 @@ class sEIT(LoggingClass, importers):
         seit = crtomo.eitMan(grid=grid, seit_data=seit_data)
         return seit
 
-    def export_to_crtomo_td_manager(self, grid, frequency):
-        """Return a read-initialized tdman object from the CRTomo tools. Use
+    def export_to_crtomo_td_manager(self, grid, frequency, norrec='norrec'):
+        """Return a ready-initialized tdman object from the CRTomo tools. Use
         the given frequency data to initialize it.
 
         WARNING: Not timestep aware!
+
+        Parameters
+        ----------
+        grid : crtomo.crt_grid
+            A CRTomo grid instance
+        frequency : float
+            The frequency to export data for
+        norrec : str (nor|rec|norrec)
+            Which data to export. Default: norrec (all)
         """
+        subdata = self.data.query('norrec == "{}"'.format(norrec))
         import crtomo
-        data = self.data.query('frequency == {}'.format(frequency))[
+        data = subdata.query('frequency == {}'.format(frequency))[
             ['a', 'b', 'm', 'n', 'r', 'rpha']
         ]
         tdman = crtomo.tdMan(grid=grid, volt_data=data)
