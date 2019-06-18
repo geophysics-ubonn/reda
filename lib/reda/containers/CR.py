@@ -23,12 +23,20 @@ class ImportersCR(object):
 
 
 class CR(TDIP, ImportersCR):
-    def export_to_crtomo_td_manager(self, grid):
+    def export_to_crtomo_td_manager(self, grid, norrec='norrec'):
         """Return a ready-initialized tdman object from the CRTomo tools.
 
         WARNING: Not timestep aware!
+
+        Parameters
+        ----------
+        grid : crtomo.crt_grid
+            A CRTomo grid instance
+        norrec : str (nor|rec|norrec)
+            Which data to export. Default: norrec (all)
         """
+        subdata = self.data.query('norrec == "{}"'.format(norrec))
         import crtomo
-        data = self.data[['a', 'b', 'm', 'n', 'r', 'rpha']]
+        data = subdata[['a', 'b', 'm', 'n', 'r', 'rpha']]
         tdman = crtomo.tdMan(grid=grid, volt_data=data)
         return tdman
