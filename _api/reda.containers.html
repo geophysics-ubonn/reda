@@ -154,7 +154,7 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="reda.containers.CR.CR.export_to_crtomo_td_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_td_manager</span></code></a>(self, grid)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="reda.containers.CR.CR.export_to_crtomo_td_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_td_manager</span></code></a>(self, grid[, norrec])</p></td>
 <td><p>Return a ready-initialized tdman object from the CRTomo tools.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
@@ -220,9 +220,19 @@
 </table>
 <dl class="method">
 <dt id="reda.containers.CR.CR.export_to_crtomo_td_manager">
-<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a ready-initialized tdman object from the CRTomo tools.</p>
 <p>WARNING: Not timestep aware!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>grid</strong><span class="classifier">crtomo.crt_grid</span></dt><dd><p>A CRTomo grid instance</p>
+</dd>
+<dt><strong>norrec</strong><span class="classifier">str (nor|rec|norrec)</span></dt><dd><p>Which data to export. Default: norrec (all)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -1072,7 +1082,7 @@ of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
 <dl class="class">
 <dt id="reda.containers.sEIT.importers">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">importers</code><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.7)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.ERT.ImportersBase" title="reda.containers.ERT.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ImportersBase</span></code></a></p>
 <p>This class provides wrappers for most of the importer functions, and is
 meant to be inherited by the data containers</p>
 <p class="rubric">Methods</p>
@@ -1177,11 +1187,11 @@ data_prefix</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.export_to_crtomo_one_frequency" title="reda.containers.sEIT.sEIT.export_to_crtomo_one_frequency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_one_frequency</span></code></a>(self, …[, …])</p></td>
 <td><p>Export one frequency into a CRTomo volt.dat file</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager" title="reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_seit_manager</span></code></a>(self, grid)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager" title="reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_seit_manager</span></code></a>(self, grid[, …])</p></td>
 <td><p>Return a ready-initialized seit-manager object from the CRTomo tools.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.export_to_crtomo_td_manager" title="reda.containers.sEIT.sEIT.export_to_crtomo_td_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_td_manager</span></code></a>(self, grid, …)</p></td>
-<td><p>Return a read-initialized tdman object from the CRTomo tools.</p></td>
+<td><p>Return a ready-initialized tdman object from the CRTomo tools.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.filter" title="reda.containers.sEIT.sEIT.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>(self, query[, inplace])</p></td>
 <td><p>Use a query statement to filter data.</p></td>
@@ -1306,7 +1316,7 @@ reda.utils.geometric_factors</p>
 </dd>
 <dt><strong>frequency</strong><span class="classifier">float</span></dt><dd><p>frequency to export</p>
 </dd>
-<dt><strong>norrec</strong><span class="classifier">string (nor|rec|norrec)</span></dt><dd><p>Which data to export. Default: norrec</p>
+<dt><strong>norrec</strong><span class="classifier">str (nor|rec|norrec)</span></dt><dd><p>Which data to export. Default: norrec</p>
 </dd>
 </dl>
 </dd>
@@ -1315,18 +1325,40 @@ reda.utils.geometric_factors</p>
 
 <dl class="method">
 <dt id="reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager">
-<code class="sig-name descname">export_to_crtomo_seit_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_seit_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_to_crtomo_seit_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_seit_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a ready-initialized seit-manager object from the CRTomo
 tools. This function only works if the crtomo_tools are installed.</p>
 <p>WARNING: Not timestep aware!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>grid</strong><span class="classifier">crtomo.crt_grid</span></dt><dd><p>A CRTomo grid instance</p>
+</dd>
+<dt><strong>norrec</strong><span class="classifier">str (nor|rec|norrec)</span></dt><dd><p>Which data to export. Default: norrec (all)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
 <dt id="reda.containers.sEIT.sEIT.export_to_crtomo_td_manager">
-<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">frequency</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a read-initialized tdman object from the CRTomo tools. Use
+<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">frequency</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a ready-initialized tdman object from the CRTomo tools. Use
 the given frequency data to initialize it.</p>
 <p>WARNING: Not timestep aware!</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>grid</strong><span class="classifier">crtomo.crt_grid</span></dt><dd><p>A CRTomo grid instance</p>
+</dd>
+<dt><strong>frequency</strong><span class="classifier">float</span></dt><dd><p>The frequency to export data for</p>
+</dd>
+<dt><strong>norrec</strong><span class="classifier">str (nor|rec|norrec)</span></dt><dd><p>Which data to export. Default: norrec (all)</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">
@@ -1458,9 +1490,23 @@ exist.</p>
 <dt id="reda.containers.sEIT.sEIT.plot_histograms">
 <code class="sig-name descname">plot_histograms</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">primary_dim=None</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_histograms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a histograms for all frequencies of one data column</p>
-<p>TODO: Check saving to file for more than one secondary dimension
-Parameters
-———-</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>column</strong><span class="classifier">str, optional</span></dt><dd><p>data column to plot. defaults to “r” for resistance</p>
+</dd>
+<dt><strong>primary_dim</strong><span class="classifier">None|str</span></dt><dd><p>???</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">None|str</span></dt><dd><p>Prefix for filename</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">dict</span></dt><dd><p>???</p>
+</dd>
+<dt><strong>TODO: Check saving to file for more than one secondary dimension</strong></dt><dd></dd>
+<dt><strong>Parameters</strong></dt><dd></dd>
+<dt><strong>———-</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

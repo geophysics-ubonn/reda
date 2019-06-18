@@ -133,13 +133,21 @@
 
 
 <div class="viewcode-block" id="CR"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CR">[docs]</a><span class="k">class</span> <span class="nc">CR</span><span class="p">(</span><span class="n">TDIP</span><span class="p">,</span> <span class="n">ImportersCR</span><span class="p">):</span>
-<div class="viewcode-block" id="CR.export_to_crtomo_td_manager"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CR.export_to_crtomo_td_manager">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_crtomo_td_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">):</span>
+<div class="viewcode-block" id="CR.export_to_crtomo_td_manager"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CR.export_to_crtomo_td_manager">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_crtomo_td_manager</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">grid</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;norrec&#39;</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Return a ready-initialized tdman object from the CRTomo tools.</span>
 
 <span class="sd">        WARNING: Not timestep aware!</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        grid : crtomo.crt_grid</span>
+<span class="sd">            A CRTomo grid instance</span>
+<span class="sd">        norrec : str (nor|rec|norrec)</span>
+<span class="sd">            Which data to export. Default: norrec (all)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">subdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;norrec == &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">norrec</span><span class="p">))</span>
         <span class="kn">import</span> <span class="nn">crtomo</span>
-        <span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]]</span>
         <span class="n">tdman</span> <span class="o">=</span> <span class="n">crtomo</span><span class="o">.</span><span class="n">tdMan</span><span class="p">(</span><span class="n">grid</span><span class="o">=</span><span class="n">grid</span><span class="p">,</span> <span class="n">volt_data</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">tdman</span></div></div>
 </pre></div>

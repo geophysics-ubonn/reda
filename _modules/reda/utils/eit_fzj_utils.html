@@ -277,8 +277,8 @@
 <span class="sd">        data is used if set to None</span>
 <span class="sd">    create_plot : bool, optional</span>
 <span class="sd">        if True, create a plot with measured and expected resistances</span>
-<span class="sd">    **kwargs : dict, optional</span>
-<span class="sd">        **kwargs will be redirected to the sEIT.import_eit_fzj call</span>
+<span class="sd">    kwargs : dict, optional</span>
+<span class="sd">        kwargs will be redirected to the sEIT.import_eit_fzj call</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -367,7 +367,7 @@
         <span class="p">]</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">xticklabels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
 
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;resistance $[\Omega]$&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;resistance $[\Omega]$&#39;</span><span class="p">)</span>
         <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;configuration a-b m-n&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="n">failing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39; PASSED&#39;</span>
