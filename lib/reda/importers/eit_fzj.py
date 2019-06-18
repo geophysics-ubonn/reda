@@ -258,10 +258,10 @@ def apply_correction_factors(df, correction_data):
     corr_data[:, 0:2] = np.sort(corr_data[:, 0:2], axis=1)
     corr_data[:, 2:4] = np.sort(corr_data[:, 2:4], axis=1)
 
-    if 'frequency' not in df.columns:
-        raise Exception(
-            'No frequency data found. Are you sure this is a seit data set?'
-        )
+    # if 'frequency' not in df.columns:
+    #     raise Exception(
+    #         'No frequency data found. Are you sure this is a seit data set?'
+    #     )
 
     df = df.reset_index()
     gf = df.groupby(['a', 'b', 'm', 'n'])
