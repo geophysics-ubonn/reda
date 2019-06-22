@@ -5,7 +5,7 @@
 
 Computation times
 =================
-**00:00.821** total execution time for **_examples_05_crtomo** files:
+**00:00.823** total execution time for **_examples_05_crtomo** files:
 
-- **00:00.523**: :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py` (``plot_import_data_to_sEIT.py``)
-- **00:00.298**: :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py` (``plot_import_data_to_CR.py``)
+- **00:00.526**: :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py` (``plot_import_data_to_sEIT.py``)
+- **00:00.297**: :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py` (``plot_import_data_to_CR.py``)
