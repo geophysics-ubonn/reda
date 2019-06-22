@@ -38,5 +38,6 @@ license. Any contributions from the community are highly welcome.
     importers.rst
     test_data.rst
     debugging.rst
+    contributing.rst
     api.rst
     Source code <https://github.com/geophysics-ubonn/reda>
