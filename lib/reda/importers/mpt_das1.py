@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 
 # from reda.importers.utils.decorators import enable_result_transforms
+from reda.importers.utils.decorators import enable_result_transforms
 
 
 class DecayCurveObj():
@@ -71,10 +72,12 @@ def import_das1_fd(filename, **kwargs):
 
 
     """
-    if kwargs.get('corr_array', True):
+    if 'corr_array' in kwargs:
         corr_array = kwargs.get('corr_array')
     else:
         corr_array = [0, 0, 0, 0]
+
+    print(corr_array)
 
     df = pd.read_csv(filename,
                      delimiter=' ',
@@ -130,7 +133,7 @@ def import_das1_td(filename, **kwargs):
 
 
     """
-    if kwargs.get('corr_array', True):
+    if 'corr_array' in kwargs:
         corr_array = kwargs.get('corr_array')
     else:
         corr_array = [0, 0, 0, 0]
@@ -231,7 +234,7 @@ def import_das1_sip(filename, **kwargs):
 
 
     """
-    if kwargs.get('corr_array', True):
+    if 'corr_array' in kwargs:
         corr_array = kwargs.get('corr_array')
     else:
         corr_array = [0, 0, 0, 0]
@@ -369,7 +372,7 @@ def import_das1(filename, **kwargs):
 
     """
 
-    if kwargs.get('corr_array', True):
+    if 'corr_array' in kwargs:
         corr_array = kwargs.get('corr_array')
     else:
         corr_array = [0, 0, 0, 0]
@@ -517,6 +520,9 @@ def import_das1(filename, **kwargs):
                 # data_fin.loc[idx+fidx, 'z'] = df_r.loc[idx, freq]
                 data_fin.loc[idx*num_freqs+fidx, 'datetime'] = quad['datetime']
 
+        # compute Zt
+        data_fin['Zt'] = data_fin['r'] * np.exp(data_fin['rpha'] * 1j / 1000.0)
+
         return data_fin, None, None
 
     else:
@@ -605,6 +611,8 @@ def import_das1(filename, **kwargs):
             data_new['r'] = np.array(data.iloc[:, 4]).astype('float')  # resistance
             data_new['rpha'] = np.array(data.iloc[:, 5]).astype('float')  # phase
             data_new['I'] = np.array(data.iloc[:, 12]).astype('float')  # current in mA
+            # compute Zt
+            data_new['Zt'] = data_new['r'] * np.exp(data_new['rpha'] * 1j / 1000.0)
 
             datetime_series = pd.to_datetime(data.iloc[:, -7],
                                              format='%Y%m%d_%H%M%S',
