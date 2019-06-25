@@ -10,7 +10,7 @@ import pandas as pd
 import numpy as np
 
 # from reda.importers.utils.decorators import enable_result_transforms
-from reda.importers.utils.decorators import enable_result_transforms
+# from reda.importers.utils.decorators import enable_result_transforms
 
 
 class DecayCurveObj():
@@ -138,21 +138,37 @@ def import_das1_td(filename, **kwargs):
     else:
         corr_array = [0, 0, 0, 0]
 
-    df = pd.read_csv(filename,
-                     delimiter=' ',
-                     comment='!',
-                     index_col=0)
+    with open(filename, 'r') as fid:
+        for idx, line in enumerate(fid):
+            if '#data_start' in line:
+                d_start = idx
+            if '#data_end' in line:
+                d_end = idx
+            if '!List' in line:
+                tm_start = idx
+            if '#elec_start' in line:
+                tm_end = idx
+            if '#TIPDly' in line:
+                mdelay = float(line.split('\t')[1])
 
-    # derive rows used in data block
-    data_start = df.index.get_loc('#data_start')
-    data_end = df.index.get_loc('#data_end')
-    data = df.iloc[data_start+1: data_end].dropna(axis=1)
+    # import the data block
+    data = pd.read_csv(filename,
+                       delimiter=' ',
+                       index_col=0,
+                       names=range(0, 10**3),  # dump the file in huge array
+                       skiprows=d_start+1,
+                       nrows=d_end-d_start-3,  # skip headers after #data_start
+                       low_memory=False)
 
-    mdelay = float(df.loc['#TIPDly'].dropna()[1])
-    gating_info = [x for x in df.index if x[: 4] == '#TW0']
-    ngates = len(gating_info)
-    ipw_temp = df.loc[gating_info].dropna(axis=1)
-    ipw = np.array(ipw_temp.iloc[:, 1]).astype(np.float)
+    header = pd.read_csv(filename,
+                         delimiter='\t',
+                         # comment='!',
+                         # index_col=0,
+                         skiprows=tm_start-1,
+                         nrows=tm_end-tm_start-1)
+
+    ngates = len(header)
+    ipw = np.array(header.iloc[:, 0]).astype(np.float)
 
     data_new = pd.DataFrame()
 
@@ -191,7 +207,7 @@ def import_das1_td(filename, **kwargs):
     denominator = np.sum(np.array(data_tm.loc[:, 'Tm1': 'Tm'+str(ngates)]), axis=1)
     data_new['chargeability'] = nominator / denominator
 
-    datetime_series = pd.to_datetime(data.iloc[:, -6],
+    datetime_series = pd.to_datetime(data.iloc[:, 10+2*ngates],
                                      format='%Y%m%d_%H%M%S',
                                      errors='ignore')
 
