@@ -96,6 +96,7 @@ def import_das1_fd(filename, **kwargs):
     data_new['r'] = np.array(data.iloc[:, 4]).astype('float')  # resistance
     data_new['rpha'] = np.array(data.iloc[:, 5]).astype('float')  # phase
     data_new['I'] = np.array(data.iloc[:, 12]).astype('float')  # current in mA
+    data_new['Zt'] = data_new['r'] * np.exp(data_new['rpha'] * 1j / 1000.0)
 
     datetime_series = pd.to_datetime(data.iloc[:, -7],
                                      format='%Y%m%d_%H%M%S',
@@ -272,7 +273,7 @@ def import_das1_sip(filename, **kwargs):
     data_new['b'] = [int(x.split(',')[1])-corr_array[1] for x in data.iloc[:, 1]]
     data_new['m'] = [int(x.split(',')[1])-corr_array[2] for x in data.iloc[:, 2]]
     data_new['n'] = [int(x.split(',')[1])-corr_array[3] for x in data.iloc[:, 3]]
-    data_fin = pd.DataFrame(columns=['a', 'b', 'm', 'n', 'frequency', 'z',
+    data_fin = pd.DataFrame(columns=['a', 'b', 'm', 'n', 'frequency', 'Zt',
                                      'r', 'dr', 'rpha', 'drpha', 'I', 'datetime'])
 
     # array to check for error
@@ -326,6 +327,9 @@ def import_das1_sip(filename, **kwargs):
         fskip_count.astype(int)
 
         data_fin = data_fin.append(data_new, ignore_index=True, sort=False)
+
+    # compute Zt
+    data_fin['Zt'] = data_fin['r'] * np.exp(data_fin['rpha'] * 1j / 1000.0)
 
     start = len(frequencies)-1
     for row_idx in range(len(data)):
