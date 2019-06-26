@@ -9,6 +9,7 @@ import reda.exporters.bert as reda_bert_export
 import reda.exporters.crtomo as reda_crtomo_export
 import reda.importers.bert as reda_bert_import
 import reda.importers.iris_syscal_pro as reda_syscal
+import reda.importers.mpt_das1 as reda_mpt
 import reda.plotters.histograms as HS
 import reda.plotters.pseudoplots as PS
 import reda.utils.fix_sign_with_K as redafixK
@@ -23,6 +24,7 @@ from reda.utils.decorators_and_managers import LogDataChanges
 
 class ImportersBase(object):
     """Base class for all importer classes"""
+
     def _add_to_container(self, df):
         """Add a given DataFrame to the container
 
@@ -157,6 +159,52 @@ class Importers(ImportersBase):
                 data['timestep'] = timestep
             self._add_to_container(data)
             self.electrode_positions = electrodes  # See issue #22
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
+    @append_doc_of(reda_mpt.import_das1_fd)
+    def import_mpt_fd(self, filename, **kwargs):
+        """MPT frequency domain import
+
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
+        self.logger.info('MPT DAS-1 frequency domain import')
+        with LogDataChanges(self, filter_action='import'):
+            data, electrodes, topography = reda_mpt.import_das1_fd(
+                filename, **kwargs)
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
+    @append_doc_of(reda_mpt.import_das1_td)
+    def import_mpt_td(self, filename, **kwargs):
+        """MPT time domain import
+
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
+        self.logger.info('MPT DAS-1 time domain import')
+        with LogDataChanges(self, filter_action='import'):
+            data, electrodes, topography = reda_mpt.import_das1_td(
+                filename, **kwargs)
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
         if kwargs.get('verbose', False):
             print('Summary:')
             self._describe_data(data)
