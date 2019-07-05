@@ -45,8 +45,8 @@ def save_block_to_crt(filename, group, norrec='all', store_errors=False):
         fmt = '%i %i %f %f'
         if store_errors:
             line += (
-                group['d|Z|_[Ohm]'].values,
-                group['dphi_[mrad]'].values,
+                group['dr'].values,
+                group['drpha'].values,
             )
             fmt += ' %f %f'
 
