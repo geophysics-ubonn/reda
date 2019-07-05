@@ -1,16 +1,110 @@
 """Time-domain IP (induced polarization) container
 """
-from reda.containers.ERT import ERT
+
 import numpy as np
 import pandas as pd
 
 import reda.utils.mpl
 
+from reda.containers.BaseContainer import ImportersBase
+from reda.containers.BaseContainer import BaseContainer
+
+# import reda.importers.bert as reda_bert_import
+import reda.importers.iris_syscal_pro as reda_syscal
+import reda.importers.mpt_das1 as reda_mpt
+
+from reda.utils.decorators_and_managers import append_doc_of
+from reda.utils.decorators_and_managers import LogDataChanges
 
 plt, mpl = reda.utils.mpl.setup()
 
 
-class TDIP(ERT):
+class TDIPImporters(ImportersBase):
+    """This class provides wrappers for most of the importer functions and is
+    meant to be inherited by the TDIP data container.
+
+    See Also
+    --------
+    Exporters
+    """
+
+    @append_doc_of(reda_syscal.import_bin)
+    def import_syscal_bin(self, filename, **kwargs):
+        """Syscal import
+
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
+        self.logger.info('IRIS Syscal Pro bin import')
+        with LogDataChanges(self, filter_action='import'):
+            data, electrodes, topography = reda_syscal.import_bin(
+                filename, **kwargs
+            )
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
+    # JG: ensure that there's chargeability involved?
+    # @append_doc_of(reda_bert_import.import_ohm)
+    # def import_bert(self, filename, **kwargs):
+    #     """BERT .ohm file import"""
+    #     timestep = kwargs.get('timestep', None)
+    #     if 'timestep' in kwargs:
+    #         del (kwargs['timestep'])
+    #
+    #     self.logger.info('Unified data format (BERT/pyGIMLi) file import')
+    #     with LogDataChanges(self, filter_action='import',
+    #                         filter_query=os.path.basename(filename)):
+    #         data, electrodes, topography = reda_bert_import.import_ohm(
+    #             filename, **kwargs)
+    #         if timestep is not None:
+    #             data['timestep'] = timestep
+    #         self._add_to_container(data)
+    #         self.electrode_positions = electrodes  # See issue #22
+    #     if kwargs.get('verbose', False):
+    #         print('Summary:')
+    #         self._describe_data(data)
+
+    @append_doc_of(reda_mpt.import_das1_td)
+    def import_mpt(self, filename, **kwargs):
+        """MPT DAS 1 TD importer
+
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
+        self.logger.info('MPT DAS-1 import')
+        with LogDataChanges(self, filter_action='import'):
+            data, electrodes, topography = reda_mpt.import_das1_td(
+                filename, **kwargs)
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
+    # @functools.wraps(import_bert)
+    # def import_pygimli(self, *args, **kargs):
+    #     self.import_bert(*args, **kargs)
+
+
+class TDIP(BaseContainer):
+    """."""
+
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
         """
