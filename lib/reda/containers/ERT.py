@@ -175,13 +175,19 @@ class Importers(ImportersBase):
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
             del (kwargs['timestep'])
-        self.logger.info('MPT DAS-1 frequency domain import')
+        self.logger.info('MPT DAS-1 import')
         with LogDataChanges(self, filter_action='import'):
             data, electrodes, topography = reda_mpt.import_das1(
                 filename, **kwargs)
             if timestep is not None:
                 data['timestep'] = timestep
-            self._add_to_container(data)
+            # check if SIP data set is imported, if so select the lowest possible
+            # frequency
+            if 'frequency' in data.columns:
+                data = data.query('frequency == {}'.format(data.frequency.min()))
+                print(data)
+            self._add_to_container(data[['a', 'b', 'm', 'n', 'r', 'dr', 'I', 'datetime']])
+
         if kwargs.get('verbose', False):
             print('Summary:')
             self._describe_data(data)
