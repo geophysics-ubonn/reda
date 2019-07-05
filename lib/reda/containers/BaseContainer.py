@@ -13,6 +13,7 @@ import reda.utils.fix_sign_with_K as redafixK
 import reda.utils.geometric_factors as redaK
 from reda.utils import has_multiple_timesteps
 from reda.utils.norrec import assign_norrec_diffs
+from reda.utils.norrec import assign_norrec_to_df
 
 from reda.utils.decorators_and_managers import LogDataChanges
 

@@ -102,7 +102,7 @@ class TDIPImporters(ImportersBase):
     #     self.import_bert(*args, **kargs)
 
 
-class TDIP(BaseContainer):
+class TDIP(BaseContainer, TDIPImporters):
     """."""
 
     def check_dataframe(self, dataframe):

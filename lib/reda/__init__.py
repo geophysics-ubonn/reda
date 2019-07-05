@@ -7,7 +7,7 @@ import reda.importers.utils.transforms as transforms
 from .configs.configManager import ConfigManager
 import reda.utils.data as data
 from .utils.helper_functions import search
-from .container.BaseContainer import BaseContainer
+from .containers.BaseContainer import BaseContainer
 from .containers.SIP import SIP
 from .containers.sEIT import sEIT
 from .containers.CR import CR
