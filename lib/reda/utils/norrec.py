@@ -104,7 +104,7 @@ def assign_norrec_to_df(df):
         # empty dataframe, just return a copy
         return df.copy()
 
-    c = df[['a', 'b', 'm', 'n']].values.copy()
+    c = df[['a', 'b', 'm', 'n']].values.copy().astype('float')
     # unique injections
     cu = np.unique(c, axis=0)
 
