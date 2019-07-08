@@ -2,12 +2,9 @@
 """
 import os
 import functools
-import numpy as np
 import pandas as pd
 
 import reda.utils.mpl
-
-from reda.main.logger import LoggingClass
 
 from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
@@ -86,7 +83,7 @@ class CRImporters(ImportersBase):
         self.import_bert(*args, **kargs)
 
 
-class CR(LoggingClass, BaseContainer, CRImporters):
+class CR(BaseContainer, CRImporters):
     """."""
 
     def check_dataframe(self, dataframe):

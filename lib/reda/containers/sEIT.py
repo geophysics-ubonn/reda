@@ -6,8 +6,6 @@ from numbers import Number
 
 import numpy as np
 
-
-from reda.main.logger import LoggingClass
 from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
 import reda.importers.eit_fzj as eit_fzj
@@ -94,7 +92,7 @@ class sEITImporters(ImportersBase):
         self._describe_data(df_emd)
 
 
-class sEIT(LoggingClass, BaseContainer, sEITImporters):
+class sEIT(BaseContainer, sEITImporters):
 
     def __init__(self, dataframe=None):
         self.setup_logger()

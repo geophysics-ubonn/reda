@@ -7,8 +7,6 @@ import pandas as pd
 
 import reda.utils.mpl
 
-from reda.main.logger import LoggingClass
-
 from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
 
@@ -83,7 +81,7 @@ class SIPImporters(ImportersBase):
             self._describe_data(data)
 
 
-class SIP(LoggingClass, BaseContainer, SIPImporters):
+class SIP(BaseContainer, SIPImporters):
     """."""
 
     def check_dataframe(self, dataframe):
