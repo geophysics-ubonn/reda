@@ -3,7 +3,7 @@ import os
 
 import pandas as pd
 
-import reda
+from reda.main.logger import LoggingClass
 
 from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
@@ -127,7 +127,7 @@ class ERTImporters(ImportersBase):
         self.import_bert(*args, **kargs)
 
 
-class ERT(BaseContainer, ERTImporters):
+class ERT(LoggingClass, BaseContainer, ERTImporters):
     """."""
 
     def __init__(self, data=None, electrode_positions=None, topography=None):

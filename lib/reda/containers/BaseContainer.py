@@ -237,6 +237,38 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
 
+    def pseudosection_type3(self, column='r', filename=None, log10=False, **kwargs):
+        """Plot a pseudosection of the given column. Note that this function
+        only works with dipole-dipole data at the moment.
+
+        Parameters
+        ----------
+        column : string, optional
+            Column to plot into the pseudosection, default: r
+        filename : string, optional
+            if not None, save the resulting figure directory to disc
+        log10 : bool, optional
+            if True, then plot values in log10, default: False
+        **kwargs : dict
+            all additional parameters are directly provided to
+            :py:func:`reda.plotters.pseudoplots.PS.plot_pseudosection_type2`
+
+        Returns
+        -------
+        fig : :class:`matplotlib.Figure`
+            matplotlib figure object
+            ax : :class:`matplotlib.axes`
+            matplotlib axes object
+        cb : colorbar object
+            matplotlib colorbar object
+        """
+        fig, ax, cb = PS.plot_pseudosection_type3(
+            self.data, column=column, log10=log10, **kwargs
+        )
+        if filename is not None:
+            fig.savefig(filename, dpi=300)
+        return fig, ax, cb
+
     def histogram(self, column='r', filename=None, log10=False, **kwargs):
         """Plot a histogram of one data column"""
         return_dict = HS.plot_histograms(self.data, column)

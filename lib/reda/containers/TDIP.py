@@ -6,6 +6,7 @@ import pandas as pd
 
 import reda.utils.mpl
 
+from reda.main.logger import LoggingClass
 from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
 
@@ -102,7 +103,7 @@ class TDIPImporters(ImportersBase):
     #     self.import_bert(*args, **kargs)
 
 
-class TDIP(BaseContainer, TDIPImporters):
+class TDIP(LoggingClass, BaseContainer, TDIPImporters):
     """."""
 
     def check_dataframe(self, dataframe):

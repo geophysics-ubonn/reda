@@ -6,8 +6,10 @@ from numbers import Number
 
 import numpy as np
 
+
 from reda.main.logger import LoggingClass
-from reda.containers.ERT import ImportersBase
+from reda.containers.BaseContainer import ImportersBase
+from reda.containers.BaseContainer import BaseContainer
 import reda.importers.eit_fzj as eit_fzj
 import reda.importers.radic_sip256c as reda_sip256c
 import reda.importers.crtomo as reda_crtomo_exporter
@@ -28,7 +30,7 @@ import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
 
 
-class importers(ImportersBase):
+class sEITImporters(ImportersBase):
     """This class provides wrappers for most of the importer functions, and is
     meant to be inherited by the data containers
     """
@@ -92,7 +94,7 @@ class importers(ImportersBase):
         self._describe_data(df_emd)
 
 
-class sEIT(LoggingClass, importers):
+class sEIT(LoggingClass, BaseContainer, sEITImporters):
 
     def __init__(self, dataframe=None):
         self.setup_logger()
