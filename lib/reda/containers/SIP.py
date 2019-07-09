@@ -84,6 +84,23 @@ class SIPImporters(ImportersBase):
 class SIP(BaseContainer, SIPImporters):
     """."""
 
+    def __init__(self, data=None):
+        self.data = self.check_dataframe(data)
+        self.required_columns = [
+            'a',
+            'b',
+            'm',
+            'n',
+            'r'
+            'frequency',
+            'rpha'
+            'zt',
+        ]
+        self.plot_columns = [
+            'frequency',
+            'Zt'
+        ]
+
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
         """
