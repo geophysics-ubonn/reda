@@ -13,7 +13,6 @@ from .containers.sEIT import sEIT
 from .containers.CR import CR
 from .containers.TDIP import TDIP
 from .containers.ERT import ERT
-from .filter.DCA import DCA
 from .testing import test
 rcParams = {}
 
@@ -27,7 +26,6 @@ EnterDirectory
 CreateEnterDirectory
 BaseContainer
 ERT
-DCA
 TDIP
 CR
 SIP
