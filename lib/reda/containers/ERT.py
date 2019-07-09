@@ -145,6 +145,11 @@ class ERT(BaseContainer, ERTImporters):
 
         """
         self.setup_logger()
+        self.required_columns = ['a',
+                                 'b',
+                                 'm',
+                                 'n',
+                                 'r']
         self.data = self.check_dataframe(data)
         self.electrode_positions = electrode_positions
         self.topography = topography
@@ -160,8 +165,7 @@ class ERT(BaseContainer, ERTImporters):
             raise Exception(
                 'The provided dataframe object is not a pandas.DataFrame')
 
-        required_columns = tuple("abmnr")
-        for column in required_columns:
+        for column in self.required_columns:
             if column not in dataframe:
                 raise Exception(
                     'Required column not in dataframe: {0}'.format(column))

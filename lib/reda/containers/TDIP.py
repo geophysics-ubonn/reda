@@ -106,6 +106,33 @@ class TDIPImporters(ImportersBase):
 class TDIP(BaseContainer, TDIPImporters):
     """."""
 
+    def __init__(self, data=None, electrode_positions=None, topography=None):
+        """
+        Parameters
+        ----------
+        data : :py:class:`pandas.DataFrame`
+            If not None, then the provided DataFrame is assumed to contain
+            valid data previously prepared elsewhere. Please refer to the
+            documentation for required columns.
+        electrode_positions : :py:class:`pandas.DataFrame`
+            If set, this is expected to be a DataFrame which contains electrode
+            positions with columns: "x", "y", "z".
+        topography : :py:class:`pandas.DataFrame`
+            If set, this is expected to a DataFrame which contains topography
+            information with columns: "x", "y", "z".
+
+        """
+        self.setup_logger()
+        self.required_columns = ['a',
+                                 'b',
+                                 'm',
+                                 'n',
+                                 'r',
+                                 'chargeability']
+        self.data = self.check_dataframe(data)
+        self.electrode_positions = electrode_positions
+        self.topography = topography
+
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
         """
@@ -118,15 +145,7 @@ class TDIP(BaseContainer, TDIPImporters):
                 'The provided dataframe object is not a pandas.DataFrame'
             )
 
-        required_columns = (
-            'a',
-            'b',
-            'm',
-            'n',
-            'r',
-            'chargeability',
-        )
-        for column in required_columns:
+        for column in self.required_columns:
             if column not in dataframe:
                 raise Exception('Required column not in dataframe: {0}'.format(
                     column

@@ -100,20 +100,22 @@ class sEIT(BaseContainer, sEITImporters):
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
         self.data = dataframe
-
-        self.required_data_columns = ['r', 'rpha']
-
-    def check_dataframe(self, dataframe):
-        """Check the given dataframe for the required columns
-        """
-        required_columns = (
+        self.required_columns = [
             'a',
             'b',
             'm',
             'n',
-            'r',
-        )
-        for column in required_columns:
+            'r'
+            'frequency',
+            'rpha'
+            'Zt',
+        ]
+
+    def check_dataframe(self, dataframe):
+        """Check the given dataframe for the required columns
+        """
+
+        for column in self.required_columns:
             if column not in dataframe:
                 raise Exception('Required column not in dataframe: {0}'.format(
                     column

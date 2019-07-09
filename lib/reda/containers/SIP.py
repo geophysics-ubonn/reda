@@ -84,7 +84,9 @@ class SIPImporters(ImportersBase):
 class SIP(BaseContainer, SIPImporters):
     """."""
 
-    def __init__(self, data=None):
+    def __init__(self, data=None, electrode_positions=None, topography=None):
+        """."""
+        self.setup_logger()
         self.data = self.check_dataframe(data)
         self.required_columns = [
             'a',
@@ -94,12 +96,14 @@ class SIP(BaseContainer, SIPImporters):
             'r'
             'frequency',
             'rpha'
-            'zt',
+            'Zt',
         ]
         self.plot_columns = [
             'frequency',
             'Zt'
         ]
+        self.electrode_positions = electrode_positions
+        self.topography = topography
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
@@ -113,17 +117,7 @@ class SIP(BaseContainer, SIPImporters):
                 'The provided dataframe object is not a pandas.DataFrame'
             )
 
-        required_columns = (
-            'a',
-            'b',
-            'm',
-            'n',
-            'r',
-            'frequency'
-            'rpha',
-            'Zt'
-        )
-        for column in required_columns:
+        for column in self.required_columns:
             if column not in dataframe:
                 raise Exception('Required column not in dataframe: {0}'.format(
                     column

@@ -77,7 +77,7 @@ class ImportersBase(object):
         else:
             df_to_use = df
         cols = []
-        for test_col in self.required_data_columns:
+        for test_col in self.required_columns:
             if test_col in df_to_use.columns:
                 cols.append(test_col)
         print(df_to_use[cols].describe())
