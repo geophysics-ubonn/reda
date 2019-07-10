@@ -5,9 +5,9 @@
 
 Computation times
 =================
-**02:41.427** total execution time for **_examples_03_sEIT** files:
+**02:41.053** total execution time for **_examples_03_sEIT** files:
 
-- **01:13.997**: :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj.py` (``plot_eit_fzj.py``)
-- **00:57.700**: :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py` (``plot_radic_sip256c.py``)
-- **00:28.562**: :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py` (``plot_visualize_4d_data.py``)
-- **00:01.168**: :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj_check.py` (``plot_eit_fzj_check.py``)
+- **01:13.722**: :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj.py` (``plot_eit_fzj.py``)
+- **00:57.801**: :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py` (``plot_radic_sip256c.py``)
+- **00:28.366**: :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py` (``plot_visualize_4d_data.py``)
+- **00:01.164**: :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj_check.py` (``plot_eit_fzj_check.py``)
