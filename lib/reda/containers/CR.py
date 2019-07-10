@@ -35,7 +35,10 @@ class CR(TDIP, ImportersCR):
         norrec : str (nor|rec|norrec)
             Which data to export. Default: norrec (all)
         """
-        subdata = self.data.query('norrec == "{}"'.format(norrec))
+        if norrec in ('nor', 'rec'):
+            subdata = self.data.query('norrec == "{}"'.format(norrec))
+        else:
+            subdata = self.data
         import crtomo
         data = subdata[['a', 'b', 'm', 'n', 'r', 'rpha']]
         tdman = crtomo.tdMan(grid=grid, volt_data=data)
