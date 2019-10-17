@@ -85,6 +85,22 @@ create the container
 
     generating ids
     assigning ids
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      self.data = self.data.ix[:, cols]
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
     Summary:
                      r         rpha
     count  4125.000000  4125.000000

@@ -51,6 +51,22 @@ import the data
     keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
     generating ids
     assigning ids
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      self.data = self.data.ix[:, cols]
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
     Summary:
                       r          rpha
     count  17296.000000  17296.000000
@@ -247,12 +263,23 @@ improved in the future
     :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/lib/type_check.py:161: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+      return val.real
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/lib/type_check.py:204: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
+      return val.imag
+
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  57.801 seconds)
+   **Total running time of the script:** ( 0 minutes  53.518 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

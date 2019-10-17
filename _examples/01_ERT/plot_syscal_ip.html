@@ -162,6 +162,22 @@ The jump indices are:
 Removing data points subsequent to the first jump
 generating ids
 assigning ids
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  self.data = self.data.ix[:, cols]
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 renumbering electrode numbers
 generating ids
 assigning ids
@@ -171,57 +187,7 @@ assigning ids
 2      1   2   5   6   211    nor
 3      6   5   2   1   211    rec
 89     6   5   3   2   212    rec
-88     2   3   5   6   212    nor
-4      1   2   6   7   252    nor
-5      7   6   2   1   252    rec
-91     7   6   3   2   253    rec
-90     2   3   6   7   253    nor
-175    7   6   4   3   254    rec
-174    3   4   6   7   254    nor
-6      1   2   7   8   293    nor
-7      8   7   2   1   293    rec
-93     8   7   3   2   294    rec
-92     2   3   7   8   294    nor
-177    8   7   4   3   295    rec
-176    3   4   7   8   295    nor
-259    8   7   5   4   296    rec
-258    4   5   7   8   296    nor
-8      1   2   8   9   334    nor
-9      9   8   2   1   334    rec
-95     9   8   3   2   335    rec
-94     2   3   8   9   335    nor
-179    9   8   4   3   336    rec
-178    3   4   8   9   336    nor
-260    4   5   8   9   337    nor
-261    9   8   5   4   337    rec
-340    5   6   8   9   338    nor
-341    9   8   6   5   338    rec
 ...   ..  ..  ..  ..   ...    ...
-1768  30  31  47  48  1965    nor
-1769  48  47  31  30  1965    rec
-1796  31  32  47  48  1966    nor
-1797  48  47  32  31  1966    rec
-1822  32  33  47  48  1967    nor
-1823  48  47  33  32  1967    rec
-1846  33  34  47  48  1968    nor
-1847  48  47  34  33  1968    rec
-1868  34  35  47  48  1969    nor
-1869  48  47  35  34  1969    rec
-1888  35  36  47  48  1970    nor
-1889  48  47  36  35  1970    rec
-1906  36  37  47  48  1971    nor
-1907  48  47  37  36  1971    rec
-1922  37  38  47  48  1972    nor
-1923  48  47  38  37  1972    rec
-1937  48  47  39  38  1973    rec
-1936  38  39  47  48  1973    nor
-1949  48  47  40  39  1974    rec
-1948  39  40  47  48  1974    nor
-1958  40  41  47  48  1975    nor
-1959  48  47  41  40  1975    rec
-1966  41  42  47  48  1976    nor
-1967  48  47  42  41  1976    rec
-1972  42  43  47  48  1977    nor
 1973  48  47  43  42  1977    rec
 1976  43  44  47  48  1978    nor
 1977  48  47  44  43  1978    rec
@@ -237,6 +203,65 @@ assigning ids
 
 <span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">fixK</span>
 <span class="n">ip</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">fixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  dataframe.ix[indices_negative, [&#39;k&#39;, &#39;r&#39;]] *= -1
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  dataframe.ix[indices_switched_ab, [&#39;a&#39;, &#39;b&#39;]] = dataframe.ix[
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  indices_switched_ab, [&#39;b&#39;, &#39;a&#39;]
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  dataframe.ix[indices_switched_mn, [&#39;m&#39;, &#39;n&#39;]] = dataframe.ix[
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  indices_switched_mn, [&#39;n&#39;, &#39;m&#39;]
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  dataframe.ix[indices_negative, &#39;Vmn&#39;] *= -1
+/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning:
+.ix is deprecated. Please use
+.loc for label based indexing or
+.iloc for positional indexing
+
+See the documentation here:
+http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+  return getattr(section, self.name)[new_key]
 </pre></div>
 </div>
 <p>plot a decay curve by specifying the index
@@ -277,10 +302,10 @@ this will only return a figure object, but will not save to file:</p>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_006.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_006.png" />
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-ip-py">
 <div class="sphx-glr-download docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/6ec5721b0005bd7aeccadbc1ccb226a4/plot_syscal_ip.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_ip.py</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/36ed92e9691cffa04f30c07b23fbfcc8/plot_syscal_ip.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_ip.py</span></code></a></p>
 </div>
 <div class="sphx-glr-download docutils container">
-<p><a class="reference download internal" download="" href="../../_downloads/6295db2db45367d799e14ea3fd5e933f/plot_syscal_ip.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_ip.ipynb</span></code></a></p>
+<p><a class="reference download internal" download="" href="../../_downloads/28bc98882edce836fd30ec5001630993/plot_syscal_ip.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_ip.ipynb</span></code></a></p>
 </div>
 </div>
 <p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
@@ -297,7 +322,7 @@ this will only return a figure object, but will not save to file:</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.1.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

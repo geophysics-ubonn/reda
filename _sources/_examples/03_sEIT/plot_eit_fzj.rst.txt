@@ -72,9 +72,29 @@ Initialize an sEIT container
 
  .. code-block:: none
 
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_version_2017.py:273: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+      sign_re = df['Zt'].real / np.abs(df['Zt'].real)
     constructing four-point measurements
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+      Rsign = np.sign(dfn['Zt'].real)
     generating ids
     assigning ids
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      self.data = self.data.ix[:, cols]
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
     Summary:
                       r          rpha
     count  16280.000000  16280.000000
@@ -147,6 +167,81 @@ Compute geometric factors
 
 
 
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_negative, ['k', 'r']] *= -1
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_switched_ab, ['a', 'b']] = dataframe.ix[
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      indices_switched_ab, ['b', 'a']
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_switched_mn, ['m', 'n']] = dataframe.ix[
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      indices_switched_mn, ['n', 'm']
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_negative, 'Vmn'] *= -1
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      return getattr(section, self.name)[new_key]
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:60: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_negative, 'Zt'] *= -1
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:79: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
+      dataframe['Zt'].imag, dataframe['Zt'].real
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:79: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+      dataframe['Zt'].imag, dataframe['Zt'].real
+
 
 
 compute normal and reciprocal pairs
@@ -192,7 +287,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f41c1275c88>
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f85c73ae0f0>
             a   b   m   n     frequency         r        rpha
     749    10  29  15  34      0.100000  7.356375   -5.205543
     2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -336,7 +431,7 @@ alternative
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  13.722 seconds)
+   **Total running time of the script:** ( 1 minutes  17.483 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:

@@ -55,9 +55,81 @@ data import:
 
     generating ids
     assigning ids
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      self.data = self.data.ix[:, cols]
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
     renumbering electrode numbers
     generating ids
     assigning ids
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_negative, ['k', 'r']] *= -1
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_switched_ab, ['a', 'b']] = dataframe.ix[
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      indices_switched_ab, ['b', 'a']
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_switched_mn, ['m', 'n']] = dataframe.ix[
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      indices_switched_mn, ['n', 'm']
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      dataframe.ix[indices_negative, 'Vmn'] *= -1
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning: 
+    .ix is deprecated. Please use
+    .loc for label based indexing or
+    .iloc for positional indexing
+
+    See the documentation here:
+    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
+      return getattr(section, self.name)[new_key]
 
 
 

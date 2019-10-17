@@ -43,18 +43,26 @@ Import the SIP data
  .. code-block:: none
 
     Import SIP04 data from .mat file
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/lib/type_check.py:161: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+      return val.real
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/lib/type_check.py:204: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
+      return val.imag
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/sip04.py:236: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
+      df['rpha'] = np.arctan2(df['zt'].imag, df['zt'].real) * 1000
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/sip04.py:236: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+      df['rpha'] = np.arctan2(df['zt'].imag, df['zt'].real) * 1000
     Summary:
     /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/core/_methods.py:36: ComplexWarning: Casting complex values to real discards the imaginary part
       return umr_sum(a, axis, dtype, out, keepdims, initial)
-              frequency                                       zt
-    count     22.000000                                  (22+0j)
-    mean    3816.767273  (84453.09832732887-1279.1473303352197j)
-    std    10316.015190                  (2532.9789432354946+0j)
-    min        0.010000   (81744.25848984452-211.4119571264628j)
-    25%        0.625000  (82286.50562535867-483.13234530138834j)
-    50%       25.000000   (83094.38567782879-2280.050158180694j)
-    75%      875.000000  (85696.34786396625-1859.1185927874285j)
-    max    45000.000000   (91671.2908894628-2692.4774606803767j)
+              frequency                         zt
+    count     22.000000        22.000000+0.000000j
+    mean    3816.767273  84453.098327-1279.147330j
+    std    10316.015190      2532.978943+0.000000j
+    min        0.010000   81744.258490-211.411957j
+    25%        0.625000   82286.505625-483.132345j
+    50%       25.000000  83094.385678-2280.050158j
+    75%      875.000000  85696.347864-1859.118593j
+    max    45000.000000  91671.290889-2692.477461j
 
 
 
