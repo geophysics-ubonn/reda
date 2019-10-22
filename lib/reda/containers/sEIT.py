@@ -578,7 +578,8 @@ class sEIT(LoggingClass, importers):
         primary_dim : None|str
             ???
         filename : None|str
-            Prefix for filename
+            Prefix for filename. Do not add a file ending here, as additional
+            string will be appended here.
         **kwargs : dict
             ???
 
@@ -591,7 +592,7 @@ class sEIT(LoggingClass, importers):
         if filename is not None:
             for key, item in figs.items():
                 item.savefig(
-                    filename + '_{}.jpg'.format(key.replace('_', '-')), dpi=300
+                    filename + '_{}.jpg'.format(key).replace('_', '-'), dpi=300
                 )
         return dict_dimension, figs
 
