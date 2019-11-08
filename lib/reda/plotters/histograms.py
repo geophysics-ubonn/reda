@@ -41,6 +41,10 @@ def plot_histograms(ertobj, keys, **kwargs):
     log10plot : bool, optional
         default: True
     extra_dims : list, optional
+        ?
+    nr_bins : None|int
+        if an int is given, use this as the number of bins, otherwise use a
+        heuristic.
 
     Examples
     --------
@@ -82,6 +86,9 @@ def plot_histograms(ertobj, keys, **kwargs):
         subdata = subdata_raw[~np.isnan(subdata_raw)]
         subdata = subdata[np.isfinite(subdata)]
 
+        nr_of_bins = kwargs.get('nr_of_bins', _get_nr_bins(subdata.size))
+        print('nr of  bins', nr_of_bins)
+
         subdata_log10_with_nan = np.log10(subdata[subdata > 0])
         subdata_log10 = subdata_log10_with_nan[~np.isnan(
             subdata_log10_with_nan)
@@ -97,7 +104,7 @@ def plot_histograms(ertobj, keys, **kwargs):
         ax = axes[0]
         ax.hist(
             subdata,
-            _get_nr_bins(subdata.size),
+            nr_of_bins,
         )
         ax.set_xlabel(
             units.get_label(key)
@@ -111,7 +118,7 @@ def plot_histograms(ertobj, keys, **kwargs):
             ax = axes[1]
             ax.hist(
                 subdata_log10,
-                _get_nr_bins(subdata.size),
+                nr_of_bins,
             )
             ax.set_xlabel(r'$log_{10}($' + units.get_label(key) + ')')
             ax.set_ylabel('count')
@@ -302,7 +309,9 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
                             subdata_log10_with_nan)
                         ]
 
-                        subdata_log10 = subdata_log10[np.isfinite(subdata_log10)]
+                        subdata_log10 = subdata_log10[
+                            np.isfinite(subdata_log10)
+                        ]
                         subdata = subdata_log10
 
                     ax = axes.flat[index]
