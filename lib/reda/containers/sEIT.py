@@ -6,8 +6,8 @@ from numbers import Number
 
 import numpy as np
 
-from reda.main.logger import LoggingClass
-from reda.containers.ERT import ImportersBase
+from reda.containers.BaseContainer import ImportersBase
+from reda.containers.BaseContainer import BaseContainer
 import reda.importers.eit_fzj as eit_fzj
 import reda.importers.radic_sip256c as reda_sip256c
 import reda.importers.crtomo as reda_crtomo_exporter
@@ -28,7 +28,7 @@ import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
 
 
-class importers(ImportersBase):
+class sEITImporters(ImportersBase):
     """This class provides wrappers for most of the importer functions, and is
     meant to be inherited by the data containers
     """
@@ -92,7 +92,7 @@ class importers(ImportersBase):
         self._describe_data(df_emd)
 
 
-class sEIT(LoggingClass, importers):
+class sEIT(BaseContainer, sEITImporters):
 
     def __init__(self, dataframe=None):
         self.setup_logger()
@@ -100,20 +100,22 @@ class sEIT(LoggingClass, importers):
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
         self.data = dataframe
-
-        self.required_data_columns = ['r', 'rpha']
-
-    def check_dataframe(self, dataframe):
-        """Check the given dataframe for the required columns
-        """
-        required_columns = (
+        self.required_columns = [
             'a',
             'b',
             'm',
             'n',
-            'r',
-        )
-        for column in required_columns:
+            'r'
+            'frequency',
+            'rpha'
+            'Zt',
+        ]
+
+    def check_dataframe(self, dataframe):
+        """Check the given dataframe for the required columns
+        """
+
+        for column in self.required_columns:
             if column not in dataframe:
                 raise Exception('Required column not in dataframe: {0}'.format(
                     column

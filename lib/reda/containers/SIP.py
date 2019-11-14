@@ -1,28 +1,31 @@
 """Container for Spectral Induced Polarization (SIP) measurements
 """
+
+import os
 import numpy as np
 import pandas as pd
 
+import reda.utils.mpl
+
+from reda.containers.BaseContainer import ImportersBase
+from reda.containers.BaseContainer import BaseContainer
+
 import reda.importers.sip04 as reda_sip04
+import reda.importers.mpt_das1 as reda_mpt
+# from reda.importers.crtomo import load_mod_file
+
+from reda.utils.decorators_and_managers import append_doc_of
+from reda.utils.decorators_and_managers import LogDataChanges
+
+plt, mpl = reda.utils.mpl.setup()
 
 
-class importers(object):
+class SIPImporters(ImportersBase):
     """This class provides wrappers for most of the importer functions, and is
     meant to be inherited by the data containers
     """
-    def _add_to_container(self, df):
-        if self.data is not None:
-            self.data = pd.concat((self.data, df))
-        else:
-            self.data = df
 
-    def _describe_data(self, df=None):
-        if df is None:
-            df_to_use = self.data
-        else:
-            df_to_use = df
-        print(df_to_use[self.plot_columns].describe())
-
+    # @append_doc_of(reda_sip04.import_sip04)
     def import_sip04(self, filename, timestep=None):
         """SIP04 data import
 
@@ -53,22 +56,54 @@ class importers(object):
         print('Summary:')
         self._describe_data(df)
 
+    @append_doc_of(reda_mpt.import_das1_td)
+    def import_mpt(self, filename, **kwargs):
+        """MPT DAS 1 FD importer
 
-class SIP(importers):
-    def __init__(self, data=None):
+        timestep: int or :class:`datetime.datetime`
+            if provided use this value to set the 'timestep' column of the
+            produced dataframe. Default: 0
+
+        """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
+        self.logger.info('MPT DAS-1 import')
+        with LogDataChanges(self, filter_action='import'):
+            data, electrodes, topography = reda_mpt.import_das1_sip(
+                filename, **kwargs)
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
+
+class SIP(BaseContainer, SIPImporters):
+    """."""
+
+    def __init__(self, data=None, electrode_positions=None, topography=None):
+        """."""
+        self.setup_logger()
         self.data = self.check_dataframe(data)
         self.required_columns = [
             'a',
             'b',
             'm',
             'n',
+            'r'
             'frequency',
-            'zt',
+            'rpha'
+            'Zt',
         ]
         self.plot_columns = [
             'frequency',
-            'zt'
+            'Zt'
         ]
+        self.electrode_positions = electrode_positions
+        self.topography = topography
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
