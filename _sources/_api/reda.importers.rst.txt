@@ -89,6 +89,14 @@ reda.importers.iris\_syscal\_pro module
    :undoc-members:
    :show-inheritance:
 
+reda.importers.mpt\_das1 module
+-------------------------------
+
+.. automodule:: reda.importers.mpt_das1
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 reda.importers.radic\_sip256c module
 ------------------------------------
 

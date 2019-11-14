@@ -173,34 +173,37 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code>(self, filename)</p></td>
 <td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 importer</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code>(self[, filename, …])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code>(self[, filename, …])</p></td>
 <td><p>Plot decay curve</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
 <td><p>Apply a filter to subset of the data</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
 <td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code>(self)</p></td>
 <td><p>Convert container to a complex resistivity container, using the CPA-conversion.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>(self)</p></td>
 <td><p>Return of copy of the data inside a TDIP container</p></td>
 </tr>
 </tbody>
@@ -317,28 +320,31 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 importer</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.pseudosection" title="reda.containers.ERT.ERT.pseudosection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code></a>(self[, column, filename, log10])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.pseudosection" title="reda.containers.ERT.ERT.pseudosection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code></a>(self[, column, filename, log10])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(self, subset, filter[, inplace])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(self, subset, filter[, inplace])</p></td>
 <td><p>Apply a filter to subset of the data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.to_configs" title="reda.containers.ERT.ERT.to_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code></a>(self)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.to_configs" title="reda.containers.ERT.ERT.to_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code></a>(self)</p></td>
 <td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.to_ip" title="reda.containers.ERT.ERT.to_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code></a>(self)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.to_ip" title="reda.containers.ERT.ERT.to_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code></a>(self)</p></td>
 <td><p>Return of copy of the data inside a TDIP container</p></td>
 </tr>
 </tbody>
@@ -636,13 +642,16 @@ meant to be inherited by the ERT data container.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_bert" title="reda.containers.ERT.Importers.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_pygimli" title="reda.containers.ERT.Importers.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_mpt" title="reda.containers.ERT.Importers.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 importer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_pygimli" title="reda.containers.ERT.Importers.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_bin" title="reda.containers.ERT.Importers.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_bin" title="reda.containers.ERT.Importers.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_txt" title="reda.containers.ERT.Importers.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_txt" title="reda.containers.ERT.Importers.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
 </tbody>
@@ -672,6 +681,40 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 <dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
 </dd>
 <dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is provided at the moment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.Importers.import_mpt">
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_mpt" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPT DAS 1 importer</p>
+<blockquote>
+<div><dl class="simple">
+<dt>timestep: int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></dt><dd><p>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</p>
+</dd>
+</dl>
+<p>Reads a any MPT DAS-1 data file (.Data), e.g. TD/FD/SIP, and prepares</p>
+</div></blockquote>
+<p>information in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
 </dd>
 </dl>
 </dd>
@@ -972,34 +1015,37 @@ meant to be inherited by the data containers</p>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 importer</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>(self[, filename, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>(self[, filename, …])</p></td>
 <td><p>Plot decay curve</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
 <td><p>Apply a filter to subset of the data</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
 <td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.to_cr" title="reda.containers.TDIP.TDIP.to_cr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code></a>(self)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.to_cr" title="reda.containers.TDIP.TDIP.to_cr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code></a>(self)</p></td>
 <td><p>Convert container to a complex resistivity container, using the CPA-conversion.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>(self)</p></td>
 <td><p>Return of copy of the data inside a TDIP container</p></td>
 </tr>
 </tbody>

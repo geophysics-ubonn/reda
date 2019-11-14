@@ -56,7 +56,7 @@ load the data set
 
     generating ids
     assigning ids
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:57: FutureWarning: 
     .ix is deprecated. Please use
     .loc for label based indexing or
     .iloc for positional indexing
@@ -237,7 +237,7 @@ Histograms
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  28.150 seconds)
+   **Total running time of the script:** ( 0 minutes  28.118 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:

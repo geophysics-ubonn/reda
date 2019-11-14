@@ -102,6 +102,8 @@ chargeability Global chargeability
 .. note ::
 
     Tm, Mx optional?
+    JG: Decay Curve properties as Sub-DF in Container with absolute time as index
+    and Mx as column; Tm deriveable from there
 
 Optional columns can be named arbitrarily, but the following are usually used:
 
@@ -115,7 +117,26 @@ rhoa      Apparent resistivity, k * r, [Ohm m]
 CR
 ^^
 
-TODO
+========= ======================================
+column    description
+========= ======================================
+a         First current electrode of quadpole
+b         Second current electrode of quadpole
+m         First potential electrode of quadpole
+n         Second potential electrode of quadpole
+z         Measured transfer impedance [Ohm]
+r         Measured resistance [Ohm]
+rpha      Resistance phase value [mrad]
+========= ======================================
+
+Optional columns can be named arbitrarily, but the following are usually used:
+
+========= ======================================
+column    description
+========= ======================================
+k         Geometric factor [m]
+rhoa      Apparent resistivity, k * r, [Ohm m]
+========= ======================================
 
 SIP
 ^^^
@@ -128,7 +149,7 @@ b         Second current electrode of quadpole
 m         First potential electrode of quadpole
 n         Second potential electrode of quadpole
 frequency Mesurement frequency
-z         Measured complex resistivity [Ohm]
+z         Measured transfer impedance [Ohm]
 r         Measured resistance [Ohm]
 rpha      Resistance phase value [mrad]
 ========= ======================================
@@ -153,7 +174,7 @@ b         Second current electrode of quadpole
 m         First potential electrode of quadpole
 n         Second potential electrode of quadpole
 frequency Mesurement frequency
-z         Measured complex resistivity [Ohm]
+zt         Measured transfer impedance [Ohm]
 r         Measured resistance [Ohm]
 rpha      Resistance phase value [mrad]
 ========= ======================================
