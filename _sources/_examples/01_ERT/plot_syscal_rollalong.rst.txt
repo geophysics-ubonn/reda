@@ -51,7 +51,7 @@ create an ERT container and import first dataset
 
     generating ids
     assigning ids
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:57: FutureWarning: 
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
     .ix is deprecated. Please use
     .loc for label based indexing or
     .iloc for positional indexing
@@ -158,7 +158,7 @@ create an ERT container and import second dataset
 
     generating ids
     assigning ids
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:57: FutureWarning: 
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
     .ix is deprecated. Please use
     .loc for label based indexing or
     .iloc for positional indexing
@@ -288,7 +288,7 @@ thereby shifting electrode notations of the second dataset by 24 electrodes
 
     generating ids
     assigning ids
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:57: FutureWarning: 
+    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
     .ix is deprecated. Please use
     .loc for label based indexing or
     .iloc for positional indexing
