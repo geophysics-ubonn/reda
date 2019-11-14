@@ -9,7 +9,7 @@ from setuptools import setup, find_packages
 # to create a windows installer
 
 version_short = '0.1'
-version_long = '0.1.4-dev'
+version_long = '0.1.4'
 
 # package data
 os.chdir('lib/reda/testing')
