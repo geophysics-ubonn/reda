@@ -297,6 +297,6 @@ def apply_correction_factors(df, correction_data):
         # apply correction factor
         for col in ('r', 'Zt', 'Vmn', 'rho_a'):
             if col in df.columns:
-                df.ix[item, col] *= factor
-        df.ix[item, 'corr_fac'] = factor
+                df.iloc[item, df.columns.get_loc(col)] *= factor
+        df.iloc[item, df.columns.get_loc('corr_fac')] = factor
     return df, corr_data

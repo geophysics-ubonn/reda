@@ -50,7 +50,7 @@ class ImportersBase(object):
         for col in tuple("nmba"):
             cols = list(self.data)
             cols.insert(0, cols.pop(cols.index(col)))
-            self.data = self.data.ix[:, cols]
+            self.data = self.data.iloc[:, self.data.columns.get_indexer(cols)]
             self.data[col] = self.data[col].astype(int)
 
         if 'timestep' in self.data:
@@ -237,7 +237,8 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
 
-    def pseudosection_type3(self, column='r', filename=None, log10=False, **kwargs):
+    def pseudosection_type3(
+            self, column='r', filename=None, log10=False, **kwargs):
         """Plot a pseudosection of the given column. Note that this function
         only works with dipole-dipole data at the moment.
 

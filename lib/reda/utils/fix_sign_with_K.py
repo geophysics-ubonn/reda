@@ -38,26 +38,36 @@ def fix_sign_with_K(dataframe):
         # nothing to do here
         return dataframe
 
-    dataframe.ix[indices_negative, ['k', 'r']] *= -1
+    dataframe.iloc[
+        indices_negative, dataframe.columns.get_indexer(['k', 'r'])
+    ] *= -1
 
     # switch potential electrodes
     indices_switched_ab = indices_negative & (dataframe['a'] > dataframe['b'])
     indices_switched_mn = indices_negative & (dataframe['a'] < dataframe['b'])
 
-    dataframe.ix[indices_switched_ab, ['a', 'b']] = dataframe.ix[
-        indices_switched_ab, ['b', 'a']
+    dataframe.iloc[
+        indices_switched_ab, dataframe.columns.get_indexer(['a', 'b'])
+    ] = dataframe.iloc[
+        indices_switched_ab, dataframe.columns.get_indexer(['b', 'a'])
     ].values
 
-    dataframe.ix[indices_switched_mn, ['m', 'n']] = dataframe.ix[
-        indices_switched_mn, ['n', 'm']
+    dataframe.iloc[
+        indices_switched_mn, dataframe.columns.get_indexer(['m', 'n'])
+    ] = dataframe.iloc[
+        indices_switched_mn, dataframe.columns.get_indexer(['n', 'm'])
     ].values
 
     # switch sign of voltages
     if 'Vmn' in dataframe:
-        dataframe.ix[indices_negative, 'Vmn'] *= -1
+        dataframe.iloc[
+            indices_negative, dataframe.columns.get_loc('Vmn')
+        ] *= -1
 
     if 'Zt' in dataframe:
-        dataframe.ix[indices_negative, 'Zt'] *= -1
+        dataframe.iloc[
+            indices_negative, dataframe.columns.get_loc('Zt')
+        ] *= -1
 
     if 'rho_a' in dataframe:
         dataframe['rho_a'] = dataframe['r'] * dataframe['k']
