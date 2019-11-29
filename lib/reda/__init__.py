@@ -1,6 +1,3 @@
-
-
-
 from reda.utils.enter_directory import CreateEnterDirectory
 from reda.utils.enter_directory import EnterDirectory
 import reda.importers.utils.transforms as transforms
@@ -35,3 +32,9 @@ search
 data
 ConfigManager
 transforms
+
+
+def version():
+    """Return the installed version of reda, using the pkg_resources package"""
+    import pkg_resources
+    return pkg_resources.require('reda')[0].version
