@@ -36,11 +36,15 @@ Install current development version from git:
 git clone https://github.com/geophysics-ubonn/reda
 cd reda
 
-# 1) Installing dependencies with pip
+# 1) Install dependencies with pip
 pip install -r requirements.txt
-# 2) Installing dependencies with conda
+# 2) or Install dependencies with conda
 conda install --file requirements.txt
 
+pip install .
+
+# alternatively: (note that this produce problems if multiple versions of reda
+#  are installed)
 python setup.py install
 ```
 
