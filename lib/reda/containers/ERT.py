@@ -95,8 +95,6 @@ class ERTImporters(ImportersBase):
     def import_mpt(self, filename, **kwargs):
         """MPT DAS 1 importer
 
-        Parameters
-        ----------
         timestep : int or :class:`datetime.datetime`
             if provided use this value to set the 'timestep' column of the
             produced dataframe. Default: 0
