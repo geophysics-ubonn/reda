@@ -1,7 +1,5 @@
 """Container for Spectral Induced Polarization (SIP) measurements
 """
-
-import os
 import numpy as np
 import pandas as pd
 
@@ -155,14 +153,14 @@ class SIP(BaseContainer, SIPImporters):
 
         def group_apply(item):
             y = item[['zt_1', 'zt_2', 'zt_3']].values.flatten()
-            zt_imag_std = np.std(y.imag)
-            zt_real_std = np.std(y.real)
-            zt_imag_min = np.min(y.imag)
-            zt_real_min = np.min(y.real)
-            zt_imag_max = np.max(y.imag)
-            zt_real_max = np.max(y.real)
-            zt_imag_mean = np.mean(y.imag)
-            zt_real_mean = np.mean(y.real)
+            zt_imag_std = np.std(np.imag(y))
+            zt_real_std = np.std(np.real(y))
+            zt_imag_min = np.min(np.imag(y))
+            zt_real_min = np.min(np.real(y))
+            zt_imag_max = np.max(np.imag(y))
+            zt_real_max = np.max(np.real(y))
+            zt_imag_mean = np.mean(np.imag(y))
+            zt_real_mean = np.mean(np.real(y))
             dfn = pd.DataFrame(
                 {
                     'zt_real_mean': zt_real_mean,
