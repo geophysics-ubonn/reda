@@ -25,19 +25,16 @@ def get_frequencies(filename, header_row):
 
     Parameters
     ----------
-    filename: string
+    filename : string
         input filename
-    header_row: int
+    header_row : int
         row number of header row
 
     Returns
     -------
-    frequencies: list
+    frequencies : list
         Contains the measured frequencies
 
-    Notes
-    -----
-    .
     """
 
     fid = open(filename, 'r')
