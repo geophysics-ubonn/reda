@@ -8,7 +8,7 @@ import numpy as np
 import reda
 
 
-def apply_K(df, k):
+def apply_K(df, k, **kwargs):
     """Apply the geometric factors to the dataset and compute (apparent)
     resistivities/conductivities
     """
@@ -74,7 +74,7 @@ def compute_K_numerical(dataframe, settings=None, keep_dir=None):
     return K
 
 
-def compute_K_analytical(dataframe, spacing):
+def compute_K_analytical(dataframe, spacing, **kwargs):
     """Given an electrode spacing, compute geometrical factors using the
     equation for the homogeneous half-space (Neumann-equation)
 
