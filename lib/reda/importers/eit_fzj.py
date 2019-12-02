@@ -279,21 +279,11 @@ def apply_correction_factors(df, correction_data):
         # print(index, corr_data[index])
         if len(index) == 0:
             print(key)
-            import IPython
-            IPython.embed()
             raise Exception(
                 'No correction factor found for this configuration'
             )
 
         factor = corr_data[index, 4]
-        # if key == (1, 4, 2, 3):
-        #     print(key)
-        #     print(factor)
-        #     print(df['R'])
-        #     print(df['k'])
-        #     import IPython
-        #     IPython.embed()
-        #     exit()
         # apply correction factor
         for col in ('r', 'Zt', 'Vmn', 'rho_a'):
             if col in df.columns:
