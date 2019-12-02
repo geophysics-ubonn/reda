@@ -84,9 +84,9 @@ def fix_sign_with_K(dataframe, **kwargs):
     # recompute phase values
     if 'rpha' in dataframe:
         if 'Zt' in dataframe:
-            # recompute
+            # recompute phase values
             dataframe['rpha'] = np.arctan2(
-                dataframe['Zt'].imag, dataframe['Zt'].real
+                np.imag(dataframe['Zt']), np.real(dataframe['Zt'])
             ) * 1e3
         else:
             raise Exception(
