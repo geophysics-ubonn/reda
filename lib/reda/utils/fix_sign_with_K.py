@@ -5,13 +5,13 @@ resistance measurements can be switched if the geometrical factor is negative.
 import numpy as np
 
 
-def fix_sign_with_K(dataframe):
+def fix_sign_with_K(dataframe, **kwargs):
     """Swap electrode denotations so that geometrical (K) factors become
     positive. Also, swap signs of all parameters affected by this process.
 
     Affected parameters, at the moment, are:
 
-        * K
+        * k
         * r
         * Vmn
         * Zt
@@ -38,8 +38,10 @@ def fix_sign_with_K(dataframe):
         # nothing to do here
         return dataframe
 
+    # import IPython
+    # IPython.embed()
     dataframe.iloc[
-        indices_negative, dataframe.columns.get_indexer(['k', 'r'])
+        indices_negative.values, dataframe.columns.get_indexer(['k', 'r'])
     ] *= -1
 
     # switch potential electrodes
@@ -47,38 +49,36 @@ def fix_sign_with_K(dataframe):
     indices_switched_mn = indices_negative & (dataframe['a'] < dataframe['b'])
 
     dataframe.iloc[
-        indices_switched_ab, dataframe.columns.get_indexer(['a', 'b'])
+        indices_switched_ab.values, dataframe.columns.get_indexer(['a', 'b'])
     ] = dataframe.iloc[
-        indices_switched_ab, dataframe.columns.get_indexer(['b', 'a'])
+        indices_switched_ab.values, dataframe.columns.get_indexer(['b', 'a'])
     ].values
 
     dataframe.iloc[
-        indices_switched_mn, dataframe.columns.get_indexer(['m', 'n'])
+        indices_switched_mn.values, dataframe.columns.get_indexer(['m', 'n'])
     ] = dataframe.iloc[
-        indices_switched_mn, dataframe.columns.get_indexer(['n', 'm'])
+        indices_switched_mn.values, dataframe.columns.get_indexer(['n', 'm'])
     ].values
 
     # switch sign of voltages
     if 'Vmn' in dataframe:
         dataframe.iloc[
-            indices_negative, dataframe.columns.get_loc('Vmn')
+            indices_negative.values, dataframe.columns.get_indexer(['Vmn'])
         ] *= -1
 
     if 'Zt' in dataframe:
         dataframe.iloc[
-            indices_negative, dataframe.columns.get_loc('Zt')
+            indices_negative.values, dataframe.columns.get_indexer(['Zt'])
         ] *= -1
 
     if 'rho_a' in dataframe:
+        # recompute to make sure the signs are consistent
         dataframe['rho_a'] = dataframe['r'] * dataframe['k']
 
     if 'Mx' in dataframe:
         # for now we have to loop here because we store numpy arrays within
         # each cell
         for index in np.where(indices_negative)[0]:
-            # import IPython
-            # IPython.embed()
-            # exit()
             dataframe.at[index, 'Mx'] *= -1
 
     # recompute phase values
