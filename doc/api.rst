@@ -4,6 +4,7 @@ API documentation
 .. currentmodule:: reda
 
 .. automodule:: reda
+   :noindex:
 
 .. rubric:: Module overview
 
