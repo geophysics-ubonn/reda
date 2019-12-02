@@ -233,7 +233,7 @@ def _import_mat_file(mat_filename):
     df['zt'] = df['Zm_m']
     # compute magnitude and phase [in mrad]
     df['r'] = np.abs(df['zt'])
-    df['rpha'] = np.arctan2(df['zt'].imag, df['zt'].real) * 1000
+    df['rpha'] = np.arctan2(np.imag(df['zt']), np.real(df['zt'])) * 1000
     df['frequency'] = df['fm']
 
     return df
@@ -378,7 +378,7 @@ def _import_csv_file(csv_filename):
 
     # compute magnitude and phase [in mrad]
     df['r'] = np.abs(df['zt'])
-    df['rpha'] = np.arctan2(df['zt'].imag, df['zt'].real) * 1000
+    df['rpha'] = np.arctan2(np.imag(df['zt']), np.real(df['zt'])) * 1000
 
     df_merged['frequency'] = df_merged['fm']
 
