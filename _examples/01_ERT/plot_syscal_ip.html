@@ -138,17 +138,17 @@
 </pre></div>
 </div>
 <p>normal loading of tdip data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">TDIP</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">TDIP</span><span class="p">()</span>
 <span class="c1"># import pprofile</span>
 <span class="c1"># profiler = pprofile.Profile()</span>
 <span class="c1"># with profiler():</span>
-<span class="n">ip</span><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_normal.bin&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_normal.bin&#39;</span><span class="p">)</span>
 <span class="c1"># profile.print_stats()</span>
 <span class="c1"># exit()</span>
-<span class="n">ip</span><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_reciprocal.bin&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_reciprocal.bin&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
 
 
-<span class="nb">print</span><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;norrec&#39;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;norrec&#39;</span><span class="p">]])</span>
 
 <span class="c1"># import IPython</span>
 <span class="c1"># IPython.embed()</span>
@@ -162,22 +162,6 @@ The jump indices are:
 Removing data points subsequent to the first jump
 generating ids
 assigning ids
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  self.data = self.data.ix[:, cols]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 renumbering electrode numbers
 generating ids
 assigning ids
@@ -198,108 +182,73 @@ assigning ids
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geomK</span>
-<span class="n">K</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">geomK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">geomK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+<a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">geomK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">geomK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">fixK</span>
-<span class="n">ip</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">fixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><span class="n">ip</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_negative, [&#39;k&#39;, &#39;r&#39;]] *= -1
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_switched_ab, [&#39;a&#39;, &#39;b&#39;]] = dataframe.ix[
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  indices_switched_ab, [&#39;b&#39;, &#39;a&#39;]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_switched_mn, [&#39;m&#39;, &#39;n&#39;]] = dataframe.ix[
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  indices_switched_mn, [&#39;n&#39;, &#39;m&#39;]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_negative, &#39;Vmn&#39;] *= -1
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  return getattr(section, self.name)[new_key]
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">fixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>plot a decay curve by specifying the index
 note that no file will be saved to disk if filename parameter is not provided</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
                     <span class="n">index_nor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_rec</span><span class="o">=</span><span class="mi">1978</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
 <p>you can also specify only one index
 this will only return a figure object, but will not save to file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
                     <span class="n">index_nor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_002.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_002.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
 <p>it does not matter if you choose normal or reciprocal</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">index_rec</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">index_rec</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_003.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_003.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
 <p>plot a decay curve by specifying the index</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">nr_id</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">nr_id</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_004.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_004.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
 <p>a  b  m  n
 0     1  2  4  5
 1978  5  4  2  1</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_005.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_005.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
 <p>reciprocal is also ok</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_006.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_006.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-ip-py">
 <div class="sphx-glr-download docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/36ed92e9691cffa04f30c07b23fbfcc8/plot_syscal_ip.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_ip.py</span></code></a></p>

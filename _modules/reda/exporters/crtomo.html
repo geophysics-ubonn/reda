@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -115,7 +117,7 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="save_block_to_crt"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.ERT.save_block_to_crt">[docs]</a><span class="k">def</span> <span class="nf">save_block_to_crt</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">store_errors</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="save_block_to_crt"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.BaseContainer.save_block_to_crt">[docs]</a><span class="k">def</span> <span class="nf">save_block_to_crt</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">group</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">store_errors</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Save a dataset to a CRTomo-compatible .crt file</span>
 
 <span class="sd">    Parameters</span>
@@ -156,8 +158,8 @@
         <span class="n">fmt</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%i</span><span class="s1"> </span><span class="si">%i</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1">&#39;</span>
         <span class="k">if</span> <span class="n">store_errors</span><span class="p">:</span>
             <span class="n">line</span> <span class="o">+=</span> <span class="p">(</span>
-                <span class="n">group</span><span class="p">[</span><span class="s1">&#39;d|Z|_[Ohm]&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                <span class="n">group</span><span class="p">[</span><span class="s1">&#39;dphi_[mrad]&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">group</span><span class="p">[</span><span class="s1">&#39;dr&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+                <span class="n">group</span><span class="p">[</span><span class="s1">&#39;drpha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
             <span class="p">)</span>
             <span class="n">fmt</span> <span class="o">+=</span> <span class="s1">&#39; </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1">&#39;</span>
 
@@ -165,7 +167,7 @@
         <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">subdata</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="n">fmt</span><span class="p">)</span></div>
 
 
-<div class="viewcode-block" id="write_files_to_directory"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.ERT.write_files_to_directory">[docs]</a><span class="k">def</span> <span class="nf">write_files_to_directory</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<div class="viewcode-block" id="write_files_to_directory"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.BaseContainer.write_files_to_directory">[docs]</a><span class="k">def</span> <span class="nf">write_files_to_directory</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Write sEIT data ta files. Data of each frequency is written in a</span>
 <span class="sd">    separate file that conforms to the CRMod/CRTomo standard, and can directly</span>
 <span class="sd">    be used for inversions using CRTomo.</span>

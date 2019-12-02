@@ -509,6 +509,149 @@ return None</p>
 </dd></dl>
 
 </div>
+<div class="section" id="module-reda.importers.mpt_das1">
+<span id="reda-importers-mpt-das1-module"></span><h2>reda.importers.mpt_das1 module<a class="headerlink" href="#module-reda.importers.mpt_das1" title="Permalink to this headline">¶</a></h2>
+<p>Read MPT DAS-1 data files.</p>
+<p>TODO:</p>
+<dl class="class">
+<dt id="reda.importers.mpt_das1.DecayCurveObj">
+<em class="property">class </em><code class="sig-prename descclassname">reda.importers.mpt_das1.</code><code class="sig-name descname">DecayCurveObj</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/mpt_das1.html#DecayCurveObj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.mpt_das1.DecayCurveObj" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Helper class to construct object out of pd.DataFrame. Used to put a sub
+DataFrame in a DataFrame.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.mpt_das1.get_frequencies">
+<code class="sig-prename descclassname">reda.importers.mpt_das1.</code><code class="sig-name descname">get_frequencies</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">header_row</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/mpt_das1.html#get_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.mpt_das1.get_frequencies" title="Permalink to this definition">¶</a></dt>
+<dd><p>Read the used frequencies in header of DAS-1 SIP data set.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>input filename</p>
+</dd>
+<dt><strong>header_row</strong><span class="classifier">int</span></dt><dd><p>row number of header row</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>frequencies</strong><span class="classifier">list</span></dt><dd><p>Contains the measured frequencies</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.mpt_das1.import_das1">
+<code class="sig-prename descclassname">reda.importers.mpt_das1.</code><code class="sig-name descname">import_das1</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/mpt_das1.html#import_das1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.mpt_das1.import_das1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a any MPT DAS-1 data file (.Data), e.g. TD/FD/SIP, and prepares
+information in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.mpt_das1.import_das1_fd">
+<code class="sig-prename descclassname">reda.importers.mpt_das1.</code><code class="sig-name descname">import_das1_fd</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/mpt_das1.html#import_das1_fd"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.mpt_das1.import_das1_fd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a frequency domain (single frequency) MPT DAS-1 data file (.Data)
+and prepares information in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+<dt><strong>corr_array</strong><span class="classifier">list, optional</span></dt><dd><p>used to correct the electrode numbers [a, b, m, n], eg. for cable layouts
+which separated current and potential cables, hence, 64 electrodes for a
+measurement profile of 32 electrodes</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.mpt_das1.import_das1_sip">
+<code class="sig-prename descclassname">reda.importers.mpt_das1.</code><code class="sig-name descname">import_das1_sip</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/mpt_das1.html#import_das1_sip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.mpt_das1.import_das1_sip" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a spectral induced polarization MPT DAS-1 data file (.Data) and
+prepares information in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.importers.mpt_das1.import_das1_td">
+<code class="sig-prename descclassname">reda.importers.mpt_das1.</code><code class="sig-name descname">import_das1_td</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/mpt_das1.html#import_das1_td"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.mpt_das1.import_das1_td" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reads a time domain MPT DAS-1 data file (.Data) and prepares information
+in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
 <div class="section" id="module-reda.importers.radic_sip256c">
 <span id="reda-importers-radic-sip256c-module"></span><h2>reda.importers.radic_sip256c module<a class="headerlink" href="#module-reda.importers.radic_sip256c" title="Permalink to this headline">¶</a></h2>
 <dl class="function">

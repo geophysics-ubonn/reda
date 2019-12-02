@@ -145,60 +145,44 @@ function. This is explained below.</p>
 </pre></div>
 </div>
 <p>Initialize an sEIT container</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
 
 <span class="c1"># import the data</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
     <span class="n">configfile</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/configs_large_dipoles_norrec.dat&#39;</span>
 <span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_version_2017.py:273: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_version_2017.py:273: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
   sign_re = df[&#39;Zt&#39;].real / np.abs(df[&#39;Zt&#39;].real)
 constructing four-point measurements
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
   Rsign = np.sign(dfn[&#39;Zt&#39;].real)
 generating ids
 assigning ids
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  self.data = self.data.ix[:, cols]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 Summary:
-                  r          rpha
-count  16280.000000  16280.000000
-mean      -0.001539   1232.306629
-std       22.939128   1823.550170
-min      -78.975665  -3141.584482
-25%       -5.791215     -9.388102
-50%        0.034648     -1.038730
-75%        5.972380   3132.171261
-max       76.991777   3141.580651
+                a           b             m             n
+count  16280.0000  16280.0000  16280.000000  16280.000000
+mean      10.5250     30.4750     20.500000     20.500000
+std        5.8096      5.8096     11.543751     11.543751
+min        1.0000     20.0000      1.000000      1.000000
+25%        5.7500     25.7500     10.750000     10.750000
+50%       10.5000     30.5000     20.500000     20.500000
+75%       15.2500     35.2500     30.250000     30.250000
+max       21.0000     40.0000     40.000000     40.000000
 </pre></div>
 </div>
 <p>an alternative would be to automatically create measurement configurations
 from the current injection dipoles:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">import</span> <a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.importers.eit_fzj</span> <span class="kn">import</span> <a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
 
 <span class="c1"># initialize an sEIT container</span>
-<span class="n">seit_not_used</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit_not_used</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
 
 <span class="c1"># import the data</span>
-<span class="n">seit_not_used</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit_not_used</span></a><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
     <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
     <span class="n">configfile</span><span class="o">=</span><a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
 <span class="p">)</span>
@@ -209,101 +193,396 @@ from the current injection dipoles:</p>
 generating ids
 assigning ids
 Summary:
-                  r          rpha
-count  16280.000000  16280.000000
-mean       0.001539   1264.340068
-std       22.939128   1809.580759
-min      -76.991777  -3141.585829
-25%       -5.972380     -9.200987
-50%       -0.034648      1.460763
-75%        5.791215   3132.397700
-max       78.975665   3141.586023
+                a           b             m             n
+count  16280.0000  16280.0000  16280.000000  16280.000000
+mean      10.5250     30.4750     20.500000     20.500000
+std        5.8096      5.8096     11.543751     11.543751
+min        1.0000     20.0000      1.000000      1.000000
+25%        5.7500     25.7500     10.750000     10.750000
+50%       10.5000     30.5000     20.500000     20.500000
+75%       15.2500     35.2500     30.250000     30.250000
+max       21.0000     40.0000     40.000000     40.000000
 </pre></div>
 </div>
 <p>Compute geometric factors</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">redaK</span>
 <span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">redafixK</span>
 
-<span class="n">K</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">redaK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">redaK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
-<a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">redafixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">redaK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">redaK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a><span class="p">)</span>
+<a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">redafixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_negative, [&#39;k&#39;, &#39;r&#39;]] *= -1
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_switched_ab, [&#39;a&#39;, &#39;b&#39;]] = dataframe.ix[
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  indices_switched_ab, [&#39;b&#39;, &#39;a&#39;]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_switched_mn, [&#39;m&#39;, &#39;n&#39;]] = dataframe.ix[
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  indices_switched_mn, [&#39;n&#39;, &#39;m&#39;]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_negative, &#39;Vmn&#39;] *= -1
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  return getattr(section, self.name)[new_key]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:60: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_negative, &#39;Zt&#39;] *= -1
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:79: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
-  dataframe[&#39;Zt&#39;].imag, dataframe[&#39;Zt&#39;].real
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:79: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-  dataframe[&#39;Zt&#39;].imag, dataframe[&#39;Zt&#39;].real
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:180: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
+  return val.imag
+/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:142: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+  return val.real
 </pre></div>
 </div>
-<p>compute normal and reciprocal pairs
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+      <th>m</th>
+      <th>n</th>
+      <th>datetime</th>
+      <th>frequency</th>
+      <th>Zg1</th>
+      <th>Zg2</th>
+      <th>Zg3</th>
+      <th>Is</th>
+      <th>Il</th>
+      <th>Zg</th>
+      <th>Iab</th>
+      <th>Zt</th>
+      <th>r</th>
+      <th>Vmn</th>
+      <th>rpha</th>
+      <th>id</th>
+      <th>norrec</th>
+      <th>rdiff</th>
+      <th>rphadiff</th>
+      <th>k</th>
+      <th>rho_a</th>
+      <th>sigma_a</th>
+      <th>rho_a_complex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>396</th>
+      <td>1</td>
+      <td>22</td>
+      <td>2</td>
+      <td>21</td>
+      <td>2018-01-27 08:03:45.233560</td>
+      <td>0.1</td>
+      <td>1845.514039-309.918615j</td>
+      <td>1830.103481-336.538264j</td>
+      <td>1830.135759-348.659106j</td>
+      <td>0.004369+0.000378j</td>
+      <td>-7.781986e-07-2.016430e-07j</td>
+      <td>1835.251093-331.705328j</td>
+      <td>4.384991</td>
+      <td>67.613572-0.476405j</td>
+      <td>67.615251</td>
+      <td>296.492266</td>
+      <td>-7.045880</td>
+      <td>74</td>
+      <td>nor</td>
+      <td>135.370540</td>
+      <td>-3141.166197</td>
+      <td>0.826735</td>
+      <td>55.899888</td>
+      <td>0.017889</td>
+      <td>55.898501-0.393861j</td>
+    </tr>
+    <tr>
+      <th>397</th>
+      <td>2</td>
+      <td>21</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2018-01-27 08:47:03.645680</td>
+      <td>0.1</td>
+      <td>1740.676857-298.630656j</td>
+      <td>1729.294712-322.735738j</td>
+      <td>1730.518216-332.929183j</td>
+      <td>0.004488+0.000382j</td>
+      <td>-2.603903e-06-6.249216e-07j</td>
+      <td>1733.496595-318.098526j</td>
+      <td>4.504308</td>
+      <td>67.753805-0.448498j</td>
+      <td>67.755289</td>
+      <td>305.190720</td>
+      <td>-6.619423</td>
+      <td>74</td>
+      <td>rec</td>
+      <td>135.370540</td>
+      <td>-3141.166197</td>
+      <td>0.826735</td>
+      <td>56.015663</td>
+      <td>0.017852</td>
+      <td>56.014436-0.370789j</td>
+    </tr>
+    <tr>
+      <th>12892</th>
+      <td>2</td>
+      <td>21</td>
+      <td>1</td>
+      <td>20</td>
+      <td>2018-01-27 08:47:03.645680</td>
+      <td>0.1</td>
+      <td>1740.676857-298.630656j</td>
+      <td>1729.294712-322.735738j</td>
+      <td>1730.518216-332.929183j</td>
+      <td>0.004488+0.000382j</td>
+      <td>-2.603903e-06-6.249216e-07j</td>
+      <td>1733.496595-318.098526j</td>
+      <td>4.504308</td>
+      <td>68.489745-0.511118j</td>
+      <td>68.491652</td>
+      <td>308.507526</td>
+      <td>-7.462554</td>
+      <td>92</td>
+      <td>rec</td>
+      <td>-0.106258</td>
+      <td>-0.590684</td>
+      <td>0.829159</td>
+      <td>56.790494</td>
+      <td>0.017609</td>
+      <td>56.788913-0.423798j</td>
+    </tr>
+    <tr>
+      <th>12893</th>
+      <td>1</td>
+      <td>20</td>
+      <td>2</td>
+      <td>21</td>
+      <td>2018-01-27 09:28:11.962861</td>
+      <td>0.1</td>
+      <td>1882.449148-332.761564j</td>
+      <td>1867.017051-353.821789j</td>
+      <td>1868.918746-358.069064j</td>
+      <td>0.004324+0.000389j</td>
+      <td>8.166327e-07+2.159040e-07j</td>
+      <td>1872.794982-348.217472j</td>
+      <td>4.341069</td>
+      <td>68.595685-0.552429j</td>
+      <td>68.597910</td>
+      <td>297.788253</td>
+      <td>-8.053239</td>
+      <td>92</td>
+      <td>nor</td>
+      <td>-0.106258</td>
+      <td>-0.590684</td>
+      <td>0.829159</td>
+      <td>56.878598</td>
+      <td>0.017581</td>
+      <td>56.876754-0.458052j</td>
+    </tr>
+    <tr>
+      <th>418</th>
+      <td>1</td>
+      <td>22</td>
+      <td>2</td>
+      <td>23</td>
+      <td>2018-01-27 08:03:45.233560</td>
+      <td>0.1</td>
+      <td>1845.514039-309.918615j</td>
+      <td>1830.103481-336.538264j</td>
+      <td>1830.135759-348.659106j</td>
+      <td>0.004369+0.000378j</td>
+      <td>-7.781986e-07-2.016430e-07j</td>
+      <td>1835.251093-331.705328j</td>
+      <td>4.384991</td>
+      <td>61.405722-0.426200j</td>
+      <td>61.407201</td>
+      <td>269.270026</td>
+      <td>-6.940618</td>
+      <td>111</td>
+      <td>nor</td>
+      <td>0.180274</td>
+      <td>-0.614708</td>
+      <td>0.824762</td>
+      <td>50.646313</td>
+      <td>0.019745</td>
+      <td>50.645094-0.351514j</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>12451</th>
+      <td>18</td>
+      <td>37</td>
+      <td>21</td>
+      <td>40</td>
+      <td>2018-01-27 09:22:14.727928</td>
+      <td>10000.0</td>
+      <td>1509.946181-140.356544j</td>
+      <td>1509.946468-140.357634j</td>
+      <td>1509.945664-140.357569j</td>
+      <td>0.004823+0.000196j</td>
+      <td>5.066413e-05-8.695025e-05j</td>
+      <td>1509.946104-140.357249j</td>
+      <td>4.826839</td>
+      <td>14.563418-1.008587j</td>
+      <td>14.598301</td>
+      <td>70.463644</td>
+      <td>-69.144430</td>
+      <td>1477</td>
+      <td>nor</td>
+      <td>-0.176318</td>
+      <td>-14.544220</td>
+      <td>2.811459</td>
+      <td>41.042529</td>
+      <td>0.024365</td>
+      <td>40.944456-2.835602j</td>
+    </tr>
+    <tr>
+      <th>11218</th>
+      <td>19</td>
+      <td>38</td>
+      <td>21</td>
+      <td>40</td>
+      <td>2018-01-27 08:41:06.303742</td>
+      <td>10000.0</td>
+      <td>1487.062804-137.106700j</td>
+      <td>1487.062909-137.107755j</td>
+      <td>1487.061286-137.107605j</td>
+      <td>0.004855+0.000194j</td>
+      <td>-1.159057e-04-8.547126e-05j</td>
+      <td>1487.062333-137.107354j</td>
+      <td>4.858639</td>
+      <td>24.556856-1.833682j</td>
+      <td>24.625222</td>
+      <td>119.645077</td>
+      <td>-74.532549</td>
+      <td>1478</td>
+      <td>nor</td>
+      <td>0.246324</td>
+      <td>11.928511</td>
+      <td>1.757913</td>
+      <td>43.289002</td>
+      <td>0.023101</td>
+      <td>43.168820-3.223453j</td>
+    </tr>
+    <tr>
+      <th>11219</th>
+      <td>21</td>
+      <td>40</td>
+      <td>19</td>
+      <td>38</td>
+      <td>2018-01-27 08:45:26.153105</td>
+      <td>10000.0</td>
+      <td>1214.971601-99.776976j</td>
+      <td>1214.970677-99.777250j</td>
+      <td>1214.970820-99.776733j</td>
+      <td>0.005267+0.000167j</td>
+      <td>3.035386e-04-5.237910e-05j</td>
+      <td>1214.971033-99.776987j</td>
+      <td>5.269442</td>
+      <td>24.331140-1.525221j</td>
+      <td>24.378898</td>
+      <td>128.463180</td>
+      <td>-62.604038</td>
+      <td>1478</td>
+      <td>rec</td>
+      <td>0.246324</td>
+      <td>11.928511</td>
+      <td>1.757913</td>
+      <td>42.855985</td>
+      <td>0.023334</td>
+      <td>42.772030-2.681205j</td>
+    </tr>
+    <tr>
+      <th>12494</th>
+      <td>21</td>
+      <td>40</td>
+      <td>20</td>
+      <td>39</td>
+      <td>2018-01-27 08:45:26.153105</td>
+      <td>10000.0</td>
+      <td>1214.971601-99.776976j</td>
+      <td>1214.970677-99.777250j</td>
+      <td>1214.970820-99.776733j</td>
+      <td>0.005267+0.000167j</td>
+      <td>3.035386e-04-5.237910e-05j</td>
+      <td>1214.971033-99.776987j</td>
+      <td>5.269442</td>
+      <td>62.492054-4.551339j</td>
+      <td>62.657574</td>
+      <td>330.170428</td>
+      <td>-72.702319</td>
+      <td>1479</td>
+      <td>rec</td>
+      <td>-0.022068</td>
+      <td>-16.100432</td>
+      <td>0.829159</td>
+      <td>51.953113</td>
+      <td>0.019248</td>
+      <td>51.815871-3.773785j</td>
+    </tr>
+    <tr>
+      <th>12495</th>
+      <td>20</td>
+      <td>39</td>
+      <td>21</td>
+      <td>40</td>
+      <td>2018-01-27 09:26:34.516287</td>
+      <td>10000.0</td>
+      <td>1420.095538-150.390175j</td>
+      <td>1420.096385-150.391266j</td>
+      <td>1420.096148-150.391203j</td>
+      <td>0.004947+0.000221j</td>
+      <td>-2.085763e-04-4.436973e-05j</td>
+      <td>1420.096023-150.390881j</td>
+      <td>4.952257</td>
+      <td>62.432660-5.558812j</td>
+      <td>62.679642</td>
+      <td>310.405690</td>
+      <td>-88.802752</td>
+      <td>1479</td>
+      <td>nor</td>
+      <td>-0.022068</td>
+      <td>-16.100432</td>
+      <td>0.829159</td>
+      <td>51.971411</td>
+      <td>0.019241</td>
+      <td>51.766624-4.609141j</td>
+    </tr>
+  </tbody>
+</table>
+<p>16280 rows × 25 columns</p>
+</div>
+<br />
+<br /><p>compute normal and reciprocal pairs
 note that this is usually done on import once.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="k">as</span> <span class="nn">norrec</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.norrec.assign_norrec_to_df" title="View documentation for reda.utils.norrec.assign_norrec_to_df"><span class="n">norrec</span><span class="o">.</span><span class="n">assign_norrec_to_df</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.norrec.assign_norrec_to_df" title="View documentation for reda.utils.norrec.assign_norrec_to_df"><span class="n">norrec</span><span class="o">.</span><span class="n">assign_norrec_to_df</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -312,13 +591,13 @@ assigning ids
 </pre></div>
 </div>
 <p>quadrupoles can be directly accessed using a pandas grouper</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
-<span class="n">quadpole_data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
+<span class="n">quadpole_data</span> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
 <span class="nb">print</span><span class="p">(</span><span class="n">quadpole_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fe9f83ffdd8&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f91edb644a8&gt;
         a   b   m   n     frequency         r        rpha
 749    10  29  15  34      0.100000  7.356375   -5.205543
 2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -334,11 +613,11 @@ assigning ids
 </pre></div>
 </div>
 <p>filter data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span><span class="o">.</span><span class="n">remove_frequencies</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &lt; 10&#39;</span><span class="p">)</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &gt; -40&#39;</span><span class="p">)</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rho_a &gt; 15 and rho_a &lt; 35&#39;</span><span class="p">)</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;k &lt; 400&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">remove_frequencies</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &lt; 10&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &gt; -40&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rho_a &gt; 15 and rho_a &lt; 35&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;k &lt; 400&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -378,7 +657,7 @@ Raw data plots (execute before applying the filters):</p>
 this context manager executes all code within the given directory</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
     <span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">redaex</span>
-    <a href="../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory" title="View documentation for reda.exporters.crtomo.write_files_to_directory"><span class="n">redaex</span><span class="o">.</span><span class="n">write_files_to_directory</span></a><span class="p">(</span><span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;crt_results&#39;</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="p">)</span>
+    <a href="../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory" title="View documentation for reda.exporters.crtomo.write_files_to_directory"><span class="n">redaex</span><span class="o">.</span><span class="n">write_files_to_directory</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;crt_results&#39;</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="p">)</span>
 </pre></div>
 </div>
 <p>Plot pseudosections of all frequencies</p>
@@ -386,28 +665,28 @@ this context manager executes all code within the given directory</p>
 <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
 
 <span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
-    <span class="n">g</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
-    <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+    <span class="n">g</span> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a><span class="p">,</span> <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">axes</span></a> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
         <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
         <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">20</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
         <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
     <span class="p">)</span>
-    <span class="k">for</span> <span class="n">ax</span><span class="p">,</span> <span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">axes</span><span class="o">.</span><span class="n">flat</span><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
-        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="p">,</span> <span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="View documentation for builtins.float"><span class="n">key</span></a><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.flat.html#numpy.ndarray.flat" title="View documentation for numpy.ndarray.flat"><span class="n">axes</span><span class="o">.</span><span class="n">flat</span></a><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+        <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="p">,</span> <a href="https://matplotlib.org/api/colorbar_api.html#matplotlib.colorbar.Colorbar" title="View documentation for matplotlib.colorbar.Colorbar"><span class="n">cb</span></a> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span><span class="n">item</span><span class="p">,</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="o">=</span><a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_title.html#matplotlib.axes.Axes.set_title" title="View documentation for matplotlib.axes.Axes.set_title"><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span></a><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="View documentation for builtins.float"><span class="n">key</span></a><span class="p">))</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.tight_layout" title="View documentation for matplotlib.figure.Figure.tight_layout"><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">()</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.savefig" title="View documentation for matplotlib.figure.Figure.savefig"><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span></a><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
 <p>alternative</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
-    <span class="n">seit</span><span class="o">.</span><span class="n">plot_pseudosections</span><span class="p">(</span>
+    <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">plot_pseudosections</span><span class="p">(</span>
         <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosections_eit40_v2.pdf&#39;</span>
     <span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  15.754 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  1.966 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4ca5c66a6f19ab045d57d723a8c23b55/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></p>

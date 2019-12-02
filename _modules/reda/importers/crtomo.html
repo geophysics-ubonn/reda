@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -113,12 +115,12 @@
 <span class="sd">&quot;&quot;&quot;Import data in the CRMod/CRTomo format</span>
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">glob</span> <span class="k">import</span> <span class="n">glob</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="k">import</span> <span class="n">enable_result_transforms</span>
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
 
 
 <div class="viewcode-block" id="load_mod_file"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.crtomo.load_mod_file">[docs]</a><span class="k">def</span> <span class="nf">load_mod_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>

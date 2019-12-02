@@ -120,40 +120,36 @@
 <span id="sphx-glr-examples-02-sip04-plot-sip04-py"></span><h1>SIP-04 Import<a class="headerlink" href="#sip-04-import" title="Permalink to this headline">¶</a></h1>
 <p>Create the SIP container</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
-<span class="n">sip</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">SIP</span><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">SIP</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Import the SIP data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sip</span><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="s1">&#39;sip_data.mat&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="s1">&#39;sip_data.mat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Import SIP04 data from .mat file
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/lib/type_check.py:161: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:142: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
   return val.real
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/lib/type_check.py:204: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
+/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:180: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
   return val.imag
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/sip04.py:236: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
-  df[&#39;rpha&#39;] = np.arctan2(df[&#39;zt&#39;].imag, df[&#39;zt&#39;].real) * 1000
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/sip04.py:236: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-  df[&#39;rpha&#39;] = np.arctan2(df[&#39;zt&#39;].imag, df[&#39;zt&#39;].real) * 1000
+generating ids
+assigning ids
 Summary:
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/numpy/core/_methods.py:36: ComplexWarning: Casting complex values to real discards the imaginary part
-  return umr_sum(a, axis, dtype, out, keepdims, initial)
-          frequency                         zt
-count     22.000000        22.000000+0.000000j
-mean    3816.767273  84453.098327-1279.147330j
-std    10316.015190      2532.978943+0.000000j
-min        0.010000   81744.258490-211.411957j
-25%        0.625000   82286.505625-483.132345j
-50%       25.000000  83094.385678-2280.050158j
-75%      875.000000  85696.347864-1859.118593j
-max    45000.000000  91671.290889-2692.477461j
+          a     b     m     n
+count  22.0  22.0  22.0  22.0
+mean    1.0   4.0   2.0   3.0
+std     0.0   0.0   0.0   0.0
+min     1.0   4.0   2.0   3.0
+25%     1.0   4.0   2.0   3.0
+50%     1.0   4.0   2.0   3.0
+75%     1.0   4.0   2.0   3.0
+max     1.0   4.0   2.0   3.0
 </pre></div>
 </div>
 <p>show the data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -184,14 +180,14 @@ max    45000.000000  91671.290889-2692.477461j
 </pre></div>
 </div>
 <p>plot the spectrum</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.eis.plots</span> <span class="k">import</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.eis.plots</span> <span class="kn">import</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a>
 
-<span class="n">spectrum</span> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a><span class="p">(</span>
-    <span class="n">frequencies</span><span class="o">=</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-    <span class="n">rcomplex</span><span class="o">=</span><span class="n">sip</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+<a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spectrum</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a><span class="p">(</span>
+    <span class="n">frequencies</span><span class="o">=</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">rcomplex</span><span class="o">=</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">fig</span> <span class="o">=</span> <span class="n">spectrum</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;spectrum.pdf&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spectrum</span></a><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;spectrum.pdf&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_sip04_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_sip04_001.png" />

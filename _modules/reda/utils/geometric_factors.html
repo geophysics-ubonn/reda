@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -119,7 +121,7 @@
 <span class="kn">import</span> <span class="nn">reda</span>
 
 
-<div class="viewcode-block" id="apply_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K">[docs]</a><span class="k">def</span> <span class="nf">apply_K</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+<div class="viewcode-block" id="apply_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K">[docs]</a><span class="k">def</span> <span class="nf">apply_K</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply the geometric factors to the dataset and compute (apparent)</span>
 <span class="sd">    resistivities/conductivities</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -185,7 +187,7 @@
     <span class="k">return</span> <span class="n">K</span></div>
 
 
-<div class="viewcode-block" id="compute_K_analytical"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical">[docs]</a><span class="k">def</span> <span class="nf">compute_K_analytical</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+<div class="viewcode-block" id="compute_K_analytical"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical">[docs]</a><span class="k">def</span> <span class="nf">compute_K_analytical</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">spacing</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Given an electrode spacing, compute geometrical factors using the</span>
 <span class="sd">    equation for the homogeneous half-space (Neumann-equation)</span>
 

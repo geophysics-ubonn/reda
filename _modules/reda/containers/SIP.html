@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -114,27 +116,28 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
+<span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
+
+<span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">ImportersBase</span>
+<span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">BaseContainer</span>
+
 <span class="kn">import</span> <span class="nn">reda.importers.sip04</span> <span class="k">as</span> <span class="nn">reda_sip04</span>
+<span class="kn">import</span> <span class="nn">reda.importers.mpt_das1</span> <span class="k">as</span> <span class="nn">reda_mpt</span>
+<span class="c1"># from reda.importers.crtomo import load_mod_file</span>
+
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">append_doc_of</span>
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">LogDataChanges</span>
+
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="importers"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.importers">[docs]</a><span class="k">class</span> <span class="nc">importers</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="SIPImporters"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIPImporters">[docs]</a><span class="k">class</span> <span class="nc">SIPImporters</span><span class="p">(</span><span class="n">ImportersBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the importer functions, and is</span>
 <span class="sd">    meant to be inherited by the data containers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">df</span><span class="p">))</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span>
 
-    <span class="k">def</span> <span class="nf">_describe_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">df</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">df_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">df_to_use</span> <span class="o">=</span> <span class="n">df</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">plot_columns</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
-
-<div class="viewcode-block" id="importers.import_sip04"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.importers.import_sip04">[docs]</a>    <span class="k">def</span> <span class="nf">import_sip04</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="c1"># @append_doc_of(reda_sip04.import_sip04)</span>
+<div class="viewcode-block" id="SIPImporters.import_sip04"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIPImporters.import_sip04">[docs]</a>    <span class="k">def</span> <span class="nf">import_sip04</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;SIP04 data import</span>
 
 <span class="sd">        Parameters</span>
@@ -162,24 +165,56 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="SIPImporters.import_mpt"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIPImporters.import_mpt">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_mpt</span><span class="o">.</span><span class="n">import_das1_td</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_mpt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;MPT DAS 1 FD importer</span>
+
+<span class="sd">        timestep: int or :class:`datetime.datetime`</span>
+<span class="sd">            if provided use this value to set the &#39;timestep&#39; column of the</span>
+<span class="sd">            produced dataframe. Default: 0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MPT DAS-1 import&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">reda_mpt</span><span class="o">.</span><span class="n">import_das1_sip</span><span class="p">(</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="SIP"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP">[docs]</a><span class="k">class</span> <span class="nc">SIP</span><span class="p">(</span><span class="n">importers</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<div class="viewcode-block" id="SIP"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP">[docs]</a><span class="k">class</span> <span class="nc">SIP</span><span class="p">(</span><span class="n">BaseContainer</span><span class="p">,</span> <span class="n">SIPImporters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">topography</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;a&#39;</span><span class="p">,</span>
             <span class="s1">&#39;b&#39;</span><span class="p">,</span>
             <span class="s1">&#39;m&#39;</span><span class="p">,</span>
             <span class="s1">&#39;n&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;r&#39;</span>
             <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;zt&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rpha&#39;</span>
+            <span class="s1">&#39;Zt&#39;</span><span class="p">,</span>
         <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">plot_columns</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;zt&#39;</span>
+            <span class="s1">&#39;Zt&#39;</span>
         <span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topography</span> <span class="o">=</span> <span class="n">topography</span>
 
 <div class="viewcode-block" id="SIP.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required type and columns</span>
@@ -231,14 +266,14 @@
 
         <span class="k">def</span> <span class="nf">group_apply</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
             <span class="n">y</span> <span class="o">=</span> <span class="n">item</span><span class="p">[[</span><span class="s1">&#39;zt_1&#39;</span><span class="p">,</span> <span class="s1">&#39;zt_2&#39;</span><span class="p">,</span> <span class="s1">&#39;zt_3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
-            <span class="n">zt_imag_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
-            <span class="n">zt_real_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
-            <span class="n">zt_imag_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
-            <span class="n">zt_real_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
-            <span class="n">zt_imag_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
-            <span class="n">zt_real_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
-            <span class="n">zt_imag_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">imag</span><span class="p">)</span>
-            <span class="n">zt_real_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+            <span class="n">zt_imag_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">zt_real_std</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">zt_imag_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">zt_real_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">zt_imag_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">zt_real_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">zt_imag_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
+            <span class="n">zt_real_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
             <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
                 <span class="p">{</span>
                     <span class="s1">&#39;zt_real_mean&#39;</span><span class="p">:</span> <span class="n">zt_real_mean</span><span class="p">,</span>

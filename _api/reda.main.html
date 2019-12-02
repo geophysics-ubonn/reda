@@ -121,7 +121,13 @@
 </div>
 <div class="section" id="module-reda.main.logger">
 <span id="reda-main-logger-module"></span><h2>reda.main.logger module<a class="headerlink" href="#module-reda.main.logger" title="Permalink to this headline">¶</a></h2>
-<p>set up the logger for EDF</p>
+<p>Set up some logging facilities for reda</p>
+<p>We differentiate multiple logging types/targets</p>
+<ol class="arabic simple">
+<li><p>general logging (using the python logging module)</p></li>
+<li><p>a data processing log (which also uses the logging module), available via
+the container-inherent .logger object</p></li>
+</ol>
 <dl class="class">
 <dt id="reda.main.logger.ListHandler">
 <em class="property">class </em><code class="sig-prename descclassname">reda.main.logger.</code><code class="sig-name descname">ListHandler</code><span class="sig-paren">(</span><em class="sig-param">log_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler" title="Permalink to this definition">¶</a></dt>

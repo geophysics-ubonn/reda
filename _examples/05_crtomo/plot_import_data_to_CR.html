@@ -121,15 +121,15 @@
 <p>Import CRTomo-style single-frequency measurement data into a CR container</p>
 <p>structure of the input data:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-<span class="n">input_dir</span> <span class="o">=</span> <span class="s1">&#39;data_crtomo_format&#39;</span>
-<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">input_dir</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a> <span class="o">=</span> <span class="s1">&#39;data_crtomo_format&#39;</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">filename</span></a> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><a href="https://docs.python.org/3/library/os.html#os.listdir" title="View documentation for os.listdir"><span class="n">os</span><span class="o">.</span><span class="n">listdir</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">filename</span></a><span class="p">)</span>
 
 <span class="c1"># the frequencies.dat filename contains the frequencies, corresponding to the</span>
 <span class="c1"># volt* files</span>
 <span class="kn">import</span> <span class="nn">subprocess</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;content of frequencies.dat&#39;</span><span class="p">)</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;cat </span><span class="si">{}</span><span class="s1">/frequencies.dat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">input_dir</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/subprocess.html#subprocess.call" title="View documentation for subprocess.call"><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span></a><span class="p">(</span><span class="s1">&#39;cat </span><span class="si">{}</span><span class="s1">/frequencies.dat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -140,33 +140,19 @@ volt_03_2.12766Hz.crt
 volt_04_4.54545Hz.crt
 volt_05_10.0Hz.crt
 content of frequencies.dat
+
+0
 </pre></div>
 </div>
 <p>import only one frequency into a CR (complex resistivity) container</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
-<span class="n">cr</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">CR</span><span class="p">()</span>
-<span class="n">cr</span><span class="o">.</span><span class="n">import_crtomo_data</span><span class="p">(</span><span class="s1">&#39;data_crtomo_format/volt_01_0.462963Hz.crt&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.CR.CR" title="View documentation for reda.containers.CR.CR"><span class="n">cr</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">CR</span><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.CR.CR" title="View documentation for reda.containers.CR.CR"><span class="n">cr</span></a><span class="o">.</span><span class="n">import_crtomo_data</span><span class="p">(</span><span class="s1">&#39;data_crtomo_format/volt_01_0.462963Hz.crt&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
 assigning ids
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  self.data = self.data.ix[:, cols]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-05-crtomo-plot-import-data-to-cr-py">

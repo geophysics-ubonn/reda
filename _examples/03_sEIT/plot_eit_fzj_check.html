@@ -146,7 +146,7 @@ reciprocal counterpart:</p>
 <span class="kn">import</span> <span class="nn">reda.utils.eit_fzj_utils</span> <span class="k">as</span> <span class="nn">eit_fzj_utils</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="View documentation for reda.utils.eit_fzj_utils.check_resistor_board_measurements"><span class="n">eit_fzj_utils</span><span class="o">.</span><span class="n">check_resistor_board_measurements</span></a><span class="p">(</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="View documentation for reda.utils.eit_fzj_utils.check_resistor_board_measurements"><span class="n">eit_fzj_utils</span><span class="o">.</span><span class="n">check_resistor_board_measurements</span></a><span class="p">(</span>
     <span class="s1">&#39;data_eit_fzj_check/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
     <span class="s1">&#39;data_eit_fzj_check/resistances.dat&#39;</span>
 <span class="p">)</span>
@@ -154,7 +154,7 @@ reciprocal counterpart:</p>
 <span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_check&#39;</span><span class="p">):</span>
     <span class="c1"># The resulting matplotlib figure can now be plotted to visualize the</span>
     <span class="c1"># measurement data and the expected outcomes</span>
-    <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;eit_fzj_resistor_check.pdf&#39;</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.savefig" title="View documentation for matplotlib.figure.Figure.savefig"><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span></a><span class="p">(</span><span class="s1">&#39;eit_fzj_resistor_check.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_eit_fzj_check_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_check_001.png" />
@@ -168,39 +168,23 @@ reciprocal counterpart:</p>
 5  10  11   9  12        1450           10               20
 6  13  16  14  15        1660           10               20
 7  14  15  13  16        1660           10               20
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_version_2013.py:109: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_version_2013.py:109: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
   sign_re = df[&#39;Zt&#39;].real / np.abs(df[&#39;Zt&#39;].real)
 constructing four-point measurements
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
   Rsign = np.sign(dfn[&#39;Zt&#39;].real)
 generating ids
 assigning ids
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  self.data = self.data.ix[:, cols]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 Summary:
-                 r        rpha
-count   232.000000  232.000000
-mean   1317.964245  -10.974077
-std     252.307820   23.327723
-min     973.780054 -118.841378
-25%    1126.688413   -8.896945
-50%    1324.014577   -0.544584
-75%    1502.235327   -0.055741
-max    1647.043890    2.065788
+               a          b          m          n
+count  232.00000  232.00000  232.00000  232.00000
+mean     7.50000    9.50000    7.50000    9.50000
+std      4.50973    4.50973    4.50973    4.50973
+min      1.00000    3.00000    1.00000    3.00000
+25%      4.25000    6.25000    4.25000    6.25000
+50%      7.50000    9.50000    7.50000    9.50000
+75%     10.75000   12.75000   10.75000   12.75000
+max     14.00000   16.00000   14.00000   16.00000
 0 [  1   4   2   3 980  10  20]
 1 [  2   3   1   4 980  10  20]
 2 [   5    8    6    7 1200   10   20]

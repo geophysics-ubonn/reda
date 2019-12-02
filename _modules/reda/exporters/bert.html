@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -110,9 +112,9 @@
             
   <h1>Source code for reda.exporters.bert</h1><div class="highlight"><pre>
 <span></span><span class="c1"># import numpy as np</span>
-<span class="kn">from</span> <span class="nn">reda.utils</span> <span class="k">import</span> <span class="n">has_multiple_timesteps</span><span class="p">,</span> <span class="n">split_timesteps</span>
+<span class="kn">from</span> <span class="nn">reda.utils</span> <span class="kn">import</span> <span class="n">has_multiple_timesteps</span><span class="p">,</span> <span class="n">split_timesteps</span>
 
-<div class="viewcode-block" id="export_bert"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.ERT.export_bert">[docs]</a><span class="k">def</span> <span class="nf">export_bert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+<div class="viewcode-block" id="export_bert"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.containers.BaseContainer.export_bert">[docs]</a><span class="k">def</span> <span class="nf">export_bert</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Export to unified data format used in pyGIMLi &amp; BERT.</span>
 
 <span class="sd">    Parameters</span>

@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -126,9 +128,9 @@
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2017</span> <span class="k">as</span> <span class="nn">eit_version_2017</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit_version_2018a</span> <span class="k">as</span> <span class="nn">eit_version_2018a</span>
 
-<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="k">import</span> <span class="n">enable_result_transforms</span>
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
 
-<span class="kn">from</span> <span class="nn">reda.configs.configManager</span> <span class="k">import</span> <span class="n">ConfigManager</span>
+<span class="kn">from</span> <span class="nn">reda.configs.configManager</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
 
 <span class="c1"># data file formats differ slightly between versions. Version numbers do not</span>
 <span class="c1"># follow a consistent naming scheme. Therefore we introduce this dict to map</span>
@@ -390,26 +392,16 @@
         <span class="c1"># print(index, corr_data[index])</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
-            <span class="kn">import</span> <span class="nn">IPython</span>
-            <span class="n">IPython</span><span class="o">.</span><span class="n">embed</span><span class="p">()</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
                 <span class="s1">&#39;No correction factor found for this configuration&#39;</span>
             <span class="p">)</span>
 
         <span class="n">factor</span> <span class="o">=</span> <span class="n">corr_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-        <span class="c1"># if key == (1, 4, 2, 3):</span>
-        <span class="c1">#     print(key)</span>
-        <span class="c1">#     print(factor)</span>
-        <span class="c1">#     print(df[&#39;R&#39;])</span>
-        <span class="c1">#     print(df[&#39;k&#39;])</span>
-        <span class="c1">#     import IPython</span>
-        <span class="c1">#     IPython.embed()</span>
-        <span class="c1">#     exit()</span>
         <span class="c1"># apply correction factor</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vmn&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-                <span class="n">df</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">*=</span> <span class="n">factor</span>
-        <span class="n">df</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="s1">&#39;corr_fac&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">factor</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">col</span><span class="p">)]</span> <span class="o">*=</span> <span class="n">factor</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s1">&#39;corr_fac&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">factor</span>
     <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">corr_data</span></div>
 </pre></div>
 

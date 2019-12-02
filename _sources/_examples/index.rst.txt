@@ -12,7 +12,7 @@ Examples
 
 .. raw:: html
 
-    <div style='clear:both'></div>
+    <div class="sphx-glr-clear"></div>
 
 
 
@@ -29,9 +29,9 @@ Usage of the ERT container
 
 .. only:: html
 
-    .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_dc_thumb.png
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_dc_thumb.png
 
-        :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py`
+     :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py`
 
 .. raw:: html
 
@@ -45,13 +45,13 @@ Usage of the ERT container
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data from roll">
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data from roll-a-long scheme">
 
 .. only:: html
 
-    .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_rollalong_thumb.png
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_rollalong_thumb.png
 
-        :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py`
+     :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py`
 
 .. raw:: html
 
@@ -69,9 +69,9 @@ Usage of the ERT container
 
 .. only:: html
 
-    .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
 
-        :ref:`sphx_glr__examples_01_ERT_plot_syscal_ip.py`
+     :ref:`sphx_glr__examples_01_ERT_plot_syscal_ip.py`
 
 .. raw:: html
 
@@ -84,7 +84,7 @@ Usage of the ERT container
    /_examples/01_ERT/plot_syscal_ip
 .. raw:: html
 
-    <div style='clear:both'></div>
+    <div class="sphx-glr-clear"></div>
 
 
 
@@ -97,13 +97,13 @@ Importing SIP04 data
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="SIP">
+    <div class="sphx-glr-thumbcontainer" tooltip="SIP-04 Import">
 
 .. only:: html
 
-    .. figure:: /_examples/02_SIP04/images/thumb/sphx_glr_plot_sip04_thumb.png
+ .. figure:: /_examples/02_SIP04/images/thumb/sphx_glr_plot_sip04_thumb.png
 
-        :ref:`sphx_glr__examples_02_SIP04_plot_sip04.py`
+     :ref:`sphx_glr__examples_02_SIP04_plot_sip04.py`
 
 .. raw:: html
 
@@ -116,7 +116,7 @@ Importing SIP04 data
    /_examples/02_SIP04/plot_sip04
 .. raw:: html
 
-    <div style='clear:both'></div>
+    <div class="sphx-glr-clear"></div>
 
 
 
@@ -133,9 +133,9 @@ Importing spectral impedance data (sEIT)
 
 .. only:: html
 
-    .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_eit_fzj_check_thumb.png
+ .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_eit_fzj_check_thumb.png
 
-        :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj_check.py`
+     :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj_check.py`
 
 .. raw:: html
 
@@ -149,13 +149,13 @@ Importing spectral impedance data (sEIT)
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This is work in progress ">
+    <div class="sphx-glr-thumbcontainer" tooltip="This is work in progress">
 
 .. only:: html
 
-    .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
+ .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
 
-        :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py`
+     :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py`
 
 .. raw:: html
 
@@ -173,9 +173,9 @@ Importing spectral impedance data (sEIT)
 
 .. only:: html
 
-    .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_radic_sip256c_thumb.png
+ .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_radic_sip256c_thumb.png
 
-        :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py`
+     :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py`
 
 .. raw:: html
 
@@ -193,9 +193,9 @@ Importing spectral impedance data (sEIT)
 
 .. only:: html
 
-    .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_eit_fzj_thumb.png
+ .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_eit_fzj_thumb.png
 
-        :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj.py`
+     :ref:`sphx_glr__examples_03_sEIT_plot_eit_fzj.py`
 
 .. raw:: html
 
@@ -208,7 +208,7 @@ Importing spectral impedance data (sEIT)
    /_examples/03_sEIT/plot_eit_fzj
 .. raw:: html
 
-    <div style='clear:both'></div>
+    <div class="sphx-glr-clear"></div>
 
 
 
@@ -228,9 +228,9 @@ Measurement configurations (A-B M-N)-tuples can be created using the
 
 .. only:: html
 
-    .. figure:: /_examples/04_configurations/images/thumb/sphx_glr_plot_configurations_thumb.png
+ .. figure:: /_examples/04_configurations/images/thumb/sphx_glr_plot_configurations_thumb.png
 
-        :ref:`sphx_glr__examples_04_configurations_plot_configurations.py`
+     :ref:`sphx_glr__examples_04_configurations_plot_configurations.py`
 
 .. raw:: html
 
@@ -243,7 +243,7 @@ Measurement configurations (A-B M-N)-tuples can be created using the
    /_examples/04_configurations/plot_configurations
 .. raw:: html
 
-    <div style='clear:both'></div>
+    <div class="sphx-glr-clear"></div>
 
 
 
@@ -260,9 +260,9 @@ Importing measurements in CRTomo format
 
 .. only:: html
 
-    .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_CR_thumb.png
+ .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_CR_thumb.png
 
-        :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py`
+     :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py`
 
 .. raw:: html
 
@@ -280,9 +280,9 @@ Importing measurements in CRTomo format
 
 .. only:: html
 
-    .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_sEIT_thumb.png
+ .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_sEIT_thumb.png
 
-        :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py`
+     :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py`
 
 .. raw:: html
 
@@ -295,7 +295,7 @@ Importing measurements in CRTomo format
    /_examples/05_crtomo/plot_import_data_to_sEIT
 .. raw:: html
 
-    <div style='clear:both'></div>
+    <div class="sphx-glr-clear"></div>
 
 
 

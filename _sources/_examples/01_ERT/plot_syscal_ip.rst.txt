@@ -11,10 +11,10 @@ Importing Syscal IP data
 ========================
 
 
-
 .. code-block:: default
 
     import reda
+
 
 
 
@@ -41,6 +41,7 @@ a hack to prevent large loading times...
     #       'data_syscal_ip/data_reciprocal.bin', reciprocals=48)
     #     with open(pfile, 'wb') as fid:
     #         pickle.dump(ip, fid)
+
 
 
 
@@ -84,22 +85,6 @@ normal loading of tdip data
     Removing data points subsequent to the first jump
     generating ids
     assigning ids
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      self.data = self.data.ix[:, cols]
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
     renumbering electrode numbers
     generating ids
     assigning ids
@@ -121,6 +106,7 @@ normal loading of tdip data
 
 
 
+
 .. code-block:: default
 
     import reda.utils.geometric_factors as geomK
@@ -134,68 +120,6 @@ normal loading of tdip data
 
 
 
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_negative, ['k', 'r']] *= -1
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_switched_ab, ['a', 'b']] = dataframe.ix[
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      indices_switched_ab, ['b', 'a']
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_switched_mn, ['m', 'n']] = dataframe.ix[
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      indices_switched_mn, ['n', 'm']
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_negative, 'Vmn'] *= -1
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      return getattr(section, self.name)[new_key]
 
 
 
@@ -215,6 +139,15 @@ note that no file will be saved to disk if filename parameter is not provided
     :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
 
 
 you can also specify only one index
@@ -233,6 +166,15 @@ this will only return a figure object, but will not save to file:
     :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
 
 
 it does not matter if you choose normal or reciprocal
@@ -249,6 +191,15 @@ it does not matter if you choose normal or reciprocal
     :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
 
 
 plot a decay curve by specifying the index
@@ -264,6 +215,15 @@ plot a decay curve by specifying the index
 .. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_004.png
     :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
 
 
 
@@ -283,6 +243,15 @@ a  b  m  n
     :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
 
 
 reciprocal is also ok
@@ -297,6 +266,15 @@ reciprocal is also ok
 .. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_006.png
     :class: sphx-glr-single-img
 
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
 
 
 

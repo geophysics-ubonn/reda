@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -239,7 +241,7 @@
         <span class="c1"># apply correction factor</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vmn&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-                <span class="n">df</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">*=</span> <span class="n">factor</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">col</span><span class="p">)]</span> <span class="o">*=</span> <span class="n">factor</span>
     <span class="k">return</span> <span class="n">corr_data</span></div>
 
 

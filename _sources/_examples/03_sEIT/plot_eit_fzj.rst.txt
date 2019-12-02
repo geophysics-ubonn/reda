@@ -36,13 +36,13 @@ configuration set. This set can be automatically generated from the measurement
 data by providing a special function as the config-parameter in the import
 function. This is explained below.
 
-
 Import reda
 
 
 .. code-block:: default
 
     import reda
+
 
 
 
@@ -72,39 +72,24 @@ Initialize an sEIT container
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_version_2017.py:273: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_version_2017.py:273: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
       sign_re = df['Zt'].real / np.abs(df['Zt'].real)
     constructing four-point measurements
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
       Rsign = np.sign(dfn['Zt'].real)
     generating ids
     assigning ids
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      self.data = self.data.ix[:, cols]
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
     Summary:
-                      r          rpha
-    count  16280.000000  16280.000000
-    mean      -0.001539   1232.306629
-    std       22.939128   1823.550170
-    min      -78.975665  -3141.584482
-    25%       -5.791215     -9.388102
-    50%        0.034648     -1.038730
-    75%        5.972380   3132.171261
-    max       76.991777   3141.580651
+                    a           b             m             n
+    count  16280.0000  16280.0000  16280.000000  16280.000000
+    mean      10.5250     30.4750     20.500000     20.500000
+    std        5.8096      5.8096     11.543751     11.543751
+    min        1.0000     20.0000      1.000000      1.000000
+    25%        5.7500     25.7500     10.750000     10.750000
+    50%       10.5000     30.5000     20.500000     20.500000
+    75%       15.2500     35.2500     30.250000     30.250000
+    max       21.0000     40.0000     40.000000     40.000000
+
 
 
 
@@ -139,15 +124,16 @@ from the current injection dipoles:
     generating ids
     assigning ids
     Summary:
-                      r          rpha
-    count  16280.000000  16280.000000
-    mean       0.001539   1264.340068
-    std       22.939128   1809.580759
-    min      -76.991777  -3141.585829
-    25%       -5.972380     -9.200987
-    50%       -0.034648      1.460763
-    75%        5.791215   3132.397700
-    max       78.975665   3141.586023
+                    a           b             m             n
+    count  16280.0000  16280.0000  16280.000000  16280.000000
+    mean      10.5250     30.4750     20.500000     20.500000
+    std        5.8096      5.8096     11.543751     11.543751
+    min        1.0000     20.0000      1.000000      1.000000
+    25%        5.7500     25.7500     10.750000     10.750000
+    50%       10.5000     30.5000     20.500000     20.500000
+    75%       15.2500     35.2500     30.250000     30.250000
+    max       21.0000     40.0000     40.000000     40.000000
+
 
 
 
@@ -173,76 +159,376 @@ Compute geometric factors
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_negative, ['k', 'r']] *= -1
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_switched_ab, ['a', 'b']] = dataframe.ix[
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      indices_switched_ab, ['b', 'a']
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_switched_mn, ['m', 'n']] = dataframe.ix[
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      indices_switched_mn, ['n', 'm']
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_negative, 'Vmn'] *= -1
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      return getattr(section, self.name)[new_key]
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:60: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      dataframe.ix[indices_negative, 'Zt'] *= -1
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:79: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
-      dataframe['Zt'].imag, dataframe['Zt'].real
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:79: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-      dataframe['Zt'].imag, dataframe['Zt'].real
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:180: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
+      return val.imag
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:142: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
+      return val.real
 
 
+.. only:: builder_html
+
+    .. raw:: html
+
+        <div>
+        <style scoped>
+            .dataframe tbody tr th:only-of-type {
+                vertical-align: middle;
+            }
+
+            .dataframe tbody tr th {
+                vertical-align: top;
+            }
+
+            .dataframe thead th {
+                text-align: right;
+            }
+        </style>
+        <table border="1" class="dataframe">
+          <thead>
+            <tr style="text-align: right;">
+              <th></th>
+              <th>a</th>
+              <th>b</th>
+              <th>m</th>
+              <th>n</th>
+              <th>datetime</th>
+              <th>frequency</th>
+              <th>Zg1</th>
+              <th>Zg2</th>
+              <th>Zg3</th>
+              <th>Is</th>
+              <th>Il</th>
+              <th>Zg</th>
+              <th>Iab</th>
+              <th>Zt</th>
+              <th>r</th>
+              <th>Vmn</th>
+              <th>rpha</th>
+              <th>id</th>
+              <th>norrec</th>
+              <th>rdiff</th>
+              <th>rphadiff</th>
+              <th>k</th>
+              <th>rho_a</th>
+              <th>sigma_a</th>
+              <th>rho_a_complex</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>396</th>
+              <td>1</td>
+              <td>22</td>
+              <td>2</td>
+              <td>21</td>
+              <td>2018-01-27 08:03:45.233560</td>
+              <td>0.1</td>
+              <td>1845.514039-309.918615j</td>
+              <td>1830.103481-336.538264j</td>
+              <td>1830.135759-348.659106j</td>
+              <td>0.004369+0.000378j</td>
+              <td>-7.781986e-07-2.016430e-07j</td>
+              <td>1835.251093-331.705328j</td>
+              <td>4.384991</td>
+              <td>67.613572-0.476405j</td>
+              <td>67.615251</td>
+              <td>296.492266</td>
+              <td>-7.045880</td>
+              <td>74</td>
+              <td>nor</td>
+              <td>135.370540</td>
+              <td>-3141.166197</td>
+              <td>0.826735</td>
+              <td>55.899888</td>
+              <td>0.017889</td>
+              <td>55.898501-0.393861j</td>
+            </tr>
+            <tr>
+              <th>397</th>
+              <td>2</td>
+              <td>21</td>
+              <td>1</td>
+              <td>22</td>
+              <td>2018-01-27 08:47:03.645680</td>
+              <td>0.1</td>
+              <td>1740.676857-298.630656j</td>
+              <td>1729.294712-322.735738j</td>
+              <td>1730.518216-332.929183j</td>
+              <td>0.004488+0.000382j</td>
+              <td>-2.603903e-06-6.249216e-07j</td>
+              <td>1733.496595-318.098526j</td>
+              <td>4.504308</td>
+              <td>67.753805-0.448498j</td>
+              <td>67.755289</td>
+              <td>305.190720</td>
+              <td>-6.619423</td>
+              <td>74</td>
+              <td>rec</td>
+              <td>135.370540</td>
+              <td>-3141.166197</td>
+              <td>0.826735</td>
+              <td>56.015663</td>
+              <td>0.017852</td>
+              <td>56.014436-0.370789j</td>
+            </tr>
+            <tr>
+              <th>12892</th>
+              <td>2</td>
+              <td>21</td>
+              <td>1</td>
+              <td>20</td>
+              <td>2018-01-27 08:47:03.645680</td>
+              <td>0.1</td>
+              <td>1740.676857-298.630656j</td>
+              <td>1729.294712-322.735738j</td>
+              <td>1730.518216-332.929183j</td>
+              <td>0.004488+0.000382j</td>
+              <td>-2.603903e-06-6.249216e-07j</td>
+              <td>1733.496595-318.098526j</td>
+              <td>4.504308</td>
+              <td>68.489745-0.511118j</td>
+              <td>68.491652</td>
+              <td>308.507526</td>
+              <td>-7.462554</td>
+              <td>92</td>
+              <td>rec</td>
+              <td>-0.106258</td>
+              <td>-0.590684</td>
+              <td>0.829159</td>
+              <td>56.790494</td>
+              <td>0.017609</td>
+              <td>56.788913-0.423798j</td>
+            </tr>
+            <tr>
+              <th>12893</th>
+              <td>1</td>
+              <td>20</td>
+              <td>2</td>
+              <td>21</td>
+              <td>2018-01-27 09:28:11.962861</td>
+              <td>0.1</td>
+              <td>1882.449148-332.761564j</td>
+              <td>1867.017051-353.821789j</td>
+              <td>1868.918746-358.069064j</td>
+              <td>0.004324+0.000389j</td>
+              <td>8.166327e-07+2.159040e-07j</td>
+              <td>1872.794982-348.217472j</td>
+              <td>4.341069</td>
+              <td>68.595685-0.552429j</td>
+              <td>68.597910</td>
+              <td>297.788253</td>
+              <td>-8.053239</td>
+              <td>92</td>
+              <td>nor</td>
+              <td>-0.106258</td>
+              <td>-0.590684</td>
+              <td>0.829159</td>
+              <td>56.878598</td>
+              <td>0.017581</td>
+              <td>56.876754-0.458052j</td>
+            </tr>
+            <tr>
+              <th>418</th>
+              <td>1</td>
+              <td>22</td>
+              <td>2</td>
+              <td>23</td>
+              <td>2018-01-27 08:03:45.233560</td>
+              <td>0.1</td>
+              <td>1845.514039-309.918615j</td>
+              <td>1830.103481-336.538264j</td>
+              <td>1830.135759-348.659106j</td>
+              <td>0.004369+0.000378j</td>
+              <td>-7.781986e-07-2.016430e-07j</td>
+              <td>1835.251093-331.705328j</td>
+              <td>4.384991</td>
+              <td>61.405722-0.426200j</td>
+              <td>61.407201</td>
+              <td>269.270026</td>
+              <td>-6.940618</td>
+              <td>111</td>
+              <td>nor</td>
+              <td>0.180274</td>
+              <td>-0.614708</td>
+              <td>0.824762</td>
+              <td>50.646313</td>
+              <td>0.019745</td>
+              <td>50.645094-0.351514j</td>
+            </tr>
+            <tr>
+              <th>...</th>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+            <tr>
+              <th>12451</th>
+              <td>18</td>
+              <td>37</td>
+              <td>21</td>
+              <td>40</td>
+              <td>2018-01-27 09:22:14.727928</td>
+              <td>10000.0</td>
+              <td>1509.946181-140.356544j</td>
+              <td>1509.946468-140.357634j</td>
+              <td>1509.945664-140.357569j</td>
+              <td>0.004823+0.000196j</td>
+              <td>5.066413e-05-8.695025e-05j</td>
+              <td>1509.946104-140.357249j</td>
+              <td>4.826839</td>
+              <td>14.563418-1.008587j</td>
+              <td>14.598301</td>
+              <td>70.463644</td>
+              <td>-69.144430</td>
+              <td>1477</td>
+              <td>nor</td>
+              <td>-0.176318</td>
+              <td>-14.544220</td>
+              <td>2.811459</td>
+              <td>41.042529</td>
+              <td>0.024365</td>
+              <td>40.944456-2.835602j</td>
+            </tr>
+            <tr>
+              <th>11218</th>
+              <td>19</td>
+              <td>38</td>
+              <td>21</td>
+              <td>40</td>
+              <td>2018-01-27 08:41:06.303742</td>
+              <td>10000.0</td>
+              <td>1487.062804-137.106700j</td>
+              <td>1487.062909-137.107755j</td>
+              <td>1487.061286-137.107605j</td>
+              <td>0.004855+0.000194j</td>
+              <td>-1.159057e-04-8.547126e-05j</td>
+              <td>1487.062333-137.107354j</td>
+              <td>4.858639</td>
+              <td>24.556856-1.833682j</td>
+              <td>24.625222</td>
+              <td>119.645077</td>
+              <td>-74.532549</td>
+              <td>1478</td>
+              <td>nor</td>
+              <td>0.246324</td>
+              <td>11.928511</td>
+              <td>1.757913</td>
+              <td>43.289002</td>
+              <td>0.023101</td>
+              <td>43.168820-3.223453j</td>
+            </tr>
+            <tr>
+              <th>11219</th>
+              <td>21</td>
+              <td>40</td>
+              <td>19</td>
+              <td>38</td>
+              <td>2018-01-27 08:45:26.153105</td>
+              <td>10000.0</td>
+              <td>1214.971601-99.776976j</td>
+              <td>1214.970677-99.777250j</td>
+              <td>1214.970820-99.776733j</td>
+              <td>0.005267+0.000167j</td>
+              <td>3.035386e-04-5.237910e-05j</td>
+              <td>1214.971033-99.776987j</td>
+              <td>5.269442</td>
+              <td>24.331140-1.525221j</td>
+              <td>24.378898</td>
+              <td>128.463180</td>
+              <td>-62.604038</td>
+              <td>1478</td>
+              <td>rec</td>
+              <td>0.246324</td>
+              <td>11.928511</td>
+              <td>1.757913</td>
+              <td>42.855985</td>
+              <td>0.023334</td>
+              <td>42.772030-2.681205j</td>
+            </tr>
+            <tr>
+              <th>12494</th>
+              <td>21</td>
+              <td>40</td>
+              <td>20</td>
+              <td>39</td>
+              <td>2018-01-27 08:45:26.153105</td>
+              <td>10000.0</td>
+              <td>1214.971601-99.776976j</td>
+              <td>1214.970677-99.777250j</td>
+              <td>1214.970820-99.776733j</td>
+              <td>0.005267+0.000167j</td>
+              <td>3.035386e-04-5.237910e-05j</td>
+              <td>1214.971033-99.776987j</td>
+              <td>5.269442</td>
+              <td>62.492054-4.551339j</td>
+              <td>62.657574</td>
+              <td>330.170428</td>
+              <td>-72.702319</td>
+              <td>1479</td>
+              <td>rec</td>
+              <td>-0.022068</td>
+              <td>-16.100432</td>
+              <td>0.829159</td>
+              <td>51.953113</td>
+              <td>0.019248</td>
+              <td>51.815871-3.773785j</td>
+            </tr>
+            <tr>
+              <th>12495</th>
+              <td>20</td>
+              <td>39</td>
+              <td>21</td>
+              <td>40</td>
+              <td>2018-01-27 09:26:34.516287</td>
+              <td>10000.0</td>
+              <td>1420.095538-150.390175j</td>
+              <td>1420.096385-150.391266j</td>
+              <td>1420.096148-150.391203j</td>
+              <td>0.004947+0.000221j</td>
+              <td>-2.085763e-04-4.436973e-05j</td>
+              <td>1420.096023-150.390881j</td>
+              <td>4.952257</td>
+              <td>62.432660-5.558812j</td>
+              <td>62.679642</td>
+              <td>310.405690</td>
+              <td>-88.802752</td>
+              <td>1479</td>
+              <td>nor</td>
+              <td>-0.022068</td>
+              <td>-16.100432</td>
+              <td>0.829159</td>
+              <td>51.971411</td>
+              <td>0.019241</td>
+              <td>51.766624-4.609141j</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>16280 rows × 25 columns</p>
+        </div>
+        <br />
+        <br />
 
 compute normal and reciprocal pairs
 note that this is usually done on import once.
@@ -268,6 +554,7 @@ note that this is usually done on import once.
 
 
 
+
 quadrupoles can be directly accessed using a pandas grouper
 
 
@@ -287,7 +574,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fe9f83ffdd8>
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f91edb644a8>
             a   b   m   n     frequency         r        rpha
     749    10  29  15  34      0.100000  7.356375   -5.205543
     2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -300,6 +587,7 @@ quadrupoles can be directly accessed using a pandas grouper
     12589  10  29  15  34   1000.000000  7.325287   -2.429873
     14069  10  29  15  34   3150.000000  7.313380  -37.892727
     15549  10  29  15  34  10000.000000  7.035541 -100.904824
+
 
 
 
@@ -326,6 +614,7 @@ filter data
 
     Remaining frequencies:
     [0.1, 0.31446541, 1.0, 3.125, 10.0, 31.25, 110.0]
+
 
 
 
@@ -367,6 +656,7 @@ Raw data plots (execute before applying the filters):
 
 
 
+
 Now export the data to CRTomo-compatible files
 this context manager executes all code within the given directory
 
@@ -376,6 +666,7 @@ this context manager executes all code within the given directory
     with reda.CreateEnterDirectory('output_eit_fzj_check'):
         import reda.exporters.crtomo as redaex
         redaex.write_files_to_directory(seit.data, 'crt_results', norrec='nor', )
+
 
 
 
@@ -413,6 +704,7 @@ Plot pseudosections of all frequencies
 
 
 
+
 alternative
 
 
@@ -429,9 +721,10 @@ alternative
 
 
 
+
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  15.754 seconds)
+   **Total running time of the script:** ( 1 minutes  1.966 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:

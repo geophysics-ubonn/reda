@@ -127,14 +127,14 @@
 </div>
 <p>show the directory/file structure of the input data</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># structure of the input data:</span>
-<span class="n">input_dir</span> <span class="o">=</span> <span class="s1">&#39;data_crtomo_format&#39;</span>
-<span class="k">for</span> <span class="n">filename</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">listdir</span><span class="p">(</span><span class="n">input_dir</span><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a> <span class="o">=</span> <span class="s1">&#39;data_crtomo_format&#39;</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">filename</span></a> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><a href="https://docs.python.org/3/library/os.html#os.listdir" title="View documentation for os.listdir"><span class="n">os</span><span class="o">.</span><span class="n">listdir</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">filename</span></a><span class="p">)</span>
 
 <span class="c1"># the frequencies.dat filename contains the frequencies, corresponding to the</span>
 <span class="c1"># volt* files</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;content of frequencies.dat&#39;</span><span class="p">)</span>
-<span class="n">subprocess</span><span class="o">.</span><span class="n">call</span><span class="p">(</span><span class="s1">&#39;cat </span><span class="si">{}</span><span class="s1">/frequencies.dat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">input_dir</span><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/subprocess.html#subprocess.call" title="View documentation for subprocess.call"><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span></a><span class="p">(</span><span class="s1">&#39;cat </span><span class="si">{}</span><span class="s1">/frequencies.dat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -145,43 +145,31 @@ volt_03_2.12766Hz.crt
 volt_04_4.54545Hz.crt
 volt_05_10.0Hz.crt
 content of frequencies.dat
+
+0
 </pre></div>
 </div>
 <p>create the container</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">import_crtomo</span><span class="p">(</span><span class="s1">&#39;data_crtomo_format/&#39;</span><span class="p">)</span>
-<span class="n">seit</span><span class="o">.</span><span class="n">frequencies</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">import_crtomo</span><span class="p">(</span><span class="s1">&#39;data_crtomo_format/&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">frequencies</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
 assigning ids
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  self.data = self.data.ix[:, cols]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 Summary:
-                 r         rpha
-count  4125.000000  4125.000000
-mean      2.019338    -0.337727
-std       4.116457     1.339764
-min       0.045715    -7.241622
-25%       0.208201    -0.250827
-50%       0.558842    -0.037169
-75%       1.910388     0.208738
-max      37.042497     2.983013
+                 a            b            m            n
+count  4125.000000  4125.000000  4125.000000  4125.000000
+mean     19.608000    22.526788    20.001212    21.118303
+std      10.681428    10.646378    10.799322    10.658306
+min       1.000000     2.000000     1.000000     1.000000
+25%      10.000000    14.000000    10.000000    11.000000
+50%      21.000000    26.000000    21.000000    23.000000
+75%      29.000000    31.000000    29.000000    30.000000
+max      37.000000    38.000000    38.000000    38.000000
+
+[0.46296296, 1.0, 2.1276596, 4.5454545, 10.0]
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-05-crtomo-plot-import-data-to-seit-py">

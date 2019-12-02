@@ -119,110 +119,38 @@
 <div class="sphx-glr-example-title section" id="importing-syscal-ert-data">
 <span id="sphx-glr-examples-01-ert-plot-syscal-dc-py"></span><h1>Importing Syscal ERT data<a class="headerlink" href="#importing-syscal-ert-data" title="Permalink to this headline">¶</a></h1>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
-<span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>data import:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># note that you should prefer importing the binary data (the importer can</span>
 <span class="c1"># import more data)</span>
-<span class="n">ert</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_syscal_ert/data_normal.txt&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_syscal_ert/data_normal.txt&#39;</span><span class="p">)</span>
 
 <span class="c1"># the second data set was measured in a reciprocal configuration by switching</span>
 <span class="c1"># the 24-electrode cables on the Syscal Pro input connectors. The parameter</span>
 <span class="c1"># &quot;reciprocals&quot; changes electrode notations.</span>
-<span class="n">ert</span><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span>
     <span class="s1">&#39;data_syscal_ert/data_reciprocal.txt&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
 
 <span class="c1"># compute geometrical factors using the analytical half-space equation for a</span>
 <span class="c1"># spacing of 0.25 m</span>
-<span class="n">ert</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
 assigning ids
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  self.data = self.data.ix[:, cols]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 renumbering electrode numbers
 generating ids
 assigning ids
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:41: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_negative, [&#39;k&#39;, &#39;r&#39;]] *= -1
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:47: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_switched_ab, [&#39;a&#39;, &#39;b&#39;]] = dataframe.ix[
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:48: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  indices_switched_ab, [&#39;b&#39;, &#39;a&#39;]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:51: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_switched_mn, [&#39;m&#39;, &#39;n&#39;]] = dataframe.ix[
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:52: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  indices_switched_mn, [&#39;n&#39;, &#39;m&#39;]
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/utils/fix_sign_with_K.py:57: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  dataframe.ix[indices_negative, &#39;Vmn&#39;] *= -1
-/home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:961: FutureWarning:
-.ix is deprecated. Please use
-.loc for label based indexing or
-.iloc for positional indexing
-
-See the documentation here:
-http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-  return getattr(section, self.name)[new_key]
 </pre></div>
 </div>
 <p>create some plots in a subdirectory</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;plots&#39;</span><span class="p">):</span>
-    <span class="n">ert</span><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
+    <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
         <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosection_log10_r.pdf&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="n">ert</span><span class="o">.</span><span class="n">histogram</span><span class="p">([</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">],</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;histograms.pdf&#39;</span><span class="p">)</span>
+    <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">histogram</span><span class="p">([</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">],</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;histograms.pdf&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <ul class="sphx-glr-horizontal">
@@ -242,7 +170,7 @@ Generating histogram plot for key: Iab
     <span class="c1"># TODO: seems broken</span>
     <span class="c1"># ert.export_bert(&#39;data.ohm&#39;)</span>
     <span class="c1"># ert.export_pygimli(&#39;data.pygimli&#39;)</span>
-    <span class="n">ert</span><span class="o">.</span><span class="n">export_crtomo</span><span class="p">(</span><span class="s1">&#39;volt.dat&#39;</span><span class="p">)</span>
+    <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">export_crtomo</span><span class="p">(</span><span class="s1">&#39;volt.dat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-dc-py">

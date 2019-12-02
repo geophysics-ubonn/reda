@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -115,12 +117,12 @@
 <span class="sd">data and real usage to improve upon this.</span>
 
 <span class="sd">&quot;&quot;&quot;</span>
-<span class="kn">from</span> <span class="nn">io</span> <span class="k">import</span> <span class="n">StringIO</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="k">import</span> <span class="n">ERT</span>
-<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="k">import</span> <span class="n">enable_result_transforms</span>
+<span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="kn">import</span> <span class="n">ERT</span>
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
 
 
 <span class="k">def</span> <span class="nf">_read_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
@@ -215,13 +217,11 @@
         <span class="p">),</span>
     <span class="p">)</span>
 
-    <span class="c1"># print(&#39;xxx&#39;, df.ix[10, [&#39;x1&#39;, &#39;x2&#39;, &#39;x3&#39;, &#39;x4&#39;]])</span>
     <span class="c1"># for now ignore the z coordinates and compute simple electrode denotations</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x1&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x2&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x3&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;x4&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">header</span><span class="p">[</span><span class="s1">&#39;unit_spacing&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-    <span class="c1"># print(&#39;abmn&#39;, df.ix[10, [&#39;a&#39;, &#39;b&#39;, &#39;m&#39;, &#39;n&#39;]])</span>
 
     <span class="c1"># for now assume value in resistances</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span>

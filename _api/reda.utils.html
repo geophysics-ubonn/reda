@@ -17,7 +17,7 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="reda.testing package" href="reda.testing.html" />
+    <link rel="prev" title="reda.testing.ert_container package" href="reda.testing.ert_container.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -80,7 +80,7 @@
   <li><a href="../index.html">Documentation overview</a><ul>
   <li><a href="../api.html">API documentation</a><ul>
   <li><a href="reda.html">reda package</a><ul>
-      <li>Previous: <a href="reda.testing.html" title="previous chapter">reda.testing package</a></li>
+      <li>Previous: <a href="reda.testing.ert_container.html" title="previous chapter">reda.testing.ert_container package</a></li>
   </ul></li>
   </ul></li>
   </ul></li>
@@ -147,8 +147,8 @@
 <p>Context manager that observes the DataFrame of a data container for
 changes in the number of rows.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="k">import</span> <span class="n">ERTContainer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="k">import</span> <span class="n">LogDataChanges</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="kn">import</span> <span class="n">ERTContainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="kn">import</span> <span class="n">LogDataChanges</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">):</span>
 <span class="gp">... </span>    <span class="c1"># now change the data</span>
 <span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>
@@ -333,13 +333,13 @@ filter functions.  All remaining configs are stored under the keywords
 resistance measurements can be switched if the geometrical factor is negative.</p>
 <dl class="function">
 <dt id="reda.utils.fix_sign_with_K.fix_sign_with_K">
-<code class="sig-prename descclassname">reda.utils.fix_sign_with_K.</code><code class="sig-name descname">fix_sign_with_K</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/fix_sign_with_K.html#fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.fix_sign_with_K.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.utils.fix_sign_with_K.</code><code class="sig-name descname">fix_sign_with_K</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/fix_sign_with_K.html#fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.fix_sign_with_K.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
 <dd><p>Swap electrode denotations so that geometrical (K) factors become
 positive. Also, swap signs of all parameters affected by this process.</p>
 <p>Affected parameters, at the moment, are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>K</p></li>
+<li><p>k</p></li>
 <li><p>r</p></li>
 <li><p>Vmn</p></li>
 <li><p>Zt</p></li>
@@ -409,14 +409,14 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 rcParams variable.</p>
 <dl class="function">
 <dt id="reda.utils.geometric_factors.apply_K">
-<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">apply_K</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">k</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#apply_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.apply_K" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">apply_K</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">k</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#apply_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.apply_K" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the geometric factors to the dataset and compute (apparent)
 resistivities/conductivities</p>
 </dd></dl>
 
 <dl class="function">
 <dt id="reda.utils.geometric_factors.compute_K_analytical">
-<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">spacing</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an electrode spacing, compute geometrical factors using the
 equation for the homogeneous half-space (Neumann-equation)</p>
 <p>If a dataframe is given, use the column (a, b, m, n). Otherwise, expect an
@@ -499,7 +499,7 @@ avoid repeated try/except statements.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.utils</span> <span class="k">import</span> <span class="n">opt_import</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.utils</span> <span class="kn">import</span> <span class="n">opt_import</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">reda</span> <span class="o">=</span> <span class="n">opt_import</span><span class="p">(</span><span class="s2">&quot;reda&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">reda</span><span class="o">.</span><span class="vm">__name__</span>
 <span class="go">&#39;reda&#39;</span>
@@ -560,7 +560,7 @@ settings.</p>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.utils.mpl</span> <span class="k">import</span> <span class="n">mpl_get_cb_bound_next_to_plot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.utils.mpl</span> <span class="kn">import</span> <span class="n">mpl_get_cb_bound_next_to_plot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">right</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">plt_obj</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;.-&#39;</span><span class="p">)</span>

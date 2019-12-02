@@ -6,6 +6,13 @@ reda.testing package
    :undoc-members:
    :show-inheritance:
 
+Subpackages
+-----------
+
+.. toctree::
+
+   reda.testing.ert_container
+
 Submodules
 ----------
 

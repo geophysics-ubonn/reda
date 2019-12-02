@@ -12,7 +12,6 @@ Single-frequency CRTomo data import
 
 Import CRTomo-style single-frequency measurement data into a CR container
 
-
 structure of the input data:
 
 
@@ -47,6 +46,8 @@ structure of the input data:
     volt_05_10.0Hz.crt
     content of frequencies.dat
 
+    0
+
 
 
 import only one frequency into a CR (complex resistivity) container
@@ -70,22 +71,7 @@ import only one frequency into a CR (complex resistivity) container
 
     generating ids
     assigning ids
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/reda/containers/ERT.py:55: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
 
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      self.data = self.data.ix[:, cols]
-    /home/travis/virtualenv/python3.6.7/lib/python3.6/site-packages/pandas/core/indexing.py:822: FutureWarning: 
-    .ix is deprecated. Please use
-    .loc for label based indexing or
-    .iloc for positional indexing
-
-    See the documentation here:
-    http://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#ix-indexer-is-deprecated
-      retval = getattr(retval, self.name)._getitem_axis(key, axis=i)
 
 
 

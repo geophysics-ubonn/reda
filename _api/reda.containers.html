@@ -120,13 +120,14 @@
 <div class="section" id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="module-reda.containers.CR">
-<span id="reda-containers-cr-module"></span><h2>reda.containers.CR module<a class="headerlink" href="#module-reda.containers.CR" title="Permalink to this headline">¶</a></h2>
-<p>Complex-resistivity container</p>
+<div class="section" id="module-reda.containers.BaseContainer">
+<span id="reda-containers-basecontainer-module"></span><h2>reda.containers.BaseContainer module<a class="headerlink" href="#module-reda.containers.BaseContainer" title="Permalink to this headline">¶</a></h2>
+<p>.</p>
 <dl class="class">
-<dt id="reda.containers.CR.CR">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">CR</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#reda.containers.TDIP.TDIP" title="reda.containers.TDIP.TDIP"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.TDIP.TDIP</span></code></a>, <a class="reference internal" href="#reda.containers.CR.ImportersCR" title="reda.containers.CR.ImportersCR"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.CR.ImportersCR</span></code></a></p>
+<dt id="reda.containers.BaseContainer.BaseContainer">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.BaseContainer.</code><code class="sig-name descname">BaseContainer</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reda.main.html#reda.main.logger.LoggingClass" title="reda.main.logger.LoggingClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.main.logger.LoggingClass</span></code></a>, <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a>, <a class="reference internal" href="#reda.containers.BaseContainer.ExportersBase" title="reda.containers.BaseContainer.ExportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ExportersBase</span></code></a></p>
+<p>.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -134,74 +135,47 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code>(self, dataframe)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.check_dataframe" title="reda.containers.BaseContainer.BaseContainer.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="reda.containers.BaseContainer.BaseContainer.compute_K_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code></a>(self, spacing, \*\*kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_reciprocal_errors</span></code>(self[, key])</p></td>
-<td><p>Compute reciprocal erros following LaBrecque et al.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.delete_measurements" title="reda.containers.BaseContainer.BaseContainer.delete_measurements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code></a>(self, row_or_rows)</p></td>
 <td><p>Delete one or more measurements by index of the DataFrame.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code>(filename, group[, norrec, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code>(filename, group[, norrec, …])</p></td>
 <td><p>Save a dataset to a CRTomo-compatible .crt file</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="reda.containers.CR.CR.export_to_crtomo_td_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_td_manager</span></code></a>(self, grid[, norrec])</p></td>
-<td><p>Return a ready-initialized tdman object from the CRTomo tools.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.filter" title="reda.containers.BaseContainer.BaseContainer.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>(self, query[, inplace])</p></td>
 <td><p>Use a query statement to filter data.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.has_multiple_timesteps" title="reda.containers.BaseContainer.BaseContainer.has_multiple_timesteps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code></a>(self)</p></td>
 <td><p>Return True if container has multiple timesteps.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.histogram" title="reda.containers.BaseContainer.BaseContainer.histogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code></a>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
-<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code>(self, filename)</p></td>
-<td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
-<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
-<td><p>Syscal import</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
-<td><p>Syscal import</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code>(self[, filename, …])</p></td>
-<td><p>Plot decay curve</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.pseudosection" title="reda.containers.BaseContainer.BaseContainer.pseudosection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code></a>(self[, column, filename, log10])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.pseudosection_type3" title="reda.containers.BaseContainer.BaseContainer.pseudosection_type3"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code></a>(self[, column, …])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.sub_filter" title="reda.containers.BaseContainer.BaseContainer.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(self, subset, filter[, inplace])</p></td>
 <td><p>Apply a filter to subset of the data</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.to_configs" title="reda.containers.BaseContainer.BaseContainer.to_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code></a>(self)</p></td>
 <td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code>(self)</p></td>
-<td><p>Convert container to a complex resistivity container, using the CPA-conversion.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>(self)</p></td>
-<td><p>Return of copy of the data inside a TDIP container</p></td>
 </tr>
 </tbody>
 </table>
@@ -219,6 +193,359 @@
 </tr>
 </tbody>
 </table>
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.check_dataframe">
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the given dataframe for the required type and columns</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.compute_K_analytical">
+<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">spacing</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute geometrical factors over the homogeneous half-space with a
+constant electrode spacing</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.delete_measurements">
+<code class="sig-name descname">delete_measurements</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">row_or_rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.delete_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.delete_measurements" title="Permalink to this definition">¶</a></dt>
+<dd><p>Delete one or more measurements by index of the DataFrame.</p>
+<p>Resets the DataFrame index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>row_or_rows</strong><span class="classifier">int or list of ints</span></dt><dd><p>Row numbers (starting with zero) of the data DataFrame (ert.data)
+to delete</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>None</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.filter">
+<code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">query</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a query statement to filter data. Note that you specify the data
+to be removed!</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>query</strong><span class="classifier">string</span></dt><dd><p>The query string to be evaluated. Is directly provided to
+pandas.DataFrame.query</p>
+</dd>
+<dt><strong>inplace</strong><span class="classifier">bool</span></dt><dd><p>if True, change the container dataframe in place (defaults to True)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>result</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame that contains the result of the filter application</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.has_multiple_timesteps">
+<code class="sig-name descname">has_multiple_timesteps</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.has_multiple_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.has_multiple_timesteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if container has multiple timesteps.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.histogram">
+<code class="sig-name descname">histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.histogram" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a histogram of one data column</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.pseudosection">
+<code class="sig-name descname">pseudosection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a pseudosection of the given column. Note that this function
+only works with dipole-dipole data at the moment.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>column</strong><span class="classifier">string, optional</span></dt><dd><p>Column to plot into the pseudosection, default: r</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">string, optional</span></dt><dd><p>if not None, save the resulting figure directory to disc</p>
+</dd>
+<dt><strong>log10</strong><span class="classifier">bool, optional</span></dt><dd><p>if True, then plot values in log10, default: False</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">dict</span></dt><dd><p>all additional parameters are directly provided to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">reda.plotters.pseudoplots.PS.plot_pseudosection_type2()</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>fig</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.Figure</span></code></span></dt><dd><p>matplotlib figure object
+ax : <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axes</span></code>
+matplotlib axes object</p>
+</dd>
+<dt><strong>cb</strong><span class="classifier">colorbar object</span></dt><dd><p>matplotlib colorbar object</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.pseudosection_type3">
+<code class="sig-name descname">pseudosection_type3</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection_type3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection_type3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot a pseudosection of the given column. Note that this function
+only works with dipole-dipole data at the moment.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>column</strong><span class="classifier">string, optional</span></dt><dd><p>Column to plot into the pseudosection, default: r</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">string, optional</span></dt><dd><p>if not None, save the resulting figure directory to disc</p>
+</dd>
+<dt><strong>log10</strong><span class="classifier">bool, optional</span></dt><dd><p>if True, then plot values in log10, default: False</p>
+</dd>
+<dt><strong>**kwargs</strong><span class="classifier">dict</span></dt><dd><p>all additional parameters are directly provided to
+<code class="xref py py-func docutils literal notranslate"><span class="pre">reda.plotters.pseudoplots.PS.plot_pseudosection_type2()</span></code></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>fig</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.Figure</span></code></span></dt><dd><p>matplotlib figure object
+ax : <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axes</span></code>
+matplotlib axes object</p>
+</dd>
+<dt><strong>cb</strong><span class="classifier">colorbar object</span></dt><dd><p>matplotlib colorbar object</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.sub_filter">
+<code class="sig-name descname">sub_filter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">subset</em>, <em class="sig-param">filter</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.sub_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.sub_filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a filter to subset of the data</p>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">subquery</span><span class="p">(</span>
+    <span class="s1">&#39;timestep == 2&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;R &gt; 4&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.BaseContainer.to_configs">
+<code class="sig-name descname">to_configs</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.to_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.to_configs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a config object that contains the measurement configurations
+(a,b,m,n) from the data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>config_obj</strong><span class="classifier">reda.ConfigManager</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.BaseContainer.ExportersBase">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.BaseContainer.</code><code class="sig-name descname">ExportersBase</code><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#ExportersBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This class provides wrappers for most of the exporter functions and is
+meant to be inherited by the ERT data container.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Importers</span></code></dt><dd></dd>
+</dl>
+</div>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.ExportersBase.export_bert" title="reda.containers.BaseContainer.ExportersBase.export_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code></a>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.ExportersBase.export_crtomo" title="reda.containers.BaseContainer.ExportersBase.export_crtomo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code></a>(filename, group[, norrec, …])</p></td>
+<td><p>Save a dataset to a CRTomo-compatible .crt file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.ExportersBase.export_pygimli" title="reda.containers.BaseContainer.ExportersBase.export_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code></a>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.BaseContainer.ExportersBase.export_bert">
+<code class="sig-name descname">export_bert</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_bert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.ExportersBase.export_crtomo">
+<code class="sig-name descname">export_crtomo</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">group</em>, <em class="sig-param">norrec='all'</em>, <em class="sig-param">store_errors=False</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_crtomo" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a dataset to a CRTomo-compatible .crt file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>Output filename</p>
+</dd>
+<dt><strong>group</strong><span class="classifier">pandas.group</span></dt><dd><p>Data group</p>
+</dd>
+<dt><strong>norrec</strong><span class="classifier">string</span></dt><dd><p>Which data to export Possible values: all|norrec|nor|rec</p>
+</dd>
+<dt><strong>store_errors</strong><span class="classifier">bool</span></dt><dd><p>If true, store errors of the data in a separate column</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.BaseContainer.ExportersBase.export_pygimli">
+<code class="sig-name descname">export_pygimli</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_pygimli" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.BaseContainer.ImportersBase">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.BaseContainer.</code><code class="sig-name descname">ImportersBase</code><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#ImportersBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.ImportersBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Base class for all importer classes</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.containers.CR">
+<span id="reda-containers-cr-module"></span><h2>reda.containers.CR module<a class="headerlink" href="#module-reda.containers.CR" title="Permalink to this headline">¶</a></h2>
+<p>Complex-resistivity container</p>
+<dl class="class">
+<dt id="reda.containers.CR.CR">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">CR</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.CR.CRImporters" title="reda.containers.CR.CRImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.CR.CRImporters</span></code></a></p>
+<p>.</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CR.check_dataframe" title="reda.containers.CR.CR.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
+<td><p>Check the given dataframe for the required type and columns</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
+<td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
+<td><p>Delete one or more measurements by index of the DataFrame.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code>(filename, group[, norrec, …])</p></td>
+<td><p>Save a dataset to a CRTomo-compatible .crt file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="reda.containers.CR.CR.export_to_crtomo_td_manager"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_td_manager</span></code></a>(self, grid[, norrec])</p></td>
+<td><p>Return a ready-initialized tdman object from the CRTomo tools.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
+<td><p>Use a query statement to filter data.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
+<td><p>Return True if container has multiple timesteps.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a histogram of one data column</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code>(self, filename)</p></td>
+<td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 FD importer</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>(self[, column, …])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
+<td><p>Setup a logger</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
+<td><p>Apply a filter to subset of the data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
+<td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 31%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>print_data_journal</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>print_log</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.CR.CR.check_dataframe">
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<dd><p>Check the given dataframe for the required type and columns</p>
+</dd></dl>
+
 <dl class="method">
 <dt id="reda.containers.CR.CR.export_to_crtomo_td_manager">
 <code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
@@ -239,9 +566,9 @@
 </dd></dl>
 
 <dl class="class">
-<dt id="reda.containers.CR.ImportersCR">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">ImportersCR</code><a class="reference internal" href="../_modules/reda/containers/CR.html#ImportersCR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.ImportersCR" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt id="reda.containers.CR.CRImporters">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">CRImporters</code><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -249,19 +576,124 @@
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.ImportersCR.import_crtomo_data" title="reda.containers.CR.ImportersCR.import_crtomo_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code></a>(self, filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_bert" title="reda.containers.CR.CRImporters.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_crtomo_data" title="reda.containers.CR.CRImporters.import_crtomo_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code></a>(self, filename)</p></td>
 <td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_mpt" title="reda.containers.CR.CRImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 FD importer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_pygimli" title="reda.containers.CR.CRImporters.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="reda.containers.CR.ImportersCR.import_crtomo_data">
-<code class="sig-name descname">import_crtomo_data</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#ImportersCR.import_crtomo_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.ImportersCR.import_crtomo_data" title="Permalink to this definition">¶</a></dt>
+<dt id="reda.containers.CR.CRImporters.import_bert">
+<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_bert" title="Permalink to this definition">¶</a></dt>
+<dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>File path to .ohm file</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">bool, optional</span></dt><dd><p>Enables extended debug output</p>
+</dd>
+<dt><strong>reciprocals</strong><span class="classifier">int, optional</span></dt><dd><p>if provided, then assume that this is a reciprocal measurement where
+only the electrode cables were switched. The provided number N is
+treated as the maximum electrode number, and denotations are renamed
+according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
+</dd>
+<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is provided at the moment</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.CR.CRImporters.import_crtomo_data">
+<code class="sig-name descname">import_crtomo_data</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_crtomo_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_crtomo_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import a CRTomo-style measurement file (usually: volt.dat).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>path to data file</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.CR.CRImporters.import_mpt">
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPT DAS 1 FD importer</p>
+<blockquote>
+<div><dl class="simple">
+<dt>timestep: int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></dt><dd><p>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</p>
+</dd>
+</dl>
+<p>Reads a time domain MPT DAS-1 data file (.Data) and prepares information</p>
+</div></blockquote>
+<p>in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.CR.CRImporters.import_pygimli">
+<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
+<dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>File path to .ohm file</p>
+</dd>
+<dt><strong>verbose</strong><span class="classifier">bool, optional</span></dt><dd><p>Enables extended debug output</p>
+</dd>
+<dt><strong>reciprocals</strong><span class="classifier">int, optional</span></dt><dd><p>if provided, then assume that this is a reciprocal measurement where
+only the electrode cables were switched. The provided number N is
+treated as the maximum electrode number, and denotations are renamed
+according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>The measurement data</p>
+</dd>
+<dt><strong>elecs</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Electrode positions (columns: X, Y, Z)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is provided at the moment</p>
 </dd>
 </dl>
 </dd>
@@ -276,7 +708,8 @@
 <dl class="class">
 <dt id="reda.containers.ERT.ERT">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">ERT</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="reda.main.html#reda.main.logger.LoggingClass" title="reda.main.logger.LoggingClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.main.logger.LoggingClass</span></code></a>, <a class="reference internal" href="#reda.containers.ERT.Importers" title="reda.containers.ERT.Importers"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.Importers</span></code></a>, <a class="reference internal" href="#reda.containers.ERT.Exporters" title="reda.containers.ERT.Exporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.Exporters</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.ERT.ERTImporters" title="reda.containers.ERT.ERTImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ERTImporters</span></code></a></p>
+<p>.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -287,13 +720,13 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.check_dataframe" title="reda.containers.ERT.ERT.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.compute_K_analytical" title="reda.containers.ERT.ERT.compute_K_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code></a>(self, spacing)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.compute_reciprocal_errors" title="reda.containers.ERT.ERT.compute_reciprocal_errors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_reciprocal_errors</span></code></a>(self[, key])</p></td>
 <td><p>Compute reciprocal erros following LaBrecque et al.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.delete_measurements" title="reda.containers.ERT.ERT.delete_measurements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code></a>(self, row_or_rows)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
 <td><p>Delete one or more measurements by index of the DataFrame.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
@@ -305,41 +738,44 @@
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.filter" title="reda.containers.ERT.ERT.filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code></a>(self, query[, inplace])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
 <td><p>Use a query statement to filter data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.has_multiple_timesteps" title="reda.containers.ERT.ERT.has_multiple_timesteps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code></a>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
 <td><p>Return True if container has multiple timesteps.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.histogram" title="reda.containers.ERT.ERT.histogram"><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code></a>(self[, column, filename, log10])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 importer</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.pseudosection" title="reda.containers.ERT.ERT.pseudosection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code></a>(self[, column, filename, log10])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>(self[, column, …])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.sub_filter" title="reda.containers.ERT.ERT.sub_filter"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code></a>(self, subset, filter[, inplace])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
 <td><p>Apply a filter to subset of the data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.to_configs" title="reda.containers.ERT.ERT.to_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code></a>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
 <td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.to_ip" title="reda.containers.ERT.ERT.to_ip"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code></a>(self)</p></td>
-<td><p>Return of copy of the data inside a TDIP container</p></td>
 </tr>
 </tbody>
 </table>
@@ -361,13 +797,6 @@
 <dt id="reda.containers.ERT.ERT.check_dataframe">
 <code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required type and columns</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.compute_K_analytical">
-<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
-<dd><p>Compute geometrical factors over the homogeneous half-space with a
-constant electrode spacing</p>
 </dd></dl>
 
 <dl class="method">
@@ -402,228 +831,18 @@ to:</p>
 </div>
 </dd></dl>
 
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.delete_measurements">
-<code class="sig-name descname">delete_measurements</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">row_or_rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.delete_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.delete_measurements" title="Permalink to this definition">¶</a></dt>
-<dd><p>Delete one or more measurements by index of the DataFrame.</p>
-<p>Resets the DataFrame index.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>row_or_rows</strong><span class="classifier">int or list of ints</span></dt><dd><p>Row numbers (starting with zero) of the data DataFrame (ert.data)
-to delete</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>None</dt><dd></dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.filter">
-<code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">query</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Use a query statement to filter data. Note that you specify the data
-to be removed!</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>query</strong><span class="classifier">string</span></dt><dd><p>The query string to be evaluated. Is directly provided to
-pandas.DataFrame.query</p>
-</dd>
-<dt><strong>inplace</strong><span class="classifier">bool</span></dt><dd><p>if True, change the container dataframe in place (defaults to True)</p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>result</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame that contains the result of the filter application</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.has_multiple_timesteps">
-<code class="sig-name descname">has_multiple_timesteps</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.has_multiple_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.has_multiple_timesteps" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return True if container has multiple timesteps.</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.histogram">
-<code class="sig-name descname">histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.histogram" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot a histogram of one data column</p>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.pseudosection">
-<code class="sig-name descname">pseudosection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.pseudosection" title="Permalink to this definition">¶</a></dt>
-<dd><p>Plot a pseudosection of the given column. Note that this function
-only works with dipole-dipole data at the moment.</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>column</strong><span class="classifier">string, optional</span></dt><dd><p>Column to plot into the pseudosection, default: r</p>
-</dd>
-<dt><strong>filename</strong><span class="classifier">string, optional</span></dt><dd><p>if not None, save the resulting figure directory to disc</p>
-</dd>
-<dt><strong>log10</strong><span class="classifier">bool, optional</span></dt><dd><p>if True, then plot values in log10, default: False</p>
-</dd>
-<dt><strong>**kwargs</strong><span class="classifier">dict</span></dt><dd><p>all additional parameters are directly provided to
-<code class="xref py py-func docutils literal notranslate"><span class="pre">reda.plotters.pseudoplots.PS.plot_pseudosection_type2()</span></code></p>
-</dd>
-</dl>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><dl>
-<dt><strong>fig</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.Figure</span></code></span></dt><dd><p>matplotlib figure object
-ax : <code class="xref py py-class docutils literal notranslate"><span class="pre">matplotlib.axes</span></code>
-matplotlib axes object</p>
-</dd>
-<dt><strong>cb</strong><span class="classifier">colorbar object</span></dt><dd><p>matplotlib colorbar object</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.sub_filter">
-<code class="sig-name descname">sub_filter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">subset</em>, <em class="sig-param">filter</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.sub_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.sub_filter" title="Permalink to this definition">¶</a></dt>
-<dd><p>Apply a filter to subset of the data</p>
-<p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">subquery</span><span class="p">(</span>
-    <span class="s1">&#39;timestep == 2&#39;</span><span class="p">,</span>
-    <span class="s1">&#39;R &gt; 4&#39;</span><span class="p">,</span>
-<span class="p">)</span>
-</pre></div>
-</div>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.to_configs">
-<code class="sig-name descname">to_configs</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.to_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.to_configs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return a config object that contains the measurement configurations
-(a,b,m,n) from the data</p>
-<dl class="field-list simple">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>config_obj</strong><span class="classifier">reda.ConfigManager</span></dt><dd></dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.ERT.to_ip">
-<code class="sig-name descname">to_ip</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.to_ip"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.to_ip" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return of copy of the data inside a TDIP container</p>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="class">
-<dt id="reda.containers.ERT.Exporters">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">Exporters</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#Exporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Exporters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>This class provides wrappers for most of the exporter functions and is
-meant to be inherited by the ERT data container.</p>
-<div class="admonition seealso">
-<p class="admonition-title">See also</p>
-<dl class="simple">
-<dt><a class="reference internal" href="#reda.containers.ERT.Importers" title="reda.containers.ERT.Importers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Importers</span></code></a></dt><dd></dd>
-</dl>
-</div>
-<p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
-<colgroup>
-<col style="width: 10%" />
-<col style="width: 90%" />
-</colgroup>
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Exporters.export_bert" title="reda.containers.ERT.Exporters.export_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code></a>(data, electrodes, filename)</p></td>
-<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.Exporters.export_crtomo" title="reda.containers.ERT.Exporters.export_crtomo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code></a>(filename, group[, norrec, …])</p></td>
-<td><p>Save a dataset to a CRTomo-compatible .crt file</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Exporters.export_pygimli" title="reda.containers.ERT.Exporters.export_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code></a>(data, electrodes, filename)</p></td>
-<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
-</tr>
-</tbody>
-</table>
-<dl class="method">
-<dt id="reda.containers.ERT.Exporters.export_bert">
-<code class="sig-name descname">export_bert</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.ERT.Exporters.export_bert" title="Permalink to this definition">¶</a></dt>
-<dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
-</dd>
-<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
-</dd>
-<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.Exporters.export_crtomo">
-<code class="sig-name descname">export_crtomo</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">group</em>, <em class="sig-param">norrec='all'</em>, <em class="sig-param">store_errors=False</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.ERT.Exporters.export_crtomo" title="Permalink to this definition">¶</a></dt>
-<dd><p>Save a dataset to a CRTomo-compatible .crt file</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl class="simple">
-<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>Output filename</p>
-</dd>
-<dt><strong>group</strong><span class="classifier">pandas.group</span></dt><dd><p>Data group</p>
-</dd>
-<dt><strong>norrec</strong><span class="classifier">string</span></dt><dd><p>Which data to export Possible values: all|norrec|nor|rec</p>
-</dd>
-<dt><strong>store_errors</strong><span class="classifier">bool</span></dt><dd><p>If true, store errors of the data in a separate column</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
-<dt id="reda.containers.ERT.Exporters.export_pygimli">
-<code class="sig-name descname">export_pygimli</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.ERT.Exporters.export_pygimli" title="Permalink to this definition">¶</a></dt>
-<dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
-<dl class="field-list">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><dl>
-<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
-</dd>
-<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
-</dd>
-<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
-</dd>
-</dl>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="class">
-<dt id="reda.containers.ERT.Importers">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">Importers</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#reda.containers.ERT.ImportersBase" title="reda.containers.ERT.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ImportersBase</span></code></a></p>
+<dt id="reda.containers.ERT.ERTImporters">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">ERTImporters</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
 <p>This class provides wrappers for most of the importer functions and is
 meant to be inherited by the ERT data container.</p>
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><a class="reference internal" href="#reda.containers.ERT.Exporters" title="reda.containers.ERT.Exporters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exporters</span></code></a></dt><dd></dd>
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exporters</span></code></dt><dd></dd>
 </dl>
 </div>
 <p class="rubric">Methods</p>
@@ -633,23 +852,26 @@ meant to be inherited by the ERT data container.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_bert" title="reda.containers.ERT.Importers.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_bert" title="reda.containers.ERT.ERTImporters.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_pygimli" title="reda.containers.ERT.Importers.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_mpt" title="reda.containers.ERT.ERTImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 importer</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="reda.containers.ERT.ERTImporters.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_bin" title="reda.containers.ERT.Importers.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="reda.containers.ERT.ERTImporters.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.Importers.import_syscal_txt" title="reda.containers.ERT.Importers.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="reda.containers.ERT.ERTImporters.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="reda.containers.ERT.Importers.import_bert">
-<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_bert" title="Permalink to this definition">¶</a></dt>
+<dt id="reda.containers.ERT.ERTImporters.import_bert">
+<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -679,8 +901,42 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd></dl>
 
 <dl class="method">
-<dt id="reda.containers.ERT.Importers.import_pygimli">
-<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_pygimli" title="Permalink to this definition">¶</a></dt>
+<dt id="reda.containers.ERT.ERTImporters.import_mpt">
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPT DAS 1 importer</p>
+<blockquote>
+<div><dl>
+<dt>timestep<span class="classifier">int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></span></dt><dd><p>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</p>
+</dd>
+</dl>
+<p>Reads a any MPT DAS-1 data file (.Data), e.g. TD/FD/SIP, and prepares</p>
+</div></blockquote>
+<p>information in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.ERT.ERTImporters.import_pygimli">
+<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -710,8 +966,8 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd></dl>
 
 <dl class="method">
-<dt id="reda.containers.ERT.Importers.import_syscal_bin">
-<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
+<dt id="reda.containers.ERT.ERTImporters.import_syscal_bin">
+<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syscal import</p>
 <blockquote>
 <div><dl class="simple">
@@ -768,8 +1024,8 @@ return None</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="reda.containers.ERT.Importers.import_syscal_txt">
-<code class="sig-name descname">import_syscal_txt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#Importers.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.Importers.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
+<dt id="reda.containers.ERT.ERTImporters.import_syscal_txt">
+<code class="sig-name descname">import_syscal_txt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syscal import</p>
 <blockquote>
 <div><dl class="simple">
@@ -819,21 +1075,15 @@ return None</p>
 
 </dd></dl>
 
-<dl class="class">
-<dt id="reda.containers.ERT.ImportersBase">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">ImportersBase</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#ImportersBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ImportersBase" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
-<p>Base class for all importer classes</p>
-</dd></dl>
-
 </div>
 <div class="section" id="module-reda.containers.SIP">
 <span id="reda-containers-sip-module"></span><h2>reda.containers.SIP module<a class="headerlink" href="#module-reda.containers.SIP" title="Permalink to this headline">¶</a></h2>
 <p>Container for Spectral Induced Polarization (SIP) measurements</p>
 <dl class="class">
 <dt id="reda.containers.SIP.SIP">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.SIP.</code><code class="sig-name descname">SIP</code><span class="sig-paren">(</span><em class="sig-param">data=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#reda.containers.SIP.importers" title="reda.containers.SIP.importers"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.SIP.importers</span></code></a></p>
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.SIP.</code><code class="sig-name descname">SIP</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.SIP.SIPImporters" title="reda.containers.SIP.SIPImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.SIP.SIPImporters</span></code></a></p>
+<p>.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -844,11 +1094,67 @@ return None</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.SIP.SIP.check_dataframe" title="reda.containers.SIP.SIP.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code>(self, filename[, timestep])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
+<td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
+<td><p>Delete one or more measurements by index of the DataFrame.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code>(filename, group[, norrec, …])</p></td>
+<td><p>Save a dataset to a CRTomo-compatible .crt file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
+<td><p>Use a query statement to filter data.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
+<td><p>Return True if container has multiple timesteps.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a histogram of one data column</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 FD importer</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code>(self, filename[, timestep])</p></td>
 <td><p>SIP04 data import</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.SIP.SIP.reduce_duplicate_frequencies" title="reda.containers.SIP.SIP.reduce_duplicate_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reduce_duplicate_frequencies</span></code></a>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>(self[, column, …])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.SIP.SIP.reduce_duplicate_frequencies" title="reda.containers.SIP.SIP.reduce_duplicate_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">reduce_duplicate_frequencies</span></code></a>(self)</p></td>
 <td><p>In case multiple frequencies were measured, average them and compute std, min, max values for zt.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
+<td><p>Setup a logger</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
+<td><p>Apply a filter to subset of the data</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
+<td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 31%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>print_data_journal</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>print_log</strong></p></td>
+<td></td>
 </tr>
 </tbody>
 </table>
@@ -882,9 +1188,9 @@ group over those and average for each timestep.</p>
 </dd></dl>
 
 <dl class="class">
-<dt id="reda.containers.SIP.importers">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.SIP.</code><code class="sig-name descname">importers</code><a class="reference internal" href="../_modules/reda/containers/SIP.html#importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.importers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<dt id="reda.containers.SIP.SIPImporters">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.SIP.</code><code class="sig-name descname">SIPImporters</code><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
 <p>This class provides wrappers for most of the importer functions, and is
 meant to be inherited by the data containers</p>
 <p class="rubric">Methods</p>
@@ -894,14 +1200,51 @@ meant to be inherited by the data containers</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.SIP.importers.import_sip04" title="reda.containers.SIP.importers.import_sip04"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code></a>(self, filename[, timestep])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.SIP.SIPImporters.import_mpt" title="reda.containers.SIP.SIPImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 FD importer</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.SIP.SIPImporters.import_sip04" title="reda.containers.SIP.SIPImporters.import_sip04"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code></a>(self, filename[, timestep])</p></td>
 <td><p>SIP04 data import</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="reda.containers.SIP.importers.import_sip04">
-<code class="sig-name descname">import_sip04</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">timestep=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#importers.import_sip04"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.importers.import_sip04" title="Permalink to this definition">¶</a></dt>
+<dt id="reda.containers.SIP.SIPImporters.import_mpt">
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPT DAS 1 FD importer</p>
+<blockquote>
+<div><dl class="simple">
+<dt>timestep: int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></dt><dd><p>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</p>
+</dd>
+</dl>
+<p>Reads a time domain MPT DAS-1 data file (.Data) and prepares information</p>
+</div></blockquote>
+<p>in pandas DataFrame for further processing.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.SIP.SIPImporters.import_sip04">
+<code class="sig-name descname">import_sip04</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">timestep=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_sip04"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_sip04" title="Permalink to this definition">¶</a></dt>
 <dd><p>SIP04 data import</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -931,7 +1274,8 @@ meant to be inherited by the data containers</p>
 <dl class="class">
 <dt id="reda.containers.TDIP.TDIP">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.TDIP.</code><code class="sig-name descname">TDIP</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ERT</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.TDIP.TDIPImporters" title="reda.containers.TDIP.TDIPImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.TDIP.TDIPImporters</span></code></a></p>
+<p>.</p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -942,49 +1286,43 @@ meant to be inherited by the data containers</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.check_dataframe" title="reda.containers.TDIP.TDIP.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_reciprocal_errors</span></code>(self[, key])</p></td>
-<td><p>Compute reciprocal erros following LaBrecque et al.</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
 <td><p>Delete one or more measurements by index of the DataFrame.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code>(filename, group[, norrec, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code>(filename, group[, norrec, …])</p></td>
 <td><p>Save a dataset to a CRTomo-compatible .crt file</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, query[, inplace])</p></td>
 <td><p>Use a query statement to filter data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
 <td><p>Return True if container has multiple timesteps.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
-<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
-</tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
-<td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 TD importer</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
-<td><p>Syscal import</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>(self[, filename, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>(self[, filename, …])</p></td>
 <td><p>Plot decay curve</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>(self[, column, …])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
@@ -998,9 +1336,6 @@ meant to be inherited by the data containers</p>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.to_cr" title="reda.containers.TDIP.TDIP.to_cr"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_cr</span></code></a>(self)</p></td>
 <td><p>Convert container to a complex resistivity container, using the CPA-conversion.</p></td>
-</tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_ip</span></code>(self)</p></td>
-<td><p>Return of copy of the data inside a TDIP container</p></td>
 </tr>
 </tbody>
 </table>
@@ -1076,16 +1411,18 @@ of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-reda.containers.sEIT">
-<span id="reda-containers-seit-module"></span><h2>reda.containers.sEIT module<a class="headerlink" href="#module-reda.containers.sEIT" title="Permalink to this headline">¶</a></h2>
-<p>spectral Electrical Impedance Tomography (sEIT) container</p>
 <dl class="class">
-<dt id="reda.containers.sEIT.importers">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">importers</code><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="#reda.containers.ERT.ImportersBase" title="reda.containers.ERT.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ImportersBase</span></code></a></p>
-<p>This class provides wrappers for most of the importer functions, and is
-meant to be inherited by the data containers</p>
+<dt id="reda.containers.TDIP.TDIPImporters">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.TDIP.</code><code class="sig-name descname">TDIPImporters</code><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
+<p>This class provides wrappers for most of the importer functions and is
+meant to be inherited by the TDIP data container.</p>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<dl class="simple">
+<dt><code class="xref py py-obj docutils literal notranslate"><span class="pre">Exporters</span></code></dt><dd></dd>
+</dl>
+</div>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
 <colgroup>
@@ -1093,43 +1430,42 @@ meant to be inherited by the data containers</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.importers.import_crtomo" title="reda.containers.sEIT.importers.import_crtomo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo</span></code></a>(self, directory[, …])</p></td>
-<td><p>CRTomo importerLoad sEIT data from data directory.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="reda.containers.TDIP.TDIPImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>MPT DAS 1 TD importer</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.importers.import_eit_fzj" title="reda.containers.sEIT.importers.import_eit_fzj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code></a>(self, filename, configfile[, …])</p></td>
-<td><p>EIT data import for FZJ Medusa systems</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.importers.import_sip256c" title="reda.containers.sEIT.importers.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(self, filename[, settings, …])</p></td>
-<td><p>Radic SIP256c data import</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="reda.containers.TDIP.TDIPImporters.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<td><p>Syscal import</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="method">
-<dt id="reda.containers.sEIT.importers.import_crtomo">
-<code class="sig-name descname">import_crtomo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">directory</em>, <em class="sig-param">frequency_file='frequencies.dat'</em>, <em class="sig-param">data_prefix='volt_'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_crtomo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_crtomo" title="Permalink to this definition">¶</a></dt>
-<dd><p>CRTomo importerLoad sEIT data from data directory. This function loads data previously
-exported from reda using reda.exporters.crtomo.write_files_to_directory</p>
-<dl class="field-list simple">
+<dt id="reda.containers.TDIP.TDIPImporters.import_mpt">
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<dd><p>MPT DAS 1 TD importer</p>
+<blockquote>
+<div><dl class="simple">
+<dt>timestep: int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></dt><dd><p>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</p>
+</dd>
+</dl>
+<p>Reads a time domain MPT DAS-1 data file (.Data) and prepares information</p>
+</div></blockquote>
+<p>in pandas DataFrame for further processing.</p>
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>directory</strong><span class="classifier">string</span></dt><dd><p>input directory</p>
-</dd>
-<dt><strong>frequency_file</strong><span class="classifier">string, optional</span></dt><dd><p>file (located in directory) that contains the frequencies</p>
-</dd>
-<dt><strong>data_prefix: string, optional</strong></dt><dd><p>for each frequency a corresponding data file must be present in the
-input directory. Frequencies and files are matched by sorting the
-frequencies AND the filenames, retrieved using glob and the
-data_prefix</p>
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input file</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame suitable for the sEIT container</p>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
 </dd>
-<dt><strong>electrodes</strong><span class="classifier">None</span></dt><dd><p>No electrode data is imported</p>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
 </dd>
-<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography data is imported</p>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
 </dd>
 </dl>
 </dd>
@@ -1137,23 +1473,73 @@ data_prefix</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="reda.containers.sEIT.importers.import_eit_fzj">
-<code class="sig-name descname">import_eit_fzj</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">configfile</em>, <em class="sig-param">correction_file=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
-<dd><p>EIT data import for FZJ Medusa systems</p>
+<dt id="reda.containers.TDIP.TDIPImporters.import_syscal_bin">
+<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Syscal import</p>
+<blockquote>
+<div><dl class="simple">
+<dt>timestep: int or <a class="reference external" href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">datetime.datetime</span></code></a></dt><dd><p>if provided use this value to set the ‘timestep’ column of the
+produced dataframe. Default: 0</p>
+</dd>
+</dl>
+<p>Read a .bin file generated by the IRIS Instruments Syscal Pro System and</p>
+</div></blockquote>
+<p>return a curated dataframe for further processing. This dataframe contains
+only information currently deemed important. Use the function
+reda.importers.iris_syscal_pro_binary._import_bin to extract ALL
+information from a given .bin file.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>path to input filename</p>
+</dd>
+<dt><strong>x0</strong><span class="classifier">float, optional</span></dt><dd><p>position of first electrode. If not given, then use the smallest
+x-position in the data as the first electrode.</p>
+</dd>
+<dt><strong>spacing</strong><span class="classifier">float</span></dt><dd><p>electrode spacing. This is important if not all electrodes are used in
+a given measurement setup. If not given, then the smallest distance
+between electrodes is assumed to be the electrode spacing. Naturally,
+this requires measurements (or injections) with subsequent electrodes.</p>
+</dd>
+<dt><strong>reciprocals</strong><span class="classifier">int, optional</span></dt><dd><p>if provided, then assume that this is a reciprocal measurements where
+only the electrode cables were switched. The provided number N is
+treated as the maximum electrode number, and denotations are renamed
+according to the equation <span class="math notranslate nohighlight">\(X_n = N - (X_a - 1)\)</span></p>
+</dd>
+<dt><strong>check_meas_nums</strong><span class="classifier">bool</span></dt><dd><p>if True, then check that the measurement numbers are consecutive. Don’t
+return data after a jump to smaller measurement numbers (this usually
+indicates that more data points were downloaded than are part of a
+specific measurement. Default: True</p>
+</dd>
+<dt><strong>skip_rows</strong><span class="classifier">int</span></dt><dd><p>Ignore this number of rows at the beginning, e.g., because they were
+inadvertently imported from an earlier measurement. Default: 0</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains electrode positions (None at the moment)</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography information is contained in the text files, so we always
+return None</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
-<dl class="method">
-<dt id="reda.containers.sEIT.importers.import_sip256c">
-<code class="sig-name descname">import_sip256c</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">settings=None</em>, <em class="sig-param">reciprocal=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#importers.import_sip256c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.importers.import_sip256c" title="Permalink to this definition">¶</a></dt>
-<dd><p>Radic SIP256c data import</p>
 </dd></dl>
 
-</dd></dl>
-
+</div>
+<div class="section" id="module-reda.containers.sEIT">
+<span id="reda-containers-seit-module"></span><h2>reda.containers.sEIT module<a class="headerlink" href="#module-reda.containers.sEIT" title="Permalink to this headline">¶</a></h2>
+<p>spectral Electrical Impedance Tomography (sEIT) container</p>
 <dl class="class">
 <dt id="reda.containers.sEIT.sEIT">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">sEIT</code><span class="sig-paren">(</span><em class="sig-param">dataframe=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference internal" href="reda.main.html#reda.main.logger.LoggingClass" title="reda.main.logger.LoggingClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.main.logger.LoggingClass</span></code></a>, <a class="reference internal" href="#reda.containers.sEIT.importers" title="reda.containers.sEIT.importers"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.sEIT.importers</span></code></a></p>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.sEIT.sEITImporters" title="reda.containers.sEIT.sEITImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.sEIT.sEITImporters</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
@@ -1182,6 +1568,18 @@ data_prefix</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.compute_K_analytical" title="reda.containers.sEIT.sEIT.compute_K_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code></a>(self, spacing)</p></td>
 <td><p>Assuming an equal electrode spacing, compute the K-factor over a homogeneous half-space.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
+<td><p>Delete one or more measurements by index of the DataFrame.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_bert</span></code>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_crtomo</span></code>(filename, group[, norrec, …])</p></td>
+<td><p>Save a dataset to a CRTomo-compatible .crt file</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(data, electrodes, filename)</p></td>
+<td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.export_to_crtomo_multi_frequency" title="reda.containers.sEIT.sEIT.export_to_crtomo_multi_frequency"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_crtomo_multi_frequency</span></code></a>(self, directory)</p></td>
 <td><p>Export the sEIT data into data files that can be read by CRTomo.</p></td>
 </tr>
@@ -1206,6 +1604,12 @@ data_prefix</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.get_spectrum" title="reda.containers.sEIT.sEIT.get_spectrum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spectrum</span></code></a>(self[, nr_id, abmn, plot_filename])</p></td>
 <td><p>Return a spectrum and its reciprocal counter part, if present in the dataset.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
+<td><p>Return True if container has multiple timesteps.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a histogram of one data column</p></td>
+</tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo</span></code>(self, directory[, …])</p></td>
 <td><p>CRTomo importerLoad sEIT data from data directory.</p></td>
 </tr>
@@ -1224,6 +1628,12 @@ data_prefix</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_pseudosections" title="reda.containers.sEIT.sEIT.plot_pseudosections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_pseudosections</span></code></a>(self, column[, …])</p></td>
 <td><p>Create a multi-plot with one pseudosection for each frequency.</p></td>
 </tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>(self[, column, …])</p></td>
+<td><p>Plot a pseudosection of the given column.</p></td>
+</tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(self, query[, inplace])</p></td>
 <td><p>State what you want to keep</p></td>
 </tr>
@@ -1236,9 +1646,15 @@ data_prefix</p>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(self, subset, filter[, inplace])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
+<td><p>Apply a filter to subset of the data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(self, subset, filter[, inplace])</p></td>
 <td><p><p class="rubric">Examples</p>
 </p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
+<td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
 </tr>
 </tbody>
 </table>
@@ -1406,7 +1822,7 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 <p>Affected parameters, at the moment, are:</p>
 <blockquote>
 <div><ul class="simple">
-<li><p>K</p></li>
+<li><p>k</p></li>
 <li><p>r</p></li>
 <li><p>Vmn</p></li>
 <li><p>Zt</p></li>
@@ -1584,6 +2000,76 @@ generated Figure object</p>
 <span class="p">)</span>
 </pre></div>
 </div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.containers.sEIT.sEITImporters">
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">sEITImporters</code><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
+<p>This class provides wrappers for most of the importer functions, and is
+meant to be inherited by the data containers</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEITImporters.import_crtomo" title="reda.containers.sEIT.sEITImporters.import_crtomo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo</span></code></a>(self, directory[, …])</p></td>
+<td><p>CRTomo importerLoad sEIT data from data directory.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="reda.containers.sEIT.sEITImporters.import_eit_fzj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code></a>(self, filename, configfile[, …])</p></td>
+<td><p>EIT data import for FZJ Medusa systems</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="reda.containers.sEIT.sEITImporters.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(self, filename[, settings, …])</p></td>
+<td><p>Radic SIP256c data import</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.containers.sEIT.sEITImporters.import_crtomo">
+<code class="sig-name descname">import_crtomo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">directory</em>, <em class="sig-param">frequency_file='frequencies.dat'</em>, <em class="sig-param">data_prefix='volt_'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_crtomo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_crtomo" title="Permalink to this definition">¶</a></dt>
+<dd><p>CRTomo importerLoad sEIT data from data directory. This function loads data previously
+exported from reda using reda.exporters.crtomo.write_files_to_directory</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>directory</strong><span class="classifier">string</span></dt><dd><p>input directory</p>
+</dd>
+<dt><strong>frequency_file</strong><span class="classifier">string, optional</span></dt><dd><p>file (located in directory) that contains the frequencies</p>
+</dd>
+<dt><strong>data_prefix: string, optional</strong></dt><dd><p>for each frequency a corresponding data file must be present in the
+input directory. Frequencies and files are matched by sorting the
+frequencies AND the filenames, retrieved using glob and the
+data_prefix</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>A DataFrame suitable for the sEIT container</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier">None</span></dt><dd><p>No electrode data is imported</p>
+</dd>
+<dt><strong>topography</strong><span class="classifier">None</span></dt><dd><p>No topography data is imported</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEITImporters.import_eit_fzj">
+<code class="sig-name descname">import_eit_fzj</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">configfile</em>, <em class="sig-param">correction_file=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
+<dd><p>EIT data import for FZJ Medusa systems</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEITImporters.import_sip256c">
+<code class="sig-name descname">import_sip256c</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">settings=None</em>, <em class="sig-param">reciprocal=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_sip256c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="Permalink to this definition">¶</a></dt>
+<dd><p>Radic SIP256c data import</p>
 </dd></dl>
 
 </dd></dl>

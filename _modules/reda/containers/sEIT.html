@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -113,22 +115,22 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="c1"># import functools</span>
 <span class="kn">import</span> <span class="nn">os</span>
-<span class="kn">from</span> <span class="nn">numbers</span> <span class="k">import</span> <span class="n">Number</span>
+<span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">reda.main.logger</span> <span class="k">import</span> <span class="n">LoggingClass</span>
-<span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="k">import</span> <span class="n">ImportersBase</span>
+<span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">ImportersBase</span>
+<span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">BaseContainer</span>
 <span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
 <span class="kn">import</span> <span class="nn">reda.importers.radic_sip256c</span> <span class="k">as</span> <span class="nn">reda_sip256c</span>
 <span class="kn">import</span> <span class="nn">reda.importers.crtomo</span> <span class="k">as</span> <span class="nn">reda_crtomo_exporter</span>
 <span class="kn">import</span> <span class="nn">reda.utils.eit_fzj_utils</span> <span class="k">as</span> <span class="nn">eit_fzj_utils</span>
 <span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geometric_factors</span>
-<span class="kn">from</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">import</span> <span class="n">fix_sign_with_K</span>
+<span class="kn">from</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="kn">import</span> <span class="n">fix_sign_with_K</span>
 <span class="kn">import</span> <span class="nn">reda.eis.plots</span> <span class="k">as</span> <span class="nn">eis_plot</span>
 
-<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="k">import</span> <span class="n">append_doc_of</span>
-<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="k">import</span> <span class="n">LogDataChanges</span>
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">append_doc_of</span>
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">LogDataChanges</span>
 
 <span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">exporter_crtomo</span>
 
@@ -139,11 +141,11 @@
 <span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
 
 
-<div class="viewcode-block" id="importers"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers">[docs]</a><span class="k">class</span> <span class="nc">importers</span><span class="p">(</span><span class="n">ImportersBase</span><span class="p">):</span>
+<div class="viewcode-block" id="sEITImporters"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEITImporters">[docs]</a><span class="k">class</span> <span class="nc">sEITImporters</span><span class="p">(</span><span class="n">ImportersBase</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the importer functions, and is</span>
 <span class="sd">    meant to be inherited by the data containers</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-<div class="viewcode-block" id="importers.import_crtomo"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_crtomo">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_crtomo_exporter</span><span class="o">.</span><span class="n">load_seit_data</span><span class="p">)</span>
+<div class="viewcode-block" id="sEITImporters.import_crtomo"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEITImporters.import_crtomo">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_crtomo_exporter</span><span class="o">.</span><span class="n">load_seit_data</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">import_crtomo</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">directory</span><span class="p">,</span> <span class="n">frequency_file</span><span class="o">=</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span>
                       <span class="n">data_prefix</span><span class="o">=</span><span class="s1">&#39;volt_&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;CRTomo importer&quot;&quot;&quot;</span>
@@ -162,7 +164,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="importers.import_sip256c"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_sip256c">[docs]</a>    <span class="k">def</span> <span class="nf">import_sip256c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="sEITImporters.import_sip256c"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEITImporters.import_sip256c">[docs]</a>    <span class="k">def</span> <span class="nf">import_sip256c</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Radic SIP256c data import&quot;&quot;&quot;</span>
         <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
@@ -181,7 +183,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="importers.import_eit_fzj"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.importers.import_eit_fzj">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit_fzj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+<div class="viewcode-block" id="sEITImporters.import_eit_fzj"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEITImporters.import_eit_fzj">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit_fzj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;EIT data import for FZJ Medusa systems&quot;&quot;&quot;</span>
         <span class="c1"># we get not electrode positions (dummy1) and no topography data</span>
@@ -203,28 +205,30 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df_emd</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="sEIT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT">[docs]</a><span class="k">class</span> <span class="nc">sEIT</span><span class="p">(</span><span class="n">LoggingClass</span><span class="p">,</span> <span class="n">importers</span><span class="p">):</span>
+<div class="viewcode-block" id="sEIT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT">[docs]</a><span class="k">class</span> <span class="nc">sEIT</span><span class="p">(</span><span class="n">BaseContainer</span><span class="p">,</span> <span class="n">sEITImporters</span><span class="p">):</span>
 
-    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
         <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
         <span class="c1"># normal data (or full data, if reciprocals are not sorted</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">dataframe</span>
-
-        <span class="bp">self</span><span class="o">.</span><span class="n">required_data_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]</span>
-
-<div class="viewcode-block" id="sEIT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required columns</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">required_columns</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;a&#39;</span><span class="p">,</span>
             <span class="s1">&#39;b&#39;</span><span class="p">,</span>
             <span class="s1">&#39;m&#39;</span><span class="p">,</span>
             <span class="s1">&#39;n&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;r&#39;</span><span class="p">,</span>
-        <span class="p">)</span>
-        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="n">required_columns</span><span class="p">:</span>
+            <span class="s1">&#39;r&#39;</span>
+            <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rpha&#39;</span>
+            <span class="s1">&#39;Zt&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
+
+<div class="viewcode-block" id="sEIT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
                 <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Required column not in dataframe: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                     <span class="n">column</span>

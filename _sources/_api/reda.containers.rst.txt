@@ -9,6 +9,14 @@ reda.containers package
 Submodules
 ----------
 
+reda.containers.BaseContainer module
+------------------------------------
+
+.. automodule:: reda.containers.BaseContainer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 reda.containers.CR module
 -------------------------
 

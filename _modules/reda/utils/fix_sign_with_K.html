@@ -78,6 +78,8 @@
 <ul>
   <li><a href="../../../index.html">Documentation overview</a><ul>
   <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
   </ul></li>
   </ul></li>
 </ul>
@@ -116,13 +118,13 @@
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 
-<div class="viewcode-block" id="fix_sign_with_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K">[docs]</a><span class="k">def</span> <span class="nf">fix_sign_with_K</span><span class="p">(</span><span class="n">dataframe</span><span class="p">):</span>
+<div class="viewcode-block" id="fix_sign_with_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K">[docs]</a><span class="k">def</span> <span class="nf">fix_sign_with_K</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Swap electrode denotations so that geometrical (K) factors become</span>
 <span class="sd">    positive. Also, swap signs of all parameters affected by this process.</span>
 
 <span class="sd">    Affected parameters, at the moment, are:</span>
 
-<span class="sd">        * K</span>
+<span class="sd">        * k</span>
 <span class="sd">        * r</span>
 <span class="sd">        * Vmn</span>
 <span class="sd">        * Zt</span>
@@ -149,45 +151,55 @@
         <span class="c1"># nothing to do here</span>
         <span class="k">return</span> <span class="n">dataframe</span>
 
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_negative</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
+    <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+        <span class="n">indices_negative</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">])</span>
+    <span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="c1"># switch potential electrodes</span>
     <span class="n">indices_switched_ab</span> <span class="o">=</span> <span class="n">indices_negative</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
     <span class="n">indices_switched_mn</span> <span class="o">=</span> <span class="n">indices_negative</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">])</span>
 
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_switched_ab</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span>
-        <span class="n">indices_switched_ab</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">]</span>
+    <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+        <span class="n">indices_switched_ab</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">])</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+        <span class="n">indices_switched_ab</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">])</span>
     <span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
-    <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_switched_mn</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span>
-        <span class="n">indices_switched_mn</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">]</span>
+    <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+        <span class="n">indices_switched_mn</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">])</span>
+    <span class="p">]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+        <span class="n">indices_switched_mn</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">])</span>
     <span class="p">]</span><span class="o">.</span><span class="n">values</span>
 
     <span class="c1"># switch sign of voltages</span>
     <span class="k">if</span> <span class="s1">&#39;Vmn&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
-        <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_negative</span><span class="p">,</span> <span class="s1">&#39;Vmn&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+            <span class="n">indices_negative</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="s1">&#39;Vmn&#39;</span><span class="p">])</span>
+        <span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">if</span> <span class="s1">&#39;Zt&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
-        <span class="n">dataframe</span><span class="o">.</span><span class="n">ix</span><span class="p">[</span><span class="n">indices_negative</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">dataframe</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span>
+            <span class="n">indices_negative</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_indexer</span><span class="p">([</span><span class="s1">&#39;Zt&#39;</span><span class="p">])</span>
+        <span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="k">if</span> <span class="s1">&#39;rho_a&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
+        <span class="c1"># recompute to make sure the signs are consistent</span>
         <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
 
     <span class="k">if</span> <span class="s1">&#39;Mx&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
         <span class="c1"># for now we have to loop here because we store numpy arrays within</span>
         <span class="c1"># each cell</span>
         <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">indices_negative</span><span class="p">)[</span><span class="mi">0</span><span class="p">]:</span>
-            <span class="c1"># import IPython</span>
-            <span class="c1"># IPython.embed()</span>
-            <span class="c1"># exit()</span>
             <span class="n">dataframe</span><span class="o">.</span><span class="n">at</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="s1">&#39;Mx&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
 
     <span class="c1"># recompute phase values</span>
     <span class="k">if</span> <span class="s1">&#39;rpha&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
         <span class="k">if</span> <span class="s1">&#39;Zt&#39;</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
-            <span class="c1"># recompute</span>
+            <span class="c1"># recompute phase values</span>
             <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
-                <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">imag</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span>
+                <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">dataframe</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">])</span>
             <span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
