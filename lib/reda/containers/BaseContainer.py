@@ -197,13 +197,13 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             )
         return result
 
-    def compute_K_analytical(self, spacing):
+    def compute_K_analytical(self, spacing, **kwargs):
         """Compute geometrical factors over the homogeneous half-space with a
         constant electrode spacing
         """
-        K = redaK.compute_K_analytical(self.data, spacing=spacing)
-        self.data = redaK.apply_K(self.data, K)
-        redafixK.fix_sign_with_K(self.data)
+        K = redaK.compute_K_analytical(self.data, spacing=spacing, **kwargs)
+        self.data = redaK.apply_K(self.data, K, **kwargs)
+        redafixK.fix_sign_with_K(self.data, **kwargs)
 
     def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
         """Plot a pseudosection of the given column. Note that this function
