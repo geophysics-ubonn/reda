@@ -272,12 +272,14 @@ class ERT(LoggingClass, Importers, Exporters):
             The query string to be evaluated. Is directly provided to
             pandas.DataFrame.query
         inplace : bool
-            if True, change the container dataframe in place (defaults to True)
+            if True, change the container dataframe in place (defaults to
+            True). Otherwise, return a new ERT container which contains the
+            filtered data.
 
         Returns
         -------
-        result : :py:class:`pandas.DataFrame`
-            DataFrame that contains the result of the filter application
+        result : :py:class:`reda.ERT`
+            ERT container with filtered data
 
         """
         with LogDataChanges(self, filter_action='filter', filter_query=query):
@@ -285,7 +287,10 @@ class ERT(LoggingClass, Importers, Exporters):
                 'not ({0})'.format(query),
                 inplace=inplace,
             )
-        return result
+        if inplace:
+            return self
+        else:
+            return ERT(data=result)
 
     def compute_K_analytical(self, spacing):
         """Compute geometrical factors over the homogeneous half-space with a
