@@ -288,5 +288,8 @@ def apply_correction_factors(df, correction_data):
         for col in ('r', 'Zt', 'Vmn', 'rho_a'):
             if col in df.columns:
                 df.iloc[item, df.columns.get_loc(col)] *= factor
+        # add the correction factor to the DataFrame
+        if 'corr_fac' not in df.columns:
+            df['corr_fac'] = np.nan
         df.iloc[item, df.columns.get_loc('corr_fac')] = factor
     return df, corr_data
