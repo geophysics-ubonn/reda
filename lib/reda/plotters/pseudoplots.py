@@ -1,10 +1,9 @@
+import reda.main.units as units
 import numpy as np
 import pandas as pd
 
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
-
-import reda.main.units as units
 
 
 def _get_unique_identifiers(ee_raw):
@@ -306,6 +305,228 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     )
     ax.set_ylabel(
         kwargs.get('ylabel', 'voltage dipoles')
+    )
+
+    return fig, ax, cb
+
+
+def plot_pseudosection_type3(dataobj, column, **kwargs):
+    """Create a pseudosection plot of type 3.
+
+    For a given measurement data set, create plots that graphically show
+    the data in a 2D pseudoplot. Hereby, x and y coordinates (pseudodistance
+    and pseudodepth) in the plot are determined by the corresponding measurement
+    configuration (after Roy and Apparao (1971) and Dahlin and Zou (2005)).
+
+    This type of rawdata plot can plot any type of measurement
+    configurations, i.e., it is not restricted to certain types of
+    configurations such as Dipole-dipole or Wenner configurations.
+
+    Parameters
+    ----------
+
+    dataobj: ERT container|pandas.DataFrame
+        Container or DataFrame with data to plot
+    column: string
+        Column key to plot
+    ax: matplotlib.Axes object, optional
+        axes object to plot to. If not provided, a new figure and axes
+        object will be created and returned
+    nocb: bool, optional
+        if set to False, don't plot the colorbar
+    cblabel: string, optional
+        label for the colorbar
+    cbmin: float, optional
+        colorbar minimum
+    cbmax: float, optional
+        colorbar maximum
+    xlabel: string, optional
+        xlabel for the plot
+    ylabel: string, optional
+        ylabel for the plot
+    do_not_saturate: bool, optional
+        if set to True, then values outside the colorbar range will not
+        saturate with the respective limit colors. Instead, values lower
+        than the CB are colored "cyan" and vaues above the CB limit are
+        colored "red"
+    markersize: float, optional
+        size of plotted data points
+    spacing: float, optional
+        if set to True, the actual electrode spacing is used for the computation
+        of the pseudodepth and -distance; default value is 1 m
+    log10: bool, optional
+        if set to True, plot the log10 values of the provided data
+
+    Returns
+    -------
+    fig:
+        figure object
+    ax:
+        axes object
+    cb:
+        colorbar object
+
+    Examples
+    --------
+
+    You can just supply a pandas.DataFrame to the plot function:
+
+    .. plot::
+        :include-source:
+
+        import numpy as np
+        configs = np.array((
+            (1, 2, 4, 3),
+            (1, 2, 5, 4),
+            (1, 2, 6, 5),
+            (2, 3, 5, 4),
+            (2, 3, 6, 5),
+            (3, 4, 6, 5),
+        ))
+        measurements = np.random.random(configs.shape[0])
+        import pandas as pd
+        df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n'])
+        df['measurements'] = measurements
+
+        from reda.plotters.pseudoplots import plot_pseudosection_type3
+        fig, ax, cb = plot_pseudosection_type3(
+           dataobj=df,
+           column='measurements',
+        )
+
+    You can also supply axes to plot to:
+
+    .. plot::
+        :include-source:
+
+        import numpy as np
+        configs = np.array((
+            (1, 2, 4, 3),
+            (1, 2, 5, 4),
+            (1, 2, 6, 5),
+            (2, 3, 5, 4),
+            (2, 3, 6, 5),
+            (3, 4, 6, 5),
+        ))
+        measurements = np.random.random(configs.shape[0])
+        measurements2 = np.random.random(configs.shape[0])
+
+        import pandas as pd
+        df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n'])
+        df['measurements'] = measurements
+        df['measurements2'] = measurements2
+
+        from reda.plotters.pseudoplots import plot_pseudosection_type3
+
+        fig, axes = plt.subplots(1, 2)
+
+        plot_pseudosection_type3(
+            df,
+            column='measurements',
+            ax=axes[0],
+            cblabel='this label',
+            xlabel='xlabel',
+            ylabel='ylabel',
+        )
+        plot_pseudosection_type3(
+            df,
+            column='measurements2',
+            ax=axes[1],
+            cblabel='measurement 2',
+            xlabel='xlabel',
+            ylabel='ylabel',
+        )
+        fig.tight_layout()
+    """
+    if isinstance(dataobj, pd.DataFrame):
+        df = dataobj
+    else:
+        df = dataobj.data
+
+    c = (df[['a', 'b', 'm', 'n']]-1)*kwargs.get('spacing', 1)
+
+    # define the configuration
+    # check on first quadrupole and assume the config is consistent
+    # dipole-dipole
+    if (sum(np.greater([c.a[0], c.b[0]], [c.m[0], c.n[0]])) == 2 or
+            sum(np.greater([c.m[0], c.n[0]], [c.a[0], c.b[0]])) == 2):
+        c.loc[:, 'xp'] = ((c.a + c.b)/2 + (c.n + c.m)/2) / 2
+        c.loc[:, 'zp'] = -((c.n - c.b)*0.195)  # Roi and Appparo
+    # multiple gradient
+    else:
+        xmn = (c.m + c.n) / 2
+        c.loc[:, 'xp'] = xmn
+        c.loc[:, 'zp'] = np.abs(np.min([xmn-c.a, c.b-xmn], axis=0) / 3)*-1  # Dahlin, Zhou
+
+    # extract the values to plot
+    c['plot_values'] = df[column]
+
+    if kwargs.get('log10', False):
+        c['plot_values'] = np.log10(c['plot_values'])
+
+    # sort after the pseudodistance and pseudodepth
+    pseudocoords = c[['xp', 'zp', 'plot_values']].sort_values(by=['xp', 'zp'])
+
+    ax = kwargs.get('ax', None)
+    if ax is None:
+        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 10 / 2.54))
+    fig = ax.get_figure()
+
+    cmap = mpl.cm.get_cmap('viridis')
+    if kwargs.get('do_not_saturate', False):
+        cmap.set_over(
+            color='r'
+        )
+        cmap.set_under(
+            color='c'
+        )
+
+    pseudocoords['markersize'] = kwargs.get('markersize', 10)
+    # check for same pseudocoordinates
+    common_pscoords = pseudocoords[['xp', 'zp']].drop_duplicates()
+
+    def smallify(markersize_array):
+        """
+        For a given array of markersizes (with same size) compute a stepwise
+        decreasing factor for the plotting size based on the length of the array.
+        """
+        nelems = len(markersize_array)
+        factor = 1/nelems
+        return markersize_array*np.flip(np.arange(1, nelems+1)*factor)
+
+    # check for overlapping points and adjust markersize accordingly
+    for _, common in common_pscoords.iterrows():
+        subset = pseudocoords.query('xp == {} and zp == {}'.format(common.xp, common.zp))
+        pseudocoords.loc[subset.index, 'markersize'] = smallify(
+            pseudocoords.loc[subset.index, 'markersize'].values)
+
+    scat = ax.scatter(pseudocoords['xp'], pseudocoords['zp'],
+                      s=pseudocoords['markersize'],
+                      c=pseudocoords['plot_values'],
+                      marker='o',
+                      edgecolors='none',
+                      cmap=cmap,
+                      vmin=kwargs.get('cbmin', None),
+                      vmax=kwargs.get('cbmax', None),
+                      alpha=1)
+
+    ax.set_xlim([np.min(c['xp'])-1*kwargs.get('spacing', 1),
+                 np.max(c['xp'])+1*kwargs.get('spacing', 1)])
+    ax.set_ylim([np.min(c['zp'])-1*kwargs.get('spacing', 1),
+                 np.max(c['zp'])+1*kwargs.get('spacing', 1)])
+
+    cb = None
+    if not kwargs.get('nocb', False):
+        cb = fig.colorbar(scat, ax=ax)
+        cb.set_label(
+            kwargs.get('cblabel', units.get_label(column))
+        )
+
+    ax.set_xlabel(
+        kwargs.get('xlabel', 'Pseudodistance')
+    )
+    ax.set_ylabel(
+        kwargs.get('ylabel', 'Pseudodepth')
     )
 
     return fig, ax, cb

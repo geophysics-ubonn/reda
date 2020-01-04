@@ -10,7 +10,7 @@ def test_init():
 
 
 def test_init_with_data():
-    """test initializing an ERT container an provide good data"""
+    """test initializing an ERT container and provide good data"""
     df = pd.DataFrame(
         [
             # normals

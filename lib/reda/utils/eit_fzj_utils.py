@@ -128,7 +128,7 @@ def apply_correction_factors(df, correction_file):
         # apply correction factor
         for col in ('r', 'Zt', 'Vmn', 'rho_a'):
             if col in df.columns:
-                df.ix[item, col] *= factor
+                df.iloc[item, df.columns.get_loc(col)] *= factor
     return corr_data
 
 

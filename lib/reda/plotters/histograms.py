@@ -87,7 +87,6 @@ def plot_histograms(ertobj, keys, **kwargs):
         subdata = subdata[np.isfinite(subdata)]
 
         nr_of_bins = kwargs.get('nr_of_bins', _get_nr_bins(subdata.size))
-        print('nr of  bins', nr_of_bins)
 
         subdata_log10_with_nan = np.log10(subdata[subdata > 0])
         subdata_log10 = subdata_log10_with_nan[~np.isnan(

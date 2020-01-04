@@ -5,6 +5,8 @@
 [![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/geophysics-ubonn/try-reda/master?filepath=reda_test.ipynb)
 
+*Latest release: 0.1.4 (14. November 2019)*
+
 REDA is a scientific Python library for reproducible geoelectrical data
 analysis. It aims to provide a unified interface for common and advanced data
 processing steps while bridging the gap between a multitude of geoelectric
@@ -34,11 +36,15 @@ Install current development version from git:
 git clone https://github.com/geophysics-ubonn/reda
 cd reda
 
-# 1) Installing dependencies with pip
+# 1) Install dependencies with pip
 pip install -r requirements.txt
-# 2) Installing dependencies with conda
+# 2) or Install dependencies with conda
 conda install --file requirements.txt
 
+pip install .
+
+# alternatively: (note that this produce problems if multiple versions of reda
+#  are installed)
 python setup.py install
 ```
 
@@ -56,7 +62,8 @@ We look forward to any type of contributions:
 * documentation help
 * issuing bug reports
 
-If in doubt, use the gitter chat to contact us (click the Gitter badge above to join the chat).
+If in doubt, use the gitter chat to contact us (click the Gitter badge above to
+join the chat).
 
 <!--
 Electrical geophysical data is increasingly measured in time-lapse setups,

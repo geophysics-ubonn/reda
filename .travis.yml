@@ -5,6 +5,7 @@ language: python
 python:
   - "3.5"
   - "3.6"
+  - "3.7"
 
 install:
   - sudo apt-get update -qq
@@ -36,4 +37,4 @@ deploy:
   verbose: true
   on:
     branch: master
-    condition: $TRAVIS_PYTHON_VERSION = "3.6"
+    condition: $TRAVIS_PYTHON_VERSION = "3.7"

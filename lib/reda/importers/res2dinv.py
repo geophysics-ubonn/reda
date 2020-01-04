@@ -104,13 +104,11 @@ def _read_general_type(content, settings):
         ),
     )
 
-    # print('xxx', df.ix[10, ['x1', 'x2', 'x3', 'x4']])
     # for now ignore the z coordinates and compute simple electrode denotations
     df['a'] = df['x1'] / header['unit_spacing'] + 1
     df['b'] = df['x2'] / header['unit_spacing'] + 1
     df['m'] = df['x3'] / header['unit_spacing'] + 1
     df['n'] = df['x4'] / header['unit_spacing'] + 1
-    # print('abmn', df.ix[10, ['a', 'b', 'm', 'n']])
 
     # for now assume value in resistances
     df['r'] = df['value']

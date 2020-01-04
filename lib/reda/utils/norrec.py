@@ -240,9 +240,6 @@ def assign_norrec_to_df(df):
         inplace=True
     )
     return df_new
-    import IPython
-    IPython.embed()
-    exit()
 
     df_new[['a', 'b', 'm', 'n', 'id_y', 'norrec_y']]
     # x.iloc[[0, 1978], :]

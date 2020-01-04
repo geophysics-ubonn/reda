@@ -1,5 +1,11 @@
 """
-set up the logger for EDF
+Set up some logging facilities for reda
+
+We differentiate multiple logging types/targets
+
+1) general logging (using the python logging module)
+2) a data processing log (which also uses the logging module), available via
+   the container-inherent .logger object
 """
 import logging
 import datetime
@@ -72,5 +78,3 @@ class LoggingClass(object):
                     )
         print('--- Data Journal End ---')
         print('')
-
-
