@@ -201,7 +201,7 @@ def compute_quadrupoles(df_emd, config_file):
 
     if quadpole_list:
         dfn = pd.concat(quadpole_list)
-        Rsign = np.sign(dfn['Zt'].real)
+        Rsign = np.sign(np.real(dfn['Zt']))
         dfn['r'] = Rsign * np.abs(dfn['Zt'])
         dfn['Vmn'] = dfn['r'] * dfn['Iab']
         dfn['rpha'] = np.arctan2(
