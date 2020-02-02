@@ -1,5 +1,5 @@
 sphinx
 numpydoc
-Pillow
 sphinx-gallery
 crtomo-tools
+pillow < 7.0
