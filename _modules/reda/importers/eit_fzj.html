@@ -314,7 +314,7 @@
 
     <span class="k">if</span> <span class="n">quadpole_list</span><span class="p">:</span>
         <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">quadpole_list</span><span class="p">)</span>
-        <span class="n">Rsign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+        <span class="n">Rsign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]))</span>
         <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rsign</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">])</span>
         <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Vmn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span>
         <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
@@ -401,6 +401,9 @@
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vmn&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">col</span><span class="p">)]</span> <span class="o">*=</span> <span class="n">factor</span>
+        <span class="c1"># add the correction factor to the DataFrame</span>
+        <span class="k">if</span> <span class="s1">&#39;corr_fac&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;corr_fac&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
         <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="s1">&#39;corr_fac&#39;</span><span class="p">)]</span> <span class="o">=</span> <span class="n">factor</span>
     <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="n">corr_data</span></div>
 </pre></div>
@@ -415,7 +418,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

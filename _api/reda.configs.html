@@ -370,7 +370,7 @@ config instance</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.configs.configManager</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.configs.configManager</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">config</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">config</span><span class="o">.</span><span class="n">gen_dipole_dipole</span><span class="p">(</span><span class="n">skipc</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">array([[ 1,  4,  5,  8],</span>
@@ -417,7 +417,7 @@ append to configurations.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cfgs</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">cfgs</span> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">nor</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">gen_dipole_dipole</span><span class="p">(</span><span class="n">skipc</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">rec</span> <span class="o">=</span> <span class="n">cfgs</span><span class="o">.</span><span class="n">gen_reciprocals</span><span class="p">(</span><span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cfgs</span><span class="o">.</span><span class="n">configs</span><span class="p">)</span>
@@ -713,7 +713,7 @@ is given, then the phase column is filled with zeros</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

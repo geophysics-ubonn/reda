@@ -295,12 +295,14 @@
 <span class="sd">            The query string to be evaluated. Is directly provided to</span>
 <span class="sd">            pandas.DataFrame.query</span>
 <span class="sd">        inplace : bool</span>
-<span class="sd">            if True, change the container dataframe in place (defaults to True)</span>
+<span class="sd">            if True, change the container dataframe in place (defaults to</span>
+<span class="sd">            True). Otherwise, return a new ERT container which contains the</span>
+<span class="sd">            filtered data.</span>
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        result : :py:class:`pandas.DataFrame`</span>
-<span class="sd">            DataFrame that contains the result of the filter application</span>
+<span class="sd">        result : :py:class:`reda.ERT`</span>
+<span class="sd">            ERT container with filtered data</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="n">filter_query</span><span class="o">=</span><span class="n">query</span><span class="p">):</span>
@@ -308,7 +310,11 @@
                 <span class="s1">&#39;not (</span><span class="si">{0}</span><span class="s1">)&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query</span><span class="p">),</span>
                 <span class="n">inplace</span><span class="o">=</span><span class="n">inplace</span><span class="p">,</span>
             <span class="p">)</span>
-        <span class="k">return</span> <span class="n">result</span></div>
+        <span class="k">if</span> <span class="n">inplace</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># create a new object of this type (e.g., ERT, IP, TDIP, ...)</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__class__</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">result</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="BaseContainer.compute_K_analytical"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.compute_K_analytical">[docs]</a>    <span class="k">def</span> <span class="nf">compute_K_analytical</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spacing</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Compute geometrical factors over the homogeneous half-space with a</span>
@@ -436,7 +442,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

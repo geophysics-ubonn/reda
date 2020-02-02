@@ -933,24 +933,13 @@ improved in the future
     :class: sphx-glr-single-img
 
 
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:142: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-      return val.real
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:180: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
-      return val.imag
-
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  41.467 seconds)
+   **Total running time of the script:** ( 0 minutes  34.106 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

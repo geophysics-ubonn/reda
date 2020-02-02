@@ -238,13 +238,15 @@ to be removed!</p>
 <dt><strong>query</strong><span class="classifier">string</span></dt><dd><p>The query string to be evaluated. Is directly provided to
 pandas.DataFrame.query</p>
 </dd>
-<dt><strong>inplace</strong><span class="classifier">bool</span></dt><dd><p>if True, change the container dataframe in place (defaults to True)</p>
+<dt><strong>inplace</strong><span class="classifier">bool</span></dt><dd><p>if True, change the container dataframe in place (defaults to
+True). Otherwise, return a new ERT container which contains the
+filtered data.</p>
 </dd>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>result</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame that contains the result of the filter application</p>
+<dt><strong>result</strong><span class="classifier"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.ERT</span></code></span></dt><dd><p>ERT container with filtered data</p>
 </dd>
 </dl>
 </dd>
@@ -815,7 +817,7 @@ to:</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">norrec</span><span class="o">.</span><span class="n">get_test_df</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([</span>
@@ -2088,7 +2090,7 @@ data_prefix</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

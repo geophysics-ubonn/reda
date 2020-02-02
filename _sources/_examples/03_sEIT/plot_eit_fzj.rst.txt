@@ -72,11 +72,7 @@ Initialize an sEIT container
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_version_2017.py:273: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-      sign_re = df['Zt'].real / np.abs(df['Zt'].real)
     constructing four-point measurements
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-      Rsign = np.sign(dfn['Zt'].real)
     generating ids
     assigning ids
     Summary:
@@ -152,17 +148,6 @@ Compute geometric factors
 
 
 
-
-.. rst-class:: sphx-glr-script-out
-
- Out:
-
- .. code-block:: none
-
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:180: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
-      return val.imag
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:142: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-      return val.real
 
 
 .. only:: builder_html
@@ -574,7 +559,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f91edb644a8>
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fc571c35208>
             a   b   m   n     frequency         r        rpha
     749    10  29  15  34      0.100000  7.356375   -5.205543
     2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -724,7 +709,7 @@ alternative
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 1 minutes  1.966 seconds)
+   **Total running time of the script:** ( 0 minutes  45.693 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_eit_fzj.py:

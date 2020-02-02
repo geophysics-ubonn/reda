@@ -85,11 +85,7 @@ imports
     5  10  11   9  12        1450           10               20
     6  13  16  14  15        1660           10               20
     7  14  15  13  16        1660           10               20
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_version_2013.py:109: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-      sign_re = df['Zt'].real / np.abs(df['Zt'].real)
     constructing four-point measurements
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-      Rsign = np.sign(dfn['Zt'].real)
     generating ids
     assigning ids
     Summary:

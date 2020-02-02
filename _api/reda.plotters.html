@@ -154,7 +154,7 @@ heuristic.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.plotters</span> <span class="kn">import</span> <span class="n">plot_histograms</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.plotters</span> <span class="kn">import</span> <span class="n">plot_histograms</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing</span> <span class="kn">import</span> <span class="n">ERTContainer</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">figs_dict</span> <span class="o">=</span> <span class="n">plot_histograms</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">,</span> <span class="n">merge</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 <span class="go">Generating histogram plot for key: r</span>
@@ -219,13 +219,13 @@ to the secondary dimension grouping keys</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.histograms</span> <span class="k">as</span> <span class="nn">RH</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dim_name</span><span class="p">,</span> <span class="n">fig</span> <span class="o">=</span> <span class="n">RH</span><span class="o">.</span><span class="n">plot_histograms_extra_dims</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="p">])</span>
 </pre></div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.histograms</span> <span class="k">as</span> <span class="nn">RH</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dim_name</span><span class="p">,</span> <span class="n">fig</span> <span class="o">=</span> <span class="n">RH</span><span class="o">.</span><span class="n">plot_histograms_extra_dims</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">])</span>
@@ -242,7 +242,7 @@ to the secondary dimension grouping keys</p>
 <code class="sig-prename descclassname">reda.plotters.plots2d.</code><code class="sig-name descname">matplot</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">colorbar=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/plots2d.html#matplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.plots2d.matplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot x, y, z as expected with correct axis labels.</p>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.plotters</span> <span class="kn">import</span> <span class="n">matplot</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
@@ -399,7 +399,7 @@ etc)</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.testing.containers</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">testing</span><span class="o">.</span><span class="n">containers</span><span class="o">.</span><span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">PS</span><span class="o">.</span><span class="n">plot_ps_extra</span><span class="p">(</span><span class="n">ert</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
@@ -547,7 +547,7 @@ colored “red”</p>
 <div class="figure align-default">
 <img alt="../_images/reda-plotters-5.png" src="../_images/reda-plotters-5.png" />
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="kn">import</span> <span class="n">ERTContainer_nr</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="kn">import</span> <span class="n">ERTContainer_nr</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">ps</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">cb</span> <span class="o">=</span> <span class="n">ps</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span><span class="p">(</span><span class="n">ERTContainer_nr</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
 </pre></div>
@@ -733,7 +733,7 @@ required columns.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

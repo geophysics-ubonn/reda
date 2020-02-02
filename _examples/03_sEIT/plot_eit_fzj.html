@@ -155,11 +155,7 @@ function. This is explained below.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_version_2017.py:273: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-  sign_re = df[&#39;Zt&#39;].real / np.abs(df[&#39;Zt&#39;].real)
-constructing four-point measurements
-/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/importers/eit_fzj.py:204: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-  Rsign = np.sign(dfn[&#39;Zt&#39;].real)
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
 generating ids
 assigning ids
 Summary:
@@ -211,13 +207,6 @@ max       21.0000     40.0000     40.000000     40.000000
 <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">redaK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
 <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">redaK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <a href="http://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a><span class="p">)</span>
 <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">redafixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
-</pre></div>
-</div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:180: FutureWarning: `imag` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.imag(ser.to_numpy())` or `ser.to_numpy().imag`.
-  return val.imag
-/home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/numpy/lib/type_check.py:142: FutureWarning: `real` is deprecated and will be removed in a future version. To eliminate this warning for a Series `ser`, use `np.real(ser.to_numpy())` or `ser.to_numpy().real`.
-  return val.real
 </pre></div>
 </div>
 <div>
@@ -597,7 +586,7 @@ assigning ids
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f91edb644a8&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fc571c35208&gt;
         a   b   m   n     frequency         r        rpha
 749    10  29  15  34      0.100000  7.356375   -5.205543
 2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -686,7 +675,7 @@ this context manager executes all code within the given directory</p>
     <span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 1 minutes  1.966 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  45.693 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-eit-fzj-py">
 <div class="sphx-glr-download docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/4ca5c66a6f19ab045d57d723a8c23b55/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></p>
@@ -709,7 +698,7 @@ this context manager executes all code within the given directory</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
