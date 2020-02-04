@@ -43,11 +43,10 @@ conda install --file requirements.txt
 
 pip install .
 
-# alternatively: (note that this produce problems if multiple versions of reda
-#  are installed)
+# alternatively: (can lead to versioning problems if multiple (development)
+versions are installed.
 python setup.py install
 ```
-
 ### Documentation
 
 An online version of the docs can be found here:
