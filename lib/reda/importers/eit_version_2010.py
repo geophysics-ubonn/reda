@@ -81,7 +81,7 @@ def _average_swapped_current_injections(df):
     if len(delete_slices) == 0:
         X_clean = X
     else:
-        X_clean = np.delete(X, np.vstack(delete_slices), axis=0)
+        X_clean = np.delete(X, np.hstack(delete_slices), axis=0)
 
     df_clean = pd.DataFrame(X_clean, columns=columns)
     # for col in columns:
