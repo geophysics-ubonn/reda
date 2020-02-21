@@ -41,7 +41,7 @@ def _average_swapped_current_injections(df):
 
     delete_slices = []
 
-    # these are the columns that we workon (and that are retained)
+    # these are the columns that we work on (and that are retained)
     columns = [
         'frequency', 'a', 'b', 'p',
         'Z1', 'Z2', 'Z3',
@@ -74,10 +74,15 @@ def _average_swapped_current_injections(df):
         X[index_a, 4:10] = (A[:, 4:10] - B[:, 4:10]) / 2.0
         X[index_a, 10:16] = (A[:, 10:16] + B[:, 10:16]) / 2.0
 
+        # delete the second pair
         delete_slices.append(
             index_b
         )
-    X_clean = np.delete(X, np.vstack(delete_slices), axis=0)
+    if len(delete_slices) == 0:
+        X_clean = X
+    else:
+        X_clean = np.delete(X, np.vstack(delete_slices), axis=0)
+
     df_clean = pd.DataFrame(X_clean, columns=columns)
     # for col in columns:
     #   # df_clean[col] = df_clean[col].astype(dtypes[col])
