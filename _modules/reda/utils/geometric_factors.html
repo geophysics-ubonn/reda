@@ -124,6 +124,21 @@
 <div class="viewcode-block" id="apply_K"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K">[docs]</a><span class="k">def</span> <span class="nf">apply_K</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">k</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Apply the geometric factors to the dataset and compute (apparent)</span>
 <span class="sd">    resistivities/conductivities</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        The dataframe containing the data to which geometric factors shall be</span>
+<span class="sd">        applied</span>
+<span class="sd">    k : numpy.ndarray</span>
+<span class="sd">        The geometric factors</span>
+<span class="sd">    **kwargs: {}</span>
+<span class="sd">        No kwargs at the moment</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        The data with geometric factors applied</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="s1">&#39;k&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
         <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">k</span>
@@ -201,6 +216,11 @@
 <span class="sd">    spacing : float or numpy.ndarray</span>
 <span class="sd">        distance between electrodes. If array, then these are the x-coordinates</span>
 <span class="sd">        of the electrodes</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    K : numpy.ndarray</span>
+<span class="sd">        The geometric factors corresponding to the provided configurations</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
         <span class="n">configs</span> <span class="o">=</span> <span class="n">dataframe</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>

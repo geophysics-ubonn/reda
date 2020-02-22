@@ -412,6 +412,25 @@ rcParams variable.</p>
 <code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">apply_K</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">k</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#apply_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.apply_K" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the geometric factors to the dataset and compute (apparent)
 resistivities/conductivities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>The dataframe containing the data to which geometric factors shall be
+applied</p>
+</dd>
+<dt><strong>k</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The geometric factors</p>
+</dd>
+<dt><strong>**kwargs: {}</strong></dt><dd><p>No kwargs at the moment</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>The data with geometric factors applied</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="function">
@@ -428,6 +447,12 @@ Nx4 arrray.</p>
 </dd>
 <dt><strong>spacing</strong><span class="classifier">float or numpy.ndarray</span></dt><dd><p>distance between electrodes. If array, then these are the x-coordinates
 of the electrodes</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>K</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The geometric factors corresponding to the provided configurations</p>
 </dd>
 </dl>
 </dd>
