@@ -11,6 +11,21 @@ import reda
 def apply_K(df, k, **kwargs):
     """Apply the geometric factors to the dataset and compute (apparent)
     resistivities/conductivities
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The dataframe containing the data to which geometric factors shall be
+        applied
+    k : numpy.ndarray
+        The geometric factors
+    **kwargs: {}
+        No kwargs at the moment
+
+    Returns
+    -------
+    df : pandas.DataFrame
+        The data with geometric factors applied
     """
     if 'k' not in df.columns:
         df['k'] = k
@@ -88,6 +103,11 @@ def compute_K_analytical(dataframe, spacing, **kwargs):
     spacing : float or numpy.ndarray
         distance between electrodes. If array, then these are the x-coordinates
         of the electrodes
+
+    Returns
+    -------
+    K : numpy.ndarray
+        The geometric factors corresponding to the provided configurations
     """
     if isinstance(dataframe, pd.DataFrame):
         configs = dataframe[['a', 'b', 'm', 'n']].values
