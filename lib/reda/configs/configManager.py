@@ -91,17 +91,21 @@ class ConfigManager(object):
         ...     (10010, 30004),
         ... ))
         >>> abmn = config._crmod_to_abmn(crmod_configs)
-        >>> print(abmn)
-        [[ 2  1  3  4]
-         [10  1  4  3]]
+        >>> print(abmn)   # doctest: +NORMALIZE_WHITESPACE
+        [[ 1  2  4  3]
+         [ 1 10  3  4]]
 
         """
-        A = configs[:, 0] % 1e4
-        B = np.floor(configs[:, 0] / 1e4).astype(int)
-        M = configs[:, 1] % 1e4
-        N = np.floor(configs[:, 1] / 1e4).astype(int)
-        ABMN = np.hstack((A[:, np.newaxis], B[:, np.newaxis], M[:, np.newaxis],
-                          N[:, np.newaxis])).astype(int)
+        A = np.floor(configs[:, 0] / 1e4).astype(int)
+        B = (configs[:, 0] % 1e4).astype(int)
+        M = np.floor(configs[:, 1] / 1e4).astype(int)
+        N = (configs[:, 1] % 1e4).astype(int)
+        ABMN = np.hstack((
+            A[:, np.newaxis],
+            B[:, np.newaxis],
+            M[:, np.newaxis],
+            N[:, np.newaxis]
+        )).astype(int)
         return ABMN
 
     def load_configs(self, filename):
