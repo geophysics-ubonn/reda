@@ -435,7 +435,7 @@
     <span class="c1"># average of Z1-Z3</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Z1&#39;</span><span class="p">,</span> <span class="s1">&#39;Z2&#39;</span><span class="p">,</span> <span class="s1">&#39;Z3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="c1"># we need to keep the sign of the real part</span>
-    <span class="n">sign_re</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+    <span class="n">sign_re</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">])</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]))</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">sign_re</span>
     <span class="c1"># df[&#39;Zt_std&#39;] = np.std(df[[&#39;Z1&#39;, &#39;Z2&#39;, &#39;Z3&#39;]].values, axis=1)</span>
 
@@ -461,7 +461,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>
