@@ -68,7 +68,7 @@ sphinx_gallery_conf = {
         'reda': None,
         # External python modules use their documentation websites
         # 'matplotlib': 'https://matplotlib.org',
-        'numpy': 'http://docs.scipy.org/doc/numpy',
+        'numpy': 'https://docs.scipy.org/doc/numpy',
         'pandas': 'https://pandas.pydata.org/pandas-docs/stable/'
     },
 
