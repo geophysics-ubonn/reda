@@ -12,6 +12,11 @@ def convert_electrode(i):
 
 
 def _extract_md(mat, **kwargs):
+    if 'multiplexer_group' not in kwargs:
+        raise Exception(
+            'This version of the EIT analysis requires the '
+            'multiplexer_group parameter!'
+        )
     md = np.atleast_1d(mat['MD'].squeeze())
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
@@ -171,6 +176,11 @@ def _extract_emd(mat, **kwargs):
     mat: matlab-imported struct
 
     """
+    if 'multiplexer_group' not in kwargs:
+        raise Exception(
+            'This version of the EIT analysis requires the '
+            'multiplexer_group parameter!'
+        )
     emd = np.atleast_1d(mat['EMD'].squeeze())
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
