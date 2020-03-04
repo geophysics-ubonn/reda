@@ -201,7 +201,12 @@ def check_resistor_board_measurements(data_file, reference_data_file=None,
     for nr, row in enumerate(ref_data.values):
         print(nr, row)
         key = tuple(row[0:4].astype(int))
-        item = seit.abmn.get_group(key)
+        group_abmn = seit.abmn
+        if key not in group_abmn.keys:
+            continue
+        else:
+            item = seit.abmn.get_group(key)
+
         expected_r = row[4]
         allowed_variation = row[5]
         # expected_r_diff = row[6]
