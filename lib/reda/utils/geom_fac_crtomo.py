@@ -11,11 +11,11 @@ import pandas as pd
 
 from reda.utils import opt_import
 
-CRbinaries = opt_import("crtomo.binaries")
-CRcfg = opt_import("crtomo.cfg")
 
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
+CRbinaries = opt_import("crtomo.binaries")
+CRcfg = opt_import("crtomo.cfg")
 
 
 def _write_config_file(filename, dataframe):
@@ -79,11 +79,11 @@ def compute_K(dataframe, settings, keep_dir=False):
     """
     Parameters
     ----------
-    dataframe: pandas.DataFrame
+    dataframe : pandas.DataFrame
         dataframe that contains the data
-    settings: dict
+    settings : dict
         with required settings, see below
-    keep_dir: path
+    keep_dir : path
         if not None, copy modeling dir here
 
 
@@ -161,14 +161,29 @@ def compute_K(dataframe, settings, keep_dir=False):
             cfg['2D'] = 1
 
         cfg.write_to_file('exe/crmod.cfg')
+
+        # print crmod.cfg for information
         subprocess.call('cat exe/crmod.cfg', shell=True)
 
         config_orig = _write_config_file('config/config.dat', dataframe)
 
         os.chdir('exe')
         binary = CRbinaries.get('CRMod')
-        subprocess.call(binary, shell=True)
+        output = subprocess.check_output(
+            binary, shell=True, stderr=subprocess.STDOUT
+        )
+        # I couldn't bring the subprocess-function to recognize a crashed CRMod
+        # call, so do it the hard way and parse the output
+        return_value = int(
+            output[output.find('STOP'.encode('utf-8')) + 4:].strip()
+        )
         os.chdir('..')
+
+        if return_value != 0:
+            print(output)
+            print('ERROR: There was an error with the call to CRMod')
+            print('The crashed tomodir can be found here: {}'.format(invdir))
+            exit()
 
         # read in results
         modeled_resistances = np.loadtxt(
