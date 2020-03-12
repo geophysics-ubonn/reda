@@ -215,6 +215,7 @@ towards its reciprocal counterpart:</p>
 <span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">2</span>   <span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">1</span>    <span class="mi">20</span>
 </pre></div>
 </div>
+<p>test frequency: 1Hz</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
@@ -261,6 +262,28 @@ Weigand and Kemna, 2017, Biogeosciences</p>
 <dd class="field-even"><dl class="simple">
 <dt><strong>correction_factors</strong><span class="classifier">Nx5 :py:class.`numpy.ndarray`</span></dt><dd><p>measurement configurations and correction factors
 (a,b,m,n,correction_factor)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.eit_fzj_utils.get_md_data_2018a">
+<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">get_md_data_2018a</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#get_md_data_2018a"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.get_md_data_2018a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the md data of a given FZJ EIT 2018a LI calibration data file.</p>
+<p>This function should probably go into the importers, but for now will
+reside here until it can be properly integrated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>Path to eit_data.mat file generated for an LI-‘calibration’ run</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>md</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>MD data</p>
 </dd>
 </dl>
 </dd>

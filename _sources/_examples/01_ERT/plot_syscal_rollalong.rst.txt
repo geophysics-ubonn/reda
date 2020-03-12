@@ -53,7 +53,7 @@ create an ERT container and import first dataset
     assigning ids
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7fd5069b9048>, <matplotlib.colorbar.Colorbar object at 0x7fd4ecedcd30>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7fee18fd3550>, <matplotlib.colorbar.Colorbar object at 0x7fee097d87f0>)
 
 
 
@@ -90,7 +90,7 @@ create an ERT container and import second dataset
     assigning ids
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7fd4ed14c588>, <matplotlib.colorbar.Colorbar object at 0x7fd4ecfe5048>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7fee09856198>, <matplotlib.colorbar.Colorbar object at 0x7fee095594a8>)
 
 
 

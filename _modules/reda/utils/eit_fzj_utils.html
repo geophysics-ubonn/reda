@@ -116,10 +116,12 @@
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
 
 <span class="kn">import</span> <span class="nn">reda</span>
 <span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geometric_factors</span>
 <span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">fixK</span>
+<span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
 
 
 <div class="viewcode-block" id="compute_correction_factors"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.compute_correction_factors">[docs]</a><span class="k">def</span> <span class="nf">compute_correction_factors</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">true_conductivity</span><span class="p">,</span> <span class="n">elem_file</span><span class="p">,</span> <span class="n">elec_file</span><span class="p">):</span>
@@ -271,6 +273,8 @@
 <span class="sd">        1   2   4   3   1000    1    20</span>
 <span class="sd">        4   3   2   1   1000    1    20</span>
 
+<span class="sd">    test frequency: 1Hz</span>
+
 <span class="sd">    Parameters</span>
 <span class="sd">    ----------</span>
 <span class="sd">    data_file : string</span>
@@ -386,6 +390,29 @@
         <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
         <span class="c1"># fig.savefig(&#39;out.pdf&#39;)</span>
         <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="get_md_data_2018a"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.get_md_data_2018a">[docs]</a><span class="k">def</span> <span class="nf">get_md_data_2018a</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the md data of a given FZJ EIT 2018a LI calibration data file.</span>
+
+<span class="sd">    This function should probably go into the importers, but for now will</span>
+<span class="sd">    reside here until it can be properly integrated.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Path to eit_data.mat file generated for an LI-&#39;calibration&#39; run</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    md : pandas.DataFrame</span>
+<span class="sd">        MD data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s1">&#39;eit_data.mat&#39;</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">importer</span> <span class="o">=</span> <span class="n">eit_fzj</span><span class="o">.</span><span class="n">mat_version_importers</span><span class="p">[</span><span class="s1">&#39;FZJ-EZ-2018A&#39;</span><span class="p">]</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_md</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">multiplexer_group</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">md</span></div>
 </pre></div>
 
           </div>
