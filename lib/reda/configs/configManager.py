@@ -540,12 +540,12 @@ class ConfigManager(object):
 
         Parameters
         ----------
-        configs: list or numpy.ndarray
+        configs : list or numpy.ndarray
             list or array of configurations
 
         Returns
         -------
-        configs: Kx4 numpy.ndarray
+        configs : Kx4 numpy.ndarray
             array holding all configurations of this instance
         """
         if len(configs) == 0:
@@ -556,6 +556,10 @@ class ConfigManager(object):
         else:
             configs = np.atleast_2d(configs)
             self.configs = np.vstack((self.configs, configs))
+
+        # make sure we store the configs as ints
+        self.configs = self.configs.astype(int)
+
         return self.configs
 
     def split_into_normal_and_reciprocal(self, pad=False,
