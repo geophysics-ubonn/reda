@@ -3,10 +3,12 @@ import numpy as np
 import pandas as pd
 
 import pylab as plt
+import scipy.io as sio
 
 import reda
 import reda.utils.geometric_factors as geometric_factors
 import reda.utils.fix_sign_with_K as fixK
+import reda.importers.eit_fzj as eit_fzj
 
 
 def compute_correction_factors(data, true_conductivity, elem_file, elec_file):
@@ -158,6 +160,8 @@ def check_resistor_board_measurements(data_file, reference_data_file=None,
         1   2   4   3   1000    1    20
         4   3   2   1   1000    1    20
 
+    test frequency: 1Hz
+
     Parameters
     ----------
     data_file : string
@@ -273,3 +277,26 @@ def check_resistor_board_measurements(data_file, reference_data_file=None,
         fig.tight_layout()
         # fig.savefig('out.pdf')
         return fig
+
+
+def get_md_data_2018a(filename):
+    """Return the md data of a given FZJ EIT 2018a LI calibration data file.
+
+    This function should probably go into the importers, but for now will
+    reside here until it can be properly integrated.
+
+    Parameters
+    ----------
+    filename : str
+        Path to eit_data.mat file generated for an LI-'calibration' run
+
+    Returns
+    -------
+    md : pandas.DataFrame
+        MD data
+
+    """
+    mat = sio.loadmat('eit_data.mat', squeeze_me=True)
+    importer = eit_fzj.mat_version_importers['FZJ-EZ-2018A']
+    md = importer._extract_md(mat, multiplexer_group=1)
+    return md
