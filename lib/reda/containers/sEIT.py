@@ -1,4 +1,8 @@
 """spectral Electrical Impedance Tomography (sEIT) container
+
+This container holds multi-frequency (spectral) imaging data, that is multipl
+SIP/EIS spectra for different four-point spreads, usually used for subsequent
+tomographic analysis.
 """
 # import functools
 import os
@@ -114,7 +118,6 @@ class sEIT(BaseContainer, sEITImporters):
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
         """
-
         for column in self.required_columns:
             if column not in dataframe:
                 raise Exception('Required column not in dataframe: {0}'.format(
@@ -203,7 +206,7 @@ class sEIT(BaseContainer, sEITImporters):
 
         Parameters
         ----------
-        spacing: float
+        spacing : float
             Electrode spacing
 
         """
@@ -349,11 +352,21 @@ class sEIT(BaseContainer, sEITImporters):
         """Return a spectrum and its reciprocal counter part, if present in the
         dataset. Optimally, refer to the spectrum by its normal-reciprocal id.
 
+        If the timestep column is present, then return dictionaries for normal
+        and reciprocal data, with one sip_response object associated with each
+        timestep.
+
+        If the parameter plot_filename is specified, then plots will be created
+        using the SIP objects.
+        If multiple timesteps are present, then the parameter plot_filename
+        will be used as a template, and the timesteps will be appended for each
+        plot.
+
         Returns
         -------
-        spectrum_nor : :py:class:`reda.eis.plots.sip_response`
+        spectrum_nor : :py:class:`reda.eis.plots.sip_response`|dict|{}
             Normal spectrum. None if no normal spectrum is available
-        spectrum_rec : :py:class:`reda.eis.plots.sip_response` or None
+        spectrum_rec : :py:class:`reda.eis.plots.sip_response`|dict|{}
             Reciprocal spectrum. None if no reciprocal spectrum is available
         fig : :py:class:`matplotlib.Figure.Figure` , optional
             Figure object (only if plot_filename is set)
@@ -381,33 +394,69 @@ class sEIT(BaseContainer, sEITImporters):
         ).sort_values('frequency')
 
         # create spectrum objects
-        spectrum_nor = None
-        spectrum_rec = None
+        spectrum_nor = {}
+        spectrum_rec = {}
 
         if subdata_nor.shape[0] > 0:
-            spectrum_nor = eis_plot.sip_response(
-                frequencies=subdata_nor['frequency'].values,
-                rmag=subdata_nor['r'],
-                rpha=subdata_nor['rpha'],
-            )
+            # create a spectrum for each timestep
+            if 'timestep' in subdata.columns:
+                g_nor_ts = subdata_nor.groupby('timestep')
+            else:
+                # create a dummy group
+                g_nor_ts = subdata_nor.groupby('id')
+
+            spectrum_nor = {}
+            for timestep, item in g_nor_ts:
+                spectrum_nor[timestep] = eis_plot.sip_response(
+                    frequencies=item['frequency'].values,
+                    rmag=item['r'],
+                    rpha=item['rpha'],
+                )
+
         if subdata_rec.shape[0] > 0:
-            spectrum_rec = eis_plot.sip_response(
-                frequencies=subdata_rec['frequency'].values,
-                rmag=subdata_rec['r'],
-                rpha=subdata_rec['rpha'],
-            )
+            if 'timestep' in subdata.columns:
+                g_rec_ts = subdata_rec.groupby('timestep')
+            else:
+                g_rec_ts = subdata_rec.groupby('id')
+
+            spectrum_rec = {}
+            for timestep, item in g_rec_ts:
+                spectrum_rec[timestep] = eis_plot.sip_response(
+                    frequencies=item['frequency'].values,
+                    rmag=item['r'],
+                    rpha=item['rpha'],
+                )
+
+        def _reduce_dicts(dictA, dictB):
+            if len(dictA) <= 1 and len(dictB) <= 1:
+                # reduce
+                return [*dictA.values()][0], [*dictB.values()][0]
+            else:
+                # do nothing
+                return dictA, dictB
+
         if plot_filename is not None:
-            if spectrum_nor is not None:
-                fig = spectrum_nor.plot(
-                    plot_filename,
-                    reciprocal=spectrum_rec,
+            ending = plot_filename[-4:]
+
+            all_timesteps = {
+                k for d in (spectrum_nor, spectrum_rec) for k in d.keys()}
+            pairs = {
+                k: [d.get(k, None) for d in (
+                    spectrum_nor, spectrum_rec
+                )] for k in all_timesteps
+            }
+            for timestep, pair in pairs.items():
+                fig = pair[0].plot(
+                    plot_filename[:-4] + '_ts_{}'.format(timestep) + ending,
+                    reciprocal=pair[1],
                     return_fig=True,
                     title='a: {} b: {} m: {}: n: {}'.format(
                         *subdata_nor[['a', 'b', 'm', 'n']].values[0, :]
                     )
                 )
-                return spectrum_nor, spectrum_rec, fig
-        return spectrum_nor, spectrum_rec
+            return [*_reduce_dicts(spectrum_nor, spectrum_rec), fig]
+
+        return _reduce_dicts(spectrum_nor, spectrum_rec)
 
     def plot_all_spectra(self, outdir):
         r"""This is a convenience function to plot ALL spectra currently
