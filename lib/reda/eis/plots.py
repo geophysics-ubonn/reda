@@ -9,7 +9,7 @@ plt, mpl = reda.utils.mpl.setup()
 
 
 class sip_response():
-    """Hold one SIP spectrum and return it in various formats
+    """Hold one EIS/SIP spectrum and return it in various formats
     """
     def __init__(self, frequencies, rcomplex=None, ccomplex=None,
                  rmag=None, rpha=None):
@@ -70,7 +70,7 @@ class sip_response():
         self.cre_cim = np.vstack((self.cre, self.cim)).T
 
     def to_one_line(self, array):
-        """flatten the array to one dimension using the 'F' (Fortran) style and
+        """Flatten the array to one dimension using the 'F' (Fortran) style and
         return a 2D array
         """
         return np.atleast_2d(array.flatten(order='F'))
@@ -113,26 +113,26 @@ class sip_response():
 
         Parameters
         ----------
-        title: string|None, optional
+        title : str|None, optional
             Title of plot
-        reciprocal: sip_response object|None, optional
+        reciprocal : sip_response object|None, optional
             If provided, plot this spectrum with another color
-        limits: dict|None, optional
+        limits : dict|None, optional
             used to set ylimits of the plots. Possible entries: rmag_min,
             rmag_max, rpha_min, rpha_max, cre_min, cre_max, cim_min, cim_max
-        dtype: string, optional
+        dtype : str, optional
             Possible values: [rho|R]. Determines the label types. 'rho':
                 resistivity/conductivity, 'r': resistance/conductance
-        label_nor:
+        label_nor : str
             label for normal data (default: "normal")
-        label_rec:
+        label_rec : str
             label for reciprocal data (default: "reciprocal")
 
         Returns
         -------
-        fig: figure object
+        fig : figure object
             the generated matplotlib figure
-        axes: list
+        axes : list
             matplotlib axes objects
         """
         if limits is None:
@@ -253,28 +253,28 @@ class sip_response():
 
         Parameters
         ----------
-        filename: string
+        filename : str
             Output filename. Include the ending to specify the filetype
             (usually .pdf or .png)
-        title: string, optional
+        title : string, optional
             Title for the plot
-        reciprocal: :class:`reda.eis.plots.sip_response`, optional
+        reciprocal : :class:`reda.eis.plots.sip_response`, optional
             If another :class:`reda.eis.plots.sip_response` object is provided
             here, use this as the reciprocal spectrum.
-        limits: dict, optional
+        limits : dict, optional
             A dictionary which contains plot limits. See code example below.
-        dtype: string, optional
+        dtype : string, optional
             Determines if the data plotted included geometric factors ('rho')
             or not ('r'). Default: 'rho'
-        return_fig: bool, optional
+        return_fig : bool, optional
             If True, then do not delete the figure object after saving to file
             and return the figure object. Default: False
-        **kwargs: dict
+        **kwargs : dict
             kwargs is piped through to the _plot function
 
         Returns
         -------
-        fig: :class:`matplotlib.Figure`
+        fig : :class:`matplotlib.Figure`
             The figure object. Only returned if return_fig is set to True
 
         Examples
