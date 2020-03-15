@@ -79,8 +79,12 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
         sole parameter and expect a Nx4 numpy.ndarray as return value
     return_3p : bool, optional
         also return 3P data
-    **kwargs : dict, optional
-        all other parameters will be handled down to the extract functions
+
+    Keyword Arguments
+    -----------------
+    multiplexer_group : int|None, optional
+        For the multiplexer system (version 2018a) the multiplexer group MUST
+        be specified to import data. This is a number between 1 and 4.
 
     Returns
     -------
@@ -121,6 +125,38 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
         return data_emd_4p, data_md_raw, data_emd_3p
     else:
         return data_emd_4p, data_md_raw
+
+
+def get_md_data(filename, **kwargs):
+    """Import data and return the MD (i.e., injection) data
+
+    Parameters
+    ----------
+    filename : string (usually: eit_data_mnu0.mat)
+        filename of matlab file
+
+    Keyword Arguments
+    -----------------
+    multiplexer_group : int|None, optional
+        For the multiplexer system (version 2018a) the multiplexer group MUST
+        be specified to import data. This is a number between 1 and 4.
+
+    Returns
+    -------
+    data_md_raw : pandas.DataFrame|None
+        MD data (sometimes this data is not imported, then we return None here)
+    """
+    if not os.path.isfile(filename):
+        print('File not found: {}'.format(filename))
+        exit()
+    version = _get_file_version(filename)
+    importer = mat_version_importers.get(version, None)
+    if importer is not None:
+        mat = sio.loadmat(filename, squeeze_me=True)
+        data_md_raw = importer._extract_md(mat, **kwargs)
+        return data_md_raw
+    else:
+        raise Exception('emmt_pp version not found: {}'.format(version))
 
 
 @enable_result_transforms
@@ -187,6 +223,7 @@ def compute_quadrupoles(df_emd, config_file):
             'Il',
             'Zg',
             'Iab',
+            'Ileakage',
         ]
 
         df4 = pd.DataFrame()
