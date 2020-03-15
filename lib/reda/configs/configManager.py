@@ -738,7 +738,7 @@ class ConfigManager(object):
                 test_dipole_length = np.abs(injections[i, :][1] -
                                             injections[i, :][0])
                 if (only_same_dipole_length
-                        and test_dipole_length != dipole_length):
+                        and test_dipole_length != dipole_length):  # noqa: W503
                     continue
                 quadpole = np.array(
                     [injections[injection, :], injections[i, :]]).flatten()
@@ -747,11 +747,11 @@ class ConfigManager(object):
                     # Note: this could be wrong if electrode number are not
                     # ascending!
                     if (quadpole[2] > quadpole[0]
-                            and quadpole[2] < quadpole[1]):
+                            and quadpole[2] < quadpole[1]):  # noqa: W503
                         if not silent:
                             print('A - ignoring', quadpole)
                     elif (quadpole[3] > quadpole[0]
-                          and quadpole[3] < quadpole[1]):
+                          and quadpole[3] < quadpole[1]):  # noqa: W503
                         if not silent:
                             print('B - ignoring', quadpole)
                     else:
