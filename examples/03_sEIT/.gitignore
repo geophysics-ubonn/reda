@@ -2,6 +2,8 @@ crt_results/
 hists_raw/
 pseudosections_*.pdf
 *.pdf
+*.png
+*.jpg
 eit_fzj_resistor_check.*
 
 output_visualize_4d/

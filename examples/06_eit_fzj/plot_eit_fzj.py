@@ -81,6 +81,16 @@ quadpole_data = seit.abmn.get_group((10, 29, 15, 34))
 print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
 
 ##############################################################################
+# in a similar fashion, spectra can be extracted
+spec_nor, spec_rec = seit.get_spectrum(abmn=(10, 29, 15, 34))
+
+print(type(spec_nor))
+print(type(spec_rec))
+
+with reda.CreateEnterDirectory('output_eit_fzj'):
+    spec_nor.plot(filename='spectrum_10_29_15_34.png')
+
+##############################################################################
 # filter data
 seit.remove_frequencies(1e-3, 300)
 seit.query('rpha < 10')
@@ -120,7 +130,7 @@ seit.query('k < 400')
 ###############################################################################
 # Now export the data to CRTomo-compatible files
 # this context manager executes all code within the given directory
-with reda.CreateEnterDirectory('output_eit_fzj_check'):
+with reda.CreateEnterDirectory('output_eit_fzj'):
     import reda.exporters.crtomo as redaex
     redaex.write_files_to_directory(seit.data, 'crt_results', norrec='nor', )
 
@@ -129,7 +139,7 @@ with reda.CreateEnterDirectory('output_eit_fzj_check'):
 import reda.plotters.pseudoplots as PS
 import pylab as plt
 
-with reda.CreateEnterDirectory('output_eit_fzj_check'):
+with reda.CreateEnterDirectory('output_eit_fzj'):
     g = seit.data.groupby('frequency')
     fig, axes = plt.subplots(
         4, 2,
@@ -144,7 +154,7 @@ with reda.CreateEnterDirectory('output_eit_fzj_check'):
 
 ###############################################################################
 # alternative
-with reda.CreateEnterDirectory('output_eit_fzj_check'):
+with reda.CreateEnterDirectory('output_eit_fzj'):
     seit.plot_pseudosections(
         column='r', filename='pseudosections_eit40_v2.pdf'
     )
