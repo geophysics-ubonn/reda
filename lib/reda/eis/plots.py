@@ -1,7 +1,7 @@
 # *-* coding: utf-8 *-*
 import numpy as np
 
-from reda.eis.units import labels as sip_labels
+from reda.eis.units import get_label
 from reda.eis.convert import convert
 
 import reda.utils.mpl
@@ -245,6 +245,9 @@ class sip_response():
                 fontsize=7.0,
             )
 
+        fig.subplots_adjust(
+            top=0.9,
+        )
         return fig, axes
 
     def plot(self, filename, title=None, reciprocal=None, limits=None,
@@ -328,7 +331,7 @@ class multi_sip_response(object):
     @staticmethod
     def _is_correct_type(object):
         """check if we can work with this object """
-        if not isinstance(object, sip_response.sip_response):
+        if not isinstance(object, sip_response):
             raise Exception(
                 'can only add sip_reponse.sip_response objects')
 
@@ -338,7 +341,20 @@ class multi_sip_response(object):
             raise Exception('can only work with lists')
         [multi_sip_response._is_correct_type(x) for x in object_list]
 
-    def __init__(self, objects=None, labels=None):
+    def __init__(self, objects=None, labels=None, obj_dict=None):
+        """
+        Parameters
+        ----------
+        objects : list|None
+            If provided, assume the list to contain multiple spectra in the
+            form of sip_response objects
+        labels: list|None
+            If provided, use the string entries of this list as labels for the
+            spectra in objects. Must have the same length as objects, or None.
+        obj_dict: dict|None
+            Only works if objects is None. Use keys as labels, items as spectra
+
+        """
         # here we store the responses
         if objects is not None:
             multi_sip_response._check_list(objects)
@@ -347,6 +363,10 @@ class multi_sip_response(object):
                     'length of object list must match length of label list')
             self.objects = objects
             self.labels = labels
+        elif obj_dict is not None and isinstance(obj_dict, dict):
+            self.objects = list(obj_dict.values())
+            self._check_list(self.objects)
+            self.labels = list(obj_dict.keys())
         else:
             self.objects = []
             self.labels = []
@@ -385,7 +405,7 @@ class multi_sip_response(object):
         cmap = mpl.cm.get_cmap('viridis')
         SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
         colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        fig, ax = plt.subplots(1, 1, figsize=(12 / 2.54, 7 / 2.54))
         for nr, item in enumerate(self.objects):
             ax.semilogx(
                 item.frequencies,
@@ -394,7 +414,7 @@ class multi_sip_response(object):
                 color=colors[nr],
                 label=self.labels[nr],
             )
-        ax.set_ylabel(sip_labels.get_label('rmag', 'meas', 'mathml'))
+        ax.set_ylabel(get_label('rmag', 'meas', 'mathml'))
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylim(pmin, pmax)
         ax.set_xlim(*self.xlim)
@@ -402,8 +422,8 @@ class multi_sip_response(object):
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5)
-        fig.savefig(filename, dpi=300)
+        fig.subplots_adjust(bottom=0.3)
+        fig.savefig(filename, dpi=300, bbox_inches='tight')
         plt.close(fig)
 
     def plot_rpha(self, filename, pmin=None, pmax=None, title=None):
@@ -412,7 +432,7 @@ class multi_sip_response(object):
         cmap = mpl.cm.get_cmap('viridis')
         SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
         colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        fig, ax = plt.subplots(1, 1, figsize=(12 / 2.54, 7 / 2.54))
         for nr, item in enumerate(self.objects):
             ax.semilogx(
                 item.frequencies,
@@ -422,14 +442,14 @@ class multi_sip_response(object):
                 label=self.labels[nr],
             )
         ax.set_xlim(*self.xlim)
-        ax.set_ylabel(sip_labels.get_label('rpha', 'meas', 'mathml'))
+        ax.set_ylabel(get_label('rpha', 'meas', 'mathml'))
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylim(pmin, pmax)
         if title is not None:
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5)
+        fig.subplots_adjust(bottom=0.3)
         fig.savefig(filename, dpi=300)
         plt.close(fig)
 
@@ -438,7 +458,7 @@ class multi_sip_response(object):
         SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
         SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
         colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        fig, ax = plt.subplots(1, 1, figsize=(12 / 2.54, 7 / 2.54))
         for nr, item in enumerate(self.objects):
             ax.loglog(
                 item.frequencies,
@@ -447,7 +467,7 @@ class multi_sip_response(object):
                 color=colors[nr],
                 label=self.labels[nr],
             )
-        ax.set_ylabel(sip_labels.get_label('cim', 'meas', 'mathml'))
+        ax.set_ylabel(get_label('cim', 'meas', 'mathml'))
         ax.set_xlim(*self.xlim)
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylim(cmin, cmax)
@@ -455,7 +475,7 @@ class multi_sip_response(object):
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5)
+        fig.subplots_adjust(bottom=0.3)
         fig.savefig(filename, dpi=300)
         plt.close(fig)
 
@@ -464,7 +484,7 @@ class multi_sip_response(object):
         SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
         SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
         colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 15 / 2.54))
+        fig, ax = plt.subplots(1, 1, figsize=(12 / 2.54, 7 / 2.54))
         for nr, item in enumerate(self.objects):
             ax.loglog(
                 item.frequencies,
@@ -474,13 +494,13 @@ class multi_sip_response(object):
                 label=self.labels[nr],
             )
         ax.set_xlim(*self.xlim)
-        ax.set_ylabel(sip_labels.get_label('cre', 'meas', 'mathml'))
+        ax.set_ylabel(get_label('cre', 'meas', 'mathml'))
         ax.set_xlabel('frequency [Hz]')
         ax.set_ylim(cmin, cmax)
         if title is not None:
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.5, top=0.9)
+        fig.subplots_adjust(bottom=0.3, top=0.9)
         fig.savefig(filename, dpi=300)
         plt.close(fig)
