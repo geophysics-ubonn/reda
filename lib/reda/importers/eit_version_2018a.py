@@ -52,7 +52,7 @@ def _extract_md(mat, **kwargs):
                 fdata['As3'][:, 3, :].squeeze(),
                 fdata['Is3'],
                 fdata['Yl3'],
-
+                fdata['Il3'],
             ))
         )
         df.columns = (
@@ -93,6 +93,9 @@ def _extract_md(mat, **kwargs):
             'Yl1',
             'Yl2',
             'Yl3',
+            'Il1',
+            'Il2',
+            'Il3',
         )
 
         df['datetime'] = pd.to_datetime(df['datetime'])
@@ -149,7 +152,21 @@ def _extract_md(mat, **kwargs):
         df['Iab'] = np.abs(df['Is']) * 1e3
         df['Iab'] = df['Iab'].astype(float)
 
+        df['Il'] = np.mean(df[['Il1', 'Il2', 'Il3']].values, axis=1)
+        # take absolute value and convert to mA
+        df['Ileakage'] = np.abs(df['Il']) * 1e3
+        df['Ileakage'] = df['Ileakage'].astype(float)
+
         df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
+
+        for col in ('Il1', 'Il2', 'Il3'):
+            df[col] = df[col].astype(complex)
+
+        for col in ('multiplexer_group', ):
+            df[col] = df[col].astype(int)
+
+        for col in ('U0', ):
+            df[col] = df[col].astype(float)
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
         dfl.append(df)
@@ -157,7 +174,7 @@ def _extract_md(mat, **kwargs):
     df = pd.concat(dfl)
     # select multiplexer group
     multiplexer_group = kwargs.get('multiplexer_group', None)
-    if multiplexer_group in (1, 2, 3):
+    if multiplexer_group in (1, 2, 3, 4):
         print('selecting multiplexer group {}'.format(multiplexer_group))
         df.query('multiplexer_group == {}'.format(multiplexer_group),
                  inplace=True
@@ -344,5 +361,8 @@ def _extract_emd(mat, **kwargs):
     df['Iab'] = np.abs(df['Is']) * 1e3
     df['Iab'] = df['Iab'].astype(float)
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
+    # take absolute value and convert to mA
+    df['Ileakage'] = np.abs(df['Il']) * 1e3
+    df['Ileakage'] = df['Ileakage'].astype(float)
 
     return df

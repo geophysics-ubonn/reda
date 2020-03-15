@@ -190,7 +190,7 @@ def _extract_emd(mat, **kwargs):
     # average of Z1-Z3
     df['Zt'] = np.mean(df[['Z1', 'Z2', 'Z3']].values, axis=1)
     # we need to keep the sign of the real part
-    sign_re = df['Zt'].real / np.abs(df['Zt'].real)
+    sign_re = np.real(df['Zt']) / np.abs(np.real(df['Zt']))
     df['r'] = np.abs(df['Zt']) * sign_re
     # df['Zt_std'] = np.std(df[['Z1', 'Z2', 'Z3']].values, axis=1)
 
@@ -202,5 +202,8 @@ def _extract_emd(mat, **kwargs):
     df['Iab'] = np.abs(df['Is']) * 1e3
     df['Iab'] = df['Iab'].astype(float)
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
+    # take absolute value and convert to mA
+    df['Ileakage'] = np.abs(df['Il']) * 1e3
+    df['Ileakage'] = df['Ileakage'].astype(float)
 
     return df

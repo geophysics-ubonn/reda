@@ -29,6 +29,7 @@ def _extract_md(mat, **kwargs):
             np.hstack((
                 timestamp,
                 fdata['cni'],
+                fdata['U0'][:, np.newaxis],
                 fdata['Cl3'],
                 fdata['Zg3'],
                 fdata['As3'][:, 0, :].squeeze(),
@@ -44,6 +45,7 @@ def _extract_md(mat, **kwargs):
             'datetime',
             'a',
             'b',
+            'U0',
             'Cl1',
             'Cl2',
             'Cl3',
@@ -114,6 +116,11 @@ def _extract_md(mat, **kwargs):
         # "standard" injected current, in [mA]
         df['Iab'] = np.abs(df['Is']) * 1e3
         df['Iab'] = df['Iab'].astype(float)
+
+        df['Il'] = np.mean(df[['Il1', 'Il2', 'Il3']].values, axis=1)
+        # take absolute value and convert to mA
+        df['Ileakage'] = np.abs(df['Il']) * 1e3
+        df['Ileakage'] = df['Ileakage'].astype(float)
 
         df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
 
@@ -282,5 +289,9 @@ def _extract_emd(mat, **kwargs):
     df['Iab'] = np.abs(df['Is']) * 1e3
     df['Iab'] = df['Iab'].astype(float)
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
+
+    # take absolute value and convert to mA
+    df['Ileakage'] = np.abs(df['Il']) * 1e3
+    df['Ileakage'] = df['Ileakage'].astype(float)
 
     return df
