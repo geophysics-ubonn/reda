@@ -878,3 +878,36 @@ class ConfigManager(object):
             # fprintf(fod, '%d\t %d\t %d\t %d\t %d\n', C');
             for nr, config in enumerate(self.configs):
                 fid.write('{}  {}  {}  {}  {}\n'.format(nr + 1, *config))
+
+    def get_unique_current_injections(self):
+        """Return all unique current injection electrode pairs
+
+        Examples
+        --------
+        >>> from reda.configs.configManager import ConfigManager
+        >>> cfg = ConfigManager()
+        >>> cfg.nr_electrodes
+        >>> cfg.nr_electrodes = 10
+        >>> cfg.add_to_configs((
+        ...     (1, 2, 3, 4),
+        ...     (1, 2, 5, 6),
+        ...     (7, 8, 9, 10)
+        ... ))
+        array([[ 1,  2,  3,  4],
+               [ 1,  2,  5,  6],
+               [ 7,  8,  9, 10]])
+        >>> cfg.get_unique_current_injections()
+        array([[1, 2],
+               [7, 8]])
+
+        cfg = ConfigManager()
+        cfg.get_unique_current_injections()
+
+        Returns
+        -------
+        unique_injections : Nx2 numpy.ndarray
+            Current injections
+        """
+        if self.configs is None:
+            return None
+        return np.unique(self.configs[:, 0:2], axis=0)
