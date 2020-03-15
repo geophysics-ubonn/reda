@@ -28,5 +28,5 @@ spectrum = sip_response(
     rcomplex=sip.data['zt'].values,
 )
 
-fig = spectrum.plot(filename='spectrum.pdf', dtype='r', return_fig=True)
-
+# note the dtype indicates that no geometric factor was applied to the data
+fig = spectrum.plot(filename='spectrum.png', dtype='r', return_fig=True)
