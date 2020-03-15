@@ -49,21 +49,21 @@ def get_label(parameter, ptype, flavor=None, mpl=None):
 
     Parameters
     ----------
-    parameter: string
+    parameter : str
         type of parameter, e.g. rmag|rpha|cre|cim
-    ptype: string
+    ptype : string
         material|meas. Either return the material property (e.g. resistivity)
         or the measurement parameter (e.g., impedance)
-    flavor: string, optional
+    flavor : string, optional
         if set, must be one of latex|mathml. Return a label for latex
         processing, or for mathml processing
-    mpl: matplotlib, optional
+    mpl : matplotlib, optional
         if set, infer flavor from mpl.rcParams. Will not be used if flavor is
         set
 
     Returns
     -------
-    label: string
+    label : string
         the requested label
     """
     # determine flavor
