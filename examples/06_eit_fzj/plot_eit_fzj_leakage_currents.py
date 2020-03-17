@@ -2,6 +2,7 @@
 # *-* coding: utf-8 *-*
 """
 Analyzing leakage currents
+--------------------------
 
 Reproduce Fig. 4 of Zimmermann et al 2019:
 
