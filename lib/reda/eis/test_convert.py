@@ -11,12 +11,6 @@ import numpy as np
 import reda.eis.convert as sip_convert
 import numpy.testing
 from_keys = sip_convert.from_converters.keys()
-# print(from_keys)
-# for x in from_keys:
-#     print(x)
-# import IPython
-# IPython.embed()
-# exit()
 
 
 class TestClass_input_styles(object):
