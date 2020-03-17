@@ -399,11 +399,13 @@ class sEIT(BaseContainer, sEITImporters):
 
         if subdata_nor.shape[0] > 0:
             # create a spectrum for each timestep
-            if 'timestep' in subdata.columns:
+            if 'timestep' in subdata_nor.columns:
                 g_nor_ts = subdata_nor.groupby('timestep')
+                with_timesteps = True
             else:
                 # create a dummy group
                 g_nor_ts = subdata_nor.groupby('id')
+                with_timesteps = False
 
             spectrum_nor = {}
             for timestep, item in g_nor_ts:
@@ -414,10 +416,12 @@ class sEIT(BaseContainer, sEITImporters):
                 )
 
         if subdata_rec.shape[0] > 0:
-            if 'timestep' in subdata.columns:
+            if 'timestep' in subdata_rec.columns:
                 g_rec_ts = subdata_rec.groupby('timestep')
+                with_timesteps = True
             else:
                 g_rec_ts = subdata_rec.groupby('id')
+                with_timesteps = False
 
             spectrum_rec = {}
             for timestep, item in g_rec_ts:
@@ -446,8 +450,14 @@ class sEIT(BaseContainer, sEITImporters):
                 )] for k in all_timesteps
             }
             for timestep, pair in pairs.items():
+                if with_timesteps:
+                    ts_suffix = '_ts_{}'.format(timestep)
+                else:
+                    ts_suffix = ''
+                filename = plot_filename[:-4] + ts_suffix + ending
+
                 fig = pair[0].plot(
-                    plot_filename[:-4] + '_ts_{}'.format(timestep) + ending,
+                    filename,
                     reciprocal=pair[1],
                     return_fig=True,
                     title='a: {} b: {} m: {}: n: {}'.format(
@@ -476,18 +486,24 @@ class sEIT(BaseContainer, sEITImporters):
         """
         os.makedirs(outdir, exist_ok=True)
 
-        g = self.data.groupby('id')
-        for nr, (name, item) in enumerate(g):
+        abmn_id = self.data[['a', 'b', 'm', 'n', 'id']].groupby(
+            'id'
+        ).first().sort_values(['a', 'b', 'm', 'n'])
+
+        for nr, (spec_id, abmn) in enumerate(abmn_id.iterrows()):
             print(
                 'Plotting spectrum with id {} ({} / {})'.format(
-                    name, nr, len(g.groups.keys()))
+                    spec_id, nr, abmn_id.shape[0]
+                )
             )
             plot_filename = ''.join((
                 outdir + os.sep,
-                '{:04}_spectrum_id_{}.png'.format(nr, name)
+                '{:04}_spectrum_{:02}_{:02}_{:02}_{:02}_id_{:04}.png'.format(
+                    nr, *abmn, spec_id
+                )
             ))
             spec_nor, spec_rec, spec_fig = self.get_spectrum(
-                nr_id=name,
+                nr_id=spec_id,
                 plot_filename=plot_filename
             )
             plt.close(spec_fig)
