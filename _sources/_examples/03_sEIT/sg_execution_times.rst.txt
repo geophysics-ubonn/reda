@@ -5,10 +5,10 @@
 
 Computation times
 =================
-**01:01.423** total execution time for **_examples_03_sEIT** files:
+**01:02.910** total execution time for **_examples_03_sEIT** files:
 
 +---------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py` (``plot_radic_sip256c.py``)         | 00:33.671 | 0.0 MB |
+| :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py` (``plot_radic_sip256c.py``)         | 00:34.694 | 0.0 MB |
 +---------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py` (``plot_visualize_4d_data.py``) | 00:27.752 | 0.0 MB |
+| :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py` (``plot_visualize_4d_data.py``) | 00:28.216 | 0.0 MB |
 +---------------------------------------------------------------------------------------------+-----------+--------+

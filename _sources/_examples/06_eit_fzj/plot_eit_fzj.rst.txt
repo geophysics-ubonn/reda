@@ -571,7 +571,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f80ca2cda20>
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f77e95784a8>
             a   b   m   n     frequency         r        rpha
     749    10  29  15  34      0.100000  7.356375   -5.205543
     2229   10  29  15  34      0.314465  7.323810   -6.903037
@@ -588,7 +588,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
 
 
-in a similar fashion, spectra can be extracted
+in a similar fashion, spectra can be extracted and plotted
 
 
 .. code-block:: default
@@ -599,7 +599,11 @@ in a similar fashion, spectra can be extracted
     print(type(spec_rec))
 
     with reda.CreateEnterDirectory('output_eit_fzj'):
-        spec_nor.plot(filename='spectrum_10_29_15_34.png')
+        spec_nor.plot(filename='spectrum_10_29_15_34.pdf')
+
+    # Note that there is also the convenient script
+    # :py:meth:`reda.sEIT.plot_all_spectra`, which can be used to plot all spectra
+    # of the container into separate files, given an output directory.
 
 
 
@@ -750,7 +754,7 @@ alternative
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  46.895 seconds)
+   **Total running time of the script:** ( 0 minutes  48.133 seconds)
 
 
 .. _sphx_glr_download__examples_06_eit_fzj_plot_eit_fzj.py:
