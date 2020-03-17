@@ -81,14 +81,18 @@ quadpole_data = seit.abmn.get_group((10, 29, 15, 34))
 print(quadpole_data[['a', 'b', 'm', 'n', 'frequency', 'r', 'rpha']])
 
 ##############################################################################
-# in a similar fashion, spectra can be extracted
+# in a similar fashion, spectra can be extracted and plotted
 spec_nor, spec_rec = seit.get_spectrum(abmn=(10, 29, 15, 34))
 
 print(type(spec_nor))
 print(type(spec_rec))
 
 with reda.CreateEnterDirectory('output_eit_fzj'):
-    spec_nor.plot(filename='spectrum_10_29_15_34.png')
+    spec_nor.plot(filename='spectrum_10_29_15_34.pdf')
+
+# Note that there is also the convenient script
+# :py:meth:`reda.sEIT.plot_all_spectra`, which can be used to plot all spectra
+# of the container into separate files, given an output directory.
 
 ##############################################################################
 # filter data
