@@ -24,7 +24,9 @@ import numpy as np
 import reda
 import reda.importers.eit_fzj as eit_fzj
 
-md_data = eit_fzj.get_md_data('eit_data.mat', multiplexer_group=1)
+md_data = eit_fzj.get_md_data(
+    'data_eit_fzj_li/eit_data.mat', multiplexer_group=1
+)
 print('Available frequencies:', np.unique(md_data['frequency'].values))
 data_1k = md_data.query('frequency == 1000')
 
