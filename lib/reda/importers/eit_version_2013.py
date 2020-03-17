@@ -6,7 +6,130 @@ from reda.importers.eit_version_2010 import _average_swapped_current_injections
 
 
 def _extract_md(mat, **kwargs):
-    return None
+    md = mat['MD'].squeeze()
+    # Labview epoch
+    epoch = datetime.datetime(1904, 1, 1)
+
+    def convert_epoch(x):
+        timestamp = epoch + datetime.timedelta(seconds=x.astype(float))
+        return timestamp
+
+    dfl = []
+    # loop over frequencies
+    for f_id in range(0, md.size):
+        # print('Frequency: ', emd[f_id]['fm'])
+        fdata = md[f_id]
+        # for name in fdata.dtype.names:
+        #     print(name, fdata[name].shape)
+
+        timestamp = np.atleast_2d(
+            [convert_epoch(x) for x in fdata['Time'].squeeze()]
+        ).T
+        df = pd.DataFrame(
+            np.hstack((
+                timestamp,
+                fdata['cni'],
+                fdata['U0'][:, np.newaxis],
+                # fdata['Cl3'],
+                fdata['Zg3'],
+                fdata['As3'][:, 0, :].squeeze(),
+                fdata['As3'][:, 1, :].squeeze(),
+                fdata['As3'][:, 2, :].squeeze(),
+                fdata['As3'][:, 3, :].squeeze(),
+                fdata['Is3'],
+                # fdata['Yl3'],
+                fdata['Il3'],
+            ))
+        )
+        df.columns = (
+            'datetime',
+            'a',
+            'b',
+            'U0',
+            # 'Cl1',
+            # 'Cl2',
+            # 'Cl3',
+            'Zg1',
+            'Zg2',
+            'Zg3',
+            'ShuntVoltage1_1',
+            'ShuntVoltage1_2',
+            'ShuntVoltage1_3',
+            'ShuntVoltage2_1',
+            'ShuntVoltage2_2',
+            'ShuntVoltage2_3',
+            'ShuntVoltage3_1',
+            'ShuntVoltage3_2',
+            'ShuntVoltage3_3',
+            'ShuntVoltage4_1',
+            'ShuntVoltage4_2',
+            'ShuntVoltage4_3',
+            'Is1',
+            'Is2',
+            'Is3',
+            # 'Yl1',
+            # 'Yl2',
+            # 'Yl3',
+            'Il1',
+            'Il2',
+            'Il3',
+        )
+
+        df['datetime'] = pd.to_datetime(df['datetime'])
+        df['a'] = df['a'].astype(int)
+        df['b'] = df['b'].astype(int)
+        # df['Cl1'] = df['Cl1'].astype(complex)
+        # df['Cl2'] = df['Cl2'].astype(complex)
+        # df['Cl3'] = df['Cl3'].astype(complex)
+        df['Zg1'] = df['Zg1'].astype(complex)
+        df['Zg2'] = df['Zg2'].astype(complex)
+        df['Zg3'] = df['Zg3'].astype(complex)
+
+        # df['Yl1'] = df['Yl1'].astype(complex)
+        # df['Yl2'] = df['Yl2'].astype(complex)
+        # df['Yl3'] = df['Yl3'].astype(complex)
+
+        for key in ('Il1', 'Il2', 'Il3'):
+            df[key] = df[key].astype(complex)
+
+        df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
+        df['ShuntVoltage1_2'] = df['ShuntVoltage1_2'].astype(complex)
+        df['ShuntVoltage1_3'] = df['ShuntVoltage1_3'].astype(complex)
+
+        df['ShuntVoltage2_1'] = df['ShuntVoltage2_1'].astype(complex)
+        df['ShuntVoltage2_2'] = df['ShuntVoltage2_2'].astype(complex)
+        df['ShuntVoltage2_3'] = df['ShuntVoltage2_3'].astype(complex)
+
+        df['ShuntVoltage3_1'] = df['ShuntVoltage3_1'].astype(complex)
+        df['ShuntVoltage3_2'] = df['ShuntVoltage3_2'].astype(complex)
+        df['ShuntVoltage3_3'] = df['ShuntVoltage3_3'].astype(complex)
+
+        df['ShuntVoltage4_1'] = df['ShuntVoltage4_1'].astype(complex)
+        df['ShuntVoltage4_2'] = df['ShuntVoltage4_2'].astype(complex)
+        df['ShuntVoltage4_3'] = df['ShuntVoltage4_3'].astype(complex)
+
+        df['Is1'] = df['Is1'].astype(complex)
+        df['Is2'] = df['Is2'].astype(complex)
+        df['Is3'] = df['Is3'].astype(complex)
+
+        df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
+        # "standard" injected current, in [mA]
+        df['Iab'] = np.abs(df['Is']) * 1e3
+        df['Iab'] = df['Iab'].astype(float)
+
+        df['Il'] = np.mean(df[['Il1', 'Il2', 'Il3']].values, axis=1)
+        # take absolute value and convert to mA
+        df['Ileakage'] = np.abs(df['Il']) * 1e3
+        df['Ileakage'] = df['Ileakage'].astype(float)
+
+        df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
+
+        df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
+        dfl.append(df)
+
+    df = pd.concat(dfl)
+
+    return df
 
 
 def _extract_emd(mat, **kwargs):
