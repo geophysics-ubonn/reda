@@ -106,7 +106,7 @@ def _parse_remote_unit(ru_block):
     text_block = text_block.replace('K Factor/m', 'K-Factor/m')
     text_block = text_block.strip()
 
-    text_block = re.sub('\s+', ' ', text_block) + os.linesep
+    text_block = re.sub(r'\s+', ' ', text_block) + os.linesep
 
     def prep_line(line):
         # for i in range(0, 7):
@@ -127,7 +127,7 @@ def _parse_remote_unit(ru_block):
         # line = ' '.join(line.split()) + r'\n'
         # import IPython
         # IPython.embed()
-        line = re.sub('\s+', ' ', line) + os.linesep
+        line = re.sub(r'\s+', ' ', line) + os.linesep
 
         # calibration dot
         line = re.sub(' . ', ' nc ', line)
@@ -184,7 +184,8 @@ def _parse_remote_unit(ru_block):
         print(df['dphi'])
         print(df)
         print('raw', tmp_file.getvalue())
-        exit()
+        raise Exception('Error converting phase from degrees to mrad')
+
     df['drpha'] = errorpha
 
     # % U(V)
@@ -389,10 +390,8 @@ def parse_radic_file(filename, settings, selection_mode="after",
     try:
         with open(filename, 'r', encoding='latin-1') as fid:
             lines = fid.readlines()
-    except:
-        print('file not found', filename)
-        import pdb
-        pdb.set_trace()
+    except IOError:
+        raise IOError('Radic SIP256c Datafile not found: {}'.format(filename))
 
     groups = itertools.groupby(
         lines,
@@ -422,12 +421,6 @@ def parse_radic_file(filename, settings, selection_mode="after",
         # print('KEY/Reading', key)
         reading = reading_blocks[key]
         tmp = parse_reading(reading)
-        # except Exception as e:
-        #     print('Parsing of reading failed')
-        #     print(''.join(reading))
-        #     print('error message')
-        #     print(e)
-        #     exit()
         readings[key] = tmp
     # print('reading keys', sorted(readings.keys()))
 
@@ -468,41 +461,3 @@ if __name__ == '__main__':
     filename = "20160612_02_p2_dd_sk3_nor.res"
     data = parse_radic_file(filename)
     write_crmod_file(data, 'p2_dd_skip3_nor')
-
-    exit()
-
-    from crlab_py.mpl import *
-    mpl.rcParams['font.size'] = 8.0
-    for nr, subdata in enumerate(data):
-        # print('plotting', nr)
-        fig, axes = plt.subplots(3, 1, figsize=(10 / 2.54, 10 / 2.54))
-        ax = axes[0]
-        ax.semilogx(subdata.index, subdata['r'], '.-')
-        ax.set_title(
-            'ABMN {0}, {1}, {2}, {3}'.format(
-                int(subdata['a'].values[0]),
-                int(subdata['b'].values[0]),
-                int(subdata['m'].values[0]),
-                int(subdata['n'].values[0]),
-            ))
-        ax.set_ylabel(r'$|Z|~[\Omega]$')
-        ax.set_xlabel('frequencies [Hz]')
-        ax = axes[1]
-        try:
-            ax.semilogx(subdata.index, -subdata['phi'] * 1000, '.-')
-        except:
-            pass
-        ax.set_ylabel(r'$-\phi~[mrad]$')
-        ax.set_xlabel('frequencies [Hz]')
-
-        ax.set_ylim(-10, 60)
-        ax = axes[2]
-        try:
-            ax.semilogx(subdata.index, -subdata['phi'] * 1000, '.-')
-        except:
-            pass
-        ax.set_ylabel(r'$-\phi~[mrad]$')
-        ax.set_xlabel('frequencies [Hz]')
-
-        fig.tight_layout()
-        fig.savefig('plot_{0:03}.png'.format(nr), dpi=300)
