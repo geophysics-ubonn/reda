@@ -22,7 +22,14 @@ sure that the individual steps in your Python script are documented according
 to the `sphinx-gallery syntax
 <http://sphinx-gallery.readthedocs.io/en/latest/tutorials/plot_notebook.html>`__.
 
-C. Contribute to the code
+C. Contribute to the documentation
+----------------------------------
+
+* We use
+  `numpydoc <https://numpydoc.readthedocs.io/en/latest/format.html#overview>`_ to
+  format our docstrings.
+
+D. Contribute to the code
 -------------------------
 
 .. note::
@@ -36,6 +43,7 @@ pull* collaborative model pull request (PR) on GitHub, described `here
 The general concept of working with pull requests is explained `here
 <https://guides.github.com/introduction/flow>`__ and involves the following
 steps:
+
 
 1. Fork the repository
 ++++++++++++++++++++++
