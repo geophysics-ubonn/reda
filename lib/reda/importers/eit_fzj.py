@@ -96,8 +96,8 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
         The imported 3P data (only if return_3p==True)
     """
     if not os.path.isfile(filename):
-        print('File not found: {}'.format(filename))
-        exit()
+        raise IOError('Data file not found! {}'.format(filename))
+
     version = _get_file_version(filename)
     importer = mat_version_importers.get(version, None)
     if importer is not None:
@@ -147,8 +147,8 @@ def get_md_data(filename, **kwargs):
         MD data (sometimes this data is not imported, then we return None here)
     """
     if not os.path.isfile(filename):
-        print('File not found: {}'.format(filename))
-        exit()
+        raise IOError('Data file not found! {}'.format(filename))
+
     version = _get_file_version(filename)
     importer = mat_version_importers.get(version, None)
     if importer is not None:
