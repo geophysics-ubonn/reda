@@ -1,0 +1,43 @@
+reda.eis package
+================
+
+.. automodule:: reda.eis
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+reda.eis.convert module
+-----------------------
+
+.. automodule:: reda.eis.convert
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.eis.plots module
+---------------------
+
+.. automodule:: reda.eis.plots
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.eis.test\_convert module
+-----------------------------
+
+.. automodule:: reda.eis.test_convert
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.eis.units module
+---------------------
+
+.. automodule:: reda.eis.units
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

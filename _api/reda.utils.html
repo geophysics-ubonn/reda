@@ -1,0 +1,795 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.utils package &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="reda.testing.ert_container package" href="reda.testing.ert_container.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API documentation</a><ul>
+  <li><a href="reda.html">reda package</a><ul>
+      <li>Previous: <a href="reda.testing.ert_container.html" title="previous chapter">reda.testing.ert_container package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-reda.utils">
+<span id="reda-utils-package"></span><h1>reda.utils package<a class="headerlink" href="#module-reda.utils" title="Permalink to this headline">¶</a></h1>
+<p>Utility functions</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reda.utils.data">
+<span id="reda-utils-data-module"></span><h2>reda.utils.data module<a class="headerlink" href="#module-reda.utils.data" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reda.utils.data.download_data">
+<code class="sig-prename descclassname">reda.utils.data.</code><code class="sig-name descname">download_data</code><span class="sig-paren">(</span><em class="sig-param">identifier</em>, <em class="sig-param">outdir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/data.html#download_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.data.download_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Download data from a separate data repository for testing.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>identifier: string</strong></dt><dd><p>The identifier used to find the data set</p>
+</dd>
+<dt><strong>outdir: string</strong></dt><dd><p>unzip the data in this directory</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.decorators_and_managers">
+<span id="reda-utils-decorators-and-managers-module"></span><h2>reda.utils.decorators_and_managers module<a class="headerlink" href="#module-reda.utils.decorators_and_managers" title="Permalink to this headline">¶</a></h2>
+<p>Utility class for context managers and decorators</p>
+<dl class="class">
+<dt id="reda.utils.decorators_and_managers.LogDataChanges">
+<em class="property">class </em><code class="sig-prename descclassname">reda.utils.decorators_and_managers.</code><code class="sig-name descname">LogDataChanges</code><span class="sig-paren">(</span><em class="sig-param">container</em>, <em class="sig-param">filter_action='default'</em>, <em class="sig-param">filter_query=''</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#LogDataChanges"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.LogDataChanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Context manager that observes the DataFrame of a data container for
+changes in the number of rows.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.testing.containers</span> <span class="kn">import</span> <span class="n">ERTContainer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="kn">import</span> <span class="n">LogDataChanges</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="n">ERTContainer</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="c1"># now change the data</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">22</span>
+<span class="gp">... </span>    <span class="n">ERTContainer</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;r &lt; 10&quot;</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># ERTContainer.print_log()</span>
+<span class="go">2... - root - INFO - Data change from 22 to 21</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.decorators_and_managers.append_doc_of">
+<code class="sig-prename descclassname">reda.utils.decorators_and_managers.</code><code class="sig-name descname">append_doc_of</code><span class="sig-paren">(</span><em class="sig-param">fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#append_doc_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.append_doc_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.decorators_and_managers.prepend_doc_of">
+<code class="sig-prename descclassname">reda.utils.decorators_and_managers.</code><code class="sig-name descname">prepend_doc_of</code><span class="sig-paren">(</span><em class="sig-param">fun</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#prepend_doc_of"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.prepend_doc_of" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.eit_fzj_utils">
+<span id="reda-utils-eit-fzj-utils-module"></span><h2>reda.utils.eit_fzj_utils module<a class="headerlink" href="#module-reda.utils.eit_fzj_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reda.utils.eit_fzj_utils.apply_correction_factors">
+<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">apply_correction_factors</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">correction_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#apply_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
+and Kemna, 2017, Biogeosciences, for more information:</p>
+<p><a class="reference external" href="https://doi.org/10.5194/bg-14-921-2017">https://doi.org/10.5194/bg-14-921-2017</a></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Data container</p>
+</dd>
+<dt><strong>correction_file</strong><span class="classifier">string</span></dt><dd><p>Path to correction file. The file must have 5 columns:
+a,b,m,n,correction_factor</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>corr_data</strong><span class="classifier">Nx5 <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction files as imported from the file. Columns:
+a,b,m,n,correction_factor</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.eit_fzj_utils.check_resistor_board_measurements">
+<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">check_resistor_board_measurements</code><span class="sig-paren">(</span><em class="sig-param">data_file</em>, <em class="sig-param">reference_data_file=None</em>, <em class="sig-param">create_plot=True</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#check_resistor_board_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="Permalink to this definition">¶</a></dt>
+<dd><p>To check basic system function a test board was built with multiple
+resistors attached to for connectors each. Measurements can thus be
+validated against known electrical (ohmic) resistances.</p>
+<p>Note that the normal-reciprocal difference is not yet analyzed!</p>
+<p>The referenc_data_file should have the following structure:
+The file contains the four-point spreads to be imported from
+the measurement. This file is a text file with four columns (A, B, M, N),
+separated by spaces or tabs. Each line denotes one measurement and its
+expected resistance, the allowed variation, and its allow difference
+towards its reciprocal counterpart:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">1000</span>    <span class="mi">1</span>    <span class="mi">20</span>
+<span class="mi">4</span>   <span class="mi">3</span>   <span class="mi">2</span>   <span class="mi">1</span>   <span class="mi">1000</span>    <span class="mi">1</span>    <span class="mi">20</span>
+</pre></div>
+</div>
+<p>test frequency: 1Hz</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>data_file</strong><span class="classifier">string</span></dt><dd><p>path to mnu0 data file</p>
+</dd>
+<dt><strong>reference_data_file: string, optional</strong></dt><dd><p>path to reference data file with structure as describe above. Default
+data is used if set to None</p>
+</dd>
+<dt><strong>create_plot</strong><span class="classifier">bool, optional</span></dt><dd><p>if True, create a plot with measured and expected resistances</p>
+</dd>
+<dt><strong>kwargs</strong><span class="classifier">dict, optional</span></dt><dd><p>kwargs will be redirected to the sEIT.import_eit_fzj call</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>fig</strong><span class="classifier">figure object, optional</span></dt><dd><p>if create_plot is True, return a matplotlib figure</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.eit_fzj_utils.compute_correction_factors">
+<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">compute_correction_factors</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">true_conductivity</em>, <em class="sig-param">elem_file</em>, <em class="sig-param">elec_file</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#compute_correction_factors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.compute_correction_factors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute correction factors for 2D rhizotron geometries, following
+Weigand and Kemna, 2017, Biogeosciences</p>
+<p><a class="reference external" href="https://doi.org/10.5194/bg-14-921-2017">https://doi.org/10.5194/bg-14-921-2017</a></p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>measured data</p>
+</dd>
+<dt><strong>true_conductivity</strong><span class="classifier">float</span></dt><dd><p>Conductivity in S/m</p>
+</dd>
+<dt><strong>elem_file</strong><span class="classifier">string</span></dt><dd><p>path to CRTomo FE mesh file (elem.dat)</p>
+</dd>
+<dt><strong>elec_file</strong><span class="classifier">string</span></dt><dd><p>path to CRTomo FE electrode file (elec.dat)</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>correction_factors</strong><span class="classifier">Nx5 :py:class.`numpy.ndarray`</span></dt><dd><p>measurement configurations and correction factors
+(a,b,m,n,correction_factor)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.eit_fzj_utils.get_md_data_2018a">
+<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">get_md_data_2018a</code><span class="sig-paren">(</span><em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#get_md_data_2018a"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.get_md_data_2018a" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the md data of a given FZJ EIT 2018a LI calibration data file.</p>
+<p>This function should probably go into the importers, but for now will
+reside here until it can be properly integrated.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>Path to eit_data.mat file generated for an LI-‘calibration’ run</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>md</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>MD data</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.enter_directory">
+<span id="reda-utils-enter-directory-module"></span><h2>reda.utils.enter_directory module<a class="headerlink" href="#module-reda.utils.enter_directory" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="reda.utils.enter_directory.CreateEnterDirectory">
+<em class="property">class </em><code class="sig-prename descclassname">reda.utils.enter_directory.</code><code class="sig-name descname">CreateEnterDirectory</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#CreateEnterDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.enter_directory.CreateEnterDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#reda.utils.enter_directory.EnterDirectory" title="reda.utils.enter_directory.EnterDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.utils.enter_directory.EnterDirectory</span></code></a></p>
+<p>This is a context manager that enters a given directory and returns to
+the initial current directory after finishing. If the target directory does
+not exist, create it.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.utils.enter_directory.EnterDirectory">
+<em class="property">class </em><code class="sig-prename descclassname">reda.utils.enter_directory.</code><code class="sig-name descname">EnterDirectory</code><span class="sig-paren">(</span><em class="sig-param">directory</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#EnterDirectory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.enter_directory.EnterDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This is a context manager that enters a given directory and returns to
+the initial current directory after finishing</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.filter_config_types">
+<span id="reda-utils-filter-config-types-module"></span><h2>reda.utils.filter_config_types module<a class="headerlink" href="#module-reda.utils.filter_config_types" title="Permalink to this headline">¶</a></h2>
+<p>Sort configurations into four-point spread types.</p>
+<p>Sorting is done by subsequently applying filters to the configurations, with
+removal of selected configurations. Thus, each filter sees only configurations
+not ‘chosen’ by any previously applied filters.</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>dipole-dipole</p></li>
+<li><p>Schlumberger</p></li>
+<li><p>Wenner</p></li>
+<li><p>misc</p></li>
+</ul>
+</div></blockquote>
+<dl class="function">
+<dt id="reda.utils.filter_config_types.filter">
+<code class="sig-prename descclassname">reda.utils.filter_config_types.</code><code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param">configs</em>, <em class="sig-param">settings</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/filter_config_types.html#filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.filter_config_types.filter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Main entry function to filtering configuration types</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>configs: Nx4 array</strong></dt><dd><p>array containing A-B-M-N configurations</p>
+</dd>
+<dt><strong>settings: dict</strong></dt><dd><p>‘only_types’: [‘dd’, ‘other’],  # filter only for those types</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>dict</dt><dd><p>results dict containing filter results (indices) for all registered
+filter functions.  All remaining configs are stored under the keywords
+‘remaining’</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.fix_sign_with_K">
+<span id="reda-utils-fix-sign-with-k-module"></span><h2>reda.utils.fix_sign_with_K module<a class="headerlink" href="#module-reda.utils.fix_sign_with_K" title="Permalink to this headline">¶</a></h2>
+<p>Fix signs in resistance measurements using the K factors. The sign of negative
+resistance measurements can be switched if the geometrical factor is negative.</p>
+<dl class="function">
+<dt id="reda.utils.fix_sign_with_K.fix_sign_with_K">
+<code class="sig-prename descclassname">reda.utils.fix_sign_with_K.</code><code class="sig-name descname">fix_sign_with_K</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/fix_sign_with_K.html#fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.fix_sign_with_K.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
+<dd><p>Swap electrode denotations so that geometrical (K) factors become
+positive. Also, swap signs of all parameters affected by this process.</p>
+<p>Affected parameters, at the moment, are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>k</p></li>
+<li><p>r</p></li>
+<li><p>Vmn</p></li>
+<li><p>Zt</p></li>
+<li><p>rho_a</p></li>
+<li><p>rpha</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dataframe</strong><span class="classifier">pandas.DateFrame</span></dt><dd><p>dataframe holding the data</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>dataframe</strong><span class="classifier">pandas.DateFrame</span></dt><dd><p>the fixed dataframe</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.fix_sign_with_K.test_fix_sign_with_K">
+<code class="sig-prename descclassname">reda.utils.fix_sign_with_K.</code><code class="sig-name descname">test_fix_sign_with_K</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/fix_sign_with_K.html#test_fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.fix_sign_with_K.test_fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
+<dd><p>a few simple test cases</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.geom_fac_crtomo">
+<span id="reda-utils-geom-fac-crtomo-module"></span><h2>reda.utils.geom_fac_crtomo module<a class="headerlink" href="#module-reda.utils.geom_fac_crtomo" title="Permalink to this headline">¶</a></h2>
+<p>Compute geometric factors (also referred to as K) using CRMod/CRTomo</p>
+<dl class="function">
+<dt id="reda.utils.geom_fac_crtomo.compute_K">
+<code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">compute_K</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">settings</em>, <em class="sig-param">keep_dir=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geom_fac_crtomo.html#compute_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geom_fac_crtomo.compute_K" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dataframe</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>dataframe that contains the data</p>
+</dd>
+<dt><strong>settings</strong><span class="classifier">dict</span></dt><dd><p>with required settings, see below</p>
+</dd>
+<dt><strong>keep_dir</strong><span class="classifier">path</span></dt><dd><p>if not None, copy modeling dir here</p>
+</dd>
+<dt><strong>settings = {</strong></dt><dd><p>‘rho’: 100,  # resistivity to use for homogeneous model, [Ohm m]
+‘elem’
+‘elec’
+‘2D’ : True|False
+‘sink_node’: ‘100’,</p>
+</dd>
+<dt><strong>}</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.geom_fac_crtomo.get_default_settings">
+<code class="sig-prename descclassname">reda.utils.geom_fac_crtomo.</code><code class="sig-name descname">get_default_settings</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geom_fac_crtomo.html#get_default_settings"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geom_fac_crtomo.get_default_settings" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.geometric_factors">
+<span id="reda-utils-geometric-factors-module"></span><h2>reda.utils.geometric_factors module<a class="headerlink" href="#module-reda.utils.geometric_factors" title="Permalink to this headline">¶</a></h2>
+<p>select and execute functions to compute geometric factors according to the
+rcParams variable.</p>
+<dl class="function">
+<dt id="reda.utils.geometric_factors.apply_K">
+<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">apply_K</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">k</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#apply_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.apply_K" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the geometric factors to the dataset and compute (apparent)
+resistivities/conductivities</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>The dataframe containing the data to which geometric factors shall be
+applied</p>
+</dd>
+<dt><strong>k</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The geometric factors</p>
+</dd>
+<dt><strong>**kwargs: {}</strong></dt><dd><p>No kwargs at the moment</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>The data with geometric factors applied</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.geometric_factors.compute_K_analytical">
+<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">spacing</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given an electrode spacing, compute geometrical factors using the
+equation for the homogeneous half-space (Neumann-equation)</p>
+<p>If a dataframe is given, use the column (a, b, m, n). Otherwise, expect an
+Nx4 arrray.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dataframe</strong><span class="classifier">pandas.DataFrame or numpy.ndarray</span></dt><dd><p>Configurations, either as DataFrame</p>
+</dd>
+<dt><strong>spacing</strong><span class="classifier">float or numpy.ndarray</span></dt><dd><p>distance between electrodes. If array, then these are the x-coordinates
+of the electrodes</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>K</strong><span class="classifier">numpy.ndarray</span></dt><dd><p>The geometric factors corresponding to the provided configurations</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.geometric_factors.compute_K_numerical">
+<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">compute_K_numerical</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">settings=None</em>, <em class="sig-param">keep_dir=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_numerical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_numerical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Use a finite-element modeling code to infer geometric factors for meshes
+with topography or irregular electrode spacings.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>dataframe</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>the data frame that contains the data</p>
+</dd>
+<dt><strong>settings</strong><span class="classifier">dict</span></dt><dd><p>The settings required to compute the geometric factors. See examples
+down below for more information in the required content.</p>
+</dd>
+<dt><strong>keep_dir</strong><span class="classifier">path</span></dt><dd><p>if not None, copy modeling dir here</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
+<dt><strong>K</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>K factors (are also directly written to the dataframe)</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">&#39;elem&#39;</span><span class="p">:</span> <span class="s1">&#39;elem.dat&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;elec&#39;</span><span class="p">:</span> <span class="s1">&#39;elec.dat&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;sink_node&#39;</span><span class="p">:</span> <span class="s1">&#39;100&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;2D&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.helper_functions">
+<span id="reda-utils-helper-functions-module"></span><h2>reda.utils.helper_functions module<a class="headerlink" href="#module-reda.utils.helper_functions" title="Permalink to this headline">¶</a></h2>
+<p>Useful helper functions.</p>
+<dl class="function">
+<dt id="reda.utils.helper_functions.has_multiple_timesteps">
+<code class="sig-prename descclassname">reda.utils.helper_functions.</code><code class="sig-name descname">has_multiple_timesteps</code><span class="sig-paren">(</span><em class="sig-param">data</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#has_multiple_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.has_multiple_timesteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return True if <cite>data</cite> container has multiple timesteps.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.helper_functions.opt_import">
+<code class="sig-prename descclassname">reda.utils.helper_functions.</code><code class="sig-name descname">opt_import</code><span class="sig-paren">(</span><em class="sig-param">module</em>, <em class="sig-param">requiredFor='use the full functionality'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#opt_import"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.opt_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import and return module only if it exists.
+If <cite>module</cite> cannot be imported, a warning is printed followed by the
+<cite>requiredFor</cite> string. Otherwise, the imported <cite>module</cite> will be returned.
+This function should be used to import optional dependencies in order to
+avoid repeated try/except statements.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>module</strong><span class="classifier">str</span></dt><dd><p>Name of the module to be imported.</p>
+</dd>
+<dt><strong>requiredFor</strong><span class="classifier">str, optional</span></dt><dd><p>Info string for the purpose of the dependency.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.utils</span> <span class="kn">import</span> <span class="n">opt_import</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reda</span> <span class="o">=</span> <span class="n">opt_import</span><span class="p">(</span><span class="s2">&quot;reda&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">reda</span><span class="o">.</span><span class="vm">__name__</span>
+<span class="go">&#39;reda&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">opt_import</span><span class="p">(</span><span class="s2">&quot;doesNotExist&quot;</span><span class="p">,</span> <span class="n">requiredFor</span><span class="o">=</span><span class="s2">&quot;do something special&quot;</span><span class="p">)</span>
+<span class="go">No module named &#39;doesNotExist&#39;.</span>
+<span class="go">You need to install this optional dependency to do something special.</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.helper_functions.search">
+<code class="sig-prename descclassname">reda.utils.helper_functions.</code><code class="sig-name descname">search</code><span class="sig-paren">(</span><em class="sig-param">what</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#search"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.search" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function to search docstrings for string <cite>what</cite>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.helper_functions.split_timesteps">
+<code class="sig-prename descclassname">reda.utils.helper_functions.</code><code class="sig-name descname">split_timesteps</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">consistent_abmn=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#split_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.split_timesteps" title="Permalink to this definition">¶</a></dt>
+<dd><p>Split data into multiple timesteps.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.helper_functions.which">
+<code class="sig-prename descclassname">reda.utils.helper_functions.</code><code class="sig-name descname">which</code><span class="sig-paren">(</span><em class="sig-param">program</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/helper_functions.html#which"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.helper_functions.which" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python function to mimic the unix ‘which’ command.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.mpl">
+<span id="reda-utils-mpl-module"></span><h2>reda.utils.mpl module<a class="headerlink" href="#module-reda.utils.mpl" title="Permalink to this headline">¶</a></h2>
+<p>This file set ups matplotlib plot functions for the whole package.</p>
+<p>Import all necessary Matplotlib modules and set default options
+To use this module, import * from it:</p>
+<div class="section" id="examples">
+<h3>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+</pre></div>
+</div>
+<dl class="function">
+<dt id="reda.utils.mpl.mpl_get_cb_bound_below_plot">
+<code class="sig-prename descclassname">reda.utils.mpl.</code><code class="sig-name descname">mpl_get_cb_bound_below_plot</code><span class="sig-paren">(</span><em class="sig-param">ax</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/mpl.html#mpl_get_cb_bound_below_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.mpl.mpl_get_cb_bound_below_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the coordinates for a colorbar axes below the provided axes
+object. Take into account the changes of the axes due to aspect ratio
+settings.</p>
+<p>Important: Use only AFTER fig.subplots_adjust(…)</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.mpl.mpl_get_cb_bound_next_to_plot">
+<code class="sig-prename descclassname">reda.utils.mpl.</code><code class="sig-name descname">mpl_get_cb_bound_next_to_plot</code><span class="sig-paren">(</span><em class="sig-param">ax</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/mpl.html#mpl_get_cb_bound_next_to_plot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.mpl.mpl_get_cb_bound_next_to_plot" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the coordinates for a colorbar axes next to the provided axes
+object. Take into account the changes of the axes due to aspect ratio
+settings.</p>
+<p>Parts of this code are taken from the transforms.py file from matplotlib</p>
+<p>Important: Use only AFTER fig.subplots_adjust(…)</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">reda.utils.mpl</span> <span class="kn">import</span> <span class="n">mpl_get_cb_bound_next_to_plot</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">right</span><span class="o">=</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">plt_obj</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;.-&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb_pos</span> <span class="o">=</span> <span class="n">mpl_get_cb_bound_next_to_plot</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ax1</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_axes</span><span class="p">(</span><span class="n">cb_pos</span><span class="p">,</span> <span class="n">frame_on</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">jet_r</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">norm</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colors</span><span class="o">.</span><span class="n">Normalize</span><span class="p">(</span><span class="n">vmin</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="mi">23</span><span class="p">),</span> <span class="n">vmax</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="mi">33</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb1</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">colorbar</span><span class="o">.</span><span class="n">ColorbarBase</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">ax1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">norm</span><span class="o">=</span><span class="n">norm</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">orientation</span><span class="o">=</span><span class="s1">&#39;vertical&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb1</span><span class="o">.</span><span class="n">locator</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">([</span><span class="mi">23</span><span class="p">,</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">33</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb1</span><span class="o">.</span><span class="n">update_ticks</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cb1</span><span class="o">.</span><span class="n">ax</span><span class="o">.</span><span class="n">artists</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">cb1</span><span class="o">.</span><span class="n">outline</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>(<a class="reference external" href="../_api/reda-utils-1.py">Source code</a>, <a class="reference external" href="../_api/reda-utils-1.png">png</a>, <a class="reference external" href="../_api/reda-utils-1.pdf">pdf</a>)</p>
+<div class="figure align-default">
+<img alt="../_images/reda-utils-1.png" src="../_images/reda-utils-1.png" />
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.mpl.setup">
+<code class="sig-prename descclassname">reda.utils.mpl.</code><code class="sig-name descname">setup</code><span class="sig-paren">(</span><em class="sig-param">use_latex=False</em>, <em class="sig-param">overwrite=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/mpl.html#setup"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.mpl.setup" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set up matplotlib imports and settings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>use_latex: bool, optional</strong></dt><dd><p>Determine if Latex output should be used. Latex will only be enable if
+a ‘latex’ binary is found in the system.</p>
+</dd>
+<dt><strong>overwrite: bool, optional</strong></dt><dd><p>Overwrite some matplotlib config values.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>plt: <code class="xref py py-mod docutils literal notranslate"><span class="pre">pylab</span></code></dt><dd><p>pylab module imported as plt</p>
+</dd>
+<dt>mpl: <code class="xref py py-mod docutils literal notranslate"><span class="pre">matplotlib</span></code></dt><dd><p>matplotlib module imported as mpl</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="module-reda.utils.norrec">
+<span id="reda-utils-norrec-module"></span><h2>reda.utils.norrec module<a class="headerlink" href="#module-reda.utils.norrec" title="Permalink to this headline">¶</a></h2>
+<p>Normal-reciprocal functionality</p>
+<dl class="function">
+<dt id="reda.utils.norrec.assign_norrec_diffs">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">assign_norrec_diffs</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">diff_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#assign_norrec_diffs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.assign_norrec_diffs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute and write the difference between normal and reciprocal values
+for all columns specified in the diff_list parameter.</p>
+<p>Note that the DataFrame is directly written to. That is, it is changed
+during the call of this function. No need to use the returned object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>df: pandas.DataFrame</strong></dt><dd><p>Dataframe containing the data</p>
+</dd>
+<dt><strong>diff_list: list</strong></dt><dd><p>list of columns to compute differences for.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>df_new: pandas.DataFrame</dt><dd><p>The data with added columns</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.norrec.assign_norrec_to_df">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">assign_norrec_to_df</code><span class="sig-paren">(</span><em class="sig-param">df</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#assign_norrec_to_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.assign_norrec_to_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determine normal-reciprocal pairs for a given dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>df: pandas.DataFrame</strong></dt><dd><p>The data</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>df_new: pandas.DataFrame</dt><dd><p>The data with two new columns: “id” and “norrec”</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.norrec.average_repetitions">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">average_repetitions</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">keys_mean</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#average_repetitions"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.average_repetitions" title="Permalink to this definition">¶</a></dt>
+<dd><p>average duplicate measurements. This requires that IDs and norrec labels
+were assigned using the <em>assign_norrec_to_df</em> function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>df</strong></dt><dd><p>DataFrame</p>
+</dd>
+<dt><strong>keys_mean: list</strong></dt><dd><p>list of keys to average. For all other keys the first entry will be
+used.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.norrec.compute_norrec_differences">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">compute_norrec_differences</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">keys_diff</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#compute_norrec_differences"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.compute_norrec_differences" title="Permalink to this definition">¶</a></dt>
+<dd><p>DO NOT USE ANY MORE - DEPRECIATED!</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.norrec.get_test_df">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">get_test_df</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#get_test_df"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.get_test_df" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a test dataframe suitable to test the normal-reciprocal functions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.norrec.get_test_df_advanced">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">get_test_df_advanced</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#get_test_df_advanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.get_test_df_advanced" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a test dataframe suitable to test the normal-reciprocal functions</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.norrec.test2">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">test2</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#test2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.test2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reda.utils.norrec.test_norrec_assignments1">
+<code class="sig-prename descclassname">reda.utils.norrec.</code><code class="sig-name descname">test_norrec_assignments1</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/norrec.html#test_norrec_assignments1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.norrec.test_norrec_assignments1" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reda.utils.pseudo_positions">
+<span id="reda-utils-pseudo-positions-module"></span><h2>reda.utils.pseudo_positions module<a class="headerlink" href="#module-reda.utils.pseudo_positions" title="Permalink to this headline">¶</a></h2>
+<p>Various ways to compute pseudo-positions of given electrode configurations.</p>
+<dl class="function">
+<dt id="reda.utils.pseudo_positions.get_xy_simple_dipole_dipole">
+<code class="sig-prename descclassname">reda.utils.pseudo_positions.</code><code class="sig-name descname">get_xy_simple_dipole_dipole</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">spacing=1</em>, <em class="sig-param">indices=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/pseudo_positions.html#get_xy_simple_dipole_dipole"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.pseudo_positions.get_xy_simple_dipole_dipole" title="Permalink to this definition">¶</a></dt>
+<dd><p>For each configuration indicated by the numerical index array, compute
+(x,z) pseudo locations based on the paper from XX.</p>
+<p>All positions are computed for indices=None.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_api/reda.utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

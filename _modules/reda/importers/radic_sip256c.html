@@ -1,0 +1,598 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.importers.radic_sip256c &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.importers.radic_sip256c</h1><div class="highlight"><pre>
+<span></span><span class="c1"># *-* coding: utf-8 *-*</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">itertools</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># from StringIO import StringIO</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
+
+
+<span class="k">def</span> <span class="nf">_get_nr_of_electrodes</span><span class="p">(</span><span class="n">header_group</span><span class="p">):</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+        <span class="n">header_group</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">(</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;[Number of Remote Units]&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <span class="n">switch</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">switch</span><span class="p">:</span>
+            <span class="n">nr_of_electrodes</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">group</span><span class="p">)[</span><span class="mi">24</span><span class="p">:]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">nr_of_electrodes</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_radic_header</span><span class="p">(</span><span class="n">header_group</span><span class="p">,</span> <span class="n">dipole_mode</span><span class="o">=</span><span class="s2">&quot;all&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    dipole_mode: Which dipoles should be extracted</span>
+<span class="sd">        &quot;all&quot;</span>
+<span class="sd">        &quot;before&quot;</span>
+<span class="sd">        &quot;between&quot;</span>
+<span class="sd">        &quot;after&quot;</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">header</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">header_group</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+
+    <span class="n">nr_of_electrodes</span> <span class="o">=</span> <span class="n">_get_nr_of_electrodes</span><span class="p">(</span><span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">))</span>
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+        <span class="n">header</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">),</span>
+        <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="p">(</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;[End Readings]&#39;</span><span class="p">)</span> <span class="ow">or</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;[Begin Readings]&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+        <span class="c1"># there is only one group we are interested in: the first one</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+            <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span>
+                <span class="p">[</span>
+                    <span class="n">np</span><span class="o">.</span><span class="n">fromstring</span><span class="p">(</span>
+                        <span class="n">x</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span>
+                    <span class="p">)</span>
+                    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">next</span><span class="p">(</span><span class="n">groups</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+                <span class="p">],</span>
+            <span class="p">)</span>
+
+            <span class="c1"># curpots = tmp.T.copy()</span>
+            <span class="c1"># curpots.resize(nr_of_electrodes + 2, tmp.shape[0])</span>
+            <span class="k">break</span>
+
+    <span class="c1"># now we have the raw readings, pad them with zeros</span>
+    <span class="n">readings</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">raw_reading</span> <span class="ow">in</span> <span class="n">tmp</span><span class="p">:</span>
+        <span class="n">voltage_rus</span> <span class="o">=</span> <span class="n">raw_reading</span><span class="p">[</span><span class="mi">3</span><span class="p">:]</span>
+        <span class="c1"># note that we now have the last electrode in here, too (so one more</span>
+        <span class="c1"># than we have RUs. This electrode is always 0</span>
+        <span class="n">normed_reading</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">voltage_rus</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">voltage_rus</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)]:</span>
+            <span class="n">normed_reading</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span>
+        <span class="n">readings</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">raw_reading</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">normed_reading</span><span class="p">)))</span>
+
+    <span class="c1"># now generate the available configurations</span>
+    <span class="c1"># add calibration</span>
+    <span class="n">reading_configs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">reading</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">readings</span><span class="p">):</span>
+        <span class="c1"># nr = reading[0]</span>
+        <span class="n">A</span> <span class="o">=</span> <span class="n">reading</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">B</span> <span class="o">=</span> <span class="n">reading</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+
+        <span class="n">voltages</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="c1"># loop over the RU-settings</span>
+        <span class="c1"># we always measure to the next zero electrode</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="n">nr_of_electrodes</span> <span class="o">+</span> <span class="mi">3</span><span class="p">):</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">nr_of_electrodes</span> <span class="o">+</span> <span class="mi">3</span><span class="p">):</span>
+                <span class="k">if</span> <span class="n">reading</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">M</span> <span class="o">=</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">2</span>
+                    <span class="n">N</span> <span class="o">=</span> <span class="n">j</span> <span class="o">-</span> <span class="mi">2</span>
+                    <span class="n">all_active</span> <span class="o">=</span> <span class="p">((</span><span class="n">reading</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">reading</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span>
+                    <span class="c1"># print(&#39;a&#39;, &#39;b&#39;, &#39;m, n&#39;, A, B, M, N, all_active)</span>
+                    <span class="n">voltages</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">all_active</span><span class="p">))</span>
+                    <span class="k">break</span>
+
+        <span class="n">reading_configs</span><span class="p">[</span><span class="n">nr</span> <span class="o">+</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">voltages</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">reading_configs</span>
+
+
+<span class="k">def</span> <span class="nf">_parse_remote_unit</span><span class="p">(</span><span class="n">ru_block</span><span class="p">):</span>
+
+    <span class="c1"># add header</span>
+    <span class="n">text_block</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">ru_block</span><span class="p">)</span>
+    <span class="n">text_block</span> <span class="o">=</span> <span class="n">text_block</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;Freq. /Hz&#39;</span><span class="p">,</span> <span class="s1">&#39;Freq./Hz&#39;</span><span class="p">)</span>
+    <span class="n">text_block</span> <span class="o">=</span> <span class="n">text_block</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;K Factor/m&#39;</span><span class="p">,</span> <span class="s1">&#39;K-Factor/m&#39;</span><span class="p">)</span>
+    <span class="n">text_block</span> <span class="o">=</span> <span class="n">text_block</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+
+    <span class="n">text_block</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">text_block</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span>
+
+    <span class="k">def</span> <span class="nf">prep_line</span><span class="p">(</span><span class="n">line</span><span class="p">):</span>
+        <span class="c1"># for i in range(0, 7):</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+            <span class="n">index</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">index</span> <span class="o">+</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">index</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span> <span class="ow">or</span> <span class="n">index</span> <span class="o">&gt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">-</span> <span class="mi">12</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="c1"># number generally have 6 digits after the dot</span>
+                <span class="n">index</span> <span class="o">+=</span> <span class="mi">6</span>
+            <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span> <span class="n">index</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39; &#39;</span> <span class="o">+</span> <span class="n">line</span><span class="p">[</span><span class="n">index</span><span class="p">:]</span>
+
+        <span class="c1"># end_characters = (10, 25, 35, 45, 55)</span>
+        <span class="c1"># for index in reversed(end_characters):</span>
+        <span class="c1">#     line = line[0:index] + &#39; &#39; + line[index:]</span>
+
+        <span class="c1"># line = &#39; &#39;.join(line.split()) + r&#39;\n&#39;</span>
+        <span class="c1"># import IPython</span>
+        <span class="c1"># IPython.embed()</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;\s+&#39;</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">linesep</span>
+
+        <span class="c1"># calibration dot</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="s1">&#39; . &#39;</span><span class="p">,</span> <span class="s1">&#39; nc &#39;</span><span class="p">,</span> <span class="n">line</span><span class="p">)</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">lstrip</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">line</span>
+
+    <span class="c1"># now the data lines, with special attention</span>
+    <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">ru_block</span><span class="p">:</span>
+        <span class="n">text_block</span> <span class="o">+=</span> <span class="n">prep_line</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+
+    <span class="c1"># text_block = &#39;&#39;.join(ru_block)</span>
+
+    <span class="n">tmp_file</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">(</span><span class="n">text_block</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+            <span class="n">tmp_file</span><span class="p">,</span>
+            <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">na_values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;NaN&#39;</span><span class="p">,</span> <span class="p">],</span>
+            <span class="c1"># header=None,</span>
+            <span class="c1"># sep=&#39; &#39;,</span>
+            <span class="c1"># index_col=0,</span>
+        <span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">tmp_file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+
+    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rho&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;rpha&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;drho&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;drpha&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;with_calib&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;I&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;k&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;time&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;date&#39;</span>
+    <span class="p">]</span>
+
+    <span class="c1"># phase is in degree, convert to mrad</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span> <span class="o">*</span> <span class="mi">1000</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+
+    <span class="c1"># % RA error (Ohm m)</span>
+    <span class="n">errorar</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;drho&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;dr&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorar</span>
+
+    <span class="c1"># % Error phase (mrad)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">errorpha</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;drpha&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mf">180.0</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Exception&#39;</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;dphi&#39;</span><span class="p">])</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;raw&#39;</span><span class="p">,</span> <span class="n">tmp_file</span><span class="o">.</span><span class="n">getvalue</span><span class="p">())</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Error converting phase from degrees to mrad&#39;</span><span class="p">)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;drpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">errorpha</span>
+
+    <span class="c1"># % U(V)</span>
+    <span class="n">voltage</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;I&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mi">1000</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;U&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">voltage</span>
+
+    <span class="c1"># rename some columns</span>
+    <span class="c1"># col_descriptions = {</span>
+    <span class="c1">#     &#39;rho&#39;: &#39;rho_[Ohm m]&#39;,</span>
+    <span class="c1">#     &#39;rpha&#39;: &#39;rpha_[mrad]&#39;,</span>
+    <span class="c1">#     &#39;dphi&#39;: &#39;dphi_[mrad]&#39;,</span>
+    <span class="c1">#     &#39;|Z|&#39;: &#39;|Z|_[Ohm]&#39;,</span>
+    <span class="c1">#     &#39;d|Z|&#39;: &#39;d|Z|_[Ohm]&#39;,</span>
+    <span class="c1">#     &#39;U&#39;: &#39;U_[V]&#39;,</span>
+    <span class="c1"># }</span>
+    <span class="c1"># columns = df.columns.values.tolist()</span>
+    <span class="c1"># for key in columns:</span>
+    <span class="c1">#     if key in col_descriptions:</span>
+    <span class="c1">#         columns[columns.index(key)] = col_descriptions[key]</span>
+    <span class="c1"># df.columns = columns</span>
+
+    <span class="c1">#</span>
+    <span class="n">df_sort</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">df_sort</span>
+
+
+<div class="viewcode-block" id="parse_reading"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.radic_sip256c.parse_reading">[docs]</a><span class="k">def</span> <span class="nf">parse_reading</span><span class="p">(</span><span class="n">reading_block</span><span class="p">):</span>
+
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+        <span class="n">reading_block</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Remote Unit:&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
+    <span class="c1"># logging.debug(&#39;reading groups: {0}&#39;.format(len(groups)))</span>
+
+    <span class="n">ru_reading</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span><span class="p">:</span>
+            <span class="c1"># reading_nr = &#39;&#39;.join(group)[13:].strip()</span>
+            <span class="c1"># import IPython</span>
+            <span class="c1"># IPython.embed()</span>
+            <span class="c1"># print(next(group).strip())</span>
+            <span class="c1"># print(next(groups)[1])</span>
+            <span class="n">df_sort</span> <span class="o">=</span> <span class="n">_parse_remote_unit</span><span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">groups</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="c1"># ru_reading[reading_nr] = df_sort</span>
+            <span class="n">ru_reading</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df_sort</span><span class="p">)</span>
+        <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">ru_reading</span></div>
+
+
+<span class="k">def</span> <span class="nf">_decide_on_quadpole</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mode</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;quadrupole_mode&#39;</span><span class="p">,</span> <span class="s1">&#39;after&#39;</span><span class="p">)</span>
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Using quadrupole_mode: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">mode</span><span class="p">))</span>
+    <span class="n">decision</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># print &#39;deciding on&#39;, config</span>
+    <span class="c1"># we don&#39;t want duplicates</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;FILTER failed: uniqueness </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="o">*</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+        <span class="p">))</span>
+        <span class="n">decision</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># we only want skip 3 data</span>
+    <span class="k">if</span> <span class="s1">&#39;filter_skip&#39;</span> <span class="ow">in</span> <span class="n">settings</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">config</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">!=</span> <span class="n">settings</span><span class="p">[</span><span class="s1">&#39;filter_skip&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;FILTER failed: filter_skip </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="o">*</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="p">))</span>
+            <span class="n">decision</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">if</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;before&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">max</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span> <span class="o">&gt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;FILTER failed: mode==before </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="o">*</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="p">))</span>
+            <span class="n">decision</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;between&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">&lt;</span> <span class="nb">min</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]))</span> <span class="ow">or</span>
+                <span class="nb">max</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">&gt;</span> <span class="nb">max</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]))):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                <span class="s1">&#39;FILTER failed: mode==between </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="o">*</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+            <span class="n">decision</span> <span class="o">=</span> <span class="kc">False</span>
+    <span class="k">elif</span> <span class="n">mode</span> <span class="o">==</span> <span class="s1">&#39;after&#39;</span><span class="p">:</span>
+        <span class="k">if</span> <span class="nb">min</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])</span> <span class="o">&lt;</span> <span class="nb">max</span><span class="p">(</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]):</span>
+            <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;FILTER failed: mode==after </span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="o">*</span><span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span>
+            <span class="p">))</span>
+            <span class="n">decision</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="k">return</span> <span class="n">decision</span>
+
+
+<div class="viewcode-block" id="compute_quadrupoles"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.radic_sip256c.compute_quadrupoles">[docs]</a><span class="k">def</span> <span class="nf">compute_quadrupoles</span><span class="p">(</span><span class="n">reading_configs</span><span class="p">,</span> <span class="n">readings</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">quadpole_data</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">readings</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
+        <span class="c1"># print(&#39;key&#39;, key, len(reading_configs), type(reading_configs))</span>
+        <span class="n">configs_in_reading</span> <span class="o">=</span> <span class="n">reading_configs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">reading</span> <span class="o">=</span> <span class="n">readings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="c1"># for configs_in_reading, reading in zip(reading_configs, readings):</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">configs_in_reading</span><span class="p">):</span>
+            <span class="n">df</span> <span class="o">=</span> <span class="n">reading</span><span class="p">[</span><span class="n">nr</span><span class="p">]</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+            <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">config</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+            <span class="c1"># for now we only want configurations that are constructed out of</span>
+            <span class="c1"># &#39;zero`d&#39; electrodes in the &quot;readings&quot;-section of the config file</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">config</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span>
+                <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span>
+                    <span class="s1">&#39;removing because of inactive electrodes: &#39;</span> <span class="o">+</span>
+                    <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1"> </span><span class="si">{4}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">config</span><span class="p">)</span>
+                <span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">_decide_on_quadpole</span><span class="p">(</span><span class="n">config</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+                <span class="n">quadpole_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">quadpole_data</span></div>
+
+
+<div class="viewcode-block" id="write_crmod_file"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.radic_sip256c.write_crmod_file">[docs]</a><span class="k">def</span> <span class="nf">write_crmod_file</span><span class="p">(</span><span class="n">sipdata</span><span class="p">,</span> <span class="n">directory</span><span class="p">):</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span>
+        <span class="n">os</span><span class="o">.</span><span class="n">makedirs</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+
+    <span class="n">pwd</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()</span>
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+
+    <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span> <span class="n">sipdata</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">frequency</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sipdata</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">):</span>
+        <span class="c1"># print(&#39;f&#39;, frequency)</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;volt_</span><span class="si">{0:02}</span><span class="s1">_</span><span class="si">{1}</span><span class="s1">Hz.crt&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">frequency</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{0}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">sipdata</span><span class="p">)))</span>
+            <span class="k">for</span> <span class="n">df</span> <span class="ow">in</span> <span class="n">sipdata</span><span class="p">:</span>
+                <span class="n">AB</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+                <span class="n">MN</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mf">1e4</span> <span class="o">+</span> <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+                <span class="n">line</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> </span><span class="si">{1}</span><span class="s1"> </span><span class="si">{2}</span><span class="s1"> </span><span class="si">{3}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">AB</span><span class="p">),</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">MN</span><span class="p">),</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="s1">&#39;r&#39;</span><span class="p">],</span>
+                    <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">nr</span><span class="p">][</span><span class="s1">&#39;rpha&#39;</span><span class="p">],</span>
+                <span class="p">)</span>
+
+                <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+    <span class="n">os</span><span class="o">.</span><span class="n">chdir</span><span class="p">(</span><span class="n">pwd</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="parse_radic_file"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.radic_sip256c.parse_radic_file">[docs]</a><span class="nd">@enable_result_transforms</span>
+<span class="k">def</span> <span class="nf">parse_radic_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">selection_mode</span><span class="o">=</span><span class="s2">&quot;after&quot;</span><span class="p">,</span>
+                     <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Import one result file as produced by the SIP256c SIP measuring device</span>
+<span class="sd">    (Radic Research)</span>
+
+<span class="sd">    Full settings dictionary: ::</span>
+
+<span class="sd">        settings = {</span>
+<span class="sd">            &#39;filter_skip&#39;: (integer) skip dipoles we are interested in</span>
+<span class="sd">            &#39;quadrupole_mode&#39;: [&#39;after&#39;|&#39;between&#39;|&#39;before&#39;| &#39;all&#39;]</span>
+<span class="sd">                               which dipoles to use from the file</span>
+<span class="sd">        }</span>
+
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename: string</span>
+<span class="sd">        input filename, usually with the ending &quot;.RES&quot;</span>
+<span class="sd">    settings: dict</span>
+<span class="sd">        Settings for the data import, see code snippet above</span>
+<span class="sd">    selection_mode: dict</span>
+<span class="sd">        which voltage dipoles should be returned. Possible choices:</span>
+<span class="sd">        &quot;all&quot;|&quot;before&quot;|&quot;after&quot;</span>
+<span class="sd">    reciprocal: int|None</span>
+<span class="sd">        If this is an integer, then assume this was a reciprocal measurement</span>
+<span class="sd">        and the number denotes the largest RU number, N. Electrode numbers</span>
+<span class="sd">        (a,b,m,n) will then be transformed to (N1 - a, N1 - b, N1 - m, N1 - n),</span>
+<span class="sd">        with N1 = N + 1</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    sip_data: :py:pandas:`pandas.DataFrame`</span>
+<span class="sd">        The data contained in a data frame</span>
+<span class="sd">    electrodes : None</span>
+<span class="sd">        No electrode positions are imported</span>
+<span class="sd">    topography : None</span>
+<span class="sd">        No topography is imported</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;latin-1&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">lines</span> <span class="o">=</span> <span class="n">fid</span><span class="o">.</span><span class="n">readlines</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">IOError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Radic SIP256c Datafile not found: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="n">groups</span> <span class="o">=</span> <span class="n">itertools</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span>
+        <span class="n">lines</span><span class="p">,</span>
+        <span class="k">lambda</span> <span class="n">line</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;Reading:&#39;</span><span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="c1"># parse header</span>
+    <span class="n">group</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">groups</span><span class="p">)</span>
+    <span class="n">header_data</span> <span class="o">=</span> <span class="n">_parse_radic_header</span><span class="p">(</span><span class="n">group</span><span class="p">,</span> <span class="n">dipole_mode</span><span class="o">=</span><span class="s1">&#39;between&#39;</span><span class="p">)</span>
+
+    <span class="c1"># parse readings</span>
+    <span class="n">reading_blocks</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">groups</span><span class="p">:</span>
+        <span class="c1"># determine reading number</span>
+        <span class="n">line</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">group</span><span class="p">)</span>
+        <span class="n">reading_nr</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">8</span><span class="p">:</span> <span class="n">line</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s1">&#39;/&#39;</span><span class="p">)]</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
+        <span class="c1"># print(&#39;reading nr&#39;, reading_nr)</span>
+        <span class="n">reading_blocks</span><span class="p">[</span><span class="n">reading_nr</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">next</span><span class="p">(</span><span class="n">groups</span><span class="p">)[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="c1"># print reading_blocks[reading_nr]</span>
+
+    <span class="c1"># print(sorted(reading_blocks.keys()))</span>
+    <span class="c1"># now parse the readings</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;number of readings&#39;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">reading_blocks</span><span class="p">))</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;keys&#39;</span><span class="p">,</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">reading_blocks</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span>
+    <span class="n">readings</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">reading_blocks</span><span class="p">):</span>
+        <span class="c1"># print(&#39;KEY/Reading&#39;, key)</span>
+        <span class="n">reading</span> <span class="o">=</span> <span class="n">reading_blocks</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">parse_reading</span><span class="p">(</span><span class="n">reading</span><span class="p">)</span>
+        <span class="n">readings</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span>
+    <span class="c1"># print(&#39;reading keys&#39;, sorted(readings.keys()))</span>
+
+    <span class="n">logging</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;removing calibration reading&#39;</span><span class="p">)</span>
+    <span class="c1"># remove calibration reading</span>
+    <span class="k">if</span> <span class="mi">0</span> <span class="ow">in</span> <span class="n">readings</span><span class="p">:</span>
+        <span class="k">del</span><span class="p">(</span><span class="n">readings</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="c1"># print(&#39;readings&#39;, readings)</span>
+    <span class="n">sip_data_raw</span> <span class="o">=</span> <span class="n">compute_quadrupoles</span><span class="p">(</span><span class="n">header_data</span><span class="p">,</span> <span class="n">readings</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+
+    <span class="n">sip_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">sip_data_raw</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">reciprocal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">reciprocal</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+        <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">reciprocal</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+        <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">reciprocal</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+        <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">reciprocal</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+        <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">reciprocal</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">-</span> <span class="n">sip_data</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">sip_data</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># filename = &quot;20160506_03_rez_skip0.res&quot;</span>
+    <span class="c1"># filename = &quot;20160506_02_rez_gradient.res&quot;</span>
+    <span class="c1"># filename = &quot;t1/gradient_full.res&quot;</span>
+    <span class="c1"># filename = &quot;20160506_01_rez_skip1.res&quot;</span>
+    <span class="c1"># filename = &quot;20160609_04_gradient_test.res&quot;</span>
+
+    <span class="c1"># filename = &quot;20160611_03_skip3_nor.res&quot;</span>
+    <span class="c1"># data = parse_radic_file(filename)</span>
+    <span class="c1"># write_crmod_file(data, &#39;p1_dd_skip3_nor&#39;)</span>
+
+    <span class="c1"># filename = &quot;20160610_02_skip3_rec.res&quot;</span>
+    <span class="c1"># data = parse_radic_file(filename)</span>
+    <span class="c1"># write_crmod_file(data, &#39;p1_dd_skip3_rec&#39;)</span>
+
+    <span class="n">filename</span> <span class="o">=</span> <span class="s2">&quot;20160612_02_p2_dd_sk3_nor.res&quot;</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">parse_radic_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">write_crmod_file</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;p2_dd_skip3_nor&#39;</span><span class="p">)</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

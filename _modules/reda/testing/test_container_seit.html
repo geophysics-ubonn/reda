@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.testing.test_container_seit &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  <li><a href="../testing.html">reda.testing</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.testing.test_container_seit</h1><div class="highlight"><pre>
+<span></span><span class="ch">#!/usr/bin/env python</span>
+<span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">tempfile</span>
+<span class="kn">import</span> <span class="nn">zipfile</span>
+<span class="kn">import</span> <span class="nn">pkg_resources</span>
+
+<span class="kn">import</span> <span class="nn">reda</span>
+
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+
+
+<div class="viewcode-block" id="prepare_4d_data"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_container_seit.prepare_4d_data">[docs]</a><span class="k">def</span> <span class="nf">prepare_4d_data</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Unzip included 4D data into a temp directory.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    tempdir : string</span>
+<span class="sd">        Temporary directory</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">outdir</span> <span class="o">=</span> <span class="n">tempfile</span><span class="o">.</span><span class="n">mkdtemp</span><span class="p">()</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">pkg_resources</span><span class="o">.</span><span class="n">resource_filename</span><span class="p">(</span>
+        <span class="s1">&#39;reda.testing&#39;</span><span class="p">,</span> <span class="s1">&#39;data/seit_test_data.zip&#39;</span>
+    <span class="p">)</span>
+    <span class="n">mzip</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">mzip</span><span class="o">.</span><span class="n">extractall</span><span class="p">(</span><span class="n">outdir</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">outdir</span></div>
+
+<div class="viewcode-block" id="load_data_into_container"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_container_seit.load_data_into_container">[docs]</a><span class="k">def</span> <span class="nf">load_data_into_container</span><span class="p">(</span><span class="n">datadir</span><span class="p">):</span>
+    <span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+    <span class="k">for</span> <span class="n">nr</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">4</span><span class="p">):</span>
+        <span class="n">seit</span><span class="o">.</span><span class="n">import_crtomo</span><span class="p">(</span>
+            <span class="n">directory</span><span class="o">=</span><span class="n">datadir</span> <span class="o">+</span> <span class="s1">&#39;/modV_0</span><span class="si">{}</span><span class="s1">_noisy/&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">nr</span><span class="p">),</span>
+            <span class="n">timestep</span><span class="o">=</span><span class="n">nr</span>
+        <span class="p">)</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">seit</span></div>
+
+
+<div class="viewcode-block" id="test_load_4d_data"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_container_seit.test_load_4d_data">[docs]</a><span class="k">def</span> <span class="nf">test_load_4d_data</span><span class="p">():</span>
+    <span class="n">datadir</span> <span class="o">=</span> <span class="n">prepare_4d_data</span><span class="p">()</span>
+    <span class="n">seit</span> <span class="o">=</span> <span class="n">load_data_into_container</span><span class="p">(</span><span class="n">datadir</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_check_4d_data"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_container_seit.test_check_4d_data">[docs]</a><span class="k">def</span> <span class="nf">test_check_4d_data</span><span class="p">():</span>
+    <span class="n">datadir</span> <span class="o">=</span> <span class="n">prepare_4d_data</span><span class="p">()</span>
+    <span class="n">seit</span> <span class="o">=</span> <span class="n">load_data_into_container</span><span class="p">(</span><span class="n">datadir</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">seit</span><span class="o">.</span><span class="n">nr_frequencies</span> <span class="o">==</span> <span class="mi">15</span>
+    <span class="k">assert</span> <span class="n">seit</span><span class="o">.</span><span class="n">nr_timesteps</span> <span class="o">==</span> <span class="mi">4</span></div>
+
+
+<div class="viewcode-block" id="test_histogram_plotting"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_container_seit.test_histogram_plotting">[docs]</a><span class="k">def</span> <span class="nf">test_histogram_plotting</span><span class="p">():</span>
+    <span class="n">datadir</span> <span class="o">=</span> <span class="n">prepare_4d_data</span><span class="p">()</span>
+    <span class="n">seit</span> <span class="o">=</span> <span class="n">load_data_into_container</span><span class="p">(</span><span class="n">datadir</span><span class="p">)</span>
+
+    <span class="c1"># frequencies into subplots</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+    <span class="c1"># expect four figures, one for each timestep</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">figs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">figs</span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">figs</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">16</span>
+    <span class="c1"># the last subplot should be hidden because we have only 15 frequencies</span>
+    <span class="k">assert</span> <span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">get_visible</span><span class="p">()</span> <span class="ow">is</span> <span class="kc">False</span>
+    <span class="c1"># close the figures</span>
+    <span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figs</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+    <span class="c1"># run the other trafos once</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figs</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="n">lin_and_log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figs</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;timestep&#39;</span><span class="p">)</span>
+    <span class="c1"># expect 15 frequency plot, with four subplots each</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">figs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">15</span>
+    <span class="c1"># get first figure</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">figs</span><span class="p">[</span><span class="nb">sorted</span><span class="p">(</span><span class="n">figs</span><span class="o">.</span><span class="n">keys</span><span class="p">())[</span><span class="mi">0</span><span class="p">]]</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">fig</span><span class="o">.</span><span class="n">axes</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+
+    <span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figs</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+    <span class="c1"># delete three frequency</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency != 0.001&#39;</span><span class="p">)</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency != 1.0&#39;</span><span class="p">)</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency != 1000.0&#39;</span><span class="p">)</span>
+
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">figs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span>
+    <span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figs</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;timestep&#39;</span><span class="p">)</span>
+    <span class="c1"># expect 15 frequency plot, with four subplots each</span>
+    <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">figs</span><span class="p">)</span> <span class="o">==</span> <span class="mi">12</span>
+    <span class="p">[</span><span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span> <span class="k">for</span> <span class="n">fig</span> <span class="ow">in</span> <span class="n">figs</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+
+    <span class="c1"># take only the first timestep</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;timestep == 1 and frequency == 1&#39;</span><span class="p">)</span>
+    <span class="n">name</span><span class="p">,</span> <span class="n">figs</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">plot_histograms</span><span class="p">(</span><span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;timestep&#39;</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Importing Syscal IP data &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="SIP-04 Import" href="../02_SIP04/plot_sip04.html" />
+    <link rel="prev" title="Importing Syscal ERT data from roll-a-long scheme" href="plot_syscal_rollalong.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="plot_syscal_rollalong.html" title="previous chapter">Importing Syscal ERT data from roll-a-long scheme</a></li>
+      <li>Next: <a href="../02_SIP04/plot_sip04.html" title="next chapter">SIP-04 Import</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-01-ert-plot-syscal-ip-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="importing-syscal-ip-data">
+<span id="sphx-glr-examples-01-ert-plot-syscal-ip-py"></span><h1>Importing Syscal IP data<a class="headerlink" href="#importing-syscal-ip-data" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+</pre></div>
+</div>
+<p>a hack to prevent large loading times…</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
+<span class="c1"># import pickle</span>
+<span class="c1"># pfile = &#39;ip.pickle&#39;</span>
+<span class="c1"># if os.path.isfile(pfile):</span>
+<span class="c1">#     with open(pfile, &#39;rb&#39;) as fid:</span>
+<span class="c1">#         ip = pickle.load(fid)</span>
+<span class="c1"># else:</span>
+<span class="c1">#     ip = reda.TDIP()</span>
+<span class="c1">#     ip.import_syscal_bin(&#39;data_syscal_ip/data_normal.bin&#39;)</span>
+<span class="c1">#     ip.import_syscal_bin(</span>
+<span class="c1">#       &#39;data_syscal_ip/data_reciprocal.bin&#39;, reciprocals=48)</span>
+<span class="c1">#     with open(pfile, &#39;wb&#39;) as fid:</span>
+<span class="c1">#         pickle.dump(ip, fid)</span>
+</pre></div>
+</div>
+<p>normal loading of tdip data</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">TDIP</span><span class="p">()</span>
+<span class="c1"># import pprofile</span>
+<span class="c1"># profiler = pprofile.Profile()</span>
+<span class="c1"># with profiler():</span>
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_normal.bin&#39;</span><span class="p">)</span>
+<span class="c1"># profile.print_stats()</span>
+<span class="c1"># exit()</span>
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_reciprocal.bin&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+
+
+<span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;norrec&#39;</span><span class="p">]])</span>
+
+<span class="c1"># import IPython</span>
+<span class="c1"># IPython.embed()</span>
+<span class="c1"># exit()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>WARNING: One or more jumps in measurement numbers detected
+The jump indices are:
+989
+Removing data points subsequent to the first jump
+generating ids
+assigning ids
+renumbering electrode numbers
+generating ids
+assigning ids
+       a   b   m   n    id norrec
+0      1   2   4   5   170    nor
+1      5   4   2   1   170    rec
+2      1   2   5   6   211    nor
+3      6   5   2   1   211    rec
+89     6   5   3   2   212    rec
+...   ..  ..  ..  ..   ...    ...
+1973  48  47  43  42  1977    rec
+1976  43  44  47  48  1978    nor
+1977  48  47  44  43  1978    rec
+1978  44  45  47  48  1979    nor
+1979  48  47  45  44  1979    rec
+
+[1980 rows x 6 columns]
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geomK</span>
+<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">geomK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">geomK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a><span class="p">)</span>
+
+<span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">fixK</span>
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">fixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>plot a decay curve by specifying the index
+note that no file will be saved to disk if filename parameter is not provided</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
+                    <span class="n">index_nor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_rec</span><span class="o">=</span><span class="mi">1978</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_syscal_ip_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
+<p>you can also specify only one index
+this will only return a figure object, but will not save to file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
+                    <span class="n">index_nor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_syscal_ip_002.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_002.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
+<p>it does not matter if you choose normal or reciprocal</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">index_rec</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_syscal_ip_003.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_003.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
+<p>plot a decay curve by specifying the index</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">nr_id</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_syscal_ip_004.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_004.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
+<p>a  b  m  n
+0     1  2  4  5
+1978  5  4  2  1</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_syscal_ip_005.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_005.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
+<p>reciprocal is also ok</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_syscal_ip_006.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_006.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;Figure size 590.551x314.961 with 3 Axes&gt;
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-ip-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/36ed92e9691cffa04f30c07b23fbfcc8/plot_syscal_ip.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_ip.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/28bc98882edce836fd30ec5001630993/plot_syscal_ip.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_ip.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/01_ERT/plot_syscal_ip.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

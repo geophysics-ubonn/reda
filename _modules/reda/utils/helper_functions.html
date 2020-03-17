@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.utils.helper_functions &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.utils.helper_functions</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot;Useful helper functions.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">os.path</span>
+<span class="kn">from</span> <span class="nn">importlib</span> <span class="kn">import</span> <span class="n">import_module</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<div class="viewcode-block" id="opt_import"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.opt_import">[docs]</a><span class="k">def</span> <span class="nf">opt_import</span><span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">requiredFor</span><span class="o">=</span><span class="s2">&quot;use the full functionality&quot;</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Import and return module only if it exists.</span>
+<span class="sd">    If `module` cannot be imported, a warning is printed followed by the</span>
+<span class="sd">    `requiredFor` string. Otherwise, the imported `module` will be returned.</span>
+<span class="sd">    This function should be used to import optional dependencies in order to</span>
+<span class="sd">    avoid repeated try/except statements.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    module : str</span>
+<span class="sd">        Name of the module to be imported.</span>
+<span class="sd">    requiredFor : str, optional</span>
+<span class="sd">        Info string for the purpose of the dependency.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from reda.utils import opt_import</span>
+<span class="sd">    &gt;&gt;&gt; reda = opt_import(&quot;reda&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; reda.__name__</span>
+<span class="sd">    &#39;reda&#39;</span>
+<span class="sd">    &gt;&gt;&gt; opt_import(&quot;doesNotExist&quot;, requiredFor=&quot;do something special&quot;)</span>
+<span class="sd">    No module named &#39;doesNotExist&#39;.</span>
+<span class="sd">    You need to install this optional dependency to do something special.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># set default message for common imports</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">requiredFor</span> <span class="ow">and</span> <span class="s2">&quot;crtomo&quot;</span> <span class="ow">in</span> <span class="n">module</span><span class="p">:</span>
+        <span class="n">requiredFor</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s2">&quot;modelling and inversion with CRTOMO. Check&quot;</span>
+            <span class="s2">&quot;http://geo.uni-bonn.de/~mweigand/dashboard for details.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">requiredFor</span> <span class="ow">and</span> <span class="s2">&quot;pygimli&quot;</span> <span class="ow">in</span> <span class="n">module</span><span class="p">:</span>
+        <span class="n">requiredFor</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;modelling and inversion with pygimli. Check&quot;</span>
+                       <span class="s2">&quot;www.pygimli.org for installation details.&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">module</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;Can only import modules and sub-packages.&quot;</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="n">import_module</span><span class="p">(</span><span class="n">module</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;No module named </span><span class="se">\&#39;</span><span class="si">%s</span><span class="se">\&#39;</span><span class="s2">.</span><span class="se">\n</span><span class="s2">You need to install this optional &quot;</span>
+               <span class="s2">&quot;dependency to </span><span class="si">%s</span><span class="s2">.&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">msg</span> <span class="o">%</span> <span class="p">(</span><span class="n">module</span><span class="p">,</span> <span class="n">requiredFor</span><span class="p">))</span>
+        <span class="n">mod</span> <span class="o">=</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">mod</span></div>
+
+
+<div class="viewcode-block" id="which"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.which">[docs]</a><span class="k">def</span> <span class="nf">which</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Python function to mimic the unix &#39;which&#39; command.&quot;&quot;&quot;</span>
+    <span class="c1"># Taken from https://stackoverflow.com/questions/377017/test-if-executable-exists-in-python</span>
+    <span class="kn">import</span> <span class="nn">os</span>
+
+    <span class="k">def</span> <span class="nf">is_exe</span><span class="p">(</span><span class="n">fpath</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">fpath</span><span class="p">)</span> <span class="ow">and</span> <span class="n">os</span><span class="o">.</span><span class="n">access</span><span class="p">(</span><span class="n">fpath</span><span class="p">,</span> <span class="n">os</span><span class="o">.</span><span class="n">X_OK</span><span class="p">)</span>
+
+    <span class="n">fpath</span><span class="p">,</span> <span class="n">fname</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">program</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">fpath</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">is_exe</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">program</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">path</span> <span class="ow">in</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PATH&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">pathsep</span><span class="p">):</span>
+            <span class="n">exe_file</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">program</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">is_exe</span><span class="p">(</span><span class="n">exe_file</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">exe_file</span>
+
+    <span class="k">return</span> <span class="kc">None</span></div>
+
+
+<div class="viewcode-block" id="search"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.search">[docs]</a><span class="k">def</span> <span class="nf">search</span><span class="p">(</span><span class="n">what</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Utility function to search docstrings for string `what`.&quot;&quot;&quot;</span>
+    <span class="n">np</span><span class="o">.</span><span class="n">lookfor</span><span class="p">(</span><span class="n">what</span><span class="p">,</span> <span class="n">module</span><span class="o">=</span><span class="s2">&quot;reda&quot;</span><span class="p">,</span> <span class="n">import_modules</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="has_multiple_timesteps"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.has_multiple_timesteps">[docs]</a><span class="k">def</span> <span class="nf">has_multiple_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return True if `data` container has multiple timesteps.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s2">&quot;timestep&quot;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s2">&quot;timestep&quot;</span><span class="p">]))</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="split_timesteps"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.helper_functions.split_timesteps">[docs]</a><span class="k">def</span> <span class="nf">split_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">consistent_abmn</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Split data into multiple timesteps.&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">has_multiple_timesteps</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">grouped</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;timestep&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">group</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">group</span> <span class="ow">in</span> <span class="n">grouped</span><span class="p">]</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

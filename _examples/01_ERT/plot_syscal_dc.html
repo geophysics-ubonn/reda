@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Importing Syscal ERT data &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Importing Syscal ERT data from roll-a-long scheme" href="plot_syscal_rollalong.html" />
+    <link rel="prev" title="Examples" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Examples</a></li>
+      <li>Next: <a href="plot_syscal_rollalong.html" title="next chapter">Importing Syscal ERT data from roll-a-long scheme</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-01-ert-plot-syscal-dc-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="importing-syscal-ert-data">
+<span id="sphx-glr-examples-01-ert-plot-syscal-dc-py"></span><h1>Importing Syscal ERT data<a class="headerlink" href="#importing-syscal-ert-data" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>data import:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># note that you should prefer importing the binary data (the importer can</span>
+<span class="c1"># import more data)</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span><span class="s1">&#39;data_syscal_ert/data_normal.txt&#39;</span><span class="p">)</span>
+
+<span class="c1"># the second data set was measured in a reciprocal configuration by switching</span>
+<span class="c1"># the 24-electrode cables on the Syscal Pro input connectors. The parameter</span>
+<span class="c1"># &quot;reciprocals&quot; changes electrode notations.</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">import_syscal_txt</span><span class="p">(</span>
+    <span class="s1">&#39;data_syscal_ert/data_reciprocal.txt&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+
+<span class="c1"># compute geometrical factors using the analytical half-space equation for a</span>
+<span class="c1"># spacing of 0.25 m</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
+assigning ids
+renumbering electrode numbers
+generating ids
+assigning ids
+</pre></div>
+</div>
+<p>create some plots in a subdirectory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;plots&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">pseudosection</span><span class="p">(</span>
+        <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosection_log10_r.pdf&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">histogram</span><span class="p">([</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">],</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;histograms.pdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="sphx-glr-horizontal">
+<li><img alt="../../_images/sphx_glr_plot_syscal_dc_001.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_syscal_dc_001.png" />
+</li>
+<li><img alt="../../_images/sphx_glr_plot_syscal_dc_002.png" class="sphx-glr-multi-img" src="../../_images/sphx_glr_plot_syscal_dc_002.png" />
+</li>
+</ul>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Generating histogram plot for key: r
+Generating histogram plot for key: rho_a
+Generating histogram plot for key: Iab
+</pre></div>
+</div>
+<p>export to various data files</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;data_export&#39;</span><span class="p">):</span>
+    <span class="c1"># TODO: seems broken</span>
+    <span class="c1"># ert.export_bert(&#39;data.ohm&#39;)</span>
+    <span class="c1"># ert.export_pygimli(&#39;data.pygimli&#39;)</span>
+    <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="View documentation for reda.containers.ERT.ERT"><span class="n">ert</span></a><span class="o">.</span><span class="n">export_crtomo</span><span class="p">(</span><span class="s1">&#39;volt.dat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-syscal-dc-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/82b70b9511740688b09019ada1f0a6b7/plot_syscal_dc.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_dc.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/ad178ae8f4d59665aee9ae6e5d1fdf29/plot_syscal_dc.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_dc.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/01_ERT/plot_syscal_dc.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

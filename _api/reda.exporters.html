@@ -1,0 +1,241 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.exporters package &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="reda.importers package" href="reda.importers.html" />
+    <link rel="prev" title="reda.eis package" href="reda.eis.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API documentation</a><ul>
+  <li><a href="reda.html">reda package</a><ul>
+      <li>Previous: <a href="reda.eis.html" title="previous chapter">reda.eis package</a></li>
+      <li>Next: <a href="reda.importers.html" title="next chapter">reda.importers package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-reda.exporters">
+<span id="reda-exporters-package"></span><h1>reda.exporters package<a class="headerlink" href="#module-reda.exporters" title="Permalink to this headline">¶</a></h1>
+<p>Exporters to different modeling and inversion codes</p>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reda.exporters.bert">
+<span id="reda-exporters-bert-module"></span><h2>reda.exporters.bert module<a class="headerlink" href="#module-reda.exporters.bert" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reda.exporters.bert.export_bert">
+<code class="sig-prename descclassname">reda.exporters.bert.</code><code class="sig-name descname">export_bert</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/bert.html#export_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.exporters.bert.export_bert" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl>
+<dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with at least a, b, m, n and r.</p>
+</dd>
+<dt><strong>electrodes</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>DataFrame with electrode positions.</p>
+</dd>
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>String of the output filename.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.exporters.crtomo">
+<span id="reda-exporters-crtomo-module"></span><h2>reda.exporters.crtomo module<a class="headerlink" href="#module-reda.exporters.crtomo" title="Permalink to this headline">¶</a></h2>
+<p>Write CRMod/CRTomo (Kemna, 2000) compatible files</p>
+<dl class="function">
+<dt id="reda.exporters.crtomo.save_block_to_crt">
+<code class="sig-prename descclassname">reda.exporters.crtomo.</code><code class="sig-name descname">save_block_to_crt</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">group</em>, <em class="sig-param">norrec='all'</em>, <em class="sig-param">store_errors=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/crtomo.html#save_block_to_crt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.exporters.crtomo.save_block_to_crt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Save a dataset to a CRTomo-compatible .crt file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>Output filename</p>
+</dd>
+<dt><strong>group</strong><span class="classifier">pandas.group</span></dt><dd><p>Data group</p>
+</dd>
+<dt><strong>norrec</strong><span class="classifier">string</span></dt><dd><p>Which data to export Possible values: all|norrec|nor|rec</p>
+</dd>
+<dt><strong>store_errors</strong><span class="classifier">bool</span></dt><dd><p>If true, store errors of the data in a separate column</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.exporters.crtomo.write_files_to_directory">
+<code class="sig-prename descclassname">reda.exporters.crtomo.</code><code class="sig-name descname">write_files_to_directory</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">directory</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/crtomo.html#write_files_to_directory"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.exporters.crtomo.write_files_to_directory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write sEIT data ta files. Data of each frequency is written in a
+separate file that conforms to the CRMod/CRTomo standard, and can directly
+be used for inversions using CRTomo.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>df</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>Data</p>
+</dd>
+<dt><strong>directory</strong><span class="classifier">string</span></dt><dd><p>Output directory. Will be created if not existant</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Other Parameters</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>store_errors: bool, optional</strong></dt><dd><p>store the device generated errors in the output files (as additional
+columns). Default: False</p>
+</dd>
+<dt><strong>norrec: string, optional</strong></dt><dd><p>all|nor|rec which normal-reciprocal data set to use. Default: all</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.exporters.syscal">
+<span id="reda-exporters-syscal-module"></span><h2>reda.exporters.syscal module<a class="headerlink" href="#module-reda.exporters.syscal" title="Permalink to this headline">¶</a></h2>
+<p>Exporter functions for IRIS Instruments Syscal Pro</p>
+<dl class="function">
+<dt id="reda.exporters.syscal.syscal_save_to_config_txt">
+<code class="sig-prename descclassname">reda.exporters.syscal.</code><code class="sig-name descname">syscal_save_to_config_txt</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">configs</em>, <em class="sig-param">spacing=1</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/syscal.html#syscal_save_to_config_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.exporters.syscal.syscal_save_to_config_txt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Write configurations to a Syscal ascii file that can be read by the
+Electre Pro program.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename: string</strong></dt><dd><p>output filename</p>
+</dd>
+<dt><strong>configs: numpy.ndarray</strong></dt><dd><p>Nx4 array with measurement configurations A-B-M-N</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_api/reda.exporters.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

@@ -1,0 +1,370 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.containers.ERT &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.containers.ERT</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">ImportersBase</span>
+<span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">BaseContainer</span>
+
+<span class="kn">import</span> <span class="nn">reda.importers.bert</span> <span class="k">as</span> <span class="nn">reda_bert_import</span>
+<span class="kn">import</span> <span class="nn">reda.importers.iris_syscal_pro</span> <span class="k">as</span> <span class="nn">reda_syscal</span>
+<span class="kn">import</span> <span class="nn">reda.importers.mpt_das1</span> <span class="k">as</span> <span class="nn">reda_mpt</span>
+<span class="kn">from</span> <span class="nn">reda.utils.norrec</span> <span class="kn">import</span> <span class="n">assign_norrec_to_df</span><span class="p">,</span> <span class="n">average_repetitions</span>
+
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">append_doc_of</span>
+<span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">LogDataChanges</span>
+
+
+<div class="viewcode-block" id="ERTImporters"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters">[docs]</a><span class="k">class</span> <span class="nc">ERTImporters</span><span class="p">(</span><span class="n">ImportersBase</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This class provides wrappers for most of the importer functions and is</span>
+<span class="sd">    meant to be inherited by the ERT data container.</span>
+
+<span class="sd">    See Also</span>
+<span class="sd">    --------</span>
+<span class="sd">    Exporters</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ERTImporters.import_syscal_bin"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_bin">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_bin</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_syscal_bin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Syscal import</span>
+
+<span class="sd">        timestep: int or :class:`datetime.datetime`</span>
+<span class="sd">            if provided use this value to set the &#39;timestep&#39; column of the</span>
+<span class="sd">            produced dataframe. Default: 0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IRIS Syscal Pro bin import&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_bin</span><span class="p">(</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERTImporters.import_syscal_txt"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_txt">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_txt</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_syscal_txt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Syscal import</span>
+
+<span class="sd">        timestep: int or :class:`datetime.datetime`</span>
+<span class="sd">            if provided use this value to set the &#39;timestep&#39; column of the</span>
+<span class="sd">            produced dataframe. Default: 0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;IRIS Syscal Pro text import&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_txt</span><span class="p">(</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERTImporters.import_bert"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_bert">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_bert_import</span><span class="o">.</span><span class="n">import_ohm</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_bert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;BERT .ohm file import&quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Unified data format (BERT/pyGIMLi) file import&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">,</span>
+                            <span class="n">filter_query</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">basename</span><span class="p">(</span><span class="n">filename</span><span class="p">)):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">reda_bert_import</span><span class="o">.</span><span class="n">import_ohm</span><span class="p">(</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrodes</span>  <span class="c1"># See issue #22</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERTImporters.import_mpt"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_mpt">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_mpt</span><span class="o">.</span><span class="n">import_das1</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_mpt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;MPT DAS 1 importer</span>
+
+<span class="sd">        timestep : int or :class:`datetime.datetime`</span>
+<span class="sd">            if provided use this value to set the &#39;timestep&#39; column of the</span>
+<span class="sd">            produced dataframe. Default: 0</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;MPT DAS-1 import&#39;</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">):</span>
+            <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">reda_mpt</span><span class="o">.</span><span class="n">import_das1</span><span class="p">(</span>
+                <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="c1"># check if SIP data set is imported, if so select the lowest</span>
+            <span class="c1"># possible frequency</span>
+            <span class="k">if</span> <span class="s1">&#39;frequency&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+                    <span class="s1">&#39;frequency == </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">frequency</span><span class="o">.</span><span class="n">min</span><span class="p">()))</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;dr&#39;</span><span class="p">,</span> <span class="s1">&#39;I&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">]]</span>
+            <span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERTImporters.import_pygimli"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_pygimli">[docs]</a>    <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">import_bert</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">import_pygimli</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">import_bert</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="ERT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT">[docs]</a><span class="k">class</span> <span class="nc">ERT</span><span class="p">(</span><span class="n">BaseContainer</span><span class="p">,</span> <span class="n">ERTImporters</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">topography</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            If not None, then the provided DataFrame is assumed to contain</span>
+<span class="sd">            valid data previously prepared elsewhere. Please refer to the</span>
+<span class="sd">            documentation for required columns.</span>
+<span class="sd">        electrode_positions : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            If set, this is expected to be a DataFrame which contains electrode</span>
+<span class="sd">            positions with columns: &quot;x&quot;, &quot;y&quot;, &quot;z&quot;.</span>
+<span class="sd">        topography : :py:class:`pandas.DataFrame`</span>
+<span class="sd">            If set, this is expected to a DataFrame which contains topography</span>
+<span class="sd">            information with columns: &quot;x&quot;, &quot;y&quot;, &quot;z&quot;.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;m&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;n&#39;</span><span class="p">,</span>
+                                 <span class="s1">&#39;r&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_positions</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topography</span> <span class="o">=</span> <span class="n">topography</span>
+
+<div class="viewcode-block" id="ERT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required type and columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="c1"># is this a DataFrame</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">dataframe</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;The provided dataframe object is not a pandas.DataFrame&#39;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">column</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">dataframe</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s1">&#39;Required column not in dataframe: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">column</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">dataframe</span></div>
+
+<div class="viewcode-block" id="ERT.compute_reciprocal_errors"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.compute_reciprocal_errors">[docs]</a>    <span class="k">def</span> <span class="nf">compute_reciprocal_errors</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="s2">&quot;r&quot;</span><span class="p">):</span>
+        <span class="c1"># JG: BaseContainer?</span>
+        <span class="sa">r</span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compute reciprocal erros following LaBrecque et al. (1996) according</span>
+<span class="sd">        to:</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">            \epsilon = \left|\frac{2(|R_n| - |R_r|)}{|R_n| + |R_r|}\right|</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        key : str</span>
+<span class="sd">            Parameter to calculate the reciprocal error for (default is &quot;r&quot;).</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; import reda</span>
+<span class="sd">        &gt;&gt;&gt; ert = reda.ERT()</span>
+<span class="sd">        &gt;&gt;&gt; ert.data = reda.utils.norrec.get_test_df()</span>
+<span class="sd">        &gt;&gt;&gt; ert.data = pd.DataFrame([</span>
+<span class="sd">        ...     [1,2,3,4,95],</span>
+<span class="sd">        ...     [3,4,2,1,-105]], columns=list(&quot;abmnr&quot;)</span>
+<span class="sd">        ... )</span>
+<span class="sd">        &gt;&gt;&gt; ert.compute_reciprocal_errors()</span>
+<span class="sd">        generating ids</span>
+<span class="sd">        assigning ids</span>
+<span class="sd">        &gt;&gt;&gt; ert.data[&quot;error&quot;].mean() == 0.1</span>
+<span class="sd">        True</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Assign norrec ids if not already present</span>
+        <span class="k">if</span> <span class="s2">&quot;id&quot;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">assign_norrec_to_df</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="c1"># Average repetitions</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">average_repetitions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Get configurations with reciprocals</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">b</span><span class="p">:</span> <span class="ow">not</span> <span class="n">b</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Could not find reciprocals for </span><span class="si">%d</span><span class="s2"> configurations&quot;</span> <span class="o">%</span> <span class="n">n</span><span class="p">)</span>
+
+        <span class="c1"># Calc reciprocal error</span>
+        <span class="n">grouped</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;id&quot;</span><span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">_error</span><span class="p">(</span><span class="n">group</span><span class="p">):</span>
+            <span class="n">R_n</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">R_r</span> <span class="o">=</span> <span class="n">group</span><span class="p">[</span><span class="s2">&quot;r&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="k">return</span> <span class="nb">abs</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">R_n</span><span class="p">)</span> <span class="o">-</span> <span class="nb">abs</span><span class="p">(</span><span class="n">R_r</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">R_n</span><span class="p">)</span> <span class="o">+</span> <span class="nb">abs</span><span class="p">(</span><span class="n">R_r</span><span class="p">)))</span>
+
+        <span class="n">error</span> <span class="o">=</span> <span class="n">grouped</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">_error</span><span class="p">)</span>
+        <span class="n">error</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;error&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">error</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span>
+            <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

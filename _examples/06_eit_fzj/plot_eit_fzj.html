@@ -1,0 +1,740 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Importing FZJ EIT40/EIT160 data &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Data Importers" href="../../importers.html" />
+    <link rel="prev" title="Analyzing total capacitances at each electrode during current injection" href="plot_eit_fzj_li.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="plot_eit_fzj_li.html" title="previous chapter">Analyzing total capacitances at each electrode during current injection</a></li>
+      <li>Next: <a href="../../importers.html" title="next chapter">Data Importers</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="importing-fzj-eit40-eit160-data">
+<span id="sphx-glr-examples-06-eit-fzj-plot-eit-fzj-py"></span><h1>Importing FZJ EIT40/EIT160 data<a class="headerlink" href="#importing-fzj-eit40-eit160-data" title="Permalink to this headline">¶</a></h1>
+<p>This example shows how to import data from the various versions of the EIT
+system developed by Zimmermann et al. 2008
+(<a class="reference external" href="http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta">http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta</a>).</p>
+<p>At this point we only support 3-point data, i.e., data which uses two
+electrodes to inject current, and then uses all electrodes to measure the
+resulting potential distribution against system ground. Classical four-point
+configurations are then computed using superposition.</p>
+<p>Required are two files: a data file (usually <strong>eit_data_mnu0.mat</strong> and a text
+file (usually <strong>configs.dat</strong> containing the measurement configurations to
+extract.</p>
+<p>The configs.dat file contains the four-point spreads to be imported from the
+measurement. This file is a text file with four columns (A, B, M, N),
+separated by spaces or tabs. Each line denotes one measurement:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">1</span>   <span class="mi">2</span>   <span class="mi">4</span>   <span class="mi">3</span>
+<span class="mi">2</span>   <span class="mi">3</span>   <span class="mi">5</span>   <span class="mi">6</span>
+</pre></div>
+</div>
+<p>An alternative to the config.dat file is to permute all current injection
+dipoles as voltage dipoles, resulting in a fully normal-reciprocal
+configuration set. This set can be automatically generated from the measurement
+data by providing a special function as the config-parameter in the import
+function. This is explained below.</p>
+<p>Import reda</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+</pre></div>
+</div>
+<p>Initialize an sEIT container</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+
+<span class="c1"># import the data</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
+    <span class="n">configfile</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/configs_large_dipoles_norrec.dat&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
+generating ids
+assigning ids
+Summary:
+                a           b             m             n
+count  16280.0000  16280.0000  16280.000000  16280.000000
+mean      10.5250     30.4750     20.500000     20.500000
+std        5.8096      5.8096     11.543751     11.543751
+min        1.0000     20.0000      1.000000      1.000000
+25%        5.7500     25.7500     10.750000     10.750000
+50%       10.5000     30.5000     20.500000     20.500000
+75%       15.2500     35.2500     30.250000     30.250000
+max       21.0000     40.0000     40.000000     40.000000
+</pre></div>
+</div>
+<p>an alternative would be to automatically create measurement configurations
+from the current injection dipoles:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.importers.eit_fzj</span> <span class="kn">import</span> <a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
+
+<span class="c1"># initialize an sEIT container</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit_not_used</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+
+<span class="c1"># import the data</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit_not_used</span></a><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;data_EIT40_v_EZ-2017/eit_data_mnu0.mat&#39;</span><span class="p">,</span>
+    <span class="n">configfile</span><span class="o">=</span><a href="../../_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate" title="View documentation for reda.importers.eit_fzj.MD_ConfigsPermutate"><span class="n">MD_ConfigsPermutate</span></a>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
+generating ids
+assigning ids
+Summary:
+                a           b             m             n
+count  16280.0000  16280.0000  16280.000000  16280.000000
+mean      10.5250     30.4750     20.500000     20.500000
+std        5.8096      5.8096     11.543751     11.543751
+min        1.0000     20.0000      1.000000      1.000000
+25%        5.7500     25.7500     10.750000     10.750000
+50%       10.5000     30.5000     20.500000     20.500000
+75%       15.2500     35.2500     30.250000     30.250000
+max       21.0000     40.0000     40.000000     40.000000
+</pre></div>
+</div>
+<p>Compute geometric factors</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">redaK</span>
+<span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">redafixK</span>
+
+<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">redaK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">redaK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a><span class="p">)</span>
+<a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">redafixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>a</th>
+      <th>b</th>
+      <th>m</th>
+      <th>n</th>
+      <th>datetime</th>
+      <th>frequency</th>
+      <th>Zg1</th>
+      <th>Zg2</th>
+      <th>Zg3</th>
+      <th>Is</th>
+      <th>Il</th>
+      <th>Zg</th>
+      <th>Iab</th>
+      <th>Ileakage</th>
+      <th>Zt</th>
+      <th>r</th>
+      <th>Vmn</th>
+      <th>rpha</th>
+      <th>id</th>
+      <th>norrec</th>
+      <th>rdiff</th>
+      <th>rphadiff</th>
+      <th>k</th>
+      <th>rho_a</th>
+      <th>sigma_a</th>
+      <th>rho_a_complex</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>396</th>
+      <td>1</td>
+      <td>22</td>
+      <td>2</td>
+      <td>21</td>
+      <td>2018-01-27 08:03:45.233560</td>
+      <td>0.1</td>
+      <td>1845.514039-309.918615j</td>
+      <td>1830.103481-336.538264j</td>
+      <td>1830.135759-348.659106j</td>
+      <td>0.004369+0.000378j</td>
+      <td>-7.781986e-07-2.016430e-07j</td>
+      <td>1835.251093-331.705328j</td>
+      <td>4.384991</td>
+      <td>0.000804</td>
+      <td>67.613572-0.476405j</td>
+      <td>67.615251</td>
+      <td>296.492266</td>
+      <td>-7.045880</td>
+      <td>74</td>
+      <td>nor</td>
+      <td>135.370540</td>
+      <td>-3141.166197</td>
+      <td>0.826735</td>
+      <td>55.899888</td>
+      <td>0.017889</td>
+      <td>55.898501-0.393861j</td>
+    </tr>
+    <tr>
+      <th>397</th>
+      <td>2</td>
+      <td>21</td>
+      <td>1</td>
+      <td>22</td>
+      <td>2018-01-27 08:47:03.645680</td>
+      <td>0.1</td>
+      <td>1740.676857-298.630656j</td>
+      <td>1729.294712-322.735738j</td>
+      <td>1730.518216-332.929183j</td>
+      <td>0.004488+0.000382j</td>
+      <td>-2.603903e-06-6.249216e-07j</td>
+      <td>1733.496595-318.098526j</td>
+      <td>4.504308</td>
+      <td>0.002678</td>
+      <td>67.753805-0.448498j</td>
+      <td>67.755289</td>
+      <td>305.190720</td>
+      <td>-6.619423</td>
+      <td>74</td>
+      <td>rec</td>
+      <td>135.370540</td>
+      <td>-3141.166197</td>
+      <td>0.826735</td>
+      <td>56.015663</td>
+      <td>0.017852</td>
+      <td>56.014436-0.370789j</td>
+    </tr>
+    <tr>
+      <th>12892</th>
+      <td>2</td>
+      <td>21</td>
+      <td>1</td>
+      <td>20</td>
+      <td>2018-01-27 08:47:03.645680</td>
+      <td>0.1</td>
+      <td>1740.676857-298.630656j</td>
+      <td>1729.294712-322.735738j</td>
+      <td>1730.518216-332.929183j</td>
+      <td>0.004488+0.000382j</td>
+      <td>-2.603903e-06-6.249216e-07j</td>
+      <td>1733.496595-318.098526j</td>
+      <td>4.504308</td>
+      <td>0.002678</td>
+      <td>68.489745-0.511118j</td>
+      <td>68.491652</td>
+      <td>308.507526</td>
+      <td>-7.462554</td>
+      <td>92</td>
+      <td>rec</td>
+      <td>-0.106258</td>
+      <td>-0.590684</td>
+      <td>0.829159</td>
+      <td>56.790494</td>
+      <td>0.017609</td>
+      <td>56.788913-0.423798j</td>
+    </tr>
+    <tr>
+      <th>12893</th>
+      <td>1</td>
+      <td>20</td>
+      <td>2</td>
+      <td>21</td>
+      <td>2018-01-27 09:28:11.962861</td>
+      <td>0.1</td>
+      <td>1882.449148-332.761564j</td>
+      <td>1867.017051-353.821789j</td>
+      <td>1868.918746-358.069064j</td>
+      <td>0.004324+0.000389j</td>
+      <td>8.166327e-07+2.159040e-07j</td>
+      <td>1872.794982-348.217472j</td>
+      <td>4.341069</td>
+      <td>0.000845</td>
+      <td>68.595685-0.552429j</td>
+      <td>68.597910</td>
+      <td>297.788253</td>
+      <td>-8.053239</td>
+      <td>92</td>
+      <td>nor</td>
+      <td>-0.106258</td>
+      <td>-0.590684</td>
+      <td>0.829159</td>
+      <td>56.878598</td>
+      <td>0.017581</td>
+      <td>56.876754-0.458052j</td>
+    </tr>
+    <tr>
+      <th>418</th>
+      <td>1</td>
+      <td>22</td>
+      <td>2</td>
+      <td>23</td>
+      <td>2018-01-27 08:03:45.233560</td>
+      <td>0.1</td>
+      <td>1845.514039-309.918615j</td>
+      <td>1830.103481-336.538264j</td>
+      <td>1830.135759-348.659106j</td>
+      <td>0.004369+0.000378j</td>
+      <td>-7.781986e-07-2.016430e-07j</td>
+      <td>1835.251093-331.705328j</td>
+      <td>4.384991</td>
+      <td>0.000804</td>
+      <td>61.405722-0.426200j</td>
+      <td>61.407201</td>
+      <td>269.270026</td>
+      <td>-6.940618</td>
+      <td>111</td>
+      <td>nor</td>
+      <td>0.180274</td>
+      <td>-0.614708</td>
+      <td>0.824762</td>
+      <td>50.646313</td>
+      <td>0.019745</td>
+      <td>50.645094-0.351514j</td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+      <td>...</td>
+    </tr>
+    <tr>
+      <th>12451</th>
+      <td>18</td>
+      <td>37</td>
+      <td>21</td>
+      <td>40</td>
+      <td>2018-01-27 09:22:14.727928</td>
+      <td>10000.0</td>
+      <td>1509.946181-140.356544j</td>
+      <td>1509.946468-140.357634j</td>
+      <td>1509.945664-140.357569j</td>
+      <td>0.004823+0.000196j</td>
+      <td>5.066413e-05-8.695025e-05j</td>
+      <td>1509.946104-140.357249j</td>
+      <td>4.826839</td>
+      <td>0.100634</td>
+      <td>14.563418-1.008587j</td>
+      <td>14.598301</td>
+      <td>70.463644</td>
+      <td>-69.144430</td>
+      <td>1477</td>
+      <td>nor</td>
+      <td>-0.176318</td>
+      <td>-14.544220</td>
+      <td>2.811459</td>
+      <td>41.042529</td>
+      <td>0.024365</td>
+      <td>40.944456-2.835602j</td>
+    </tr>
+    <tr>
+      <th>11218</th>
+      <td>19</td>
+      <td>38</td>
+      <td>21</td>
+      <td>40</td>
+      <td>2018-01-27 08:41:06.303742</td>
+      <td>10000.0</td>
+      <td>1487.062804-137.106700j</td>
+      <td>1487.062909-137.107755j</td>
+      <td>1487.061286-137.107605j</td>
+      <td>0.004855+0.000194j</td>
+      <td>-1.159057e-04-8.547126e-05j</td>
+      <td>1487.062333-137.107354j</td>
+      <td>4.858639</td>
+      <td>0.144012</td>
+      <td>24.556856-1.833682j</td>
+      <td>24.625222</td>
+      <td>119.645077</td>
+      <td>-74.532549</td>
+      <td>1478</td>
+      <td>nor</td>
+      <td>0.246324</td>
+      <td>11.928511</td>
+      <td>1.757913</td>
+      <td>43.289002</td>
+      <td>0.023101</td>
+      <td>43.168820-3.223453j</td>
+    </tr>
+    <tr>
+      <th>11219</th>
+      <td>21</td>
+      <td>40</td>
+      <td>19</td>
+      <td>38</td>
+      <td>2018-01-27 08:45:26.153105</td>
+      <td>10000.0</td>
+      <td>1214.971601-99.776976j</td>
+      <td>1214.970677-99.777250j</td>
+      <td>1214.970820-99.776733j</td>
+      <td>0.005267+0.000167j</td>
+      <td>3.035386e-04-5.237910e-05j</td>
+      <td>1214.971033-99.776987j</td>
+      <td>5.269442</td>
+      <td>0.308025</td>
+      <td>24.331140-1.525221j</td>
+      <td>24.378898</td>
+      <td>128.463180</td>
+      <td>-62.604038</td>
+      <td>1478</td>
+      <td>rec</td>
+      <td>0.246324</td>
+      <td>11.928511</td>
+      <td>1.757913</td>
+      <td>42.855985</td>
+      <td>0.023334</td>
+      <td>42.772030-2.681205j</td>
+    </tr>
+    <tr>
+      <th>12494</th>
+      <td>21</td>
+      <td>40</td>
+      <td>20</td>
+      <td>39</td>
+      <td>2018-01-27 08:45:26.153105</td>
+      <td>10000.0</td>
+      <td>1214.971601-99.776976j</td>
+      <td>1214.970677-99.777250j</td>
+      <td>1214.970820-99.776733j</td>
+      <td>0.005267+0.000167j</td>
+      <td>3.035386e-04-5.237910e-05j</td>
+      <td>1214.971033-99.776987j</td>
+      <td>5.269442</td>
+      <td>0.308025</td>
+      <td>62.492054-4.551339j</td>
+      <td>62.657574</td>
+      <td>330.170428</td>
+      <td>-72.702319</td>
+      <td>1479</td>
+      <td>rec</td>
+      <td>-0.022068</td>
+      <td>-16.100432</td>
+      <td>0.829159</td>
+      <td>51.953113</td>
+      <td>0.019248</td>
+      <td>51.815871-3.773785j</td>
+    </tr>
+    <tr>
+      <th>12495</th>
+      <td>20</td>
+      <td>39</td>
+      <td>21</td>
+      <td>40</td>
+      <td>2018-01-27 09:26:34.516287</td>
+      <td>10000.0</td>
+      <td>1420.095538-150.390175j</td>
+      <td>1420.096385-150.391266j</td>
+      <td>1420.096148-150.391203j</td>
+      <td>0.004947+0.000221j</td>
+      <td>-2.085763e-04-4.436973e-05j</td>
+      <td>1420.096023-150.390881j</td>
+      <td>4.952257</td>
+      <td>0.213243</td>
+      <td>62.432660-5.558812j</td>
+      <td>62.679642</td>
+      <td>310.405690</td>
+      <td>-88.802752</td>
+      <td>1479</td>
+      <td>nor</td>
+      <td>-0.022068</td>
+      <td>-16.100432</td>
+      <td>0.829159</td>
+      <td>51.971411</td>
+      <td>0.019241</td>
+      <td>51.766624-4.609141j</td>
+    </tr>
+  </tbody>
+</table>
+<p>16280 rows × 26 columns</p>
+</div>
+<br />
+<br /><p>compute normal and reciprocal pairs
+note that this is usually done on import once.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.norrec</span> <span class="k">as</span> <span class="nn">norrec</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.norrec.assign_norrec_to_df" title="View documentation for reda.utils.norrec.assign_norrec_to_df"><span class="n">norrec</span><span class="o">.</span><span class="n">assign_norrec_to_df</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
+assigning ids
+</pre></div>
+</div>
+<p>quadrupoles can be directly accessed using a pandas grouper</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">abmn</span><span class="p">)</span>
+<span class="n">quadpole_data</span> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">quadpole_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f6ec9f0c208&gt;
+        a   b   m   n     frequency         r        rpha
+749    10  29  15  34      0.100000  7.356375   -5.205543
+2229   10  29  15  34      0.314465  7.323810   -6.903037
+3709   10  29  15  34      1.000000  7.282164   -7.242394
+5189   10  29  15  34      3.125000  7.239073   -6.332998
+6669   10  29  15  34     10.000000  7.199660  -12.081013
+8149   10  29  15  34     31.250000  7.176920   -3.132819
+9629   10  29  15  34    110.000000  7.170031    4.958888
+11109  10  29  15  34    312.500000  7.211899    8.671063
+12589  10  29  15  34   1000.000000  7.325287   -2.429873
+14069  10  29  15  34   3150.000000  7.313380  -37.892727
+15549  10  29  15  34  10000.000000  7.035541 -100.904824
+</pre></div>
+</div>
+<p>in a similar fashion, spectra can be extracted</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spec_nor</span></a><span class="p">,</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spec_rec</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">get_spectrum</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spec_nor</span></a><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spec_rec</span></a><span class="p">))</span>
+
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spec_nor</span></a><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;spectrum_10_29_15_34.png&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;reda.eis.plots.sip_response&#39;&gt;
+&lt;class &#39;reda.eis.plots.sip_response&#39;&gt;
+</pre></div>
+</div>
+<p>filter data</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">remove_frequencies</span><span class="p">(</span><span class="mf">1e-3</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &lt; 10&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rpha &gt; -40&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;rho_a &gt; 15 and rho_a &lt; 35&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;k &lt; 400&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Remaining frequencies:
+[0.1, 0.31446541, 1.0, 3.125, 10.0, 31.25, 110.0]
+</pre></div>
+</div>
+<p>Plotting histograms
+Raw data plots (execute before applying the filters):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># import os</span>
+<span class="c1"># import reda.plotters.histograms as redahist</span>
+
+<span class="c1"># if not os.path.isdir(&#39;hists_raw&#39;):</span>
+<span class="c1">#     os.makedirs(&#39;hists_raw&#39;)</span>
+
+<span class="c1"># # plot histograms for all frequencies</span>
+<span class="c1"># r = redahist.plot_histograms_extra_dims(</span>
+<span class="c1">#     seit.data, [&#39;R&#39;, &#39;rpha&#39;], [&#39;frequency&#39;]</span>
+<span class="c1"># )</span>
+<span class="c1"># for f in sorted(r.keys()):</span>
+<span class="c1">#     r[f][&#39;all&#39;].savefig(&#39;hists_raw/hist_raw_f_{0}.png&#39;.format(f), dpi=300)</span>
+
+<span class="c1"># if not os.path.isdir(&#39;hists_filtered&#39;):</span>
+<span class="c1">#     os.makedirs(&#39;hists_filtered&#39;)</span>
+
+<span class="c1"># r = redahist.plot_histograms_extra_dims(</span>
+<span class="c1">#     seit.data, [&#39;R&#39;, &#39;rpha&#39;], [&#39;frequency&#39;]</span>
+<span class="c1"># )</span>
+
+<span class="c1"># for f in sorted(r.keys()):</span>
+<span class="c1">#     r[f][&#39;all&#39;].savefig(</span>
+<span class="c1">#         &#39;hists_filtered/hist_filtered_f_{0}.png&#39;.format(f), dpi=300</span>
+<span class="c1">#     )</span>
+</pre></div>
+</div>
+<p>Now export the data to CRTomo-compatible files
+this context manager executes all code within the given directory</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj&#39;</span><span class="p">):</span>
+    <span class="kn">import</span> <span class="nn">reda.exporters.crtomo</span> <span class="k">as</span> <span class="nn">redaex</span>
+    <a href="../../_api/reda.exporters.html#reda.exporters.crtomo.write_files_to_directory" title="View documentation for reda.exporters.crtomo.write_files_to_directory"><span class="n">redaex</span><span class="o">.</span><span class="n">write_files_to_directory</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="s1">&#39;crt_results&#39;</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot pseudosections of all frequencies</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.plotters.pseudoplots</span> <span class="k">as</span> <span class="nn">PS</span>
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj&#39;</span><span class="p">):</span>
+    <span class="n">g</span> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">axes</span></a> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+        <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">20</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span>
+        <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+    <span class="k">for</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="p">,</span> <span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="View documentation for builtins.float"><span class="n">key</span></a><span class="p">,</span> <span class="n">item</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.flat.html#numpy.ndarray.flat" title="View documentation for numpy.ndarray.flat"><span class="n">axes</span><span class="o">.</span><span class="n">flat</span></a><span class="p">,</span> <span class="n">g</span><span class="p">):</span>
+        <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="p">,</span> <a href="https://matplotlib.org/api/colorbar_api.html#matplotlib.colorbar.Colorbar" title="View documentation for matplotlib.colorbar.Colorbar"><span class="n">cb</span></a> <span class="o">=</span> <a href="../../_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2" title="View documentation for reda.plotters.pseudoplots.plot_pseudosection_type2"><span class="n">PS</span><span class="o">.</span><span class="n">plot_pseudosection_type2</span></a><span class="p">(</span><span class="n">item</span><span class="p">,</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="o">=</span><a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a><span class="p">,</span> <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+        <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_title.html#matplotlib.axes.Axes.set_title" title="View documentation for matplotlib.axes.Axes.set_title"><span class="n">ax</span><span class="o">.</span><span class="n">set_title</span></a><span class="p">(</span><span class="s1">&#39;f: </span><span class="si">{}</span><span class="s1"> Hz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/functions.html#float" title="View documentation for builtins.float"><span class="n">key</span></a><span class="p">))</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.tight_layout" title="View documentation for matplotlib.figure.Figure.tight_layout"><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">()</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.savefig" title="View documentation for matplotlib.figure.Figure.savefig"><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span></a><span class="p">(</span><span class="s1">&#39;pseudosections_eit40.pdf&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_eit_fzj_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_001.png" />
+<p>alternative</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">plot_pseudosections</span><span class="p">(</span>
+        <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosections_eit40_v2.pdf&#39;</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  47.451 seconds)</p>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/838ff59b27381854f04afa4adea79a01/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/c3168fbff9472282ee9a322616272b70/plot_eit_fzj.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/06_eit_fzj/plot_eit_fzj.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

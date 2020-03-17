@@ -1,0 +1,970 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr__examples_03_sEIT_plot_radic_sip256c.py:
+
+
+Importing Radic SIP256c data
+============================
+
+.. warning::
+
+    The SIP256c importer is incredibly slow at the moment. Sorry for that.
+
+create the data container
+
+
+.. code-block:: default
+
+    import reda
+    seit = reda.sEIT()
+
+
+
+
+
+
+
+
+import the data
+
+
+.. code-block:: default
+
+    seit.import_sip256c('data_Radic_256c/dipdip_skip0_nor.res')
+    seit.import_sip256c('data_Radic_256c/dipdip_skip0_rec.res', reciprocal=49)
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    number of readings 47
+    keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
+    generating ids
+    assigning ids
+    Summary:
+                      a             b             m             n
+    count  17296.000000  17296.000000  17296.000000  17296.000000
+    mean      16.000000     17.000000     34.000000     33.000000
+    std       10.954768     10.954768     10.954768     10.954768
+    min        1.000000      2.000000      4.000000      3.000000
+    25%        7.000000      8.000000     26.000000     25.000000
+    50%       14.000000     15.000000     36.000000     35.000000
+    75%       24.000000     25.000000     43.000000     42.000000
+    max       46.000000     47.000000     49.000000     48.000000
+    number of readings 47
+    keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
+    generating ids
+    assigning ids
+    Summary:
+                      a             b             m             n
+    count  17296.000000  17296.000000  17296.000000  17296.000000
+    mean      34.000000     33.000000     16.000000     17.000000
+    std       10.954768     10.954768     10.954768     10.954768
+    min        4.000000      3.000000      1.000000      2.000000
+    25%       26.000000     25.000000      7.000000      8.000000
+    50%       36.000000     35.000000     14.000000     15.000000
+    75%       43.000000     42.000000     24.000000     25.000000
+    max       49.000000     48.000000     46.000000     47.000000
+
+
+
+
+compute K factors (electrode spacing was 3 m)
+
+
+.. code-block:: default
+
+    import reda.utils.geometric_factors as redaK
+    K = redaK.compute_K_analytical(seit.data, spacing=3)
+    redaK.apply_K(seit.data, K)
+
+
+
+
+
+
+.. only:: builder_html
+
+    .. raw:: html
+
+        <div>
+        <style scoped>
+            .dataframe tbody tr th:only-of-type {
+                vertical-align: middle;
+            }
+
+            .dataframe tbody tr th {
+                vertical-align: top;
+            }
+
+            .dataframe thead th {
+                text-align: right;
+            }
+        </style>
+        <table border="1" class="dataframe">
+          <thead>
+            <tr style="text-align: right;">
+              <th></th>
+              <th>a</th>
+              <th>b</th>
+              <th>m</th>
+              <th>n</th>
+              <th>I</th>
+              <th>U</th>
+              <th>date</th>
+              <th>dr</th>
+              <th>drho</th>
+              <th>drpha</th>
+              <th>frequency</th>
+              <th>k</th>
+              <th>r</th>
+              <th>rho</th>
+              <th>rpha</th>
+              <th>time</th>
+              <th>with_calib</th>
+              <th>id</th>
+              <th>norrec</th>
+              <th>rdiff</th>
+              <th>rphadiff</th>
+              <th>rho_a</th>
+              <th>sigma_a</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td>1</td>
+              <td>2</td>
+              <td>4</td>
+              <td>3</td>
+              <td>114.03921</td>
+              <td>0.080038</td>
+              <td>09.06.2016</td>
+              <td>0.007672</td>
+              <td>0.00439</td>
+              <td>0.043982</td>
+              <td>0.03906</td>
+              <td>56.548668</td>
+              <td>1.747590</td>
+              <td>4.35150</td>
+              <td>-4.114614</td>
+              <td>13:55:55</td>
+              <td>nc</td>
+              <td>135</td>
+              <td>nor</td>
+              <td>0.020546</td>
+              <td>-0.101404</td>
+              <td>98.823907</td>
+              <td>0.010119</td>
+            </tr>
+            <tr>
+              <th>1</th>
+              <td>4</td>
+              <td>3</td>
+              <td>1</td>
+              <td>2</td>
+              <td>124.61780</td>
+              <td>0.088490</td>
+              <td>10.06.2016</td>
+              <td>0.005976</td>
+              <td>0.00338</td>
+              <td>0.033685</td>
+              <td>0.03906</td>
+              <td>56.548668</td>
+              <td>1.768137</td>
+              <td>4.40266</td>
+              <td>-4.216017</td>
+              <td>16:59:07</td>
+              <td>nc</td>
+              <td>135</td>
+              <td>rec</td>
+              <td>0.020546</td>
+              <td>-0.101404</td>
+              <td>99.985766</td>
+              <td>0.010001</td>
+            </tr>
+            <tr>
+              <th>2</th>
+              <td>1</td>
+              <td>2</td>
+              <td>5</td>
+              <td>4</td>
+              <td>114.03921</td>
+              <td>0.003014</td>
+              <td>09.06.2016</td>
+              <td>0.003727</td>
+              <td>0.01289</td>
+              <td>0.128980</td>
+              <td>0.03906</td>
+              <td>226.194671</td>
+              <td>0.289123</td>
+              <td>3.16301</td>
+              <td>-3.258006</td>
+              <td>13:55:55</td>
+              <td>nc</td>
+              <td>179</td>
+              <td>nor</td>
+              <td>-0.000811</td>
+              <td>0.136834</td>
+              <td>65.398172</td>
+              <td>0.015291</td>
+            </tr>
+            <tr>
+              <th>3</th>
+              <td>5</td>
+              <td>4</td>
+              <td>1</td>
+              <td>2</td>
+              <td>124.89605</td>
+              <td>0.003292</td>
+              <td>10.06.2016</td>
+              <td>0.000776</td>
+              <td>0.00269</td>
+              <td>0.026878</td>
+              <td>0.03906</td>
+              <td>226.194671</td>
+              <td>0.288313</td>
+              <td>3.15414</td>
+              <td>-3.121172</td>
+              <td>16:50:00</td>
+              <td>nc</td>
+              <td>179</td>
+              <td>rec</td>
+              <td>-0.000811</td>
+              <td>0.136834</td>
+              <td>65.214777</td>
+              <td>0.015334</td>
+            </tr>
+            <tr>
+              <th>92</th>
+              <td>2</td>
+              <td>3</td>
+              <td>5</td>
+              <td>4</td>
+              <td>124.50752</td>
+              <td>0.071875</td>
+              <td>09.06.2016</td>
+              <td>0.013855</td>
+              <td>0.00800</td>
+              <td>0.079936</td>
+              <td>0.03906</td>
+              <td>56.548668</td>
+              <td>1.731830</td>
+              <td>5.19549</td>
+              <td>-5.190260</td>
+              <td>14:04:59</td>
+              <td>nc</td>
+              <td>180</td>
+              <td>nor</td>
+              <td>0.002413</td>
+              <td>0.052011</td>
+              <td>97.932679</td>
+              <td>0.010211</td>
+            </tr>
+            <tr>
+              <th>...</th>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+            <tr>
+              <th>34585</th>
+              <td>49</td>
+              <td>48</td>
+              <td>44</td>
+              <td>45</td>
+              <td>25.36068</td>
+              <td>0.000061</td>
+              <td>10.06.2016</td>
+              <td>0.002889</td>
+              <td>0.04718</td>
+              <td>0.471762</td>
+              <td>1000.00000</td>
+              <td>565.486678</td>
+              <td>0.061233</td>
+              <td>1.55655</td>
+              <td>-47.552543</td>
+              <td>10:01:20</td>
+              <td>nc</td>
+              <td>2159</td>
+              <td>rec</td>
+              <td>-0.000273</td>
+              <td>10.720336</td>
+              <td>34.626605</td>
+              <td>0.028880</td>
+            </tr>
+            <tr>
+              <th>34588</th>
+              <td>45</td>
+              <td>46</td>
+              <td>49</td>
+              <td>48</td>
+              <td>44.45877</td>
+              <td>0.000891</td>
+              <td>09.06.2016</td>
+              <td>0.002308</td>
+              <td>0.01053</td>
+              <td>0.105243</td>
+              <td>1000.00000</td>
+              <td>226.194671</td>
+              <td>0.219183</td>
+              <td>2.39786</td>
+              <td>-64.560253</td>
+              <td>20:26:49</td>
+              <td>nc</td>
+              <td>2160</td>
+              <td>nor</td>
+              <td>-0.000217</td>
+              <td>21.121451</td>
+              <td>49.577985</td>
+              <td>0.020170</td>
+            </tr>
+            <tr>
+              <th>34589</th>
+              <td>49</td>
+              <td>48</td>
+              <td>45</td>
+              <td>46</td>
+              <td>25.36068</td>
+              <td>0.000508</td>
+              <td>10.06.2016</td>
+              <td>0.002181</td>
+              <td>0.00996</td>
+              <td>0.099658</td>
+              <td>1000.00000</td>
+              <td>226.194671</td>
+              <td>0.218966</td>
+              <td>2.39549</td>
+              <td>-43.438802</td>
+              <td>10:01:20</td>
+              <td>nc</td>
+              <td>2160</td>
+              <td>rec</td>
+              <td>-0.000217</td>
+              <td>21.121451</td>
+              <td>49.528983</td>
+              <td>0.020190</td>
+            </tr>
+            <tr>
+              <th>34590</th>
+              <td>46</td>
+              <td>47</td>
+              <td>49</td>
+              <td>48</td>
+              <td>49.41489</td>
+              <td>0.018629</td>
+              <td>09.06.2016</td>
+              <td>0.007153</td>
+              <td>0.00762</td>
+              <td>0.076096</td>
+              <td>1000.00000</td>
+              <td>56.548668</td>
+              <td>0.938707</td>
+              <td>2.33738</td>
+              <td>42.262101</td>
+              <td>20:35:55</td>
+              <td>nc</td>
+              <td>2161</td>
+              <td>nor</td>
+              <td>-0.001265</td>
+              <td>5.689250</td>
+              <td>53.082621</td>
+              <td>0.018839</td>
+            </tr>
+            <tr>
+              <th>34591</th>
+              <td>49</td>
+              <td>48</td>
+              <td>46</td>
+              <td>47</td>
+              <td>25.36068</td>
+              <td>0.009548</td>
+              <td>10.06.2016</td>
+              <td>0.003694</td>
+              <td>0.00394</td>
+              <td>0.039444</td>
+              <td>1000.00000</td>
+              <td>56.548668</td>
+              <td>0.937442</td>
+              <td>2.33423</td>
+              <td>47.951350</td>
+              <td>10:01:20</td>
+              <td>nc</td>
+              <td>2161</td>
+              <td>rec</td>
+              <td>-0.001265</td>
+              <td>5.689250</td>
+              <td>53.011083</td>
+              <td>0.018864</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>34592 rows × 23 columns</p>
+        </div>
+        <br />
+        <br />
+
+fix signs/pi-shifts caused by negative geometric factors
+
+
+.. code-block:: default
+
+    import reda.utils.fix_sign_with_K as redaFixK
+    redaFixK.fix_sign_with_K(seit.data)
+
+
+
+
+
+.. only:: builder_html
+
+    .. raw:: html
+
+        <div>
+        <style scoped>
+            .dataframe tbody tr th:only-of-type {
+                vertical-align: middle;
+            }
+
+            .dataframe tbody tr th {
+                vertical-align: top;
+            }
+
+            .dataframe thead th {
+                text-align: right;
+            }
+        </style>
+        <table border="1" class="dataframe">
+          <thead>
+            <tr style="text-align: right;">
+              <th></th>
+              <th>a</th>
+              <th>b</th>
+              <th>m</th>
+              <th>n</th>
+              <th>I</th>
+              <th>U</th>
+              <th>date</th>
+              <th>dr</th>
+              <th>drho</th>
+              <th>drpha</th>
+              <th>frequency</th>
+              <th>k</th>
+              <th>r</th>
+              <th>rho</th>
+              <th>rpha</th>
+              <th>time</th>
+              <th>with_calib</th>
+              <th>id</th>
+              <th>norrec</th>
+              <th>rdiff</th>
+              <th>rphadiff</th>
+              <th>rho_a</th>
+              <th>sigma_a</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th>0</th>
+              <td>1</td>
+              <td>2</td>
+              <td>4</td>
+              <td>3</td>
+              <td>114.03921</td>
+              <td>0.080038</td>
+              <td>09.06.2016</td>
+              <td>0.007672</td>
+              <td>0.00439</td>
+              <td>0.043982</td>
+              <td>0.03906</td>
+              <td>56.548668</td>
+              <td>1.747590</td>
+              <td>4.35150</td>
+              <td>-4.114614</td>
+              <td>13:55:55</td>
+              <td>nc</td>
+              <td>135</td>
+              <td>nor</td>
+              <td>0.020546</td>
+              <td>-0.101404</td>
+              <td>98.823907</td>
+              <td>0.010119</td>
+            </tr>
+            <tr>
+              <th>1</th>
+              <td>4</td>
+              <td>3</td>
+              <td>1</td>
+              <td>2</td>
+              <td>124.61780</td>
+              <td>0.088490</td>
+              <td>10.06.2016</td>
+              <td>0.005976</td>
+              <td>0.00338</td>
+              <td>0.033685</td>
+              <td>0.03906</td>
+              <td>56.548668</td>
+              <td>1.768137</td>
+              <td>4.40266</td>
+              <td>-4.216017</td>
+              <td>16:59:07</td>
+              <td>nc</td>
+              <td>135</td>
+              <td>rec</td>
+              <td>0.020546</td>
+              <td>-0.101404</td>
+              <td>99.985766</td>
+              <td>0.010001</td>
+            </tr>
+            <tr>
+              <th>2</th>
+              <td>1</td>
+              <td>2</td>
+              <td>5</td>
+              <td>4</td>
+              <td>114.03921</td>
+              <td>0.003014</td>
+              <td>09.06.2016</td>
+              <td>0.003727</td>
+              <td>0.01289</td>
+              <td>0.128980</td>
+              <td>0.03906</td>
+              <td>226.194671</td>
+              <td>0.289123</td>
+              <td>3.16301</td>
+              <td>-3.258006</td>
+              <td>13:55:55</td>
+              <td>nc</td>
+              <td>179</td>
+              <td>nor</td>
+              <td>-0.000811</td>
+              <td>0.136834</td>
+              <td>65.398172</td>
+              <td>0.015291</td>
+            </tr>
+            <tr>
+              <th>3</th>
+              <td>5</td>
+              <td>4</td>
+              <td>1</td>
+              <td>2</td>
+              <td>124.89605</td>
+              <td>0.003292</td>
+              <td>10.06.2016</td>
+              <td>0.000776</td>
+              <td>0.00269</td>
+              <td>0.026878</td>
+              <td>0.03906</td>
+              <td>226.194671</td>
+              <td>0.288313</td>
+              <td>3.15414</td>
+              <td>-3.121172</td>
+              <td>16:50:00</td>
+              <td>nc</td>
+              <td>179</td>
+              <td>rec</td>
+              <td>-0.000811</td>
+              <td>0.136834</td>
+              <td>65.214777</td>
+              <td>0.015334</td>
+            </tr>
+            <tr>
+              <th>92</th>
+              <td>2</td>
+              <td>3</td>
+              <td>5</td>
+              <td>4</td>
+              <td>124.50752</td>
+              <td>0.071875</td>
+              <td>09.06.2016</td>
+              <td>0.013855</td>
+              <td>0.00800</td>
+              <td>0.079936</td>
+              <td>0.03906</td>
+              <td>56.548668</td>
+              <td>1.731830</td>
+              <td>5.19549</td>
+              <td>-5.190260</td>
+              <td>14:04:59</td>
+              <td>nc</td>
+              <td>180</td>
+              <td>nor</td>
+              <td>0.002413</td>
+              <td>0.052011</td>
+              <td>97.932679</td>
+              <td>0.010211</td>
+            </tr>
+            <tr>
+              <th>...</th>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+              <td>...</td>
+            </tr>
+            <tr>
+              <th>34585</th>
+              <td>49</td>
+              <td>48</td>
+              <td>44</td>
+              <td>45</td>
+              <td>25.36068</td>
+              <td>0.000061</td>
+              <td>10.06.2016</td>
+              <td>0.002889</td>
+              <td>0.04718</td>
+              <td>0.471762</td>
+              <td>1000.00000</td>
+              <td>565.486678</td>
+              <td>0.061233</td>
+              <td>1.55655</td>
+              <td>-47.552543</td>
+              <td>10:01:20</td>
+              <td>nc</td>
+              <td>2159</td>
+              <td>rec</td>
+              <td>-0.000273</td>
+              <td>10.720336</td>
+              <td>34.626605</td>
+              <td>0.028880</td>
+            </tr>
+            <tr>
+              <th>34588</th>
+              <td>45</td>
+              <td>46</td>
+              <td>49</td>
+              <td>48</td>
+              <td>44.45877</td>
+              <td>0.000891</td>
+              <td>09.06.2016</td>
+              <td>0.002308</td>
+              <td>0.01053</td>
+              <td>0.105243</td>
+              <td>1000.00000</td>
+              <td>226.194671</td>
+              <td>0.219183</td>
+              <td>2.39786</td>
+              <td>-64.560253</td>
+              <td>20:26:49</td>
+              <td>nc</td>
+              <td>2160</td>
+              <td>nor</td>
+              <td>-0.000217</td>
+              <td>21.121451</td>
+              <td>49.577985</td>
+              <td>0.020170</td>
+            </tr>
+            <tr>
+              <th>34589</th>
+              <td>49</td>
+              <td>48</td>
+              <td>45</td>
+              <td>46</td>
+              <td>25.36068</td>
+              <td>0.000508</td>
+              <td>10.06.2016</td>
+              <td>0.002181</td>
+              <td>0.00996</td>
+              <td>0.099658</td>
+              <td>1000.00000</td>
+              <td>226.194671</td>
+              <td>0.218966</td>
+              <td>2.39549</td>
+              <td>-43.438802</td>
+              <td>10:01:20</td>
+              <td>nc</td>
+              <td>2160</td>
+              <td>rec</td>
+              <td>-0.000217</td>
+              <td>21.121451</td>
+              <td>49.528983</td>
+              <td>0.020190</td>
+            </tr>
+            <tr>
+              <th>34590</th>
+              <td>46</td>
+              <td>47</td>
+              <td>49</td>
+              <td>48</td>
+              <td>49.41489</td>
+              <td>0.018629</td>
+              <td>09.06.2016</td>
+              <td>0.007153</td>
+              <td>0.00762</td>
+              <td>0.076096</td>
+              <td>1000.00000</td>
+              <td>56.548668</td>
+              <td>0.938707</td>
+              <td>2.33738</td>
+              <td>42.262101</td>
+              <td>20:35:55</td>
+              <td>nc</td>
+              <td>2161</td>
+              <td>nor</td>
+              <td>-0.001265</td>
+              <td>5.689250</td>
+              <td>53.082621</td>
+              <td>0.018839</td>
+            </tr>
+            <tr>
+              <th>34591</th>
+              <td>49</td>
+              <td>48</td>
+              <td>46</td>
+              <td>47</td>
+              <td>25.36068</td>
+              <td>0.009548</td>
+              <td>10.06.2016</td>
+              <td>0.003694</td>
+              <td>0.00394</td>
+              <td>0.039444</td>
+              <td>1000.00000</td>
+              <td>56.548668</td>
+              <td>0.937442</td>
+              <td>2.33423</td>
+              <td>47.951350</td>
+              <td>10:01:20</td>
+              <td>nc</td>
+              <td>2161</td>
+              <td>rec</td>
+              <td>-0.001265</td>
+              <td>5.689250</td>
+              <td>53.011083</td>
+              <td>0.018864</td>
+            </tr>
+          </tbody>
+        </table>
+        <p>34592 rows × 23 columns</p>
+        </div>
+        <br />
+        <br />
+
+Plot histograms of raw data
+
+
+.. code-block:: default
+
+
+    # TODO
+
+
+
+
+
+
+
+
+filter the data a bit
+
+
+.. code-block:: default
+
+    seit.query('r > 0')
+    seit.query('rpha > -50 and rpha < 30')
+
+
+
+
+
+
+
+
+group the data into frequencies
+
+
+.. code-block:: default
+
+    g = seit.data.groupby('frequency')
+
+
+
+
+
+
+
+
+Plot pseudosection for 10 Hz
+
+
+.. code-block:: default
+
+    import reda.plotters.pseudoplots as PS
+    data_10hz = g.get_group(10)
+    fig, ax, cb = PS.plot_pseudosection_type2(
+        data_10hz, column='r', log10=True)
+    fig, ax, cb = PS.plot_pseudosection_type2(
+        data_10hz, column='rpha')
+
+
+
+
+.. rst-class:: sphx-glr-horizontal
+
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_001.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_002.png
+            :class: sphx-glr-multi-img
+
+
+
+
+
+Plot pseudosections of all frequencies
+
+
+.. code-block:: default
+
+    import reda.plotters.pseudoplots as PS
+    import pylab as plt
+    with reda.CreateEnterDirectory('output_radic'):
+        fig, axes = plt.subplots(
+            7, 2,
+            figsize=(15 / 2.54, 25 / 2.54),
+            sharex=True, sharey=True
+        )
+        for ax, (key, item) in zip(axes.flat, g):
+            fig, ax, cb = PS.plot_pseudosection_type2(
+                item, ax=ax, column='r', log10=True)
+            ax.set_title('f: {} Hz'.format(key))
+        fig.subplots_adjust(
+            hspace=1,
+            wspace=0.5,
+            right=0.9,
+            top=0.95,
+        )
+        fig.savefig('pseudosections_radic.pdf')
+
+
+
+
+.. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_003.png
+    :class: sphx-glr-single-img
+
+
+
+
+
+plotting of SIP/EIS spectra is still somewhat cumbersome, but will be
+improved in the future
+
+
+.. code-block:: default
+
+    import reda.eis.plots as eis_plot
+    import numpy as np
+
+    subdata = seit.data.query(
+        'a == 1 and b == 2 and m == 5 and n == 4'
+    ).sort_values('frequency')
+    # determine the norrec-id of this spectrum
+    nr_id = subdata['id'].iloc[0]
+    subdata_rec = seit.data.query(
+        'id == {} and norrec=="rec"'.format(nr_id)
+    ).sort_values('frequency')
+
+    spectrum_nor = eis_plot.sip_response(
+        frequencies=subdata['frequency'].values,
+        rcomplex=subdata['r'] * np.exp(1j * subdata['rpha'] / 1000)
+    )
+    spectrum_rec = eis_plot.sip_response(
+        frequencies=subdata_rec['frequency'].values,
+        rcomplex=subdata_rec['r'] * np.exp(1j * subdata_rec['rpha'] / 1000)
+    )
+    with reda.CreateEnterDirectory('output_radic'):
+        spectrum_nor.plot('spectrum.pdf', reciprocal=spectrum_rec, return_fig=True)
+
+
+
+.. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_004.png
+    :class: sphx-glr-single-img
+
+
+
+
+
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** ( 0 minutes  34.360 seconds)
+
+
+.. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: plot_radic_sip256c.py <plot_radic_sip256c.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_radic_sip256c.ipynb <plot_radic_sip256c.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

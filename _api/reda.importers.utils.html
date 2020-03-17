@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.importers.utils package &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="reda.main package" href="reda.main.html" />
+    <link rel="prev" title="reda.importers.legacy package" href="reda.importers.legacy.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API documentation</a><ul>
+  <li><a href="reda.html">reda package</a><ul>
+  <li><a href="reda.importers.html">reda.importers package</a><ul>
+      <li>Previous: <a href="reda.importers.legacy.html" title="previous chapter">reda.importers.legacy package</a></li>
+      <li>Next: <a href="reda.main.html" title="next chapter">reda.main package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-reda.importers.utils">
+<span id="reda-importers-utils-package"></span><h1>reda.importers.utils package<a class="headerlink" href="#module-reda.importers.utils" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reda.importers.utils.decorators">
+<span id="reda-importers-utils-decorators-module"></span><h2>reda.importers.utils.decorators module<a class="headerlink" href="#module-reda.importers.utils.decorators" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reda.importers.utils.decorators.enable_result_transforms">
+<code class="sig-prename descclassname">reda.importers.utils.decorators.</code><code class="sig-name descname">enable_result_transforms</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/decorators.html#enable_result_transforms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.decorators.enable_result_transforms" title="Permalink to this definition">¶</a></dt>
+<dd><p>Decorator that tries to use the object provided using a kwarg called
+‘electrode_transformator’ to transform the return values of an import
+function. It is intended to be used to transform electrode numbers and
+locations, i.e. for use in roll-along-measurement schemes.</p>
+<p>The transformator object must have a function .transform, which takes three
+parameters: data, electrode, topography and returns three correspondingly
+transformed objects.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.importers.utils.transforms">
+<span id="reda-importers-utils-transforms-module"></span><h2>reda.importers.utils.transforms module<a class="headerlink" href="#module-reda.importers.utils.transforms" title="Permalink to this headline">¶</a></h2>
+<p>This file contains transform functions for electrode numbering. If want to
+apply custom electrode renumbering, use these functions as starting points to
+design your own.</p>
+<dl class="class">
+<dt id="reda.importers.utils.transforms.transform_electrodes_roll_along">
+<em class="property">class </em><code class="sig-prename descclassname">reda.importers.utils.transforms.</code><code class="sig-name descname">transform_electrodes_roll_along</code><span class="sig-paren">(</span><em class="sig-param">shiftby=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/transforms.html#transform_electrodes_roll_along"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.transforms.transform_electrodes_roll_along" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>This function shifts all electrode numbers by a fixed offset, as
+commonly encountered for roll-a-long measurement schemes.</p>
+<p class="rubric">Methods</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 57%" />
+<col style="width: 43%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>transform</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.importers.utils.transforms.transform_electrodes_roll_along.transform">
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">topography</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/transforms.html#transform_electrodes_roll_along.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.transforms.transform_electrodes_roll_along.transform" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_api/reda.importers.utils.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

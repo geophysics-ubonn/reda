@@ -1,0 +1,641 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.eis.plots &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.eis.plots</h1><div class="highlight"><pre>
+<span></span><span class="c1"># *-* coding: utf-8 *-*</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">reda.eis.units</span> <span class="kn">import</span> <span class="n">get_label</span>
+<span class="kn">from</span> <span class="nn">reda.eis.convert</span> <span class="kn">import</span> <span class="n">convert</span>
+
+<span class="kn">import</span> <span class="nn">reda.utils.mpl</span>
+<span class="n">plt</span><span class="p">,</span> <span class="n">mpl</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">mpl</span><span class="o">.</span><span class="n">setup</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="sip_response"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.sip_response">[docs]</a><span class="k">class</span> <span class="nc">sip_response</span><span class="p">():</span>
+    <span class="sd">&quot;&quot;&quot;Hold one EIS/SIP spectrum and return it in various formats</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequencies</span><span class="p">,</span> <span class="n">rcomplex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">ccomplex</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">rmag</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">rpha</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        frequencies : :class:`numpy.ndarray`</span>
+<span class="sd">            Array of size N containing N frequencies in ascending order</span>
+<span class="sd">        rcomplex : :class:`numpy.ndarray`, optional</span>
+<span class="sd">            Complex values resistance/resistivity values (size N)</span>
+<span class="sd">        ccomplex : :class:`numpy.ndarray`, optional</span>
+<span class="sd">            Complex values conductance/conductivity values (size N)</span>
+<span class="sd">        rmag : :class:`numpy.ndarray`, optional</span>
+<span class="sd">            Real valued resistance/resistivity magnitude values (size N)</span>
+<span class="sd">        rpha : :class:`numpy.ndarray`, optional</span>
+<span class="sd">            Real valued resistance/resistivity phase values (size N)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">rcomplex</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ccomplex</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="p">(</span>
+                <span class="n">rmag</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">rpha</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;One initialization array is allowed!&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">rcomplex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">ccomplex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Only one initialization array is allowed!&#39;</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span> <span class="o">=</span> <span class="n">frequencies</span>
+
+        <span class="k">if</span> <span class="n">rcomplex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span> <span class="o">=</span> <span class="n">rcomplex</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s1">&#39;rcomplex&#39;</span><span class="p">,</span> <span class="s1">&#39;ccomplex&#39;</span><span class="p">,</span> <span class="n">rcomplex</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">ccomplex</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span> <span class="o">=</span> <span class="n">ccomplex</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s1">&#39;ccomplex&#39;</span><span class="p">,</span> <span class="s1">&#39;rcomplex&#39;</span><span class="p">,</span> <span class="n">ccomplex</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">rmag</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="n">rpha</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span> <span class="o">=</span> <span class="n">rmag</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">rpha</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span> <span class="o">=</span> <span class="n">convert</span><span class="p">(</span><span class="s1">&#39;rcomplex&#39;</span><span class="p">,</span> <span class="s1">&#39;ccomplex&#39;</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rmag_rpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">rmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rpha</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cmag_cpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">cmag</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cpha</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rre</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">rim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">rcomplex</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cre</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ccomplex</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">rre_rim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">rre</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rim</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cre_cim</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">cre</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cim</span><span class="p">))</span><span class="o">.</span><span class="n">T</span>
+
+<div class="viewcode-block" id="sip_response.to_one_line"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.sip_response.to_one_line">[docs]</a>    <span class="k">def</span> <span class="nf">to_one_line</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">array</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Flatten the array to one dimension using the &#39;F&#39; (Fortran) style and</span>
+<span class="sd">        return a 2D array</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">array</span><span class="o">.</span><span class="n">flatten</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="s1">&#39;F&#39;</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_labels</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">axes</span><span class="p">,</span> <span class="n">dtype</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Given a 2x2 array of axes, add x and y labels</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        axes: numpy.ndarray, 2x2</span>
+<span class="sd">            A numpy array containing the four principal axes of an SIP plot</span>
+<span class="sd">        dtype: string</span>
+<span class="sd">            Can be either &#39;rho&#39; or &#39;r&#39;, indicating the type of data that is</span>
+<span class="sd">            plotted: &#39;rho&#39; stands for resistivities/conductivities, &#39;r&#39; stands</span>
+<span class="sd">            for impedances/condactances</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">flat</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;rho&#39;</span><span class="p">:</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$|\rho| [\Omega m]$&#39;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$-\phi [mrad]$&#39;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39; [S/m]$&quot;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$\sigma&#39;&#39; [S/m]$&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">dtype</span> <span class="o">==</span> <span class="s1">&#39;r&#39;</span><span class="p">:</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$|R| [\Omega]$&#39;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;$-\phi [mrad]$&#39;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$Y&#39; [S]$&quot;</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;$Y&#39;&#39; [S]$&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;dtype not known: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">dtype</span><span class="p">))</span>
+
+    <span class="k">def</span> <span class="nf">_plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span>
+              <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Standard plot of spectrum</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        title : str|None, optional</span>
+<span class="sd">            Title of plot</span>
+<span class="sd">        reciprocal : sip_response object|None, optional</span>
+<span class="sd">            If provided, plot this spectrum with another color</span>
+<span class="sd">        limits : dict|None, optional</span>
+<span class="sd">            used to set ylimits of the plots. Possible entries: rmag_min,</span>
+<span class="sd">            rmag_max, rpha_min, rpha_max, cre_min, cre_max, cim_min, cim_max</span>
+<span class="sd">        dtype : str, optional</span>
+<span class="sd">            Possible values: [rho|R]. Determines the label types. &#39;rho&#39;:</span>
+<span class="sd">                resistivity/conductivity, &#39;r&#39;: resistance/conductance</span>
+<span class="sd">        label_nor : str</span>
+<span class="sd">            label for normal data (default: &quot;normal&quot;)</span>
+<span class="sd">        label_rec : str</span>
+<span class="sd">            label for reciprocal data (default: &quot;reciprocal&quot;)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fig : figure object</span>
+<span class="sd">            the generated matplotlib figure</span>
+<span class="sd">        axes : list</span>
+<span class="sd">            matplotlib axes objects</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">limits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">limits</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span>
+            <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">6</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">),</span> <span class="n">sharex</span><span class="o">=</span><span class="kc">True</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+
+        <span class="c1"># resistivity magnitude</span>
+        <span class="k">if</span> <span class="n">limits</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">limits</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rmag</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label_nor&#39;</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span><span class="p">),</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rmag_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rmag_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># resistivity phase</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="o">-</span><span class="bp">self</span><span class="o">.</span><span class="n">rpha</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="c1"># note the switch of _min/_max because we change the sign while</span>
+        <span class="c1"># plotting</span>
+        <span class="n">ymin</span> <span class="o">=</span> <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rpha_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ymin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ymin</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">ymax</span> <span class="o">=</span> <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rpha_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ymax</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ymax</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+            <span class="n">ymin</span><span class="p">,</span>
+            <span class="n">ymax</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># conductivity real part</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cre</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cre_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cre_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="c1"># conductivity imaginary part</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">cim</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cim_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cim_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_labels</span><span class="p">(</span><span class="n">axes</span><span class="p">,</span> <span class="n">dtype</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">numticks</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">MaxNLocator</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+
+        <span class="k">for</span> <span class="n">ax</span> <span class="ow">in</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">2</span><span class="p">:]:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">numticks</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">mpl</span><span class="o">.</span><span class="n">ticker</span><span class="o">.</span><span class="n">LogLocator</span><span class="p">(</span><span class="n">numticks</span><span class="o">=</span><span class="mi">5</span><span class="p">))</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="c1"># plot reciprocal spectrum</span>
+        <span class="k">if</span> <span class="n">reciprocal</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+                <span class="n">reciprocal</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="n">reciprocal</span><span class="o">.</span><span class="n">rmag</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label_rec&#39;</span><span class="p">,</span> <span class="s1">&#39;reciprocal&#39;</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+                <span class="n">reciprocal</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="o">-</span><span class="n">reciprocal</span><span class="o">.</span><span class="n">rpha</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+                <span class="n">reciprocal</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="n">reciprocal</span><span class="o">.</span><span class="n">cre</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+                <span class="n">reciprocal</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="n">reciprocal</span><span class="o">.</span><span class="n">cim</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span>
+                <span class="n">bottom</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+                <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower center&quot;</span><span class="p">,</span>
+                <span class="n">ncol</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+                <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+                <span class="n">bbox_transform</span><span class="o">=</span><span class="n">fig</span><span class="o">.</span><span class="n">transFigure</span><span class="p">,</span>
+                <span class="n">fontsize</span><span class="o">=</span><span class="mf">7.0</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span>
+            <span class="n">top</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span>
+
+<div class="viewcode-block" id="sip_response.plot"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.sip_response.plot">[docs]</a>    <span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">reciprocal</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">limits</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+             <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Standard plot of spectrum</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Output filename. Include the ending to specify the filetype</span>
+<span class="sd">            (usually .pdf or .png)</span>
+<span class="sd">        title : string, optional</span>
+<span class="sd">            Title for the plot</span>
+<span class="sd">        reciprocal : :class:`reda.eis.plots.sip_response`, optional</span>
+<span class="sd">            If another :class:`reda.eis.plots.sip_response` object is provided</span>
+<span class="sd">            here, use this as the reciprocal spectrum.</span>
+<span class="sd">        limits : dict, optional</span>
+<span class="sd">            A dictionary which contains plot limits. See code example below.</span>
+<span class="sd">        dtype : string, optional</span>
+<span class="sd">            Determines if the data plotted included geometric factors (&#39;rho&#39;)</span>
+<span class="sd">            or not (&#39;r&#39;). Default: &#39;rho&#39;</span>
+<span class="sd">        return_fig : bool, optional</span>
+<span class="sd">            If True, then do not delete the figure object after saving to file</span>
+<span class="sd">            and return the figure object. Default: False</span>
+<span class="sd">        **kwargs : dict</span>
+<span class="sd">            kwargs is piped through to the _plot function</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fig : :class:`matplotlib.Figure`</span>
+<span class="sd">            The figure object. Only returned if return_fig is set to True</span>
+
+<span class="sd">        Examples</span>
+<span class="sd">        --------</span>
+<span class="sd">        &gt;&gt;&gt; from reda.eis.plots import sip_response</span>
+<span class="sd">        &gt;&gt;&gt; import numpy as np</span>
+<span class="sd">        &gt;&gt;&gt; frequencies = np.array([</span>
+<span class="sd">        ...     1.00000000e-03, 1.77827941e-03, 3.16227766e-03, 5.62341325e-03,</span>
+<span class="sd">        ...     1.00000000e-02, 1.77827941e-02, 3.16227766e-02, 5.62341325e-02,</span>
+<span class="sd">        ...     1.00000000e-01, 1.77827941e-01, 3.16227766e-01, 5.62341325e-01,</span>
+<span class="sd">        ...     1.00000000e+00, 1.77827941e+00, 3.16227766e+00, 5.62341325e+00,</span>
+<span class="sd">        ...     1.00000000e+01, 1.77827941e+01, 3.16227766e+01, 5.62341325e+01,</span>
+<span class="sd">        ...     1.00000000e+02, 1.77827941e+02, 3.16227766e+02, 5.62341325e+02,</span>
+<span class="sd">        ...     1.00000000e+03])</span>
+<span class="sd">        &gt;&gt;&gt; rcomplex = np.array([</span>
+<span class="sd">        ...     49.34369772-0.51828971j, 49.11781581-0.59248806j,</span>
+<span class="sd">        ...     48.85819872-0.6331137j , 48.58762806-0.62835135j,</span>
+<span class="sd">        ...     48.33331113-0.57965851j, 48.11599009-0.50083533j,</span>
+<span class="sd">        ...     47.94405036-0.41005275j, 47.81528917-0.32210768j,</span>
+<span class="sd">        ...     47.72215469-0.24543425j, 47.65607773-0.18297794j,</span>
+<span class="sd">        ...     47.60962191-0.13433101j, 47.57706229-0.09755774j,</span>
+<span class="sd">        ...     47.55424286-0.07031682j, 47.53822912-0.05041399j,</span>
+<span class="sd">        ...     47.52697253-0.03601005j, 47.51904718-0.02565412j,</span>
+<span class="sd">        ...     47.51345965-0.01824266j, 47.50951606-0.01295546j,</span>
+<span class="sd">        ...     47.50673042-0.00919217j, 47.50476152-0.0065178j ,</span>
+<span class="sd">        ...     47.50336925-0.00461938j, 47.50238442-0.00327285j,</span>
+<span class="sd">        ...     47.50168762-0.00231829j, 47.50119454-0.00164187j,</span>
+<span class="sd">        ...     47.50084556-0.00116268j])</span>
+<span class="sd">        &gt;&gt;&gt; spectrum = sip_response(frequencies=frequencies, rcomplex=rcomplex)</span>
+<span class="sd">        &gt;&gt;&gt; fig = spectrum.plot(&#39;spectrum.pdf&#39;, return_fig=True)</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_plot</span><span class="p">(</span>
+            <span class="n">reciprocal</span><span class="o">=</span><span class="n">reciprocal</span><span class="p">,</span>
+            <span class="n">limits</span><span class="o">=</span><span class="n">limits</span><span class="p">,</span>
+            <span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span>
+            <span class="n">dtype</span><span class="o">=</span><span class="n">dtype</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">return_fig</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">fig</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="multi_sip_response"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response">[docs]</a><span class="k">class</span> <span class="nc">multi_sip_response</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;manage multiple sip_response objects and provide some nice overview</span>
+<span class="sd">    plots</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_is_correct_type</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;check if we can work with this object &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="nb">object</span><span class="p">,</span> <span class="n">sip_response</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;can only add sip_reponse.sip_response objects&#39;</span><span class="p">)</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_check_list</span><span class="p">(</span><span class="n">object_list</span><span class="p">):</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">object_list</span><span class="p">,</span> <span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;can only work with lists&#39;</span><span class="p">)</span>
+        <span class="p">[</span><span class="n">multi_sip_response</span><span class="o">.</span><span class="n">_is_correct_type</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">object_list</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">objects</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">labels</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">obj_dict</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        objects : list|None</span>
+<span class="sd">            If provided, assume the list to contain multiple spectra in the</span>
+<span class="sd">            form of sip_response objects</span>
+<span class="sd">        labels: list|None</span>
+<span class="sd">            If provided, use the string entries of this list as labels for the</span>
+<span class="sd">            spectra in objects. Must have the same length as objects, or None.</span>
+<span class="sd">        obj_dict: dict|None</span>
+<span class="sd">            Only works if objects is None. Use keys as labels, items as spectra</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># here we store the responses</span>
+        <span class="k">if</span> <span class="n">objects</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">multi_sip_response</span><span class="o">.</span><span class="n">_check_list</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">objects</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">labels</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                    <span class="s1">&#39;length of object list must match length of label list&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="n">objects</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="n">labels</span>
+        <span class="k">elif</span> <span class="n">obj_dict</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">obj_dict</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obj_dict</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_check_list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">obj_dict</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">objects</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xlim</span> <span class="o">=</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+
+<div class="viewcode-block" id="multi_sip_response.set_xlim"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response.set_xlim">[docs]</a>    <span class="k">def</span> <span class="nf">set_xlim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xlim</span> <span class="o">=</span> <span class="p">[</span><span class="n">xmin</span><span class="p">,</span> <span class="n">xmax</span><span class="p">]</span></div>
+
+<div class="viewcode-block" id="multi_sip_response.add"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;add one response object to the list</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">sip_response</span><span class="o">.</span><span class="n">sip_response</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;can only add sip_reponse.sip_response objects&#39;</span>
+            <span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">label</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;na&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">label</span><span class="p">)</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_legend</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+        <span class="n">leg</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span>
+            <span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower center&quot;</span><span class="p">,</span>
+            <span class="n">ncol</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+            <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+            <span class="n">bbox_transform</span><span class="o">=</span><span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span><span class="o">.</span><span class="n">transFigure</span><span class="p">,</span>
+            <span class="n">fontsize</span><span class="o">=</span><span class="mf">6.0</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="n">leg</span>
+
+<div class="viewcode-block" id="multi_sip_response.plot_rmag"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_rmag">[docs]</a>    <span class="k">def</span> <span class="nf">plot_rmag</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">pmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;plot all resistance/resistivity magnitude spectra</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+        <span class="n">SM</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">SM</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)))</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">7</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">rmag</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+                <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">get_label</span><span class="p">(</span><span class="s1">&#39;rmag&#39;</span><span class="p">,</span> <span class="s1">&#39;meas&#39;</span><span class="p">,</span> <span class="s1">&#39;mathml&#39;</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">pmin</span><span class="p">,</span> <span class="n">pmax</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">xlim</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_legend</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="multi_sip_response.plot_rpha"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_rpha">[docs]</a>    <span class="k">def</span> <span class="nf">plot_rpha</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">pmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">pmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;plot all resistance/resistivity phase spectra</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+        <span class="n">SM</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">SM</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)))</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">7</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="o">-</span><span class="n">item</span><span class="o">.</span><span class="n">rpha</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+                <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">get_label</span><span class="p">(</span><span class="s1">&#39;rpha&#39;</span><span class="p">,</span> <span class="s1">&#39;meas&#39;</span><span class="p">,</span> <span class="s1">&#39;mathml&#39;</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">pmin</span><span class="p">,</span> <span class="n">pmax</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_legend</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="multi_sip_response.plot_cim"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_cim">[docs]</a>    <span class="k">def</span> <span class="nf">plot_cim</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">cmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+        <span class="n">SM</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">SM</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">SM</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)))</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">7</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">cim</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+                <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">get_label</span><span class="p">(</span><span class="s1">&#39;cim&#39;</span><span class="p">,</span> <span class="s1">&#39;meas&#39;</span><span class="p">,</span> <span class="s1">&#39;mathml&#39;</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">cmin</span><span class="p">,</span> <span class="n">cmax</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_legend</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="multi_sip_response.plot_cre"><a class="viewcode-back" href="../../../_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_cre">[docs]</a>    <span class="k">def</span> <span class="nf">plot_cre</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">cmin</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="n">cmap</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">get_cmap</span><span class="p">(</span><span class="s1">&#39;viridis&#39;</span><span class="p">)</span>
+        <span class="n">SM</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">SM</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">ScalarMappable</span><span class="p">(</span><span class="n">norm</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">cmap</span><span class="p">)</span>
+        <span class="n">colors</span> <span class="o">=</span> <span class="n">SM</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">)))</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">7</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">objects</span><span class="p">):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">cre</span><span class="p">,</span>
+                <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+                <span class="n">color</span><span class="o">=</span><span class="n">colors</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+                <span class="n">label</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">labels</span><span class="p">[</span><span class="n">nr</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">*</span><span class="bp">self</span><span class="o">.</span><span class="n">xlim</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">get_label</span><span class="p">(</span><span class="s1">&#39;cre&#39;</span><span class="p">,</span> <span class="s1">&#39;meas&#39;</span><span class="p">,</span> <span class="s1">&#39;mathml&#39;</span><span class="p">))</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;frequency [Hz]&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">cmin</span><span class="p">,</span> <span class="n">cmax</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">title</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_legend</span><span class="p">(</span><span class="n">ax</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">top</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

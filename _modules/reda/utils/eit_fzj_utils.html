@@ -1,0 +1,437 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.utils.eit_fzj_utils &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.utils.eit_fzj_utils</h1><div class="highlight"><pre>
+<span></span><span class="c1"># various utility functions used in conjunction with the FZ EIT systems</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
+
+<span class="kn">import</span> <span class="nn">reda</span>
+<span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geometric_factors</span>
+<span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">fixK</span>
+<span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
+
+
+<div class="viewcode-block" id="compute_correction_factors"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.compute_correction_factors">[docs]</a><span class="k">def</span> <span class="nf">compute_correction_factors</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">true_conductivity</span><span class="p">,</span> <span class="n">elem_file</span><span class="p">,</span> <span class="n">elec_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Compute correction factors for 2D rhizotron geometries, following</span>
+<span class="sd">    Weigand and Kemna, 2017, Biogeosciences</span>
+
+<span class="sd">    https://doi.org/10.5194/bg-14-921-2017</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : :py:class:`pandas.DataFrame`</span>
+<span class="sd">        measured data</span>
+<span class="sd">    true_conductivity : float</span>
+<span class="sd">        Conductivity in S/m</span>
+<span class="sd">    elem_file : string</span>
+<span class="sd">        path to CRTomo FE mesh file (elem.dat)</span>
+<span class="sd">    elec_file : string</span>
+<span class="sd">        path to CRTomo FE electrode file (elec.dat)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    correction_factors : Nx5 :py:class.`numpy.ndarray`</span>
+<span class="sd">        measurement configurations and correction factors</span>
+<span class="sd">        (a,b,m,n,correction_factor)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">settings</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;rho&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+        <span class="s1">&#39;pha&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+        <span class="s1">&#39;elem&#39;</span><span class="p">:</span> <span class="s1">&#39;elem.dat&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;elec&#39;</span><span class="p">:</span> <span class="s1">&#39;elec.dat&#39;</span><span class="p">,</span>
+        <span class="s1">&#39;2D&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+        <span class="s1">&#39;sink_node&#39;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+
+    <span class="p">}</span>
+    <span class="n">K</span> <span class="o">=</span> <span class="n">geometric_factors</span><span class="o">.</span><span class="n">compute_K_numerical</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">settings</span><span class="o">=</span><span class="n">settings</span><span class="p">)</span>
+
+    <span class="n">data</span> <span class="o">=</span> <span class="n">geometric_factors</span><span class="o">.</span><span class="n">apply_K</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">K</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">fixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="n">frequency</span> <span class="o">=</span> <span class="mi">100</span>
+
+    <span class="n">data_onef</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency == </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">frequency</span><span class="p">))</span>
+    <span class="n">rho_measured</span> <span class="o">=</span> <span class="n">data_onef</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">data_onef</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+
+    <span class="n">rho_true</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">true_conductivity</span> <span class="o">*</span> <span class="mf">1e4</span>
+    <span class="n">correction_factors</span> <span class="o">=</span> <span class="n">rho_true</span> <span class="o">/</span> <span class="n">rho_measured</span>
+
+    <span class="n">collection</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+        <span class="n">data_onef</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">correction_factors</span><span class="p">)[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+    <span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">collection</span></div>
+
+
+<div class="viewcode-block" id="apply_correction_factors"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.apply_correction_factors">[docs]</a><span class="k">def</span> <span class="nf">apply_correction_factors</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">correction_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Apply correction factors for a pseudo-2D measurement setup. See Weigand</span>
+<span class="sd">    and Kemna, 2017, Biogeosciences, for more information:</span>
+
+<span class="sd">    https://doi.org/10.5194/bg-14-921-2017</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    df : :py:class:`pandas.DataFrame`</span>
+<span class="sd">        Data container</span>
+<span class="sd">    correction_file : string</span>
+<span class="sd">        Path to correction file. The file must have 5 columns:</span>
+<span class="sd">        a,b,m,n,correction_factor</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    corr_data : Nx5 :py:class:`numpy.ndarray`</span>
+<span class="sd">        Correction files as imported from the file. Columns:</span>
+<span class="sd">        a,b,m,n,correction_factor</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">correction_file</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+        <span class="n">corr_data_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">correction_file</span><span class="p">]</span>
+        <span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">corr_data_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">correction_file</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">B</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">N</span> <span class="o">=</span> <span class="p">(</span><span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">corr_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">((</span><span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span><span class="p">,</span> <span class="n">corr_data_raw</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]))</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="s1">&#39;frequency&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s1">&#39;No frequency data found. Are you sure this is a seit data set?&#39;</span>
+        <span class="p">)</span>
+
+    <span class="n">gf</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">gf</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="c1"># print(&#39;key&#39;, key)</span>
+        <span class="c1"># print(item)</span>
+        <span class="n">item_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">key</span><span class="p">[</span><span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">])))</span>
+        <span class="c1"># print(item_norm)</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">item_norm</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">item_norm</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">item_norm</span><span class="p">[</span><span class="mi">2</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">corr_data</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">item_norm</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
+        <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1"># print(index, corr_data[index])</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="c1"># import IPython</span>
+            <span class="c1"># IPython.embed()</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;No correction factor found for this configuration&#39;</span>
+            <span class="p">)</span>
+
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">corr_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="c1"># apply correction factor</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vmn&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                <span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">item</span><span class="p">,</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">get_loc</span><span class="p">(</span><span class="n">col</span><span class="p">)]</span> <span class="o">*=</span> <span class="n">factor</span>
+    <span class="k">return</span> <span class="n">corr_data</span></div>
+
+
+<span class="c1"># this is data for the first test board. As far as I know nobody else has such</span>
+<span class="c1"># an EIT system, and therefore I think it&#39;s ok to include the data here.</span>
+<span class="n">_resistor_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span>
+    <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">980</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+    <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">980</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">),</span>
+<span class="p">))</span>
+
+
+<div class="viewcode-block" id="check_resistor_board_measurements"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.check_resistor_board_measurements">[docs]</a><span class="k">def</span> <span class="nf">check_resistor_board_measurements</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">reference_data_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                                      <span class="n">create_plot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot; To check basic system function a test board was built with multiple</span>
+<span class="sd">    resistors attached to for connectors each. Measurements can thus be</span>
+<span class="sd">    validated against known electrical (ohmic) resistances.</span>
+
+<span class="sd">    Note that the normal-reciprocal difference is not yet analyzed!</span>
+
+<span class="sd">    The referenc_data_file should have the following structure:</span>
+<span class="sd">    The file contains the four-point spreads to be imported from</span>
+<span class="sd">    the measurement. This file is a text file with four columns (A, B, M, N),</span>
+<span class="sd">    separated by spaces or tabs. Each line denotes one measurement and its</span>
+<span class="sd">    expected resistance, the allowed variation, and its allow difference</span>
+<span class="sd">    towards its reciprocal counterpart: ::</span>
+
+<span class="sd">        1   2   4   3   1000    1    20</span>
+<span class="sd">        4   3   2   1   1000    1    20</span>
+
+<span class="sd">    test frequency: 1Hz</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data_file : string</span>
+<span class="sd">        path to mnu0 data file</span>
+<span class="sd">    reference_data_file: string, optional</span>
+<span class="sd">        path to reference data file with structure as describe above. Default</span>
+<span class="sd">        data is used if set to None</span>
+<span class="sd">    create_plot : bool, optional</span>
+<span class="sd">        if True, create a plot with measured and expected resistances</span>
+<span class="sd">    kwargs : dict, optional</span>
+<span class="sd">        kwargs will be redirected to the sEIT.import_eit_fzj call</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    fig : figure object, optional</span>
+<span class="sd">        if create_plot is True, return a matplotlib figure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># reference_data = np.loadtxt(reference_data_file)</span>
+    <span class="c1"># configs = reference_data[:, 0:4]</span>
+    <span class="n">column_names</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;expected_r&#39;</span><span class="p">,</span> <span class="s1">&#39;variation_r&#39;</span><span class="p">,</span> <span class="s1">&#39;variation_diffr&#39;</span>
+    <span class="p">]</span>
+    <span class="k">if</span> <span class="n">reference_data_file</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ref_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">_resistor_data</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">column_names</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ref_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+            <span class="n">reference_data_file</span><span class="p">,</span>
+            <span class="n">names</span><span class="o">=</span><span class="n">column_names</span><span class="p">,</span>
+            <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">ref_data</span><span class="p">)</span>
+    <span class="n">configs</span> <span class="o">=</span> <span class="n">ref_data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">import_eit_fzj</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">configs</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="n">seit</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span><span class="n">ref_data</span><span class="p">,</span> <span class="n">on</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">))</span>
+
+    <span class="c1"># iterate through the test configurations</span>
+    <span class="n">test_frequency</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="n">failing</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">nr</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">ref_data</span><span class="o">.</span><span class="n">values</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">nr</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">))</span>
+        <span class="n">group_abmn</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">abmn</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">group_abmn</span><span class="o">.</span><span class="n">keys</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+        <span class="n">expected_r</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span>
+        <span class="n">allowed_variation</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+        <span class="c1"># expected_r_diff = row[6]</span>
+
+        <span class="n">measured_r</span><span class="p">,</span> <span class="n">measured_rdiff</span> <span class="o">=</span> <span class="n">item</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
+            <span class="s1">&#39;frequency == </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">test_frequency</span><span class="p">)</span>
+        <span class="p">)[[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rdiff&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="n">minr</span> <span class="o">=</span> <span class="n">expected_r</span> <span class="o">-</span> <span class="n">allowed_variation</span>
+        <span class="n">maxr</span> <span class="o">=</span> <span class="n">expected_r</span> <span class="o">+</span> <span class="n">allowed_variation</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="n">minr</span> <span class="o">&lt;=</span> <span class="n">measured_r</span> <span class="ow">and</span> <span class="n">maxr</span> <span class="o">&gt;=</span> <span class="n">measured_r</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    &#39;</span><span class="p">,</span> <span class="s1">&#39;not passing&#39;</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    &#39;</span><span class="p">,</span> <span class="n">minr</span><span class="p">,</span> <span class="n">maxr</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;    &#39;</span><span class="p">,</span> <span class="n">measured_r</span><span class="p">)</span>
+            <span class="n">failing</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nr</span><span class="p">,</span> <span class="n">measured_r</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failing</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">failing</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">failing</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">failing</span><span class="p">))</span>
+
+    <span class="k">if</span> <span class="n">create_plot</span><span class="p">:</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">8</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">seit</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency == 1&#39;</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">],</span>
+            <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;data&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+            <span class="n">x</span><span class="p">,</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;expected_r&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;variation_r&#39;</span><span class="p">],</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;expected_r&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;variation_r&#39;</span><span class="p">],</span>
+            <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span>
+            <span class="n">alpha</span><span class="o">=</span><span class="mf">0.8</span><span class="p">,</span>
+            <span class="n">label</span><span class="o">=</span><span class="s1">&#39;allowed limits&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">failing</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span>
+                <span class="n">failing</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                <span class="n">failing</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+                <span class="n">label</span><span class="o">=</span><span class="s1">&#39;not passing&#39;</span><span class="p">,</span>
+                <span class="n">s</span><span class="o">=</span><span class="mi">40</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">xticklabels</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="s1">-</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="o">*</span><span class="n">row</span><span class="p">)</span> <span class="k">for</span> <span class="n">row</span>
+            <span class="ow">in</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="p">]</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">xticklabels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">&#39;resistance $[\Omega]$&#39;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;configuration a-b m-n&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">failing</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39; PASSED&#39;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">suffix</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Resistor-check for FZJ-EIT systems&#39;</span> <span class="o">+</span> <span class="n">suffix</span><span class="p">)</span>
+
+        <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="c1"># fig.savefig(&#39;out.pdf&#39;)</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="get_md_data_2018a"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.eit_fzj_utils.get_md_data_2018a">[docs]</a><span class="k">def</span> <span class="nf">get_md_data_2018a</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Return the md data of a given FZJ EIT 2018a LI calibration data file.</span>
+
+<span class="sd">    This function should probably go into the importers, but for now will</span>
+<span class="sd">    reside here until it can be properly integrated.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Path to eit_data.mat file generated for an LI-&#39;calibration&#39; run</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    md : pandas.DataFrame</span>
+<span class="sd">        MD data</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s1">&#39;eit_data.mat&#39;</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">importer</span> <span class="o">=</span> <span class="n">eit_fzj</span><span class="o">.</span><span class="n">mat_version_importers</span><span class="p">[</span><span class="s1">&#39;FZJ-EZ-2018A&#39;</span><span class="p">]</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_md</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">multiplexer_group</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">md</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

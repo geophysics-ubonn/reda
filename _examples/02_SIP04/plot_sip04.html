@@ -1,0 +1,225 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>SIP-04 Import &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Visualizing multi-dimensional sEIT data" href="../03_sEIT/plot_visualize_4d_data.html" />
+    <link rel="prev" title="Importing Syscal IP data" href="../01_ERT/plot_syscal_ip.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="../01_ERT/plot_syscal_ip.html" title="previous chapter">Importing Syscal IP data</a></li>
+      <li>Next: <a href="../03_sEIT/plot_visualize_4d_data.html" title="next chapter">Visualizing multi-dimensional sEIT data</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-02-sip04-plot-sip04-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="sip-04-import">
+<span id="sphx-glr-examples-02-sip04-plot-sip04-py"></span><h1>SIP-04 Import<a class="headerlink" href="#sip-04-import" title="Permalink to this headline">¶</a></h1>
+<p>Create the SIP container</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">SIP</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Import the SIP data</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="s1">&#39;sip_data.mat&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Import SIP04 data from .mat file
+generating ids
+assigning ids
+Summary:
+          a     b     m     n
+count  22.0  22.0  22.0  22.0
+mean    1.0   4.0   2.0   3.0
+std     0.0   0.0   0.0   0.0
+min     1.0   4.0   2.0   3.0
+25%     1.0   4.0   2.0   3.0
+50%     1.0   4.0   2.0   3.0
+75%     1.0   4.0   2.0   3.0
+max     1.0   4.0   2.0   3.0
+</pre></div>
+</div>
+<p>show the data</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+    a  b  m  n  frequency             r       rpha
+0   1  4  2  3       0.01  91710.822743 -29.362558
+1   1  4  2  3       0.02  90636.299943 -28.489816
+2   1  4  2  3       0.05  89244.733614 -26.907518
+3   1  4  2  3       0.10  88216.019214 -26.126560
+4   1  4  2  3       0.20  87199.203662 -25.008222
+5   1  4  2  3       0.50  85920.509490 -22.469295
+6   1  4  2  3       1.00  85104.832528 -19.333149
+7   1  4  2  3       2.00  84452.492098 -15.902216
+8   1  4  2  3       5.00  83819.335016 -12.312403
+9   1  4  2  3      10.00  83432.605700 -10.303340
+10  1  4  2  3      20.00  83104.178605  -8.858852
+11  1  4  2  3      30.00  82930.728765  -8.257339
+12  1  4  2  3      70.00  82606.356388  -7.006607
+13  1  4  2  3     130.00  82389.613467  -6.253892
+14  1  4  2  3     200.00  82254.030100  -5.743527
+15  1  4  2  3     500.00  82000.383966  -4.723193
+16  1  4  2  3    1000.00  81852.442931  -3.658800
+17  1  4  2  3    2000.00  81744.531873  -2.586255
+18  1  4  2  3    5000.00  81779.213925  -1.349227
+19  1  4  2  3   10000.00  82085.647708  -3.090301
+20  1  4  2  3   20000.00  82641.939514 -13.275897
+21  1  4  2  3   45000.00  83175.799742 -45.989948
+</pre></div>
+</div>
+<p>plot the spectrum</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.eis.plots</span> <span class="kn">import</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a>
+
+<a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spectrum</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a><span class="p">(</span>
+    <span class="n">frequencies</span><span class="o">=</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">rcomplex</span><span class="o">=</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># note the dtype indicates that no geometric factor was applied to the data</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spectrum</span></a><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;spectrum.png&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="../../_images/sphx_glr_plot_sip04_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_sip04_001.png" />
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-02-sip04-plot-sip04-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/121c11657b37e767ab6988e8e351669e/plot_sip04.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_sip04.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/71f31be82a0be02de92006cb08c3e0df/plot_sip04.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_sip04.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/02_SIP04/plot_sip04.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

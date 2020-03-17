@@ -1,0 +1,239 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.testing package &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="reda.testing.ert_container package" href="reda.testing.ert_container.html" />
+    <link rel="prev" title="reda.plotters package" href="reda.plotters.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API documentation</a><ul>
+  <li><a href="reda.html">reda package</a><ul>
+      <li>Previous: <a href="reda.plotters.html" title="previous chapter">reda.plotters package</a></li>
+      <li>Next: <a href="reda.testing.ert_container.html" title="next chapter">reda.testing.ert_container package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-reda.testing">
+<span id="reda-testing-package"></span><h1>reda.testing package<a class="headerlink" href="#module-reda.testing" title="Permalink to this headline">¶</a></h1>
+<p>Testing utilities</p>
+<dl class="function">
+<dt id="reda.testing.test">
+<code class="sig-prename descclassname">reda.testing.</code><code class="sig-name descname">test</code><span class="sig-paren">(</span><em class="sig-param">target=None</em>, <em class="sig-param">show=False</em>, <em class="sig-param">onlydoctests=False</em>, <em class="sig-param">abort=False</em>, <em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing.html#test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run docstring examples and additional tests.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>target</strong><span class="classifier">function or string, optional</span></dt><dd><p>Function or method to test. By default everything is tested.</p>
+</dd>
+<dt><strong>show</strong><span class="classifier">boolean, optional</span></dt><dd><p>Show matplotlib windows during test run. They will be closed
+automatically.</p>
+</dd>
+<dt><strong>onlydoctests</strong><span class="classifier">boolean, optional</span></dt><dd><p>Run test files in ../tests as well.</p>
+</dd>
+<dt><strong>abort</strong><span class="classifier">boolean, optional</span></dt><dd><p>Return correct exit code, e.g. abort documentation build when a test
+fails.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="reda.testing.ert_container.html">reda.testing.ert_container package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reda.testing.ert_container.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.testing.ert_container.html#module-reda.testing.ert_container.test_K_computation">reda.testing.ert_container.test_K_computation module</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reda.testing.containers">
+<span id="reda-testing-containers-module"></span><h2>reda.testing.containers module<a class="headerlink" href="#module-reda.testing.containers" title="Permalink to this headline">¶</a></h2>
+<p>Dummy data containers for testing purposes.</p>
+</div>
+<div class="section" id="module-reda.testing.test_container_ert">
+<span id="reda-testing-test-container-ert-module"></span><h2>reda.testing.test_container_ert module<a class="headerlink" href="#module-reda.testing.test_container_ert" title="Permalink to this headline">¶</a></h2>
+<p>Container tests</p>
+<dl class="function">
+<dt id="reda.testing.test_container_ert.test_init">
+<code class="sig-prename descclassname">reda.testing.test_container_ert.</code><code class="sig-name descname">test_init</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init" title="Permalink to this definition">¶</a></dt>
+<dd><p>test initializing an empty ERT container</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.testing.test_container_ert.test_init_with_data">
+<code class="sig-prename descclassname">reda.testing.test_container_ert.</code><code class="sig-name descname">test_init_with_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init_with_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init_with_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>test initializing an ERT container and provide good data</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-reda.testing.test_container_seit">
+<span id="reda-testing-test-container-seit-module"></span><h2>reda.testing.test_container_seit module<a class="headerlink" href="#module-reda.testing.test_container_seit" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="reda.testing.test_container_seit.load_data_into_container">
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">load_data_into_container</code><span class="sig-paren">(</span><em class="sig-param">datadir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#load_data_into_container"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.load_data_into_container" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reda.testing.test_container_seit.prepare_4d_data">
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">prepare_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#prepare_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.prepare_4d_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Unzip included 4D data into a temp directory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>tempdir</strong><span class="classifier">string</span></dt><dd><p>Temporary directory</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.testing.test_container_seit.test_check_4d_data">
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">test_check_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_check_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_check_4d_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reda.testing.test_container_seit.test_histogram_plotting">
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">test_histogram_plotting</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_histogram_plotting"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_histogram_plotting" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="reda.testing.test_container_seit.test_load_4d_data">
+<code class="sig-prename descclassname">reda.testing.test_container_seit.</code><code class="sig-name descname">test_load_4d_data</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_load_4d_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_load_4d_data" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_api/reda.testing.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

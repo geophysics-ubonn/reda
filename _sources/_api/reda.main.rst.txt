@@ -1,0 +1,27 @@
+reda.main package
+=================
+
+.. automodule:: reda.main
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+reda.main.logger module
+-----------------------
+
+.. automodule:: reda.main.logger
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.main.units module
+----------------------
+
+.. automodule:: reda.main.units
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

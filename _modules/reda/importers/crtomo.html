@@ -1,0 +1,246 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.importers.crtomo &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.importers.crtomo</h1><div class="highlight"><pre>
+<span></span><span class="c1"># *-* coding: utf-8 *-*</span>
+<span class="sd">&quot;&quot;&quot;Import data in the CRMod/CRTomo format</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">glob</span> <span class="kn">import</span> <span class="n">glob</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
+
+
+<div class="viewcode-block" id="load_mod_file"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.crtomo.load_mod_file">[docs]</a><span class="k">def</span> <span class="nf">load_mod_file</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load a .mod file (sometimes also called volt.dat or data.crt). This file</span>
+<span class="sd">    contains the number of measurements in the first line, and in the following</span>
+<span class="sd">    lines measurements. Each line consists of 4 columns:</span>
+
+<span class="sd">    * the first column contains the current injection electrodes a and b,</span>
+<span class="sd">      stored as one integer using the equation: a * 1e4 + b</span>
+<span class="sd">    * the second column contains the voltage measurement electrodes m and n,</span>
+<span class="sd">      stored as one integer using the equation: m * 1e4 + n</span>
+<span class="sd">    * the third column contains the measured resistance [Ohm]</span>
+<span class="sd">    * the fourth column contains the measured phase value [mrad]</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : str</span>
+<span class="sd">        Path of filename to import</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        A reda-conform DataFrame</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+
+<span class="sd">        import reda</span>
+<span class="sd">        import reda.importers.crtomo as cexp</span>
+<span class="sd">        df = cexp.load_mod_file(&#39;volt_01_0.1Hz.crt&#39;)</span>
+<span class="sd">        ert = reda.ERT(data=df)</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df_raw</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="n">filename</span><span class="p">,</span> <span class="n">skiprows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">names</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;mn&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]</span>
+    <span class="p">)</span>
+    <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1000.0</span><span class="p">)</span>
+    <span class="c1"># ok, this is tricky: the preceding line, computing Zt, always makes sure</span>
+    <span class="c1"># that the resulting complex number is located in the upper right quadrant</span>
+    <span class="c1"># of the complex plane, thereby implicitly correcting for any negative</span>
+    <span class="c1"># K-factor. We do not want this to ensure data integrity (i.e., electrode</span>
+    <span class="c1"># numbers in the abmn columns would need to be changed, too). Therefore, if</span>
+    <span class="c1"># r &lt; 0, switch the sign of Zt.</span>
+    <span class="n">r_smaller_0</span> <span class="o">=</span> <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span>
+    <span class="n">df_raw</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">r_smaller_0</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+    <span class="c1"># print(&#39;crtomo import&#39;)</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
+    <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;ab&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;ab&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">floor</span><span class="p">(</span><span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;mn&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">df_raw</span><span class="p">[</span><span class="s1">&#39;mn&#39;</span><span class="p">]</span> <span class="o">%</span> <span class="mf">1e4</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">df_raw</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;ab&#39;</span><span class="p">,</span> <span class="s1">&#39;mn&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span></div>
+
+
+<div class="viewcode-block" id="load_seit_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.crtomo.load_seit_data">[docs]</a><span class="nd">@enable_result_transforms</span>
+<span class="k">def</span> <span class="nf">load_seit_data</span><span class="p">(</span><span class="n">directory</span><span class="p">,</span> <span class="n">frequency_file</span><span class="o">=</span><span class="s1">&#39;frequencies.dat&#39;</span><span class="p">,</span>
+                   <span class="n">data_prefix</span><span class="o">=</span><span class="s1">&#39;volt_&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Load sEIT data from data directory. This function loads data previously</span>
+<span class="sd">    exported from reda using reda.exporters.crtomo.write_files_to_directory</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    directory : string</span>
+<span class="sd">        input directory</span>
+<span class="sd">    frequency_file : string, optional</span>
+<span class="sd">        file (located in directory) that contains the frequencies</span>
+<span class="sd">    data_prefix: string, optional</span>
+<span class="sd">        for each frequency a corresponding data file must be present in the</span>
+<span class="sd">        input directory. Frequencies and files are matched by sorting the</span>
+<span class="sd">        frequencies AND the filenames, retrieved using glob and the</span>
+<span class="sd">        data_prefix</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    df : pandas.DataFrame</span>
+<span class="sd">        A DataFrame suitable for the sEIT container</span>
+<span class="sd">    electrodes : None</span>
+<span class="sd">        No electrode data is imported</span>
+<span class="sd">    topography : None</span>
+<span class="sd">        No topography data is imported</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">frequencies</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">frequency_file</span><span class="p">)</span>
+    <span class="n">data_files</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">glob</span><span class="p">(</span><span class="n">directory</span> <span class="o">+</span> <span class="n">os</span><span class="o">.</span><span class="n">sep</span> <span class="o">+</span> <span class="n">data_prefix</span> <span class="o">+</span> <span class="s1">&#39;*&#39;</span><span class="p">))</span>
+    <span class="c1"># check that the number of frequencies matches the number of data files</span>
+    <span class="k">if</span> <span class="n">frequencies</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_files</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s1">&#39;number of frequencies does not match number of data files&#39;</span><span class="p">)</span>
+
+    <span class="c1"># load data</span>
+    <span class="n">data_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">frequency</span><span class="p">,</span> <span class="n">filename</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">frequencies</span><span class="p">,</span> <span class="n">data_files</span><span class="p">):</span>
+        <span class="n">subdata</span> <span class="o">=</span> <span class="n">load_mod_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">frequency</span>
+        <span class="n">data_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">subdata</span><span class="p">)</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">data_list</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">df</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

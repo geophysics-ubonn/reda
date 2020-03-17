@@ -1,0 +1,375 @@
+:orphan:
+
+
+
+.. _sphx_glr__examples:
+
+.. _examples:
+
+Examples
+========
+
+
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_01_ERT:
+
+Usage of the ERT container
+--------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data">
+
+.. only:: html
+
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_dc_thumb.png
+
+     :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/01_ERT/plot_syscal_dc
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data from roll-a-long scheme">
+
+.. only:: html
+
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_rollalong_thumb.png
+
+     :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/01_ERT/plot_syscal_rollalong
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal IP data">
+
+.. only:: html
+
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
+
+     :ref:`sphx_glr__examples_01_ERT_plot_syscal_ip.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/01_ERT/plot_syscal_ip
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_02_SIP04:
+
+Importing SIP04 data
+--------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="SIP-04 Import">
+
+.. only:: html
+
+ .. figure:: /_examples/02_SIP04/images/thumb/sphx_glr_plot_sip04_thumb.png
+
+     :ref:`sphx_glr__examples_02_SIP04_plot_sip04.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/02_SIP04/plot_sip04
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_03_sEIT:
+
+Importing spectral impedance data (sEIT)
+----------------------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This is work in progress">
+
+.. only:: html
+
+ .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
+
+     :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/03_sEIT/plot_visualize_4d_data
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="    The SIP256c importer is incredibly slow at the moment. Sorry for that.">
+
+.. only:: html
+
+ .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_radic_sip256c_thumb.png
+
+     :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/03_sEIT/plot_radic_sip256c
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_04_configurations:
+
+Creating measurement configurations
+-----------------------------------
+
+Measurement configurations (A-B M-N)-tuples can be created using the
+:py:class:`reda.ConfigManager` class.
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Various ways to create measurement configurations">
+
+.. only:: html
+
+ .. figure:: /_examples/04_configurations/images/thumb/sphx_glr_plot_configurations_thumb.png
+
+     :ref:`sphx_glr__examples_04_configurations_plot_configurations.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/04_configurations/plot_configurations
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_05_crtomo:
+
+Importing measurements in CRTomo format
+---------------------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Import CRTomo-style single-frequency measurement data into a CR container">
+
+.. only:: html
+
+ .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_CR_thumb.png
+
+     :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/05_crtomo/plot_import_data_to_CR
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Import CRTomo-style multiy-frequency measurement data into a sEIT container">
+
+.. only:: html
+
+ .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_sEIT_thumb.png
+
+     :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/05_crtomo/plot_import_data_to_sEIT
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_06_eit_fzj:
+
+Operations specific to the FZJ sEIT systems
+-------------------------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="There exist multiple hardware and software versions of the of the EIT system developed by Zimme...">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_check_thumb.png
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_check.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_eit_fzj_check
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Reproduce Fig. 4 of Zimmermann et al 2019:">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_leakage_currents_thumb.png
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_leakage_currents.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_eit_fzj_leakage_currents
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="It is useful to conduct additional measurements for each sEIT setup and determine the total cap...">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_li_thumb.png
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_li.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_eit_fzj_li
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to import data from the various versions of the EIT system developed by ...">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_thumb.png
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_eit_fzj
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-gallery
+
+
+  .. container:: sphx-glr-download
+
+    :download:`Download all examples in Python source code: _examples_python.zip <//home/travis/build/geophysics-ubonn/reda/doc/_examples/_examples_python.zip>`
+
+
+
+  .. container:: sphx-glr-download
+
+    :download:`Download all examples in Jupyter notebooks: _examples_jupyter.zip <//home/travis/build/geophysics-ubonn/reda/doc/_examples/_examples_jupyter.zip>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

@@ -1,0 +1,344 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py:
+
+
+Visualizing multi-dimensional sEIT data
+---------------------------------------
+
+This is work in progress
+
+imports
+
+
+.. code-block:: default
+
+    import reda
+
+
+
+
+
+
+
+load the data set
+
+
+.. code-block:: default
+
+
+    seit = reda.sEIT()
+    for nr in range(0, 4):
+        seit.import_crtomo(
+            directory='data_synthetic_4d/modV_0{}_noisy/'.format(nr),
+            timestep=nr
+        )
+    seit.compute_K_analytical(spacing=1)
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    generating ids
+    assigning ids
+    Summary:
+                      a             b             m             n
+    count  21090.000000  21090.000000  21090.000000  21090.000000
+    mean      20.000000     21.000000     21.000000     20.000000
+    std       11.269695     11.269695     11.269695     11.269695
+    min        1.000000      2.000000      2.000000      1.000000
+    25%       10.000000     11.000000     11.000000     10.000000
+    50%       20.000000     21.000000     21.000000     20.000000
+    75%       30.000000     31.000000     31.000000     30.000000
+    max       39.000000     40.000000     40.000000     39.000000
+    generating ids
+    assigning ids
+    Summary:
+                      a             b             m             n
+    count  21090.000000  21090.000000  21090.000000  21090.000000
+    mean      20.000000     21.000000     21.000000     20.000000
+    std       11.269695     11.269695     11.269695     11.269695
+    min        1.000000      2.000000      2.000000      1.000000
+    25%       10.000000     11.000000     11.000000     10.000000
+    50%       20.000000     21.000000     21.000000     20.000000
+    75%       30.000000     31.000000     31.000000     30.000000
+    max       39.000000     40.000000     40.000000     39.000000
+    generating ids
+    assigning ids
+    Summary:
+                      a             b             m             n
+    count  21090.000000  21090.000000  21090.000000  21090.000000
+    mean      20.000000     21.000000     21.000000     20.000000
+    std       11.269695     11.269695     11.269695     11.269695
+    min        1.000000      2.000000      2.000000      1.000000
+    25%       10.000000     11.000000     11.000000     10.000000
+    50%       20.000000     21.000000     21.000000     20.000000
+    75%       30.000000     31.000000     31.000000     30.000000
+    max       39.000000     40.000000     40.000000     39.000000
+    generating ids
+    assigning ids
+    Summary:
+                      a             b             m             n
+    count  21090.000000  21090.000000  21090.000000  21090.000000
+    mean      20.000000     21.000000     21.000000     20.000000
+    std       11.269695     11.269695     11.269695     11.269695
+    min        1.000000      2.000000      2.000000      1.000000
+    25%       10.000000     11.000000     11.000000     10.000000
+    50%       20.000000     21.000000     21.000000     20.000000
+    75%       30.000000     31.000000     31.000000     30.000000
+    max       39.000000     40.000000     40.000000     39.000000
+
+
+
+
+Plotting pseudosections
+
+
+.. code-block:: default
+
+    with reda.CreateEnterDirectory('output_visualize_4d'):
+        pass
+        print(
+            'at this point the plotting routines do not honor'
+            ' timestep dimensionality'
+        )
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    at this point the plotting routines do not honor timestep dimensionality
+
+
+
+
+Plot a single spectrum
+
+
+.. code-block:: default
+
+    nor, rec = seit.get_spectrum(abmn=[1, 2, 4, 3])
+
+    with reda.CreateEnterDirectory('output_visualize_4d'):
+        for timestep, spectrum in nor.items():
+            spectrum.plot(filename='spectrum_1-2_4-3_ts_{}.png'.format(timestep))
+
+    with reda.CreateEnterDirectory('output_visualize_4d'):
+        nor, rec, fig = seit.get_spectrum(
+            abmn=[1, 2, 4, 3], plot_filename='specplot.png'
+        )
+
+
+
+
+.. rst-class:: sphx-glr-horizontal
+
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_001.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_002.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_003.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_004.png
+            :class: sphx-glr-multi-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+
+
+
+
+
+.. code-block:: default
+
+    from reda.eis.plots import multi_sip_response
+    # important: use the obj_dict parameter to use a dict as input
+    multi = multi_sip_response(obj_dict=nor)
+    with reda.CreateEnterDirectory('output_visualize_4d'):
+        multi.plot_cre('multiplot_cre.png')
+        multi.plot_cim('multiplot_cim.png')
+        multi.plot_rmag('multiplot_rmag.png')
+        multi.plot_rpha('multiplot_rpha.png')
+
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:471: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_xlim(*self.xlim)
+
+
+
+
+Histograms
+just used to close the figures to save memory
+
+
+.. code-block:: default
+
+    import pylab as plt
+
+    with reda.CreateEnterDirectory('output_visualize_4d'):
+        # plot frequencies in one plot
+        name, figs = seit.plot_histograms('rho_a', 'frequency')
+        for ts, fig in sorted(figs.items()):
+            fig.savefig(name + '_lin_{}.jpg'.format(ts), dpi=200)
+            plt.close(fig)
+
+        # plot in log10 representation
+        name, figs = seit.plot_histograms('rho_a', 'frequency', log10=True)
+        for ts, fig in sorted(figs.items()):
+            fig.savefig(name + '_log10_{}.jpg'.format(ts), dpi=200)
+            plt.close(fig)
+
+        name, figs = seit.plot_histograms('rho_a', 'timestep')
+        # plot only each third plot
+        for ts, fig in sorted(figs.items())[0::3]:
+            fig.savefig(name + '_{}.jpg'.format(ts), dpi=200)
+            plt.close(fig)
+
+
+
+.. rst-class:: sphx-glr-horizontal
+
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_005.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_006.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_007.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_008.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_009.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_010.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_011.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_012.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_013.png
+            :class: sphx-glr-multi-img
+
+    *
+
+      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_014.png
+            :class: sphx-glr-multi-img
+
+
+
+
+
+
+.. rst-class:: sphx-glr-timing
+
+   **Total running time of the script:** ( 0 minutes  28.046 seconds)
+
+
+.. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: plot_visualize_4d_data.py <plot_visualize_4d_data.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_visualize_4d_data.ipynb <plot_visualize_4d_data.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

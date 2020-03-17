@@ -1,0 +1,163 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download__examples_06_eit_fzj_plot_eit_fzj_check.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr__examples_06_eit_fzj_plot_eit_fzj_check.py:
+
+
+Checking FZJ-EIT data from a test board
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+There exist multiple hardware and software versions of the of the EIT
+system developed by Zimmermann et al. 2008
+(http://iopscience.iop.org/article/10.1088/0957-0233/19/9/094010/meta). To
+check basic system function a test board was built with multiple resistors
+attached to for connectors each. Measurements can thus be validated against
+known electrical (ohmic) resistances.
+
+At this point we only support 3-point data, i.e., data which uses two
+electrodes to inject current, and then uses all electrodes to measure the
+resulting potential distribution against system ground. Classical four-point
+configurations are then computed using superposition.
+
+Required are two files: a data file (usually **eit_data_mnu0.mat** and a text
+file (usually **resistor_check.dat** containing the measurement configurations
+to extract, and the expected measurement resistances.
+
+The resistor_check.dat file contains the four-point spreads to be imported from
+the measurement. This file is a text file with four columns (A, B, M, N),
+separated by spaces or tabs. Each line denotes one measurement and its expected
+resistance, the allowed variation, and its allow difference towards its
+reciprocal counterpart: ::
+
+    1   2   4   3   1000    1    20
+    4   3   2   1   1000    1    20
+    ...
+
+imports
+
+
+.. code-block:: default
+
+    import reda
+    import reda.utils.eit_fzj_utils as eit_fzj_utils
+
+
+
+
+
+
+
+
+
+.. code-block:: default
+
+    fig = eit_fzj_utils.check_resistor_board_measurements(
+        'data_eit_fzj_check/eit_data_mnu0.mat',
+        'data_eit_fzj_check/resistances.dat'
+    )
+    # this context manager executes all code within the given directory
+    with reda.CreateEnterDirectory('output_eit_fzj_check'):
+        # The resulting matplotlib figure can now be plotted to visualize the
+        # measurement data and the expected outcomes
+        fig.savefig('eit_fzj_resistor_check.pdf')
+
+
+
+.. image:: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_check_001.png
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+         a   b   m   n  expected_r  variation_r  variation_diffr
+    0    1   4   2   3         980           10               20
+    1    2   3   1   4         980           10               20
+    2    5   8   6   7        1200           10               20
+    3    6   7   5   8        1200           10               20
+    4    9  12  10  11        1450           10               20
+    5   10  11   9  12        1450           10               20
+    6   13  16  14  15        1660           10               20
+    7   14  15  13  16        1660           10               20
+    8   17  20  18  19        1750           10               20
+    9   18  19  17  20        1750           10               20
+    10  21  24  22  23        1960           10               20
+    11  22  23  21  24        1960           10               20
+    12  25  28  26  27        2160           10               20
+    13  26  27  25  28        2160           10               20
+    14  29  32  30  31        2370           10               20
+    15  30  31  29  32        2370           10               20
+    16  33  36  34  35        2630           10               20
+    17  34  35  33  36        2630           10               20
+    18  37  40  38  39        2930           10               20
+    19  38  39  37  40        2930           10               20
+    constructing four-point measurements
+    generating ids
+    assigning ids
+    Summary:
+                   a          b          m          n
+    count  232.00000  232.00000  232.00000  232.00000
+    mean     7.50000    9.50000    7.50000    9.50000
+    std      4.50973    4.50973    4.50973    4.50973
+    min      1.00000    3.00000    1.00000    3.00000
+    25%      4.25000    6.25000    4.25000    6.25000
+    50%      7.50000    9.50000    7.50000    9.50000
+    75%     10.75000   12.75000   10.75000   12.75000
+    max     14.00000   16.00000   14.00000   16.00000
+    0 [  1   4   2   3 980  10  20]
+    1 [  2   3   1   4 980  10  20]
+    2 [   5    8    6    7 1200   10   20]
+    3 [   6    7    5    8 1200   10   20]
+    4 [   9   12   10   11 1450   10   20]
+    5 [  10   11    9   12 1450   10   20]
+    6 [  13   16   14   15 1660   10   20]
+    7 [  14   15   13   16 1660   10   20]
+    8 [  17   20   18   19 1750   10   20]
+    9 [  18   19   17   20 1750   10   20]
+    10 [  21   24   22   23 1960   10   20]
+    11 [  22   23   21   24 1960   10   20]
+    12 [  25   28   26   27 2160   10   20]
+    13 [  26   27   25   28 2160   10   20]
+    14 [  29   32   30   31 2370   10   20]
+    15 [  30   31   29   32 2370   10   20]
+    16 [  33   36   34   35 2630   10   20]
+    17 [  34   35   33   36 2630   10   20]
+    18 [  37   40   38   39 2930   10   20]
+    19 [  38   39   37   40 2930   10   20]
+
+
+
+
+
+.. _sphx_glr_download__examples_06_eit_fzj_plot_eit_fzj_check.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: plot_eit_fzj_check.py <plot_eit_fzj_check.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_eit_fzj_check.ipynb <plot_eit_fzj_check.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

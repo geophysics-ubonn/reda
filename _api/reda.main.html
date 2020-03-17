@@ -1,0 +1,311 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.main package &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../about.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="reda.plotters package" href="reda.plotters.html" />
+    <link rel="prev" title="reda.importers.utils package" href="reda.importers.utils.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API documentation</a><ul>
+  <li><a href="reda.html">reda package</a><ul>
+      <li>Previous: <a href="reda.importers.utils.html" title="previous chapter">reda.importers.utils package</a></li>
+      <li>Next: <a href="reda.plotters.html" title="next chapter">reda.plotters package</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-reda.main">
+<span id="reda-main-package"></span><h1>reda.main package<a class="headerlink" href="#module-reda.main" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-reda.main.logger">
+<span id="reda-main-logger-module"></span><h2>reda.main.logger module<a class="headerlink" href="#module-reda.main.logger" title="Permalink to this headline">¶</a></h2>
+<p>Set up some logging facilities for reda</p>
+<p>We differentiate multiple logging types/targets</p>
+<ol class="arabic simple">
+<li><p>general logging (using the python logging module)</p></li>
+<li><p>a data processing log (which also uses the logging module), available via
+the container-inherent .logger object</p></li>
+</ol>
+<dl class="class">
+<dt id="reda.main.logger.ListHandler">
+<em class="property">class </em><code class="sig-prename descclassname">reda.main.logger.</code><code class="sig-name descname">ListHandler</code><span class="sig-paren">(</span><em class="sig-param">log_list</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/logging.html#logging.Handler" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">logging.Handler</span></code></a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Attributes</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>name</strong></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">acquire</span></code>(self)</p></td>
+<td><p>Acquire the I/O thread lock.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">addFilter</span></code>(self, filter)</p></td>
+<td><p>Add the specified filter to this handler.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>(self)</p></td>
+<td><p>Tidy up any resources used by the handler.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">createLock</span></code>(self)</p></td>
+<td><p>Acquire a thread lock for serializing access to the underlying I/O.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.main.logger.ListHandler.emit" title="reda.main.logger.ListHandler.emit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">emit</span></code></a>(self, record)</p></td>
+<td><p>Do whatever it takes to actually log the specified logging record.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, record)</p></td>
+<td><p>Determine if a record is loggable by consulting all the filters.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code>(self)</p></td>
+<td><p>Ensure all logging output has been flushed.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code>(self, record)</p></td>
+<td><p>Format the specified record.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handle</span></code>(self, record)</p></td>
+<td><p>Conditionally emit the specified logging record.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handleError</span></code>(self, record)</p></td>
+<td><p>Handle errors which occur during an emit() call.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">release</span></code>(self)</p></td>
+<td><p>Release the I/O thread lock.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeFilter</span></code>(self, filter)</p></td>
+<td><p>Remove the specified filter from this handler.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFormatter</span></code>(self, fmt)</p></td>
+<td><p>Set the formatter for this handler.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLevel</span></code>(self, level)</p></td>
+<td><p>Set the logging level of this handler.</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 55%" />
+<col style="width: 45%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>get_name</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>set_name</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.main.logger.ListHandler.emit">
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">record</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler.emit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Do whatever it takes to actually log the specified logging record.</p>
+<p>This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="reda.main.logger.LoggingClass">
+<em class="property">class </em><code class="sig-prename descclassname">reda.main.logger.</code><code class="sig-name descname">LoggingClass</code><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<p>Set up logging facilities for the containers</p>
+<p class="rubric">Methods</p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.main.logger.LoggingClass.setup_logger" title="reda.main.logger.LoggingClass.setup_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code></a>(self)</p></td>
+<td><p>Setup a logger</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 69%" />
+<col style="width: 31%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>print_data_journal</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>print_log</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="reda.main.logger.LoggingClass.print_data_journal">
+<code class="sig-name descname">print_data_journal</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_data_journal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_data_journal" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reda.main.logger.LoggingClass.print_log">
+<code class="sig-name descname">print_log</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_log" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="reda.main.logger.LoggingClass.setup_logger">
+<code class="sig-name descname">setup_logger</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.setup_logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Setup a logger</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="reda.main.logger.setup_logger">
+<code class="sig-prename descclassname">reda.main.logger.</code><code class="sig-name descname">setup_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.setup_logger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-reda.main.units">
+<span id="reda-main-units-module"></span><h2>reda.main.units module<a class="headerlink" href="#module-reda.main.units" title="Permalink to this headline">¶</a></h2>
+<p>columns in the containers are usually named in a simplified way to facilitate
+working with them. However, as soon as we want to export data, or plot data,
+meaningful and physically correct identifiers are required. This file defines
+the corresponding relations.</p>
+<dl class="function">
+<dt id="reda.main.units.get_label">
+<code class="sig-prename descclassname">reda.main.units.</code><code class="sig-name descname">get_label</code><span class="sig-paren">(</span><em class="sig-param">key</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/units.html#get_label"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.units.get_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convenience function: return the label (latex version) of a given key,
+if available. Otherwise, return the key itself.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/_api/reda.main.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

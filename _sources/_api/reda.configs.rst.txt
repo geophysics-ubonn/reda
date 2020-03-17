@@ -1,0 +1,19 @@
+reda.configs package
+====================
+
+.. automodule:: reda.configs
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+reda.configs.configManager module
+---------------------------------
+
+.. automodule:: reda.configs.configManager
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

@@ -1,0 +1,205 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Analyzing total capacitances at each electrode during current injection &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Importing FZJ EIT40/EIT160 data" href="plot_eit_fzj.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="plot_eit_fzj_leakage_currents.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="plot_eit_fzj_leakage_currents.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="plot_eit_fzj.html" title="next chapter">Importing FZJ EIT40/EIT160 data</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-li-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+</div>
+<div class="sphx-glr-example-title section" id="analyzing-total-capacitances-at-each-electrode-during-current-injection">
+<span id="sphx-glr-examples-06-eit-fzj-plot-eit-fzj-li-py"></span><h1>Analyzing total capacitances at each electrode during current injection<a class="headerlink" href="#analyzing-total-capacitances-at-each-electrode-during-current-injection" title="Permalink to this headline">¶</a></h1>
+<p>It is useful to conduct additional measurements for each sEIT setup and
+determine the total capacitances seen by each electrode during current
+excitation.
+This parameter is helpful in assessing leakages and general electrical flow
+paths with respect to system ground.</p>
+<p>For more information, see:</p>
+<p>Zimmermann, E., Huisman, J. A., Mester, A., and van Waasen, S.: Correction of
+phase errors due to leakage currents in wideband EIT field measurements on
+soil and sediments, Measurement Science and Technology, 30, 084 002,
+doi:10.1088/1361-6501/ab1b09, 2019.</p>
+<img alt="../../_images/sphx_glr_plot_eit_fzj_li_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_li_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>selecting multiplexer group 1
+Available frequencies: [  500.  1000.  5000. 10000.]
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">import</span> <span class="nn">reda</span>
+<span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
+
+<span class="n">md_data</span> <span class="o">=</span> <a href="../../_api/reda.importers.html#reda.importers.eit_fzj.get_md_data" title="View documentation for reda.importers.eit_fzj.get_md_data"><span class="n">eit_fzj</span><span class="o">.</span><span class="n">get_md_data</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_eit_fzj_li/eit_data.mat&#39;</span><span class="p">,</span> <span class="n">multiplexer_group</span><span class="o">=</span><span class="mi">1</span>
+<span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Available frequencies:&#39;</span><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.unique.html#numpy.unique" title="View documentation for numpy.unique"><span class="n">np</span><span class="o">.</span><span class="n">unique</span></a><span class="p">(</span><span class="n">md_data</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">))</span>
+<span class="n">data_1k</span> <span class="o">=</span> <span class="n">md_data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;frequency == 1000&#39;</span><span class="p">)</span>
+
+<span class="c1"># convert to [nF]</span>
+<span class="n">Cl_1k_nF</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">data_1k</span><span class="p">[[</span><span class="s1">&#39;Cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl2&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl3&#39;</span><span class="p">]]</span> <span class="o">/</span> <span class="mf">1e-9</span><span class="p">)</span>
+
+<span class="n">min_Cl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">Cl_1k_nF</span><span class="p">[[</span><span class="s1">&#39;Cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl2&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl3&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">max_Cl</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">Cl_1k_nF</span><span class="p">[[</span><span class="s1">&#39;Cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl2&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl3&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">mean_Cl</span> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.mean.html#numpy.mean" title="View documentation for numpy.mean"><span class="n">np</span><span class="o">.</span><span class="n">mean</span></a><span class="p">(</span><span class="n">Cl_1k_nF</span><span class="p">[[</span><span class="s1">&#39;Cl1&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl2&#39;</span><span class="p">,</span> <span class="s1">&#39;Cl3&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a><span class="p">,</span> <a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.SubplotBase.html#matplotlib.axes.SubplotBase" title="View documentation for matplotlib.axes.SubplotBase"><span class="n">ax</span></a> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mf">8.3</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mf">4.5</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.fill_between.html#matplotlib.axes.Axes.fill_between" title="View documentation for matplotlib.axes.Axes.fill_between"><span class="n">ax</span><span class="o">.</span><span class="n">fill_between</span></a><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">mean_Cl</span><span class="p">)),</span> <span class="n">y1</span><span class="o">=</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.real.html#numpy.real" title="View documentation for numpy.real"><span class="n">np</span><span class="o">.</span><span class="n">real</span></a><span class="p">(</span><span class="n">min_Cl</span><span class="p">),</span> <span class="n">y2</span><span class="o">=</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.real.html#numpy.real" title="View documentation for numpy.real"><span class="n">np</span><span class="o">.</span><span class="n">real</span></a><span class="p">(</span><span class="n">max_Cl</span><span class="p">)</span>
+<span class="p">)</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.plot.html#matplotlib.axes.Axes.plot" title="View documentation for matplotlib.axes.Axes.plot"><span class="n">ax</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.real.html#numpy.real" title="View documentation for numpy.real"><span class="n">np</span><span class="o">.</span><span class="n">real</span></a><span class="p">(</span><span class="n">mean_Cl</span><span class="p">),</span> <span class="s1">&#39;.&#39;</span><span class="p">)</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.axes.Axes.set_ylabel.html#matplotlib.axes.Axes.set_ylabel" title="View documentation for matplotlib.axes.Axes.set_ylabel"><span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span></a><span class="p">(</span><span class="s1">&#39;real(Cl) [nF]&#39;</span><span class="p">)</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.tight_layout" title="View documentation for matplotlib.figure.Figure.tight_layout"><span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span></a><span class="p">()</span>
+
+<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;output_eit_fzj_li&#39;</span><span class="p">):</span>
+    <a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure.savefig" title="View documentation for matplotlib.figure.Figure.savefig"><span class="n">fig</span><span class="o">.</span><span class="n">savefig</span></a><span class="p">(</span><span class="s1">&#39;electrode_capacitances.jpg&#39;</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-li-py">
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/a0693cf268c1caa432d3db8a8bb8f63e/plot_eit_fzj_li.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj_li.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/1c47d030e251040167e9760ad88d6126/plot_eit_fzj_li.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj_li.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/06_eit_fzj/plot_eit_fzj_li.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

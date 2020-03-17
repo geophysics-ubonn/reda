@@ -1,0 +1,307 @@
+.. note::
+    :class: sphx-glr-download-link-note
+
+    Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_ip.py>` to download the full example code
+.. rst-class:: sphx-glr-example-title
+
+.. _sphx_glr__examples_01_ERT_plot_syscal_ip.py:
+
+
+Importing Syscal IP data
+========================
+
+
+.. code-block:: default
+
+    import reda
+
+
+
+
+
+
+
+
+a hack to prevent large loading times...
+
+
+.. code-block:: default
+
+
+    # import os
+    # import pickle
+    # pfile = 'ip.pickle'
+    # if os.path.isfile(pfile):
+    #     with open(pfile, 'rb') as fid:
+    #         ip = pickle.load(fid)
+    # else:
+    #     ip = reda.TDIP()
+    #     ip.import_syscal_bin('data_syscal_ip/data_normal.bin')
+    #     ip.import_syscal_bin(
+    #       'data_syscal_ip/data_reciprocal.bin', reciprocals=48)
+    #     with open(pfile, 'wb') as fid:
+    #         pickle.dump(ip, fid)
+
+
+
+
+
+
+
+
+normal loading of tdip data
+
+
+.. code-block:: default
+
+    ip = reda.TDIP()
+    # import pprofile
+    # profiler = pprofile.Profile()
+    # with profiler():
+    ip.import_syscal_bin('data_syscal_ip/data_normal.bin')
+    # profile.print_stats()
+    # exit()
+    ip.import_syscal_bin('data_syscal_ip/data_reciprocal.bin', reciprocals=48)
+
+
+    print(ip.data[['a', 'b', 'm', 'n', 'id', 'norrec']])
+
+    # import IPython
+    # IPython.embed()
+    # exit()
+
+
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    WARNING: One or more jumps in measurement numbers detected
+    The jump indices are:
+    989
+    Removing data points subsequent to the first jump
+    generating ids
+    assigning ids
+    renumbering electrode numbers
+    generating ids
+    assigning ids
+           a   b   m   n    id norrec
+    0      1   2   4   5   170    nor
+    1      5   4   2   1   170    rec
+    2      1   2   5   6   211    nor
+    3      6   5   2   1   211    rec
+    89     6   5   3   2   212    rec
+    ...   ..  ..  ..  ..   ...    ...
+    1973  48  47  43  42  1977    rec
+    1976  43  44  47  48  1978    nor
+    1977  48  47  44  43  1978    rec
+    1978  44  45  47  48  1979    nor
+    1979  48  47  45  44  1979    rec
+
+    [1980 rows x 6 columns]
+
+
+
+
+
+.. code-block:: default
+
+    import reda.utils.geometric_factors as geomK
+    K = geomK.compute_K_analytical(ip.data, spacing=0.25)
+    geomK.apply_K(ip.data, K)
+
+    import reda.utils.fix_sign_with_K as fixK
+    ip.data = fixK.fix_sign_with_K(ip.data)
+
+
+
+
+
+
+
+
+plot a decay curve by specifying the index
+note that no file will be saved to disk if filename parameter is not provided
+
+
+.. code-block:: default
+
+    ip.plot_decay_curve(filename='decay_curve.png',
+                        index_nor=0, index_rec=1978, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_001.png
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
+
+
+you can also specify only one index
+this will only return a figure object, but will not save to file:
+
+
+.. code-block:: default
+
+    ip.plot_decay_curve(filename='decay_curve.png',
+                        index_nor=0, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_002.png
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
+
+
+it does not matter if you choose normal or reciprocal
+
+
+.. code-block:: default
+
+    ip.plot_decay_curve(index_rec=0, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_003.png
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
+
+
+plot a decay curve by specifying the index
+
+
+.. code-block:: default
+
+    ip.plot_decay_curve(nr_id=170, return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_004.png
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
+
+
+a  b  m  n
+0     1  2  4  5
+1978  5  4  2  1
+
+
+.. code-block:: default
+
+    ip.plot_decay_curve(abmn=(1, 2, 5, 4), return_fig=True)
+
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_005.png
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
+
+
+reciprocal is also ok
+
+
+.. code-block:: default
+
+    ip.plot_decay_curve(abmn=(4, 5, 2, 1), return_fig=True)
+
+
+
+.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_006.png
+    :class: sphx-glr-single-img
+
+
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+
+    <Figure size 590.551x314.961 with 3 Axes>
+
+
+
+
+.. _sphx_glr_download__examples_01_ERT_plot_syscal_ip.py:
+
+
+.. only :: html
+
+ .. container:: sphx-glr-footer
+    :class: sphx-glr-footer-example
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Python source code: plot_syscal_ip.py <plot_syscal_ip.py>`
+
+
+
+  .. container:: sphx-glr-download
+
+     :download:`Download Jupyter notebook: plot_syscal_ip.ipynb <plot_syscal_ip.ipynb>`
+
+
+.. only:: html
+
+ .. rst-class:: sphx-glr-signature
+
+    `Gallery generated by Sphinx-Gallery <https://sphinx-gallery.github.io>`_

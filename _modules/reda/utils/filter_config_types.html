@@ -1,0 +1,376 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.utils.filter_config_types &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.utils.filter_config_types</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Sort configurations into four-point spread types.</span>
+
+<span class="sd">Sorting is done by subsequently applying filters to the configurations, with</span>
+<span class="sd">removal of selected configurations. Thus, each filter sees only configurations</span>
+<span class="sd">not &#39;chosen&#39; by any previously applied filters.</span>
+
+<span class="sd">    * dipole-dipole</span>
+<span class="sd">    * Schlumberger</span>
+<span class="sd">    * Wenner</span>
+<span class="sd">    * misc</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_schlumberger</span><span class="p">(</span><span class="n">configs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter Schlumberger configurations</span>
+
+<span class="sd">    Schlumberger configurations are selected using the following criteria:</span>
+
+<span class="sd">    * For a given voltage dipole, there need to be at least two current</span>
+<span class="sd">      injections with electrodes located on the left and the right of the</span>
+<span class="sd">      voltage dipole.</span>
+<span class="sd">    * The distance between the current electrodes and the next voltage</span>
+<span class="sd">      electrode is the same on both sides.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    configs: numpy.ndarray</span>
+<span class="sd">        Nx4 array with N measurement configurations</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    configs: numpy.ndarray</span>
+<span class="sd">        Remaining configurations, all Schlumberger configurations are set to</span>
+<span class="sd">        numpy.nan</span>
+<span class="sd">    schl_indices: dict with one entry: numpy.ndarray</span>
+<span class="sd">        indices of Schlumberger configurations</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># sort configs</span>
+    <span class="n">configs_sorted</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span>
+    <span class="p">))</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># determine unique voltage dipoles</span>
+    <span class="n">MN</span> <span class="o">=</span> <span class="n">configs_sorted</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">MN_unique</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span>
+        <span class="n">MN</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+            <span class="n">MN</span><span class="o">.</span><span class="n">dtype</span><span class="o">.</span><span class="n">descr</span> <span class="o">*</span> <span class="mi">2</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+    <span class="n">MN_unique_reshape</span> <span class="o">=</span> <span class="n">MN_unique</span><span class="o">.</span><span class="n">view</span><span class="p">(</span>
+        <span class="n">MN</span><span class="o">.</span><span class="n">dtype</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="n">schl_indices_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">mn</span> <span class="ow">in</span> <span class="n">MN_unique_reshape</span><span class="p">:</span>
+        <span class="c1"># check if there are more than one associated current injections</span>
+        <span class="n">nr_current_binary</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">configs_sorted</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">mn</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs_sorted</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">mn</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">nr_current_binary</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># now which of these configurations have current electrodes on both</span>
+        <span class="c1"># sides of the voltage dipole</span>
+        <span class="n">nr_left_right</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="p">(</span><span class="n">configs_sorted</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">mn</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs_sorted</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">mn</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="n">nr_current_binary</span>
+        <span class="p">)</span>
+
+        <span class="c1"># now check that the left/right distances are equal</span>
+        <span class="n">distance_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+            <span class="n">configs_sorted</span><span class="p">[</span><span class="n">nr_left_right</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">mn</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="n">distance_right</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span>
+            <span class="n">configs_sorted</span><span class="p">[</span><span class="n">nr_left_right</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">mn</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+        <span class="n">nr_equal_distances</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">distance_left</span> <span class="o">==</span> <span class="n">distance_right</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">nr_left_right</span><span class="p">)[</span><span class="mi">0</span><span class="p">][</span><span class="n">nr_equal_distances</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">indices</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="n">schl_indices_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">indices</span><span class="p">)</span>
+
+    <span class="c1"># set Schlumberger configs to nan</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">schl_indices_list</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">configs</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([])}</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">schl_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span><span class="n">schl_indices_list</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+        <span class="n">configs</span><span class="p">[</span><span class="n">schl_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+        <span class="k">return</span> <span class="n">configs</span><span class="p">,</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="n">schl_indices</span><span class="p">}</span>
+
+
+<span class="k">def</span> <span class="nf">_filter_dipole_dipole</span><span class="p">(</span><span class="n">configs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Filter dipole-dipole configurations</span>
+
+<span class="sd">    A dipole-dipole configuration is defined using the following criteria:</span>
+
+<span class="sd">        * equal distance between the two current electrodes and between the two</span>
+<span class="sd">          voltage electrodes</span>
+<span class="sd">        * no overlap of dipoles</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    configs: numpy.ndarray</span>
+<span class="sd">        Nx4 array with N measurement configurations</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    configs: numpy.ndarray</span>
+<span class="sd">        Remaining configurations, all dipole-dipole configurations are set to</span>
+<span class="sd">        numpy.nan</span>
+<span class="sd">    dd_indices: numpy.ndarray</span>
+<span class="sd">        indices of dipole-dipole configurations</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># check that dipoles have equal size</span>
+    <span class="n">dist_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+    <span class="n">dist_mn</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
+
+    <span class="n">distances_equal</span> <span class="o">=</span> <span class="p">(</span><span class="n">dist_ab</span> <span class="o">==</span> <span class="n">dist_mn</span><span class="p">)</span>
+
+    <span class="c1"># check that they are not overlapping</span>
+    <span class="n">not_overlapping</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="c1"># either a,b &lt; m,n</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
+        <span class="p">)</span> <span class="o">|</span>
+        <span class="c1"># or m,n &lt; a,b</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">&amp;</span>
+            <span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+
+    <span class="n">is_dipole_dipole</span> <span class="o">=</span> <span class="p">(</span><span class="n">distances_equal</span> <span class="o">&amp;</span> <span class="n">not_overlapping</span><span class="p">)</span>
+
+    <span class="n">dd_indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">is_dipole_dipole</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">dd_indices_sorted</span> <span class="o">=</span> <span class="n">_sort_dd_skips</span><span class="p">(</span><span class="n">configs</span><span class="p">[</span><span class="n">dd_indices</span><span class="p">,</span> <span class="p">:],</span> <span class="n">dd_indices</span><span class="p">)</span>
+
+    <span class="c1"># set all dd configs to nan</span>
+    <span class="n">configs</span><span class="p">[</span><span class="n">dd_indices</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span>
+
+    <span class="k">return</span> <span class="n">configs</span><span class="p">,</span> <span class="n">dd_indices_sorted</span>
+
+
+<span class="k">def</span> <span class="nf">_sort_dd_skips</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">dd_indices_all</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Given a set of dipole-dipole configurations, sort them according to</span>
+<span class="sd">    their current skip.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    configs: Nx4 numpy.ndarray</span>
+<span class="sd">        Dipole-Dipole configurations</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dd_configs_sorted: dict</span>
+<span class="sd">        dictionary with the skip as keys, and arrays/lists with indices to</span>
+<span class="sd">        these skips.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">config_current_skips</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">config_current_skips</span><span class="p">)):</span>
+        <span class="k">return</span> <span class="p">{</span><span class="mi">0</span><span class="p">:</span> <span class="p">[]}</span>
+
+    <span class="c1"># determine skips</span>
+    <span class="n">available_skips_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">config_current_skips</span><span class="p">)</span>
+    <span class="n">available_skips</span> <span class="o">=</span> <span class="n">available_skips_raw</span><span class="p">[</span>
+        <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">available_skips_raw</span><span class="p">)</span>
+    <span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+    <span class="c1"># now determine the configurations</span>
+    <span class="n">dd_configs_sorted</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">skip</span> <span class="ow">in</span> <span class="n">available_skips</span><span class="p">:</span>
+        <span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">config_current_skips</span> <span class="o">==</span> <span class="n">skip</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">dd_configs_sorted</span><span class="p">[</span><span class="n">skip</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">dd_indices_all</span><span class="p">[</span><span class="n">indices</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">dd_configs_sorted</span>
+
+
+<div class="viewcode-block" id="filter"><a class="viewcode-back" href="../../../_api/reda.utils.html#reda.utils.filter_config_types.filter">[docs]</a><span class="k">def</span> <span class="nf">filter</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Main entry function to filtering configuration types</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    configs: Nx4 array</span>
+<span class="sd">        array containing A-B-M-N configurations</span>
+<span class="sd">    settings: dict</span>
+<span class="sd">        &#39;only_types&#39;: [&#39;dd&#39;, &#39;other&#39;],  # filter only for those types</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    dict</span>
+<span class="sd">        results dict containing filter results (indices) for all registered</span>
+<span class="sd">        filter functions.  All remaining configs are stored under the keywords</span>
+<span class="sd">        &#39;remaining&#39;</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">configs</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="n">configs</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># assign short labels to Python functions</span>
+    <span class="n">filter_funcs</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;dd&#39;</span><span class="p">:</span> <span class="n">_filter_dipole_dipole</span><span class="p">,</span>
+        <span class="s1">&#39;schlumberger&#39;</span><span class="p">:</span> <span class="n">_filter_schlumberger</span><span class="p">,</span>
+    <span class="p">}</span>
+
+    <span class="c1"># we need a list to fix the call order of filter functions</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;dd&#39;</span><span class="p">,</span> <span class="s1">&#39;schlumberger&#39;</span><span class="p">,</span> <span class="p">]</span>
+
+    <span class="n">allowed_keys</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;only_types&#39;</span><span class="p">,</span> <span class="n">filter_funcs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+    <span class="n">results</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="c1"># we operate iteratively on the configs, set the first round here</span>
+    <span class="c1"># rows are iteratively set to nan when filters remove them!</span>
+    <span class="n">configs_filtered</span> <span class="o">=</span> <span class="n">configs</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">keys</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">allowed_keys</span><span class="p">:</span>
+            <span class="n">configs_filtered</span><span class="p">,</span> <span class="n">indices_filtered</span> <span class="o">=</span> <span class="n">filter_funcs</span><span class="p">[</span><span class="n">key</span><span class="p">](</span>
+                <span class="n">configs_filtered</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">indices_filtered</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">results</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">indices_filtered</span>
+
+    <span class="c1"># add all remaining indices to the results dict</span>
+    <span class="n">results</span><span class="p">[</span><span class="s1">&#39;not_sorted&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+        <span class="o">~</span><span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">configs_filtered</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">results</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

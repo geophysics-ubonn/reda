@@ -1,0 +1,244 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.importers.geotom &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <script src="../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.importers.geotom</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="kn">from</span> <span class="nn">reda.containers.ERT</span> <span class="kn">import</span> <span class="n">ERT</span>
+<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
+
+
+<span class="nd">@enable_result_transforms</span>
+<span class="k">def</span> <span class="nf">_parse_wenner_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Parse a Geotom .wen (Wenner configuration) file</span>
+
+<span class="sd">    Parsing problems</span>
+<span class="sd">    ----------------</span>
+
+<span class="sd">    Due to column overflows it is necessary to make sure that spaces are</span>
+<span class="sd">    present around the ; character. Example:</span>
+
+<span class="sd">        8.000    14.000 10835948.70;   0.001  -123.1853  -1.0  23.10.2014</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># read data</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid2</span><span class="p">:</span>
+        <span class="n">geotom_data_orig</span> <span class="o">=</span> <span class="n">fid2</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+    <span class="c1"># replace all &#39;;&#39; by &#39; ; &#39;</span>
+    <span class="n">geotom_data</span> <span class="o">=</span> <span class="n">geotom_data_orig</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">,</span> <span class="s1">&#39; ; &#39;</span><span class="p">)</span>
+
+    <span class="n">fid</span> <span class="o">=</span> <span class="n">StringIO</span><span class="p">()</span>
+    <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">geotom_data</span><span class="p">)</span>
+    <span class="n">fid</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="n">header</span> <span class="o">=</span> <span class="p">[</span><span class="n">fid</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">16</span><span class="p">)]</span>
+    <span class="n">header</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span>
+        <span class="n">fid</span><span class="p">,</span>
+        <span class="n">delim_whitespace</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">header</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">names</span><span class="o">=</span><span class="p">(</span>
+            <span class="s1">&#39;elec1_wenner&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;a_w&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c4&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c5&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c6&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c6&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c7&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c8&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c9&#39;</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="c1"># compute geometric factor using the Wenner formula</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_w&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+
+    <span class="n">Am</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;elec1_wenner&#39;</span><span class="p">]</span>
+    <span class="n">Bm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;elec1_wenner&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_w&#39;</span><span class="p">]</span>
+    <span class="n">Mm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;elec1_wenner&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_w&#39;</span><span class="p">]</span>
+    <span class="n">Nm</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;elec1_wenner&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a_w&#39;</span><span class="p">]</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Am</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Bm</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Mm</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Nm</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mi">1</span>
+
+    <span class="c1"># remove any nan values</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">],</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<div class="viewcode-block" id="add_file"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.geotom.add_file">[docs]</a><span class="k">def</span> <span class="nf">add_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="p">,</span> <span class="n">container</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename: string</span>
+<span class="sd">        path</span>
+<span class="sd">    settings: dict</span>
+<span class="sd">        ::</span>
+
+<span class="sd">            {</span>
+<span class="sd">                timestep: [int|datetime], timestep relating to this measurement</span>
+<span class="sd">            }</span>
+
+<span class="sd">    container: :class:`reda.container.ERT.ERT`</span>
+<span class="sd">        ERT container to add dataset to</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">timestep</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># Wenner</span>
+    <span class="k">if</span> <span class="n">filename</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s1">&#39;.wen&#39;</span><span class="p">):</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">_parse_wenner_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">settings</span><span class="p">)</span>
+        <span class="c1"># add timestep column</span>
+        <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;Not a Wenner file&#39;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">container</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">container</span> <span class="o">=</span> <span class="n">ERT</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">container</span><span class="o">.</span><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">container</span><span class="o">.</span><span class="n">df</span><span class="p">,</span> <span class="n">data</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">container</span></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

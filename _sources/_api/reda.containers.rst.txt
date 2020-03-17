@@ -1,0 +1,59 @@
+reda.containers package
+=======================
+
+.. automodule:: reda.containers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+reda.containers.BaseContainer module
+------------------------------------
+
+.. automodule:: reda.containers.BaseContainer
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.containers.CR module
+-------------------------
+
+.. automodule:: reda.containers.CR
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.containers.ERT module
+--------------------------
+
+.. automodule:: reda.containers.ERT
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.containers.SIP module
+--------------------------
+
+.. automodule:: reda.containers.SIP
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.containers.TDIP module
+---------------------------
+
+.. automodule:: reda.containers.TDIP
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.containers.sEIT module
+---------------------------
+
+.. automodule:: reda.containers.sEIT
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

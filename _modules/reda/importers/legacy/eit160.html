@@ -1,0 +1,580 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>reda.importers.legacy.eit160 &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../../_static/gallery.css" />
+    <script id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+    <script src="../../../../_static/jquery.js"></script>
+    <script src="../../../../_static/underscore.js"></script>
+    <script src="../../../../_static/doctools.js"></script>
+    <script src="../../../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../../../about.html" />
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../../index.html">
+    <img class="logo" src="../../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../../index.html">Module code</a><ul>
+  <li><a href="../../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.importers.legacy.eit160</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="sd">&quot;&quot;&quot; Work with result files from the EIT-40/160 tomograph (also called medusa).</span>
+
+<span class="sd">Data structure of .mat files:</span>
+
+<span class="sd">    EMD(n).fm frequency</span>
+<span class="sd">    EMD(n).Time point of time of this measurement</span>
+<span class="sd">    EMD(n).ni number of the two excitation electrodes (not the channel number)</span>
+<span class="sd">    EMD(n).nu number of the two potential electrodes (not the channel number)</span>
+<span class="sd">    EMD(n).Zt3 array with the transfer impedances (repetition measurement)</span>
+<span class="sd">    EMD(n).nni number of injection</span>
+<span class="sd">    EMD(n).cni number of channels used to inject current</span>
+<span class="sd">    EMD(n).cnu number of channels used to measure voltage</span>
+<span class="sd">    EMD(n).Is3 injected current (A) (calibrated)</span>
+<span class="sd">    EMD(n).II3 leakage current (A)</span>
+<span class="sd">    EMD(n).Yg1 Admitance of first injection path</span>
+<span class="sd">    EMD(n).Yg2 Admitance of second injection path</span>
+<span class="sd">    EMD(n).As3 Voltages at shunt resistors (defined in .mcf files: NA1 - NA2)</span>
+<span class="sd">    EMD(n).Zg3 Impedance between injection electrodes</span>
+
+
+<span class="sd">Import pipeline:</span>
+
+<span class="sd">* read single-potentials from .mat file</span>
+<span class="sd">* read quadrupoles from separate file or provide numpy array</span>
+<span class="sd">* compute mean of three impedance measurement repetitions (Z1-Z3) for each ABM</span>
+<span class="sd">* compute quadrupole impedance via superposition using</span>
+
+<span class="sd">    * a) averaged Z-values</span>
+<span class="sd">    * b) the single repetitions Z1-Z3</span>
+
+<span class="sd">* (I think we don&#39;t need the next step because of np.arctan2)</span>
+<span class="sd">  check for correct quadrant in phase values, correct if necessary (is this</span>
+<span class="sd">  required if we use the arctan2 function?)</span>
+<span class="sd">* compute variance/standard deviation from the repetition values</span>
+
+<span class="sd">Open questions:</span>
+
+<span class="sd">* should we provide a time delta between the two measurements?</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: DONt use this module anymore!. Use the eit_fzj module!&#39;</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">scipy.io</span> <span class="k">as</span> <span class="nn">sio</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">redaK</span>
+
+
+<span class="k">def</span> <span class="nf">_add_rhoa</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">spacing</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;a simple wrapper to compute K factors and add rhoa</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">redaK</span><span class="o">.</span><span class="n">compute_K_analytical</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="n">spacing</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="s1">&#39;Zt&#39;</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rho_a_complex&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<div class="viewcode-block" id="import_medusa_data"><a class="viewcode-back" href="../../../../_api/reda.importers.legacy.html#reda.importers.legacy.eit160.import_medusa_data">[docs]</a><span class="k">def</span> <span class="nf">import_medusa_data</span><span class="p">(</span><span class="n">mat_filename</span><span class="p">,</span> <span class="n">config_file</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Import measurement data (a .mat file) of the FZJ EIT160 system. This</span>
+<span class="sd">    data format is identified as &#39;FZJ-EZ-2017&#39;.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    mat_filename: string</span>
+<span class="sd">        filename to the .mat data file. Note that only MNU0 single-potentials</span>
+<span class="sd">        are supported!</span>
+<span class="sd">    config_file: string</span>
+<span class="sd">        filename for configuration file. The configuration file contains N rows</span>
+<span class="sd">        with 4 columns each (a, b, m, n)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">df_emd</span><span class="p">,</span> <span class="n">df_md</span> <span class="o">=</span> <span class="n">_read_mat_mnu0</span><span class="p">(</span><span class="n">mat_filename</span><span class="p">)</span>
+
+    <span class="c1"># &#39;configs&#39; can be a numpy array or a filename</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">config_file</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">config_file</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">configs</span> <span class="o">=</span> <span class="n">config_file</span>
+
+    <span class="c1"># construct four-point measurements via superposition</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;constructing four-point measurements&#39;</span><span class="p">)</span>
+    <span class="n">quadpole_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">if</span> <span class="n">df_emd</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">for</span> <span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">,</span> <span class="n">M</span><span class="p">,</span> <span class="n">N</span> <span class="ow">in</span> <span class="n">configs</span><span class="p">:</span>
+            <span class="c1"># print(&#39;constructing&#39;, Ar, Br, M, N)</span>
+            <span class="c1"># the order of A and B doesn&#39;t concern us</span>
+            <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">((</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">))</span>
+            <span class="n">B</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">((</span><span class="n">Ar</span><span class="p">,</span> <span class="n">Br</span><span class="p">))</span>
+
+            <span class="c1"># first choice: correct ordering</span>
+            <span class="n">query_M</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span>
+            <span class="p">))</span>
+            <span class="n">query_N</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span>
+            <span class="p">))</span>
+
+            <span class="k">if</span> <span class="n">query_M</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">query_N</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
+
+            <span class="c1"># keep these columns as they are (no subtracting)</span>
+            <span class="n">keep_cols</span> <span class="o">=</span> <span class="p">[</span>
+                <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Zg1&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg2&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg3&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Is&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Il&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Zg&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Iab&#39;</span><span class="p">,</span>
+            <span class="p">]</span>
+
+            <span class="n">df4</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+            <span class="n">diff_cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="p">]</span>
+            <span class="n">df4</span><span class="p">[</span><span class="n">keep_cols</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="n">keep_cols</span><span class="p">]</span>
+            <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">diff_cols</span><span class="p">:</span>
+                <span class="n">df4</span><span class="p">[</span><span class="n">col</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span> <span class="o">-</span> <span class="n">query_N</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_M</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+            <span class="n">df4</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">query_N</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+            <span class="n">quadpole_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df4</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">quadpole_list</span><span class="p">:</span>
+        <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">quadpole_list</span><span class="p">)</span>
+        <span class="n">Rsign</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+        <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">Rsign</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">])</span>
+        <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Vmn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span>
+        <span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">dfn</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+        <span class="p">)</span> <span class="o">*</span> <span class="mf">1e3</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">dfn</span><span class="p">,</span> <span class="n">df_md</span></div>
+
+
+<span class="k">def</span> <span class="nf">_read_mat_mnu0</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Import a .mat file with single potentials (a b m) into a pandas</span>
+<span class="sd">    DataFrame</span>
+
+<span class="sd">    Also export some variables of the MD struct into a separate structure</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;read_mag_single_file: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="n">mat</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="c1"># check the version</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;MP&#39;</span><span class="p">][</span><span class="s1">&#39;Version&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">item</span><span class="p">()</span>
+    <span class="k">if</span> <span class="n">version</span> <span class="o">!=</span> <span class="s1">&#39;FZJ-EZ-2017&#39;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+            <span class="s1">&#39;This data format is not supported (expected: FZJ-EZ-2017)&#39;</span> <span class="o">+</span>
+            <span class="s1">&#39; got: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="n">df_emd</span> <span class="o">=</span> <span class="n">_extract_emd</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">filename</span><span class="o">=</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">df_md</span> <span class="o">=</span> <span class="n">_extract_md</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df_emd</span><span class="p">,</span> <span class="n">df_md</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_md</span><span class="p">(</span><span class="n">mat</span><span class="p">):</span>
+    <span class="n">md</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;MD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+    <span class="c1"># Labview epoch</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1904</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">convert_epoch</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">epoch</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">timestamp</span>
+
+    <span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># loop over frequencies</span>
+    <span class="k">for</span> <span class="n">f_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">md</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="c1"># print(&#39;Frequency: &#39;, emd[f_id][&#39;fm&#39;])</span>
+        <span class="n">fdata</span> <span class="o">=</span> <span class="n">md</span><span class="p">[</span><span class="n">f_id</span><span class="p">]</span>
+        <span class="c1"># for name in fdata.dtype.names:</span>
+        <span class="c1">#     print(name, fdata[name].shape)</span>
+
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">convert_epoch</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+                <span class="n">timestamp</span><span class="p">,</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;cni&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Cl3&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Zg3&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Is3&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Yl3&#39;</span><span class="p">],</span>
+            <span class="p">))</span>
+        <span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Cl1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Cl2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Cl3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zg1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zg2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zg3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage1_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage1_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage1_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage2_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage2_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage2_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage3_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage3_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage3_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage4_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage4_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage4_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Is1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Is2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Is3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yl1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yl2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yl3&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cl1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cl1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cl2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cl2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cl3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Cl3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Yl1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Yl1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Yl2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Yl2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Yl3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Yl3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Is1&#39;</span><span class="p">,</span> <span class="s1">&#39;Is2&#39;</span><span class="p">,</span> <span class="s1">&#39;Is3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1"># &quot;standard&quot; injected current, in [mA]</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1e3</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Zg1&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg2&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg3&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;fm&#39;</span><span class="p">]</span>
+        <span class="n">dfl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+
+
+<span class="k">def</span> <span class="nf">_extract_emd</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Extract the data from the EMD substruct, given a medusa-created MNU0-mat</span>
+<span class="sd">    file</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+
+<span class="sd">    mat: matlab-imported struct</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">emd</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;EMD&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+    <span class="c1"># Labview epoch</span>
+    <span class="n">epoch</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">1904</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">convert_epoch</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">epoch</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">))</span>
+        <span class="k">return</span> <span class="n">timestamp</span>
+
+    <span class="n">dfl</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="c1"># loop over frequencies</span>
+    <span class="k">for</span> <span class="n">f_id</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">emd</span><span class="o">.</span><span class="n">size</span><span class="p">):</span>
+        <span class="c1"># print(&#39;Frequency: &#39;, emd[f_id][&#39;fm&#39;])</span>
+        <span class="n">fdata</span> <span class="o">=</span> <span class="n">emd</span><span class="p">[</span><span class="n">f_id</span><span class="p">]</span>
+        <span class="c1"># some consistency checks</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;nu&#39;</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span> <span class="ow">and</span> <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;nu&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;Need MNU0 file, not a quadpole .mat file: </span><span class="si">{0}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">filename</span>
+                <span class="p">)</span>
+            <span class="p">)</span>
+
+        <span class="c1"># fdata_md = md[f_id]</span>
+
+        <span class="n">timestamp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_2d</span><span class="p">(</span>
+            <span class="p">[</span><span class="n">convert_epoch</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()]</span>
+        <span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">((</span>
+                <span class="n">timestamp</span><span class="p">,</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;ni&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;nu&#39;</span><span class="p">][:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Zt3&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Is3&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Il3&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Zg3&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">2</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;As3&#39;</span><span class="p">][:,</span> <span class="mi">3</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">squeeze</span><span class="p">(),</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Yg13&#39;</span><span class="p">],</span>
+                <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;Yg23&#39;</span><span class="p">],</span>
+            <span class="p">)),</span>
+        <span class="p">)</span>
+        <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="s1">&#39;datetime&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;p&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Z1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Z2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Z3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Is1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Is2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Is3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Il1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Il2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Il3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zg1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zg2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zg3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage1_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage1_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage1_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage2_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage2_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage2_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage3_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage3_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage3_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage4_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage4_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;ShuntVoltage4_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yg13_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yg13_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yg13_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yg23_1&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yg23_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Yg23_3&#39;</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="n">fdata</span><span class="p">[</span><span class="s1">&#39;fm&#39;</span><span class="p">]</span>
+
+        <span class="c1"># cast to correct type</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;datetime&#39;</span><span class="p">])</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Z3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Il1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Il1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Il2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Il2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Il3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Il3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage1_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage2_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage3_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_1&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;ShuntVoltage4_3&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">complex</span><span class="p">)</span>
+
+        <span class="n">dfl</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">None</span>
+    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span><span class="n">dfl</span><span class="p">)</span>
+
+    <span class="c1"># average swapped current injections here!</span>
+    <span class="c1"># TODO</span>
+
+    <span class="c1"># sort current injections</span>
+    <span class="n">condition</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">condition</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">condition</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;a&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span>
+    <span class="c1"># change sign because we changed A and B</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">condition</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;Z1&#39;</span><span class="p">,</span> <span class="s1">&#39;Z2&#39;</span><span class="p">,</span> <span class="s1">&#39;Z3&#39;</span><span class="p">]]</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+
+    <span class="c1"># average of Z1-Z3</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Z1&#39;</span><span class="p">,</span> <span class="s1">&#39;Z2&#39;</span><span class="p">,</span> <span class="s1">&#39;Z3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># we need to keep the sign of the real part</span>
+    <span class="n">sign_re</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">real</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="n">sign_re</span>
+    <span class="c1"># df[&#39;Zt_std&#39;] = np.std(df[[&#39;Z1&#39;, &#39;Z2&#39;, &#39;Z3&#39;]].values, axis=1)</span>
+
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Is1&#39;</span><span class="p">,</span> <span class="s1">&#39;Is2&#39;</span><span class="p">,</span> <span class="s1">&#39;Is3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Il&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Il1&#39;</span><span class="p">,</span> <span class="s1">&#39;Il2&#39;</span><span class="p">,</span> <span class="s1">&#39;Il3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zg&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">df</span><span class="p">[[</span><span class="s1">&#39;Zg1&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg2&#39;</span><span class="p">,</span> <span class="s1">&#39;Zg3&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># &quot;standard&quot; injected current, in [mA]</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Is&#39;</span><span class="p">])</span> <span class="o">*</span> <span class="mf">1e3</span>
+    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+    <span class="c1"># df[&#39;Is_std&#39;] = np.std(df[[&#39;Is1&#39;, &#39;Is2&#39;, &#39;Is3&#39;]].values, axis=1)</span>
+
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

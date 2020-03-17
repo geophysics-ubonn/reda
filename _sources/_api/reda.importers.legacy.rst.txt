@@ -1,0 +1,27 @@
+reda.importers.legacy package
+=============================
+
+.. automodule:: reda.importers.legacy
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+reda.importers.legacy.eit160 module
+-----------------------------------
+
+.. automodule:: reda.importers.legacy.eit160
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.importers.legacy.eit40 module
+----------------------------------
+
+.. automodule:: reda.importers.legacy.eit40
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
