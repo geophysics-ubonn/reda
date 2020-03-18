@@ -21,13 +21,17 @@ plt, mpl = reda.utils.mpl.setup()
 
 class CRImporters(ImportersBase):
     def import_crtomo_data(self, filename):
-        """Import a CRTomo-style measurement file (usually: volt.dat).
+
+        """
+        Import a CRTomo-style measurement file (usually: volt.dat).
 
         Parameters
         ----------
         filename : str
             path to data file
+
         """
+
         data = load_mod_file(filename)
         self._add_to_container(data)
 
@@ -53,13 +57,15 @@ class CRImporters(ImportersBase):
 
     @append_doc_of(reda_mpt.import_das1_td)
     def import_mpt(self, filename, **kwargs):
-        """MPT DAS 1 FD importer
+        """
+        MPT DAS 1 FD importer
 
         timestep: int or :class:`datetime.datetime`
             if provided use this value to set the 'timestep' column of the
             produced dataframe. Default: 0
 
         """
+        
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
             del (kwargs['timestep'])

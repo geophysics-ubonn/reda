@@ -19,7 +19,11 @@ from reda.utils.decorators_and_managers import LogDataChanges
 
 
 class ImportersBase(object):
-    """Base class for all importer classes"""
+
+    """
+    Base class for all importer classes
+    
+    """
 
     def _add_to_container(self, df):
         """Add a given DataFrame to the container
@@ -31,6 +35,7 @@ class ImportersBase(object):
             all required columns)
 
         """
+
         if self.data is None:
             self.data = df
         else:
@@ -64,7 +69,8 @@ class ImportersBase(object):
             ))
 
     def _describe_data(self, df=None):
-        """Print statistics on a DataFrame by calling its .describe() function
+        """
+        Print statistics on a DataFrame by calling its .describe() function
 
         Parameters
         ----------

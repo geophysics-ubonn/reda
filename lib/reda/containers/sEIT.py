@@ -349,7 +349,9 @@ class sEIT(BaseContainer, sEITImporters):
         ).copy()
 
     def get_spectrum(self, nr_id=None, abmn=None, plot_filename=None):
-        """Return a spectrum and its reciprocal counter part, if present in the
+
+        """
+        Return a spectrum and its reciprocal counter part, if present in the
         dataset. Optimally, refer to the spectrum by its normal-reciprocal id.
 
         If the timestep column is present, then return dictionaries for normal
@@ -364,14 +366,16 @@ class sEIT(BaseContainer, sEITImporters):
 
         Returns
         -------
-        spectrum_nor : :py:class:`reda.eis.plots.sip_response`|dict|{}
+        spectrum_nor : :py:class:'reda.eis.plots.sip_response'
             Normal spectrum. None if no normal spectrum is available
-        spectrum_rec : :py:class:`reda.eis.plots.sip_response`|dict|{}
+        spectrum_rec : :py:class:'reda.eis.plots.sip_response'
             Reciprocal spectrum. None if no reciprocal spectrum is available
-        fig : :py:class:`matplotlib.Figure.Figure` , optional
+        fig : :py:class:'matplotlib.Figure.Figure' , optional
             Figure object (only if plot_filename is set)
-
         """
+
+        # Here are some problems with |dict|{} at end of 369 and 371
+
         assert nr_id is None or abmn is None
         # determine nr_id for given abmn tuple
         if abmn is not None:

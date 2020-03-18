@@ -350,7 +350,9 @@ def write_crmod_file(sipdata, directory):
 @enable_result_transforms
 def parse_radic_file(filename, settings, selection_mode="after",
                      reciprocal=None):
-    """Import one result file as produced by the SIP256c SIP measuring device
+    
+    """
+    Import one result file as produced by the SIP256c SIP measuring device
     (Radic Research)
 
     Full settings dictionary: ::
@@ -379,7 +381,7 @@ def parse_radic_file(filename, settings, selection_mode="after",
 
     Returns
     -------
-    sip_data: :py:pandas:`pandas.DataFrame`
+    sip_data: :py pandas`pandas.DataFrame`
         The data contained in a data frame
     electrodes : None
         No electrode positions are imported
@@ -387,6 +389,9 @@ def parse_radic_file(filename, settings, selection_mode="after",
         No topography is imported
 
     """
+
+    # removed : between py and pandas in line 384
+
     try:
         with open(filename, 'r', encoding='latin-1') as fid:
             lines = fid.readlines()
