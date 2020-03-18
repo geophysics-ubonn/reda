@@ -110,7 +110,9 @@ def import_das1_fd(filename, **kwargs):
 
 
 def import_das1_td(filename, **kwargs):
-    """Reads a time domain MPT DAS-1 data file (.Data) and prepares information
+
+    """
+    Reads a time domain MPT DAS-1 data file (.Data) and prepares information
     in pandas DataFrame for further processing.
 
     Parameters
@@ -134,9 +136,8 @@ def import_das1_td(filename, **kwargs):
     topography : None
         No topography information is contained in the text files, so we always
         return None
-
-
     """
+    
     if 'corr_array' in kwargs:
         corr_array = kwargs.get('corr_array')
     else:
@@ -256,9 +257,8 @@ def import_das1_sip(filename, **kwargs):
     topography : None
         No topography information is contained in the text files, so we always
         return None
-
-
     """
+
     if 'corr_array' in kwargs:
         corr_array = kwargs.get('corr_array')
     else:
@@ -376,7 +376,9 @@ def import_das1_sip(filename, **kwargs):
 
 
 def import_das1(filename, **kwargs):
-    """Reads a any MPT DAS-1 data file (.Data), e.g. TD/FD/SIP, and prepares
+    
+    """
+    Reads a any MPT DAS-1 data file (.Data), e.g. TD/FD/SIP, and prepares
     information in pandas DataFrame for further processing.
 
     Parameters

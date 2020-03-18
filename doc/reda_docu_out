@@ -1,0 +1,316 @@
+sphinx-apidoc -M -T -f -o _api ../lib/reda
+Creating file _api/reda.rst.
+Creating file _api/reda.configs.rst.
+Creating file _api/reda.containers.rst.
+Creating file _api/reda.eis.rst.
+Creating file _api/reda.exporters.rst.
+Creating file _api/reda.importers.rst.
+Creating file _api/reda.importers.legacy.rst.
+Creating file _api/reda.importers.utils.rst.
+Creating file _api/reda.main.rst.
+Creating file _api/reda.plotters.rst.
+Creating file _api/reda.testing.rst.
+Creating file _api/reda.testing.ert_container.rst.
+Creating file _api/reda.utils.rst.
+sphinx-build -b html -d _build/doctrees   . _build/html
+Sphinx v2.4.4 in Verwendung
+loading pickled environment... erledigt
+[autosummary] generating autosummary for: _api/reda.configs.rst, _api/reda.containers.rst, _api/reda.eis.rst, _api/reda.exporters.rst, _api/reda.importers.legacy.rst, _api/reda.importers.rst, _api/reda.importers.utils.rst, _api/reda.main.rst, _api/reda.plotters.rst, _api/reda.rst, ..., about.rst, api.rst, contributing.rst, data_containers.rst, debugging.rst, filtering.rst, importers.rst, index.rst, installation.rst, test_data.rst
+No module named 'crtomo.binaries'.
+You need to install this optional dependency to use the full functionality.
+WARNING: DONt use this module anymore!. Use the eit_fzj module!
+generating gallery...
+generating gallery for _examples/01_ERT... [ 33%] plot_syscal_dc.py
+generating gallery for _examples/01_ERT... [ 66%] plot_syscal_rollalong.py
+generating gallery for _examples/01_ERT... [100%] plot_syscal_ip.py
+
+generating gallery for _examples/02_SIP04... [100%] plot_sip04.py
+
+generating gallery for _examples/03_sEIT... [ 50%] plot_visualize_4d_data.py
+generating gallery for _examples/03_sEIT... [100%] plot_radic_sip256c.py
+
+generating gallery for _examples/04_configurations... [100%] plot_configurations.py
+
+generating gallery for _examples/05_crtomo... [ 50%] plot_import_data_to_CR.py
+generating gallery for _examples/05_crtomo... [100%] plot_import_data_to_sEIT.py
+
+generating gallery for _examples/06_eit_fzj... [ 25%] plot_eit_fzj_check.py
+generating gallery for _examples/06_eit_fzj... [ 50%] plot_eit_fzj_leakage_currents.py
+generating gallery for _examples/06_eit_fzj... [ 75%] plot_eit_fzj_li.py
+generating gallery for _examples/06_eit_fzj... [100%] plot_eit_fzj.py
+
+computation time summary:
+building [mo]: targets for 0 po files that are out of date
+building [html]: targets for 0 source files that are out of date
+updating environment: [config changed ('numpydoc_xref_aliases')] 43 added, 0 changed, 0 removed
+reading sources... [  2%] _api/reda
+reading sources... [  4%] _api/reda.configs
+reading sources... [  6%] _api/reda.containers
+reading sources... [  9%] _api/reda.eis
+reading sources... [ 11%] _api/reda.exporters
+reading sources... [ 13%] _api/reda.importers
+reading sources... [ 16%] _api/reda.importers.legacy
+reading sources... [ 18%] _api/reda.importers.utils
+reading sources... [ 20%] _api/reda.main
+reading sources... [ 23%] _api/reda.plotters
+reading sources... [ 25%] _api/reda.testing
+reading sources... [ 27%] _api/reda.testing.ert_container
+reading sources... [ 30%] _api/reda.utils
+reading sources... [ 32%] _examples/01_ERT/plot_syscal_dc
+reading sources... [ 34%] _examples/01_ERT/plot_syscal_ip
+reading sources... [ 37%] _examples/01_ERT/plot_syscal_rollalong
+reading sources... [ 39%] _examples/01_ERT/sg_execution_times
+reading sources... [ 41%] _examples/02_SIP04/plot_sip04
+reading sources... [ 44%] _examples/02_SIP04/sg_execution_times
+reading sources... [ 46%] _examples/03_sEIT/plot_radic_sip256c
+reading sources... [ 48%] _examples/03_sEIT/plot_visualize_4d_data
+reading sources... [ 51%] _examples/03_sEIT/sg_execution_times
+reading sources... [ 53%] _examples/04_configurations/plot_configurations
+reading sources... [ 55%] _examples/04_configurations/sg_execution_times
+reading sources... [ 58%] _examples/05_crtomo/plot_import_data_to_CR
+reading sources... [ 60%] _examples/05_crtomo/plot_import_data_to_sEIT
+reading sources... [ 62%] _examples/05_crtomo/sg_execution_times
+reading sources... [ 65%] _examples/06_eit_fzj/plot_eit_fzj
+reading sources... [ 67%] _examples/06_eit_fzj/plot_eit_fzj_check
+reading sources... [ 69%] _examples/06_eit_fzj/plot_eit_fzj_leakage_currents
+reading sources... [ 72%] _examples/06_eit_fzj/plot_eit_fzj_li
+reading sources... [ 74%] _examples/06_eit_fzj/sg_execution_times
+reading sources... [ 76%] _examples/index
+reading sources... [ 79%] about
+reading sources... [ 81%] api
+reading sources... [ 83%] contributing
+reading sources... [ 86%] data_containers
+reading sources... [ 88%] debugging
+reading sources... [ 90%] filtering
+reading sources... [ 93%] importers
+reading sources... [ 95%] index
+reading sources... [ 97%] installation
+reading sources... [100%] test_data
+
+looking for now-outdated files... none found
+pickling environment... erledigt
+checking consistency... erledigt
+preparing documents... erledigt
+writing output... [  2%] _api/reda
+writing output... [  4%] _api/reda.configs
+writing output... [  6%] _api/reda.containers
+writing output... [  9%] _api/reda.eis
+writing output... [ 11%] _api/reda.exporters
+writing output... [ 13%] _api/reda.importers
+writing output... [ 16%] _api/reda.importers.legacy
+writing output... [ 18%] _api/reda.importers.utils
+writing output... [ 20%] _api/reda.main
+writing output... [ 23%] _api/reda.plotters
+writing output... [ 25%] _api/reda.testing
+writing output... [ 27%] _api/reda.testing.ert_container
+writing output... [ 30%] _api/reda.utils
+writing output... [ 32%] _examples/01_ERT/plot_syscal_dc
+writing output... [ 34%] _examples/01_ERT/plot_syscal_ip
+writing output... [ 37%] _examples/01_ERT/plot_syscal_rollalong
+writing output... [ 39%] _examples/01_ERT/sg_execution_times
+writing output... [ 41%] _examples/02_SIP04/plot_sip04
+writing output... [ 44%] _examples/02_SIP04/sg_execution_times
+writing output... [ 46%] _examples/03_sEIT/plot_radic_sip256c
+writing output... [ 48%] _examples/03_sEIT/plot_visualize_4d_data
+writing output... [ 51%] _examples/03_sEIT/sg_execution_times
+writing output... [ 53%] _examples/04_configurations/plot_configurations
+writing output... [ 55%] _examples/04_configurations/sg_execution_times
+writing output... [ 58%] _examples/05_crtomo/plot_import_data_to_CR
+writing output... [ 60%] _examples/05_crtomo/plot_import_data_to_sEIT
+writing output... [ 62%] _examples/05_crtomo/sg_execution_times
+writing output... [ 65%] _examples/06_eit_fzj/plot_eit_fzj
+writing output... [ 67%] _examples/06_eit_fzj/plot_eit_fzj_check
+writing output... [ 69%] _examples/06_eit_fzj/plot_eit_fzj_leakage_currents
+writing output... [ 72%] _examples/06_eit_fzj/plot_eit_fzj_li
+writing output... [ 74%] _examples/06_eit_fzj/sg_execution_times
+writing output... [ 76%] _examples/index
+writing output... [ 79%] about
+writing output... [ 81%] api
+writing output... [ 83%] contributing
+writing output... [ 86%] data_containers
+writing output... [ 88%] debugging
+writing output... [ 90%] filtering
+writing output... [ 93%] importers
+writing output... [ 95%] index
+writing output... [ 97%] installation
+writing output... [100%] test_data
+
+generating indices...  genindex py-modindexerledigt
+highlighting module code... [  1%] reda
+highlighting module code... [  3%] reda.configs.configManager
+highlighting module code... [  5%] reda.containers.BaseContainer
+highlighting module code... [  7%] reda.containers.CR
+highlighting module code... [  9%] reda.containers.ERT
+highlighting module code... [ 11%] reda.containers.SIP
+highlighting module code... [ 13%] reda.containers.TDIP
+highlighting module code... [ 15%] reda.containers.sEIT
+highlighting module code... [ 17%] reda.eis.convert
+highlighting module code... [ 19%] reda.eis.plots
+highlighting module code... [ 21%] reda.eis.test_convert
+highlighting module code... [ 23%] reda.eis.units
+highlighting module code... [ 25%] reda.exporters.bert
+highlighting module code... [ 27%] reda.exporters.crtomo
+highlighting module code... [ 29%] reda.exporters.syscal
+highlighting module code... [ 31%] reda.importers.bert
+highlighting module code... [ 33%] reda.importers.crtomo
+highlighting module code... [ 35%] reda.importers.eit_fzj
+highlighting module code... [ 37%] reda.importers.eit_version_2018a
+highlighting module code... [ 39%] reda.importers.geotom
+highlighting module code... [ 41%] reda.importers.iris_syscal_pro
+highlighting module code... [ 43%] reda.importers.legacy.eit160
+highlighting module code... [ 45%] reda.importers.legacy.eit40
+highlighting module code... [ 47%] reda.importers.mpt_das1
+highlighting module code... [ 49%] reda.importers.radic_sip256c
+highlighting module code... [ 50%] reda.importers.res2dinv
+highlighting module code... [ 52%] reda.importers.sip04
+highlighting module code... [ 54%] reda.importers.utils.decorators
+highlighting module code... [ 56%] reda.importers.utils.transforms
+highlighting module code... [ 58%] reda.main.logger
+highlighting module code... [ 60%] reda.main.units
+highlighting module code... [ 62%] reda.plotters.histograms
+highlighting module code... [ 64%] reda.plotters.plots2d
+highlighting module code... [ 66%] reda.plotters.pseudoplots
+highlighting module code... [ 68%] reda.plotters.time_series
+highlighting module code... [ 70%] reda.testing
+highlighting module code... [ 72%] reda.testing.ert_container.test_K_computation
+highlighting module code... [ 74%] reda.testing.test_container_ert
+highlighting module code... [ 76%] reda.testing.test_container_seit
+highlighting module code... [ 78%] reda.utils.data
+highlighting module code... [ 80%] reda.utils.decorators_and_managers
+highlighting module code... [ 82%] reda.utils.eit_fzj_utils
+highlighting module code... [ 84%] reda.utils.enter_directory
+highlighting module code... [ 86%] reda.utils.filter_config_types
+highlighting module code... [ 88%] reda.utils.fix_sign_with_K
+highlighting module code... [ 90%] reda.utils.geom_fac_crtomo
+highlighting module code... [ 92%] reda.utils.geometric_factors
+highlighting module code... [ 94%] reda.utils.helper_functions
+highlighting module code... [ 96%] reda.utils.mpl
+highlighting module code... [ 98%] reda.utils.norrec
+highlighting module code... [100%] reda.utils.pseudo_positions
+
+writing additional pages...  searcherledigt
+copying images... [  1%] _api/../_build/plot_directive/_api/reda-plotters-1.png
+copying images... [  3%] _api/../_build/plot_directive/_api/reda-plotters-2.png
+copying images... [  5%] _api/../_build/plot_directive/_api/reda-plotters-3.png
+copying images... [  7%] _api/../_build/plot_directive/_api/reda-plotters-4.png
+copying images... [  8%] _api/../_build/plot_directive/_api/reda-plotters-5.png
+copying images... [ 10%] _api/../_build/plot_directive/_api/reda-plotters-6.png
+copying images... [ 12%] _api/../_build/plot_directive/_api/reda-plotters-7.png
+copying images... [ 14%] _api/../_build/plot_directive/_api/reda-utils-1.png
+copying images... [ 16%] _examples/01_ERT/images/sphx_glr_plot_syscal_dc_001.png
+copying images... [ 17%] _examples/01_ERT/images/sphx_glr_plot_syscal_dc_002.png
+copying images... [ 19%] _examples/01_ERT/images/sphx_glr_plot_syscal_ip_001.png
+copying images... [ 21%] _examples/01_ERT/images/sphx_glr_plot_syscal_ip_002.png
+copying images... [ 23%] _examples/01_ERT/images/sphx_glr_plot_syscal_ip_003.png
+copying images... [ 25%] _examples/01_ERT/images/sphx_glr_plot_syscal_ip_004.png
+copying images... [ 26%] _examples/01_ERT/images/sphx_glr_plot_syscal_ip_005.png
+copying images... [ 28%] _examples/01_ERT/images/sphx_glr_plot_syscal_ip_006.png
+copying images... [ 30%] _examples/01_ERT/images/sphx_glr_plot_syscal_rollalong_001.png
+copying images... [ 32%] _examples/01_ERT/images/sphx_glr_plot_syscal_rollalong_002.png
+copying images... [ 33%] _examples/01_ERT/images/sphx_glr_plot_syscal_rollalong_003.png
+copying images... [ 35%] _examples/01_ERT/images/sphx_glr_plot_syscal_rollalong_004.png
+copying images... [ 37%] _examples/02_SIP04/images/sphx_glr_plot_sip04_001.png
+copying images... [ 39%] _examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_001.png
+copying images... [ 41%] _examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_002.png
+copying images... [ 42%] _examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_003.png
+copying images... [ 44%] _examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_004.png
+copying images... [ 46%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_001.png
+copying images... [ 48%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_002.png
+copying images... [ 50%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_003.png
+copying images... [ 51%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_004.png
+copying images... [ 53%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_005.png
+copying images... [ 55%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_006.png
+copying images... [ 57%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_007.png
+copying images... [ 58%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_008.png
+copying images... [ 60%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_009.png
+copying images... [ 62%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_010.png
+copying images... [ 64%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_011.png
+copying images... [ 66%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_012.png
+copying images... [ 67%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_013.png
+copying images... [ 69%] _examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_014.png
+copying images... [ 71%] _examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_001.png
+copying images... [ 73%] _examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_check_001.png
+copying images... [ 75%] _examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_leakage_currents_001.png
+copying images... [ 76%] _examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_li_001.png
+copying images... [ 78%] _examples/01_ERT/images/thumb/sphx_glr_plot_syscal_dc_thumb.png
+copying images... [ 80%] _examples/01_ERT/images/thumb/sphx_glr_plot_syscal_rollalong_thumb.png
+copying images... [ 82%] _examples/01_ERT/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
+copying images... [ 83%] _examples/02_SIP04/images/thumb/sphx_glr_plot_sip04_thumb.png
+copying images... [ 85%] _examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
+copying images... [ 87%] _examples/03_sEIT/images/thumb/sphx_glr_plot_radic_sip256c_thumb.png
+copying images... [ 89%] _examples/04_configurations/images/thumb/sphx_glr_plot_configurations_thumb.png
+copying images... [ 91%] _examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_CR_thumb.png
+copying images... [ 92%] _examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_sEIT_thumb.png
+copying images... [ 94%] _examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_check_thumb.png
+copying images... [ 96%] _examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_leakage_currents_thumb.png
+copying images... [ 98%] _examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_li_thumb.png
+copying images... [100%] _examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_thumb.png
+
+copying downloadable files... [  3%] _examples/01_ERT/plot_syscal_dc.py
+copying downloadable files... [  7%] _examples/01_ERT/plot_syscal_dc.ipynb
+copying downloadable files... [ 10%] _examples/01_ERT/plot_syscal_ip.py
+copying downloadable files... [ 14%] _examples/01_ERT/plot_syscal_ip.ipynb
+copying downloadable files... [ 17%] _examples/01_ERT/plot_syscal_rollalong.py
+copying downloadable files... [ 21%] _examples/01_ERT/plot_syscal_rollalong.ipynb
+copying downloadable files... [ 25%] _examples/02_SIP04/plot_sip04.py
+copying downloadable files... [ 28%] _examples/02_SIP04/plot_sip04.ipynb
+copying downloadable files... [ 32%] _examples/03_sEIT/plot_radic_sip256c.py
+copying downloadable files... [ 35%] _examples/03_sEIT/plot_radic_sip256c.ipynb
+copying downloadable files... [ 39%] _examples/03_sEIT/plot_visualize_4d_data.py
+copying downloadable files... [ 42%] _examples/03_sEIT/plot_visualize_4d_data.ipynb
+copying downloadable files... [ 46%] _examples/04_configurations/plot_configurations.py
+copying downloadable files... [ 50%] _examples/04_configurations/plot_configurations.ipynb
+copying downloadable files... [ 53%] _examples/05_crtomo/plot_import_data_to_CR.py
+copying downloadable files... [ 57%] _examples/05_crtomo/plot_import_data_to_CR.ipynb
+copying downloadable files... [ 60%] _examples/05_crtomo/plot_import_data_to_sEIT.py
+copying downloadable files... [ 64%] _examples/05_crtomo/plot_import_data_to_sEIT.ipynb
+copying downloadable files... [ 67%] _examples/06_eit_fzj/plot_eit_fzj.py
+copying downloadable files... [ 71%] _examples/06_eit_fzj/plot_eit_fzj.ipynb
+copying downloadable files... [ 75%] _examples/06_eit_fzj/plot_eit_fzj_check.py
+copying downloadable files... [ 78%] _examples/06_eit_fzj/plot_eit_fzj_check.ipynb
+copying downloadable files... [ 82%] _examples/06_eit_fzj/plot_eit_fzj_leakage_currents.py
+copying downloadable files... [ 85%] _examples/06_eit_fzj/plot_eit_fzj_leakage_currents.ipynb
+copying downloadable files... [ 89%] _examples/06_eit_fzj/plot_eit_fzj_li.py
+copying downloadable files... [ 92%] _examples/06_eit_fzj/plot_eit_fzj_li.ipynb
+copying downloadable files... [ 96%] _examples/_examples_python.zip
+copying downloadable files... [100%] _examples/_examples_jupyter.zip
+
+copying static files... ... erledigt
+copying extra files... erledigt
+dumping search index in English (code: en)... erledigt
+dumping object inventory... erledigt
+build abgeschlossen, 9 warnings.
+
+The HTML pages are in _build/html.
+
+Sphinx-gallery successfully executed 0 out of 0 files subselected by:
+
+    gallery_conf["filename_pattern"] = 'plot_'
+    gallery_conf["ignore_pattern"]   = '__init__\\.py'
+
+after excluding 13 files that had previously been run (based on MD5).
+
+embedding documentation hyperlinks...
+embedding documentation hyperlinks for _examples... [  5%] index.html
+embedding documentation hyperlinks for _examples... [ 10%] plot_syscal_dc.html
+embedding documentation hyperlinks for _examples... [ 15%] plot_syscal_ip.html
+embedding documentation hyperlinks for _examples... [ 20%] plot_syscal_rollalong.html
+embedding documentation hyperlinks for _examples... [ 25%] sg_execution_times.html
+embedding documentation hyperlinks for _examples... [ 30%] sg_execution_times.html
+embedding documentation hyperlinks for _examples... [ 35%] plot_configurations.html
+embedding documentation hyperlinks for _examples... [ 40%] plot_eit_fzj_check.html
+embedding documentation hyperlinks for _examples... [ 45%] plot_eit_fzj.html
+embedding documentation hyperlinks for _examples... [ 50%] plot_eit_fzj_li.html
+embedding documentation hyperlinks for _examples... [ 55%] plot_eit_fzj_leakage_currents.html
+embedding documentation hyperlinks for _examples... [ 60%] sg_execution_times.html
+embedding documentation hyperlinks for _examples... [ 65%] sg_execution_times.html
+embedding documentation hyperlinks for _examples... [ 70%] plot_sip04.html
+embedding documentation hyperlinks for _examples... [ 75%] plot_visualize_4d_data.html
+embedding documentation hyperlinks for _examples... [ 80%] plot_radic_sip256c.html
+embedding documentation hyperlinks for _examples... [ 85%] sg_execution_times.html
+embedding documentation hyperlinks for _examples... [ 90%] plot_import_data_to_sEIT.html
+embedding documentation hyperlinks for _examples... [ 95%] plot_import_data_to_CR.html
+embedding documentation hyperlinks for _examples... [100%] sg_execution_times.html
+
+
+Build finished. The HTML pages are in _build/html.
