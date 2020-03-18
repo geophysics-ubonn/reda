@@ -112,21 +112,62 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Install latest release from PyPI (<a class="reference external" href="https://pypi.org/project/reda/">https://pypi.org/project/reda/</a>):</p>
+<p>Reda can be installed in any up-to-date python 3 environment.
+This can be a system-installed Python, but also a fully self-contained
+distribution, such as <a class="reference external" href="https://www.continuum.io/downloads">Anaconda</a>.
+For Windows system at this point we recommend to use Anaconda.</p>
+<p>There are two basic ways to obtain reda: Either using the Python Packaging
+Index (PyPI), or by using the source code directly from github.
+For most cases we recommend to use the latest release from PyPI, but if newer
+features or bug fixes are required, a source installation should be considered.</p>
+<p>Please note that the handling of Python interpreters and work environments can be done in various ways, which sometimes overlap in their principal approaches.
+As a rule of thumb you should stick with any procedures you already use - reda
+is a pure python package that should work on most environments - and only use
+the notes below in case you don’t have any established work procedures.</p>
+<div class="section" id="acquiring-and-installing-the-reda-package">
+<h2>Acquiring and installing the reda package<a class="headerlink" href="#acquiring-and-installing-the-reda-package" title="Permalink to this headline">¶</a></h2>
+<p>Install the latest release from PyPI (<a class="reference external" href="https://pypi.org/project/reda/">https://pypi.org/project/reda/</a>):</p>
 <img alt="https://img.shields.io/pypi/v/reda.svg" src="https://img.shields.io/pypi/v/reda.svg" /><div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>pip install reda
 </pre></div>
 </div>
-<p>Install current development version from git:</p>
+<p>Install the current development version from git:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/geophysics-ubonn/reda
 <span class="nb">cd</span> reda
 
-<span class="c1"># Option 1) Installing dependencies with pip</span>
+<span class="c1"># Option 1) Install dependencies with pip</span>
 pip install -r requirements.txt
-<span class="c1"># Option 2) Installing dependencies with conda</span>
+<span class="c1"># Option 2) Install dependencies with conda</span>
 conda install --file requirements.txt
 
 python setup.py install
 </pre></div>
+</div>
+</div>
+<div class="section" id="virtualenvs">
+<h2>Virtualenvs<a class="headerlink" href="#virtualenvs" title="Permalink to this headline">¶</a></h2>
+<p>virtualenv is a tool to create isolated Python environments, used to isolate
+package installations from each other.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>On linux system we recommend to also install the virtualenvwrapper, which
+simplifies handling of virtualenvs</p>
+</div>
+<p>Create a virtual environment</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mkvirtualenv</span> <span class="o">--</span><span class="n">python</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python3</span> <span class="n">reda</span>
+</pre></div>
+</div>
+<p>with reda as the name of your virtual environment.
+Activate your virtual environment with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">workon</span> <span class="n">reda</span>
+</pre></div>
+</div>
+<p>Weblinks:</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><a class="reference external" href="https://pypi.org/project/virtualenv/">https://pypi.org/project/virtualenv/</a></p></li>
+<li><p><a class="reference external" href="https://pypi.org/project/virtualenvwrapper/">https://pypi.org/project/virtualenvwrapper/</a></p></li>
+</ul>
+</div></blockquote>
 </div>
 </div>
 
