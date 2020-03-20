@@ -434,7 +434,13 @@ class sEIT(BaseContainer, sEITImporters):
         def _reduce_dicts(dictA, dictB):
             if len(dictA) <= 1 and len(dictB) <= 1:
                 # reduce
-                return [*dictA.values()][0], [*dictB.values()][0]
+                dictA_reduced = [*dictA.values()][0]
+                if len(dictB) > 0:
+                    dictB_reduced = [*dictB.values()][0]
+                else:
+                    dictB_reduced = (None, )
+
+                return dictA_reduced, dictB_reduced
             else:
                 # do nothing
                 return dictA, dictB
