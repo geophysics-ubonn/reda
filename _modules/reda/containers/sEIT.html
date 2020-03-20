@@ -547,7 +547,13 @@
         <span class="k">def</span> <span class="nf">_reduce_dicts</span><span class="p">(</span><span class="n">dictA</span><span class="p">,</span> <span class="n">dictB</span><span class="p">):</span>
             <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dictA</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">dictB</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
                 <span class="c1"># reduce</span>
-                <span class="k">return</span> <span class="p">[</span><span class="o">*</span><span class="n">dictA</span><span class="o">.</span><span class="n">values</span><span class="p">()][</span><span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="o">*</span><span class="n">dictB</span><span class="o">.</span><span class="n">values</span><span class="p">()][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="n">dictA_reduced</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">dictA</span><span class="o">.</span><span class="n">values</span><span class="p">()][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">dictB</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">dictB_reduced</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">dictB</span><span class="o">.</span><span class="n">values</span><span class="p">()][</span><span class="mi">0</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">dictB_reduced</span> <span class="o">=</span> <span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="p">)</span>
+
+                <span class="k">return</span> <span class="n">dictA_reduced</span><span class="p">,</span> <span class="n">dictB_reduced</span>
             <span class="k">else</span><span class="p">:</span>
                 <span class="c1"># do nothing</span>
                 <span class="k">return</span> <span class="n">dictA</span><span class="p">,</span> <span class="n">dictB</span>
