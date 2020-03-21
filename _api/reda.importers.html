@@ -691,14 +691,14 @@ return None</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>filename: string</strong></dt><dd><p>input filename, usually with the ending “.RES”</p>
+<dt><strong>filename</strong><span class="classifier">string</span></dt><dd><p>input filename, usually with the ending “.RES”</p>
 </dd>
-<dt><strong>settings: dict</strong></dt><dd><p>Settings for the data import, see code snippet above</p>
+<dt><strong>settings</strong><span class="classifier">dict</span></dt><dd><p>Settings for the data import, see code snippet above</p>
 </dd>
-<dt><strong>selection_mode: dict</strong></dt><dd><p>which voltage dipoles should be returned. Possible choices:
+<dt><strong>selection_mode</strong><span class="classifier">dict</span></dt><dd><p>which voltage dipoles should be returned. Possible choices:
 “all”|”before”|”after”</p>
 </dd>
-<dt><strong>reciprocal: int|None</strong></dt><dd><p>If this is an integer, then assume this was a reciprocal measurement
+<dt><strong>reciprocal</strong><span class="classifier">int|None</span></dt><dd><p>If this is an integer, then assume this was a reciprocal measurement
 and the number denotes the largest RU number, N. Electrode numbers
 (a,b,m,n) will then be transformed to (N1 - a, N1 - b, N1 - m, N1 - n),
 with N1 = N + 1</p>
@@ -707,7 +707,7 @@ with N1 = N + 1</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl class="simple">
-<dt>sip_data: <a href="#id1"><span class="problematic" id="id2">:py:pandas:`pandas.DataFrame`</span></a></dt><dd><p>The data contained in a data frame</p>
+<dt><strong>sip_data</strong><span class="classifier">:py:pandas`pandas.DataFrame`</span></dt><dd><p>The data contained in a data frame</p>
 </dd>
 <dt><strong>electrodes</strong><span class="classifier">None</span></dt><dd><p>No electrode positions are imported</p>
 </dd>

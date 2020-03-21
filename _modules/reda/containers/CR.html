@@ -134,13 +134,17 @@
 
 <div class="viewcode-block" id="CRImporters"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CRImporters">[docs]</a><span class="k">class</span> <span class="nc">CRImporters</span><span class="p">(</span><span class="n">ImportersBase</span><span class="p">):</span>
 <div class="viewcode-block" id="CRImporters.import_crtomo_data"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CRImporters.import_crtomo_data">[docs]</a>    <span class="k">def</span> <span class="nf">import_crtomo_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Import a CRTomo-style measurement file (usually: volt.dat).</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Import a CRTomo-style measurement file (usually: volt.dat).</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
 <span class="sd">        filename : str</span>
 <span class="sd">            path to data file</span>
+
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="n">data</span> <span class="o">=</span> <span class="n">load_mod_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
@@ -166,13 +170,15 @@
 
 <div class="viewcode-block" id="CRImporters.import_mpt"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.CR.CRImporters.import_mpt">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_mpt</span><span class="o">.</span><span class="n">import_das1_td</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">import_mpt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;MPT DAS 1 FD importer</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        MPT DAS 1 FD importer</span>
 
 <span class="sd">        timestep: int or :class:`datetime.datetime`</span>
 <span class="sd">            if provided use this value to set the &#39;timestep&#39; column of the</span>
 <span class="sd">            produced dataframe. Default: 0</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        
         <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>

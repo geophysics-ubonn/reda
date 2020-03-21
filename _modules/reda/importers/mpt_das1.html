@@ -223,7 +223,9 @@
 
 
 <div class="viewcode-block" id="import_das1_td"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.mpt_das1.import_das1_td">[docs]</a><span class="k">def</span> <span class="nf">import_das1_td</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Reads a time domain MPT DAS-1 data file (.Data) and prepares information</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads a time domain MPT DAS-1 data file (.Data) and prepares information</span>
 <span class="sd">    in pandas DataFrame for further processing.</span>
 
 <span class="sd">    Parameters</span>
@@ -247,9 +249,8 @@
 <span class="sd">    topography : None</span>
 <span class="sd">        No topography information is contained in the text files, so we always</span>
 <span class="sd">        return None</span>
-
-
 <span class="sd">    &quot;&quot;&quot;</span>
+    
     <span class="k">if</span> <span class="s1">&#39;corr_array&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="n">corr_array</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;corr_array&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -369,9 +370,8 @@
 <span class="sd">    topography : None</span>
 <span class="sd">        No topography information is contained in the text files, so we always</span>
 <span class="sd">        return None</span>
-
-
 <span class="sd">    &quot;&quot;&quot;</span>
+
     <span class="k">if</span> <span class="s1">&#39;corr_array&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
         <span class="n">corr_array</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;corr_array&#39;</span><span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
@@ -489,7 +489,9 @@
 
 
 <div class="viewcode-block" id="import_das1"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.mpt_das1.import_das1">[docs]</a><span class="k">def</span> <span class="nf">import_das1</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Reads a any MPT DAS-1 data file (.Data), e.g. TD/FD/SIP, and prepares</span>
+    
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Reads a any MPT DAS-1 data file (.Data), e.g. TD/FD/SIP, and prepares</span>
 <span class="sd">    information in pandas DataFrame for further processing.</span>
 
 <span class="sd">    Parameters</span>

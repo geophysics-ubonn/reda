@@ -116,6 +116,10 @@
 we can track the impact of each filter operation for later review.</p>
 <div class="section" id="working-with-nan-data">
 <h2>Working with NaN data<a class="headerlink" href="#working-with-nan-data" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>We implement the generic filter functions <cite>.filter()</cite> and <cite>.query()</cite>.</p>
+</div>
 <p>Sometimes we want to work with columns that contain NaN values, for example
 normal-reciprocal differences with some data not having a reciprocal
 counterpart. If we just use filter operations such as</p>
@@ -126,12 +130,27 @@ counterpart. If we just use filter operations such as</p>
 </div>
 <p>then we will loose all data points that did not have a normal-reciprocal
 differences in the beginning. This is caused by the filter operation
-validating the above shown expression als False for NaN values. To overcome
+validating the above shown expression as False for NaN values. To overcome
 this we can use the fact that NaN always is inequal to itself, <cite>NaN != NaN</cite>.
 The following filter function will retain all NaN valued rows:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">seit</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
 <span class="c1"># ... load data</span>
 <span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;(rdiff != rdiff) or (rdiff &gt; -5 and rdiff &lt; -5&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="implementing-new-filter-methods">
+<h2>Implementing new filter methods<a class="headerlink" href="#implementing-new-filter-methods" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes the generic filter interface using the <cite>.filter</cite> functions of the
+containers is not sufficient or convenient for complex filter procedures.
+In this case it makes sense to create new <cite>filter_XXX</cite> functions in the
+containers, e.g., to pre-process the data before applying filters based on the
+processing results.  If possible, those functions should internally use the
+<cite>.filter</cite> functions of the containers to ensure a clean logging of the changes.</p>
+<p>Otherweise, use the context manager <cite>LogDataChanges</cite> to monitor the DataFrame
+<cite>self.data</cite> , and report any changes in the journal:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">LogDataChanges</span>
+<span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="n">filter_query</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>

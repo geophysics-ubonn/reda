@@ -163,13 +163,16 @@
 
 <div class="viewcode-block" id="ERTImporters.import_syscal_txt"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_txt">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_txt</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">import_syscal_txt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Syscal import</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Syscal import</span>
 
 <span class="sd">        timestep: int or :class:`datetime.datetime`</span>
 <span class="sd">            if provided use this value to set the &#39;timestep&#39; column of the</span>
 <span class="sd">            produced dataframe. Default: 0</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+        
         <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>

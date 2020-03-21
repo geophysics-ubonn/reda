@@ -462,7 +462,9 @@
         <span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
 <div class="viewcode-block" id="sEIT.get_spectrum"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.get_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">get_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nr_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">abmn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Return a spectrum and its reciprocal counter part, if present in the</span>
+
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return a spectrum and its reciprocal counter part, if present in the</span>
 <span class="sd">        dataset. Optimally, refer to the spectrum by its normal-reciprocal id.</span>
 
 <span class="sd">        If the timestep column is present, then return dictionaries for normal</span>
@@ -477,14 +479,16 @@
 
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
-<span class="sd">        spectrum_nor : :py:class:`reda.eis.plots.sip_response`|dict|{}</span>
+<span class="sd">        spectrum_nor : :py:class:`reda.eis.plots.sip_response` or dict or None</span>
 <span class="sd">            Normal spectrum. None if no normal spectrum is available</span>
-<span class="sd">        spectrum_rec : :py:class:`reda.eis.plots.sip_response`|dict|{}</span>
+<span class="sd">        spectrum_rec : :py:class:`reda.eis.plots.sip_response` or dict or None</span>
 <span class="sd">            Reciprocal spectrum. None if no reciprocal spectrum is available</span>
-<span class="sd">        fig : :py:class:`matplotlib.Figure.Figure` , optional</span>
+<span class="sd">        fig : :py:class:`matplotlib.Figure.Figure`, optional</span>
 <span class="sd">            Figure object (only if plot_filename is set)</span>
-
 <span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># Here are some problems with |dict|{} at end of 369 and 371</span>
+
         <span class="k">assert</span> <span class="n">nr_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">abmn</span> <span class="ow">is</span> <span class="kc">None</span>
         <span class="c1"># determine nr_id for given abmn tuple</span>
         <span class="k">if</span> <span class="n">abmn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>

@@ -132,7 +132,11 @@
 
 
 <div class="viewcode-block" id="ImportersBase"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.ImportersBase">[docs]</a><span class="k">class</span> <span class="nc">ImportersBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
-    <span class="sd">&quot;&quot;&quot;Base class for all importer classes&quot;&quot;&quot;</span>
+
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Base class for all importer classes</span>
+<span class="sd">    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
 
     <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Add a given DataFrame to the container</span>
@@ -144,6 +148,7 @@
 <span class="sd">            all required columns)</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
+
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span>
         <span class="k">else</span><span class="p">:</span>
@@ -177,7 +182,8 @@
             <span class="p">))</span>
 
     <span class="k">def</span> <span class="nf">_describe_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Print statistics on a DataFrame by calling its .describe() function</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Print statistics on a DataFrame by calling its .describe() function</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
