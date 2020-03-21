@@ -350,7 +350,7 @@ def write_crmod_file(sipdata, directory):
 @enable_result_transforms
 def parse_radic_file(filename, settings, selection_mode="after",
                      reciprocal=None):
-    
+
     """
     Import one result file as produced by the SIP256c SIP measuring device
     (Radic Research)
@@ -366,14 +366,14 @@ def parse_radic_file(filename, settings, selection_mode="after",
 
     Parameters
     ----------
-    filename: string
+    filename : string
         input filename, usually with the ending ".RES"
-    settings: dict
+    settings : dict
         Settings for the data import, see code snippet above
-    selection_mode: dict
+    selection_mode : dict
         which voltage dipoles should be returned. Possible choices:
         "all"|"before"|"after"
-    reciprocal: int|None
+    reciprocal : int|None
         If this is an integer, then assume this was a reciprocal measurement
         and the number denotes the largest RU number, N. Electrode numbers
         (a,b,m,n) will then be transformed to (N1 - a, N1 - b, N1 - m, N1 - n),
@@ -381,7 +381,7 @@ def parse_radic_file(filename, settings, selection_mode="after",
 
     Returns
     -------
-    sip_data: :py pandas`pandas.DataFrame`
+    sip_data : :py:pandas`pandas.DataFrame`
         The data contained in a data frame
     electrodes : None
         No electrode positions are imported

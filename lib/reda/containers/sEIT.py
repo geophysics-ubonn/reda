@@ -366,11 +366,11 @@ class sEIT(BaseContainer, sEITImporters):
 
         Returns
         -------
-        spectrum_nor : :py:class:'reda.eis.plots.sip_response'
+        spectrum_nor : :py:class:`reda.eis.plots.sip_response` or dict or None
             Normal spectrum. None if no normal spectrum is available
-        spectrum_rec : :py:class:'reda.eis.plots.sip_response'
+        spectrum_rec : :py:class:`reda.eis.plots.sip_response` or dict or None
             Reciprocal spectrum. None if no reciprocal spectrum is available
-        fig : :py:class:'matplotlib.Figure.Figure' , optional
+        fig : :py:class:`matplotlib.Figure.Figure` , optional
             Figure object (only if plot_filename is set)
         """
 
