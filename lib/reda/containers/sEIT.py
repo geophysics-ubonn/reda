@@ -370,7 +370,7 @@ class sEIT(BaseContainer, sEITImporters):
             Normal spectrum. None if no normal spectrum is available
         spectrum_rec : :py:class:`reda.eis.plots.sip_response` or dict or None
             Reciprocal spectrum. None if no reciprocal spectrum is available
-        fig : :py:class:`matplotlib.Figure.Figure` , optional
+        fig : :py:class:`matplotlib.Figure.Figure`, optional
             Figure object (only if plot_filename is set)
         """
 
@@ -438,7 +438,13 @@ class sEIT(BaseContainer, sEITImporters):
         def _reduce_dicts(dictA, dictB):
             if len(dictA) <= 1 and len(dictB) <= 1:
                 # reduce
-                return [*dictA.values()][0], [*dictB.values()][0]
+                dictA_reduced = [*dictA.values()][0]
+                if len(dictB) > 0:
+                    dictB_reduced = [*dictB.values()][0]
+                else:
+                    dictB_reduced = (None, )
+
+                return dictA_reduced, dictB_reduced
             else:
                 # do nothing
                 return dictA, dictB

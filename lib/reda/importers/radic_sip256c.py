@@ -350,7 +350,6 @@ def write_crmod_file(sipdata, directory):
 @enable_result_transforms
 def parse_radic_file(filename, settings, selection_mode="after",
                      reciprocal=None):
-
     """
     Import one result file as produced by the SIP256c SIP measuring device
     (Radic Research)
