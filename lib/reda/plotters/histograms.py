@@ -2,13 +2,13 @@
 
 import pandas as pd
 import reda.utils.mpl
-plt, mpl = reda.utils.mpl.setup()
 # import pylab as plt
 # import matplotlib as mpl
 # mpl.rcParams['font.size'] = 8.0
 import numpy as np
 
 import reda.main.units as units
+plt, mpl = reda.utils.mpl.setup()
 
 
 def _get_nr_bins(count):
@@ -100,13 +100,16 @@ def plot_histograms(ertobj, keys, **kwargs):
         else:
             fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
 
+        label = units.get_label(key)
+        if mpl.rcParams['text.usetex']:
+            label = label.replace('_', '-')
         ax = axes[0]
         ax.hist(
             subdata,
             nr_of_bins,
         )
         ax.set_xlabel(
-            units.get_label(key)
+            label
         )
         ax.set_ylabel('count')
         ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
@@ -119,7 +122,7 @@ def plot_histograms(ertobj, keys, **kwargs):
                 subdata_log10,
                 nr_of_bins,
             )
-            ax.set_xlabel(r'$log_{10}($' + units.get_label(key) + ')')
+            ax.set_xlabel(r'$log_{10}($' + label + ')')
             ax.set_ylabel('count')
             ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
         else:
