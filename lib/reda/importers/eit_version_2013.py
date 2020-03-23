@@ -6,6 +6,7 @@ from reda.importers.eit_version_2010 import _average_swapped_current_injections
 
 
 def _extract_md(mat, **kwargs):
+    return
     md = mat['MD'].squeeze()
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
