@@ -53,7 +53,7 @@ Status of REDA
       -
     * - MPT DAS-1
       - :green:`working`
-      -
+      - SIP import slow
     * - Radic 256c
       - :orange:`untested`
       - slow, but should be fairly robust.
