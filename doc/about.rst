@@ -51,8 +51,8 @@ Status of REDA
     * - bert
       - :green:`working`
       -
-    * - Res2DInv
-      - :red:`work in progress`
+    * - MPT DAS-1
+      - :green:`working`
       -
     * - Radic 256c
       - :orange:`untested`
@@ -61,7 +61,10 @@ Status of REDA
       - :orange:`untested`
       -
     * - FZJ EIT40/EIT160
-      - :green:`mostly working`
+      - :green:`working`
+      -
+    * - Res2DInv
+      - :red:`work in progress`
       -
 
 .. list-table:: Exporters
