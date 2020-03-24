@@ -9,15 +9,9 @@ import re
 import pandas as pd
 import numpy as np
 
+from reda.tdip.decay_curve import DecayCurveObj
+
 # from reda.importers.utils.decorators import enable_result_transforms
-
-
-class DecayCurveObj():
-    """Helper class to construct object out of pd.DataFrame. Used to put a sub
-    DataFrame in a DataFrame."""
-
-    def __init__(self, df):
-        self.df = df
 
 
 def get_frequencies(filename, header_row):
@@ -25,7 +19,7 @@ def get_frequencies(filename, header_row):
 
     Parameters
     ----------
-    filename : string
+    filename : str
         input filename
     header_row : int
         row number of header row
@@ -39,7 +33,7 @@ def get_frequencies(filename, header_row):
 
     fid = open(filename, 'r')
     lines = fid.readlines()
-    freq_header = lines[header_row+1].split('Hz')[:-1]
+    freq_header = lines[header_row + 1].split('Hz')[:-1]
     frequencies = [re.sub(r"[^\d\.]", "", part) for part in freq_header]
     fid.close()
     return frequencies
@@ -47,11 +41,11 @@ def get_frequencies(filename, header_row):
 
 def import_das1_fd(filename, **kwargs):
     """Reads a frequency domain (single frequency) MPT DAS-1 data file (.Data)
-    and prepares information in pandas DataFrame for further processing.
+    and pre pares information in pandas DataFrame for further processing.
 
     Parameters
     ----------
-    filename : string
+    filename : str
         path to input file
     corr_array : list, optional
         used to correct the electrode numbers [a, b, m, n], eg. for cable
@@ -83,7 +77,7 @@ def import_das1_fd(filename, **kwargs):
     # derive rows used in data block
     data_start = df.index.get_loc('#data_start')
     data_end = df.index.get_loc('#data_end')
-    data = df.iloc[data_start+1: data_end].dropna(axis=1)
+    data = df.iloc[data_start + 1: data_end].dropna(axis=1)
 
     data_new = pd.DataFrame()
 
@@ -92,13 +86,13 @@ def import_das1_fd(filename, **kwargs):
 
     # A, B, M, N
     data_new['a'] = [
-        int(x.split(',')[1])-corr_array[0] for x in data.iloc[:, 0]]
+        int(x.split(',')[1]) - corr_array[0] for x in data.iloc[:, 0]]
     data_new['b'] = [
-        int(x.split(',')[1])-corr_array[1] for x in data.iloc[:, 1]]
+        int(x.split(',')[1]) - corr_array[1] for x in data.iloc[:, 1]]
     data_new['m'] = [
-        int(x.split(',')[1])-corr_array[2] for x in data.iloc[:, 2]]
+        int(x.split(',')[1]) - corr_array[2] for x in data.iloc[:, 2]]
     data_new['n'] = [
-        int(x.split(',')[1])-corr_array[3] for x in data.iloc[:, 3]]
+        int(x.split(',')[1]) - corr_array[3] for x in data.iloc[:, 3]]
 
     data_new['r'] = np.array(data.iloc[:, 4]).astype('float')  # resistance Ohm
     data_new['rpha'] = np.array(data.iloc[:, 5]).astype('float')  # phase mrad
@@ -173,7 +167,7 @@ def import_das1_td(filename, **kwargs):
         index_col=0,
         names=range(0, 10**3),  # dump the file in huge array
         skiprows=d_start + 1,
-        nrows=d_end-d_start - 3,  # skip headers after #data_start
+        nrows=d_end - d_start - 3,  # skip headers after #data_start
         low_memory=False
     )
     # sometimes there are additional comment lines in the file
@@ -189,7 +183,7 @@ def import_das1_td(filename, **kwargs):
         # comment='!',
         # index_col=0,
         skiprows=tm_start - 1,
-        nrows=tm_end-tm_start - 1
+        nrows=tm_end - tm_start - 1
     )
 
     ngates = len(header)
@@ -204,61 +198,63 @@ def import_das1_td(filename, **kwargs):
 
     # A, B, M, N
     data_new['a'] = [
-        int(x.split(',')[1])-corr_array[0] for x in data.iloc[:, 0]]
+        int(x.split(',')[1]) - corr_array[0] for x in data.iloc[:, 0]]
     data_new['b'] = [
-        int(x.split(',')[1])-corr_array[1] for x in data.iloc[:, 1]]
+        int(x.split(',')[1]) - corr_array[1] for x in data.iloc[:, 1]]
     data_new['m'] = [
-        int(x.split(',')[1])-corr_array[2] for x in data.iloc[:, 2]]
+        int(x.split(',')[1]) - corr_array[2] for x in data.iloc[:, 2]]
     data_new['n'] = [
-        int(x.split(',')[1])-corr_array[3] for x in data.iloc[:, 3]]
+        int(x.split(',')[1]) - corr_array[3] for x in data.iloc[:, 3]]
 
     data_new['r'] = np.array(data.iloc[:, 4]).astype('float')  # resistance
     data_new['dr'] = np.array(data.iloc[:, 5]).astype('float')  # devR
     # voltage in mV
-    data_new['Vab'] = np.array(data.iloc[:, 6].astype('float')*1000)
+    data_new['Vab'] = np.array(data.iloc[:, 6].astype('float') * 1000)
     data_new['dVab'] = np.array(
         data.iloc[:, 7].astype('float') * 1000)  # deviation voltage in mV
     # curret in mA
-    data_new['I'] = np.array(data.iloc[:, 8+2*ngates]).astype('float')
+    data_new['I'] = np.array(data.iloc[:, 8 + 2 * ngates]).astype('float')
     data_new['mdelay'] = mdelay
 
     # use helper DataFrames for Mx, Tm, dMx
     data_m = pd.DataFrame(
-        columns=['M' + str(num) for num in range(1, ngates+1)],
+        columns=['M' + str(num) for num in range(1, ngates + 1)],
         index=data_new.index
     )
-    data_m.loc[:, 'M1':'M'+str(ngates)] = np.array(
+    data_m.loc[:, 'M1':'M' + str(ngates)] = np.array(
         data.iloc[:, 8:8 + 2 * ngates:2]).astype(np.float)  # Mi
 
     data_tm = pd.DataFrame(
-        columns=['Tm' + str(num) for num in range(1, ngates+1)],
+        columns=['Tm' + str(num) for num in range(1, ngates + 1)],
         index=data_new.index
     )
-    data_tm.loc[:, 'Tm1':'Tm'+str(ngates)] = ipw
+    data_tm.loc[:, 'Tm1':'Tm' + str(ngates)] = ipw
 
     data_devm = pd.DataFrame(
-        columns=['devm' + str(num) for num in range(1, ngates+1)],
+        columns=['devm' + str(num) for num in range(1, ngates + 1)],
         index=data_new.index
     )
-    data_devm.loc[:, 'devm1':'devm'+str(ngates)] = np.array(
+    data_devm.loc[:, 'devm1':'devm' + str(ngates)] = np.array(
         data.iloc[:, 9:9 + 2 * ngates:2]
     ).astype(np.float)  # devMi
 
     # compute the global chargeability
     nominator = np.sum(
-        np.array(data_m.loc[:, 'M1': 'M'+str(ngates)]) *
-        np.array(data_tm.loc[:, 'Tm1': 'Tm'+str(ngates)]),
+        np.array(data_m.loc[:, 'M1': 'M' + str(ngates)]) *
+        np.array(data_tm.loc[:, 'Tm1': 'Tm' + str(ngates)]),
         axis=1
     )
     denominator = np.sum(
-        np.array(data_tm.loc[:, 'Tm1': 'Tm'+str(ngates)]),
+        np.array(data_tm.loc[:, 'Tm1': 'Tm' + str(ngates)]),
         axis=1
     )
     data_new['chargeability'] = nominator / denominator
 
-    datetime_series = pd.to_datetime(data.iloc[:, 10+2*ngates],
-                                     format='%Y%m%d_%H%M%S',
-                                     errors='ignore')
+    datetime_series = pd.to_datetime(
+        data.iloc[:, 10 + 2 * ngates],
+        format='%Y%m%d_%H%M%S',
+        errors='ignore'
+    )
 
     data_new['datetime'] = [
         time for index, time in datetime_series.iteritems()]
@@ -323,18 +319,24 @@ def import_das1_sip(filename, **kwargs):
                 d_end = idx
 
     # import the data block
-    data = pd.read_csv(filename,
-                       delimiter=' ',
-                       index_col=0,
-                       names=range(0, 10**3),  # dump the file in huge array
-                       skiprows=d_start+3,
-                       nrows=d_end-d_start-4,  # skip headers after #data_start
-                       low_memory=False)
+    data = pd.read_csv(
+        filename,
+        delimiter=' ',
+        index_col=0,
+        names=range(0, 10 ** 3),  # dump the file in huge array
+        skiprows=d_start + 3,
+        # skip headers after #data_start
+        nrows=d_end - d_start - 4,
+        low_memory=False
+    )
+    # sometimes there are additional comment lines in the file
+    indices_comments = data.index == '!'
+    data = data.iloc[~indices_comments]
 
     frequency_list = get_frequencies(filename, d_start)
     frequencies = np.array(frequency_list).astype(float)
     num_freqs = len(frequencies)
-    num_meas = d_end-d_start-4
+    num_meas = d_end - d_start - 4
 
     # number of nan and unused columns present when quadrupoles has
     # << * * TX Resist. out of range * * >> error
@@ -345,13 +347,13 @@ def import_das1_sip(filename, **kwargs):
 
     data_new = pd.DataFrame()
     data_new['a'] = [
-        int(x.split(',')[1])-corr_array[0] for x in data.iloc[:, 0]]
+        int(x.split(',')[1]) - corr_array[0] for x in data.iloc[:, 0]]
     data_new['b'] = [
-        int(x.split(',')[1])-corr_array[1] for x in data.iloc[:, 1]]
+        int(x.split(',')[1]) - corr_array[1] for x in data.iloc[:, 1]]
     data_new['m'] = [
-        int(x.split(',')[1])-corr_array[2] for x in data.iloc[:, 2]]
+        int(x.split(',')[1]) - corr_array[2] for x in data.iloc[:, 2]]
     data_new['n'] = [
-        int(x.split(',')[1])-corr_array[3] for x in data.iloc[:, 3]]
+        int(x.split(',')[1]) - corr_array[3] for x in data.iloc[:, 3]]
     data_fin = pd.DataFrame(
         columns=[
             'a', 'b', 'm', 'n', 'frequency', 'Zt', 'r', 'dr', 'rpha', 'drpha',
@@ -374,26 +376,29 @@ def import_das1_sip(filename, **kwargs):
                 data_new.loc[row_idx, 'r'] = float(
                     data.iloc[
                         row_idx,
-                        idx*6 + 4 + tx_out_skip*fskip_count[row_idx]
+                        idx * 6 + 4 + tx_out_skip * fskip_count[row_idx]
                     ]
                 )
                 # phase
                 data_new.loc[row_idx, 'rpha'] = float(
                     data.iloc[
-                        row_idx, idx*6 + 6 + tx_out_skip*fskip_count[row_idx]])
+                        row_idx, idx * 6 + 6 + tx_out_skip * fskip_count[
+                            row_idx]])
                 # current in mA
                 data_new.loc[row_idx, 'I'] = float(
                     data.iloc[
-                        row_idx, idx*6 + 8 +
-                        tx_out_skip*fskip_count[row_idx]])
+                        row_idx, idx * 6 + 8 +
+                        tx_out_skip * fskip_count[row_idx]])
                 # devR
                 data_new.loc[row_idx, 'dr'] = float(
                     data.iloc[
-                        row_idx, idx*6 + 5 + tx_out_skip*fskip_count[row_idx]])
+                        row_idx, idx * 6 + 5 + tx_out_skip * fskip_count[
+                            row_idx]])
                 # devPhi
                 data_new.loc[row_idx, 'drpha'] = float(
                     data.iloc[
-                        row_idx, idx*6 + 7 + tx_out_skip*fskip_count[row_idx]])
+                        row_idx, idx * 6 + 7 + tx_out_skip * fskip_count[
+                            row_idx]])
                 # array to check for error
                 dout_r[row_idx, idx] = float(
                     data.iloc[
@@ -402,20 +407,21 @@ def import_das1_sip(filename, **kwargs):
 
         else:
 
-            dout_r[:, idx] = np.array(data.iloc[:, idx*6 + 4])
+            dout_r[:, idx] = np.array(data.iloc[:, idx * 6 + 4])
             data_new['frequency'] = freq
             # resistance
-            data_new['r'] = np.array(data.iloc[:, idx*6 + 4]).astype('float')
+            data_new['r'] = np.array(data.iloc[:, idx * 6 + 4]).astype('float')
             # phase
             data_new['rpha'] = np.array(
-                data.iloc[:, idx*6 + 6]).astype('float')
+                data.iloc[:, idx * 6 + 6]).astype('float')
             # current in mA
-            data_new['I'] = np.array(data.iloc[:, idx*6 + 8]).astype('float')
+            data_new['I'] = np.array(data.iloc[:, idx * 6 + 8]).astype('float')
             # devR
-            data_new['dr'] = np.array(data.iloc[:, idx*6 + 5]).astype('float')
+            data_new['dr'] = np.array(data.iloc[:, idx * 6 + 5]).astype(
+                'float')
             # dev Phi
             data_new['drpha'] = np.array(
-                data.iloc[:, idx*6 + 7]).astype('float')
+                data.iloc[:, idx * 6 + 7]).astype('float')
 
         # check for quadrupoles containing nans (because of error)
         nan_index = np.where(np.isnan(dout_r[:, idx]) == 1)[0]
@@ -428,18 +434,61 @@ def import_das1_sip(filename, **kwargs):
     # compute Zt
     data_fin['Zt'] = data_fin['r'] * np.exp(data_fin['rpha'] * 1j / 1000.0)
 
-    start = len(frequencies)-1
+    #
+    start = len(frequencies) - 1
     for row_idx in range(len(data)):
         data_new.at[row_idx, 'datetime'] = data.iloc[
-            row_idx, start*6 + 11 + tx_out_skip*fskip_count[row_idx]]
+            row_idx, start * 6 + 11 + tx_out_skip * fskip_count[row_idx]]
 
     datetime_series = pd.to_datetime(
         data_new['datetime'], format='%Y%m%d_%H%M%S', errors='ignore')
-    datetime_stack = datetime_series.append([datetime_series]*(num_freqs-1))
+    datetime_stack = datetime_series.append(
+        [datetime_series] * (num_freqs - 1)
+    )
     datetime_stack_reindex = datetime_stack.reset_index()
     data_fin['datetime'] = datetime_stack_reindex['datetime']
 
+    data_fin[['a', 'b', 'm', 'n']] = data_fin[['a', 'b', 'm', 'n']].astype(
+        int
+    )
+
     return data_fin, None, None
+
+
+def get_measurement_type(filename):
+    """
+    Given an MPT DAS-1 result file, try to determine the type of measurement.
+
+    Currently supported/detected types:
+
+    * TDIP (i.e., time-domain measurement)
+    * FD (i.e., complex measurement)
+    * SIP (i.e., sEIT measurements
+
+    Parameters
+    ----------
+    filename : str
+        Path to data file
+
+    Returns
+    -------
+    measurement_type : str
+        The type of measurement: tdip,cr,sip
+
+    """
+    with open(filename, 'r') as fid:
+        for line in fid:
+            if '!TDIP' in line:
+                return 'tdip'
+            if '!Spectral' in line:
+                return 'sip'
+            if '!FDIP' in line:
+                return 'cr'
+
+    raise Exception(
+        'Data type (FD/TD/SIP) of '
+        '{0} cannot be determined. Check the file!'.format(filename)
+    )
 
 
 def import_das1(filename, **kwargs):
@@ -470,22 +519,16 @@ def import_das1(filename, **kwargs):
         No topography information is contained in the text files, so we always
         return None
     """
-
-    with open(filename, 'r') as fid:
-        for line in fid:
-            if '!TDIP' in line:
-                data, electrodes, topography = import_das1_td(
-                    filename, **kwargs)
-                return data, electrodes, topography
-            if '!Spectral' in line:
-                data, electrodes, topography = import_das1_sip(
-                    filename, **kwargs)
-                return data, electrodes, topography
-            if '!FDIP' in line:
-                data, electrodes, topography = import_das1_fd(
-                    filename, **kwargs)
-                return data, electrodes, topography
-    raise Exception(
-        'Data type (FD/TD/SIP) of '
-        '{0} cannot be determined. Check the file!'.format(filename)
-    )
+    measurement_type = get_measurement_type(filename)
+    if measurement_type == 'tdip':
+        data, electrodes, topography = import_das1_td(
+            filename, **kwargs)
+        return data, electrodes, topography
+    elif measurement_type == 'sip':
+        data, electrodes, topography = import_das1_sip(
+            filename, **kwargs)
+        return data, electrodes, topography
+    elif measurement_type == 'cr':
+        data, electrodes, topography = import_das1_fd(
+            filename, **kwargs)
+        return data, electrodes, topography

@@ -15,6 +15,7 @@ from reda.containers.BaseContainer import BaseContainer
 import reda.importers.eit_fzj as eit_fzj
 import reda.importers.radic_sip256c as reda_sip256c
 import reda.importers.crtomo as reda_crtomo_exporter
+import reda.importers.mpt_das1 as mpt_das1
 import reda.utils.eit_fzj_utils as eit_fzj_utils
 import reda.utils.geometric_factors as geometric_factors
 from reda.utils.fix_sign_with_K import fix_sign_with_K
@@ -77,7 +78,7 @@ class sEITImporters(ImportersBase):
     def import_eit_fzj(self, filename, configfile, correction_file=None,
                        timestep=None, **kwargs):
         """EIT data import for FZJ Medusa systems"""
-        # we get not electrode positions (dummy1) and no topography data
+        # we get no electrode positions (dummy1) and no topography data
         # (dummy2)
         df_emd, dummy1, dummy2 = eit_fzj.read_3p_data(
             filename,
@@ -94,6 +95,31 @@ class sEITImporters(ImportersBase):
 
         print('Summary:')
         self._describe_data(df_emd)
+
+    def import_mpt_das1(self, filename, timestep=None, **kwargs):
+        """Import MPT DAS-1 SIP data
+
+        Parameters
+        ----------
+        filename : str
+            Data file
+        timestep : object, optional
+            Timestep of the measurement, default: None
+        """
+        # check file type
+        assert mpt_das1.get_measurement_type(filename) == 'sip'
+        data, electrodes, topography = mpt_das1.import_das1_sip(
+            filename
+        )
+        if timestep is not None:
+            data['timestep'] = timestep
+
+        self._add_to_container(data)
+        self.electrode_positions = electrodes
+        self.topography = topography
+
+        print('Summary:')
+        self._describe_data(data)
 
 
 class sEIT(BaseContainer, sEITImporters):

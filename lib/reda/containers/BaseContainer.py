@@ -22,7 +22,7 @@ class ImportersBase(object):
 
     """
     Base class for all importer classes
-    
+
     """
 
     def _add_to_container(self, df):
