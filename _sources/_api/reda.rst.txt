@@ -18,5 +18,6 @@ Subpackages
    reda.importers
    reda.main
    reda.plotters
+   reda.tdip
    reda.testing
    reda.utils

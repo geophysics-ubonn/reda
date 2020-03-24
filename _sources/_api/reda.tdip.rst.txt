@@ -1,0 +1,19 @@
+reda.tdip package
+=================
+
+.. automodule:: reda.tdip
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+Submodules
+----------
+
+reda.tdip.decay\_curve module
+-----------------------------
+
+.. automodule:: reda.tdip.decay_curve
+   :members:
+   :undoc-members:
+   :show-inheritance:
+

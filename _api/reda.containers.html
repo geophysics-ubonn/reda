@@ -64,13 +64,13 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -1621,44 +1621,47 @@ tomographic analysis.</p>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code>(self, filename, configfile[, …])</p></td>
 <td><p>EIT data import for FZJ Medusa systems</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(self, filename[, settings, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt_das1</span></code>(self, filename[, timestep])</p></td>
+<td><p>Import MPT DAS-1 SIP data</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code>(self, filename[, settings, …])</p></td>
 <td><p>Radic SIP256c data import</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_all_spectra" title="reda.containers.sEIT.sEIT.plot_all_spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_all_spectra</span></code></a>(self, outdir)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_all_spectra" title="reda.containers.sEIT.sEIT.plot_all_spectra"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_all_spectra</span></code></a>(self, outdir)</p></td>
 <td><p>This is a convenience function to plot ALL spectra currently stored in the container.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_histograms" title="reda.containers.sEIT.sEIT.plot_histograms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_histograms</span></code></a>(self[, column, primary_dim, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_histograms" title="reda.containers.sEIT.sEIT.plot_histograms"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_histograms</span></code></a>(self[, column, primary_dim, …])</p></td>
 <td><p>Plot a histograms for all frequencies of one data column</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_pseudosections" title="reda.containers.sEIT.sEIT.plot_pseudosections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_pseudosections</span></code></a>(self, column[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.plot_pseudosections" title="reda.containers.sEIT.sEIT.plot_pseudosections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_pseudosections</span></code></a>(self, column[, …])</p></td>
 <td><p>Create a multi-plot with one pseudosection for each frequency.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>(self[, column, …])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>(self[, column, …])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(self, query[, inplace])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.query" title="reda.containers.sEIT.sEIT.query"><code class="xref py py-obj docutils literal notranslate"><span class="pre">query</span></code></a>(self, query[, inplace])</p></td>
 <td><p>State what you want to keep</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(self, fmin, fmax)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(self, fmin, fmax)</p></td>
 <td><p>Remove frequencies from the dataset</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>(self[, filename, individual])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>(self[, filename, individual])</p></td>
 <td><p>Create a scatter plot for all diff pairs</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>(self)</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(self, subset, filter[, inplace])</p></td>
 <td><p>Apply a filter to subset of the data</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(self, subset, filter[, inplace])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.subquery" title="reda.containers.sEIT.sEIT.subquery"><code class="xref py py-obj docutils literal notranslate"><span class="pre">subquery</span></code></a>(self, subset, filter[, inplace])</p></td>
 <td><p><p class="rubric">Examples</p>
 </p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>(self)</p></td>
 <td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
 </tr>
 </tbody>
@@ -2036,7 +2039,10 @@ meant to be inherited by the data containers</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="reda.containers.sEIT.sEITImporters.import_eit_fzj"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_eit_fzj</span></code></a>(self, filename, configfile[, …])</p></td>
 <td><p>EIT data import for FZJ Medusa systems</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="reda.containers.sEIT.sEITImporters.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(self, filename[, settings, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEITImporters.import_mpt_das1" title="reda.containers.sEIT.sEITImporters.import_mpt_das1"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt_das1</span></code></a>(self, filename[, timestep])</p></td>
+<td><p>Import MPT DAS-1 SIP data</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="reda.containers.sEIT.sEITImporters.import_sip256c"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip256c</span></code></a>(self, filename[, settings, …])</p></td>
 <td><p>Radic SIP256c data import</p></td>
 </tr>
 </tbody>
@@ -2077,6 +2083,22 @@ data_prefix</p>
 <dt id="reda.containers.sEIT.sEITImporters.import_eit_fzj">
 <code class="sig-name descname">import_eit_fzj</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">configfile</em>, <em class="sig-param">correction_file=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
 <dd><p>EIT data import for FZJ Medusa systems</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.containers.sEIT.sEITImporters.import_mpt_das1">
+<code class="sig-name descname">import_mpt_das1</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_mpt_das1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_mpt_das1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Import MPT DAS-1 SIP data</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename</strong><span class="classifier">str</span></dt><dd><p>Data file</p>
+</dd>
+<dt><strong>timestep</strong><span class="classifier">object, optional</span></dt><dd><p>Timestep of the measurement, default: None</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="method">

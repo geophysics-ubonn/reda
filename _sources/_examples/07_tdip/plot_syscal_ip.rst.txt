@@ -1,10 +1,10 @@
 .. note::
     :class: sphx-glr-download-link-note
 
-    Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_ip.py>` to download the full example code
+    Click :ref:`here <sphx_glr_download__examples_07_tdip_plot_syscal_ip.py>` to download the full example code
 .. rst-class:: sphx-glr-example-title
 
-.. _sphx_glr__examples_01_ERT_plot_syscal_ip.py:
+.. _sphx_glr__examples_07_tdip_plot_syscal_ip.py:
 
 
 Importing Syscal IP data
@@ -135,7 +135,7 @@ note that no file will be saved to disk if filename parameter is not provided
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_001.png
+.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_001.png
     :class: sphx-glr-single-img
 
 
@@ -162,7 +162,7 @@ this will only return a figure object, but will not save to file:
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_002.png
+.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_002.png
     :class: sphx-glr-single-img
 
 
@@ -187,7 +187,7 @@ it does not matter if you choose normal or reciprocal
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_003.png
+.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_003.png
     :class: sphx-glr-single-img
 
 
@@ -212,7 +212,7 @@ plot a decay curve by specifying the index
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_004.png
+.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_004.png
     :class: sphx-glr-single-img
 
 
@@ -239,7 +239,7 @@ a  b  m  n
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_005.png
+.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_005.png
     :class: sphx-glr-single-img
 
 
@@ -263,7 +263,7 @@ reciprocal is also ok
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_ip_006.png
+.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_006.png
     :class: sphx-glr-single-img
 
 
@@ -279,7 +279,7 @@ reciprocal is also ok
 
 
 
-.. _sphx_glr_download__examples_01_ERT_plot_syscal_ip.py:
+.. _sphx_glr_download__examples_07_tdip_plot_syscal_ip.py:
 
 
 .. only :: html

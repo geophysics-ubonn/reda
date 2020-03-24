@@ -62,13 +62,13 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -128,6 +128,7 @@
 <span class="kn">import</span> <span class="nn">reda.importers.eit_fzj</span> <span class="k">as</span> <span class="nn">eit_fzj</span>
 <span class="kn">import</span> <span class="nn">reda.importers.radic_sip256c</span> <span class="k">as</span> <span class="nn">reda_sip256c</span>
 <span class="kn">import</span> <span class="nn">reda.importers.crtomo</span> <span class="k">as</span> <span class="nn">reda_crtomo_exporter</span>
+<span class="kn">import</span> <span class="nn">reda.importers.mpt_das1</span> <span class="k">as</span> <span class="nn">mpt_das1</span>
 <span class="kn">import</span> <span class="nn">reda.utils.eit_fzj_utils</span> <span class="k">as</span> <span class="nn">eit_fzj_utils</span>
 <span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geometric_factors</span>
 <span class="kn">from</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="kn">import</span> <span class="n">fix_sign_with_K</span>
@@ -190,7 +191,7 @@
 <div class="viewcode-block" id="sEITImporters.import_eit_fzj"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEITImporters.import_eit_fzj">[docs]</a>    <span class="k">def</span> <span class="nf">import_eit_fzj</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">configfile</span><span class="p">,</span> <span class="n">correction_file</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
                        <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;EIT data import for FZJ Medusa systems&quot;&quot;&quot;</span>
-        <span class="c1"># we get not electrode positions (dummy1) and no topography data</span>
+        <span class="c1"># we get no electrode positions (dummy1) and no topography data</span>
         <span class="c1"># (dummy2)</span>
         <span class="n">df_emd</span><span class="p">,</span> <span class="n">dummy1</span><span class="p">,</span> <span class="n">dummy2</span> <span class="o">=</span> <span class="n">eit_fzj</span><span class="o">.</span><span class="n">read_3p_data</span><span class="p">(</span>
             <span class="n">filename</span><span class="p">,</span>
@@ -206,7 +207,32 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">df_emd</span><span class="p">)</span>
 
         <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df_emd</span><span class="p">)</span></div></div>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">df_emd</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="sEITImporters.import_mpt_das1"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEITImporters.import_mpt_das1">[docs]</a>    <span class="k">def</span> <span class="nf">import_mpt_das1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Import MPT DAS-1 SIP data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Data file</span>
+<span class="sd">        timestep : object, optional</span>
+<span class="sd">            Timestep of the measurement, default: None</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check file type</span>
+        <span class="k">assert</span> <span class="n">mpt_das1</span><span class="o">.</span><span class="n">get_measurement_type</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;sip&#39;</span>
+        <span class="n">data</span><span class="p">,</span> <span class="n">electrodes</span><span class="p">,</span> <span class="n">topography</span> <span class="o">=</span> <span class="n">mpt_das1</span><span class="o">.</span><span class="n">import_das1_sip</span><span class="p">(</span>
+            <span class="n">filename</span>
+        <span class="p">)</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrodes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">topography</span> <span class="o">=</span> <span class="n">topography</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="sEIT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT">[docs]</a><span class="k">class</span> <span class="nc">sEIT</span><span class="p">(</span><span class="n">BaseContainer</span><span class="p">,</span> <span class="n">sEITImporters</span><span class="p">):</span>

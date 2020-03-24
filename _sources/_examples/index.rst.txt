@@ -62,26 +62,6 @@ Usage of the ERT container
    :hidden:
 
    /_examples/01_ERT/plot_syscal_rollalong
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal IP data">
-
-.. only:: html
-
- .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
-
-     :ref:`sphx_glr__examples_01_ERT_plot_syscal_ip.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/01_ERT/plot_syscal_ip
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
@@ -345,6 +325,78 @@ Operations specific to the FZJ sEIT systems
    :hidden:
 
    /_examples/06_eit_fzj/plot_eit_fzj
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_07_tdip:
+
+Time-domain induced polarization
+--------------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Import MPT DAS-1 data">
+
+.. only:: html
+
+ .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_mpt_das_thumb.png
+
+     :ref:`sphx_glr__examples_07_tdip_plot_mpt_das.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/07_tdip/plot_mpt_das
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Data sets from:">
+
+.. only:: html
+
+ .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_syscal_ip_2_thumb.png
+
+     :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip_2.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/07_tdip/plot_syscal_ip_2
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal IP data">
+
+.. only:: html
+
+ .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
+
+     :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/07_tdip/plot_syscal_ip
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
