@@ -389,6 +389,58 @@ class ConfigManager(object):
             self.configs = np.vstack((self.configs, configs))
         return configs
 
+    def gen_inner_gradients(self, injections, skips=None):
+        """
+        Given a set of current injections, generate voltage dipoles between the
+        current electrodes
+
+        Examples
+        --------
+        >>> import reda
+        >>> cfg = reda.ConfigManager(nr_of_electrodes=10)
+        >>> cfg.gen_inner_gradients([1, 10], skips=[2, ])
+        array([[ 1, 10,  2,  5],
+               [ 1, 10,  3,  6],
+               [ 1, 10,  4,  7],
+               [ 1, 10,  5,  8],
+               [ 1, 10,  6,  9]])
+
+
+        Parameters
+        ----------
+        injections : Nx2 numpy.ndarray
+            Current injections
+        skips : None or iterable
+            The skips to generate. None will generate all possible skips
+
+        Returns
+        -------
+        configs : Nx4 numpy.ndarray
+            The generated configurations
+
+        """
+        configs_raw = []
+        for ab in np.atleast_2d(injections):
+            a = min(ab)
+            b = max(ab)
+            if b - a < 3:
+                continue
+
+            max_skip = b - a - 2
+            if skips is None:
+                use_skips = range(0, max_skip)
+            else:
+                use_skips = [x for x in skips if x <= max_skip]
+            for skip in use_skips:
+                for m in range(a + 1, b - 1 - skip, 1):
+                    n = m + skip + 1
+                    configs_raw.append(
+                        (ab[0], ab[1], m, n)
+                    )
+        configs = np.array(configs_raw)
+        self.add_to_configs(configs)
+        return configs
+
     def gen_gradient(self, skip=0, step=1, vskip=0, vstep=1):
         """Generate gradient measurements
 
