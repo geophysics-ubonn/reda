@@ -1,10 +1,12 @@
-.. note::
-    :class: sphx-glr-download-link-note
+.. only:: html
 
-    Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_rollalong.py>` to download the full example code
-.. rst-class:: sphx-glr-example-title
+    .. note::
+        :class: sphx-glr-download-link-note
 
-.. _sphx_glr__examples_01_ERT_plot_syscal_rollalong.py:
+        Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_rollalong.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr__examples_01_ERT_plot_syscal_rollalong.py:
 
 
 Importing Syscal ERT data from roll-a-long scheme
@@ -53,7 +55,7 @@ create an ERT container and import first dataset
     assigning ids
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7f94073af550>, <matplotlib.colorbar.Colorbar object at 0x7f940420d908>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7f72b87f5a20>, <matplotlib.colorbar.Colorbar object at 0x7f72b0d36978>)
 
 
 
@@ -90,7 +92,7 @@ create an ERT container and import second dataset
     assigning ids
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7f94043cd1d0>, <matplotlib.colorbar.Colorbar object at 0x7f9404075ef0>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <matplotlib.axes._subplots.AxesSubplot object at 0x7f72b0ef3320>, <matplotlib.colorbar.Colorbar object at 0x7f72b0cdba58>)
 
 
 
@@ -170,13 +172,13 @@ thereby shifting electrode notations of the second dataset by 24 electrodes
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-python
 
      :download:`Download Python source code: plot_syscal_rollalong.py <plot_syscal_rollalong.py>`
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
 
      :download:`Download Jupyter notebook: plot_syscal_rollalong.ipynb <plot_syscal_rollalong.ipynb>`
 

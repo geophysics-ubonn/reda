@@ -1,10 +1,12 @@
-.. note::
-    :class: sphx-glr-download-link-note
+.. only:: html
 
-    Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_dc.py>` to download the full example code
-.. rst-class:: sphx-glr-example-title
+    .. note::
+        :class: sphx-glr-download-link-note
 
-.. _sphx_glr__examples_01_ERT_plot_syscal_dc.py:
+        Click :ref:`here <sphx_glr_download__examples_01_ERT_plot_syscal_dc.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr__examples_01_ERT_plot_syscal_dc.py:
 
 
 Importing Syscal ERT data
@@ -130,13 +132,13 @@ export to various data files
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-python
 
      :download:`Download Python source code: plot_syscal_dc.py <plot_syscal_dc.py>`
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
 
      :download:`Download Jupyter notebook: plot_syscal_dc.ipynb <plot_syscal_dc.ipynb>`
 

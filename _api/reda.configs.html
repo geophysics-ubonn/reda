@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -166,49 +168,52 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_gradient" title="reda.configs.configManager.ConfigManager.gen_gradient"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_gradient</span></code></a>(self[, skip, step, vskip, vstep])</p></td>
 <td><p>Generate gradient measurements</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_reciprocals" title="reda.configs.configManager.ConfigManager.gen_reciprocals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_reciprocals</span></code></a>(self[, append])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_inner_gradients" title="reda.configs.configManager.ConfigManager.gen_inner_gradients"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_inner_gradients</span></code></a>(self, injections[, skips])</p></td>
+<td><p>Given a set of current injections, generate voltage dipoles between the current electrodes</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_reciprocals" title="reda.configs.configManager.ConfigManager.gen_reciprocals"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_reciprocals</span></code></a>(self[, append])</p></td>
 <td><p>Generate reciprocal configurations, sort by AB, and optionally append to configurations.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_schlumberger" title="reda.configs.configManager.ConfigManager.gen_schlumberger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_schlumberger</span></code></a>(self, M, N[, a])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_schlumberger" title="reda.configs.configManager.ConfigManager.gen_schlumberger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_schlumberger</span></code></a>(self, M, N[, a])</p></td>
 <td><p>generate one Schlumberger sounding configuration, that is, one set of configurations for one potential dipole MN.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_wenner" title="reda.configs.configManager.ConfigManager.gen_wenner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_wenner</span></code></a>(self, a)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.gen_wenner" title="reda.configs.configManager.ConfigManager.gen_wenner"><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_wenner</span></code></a>(self, a)</p></td>
 <td><p>Generate Wenner measurement configurations.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.get_unique_current_injections" title="reda.configs.configManager.ConfigManager.get_unique_current_injections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_unique_current_injections</span></code></a>(self)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.get_unique_current_injections" title="reda.configs.configManager.ConfigManager.get_unique_current_injections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_unique_current_injections</span></code></a>(self)</p></td>
 <td><p>Return all unique current injection electrode pairs</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_configs" title="reda.configs.configManager.ConfigManager.load_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_configs</span></code></a>(self, filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_configs" title="reda.configs.configManager.ConfigManager.load_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_configs</span></code></a>(self, filename)</p></td>
 <td><p>Load configurations from a file with four columns: a b m n</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_crmod_config" title="reda.configs.configManager.ConfigManager.load_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_crmod_config</span></code></a>(self, filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_crmod_config" title="reda.configs.configManager.ConfigManager.load_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_crmod_config</span></code></a>(self, filename)</p></td>
 <td><p>Load a CRMod configuration file</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_crmod_volt" title="reda.configs.configManager.ConfigManager.load_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_crmod_volt</span></code></a>(self, filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_crmod_volt" title="reda.configs.configManager.ConfigManager.load_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_crmod_volt</span></code></a>(self, filename)</p></td>
 <td><p>Load a CRMod measurement file (commonly called volt.dat)</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_duplicates" title="reda.configs.configManager.ConfigManager.remove_duplicates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_duplicates</span></code></a>(self[, configs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_duplicates" title="reda.configs.configManager.ConfigManager.remove_duplicates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_duplicates</span></code></a>(self[, configs])</p></td>
 <td><p>remove duplicate entries from 4-point configurations.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_max_dipole_sep" title="reda.configs.configManager.ConfigManager.remove_max_dipole_sep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_max_dipole_sep</span></code></a>(self[, maxsep])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_max_dipole_sep" title="reda.configs.configManager.ConfigManager.remove_max_dipole_sep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_max_dipole_sep</span></code></a>(self[, maxsep])</p></td>
 <td><p>Remove configurations with dipole separations higher than <cite>maxsep</cite>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal" title="reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_into_normal_and_reciprocal</span></code></a>(self[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal" title="reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_into_normal_and_reciprocal</span></code></a>(self[, …])</p></td>
 <td><p>Split the stored configurations into normal and reciprocal measurements</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_iris_syscal" title="reda.configs.configManager.ConfigManager.to_iris_syscal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_iris_syscal</span></code></a>(self, filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_iris_syscal" title="reda.configs.configManager.ConfigManager.to_iris_syscal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_iris_syscal</span></code></a>(self, filename)</p></td>
 <td><p>Export to IRIS Instrument configuration file</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_pg_scheme" title="reda.configs.configManager.ConfigManager.to_pg_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pg_scheme</span></code></a>(self[, container, positions])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_pg_scheme" title="reda.configs.configManager.ConfigManager.to_pg_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pg_scheme</span></code></a>(self[, container, positions])</p></td>
 <td><p>Convert the configuration to a pygimli measurement scheme</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_configs" title="reda.configs.configManager.ConfigManager.write_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_configs</span></code></a>(self, filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_configs" title="reda.configs.configManager.ConfigManager.write_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_configs</span></code></a>(self, filename)</p></td>
 <td><p>Write configs to file in four columns</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_config" title="reda.configs.configManager.ConfigManager.write_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_config</span></code></a>(self, filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_config" title="reda.configs.configManager.ConfigManager.write_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_config</span></code></a>(self, filename)</p></td>
 <td><p>Write the configurations to a configuration file in the CRMod format All configurations are merged into one previor to writing to file</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_volt" title="reda.configs.configManager.ConfigManager.write_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_volt</span></code></a>(self, filename, mid)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_volt" title="reda.configs.configManager.ConfigManager.write_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_volt</span></code></a>(self, filename, mid)</p></td>
 <td><p>Write the measurements to the output file in the volt.dat file format that can be read by CRTomo.</p></td>
 </tr>
 </tbody>
@@ -452,6 +457,40 @@ config instance</p>
 </dl>
 </dd>
 </dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="reda.configs.configManager.ConfigManager.gen_inner_gradients">
+<code class="sig-name descname">gen_inner_gradients</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">injections</em>, <em class="sig-param">skips=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/configs/configManager.html#ConfigManager.gen_inner_gradients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.configs.configManager.ConfigManager.gen_inner_gradients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Given a set of current injections, generate voltage dipoles between the
+current electrodes</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>injections</strong><span class="classifier">Nx2 numpy.ndarray</span></dt><dd><p>Current injections</p>
+</dd>
+<dt><strong>skips</strong><span class="classifier">None or iterable</span></dt><dd><p>The skips to generate. None will generate all possible skips</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>configs</strong><span class="classifier">Nx4 numpy.ndarray</span></dt><dd><p>The generated configurations</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">reda</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfg</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cfg</span><span class="o">.</span><span class="n">gen_inner_gradients</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">],</span> <span class="n">skips</span><span class="o">=</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">])</span>
+<span class="go">array([[ 1, 10,  2,  5],</span>
+<span class="go">       [ 1, 10,  3,  6],</span>
+<span class="go">       [ 1, 10,  4,  7],</span>
+<span class="go">       [ 1, 10,  5,  8],</span>
+<span class="go">       [ 1, 10,  6,  9]])</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="method">

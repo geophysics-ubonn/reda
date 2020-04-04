@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -114,17 +116,17 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-02-sip04-plot-sip04-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-02-sip04-plot-sip04-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="sip-04-import">
 <span id="sphx-glr-examples-02-sip04-plot-sip04-py"></span><h1>SIP-04 Import<a class="headerlink" href="#sip-04-import" title="Permalink to this headline">¶</a></h1>
 <p>Create the SIP container</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
-<a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">SIP</span><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="reda.containers.SIP.SIP" class="sphx-glr-backref-module-reda-containers-SIP sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sip</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="reda.containers.SIP.SIP" class="sphx-glr-backref-module-reda-containers-SIP sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">SIP</span></a><span class="p">()</span>
 </pre></div>
 </div>
 <p>Import the SIP data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">import_sip04</span><span class="p">(</span><span class="s1">&#39;sip_data.mat&#39;</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIPImporters.import_sip04" title="reda.containers.SIP.SIPImporters.import_sip04" class="sphx-glr-backref-module-reda-containers-SIP sphx-glr-backref-type-py-method"><span class="n">sip</span><span class="o">.</span><span class="n">import_sip04</span></a><span class="p">(</span><span class="s1">&#39;sip_data.mat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -144,8 +146,8 @@ max     1.0   4.0   2.0   3.0
 </pre></div>
 </div>
 <p>show the data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">))</span>
-<span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sip</span><span class="o">.</span><span class="n">data</span></a><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sip</span><span class="o">.</span><span class="n">data</span></a><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]])</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -176,23 +178,23 @@ max     1.0   4.0   2.0   3.0
 </pre></div>
 </div>
 <p>plot the spectrum</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.eis.plots</span> <span class="kn">import</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda.eis.plots</span> <span class="kn">import</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response" class="sphx-glr-backref-module-reda-eis-plots sphx-glr-backref-type-py-class"><span class="n">sip_response</span></a>
 
-<a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spectrum</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">sip_response</span></a><span class="p">(</span>
-    <span class="n">frequencies</span><span class="o">=</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-    <span class="n">rcomplex</span><span class="o">=</span><a href="../../_api/reda.containers.html#reda.containers.SIP.SIP" title="View documentation for reda.containers.SIP.SIP"><span class="n">sip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+<a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response" class="sphx-glr-backref-module-reda-eis-plots sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">spectrum</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response" class="sphx-glr-backref-module-reda-eis-plots sphx-glr-backref-type-py-class"><span class="n">sip_response</span></a><span class="p">(</span>
+    <span class="n">frequencies</span><span class="o">=</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sip</span><span class="o">.</span><span class="n">data</span></a><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
+    <span class="n">rcomplex</span><span class="o">=</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">sip</span><span class="o">.</span><span class="n">data</span></a><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="c1"># note the dtype indicates that no geometric factor was applied to the data</span>
-<a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="View documentation for matplotlib.figure.Figure"><span class="n">fig</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response" title="View documentation for reda.eis.plots.sip_response"><span class="n">spectrum</span></a><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;spectrum.png&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a href="https://matplotlib.org/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a> <span class="o">=</span> <a href="../../_api/reda.eis.html#reda.eis.plots.sip_response.plot" title="reda.eis.plots.sip_response.plot" class="sphx-glr-backref-module-reda-eis-plots sphx-glr-backref-type-py-method"><span class="n">spectrum</span><span class="o">.</span><span class="n">plot</span></a><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;spectrum.png&#39;</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_sip04_001.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_sip04_001.png" />
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-02-sip04-plot-sip04-py">
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/121c11657b37e767ab6988e8e351669e/plot_sip04.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_sip04.py</span></code></a></p>
 </div>
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/71f31be82a0be02de92006cb08c3e0df/plot_sip04.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_sip04.ipynb</span></code></a></p>
 </div>
 </div>

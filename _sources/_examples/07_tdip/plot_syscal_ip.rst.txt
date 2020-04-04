@@ -1,10 +1,12 @@
-.. note::
-    :class: sphx-glr-download-link-note
+.. only:: html
 
-    Click :ref:`here <sphx_glr_download__examples_07_tdip_plot_syscal_ip.py>` to download the full example code
-.. rst-class:: sphx-glr-example-title
+    .. note::
+        :class: sphx-glr-download-link-note
 
-.. _sphx_glr__examples_07_tdip_plot_syscal_ip.py:
+        Click :ref:`here <sphx_glr_download__examples_07_tdip_plot_syscal_ip.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr__examples_07_tdip_plot_syscal_ip.py:
 
 
 Importing Syscal IP data
@@ -289,13 +291,13 @@ reciprocal is also ok
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-python
 
      :download:`Download Python source code: plot_syscal_ip.py <plot_syscal_ip.py>`
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
 
      :download:`Download Jupyter notebook: plot_syscal_ip.ipynb <plot_syscal_ip.ipynb>`
 

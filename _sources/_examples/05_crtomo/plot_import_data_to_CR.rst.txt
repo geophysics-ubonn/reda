@@ -1,10 +1,12 @@
-.. note::
-    :class: sphx-glr-download-link-note
+.. only:: html
 
-    Click :ref:`here <sphx_glr_download__examples_05_crtomo_plot_import_data_to_CR.py>` to download the full example code
-.. rst-class:: sphx-glr-example-title
+    .. note::
+        :class: sphx-glr-download-link-note
 
-.. _sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py:
+        Click :ref:`here <sphx_glr_download__examples_05_crtomo_plot_import_data_to_CR.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py:
 
 
 Single-frequency CRTomo data import
@@ -86,13 +88,13 @@ import only one frequency into a CR (complex resistivity) container
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-python
 
      :download:`Download Python source code: plot_import_data_to_CR.py <plot_import_data_to_CR.py>`
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
 
      :download:`Download Jupyter notebook: plot_import_data_to_CR.ipynb <plot_import_data_to_CR.ipynb>`
 

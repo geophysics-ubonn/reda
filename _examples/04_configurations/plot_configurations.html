@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -114,20 +116,20 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-04-configurations-plot-configurations-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-04-configurations-plot-configurations-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="various-ways-to-create-measurement-configurations">
 <span id="sphx-glr-examples-04-configurations-plot-configurations-py"></span><h1>Various ways to create measurement configurations<a class="headerlink" href="#various-ways-to-create-measurement-configurations" title="Permalink to this headline">¶</a></h1>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda</span> <span class="kn">import</span> <span class="n">ConfigManager</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">reda</span> <span class="kn">import</span> <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="reda.configs.configManager.ConfigManager" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-class"><span class="n">ConfigManager</span></a>
 
-<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a> <span class="o">=</span> <span class="n">ConfigManager</span><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="reda.configs.configManager.ConfigManager" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">configs</span></a> <span class="o">=</span> <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="reda.configs.configManager.ConfigManager" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-class"><span class="n">ConfigManager</span></a><span class="p">(</span><span class="n">nr_of_electrodes</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
 
-<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><span class="n">gen_gradient</span><span class="p">(</span><span class="n">skip</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">vskip</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
-<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><span class="n">gen_dipole_dipole</span><span class="p">(</span><span class="n">skipc</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><span class="n">gen_gradient</span><span class="p">()</span>
-<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><span class="n">gen_schlumberger</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_gradient" title="reda.configs.configManager.ConfigManager.gen_gradient" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-method"><span class="n">configs</span><span class="o">.</span><span class="n">gen_gradient</span></a><span class="p">(</span><span class="n">skip</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">vskip</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_dipole_dipole" title="reda.configs.configManager.ConfigManager.gen_dipole_dipole" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-method"><span class="n">configs</span><span class="o">.</span><span class="n">gen_dipole_dipole</span></a><span class="p">(</span><span class="n">skipc</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_gradient" title="reda.configs.configManager.ConfigManager.gen_gradient" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-method"><span class="n">configs</span><span class="o">.</span><span class="n">gen_gradient</span></a><span class="p">()</span>
+<a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.gen_schlumberger" title="reda.configs.configManager.ConfigManager.gen_schlumberger" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-method"><span class="n">configs</span><span class="o">.</span><span class="n">gen_schlumberger</span></a><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">configs</span><span class="o">.</span><span class="n">configs</span></a><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -142,17 +144,17 @@
 </div>
 <p>export mechanisms:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
-<span class="k">with</span> <span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span><span class="p">(</span><span class="s1">&#39;exported_configs&#39;</span><span class="p">):</span>
-    <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><span class="n">to_iris_syscal</span><span class="p">(</span><span class="s1">&#39;syscal_configs.txt&#39;</span><span class="p">)</span>
-    <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><span class="n">write_configs</span><span class="p">(</span><span class="s1">&#39;abmn.dat&#39;</span><span class="p">)</span>
-    <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager" title="View documentation for reda.configs.configManager.ConfigManager"><span class="n">configs</span></a><span class="o">.</span><span class="n">write_crmod_config</span><span class="p">(</span><span class="s1">&#39;config.dat&#39;</span><span class="p">)</span>
+<span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;exported_configs&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.to_iris_syscal" title="reda.configs.configManager.ConfigManager.to_iris_syscal" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-method"><span class="n">configs</span><span class="o">.</span><span class="n">to_iris_syscal</span></a><span class="p">(</span><span class="s1">&#39;syscal_configs.txt&#39;</span><span class="p">)</span>
+    <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.write_configs" title="reda.configs.configManager.ConfigManager.write_configs" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-method"><span class="n">configs</span><span class="o">.</span><span class="n">write_configs</span></a><span class="p">(</span><span class="s1">&#39;abmn.dat&#39;</span><span class="p">)</span>
+    <a href="../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.write_crmod_config" title="reda.configs.configManager.ConfigManager.write_crmod_config" class="sphx-glr-backref-module-reda-configs-configManager sphx-glr-backref-type-py-method"><span class="n">configs</span><span class="o">.</span><span class="n">write_crmod_config</span></a><span class="p">(</span><span class="s1">&#39;config.dat&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-04-configurations-plot-configurations-py">
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/ace0a685f42f830d51993279ef2b11a5/plot_configurations.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_configurations.py</span></code></a></p>
 </div>
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/6561f1c5b795306bbe38017f4b341c6c/plot_configurations.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_configurations.ipynb</span></code></a></p>
 </div>
 </div>

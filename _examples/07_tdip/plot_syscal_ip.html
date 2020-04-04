@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -114,7 +116,7 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-07-tdip-plot-syscal-ip-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-07-tdip-plot-syscal-ip-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="importing-syscal-ip-data">
 <span id="sphx-glr-examples-07-tdip-plot-syscal-ip-py"></span><h1>Importing Syscal IP data<a class="headerlink" href="#importing-syscal-ip-data" title="Permalink to this headline">¶</a></h1>
@@ -138,17 +140,17 @@
 </pre></div>
 </div>
 <p>normal loading of tdip data</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">TDIP</span><span class="p">()</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="reda.containers.TDIP.TDIP" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ip</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="reda.containers.TDIP.TDIP" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">TDIP</span></a><span class="p">()</span>
 <span class="c1"># import pprofile</span>
 <span class="c1"># profiler = pprofile.Profile()</span>
 <span class="c1"># with profiler():</span>
-<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_normal.bin&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="reda.containers.TDIP.TDIPImporters.import_syscal_bin" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">import_syscal_bin</span></a><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_normal.bin&#39;</span><span class="p">)</span>
 <span class="c1"># profile.print_stats()</span>
 <span class="c1"># exit()</span>
-<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">import_syscal_bin</span><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_reciprocal.bin&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="reda.containers.TDIP.TDIPImporters.import_syscal_bin" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">import_syscal_bin</span></a><span class="p">(</span><span class="s1">&#39;data_syscal_ip/data_reciprocal.bin&#39;</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="mi">48</span><span class="p">)</span>
 
 
-<span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;norrec&#39;</span><span class="p">]])</span>
+<span class="nb">print</span><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ip</span><span class="o">.</span><span class="n">data</span></a><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;id&#39;</span><span class="p">,</span> <span class="s1">&#39;norrec&#39;</span><span class="p">]])</span>
 
 <span class="c1"># import IPython</span>
 <span class="c1"># IPython.embed()</span>
@@ -182,16 +184,16 @@ assigning ids
 </pre></div>
 </div>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda.utils.geometric_factors</span> <span class="k">as</span> <span class="nn">geomK</span>
-<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="View documentation for reda.utils.geometric_factors.compute_K_analytical"><span class="n">geomK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
-<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="View documentation for reda.utils.geometric_factors.apply_K"><span class="n">geomK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="View documentation for numpy.ndarray"><span class="n">K</span></a><span class="p">)</span>
+<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">K</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.compute_K_analytical" title="reda.utils.geometric_factors.compute_K_analytical" class="sphx-glr-backref-module-reda-utils-geometric_factors sphx-glr-backref-type-py-function"><span class="n">geomK</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ip</span><span class="o">.</span><span class="n">data</span></a><span class="p">,</span> <span class="n">spacing</span><span class="o">=</span><span class="mf">0.25</span><span class="p">)</span>
+<a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="reda.utils.geometric_factors.apply_K" class="sphx-glr-backref-module-reda-utils-geometric_factors sphx-glr-backref-type-py-function"><span class="n">geomK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ip</span><span class="o">.</span><span class="n">data</span></a><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">K</span></a><span class="p">)</span>
 
 <span class="kn">import</span> <span class="nn">reda.utils.fix_sign_with_K</span> <span class="k">as</span> <span class="nn">fixK</span>
-<a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="View documentation for reda.utils.fix_sign_with_K.fix_sign_with_K"><span class="n">fixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">data</span><span class="p">)</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ip</span><span class="o">.</span><span class="n">data</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="reda.utils.fix_sign_with_K.fix_sign_with_K" class="sphx-glr-backref-module-reda-utils-fix_sign_with_K sphx-glr-backref-type-py-function"><span class="n">fixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ip</span><span class="o">.</span><span class="n">data</span></a><span class="p">)</span>
 </pre></div>
 </div>
 <p>plot a decay curve by specifying the index
 note that no file will be saved to disk if filename parameter is not provided</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span></a><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
                     <span class="n">index_nor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">index_rec</span><span class="o">=</span><span class="mi">1978</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -202,7 +204,7 @@ note that no file will be saved to disk if filename parameter is not provided</p
 </div>
 <p>you can also specify only one index
 this will only return a figure object, but will not save to file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span></a><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;decay_curve.png&#39;</span><span class="p">,</span>
                     <span class="n">index_nor</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -212,7 +214,7 @@ this will only return a figure object, but will not save to file:</p>
 </pre></div>
 </div>
 <p>it does not matter if you choose normal or reciprocal</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">index_rec</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span></a><span class="p">(</span><span class="n">index_rec</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_003.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_003.png" />
@@ -221,7 +223,7 @@ this will only return a figure object, but will not save to file:</p>
 </pre></div>
 </div>
 <p>plot a decay curve by specifying the index</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">nr_id</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span></a><span class="p">(</span><span class="n">nr_id</span><span class="o">=</span><span class="mi">170</span><span class="p">,</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_004.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_004.png" />
@@ -232,7 +234,7 @@ this will only return a figure object, but will not save to file:</p>
 <p>a  b  m  n
 0     1  2  4  5
 1978  5  4  2  1</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span></a><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_005.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_005.png" />
@@ -241,7 +243,7 @@ this will only return a figure object, but will not save to file:</p>
 </pre></div>
 </div>
 <p>reciprocal is also ok</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP" title="View documentation for reda.containers.TDIP.TDIP"><span class="n">ip</span></a><span class="o">.</span><span class="n">plot_decay_curve</span><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve" class="sphx-glr-backref-module-reda-containers-TDIP sphx-glr-backref-type-py-method"><span class="n">ip</span><span class="o">.</span><span class="n">plot_decay_curve</span></a><span class="p">(</span><span class="n">abmn</span><span class="o">=</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">return_fig</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <img alt="../../_images/sphx_glr_plot_syscal_ip_006.png" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_syscal_ip_006.png" />
@@ -250,10 +252,10 @@ this will only return a figure object, but will not save to file:</p>
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-07-tdip-plot-syscal-ip-py">
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/72dfd87c9b0e1fb02d651f8f84de1a94/plot_syscal_ip.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_syscal_ip.py</span></code></a></p>
 </div>
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/fe89bca8f74ba9dda7913f24ce324f11/plot_syscal_ip.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_syscal_ip.ipynb</span></code></a></p>
 </div>
 </div>

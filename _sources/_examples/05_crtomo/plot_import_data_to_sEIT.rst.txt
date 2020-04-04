@@ -1,10 +1,12 @@
-.. note::
-    :class: sphx-glr-download-link-note
+.. only:: html
 
-    Click :ref:`here <sphx_glr_download__examples_05_crtomo_plot_import_data_to_sEIT.py>` to download the full example code
-.. rst-class:: sphx-glr-example-title
+    .. note::
+        :class: sphx-glr-download-link-note
 
-.. _sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py:
+        Click :ref:`here <sphx_glr_download__examples_05_crtomo_plot_import_data_to_sEIT.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py:
 
 
 Multi-frequency CRTomo data import
@@ -113,13 +115,13 @@ create the container
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-python
 
      :download:`Download Python source code: plot_import_data_to_sEIT.py <plot_import_data_to_sEIT.py>`
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
 
      :download:`Download Jupyter notebook: plot_import_data_to_sEIT.ipynb <plot_import_data_to_sEIT.ipynb>`
 

@@ -1,10 +1,12 @@
-.. note::
-    :class: sphx-glr-download-link-note
+.. only:: html
 
-    Click :ref:`here <sphx_glr_download__examples_06_eit_fzj_plot_eit_fzj_li.py>` to download the full example code
-.. rst-class:: sphx-glr-example-title
+    .. note::
+        :class: sphx-glr-download-link-note
 
-.. _sphx_glr__examples_06_eit_fzj_plot_eit_fzj_li.py:
+        Click :ref:`here <sphx_glr_download__examples_06_eit_fzj_plot_eit_fzj_li.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr__examples_06_eit_fzj_plot_eit_fzj_li.py:
 
 
 Analyzing total capacitances at each electrode during current injection
@@ -89,13 +91,13 @@ doi:10.1088/1361-6501/ab1b09, 2019.
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-python
 
      :download:`Download Python source code: plot_eit_fzj_li.py <plot_eit_fzj_li.py>`
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
 
      :download:`Download Jupyter notebook: plot_eit_fzj_li.ipynb <plot_eit_fzj_li.ipynb>`
 

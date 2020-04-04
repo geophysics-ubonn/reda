@@ -1,10 +1,12 @@
-.. note::
-    :class: sphx-glr-download-link-note
+.. only:: html
 
-    Click :ref:`here <sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py>` to download the full example code
-.. rst-class:: sphx-glr-example-title
+    .. note::
+        :class: sphx-glr-download-link-note
 
-.. _sphx_glr__examples_03_sEIT_plot_radic_sip256c.py:
+        Click :ref:`here <sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py>`     to download the full example code
+    .. rst-class:: sphx-glr-example-title
+
+    .. _sphx_glr__examples_03_sEIT_plot_radic_sip256c.py:
 
 
 Importing Radic SIP256c data
@@ -939,7 +941,7 @@ improved in the future
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  34.637 seconds)
+   **Total running time of the script:** ( 0 minutes  33.633 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:
@@ -952,13 +954,13 @@ improved in the future
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-python
 
      :download:`Download Python source code: plot_radic_sip256c.py <plot_radic_sip256c.py>`
 
 
 
-  .. container:: sphx-glr-download
+  .. container:: sphx-glr-download sphx-glr-download-jupyter
 
      :download:`Download Jupyter notebook: plot_radic_sip256c.ipynb <plot_radic_sip256c.ipynb>`
 

@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
@@ -114,7 +116,7 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-05-crtomo-plot-import-data-to-seit-py"><span class="std std-ref">here</span></a> to download the full example code</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-05-crtomo-plot-import-data-to-seit-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="multi-frequency-crtomo-data-import">
 <span id="sphx-glr-examples-05-crtomo-plot-import-data-to-seit-py"></span><h1>Multi-frequency CRTomo data import<a class="headerlink" href="#multi-frequency-crtomo-data-import" title="Permalink to this headline">¶</a></h1>
@@ -127,14 +129,14 @@
 </div>
 <p>show the directory/file structure of the input data</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># structure of the input data:</span>
-<a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a> <span class="o">=</span> <span class="s1">&#39;data_crtomo_format&#39;</span>
-<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">filename</span></a> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><a href="https://docs.python.org/3/library/os.html#os.listdir" title="View documentation for os.listdir"><span class="n">os</span><span class="o">.</span><span class="n">listdir</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a><span class="p">)):</span>
-    <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">filename</span></a><span class="p">)</span>
+<a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">input_dir</span></a> <span class="o">=</span> <span class="s1">&#39;data_crtomo_format&#39;</span>
+<span class="k">for</span> <a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">filename</span></a> <span class="ow">in</span> <span class="nb">sorted</span><span class="p">(</span><a href="https://docs.python.org/3/library/os.html#os.listdir" title="os.listdir" class="sphx-glr-backref-module-os sphx-glr-backref-type-py-function"><span class="n">os</span><span class="o">.</span><span class="n">listdir</span></a><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">input_dir</span></a><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">filename</span></a><span class="p">)</span>
 
 <span class="c1"># the frequencies.dat filename contains the frequencies, corresponding to the</span>
 <span class="c1"># volt* files</span>
 <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;content of frequencies.dat&#39;</span><span class="p">)</span>
-<a href="https://docs.python.org/3/library/subprocess.html#subprocess.call" title="View documentation for subprocess.call"><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span></a><span class="p">(</span><span class="s1">&#39;cat </span><span class="si">{}</span><span class="s1">/frequencies.dat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="View documentation for builtins.str"><span class="n">input_dir</span></a><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<a href="https://docs.python.org/3/library/subprocess.html#subprocess.call" title="subprocess.call" class="sphx-glr-backref-module-subprocess sphx-glr-backref-type-py-function"><span class="n">subprocess</span><span class="o">.</span><span class="n">call</span></a><span class="p">(</span><span class="s1">&#39;cat </span><span class="si">{}</span><span class="s1">/frequencies.dat&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><a href="https://docs.python.org/3/library/stdtypes.html#str" title="builtins.str" class="sphx-glr-backref-module-builtins sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">input_dir</span></a><span class="p">),</span> <span class="n">shell</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -150,9 +152,9 @@ content of frequencies.dat
 </pre></div>
 </div>
 <p>create the container</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span><span class="p">()</span>
-<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">import_crtomo</span><span class="p">(</span><span class="s1">&#39;data_crtomo_format/&#39;</span><span class="p">)</span>
-<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="View documentation for reda.containers.sEIT.sEIT"><span class="n">seit</span></a><span class="o">.</span><span class="n">frequencies</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="reda.containers.sEIT.sEIT" class="sphx-glr-backref-module-reda-containers-sEIT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seit</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT" title="reda.containers.sEIT.sEIT" class="sphx-glr-backref-module-reda-containers-sEIT sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">sEIT</span></a><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEITImporters.import_crtomo" title="reda.containers.sEIT.sEITImporters.import_crtomo" class="sphx-glr-backref-module-reda-containers-sEIT sphx-glr-backref-type-py-method"><span class="n">seit</span><span class="o">.</span><span class="n">import_crtomo</span></a><span class="p">(</span><span class="s1">&#39;data_crtomo_format/&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT.frequencies" title="reda.containers.sEIT.sEIT.frequencies" class="sphx-glr-backref-module-reda-containers-sEIT sphx-glr-backref-type-py-method"><span class="n">seit</span><span class="o">.</span><span class="n">frequencies</span></a>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
@@ -173,10 +175,10 @@ max      37.000000    38.000000    38.000000    38.000000
 </pre></div>
 </div>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-05-crtomo-plot-import-data-to-seit-py">
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/c779cc92b7332fdfe8fde7b5ef0411ba/plot_import_data_to_sEIT.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_import_data_to_sEIT.py</span></code></a></p>
 </div>
-<div class="sphx-glr-download docutils container">
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/c1e832b83cb2105ff963aaa0f672887c/plot_import_data_to_sEIT.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_import_data_to_sEIT.ipynb</span></code></a></p>
 </div>
 </div>
