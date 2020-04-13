@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>reda.containers.sEIT &#8212; REDA 0.1.0 documentation</title>
@@ -489,8 +489,8 @@
             <span class="n">_retain_only_complete_spectra</span><span class="p">,</span> <span class="n">fmax</span><span class="o">=</span><span class="n">flimit</span><span class="p">,</span> <span class="n">acceptN</span><span class="o">=</span><span class="n">Naccept</span>
         <span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="sEIT.get_spectrum"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.get_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">get_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nr_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">abmn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-
+<div class="viewcode-block" id="sEIT.get_spectrum"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.get_spectrum">[docs]</a>    <span class="k">def</span> <span class="nf">get_spectrum</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nr_id</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">abmn</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">withK</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+                     <span class="n">plot_filename</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Return a spectrum and its reciprocal counter part, if present in the</span>
 <span class="sd">        dataset. Optimally, refer to the spectrum by its normal-reciprocal id.</span>
@@ -505,6 +505,12 @@
 <span class="sd">        will be used as a template, and the timesteps will be appended for each</span>
 <span class="sd">        plot.</span>
 
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        withK : bool</span>
+<span class="sd">            If True, and the column &quot;k&quot; exists, then return an apparent</span>
+<span class="sd">            spectrum with geometric factors included</span>
+
 <span class="sd">        Returns</span>
 <span class="sd">        -------</span>
 <span class="sd">        spectrum_nor : :py:class:`reda.eis.plots.sip_response` or dict or None</span>
@@ -514,10 +520,13 @@
 <span class="sd">        fig : :py:class:`matplotlib.Figure.Figure`, optional</span>
 <span class="sd">            Figure object (only if plot_filename is set)</span>
 <span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="n">nr_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nr_id</span><span class="p">,</span> <span class="nb">int</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">nr_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">abmn</span> <span class="ow">is</span> <span class="kc">None</span>
+
+        <span class="k">assert</span> <span class="ow">not</span> <span class="n">withK</span> <span class="ow">or</span> <span class="p">(</span><span class="n">withK</span> <span class="ow">and</span> <span class="s1">&#39;k&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
 
         <span class="c1"># Here are some problems with |dict|{} at end of 369 and 371</span>
 
-        <span class="k">assert</span> <span class="n">nr_id</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="n">abmn</span> <span class="ow">is</span> <span class="kc">None</span>
         <span class="c1"># determine nr_id for given abmn tuple</span>
         <span class="k">if</span> <span class="n">abmn</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
             <span class="n">subdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
@@ -554,9 +563,13 @@
 
             <span class="n">spectrum_nor</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">g_nor_ts</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">withK</span><span class="p">:</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
                 <span class="n">spectrum_nor</span><span class="p">[</span><span class="n">timestep</span><span class="p">]</span> <span class="o">=</span> <span class="n">eis_plot</span><span class="o">.</span><span class="n">sip_response</span><span class="p">(</span>
                     <span class="n">frequencies</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                    <span class="n">rmag</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">],</span>
+                    <span class="n">rmag</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span>
                     <span class="n">rpha</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">],</span>
                 <span class="p">)</span>
 
@@ -570,9 +583,13 @@
 
             <span class="n">spectrum_rec</span> <span class="o">=</span> <span class="p">{}</span>
             <span class="k">for</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">g_rec_ts</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">withK</span><span class="p">:</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
                 <span class="n">spectrum_rec</span><span class="p">[</span><span class="n">timestep</span><span class="p">]</span> <span class="o">=</span> <span class="n">eis_plot</span><span class="o">.</span><span class="n">sip_response</span><span class="p">(</span>
                     <span class="n">frequencies</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span>
-                    <span class="n">rmag</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">],</span>
+                    <span class="n">rmag</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="n">k</span><span class="p">,</span>
                     <span class="n">rpha</span><span class="o">=</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">],</span>
                 <span class="p">)</span>
 
@@ -854,7 +871,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

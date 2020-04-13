@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>reda.importers.utils package &#8212; REDA 0.1.0 documentation</title>
@@ -125,9 +125,9 @@
 </div>
 <div class="section" id="module-reda.importers.utils.decorators">
 <span id="reda-importers-utils-decorators-module"></span><h2>reda.importers.utils.decorators module<a class="headerlink" href="#module-reda.importers.utils.decorators" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="reda.importers.utils.decorators.enable_result_transforms">
-<code class="sig-prename descclassname">reda.importers.utils.decorators.</code><code class="sig-name descname">enable_result_transforms</code><span class="sig-paren">(</span><em class="sig-param">func</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/decorators.html#enable_result_transforms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.decorators.enable_result_transforms" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.utils.decorators.</code><code class="sig-name descname">enable_result_transforms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">func</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/decorators.html#enable_result_transforms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.decorators.enable_result_transforms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Decorator that tries to use the object provided using a kwarg called
 ‘electrode_transformator’ to transform the return values of an import
 function. It is intended to be used to transform electrode numbers and
@@ -143,9 +143,9 @@ transformed objects.</p>
 <p>This file contains transform functions for electrode numbering. If want to
 apply custom electrode renumbering, use these functions as starting points to
 design your own.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="reda.importers.utils.transforms.transform_electrodes_roll_along">
-<em class="property">class </em><code class="sig-prename descclassname">reda.importers.utils.transforms.</code><code class="sig-name descname">transform_electrodes_roll_along</code><span class="sig-paren">(</span><em class="sig-param">shiftby=0</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/transforms.html#transform_electrodes_roll_along"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.transforms.transform_electrodes_roll_along" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.importers.utils.transforms.</code><code class="sig-name descname">transform_electrodes_roll_along</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">shiftby</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/transforms.html#transform_electrodes_roll_along"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.transforms.transform_electrodes_roll_along" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>This function shifts all electrode numbers by a fixed offset, as
 commonly encountered for roll-a-long measurement schemes.</p>
@@ -161,9 +161,9 @@ commonly encountered for roll-a-long measurement schemes.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.importers.utils.transforms.transform_electrodes_roll_along.transform">
-<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">topography</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/transforms.html#transform_electrodes_roll_along.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.transforms.transform_electrodes_roll_along.transform" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">transform</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">electrodes</span></em>, <em class="sig-param"><span class="n">topography</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/utils/transforms.html#transform_electrodes_roll_along.transform"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.utils.transforms.transform_electrodes_roll_along.transform" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -182,7 +182,7 @@ commonly encountered for roll-a-long measurement schemes.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

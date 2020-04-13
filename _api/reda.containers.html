@@ -1,7 +1,7 @@
 
 <!DOCTYPE html>
 
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
   <head>
     <meta charset="utf-8" />
     <title>reda.containers package &#8212; REDA 0.1.0 documentation</title>
@@ -125,9 +125,9 @@
 <div class="section" id="module-reda.containers.BaseContainer">
 <span id="reda-containers-basecontainer-module"></span><h2>reda.containers.BaseContainer module<a class="headerlink" href="#module-reda.containers.BaseContainer" title="Permalink to this headline">¶</a></h2>
 <p>.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.BaseContainer.BaseContainer">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.BaseContainer.</code><code class="sig-name descname">BaseContainer</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.BaseContainer.</code><code class="sig-name descname">BaseContainer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">electrode_positions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">topography</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="reda.main.html#reda.main.logger.LoggingClass" title="reda.main.logger.LoggingClass"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.main.logger.LoggingClass</span></code></a>, <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a>, <a class="reference internal" href="#reda.containers.BaseContainer.ExportersBase" title="reda.containers.BaseContainer.ExportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ExportersBase</span></code></a></p>
 <p>.</p>
 <p class="rubric">Methods</p>
@@ -195,22 +195,22 @@
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.check_dataframe">
-<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required type and columns</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.compute_K_analytical">
-<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">spacing</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">spacing</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute geometrical factors over the homogeneous half-space with a
 constant electrode spacing</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.delete_measurements">
-<code class="sig-name descname">delete_measurements</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">row_or_rows</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.delete_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.delete_measurements" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">delete_measurements</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">row_or_rows</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.delete_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.delete_measurements" title="Permalink to this definition">¶</a></dt>
 <dd><p>Delete one or more measurements by index of the DataFrame.</p>
 <p>Resets the DataFrame index.</p>
 <dl class="field-list simple">
@@ -229,9 +229,9 @@ to delete</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.filter">
-<code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">query</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">query</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use a query statement to filter data. Note that you specify the data
 to be removed!</p>
 <dl class="field-list">
@@ -255,21 +255,21 @@ filtered data.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.has_multiple_timesteps">
-<code class="sig-name descname">has_multiple_timesteps</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.has_multiple_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.has_multiple_timesteps" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">has_multiple_timesteps</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.has_multiple_timesteps"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.has_multiple_timesteps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return True if container has multiple timesteps.</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.histogram">
-<code class="sig-name descname">histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.histogram" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a histogram of one data column</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.pseudosection">
-<code class="sig-name descname">pseudosection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">pseudosection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a pseudosection of the given column. Note that this function
 only works with dipole-dipole data at the moment.</p>
 <dl class="field-list">
@@ -299,9 +299,9 @@ matplotlib axes object</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.pseudosection_type3">
-<code class="sig-name descname">pseudosection_type3</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection_type3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection_type3" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">pseudosection_type3</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection_type3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection_type3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a pseudosection of the given column. Note that this function
 only works with dipole-dipole data at the moment.</p>
 <dl class="field-list">
@@ -331,9 +331,9 @@ matplotlib axes object</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.sub_filter">
-<code class="sig-name descname">sub_filter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">subset</em>, <em class="sig-param">filter</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.sub_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.sub_filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">sub_filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">subset</span></em>, <em class="sig-param"><span class="n">filter</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.sub_filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.sub_filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply a filter to subset of the data</p>
 <p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">.</span><span class="n">subquery</span><span class="p">(</span>
@@ -344,9 +344,9 @@ matplotlib axes object</p>
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.to_configs">
-<code class="sig-name descname">to_configs</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.to_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.to_configs" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">to_configs</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.to_configs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.to_configs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a config object that contains the measurement configurations
 (a,b,m,n) from the data</p>
 <dl class="field-list simple">
@@ -360,7 +360,7 @@ matplotlib axes object</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.BaseContainer.ExportersBase">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.BaseContainer.</code><code class="sig-name descname">ExportersBase</code><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#ExportersBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -390,9 +390,9 @@ meant to be inherited by the ERT data container.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.ExportersBase.export_bert">
-<code class="sig-name descname">export_bert</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_bert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_bert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">electrodes</span></em>, <em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -408,9 +408,9 @@ meant to be inherited by the ERT data container.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.ExportersBase.export_crtomo">
-<code class="sig-name descname">export_crtomo</code><span class="sig-paren">(</span><em class="sig-param">filename</em>, <em class="sig-param">group</em>, <em class="sig-param">norrec='all'</em>, <em class="sig-param">store_errors=False</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_crtomo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_crtomo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">group</span></em>, <em class="sig-param"><span class="n">norrec</span><span class="o">=</span><span class="default_value">'all'</span></em>, <em class="sig-param"><span class="n">store_errors</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_crtomo" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a dataset to a CRTomo-compatible .crt file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -428,9 +428,9 @@ meant to be inherited by the ERT data container.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.BaseContainer.ExportersBase.export_pygimli">
-<code class="sig-name descname">export_pygimli</code><span class="sig-paren">(</span><em class="sig-param">data</em>, <em class="sig-param">electrodes</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_pygimli" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_pygimli</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em>, <em class="sig-param"><span class="n">electrodes</span></em>, <em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="headerlink" href="#reda.containers.BaseContainer.ExportersBase.export_pygimli" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -448,7 +448,7 @@ meant to be inherited by the ERT data container.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.BaseContainer.ImportersBase">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.BaseContainer.</code><code class="sig-name descname">ImportersBase</code><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#ImportersBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.ImportersBase" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
@@ -459,9 +459,9 @@ meant to be inherited by the ERT data container.</p>
 <div class="section" id="module-reda.containers.CR">
 <span id="reda-containers-cr-module"></span><h2>reda.containers.CR module<a class="headerlink" href="#module-reda.containers.CR" title="Permalink to this headline">¶</a></h2>
 <p>Complex-resistivity container</p>
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.CR.CR">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">CR</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">CR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">electrode_positions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">topography</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.CR.CRImporters" title="reda.containers.CR.CRImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.CR.CRImporters</span></code></a></p>
 <p>.</p>
 <p class="rubric">Methods</p>
@@ -544,15 +544,15 @@ meant to be inherited by the ERT data container.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.CR.CR.check_dataframe">
-<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required type and columns</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.CR.CR.export_to_crtomo_td_manager">
-<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">norrec</span><span class="o">=</span><span class="default_value">'norrec'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CR.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CR.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a ready-initialized tdman object from the CRTomo tools.</p>
 <p>WARNING: Not timestep aware!</p>
 <dl class="field-list simple">
@@ -569,7 +569,7 @@ meant to be inherited by the ERT data container.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.CR.CRImporters">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.CR.</code><code class="sig-name descname">CRImporters</code><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
@@ -594,9 +594,9 @@ meant to be inherited by the ERT data container.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.CR.CRImporters.import_bert">
-<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_bert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -625,9 +625,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.CR.CRImporters.import_crtomo_data">
-<code class="sig-name descname">import_crtomo_data</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_crtomo_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_crtomo_data" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_crtomo_data</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_crtomo_data"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_crtomo_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import a CRTomo-style measurement file (usually: volt.dat).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -639,9 +639,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.CR.CRImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>MPT DAS 1 FD importer</p>
 <dl class="simple">
@@ -673,9 +673,9 @@ return None</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.CR.CRImporters.import_pygimli">
-<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -709,9 +709,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </div>
 <div class="section" id="module-reda.containers.ERT">
 <span id="reda-containers-ert-module"></span><h2>reda.containers.ERT module<a class="headerlink" href="#module-reda.containers.ERT" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.ERT.ERT">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">ERT</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">ERT</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">electrode_positions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">topography</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.ERT.ERTImporters" title="reda.containers.ERT.ERTImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.ERT.ERTImporters</span></code></a></p>
 <p>.</p>
 <p class="rubric">Methods</p>
@@ -797,15 +797,15 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.ERT.ERT.check_dataframe">
-<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required type and columns</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.ERT.ERT.compute_reciprocal_errors">
-<code class="sig-name descname">compute_reciprocal_errors</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">key='r'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.compute_reciprocal_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.compute_reciprocal_errors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">compute_reciprocal_errors</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">key</span><span class="o">=</span><span class="default_value">'r'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.compute_reciprocal_errors"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.compute_reciprocal_errors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute reciprocal erros following LaBrecque et al. (1996) according
 to:</p>
 <div class="math notranslate nohighlight">
@@ -837,7 +837,7 @@ to:</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.ERT.ERTImporters">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.ERT.</code><code class="sig-name descname">ERTImporters</code><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
@@ -873,9 +873,9 @@ meant to be inherited by the ERT data container.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_bert">
-<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_bert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -904,9 +904,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><p>MPT DAS 1 importer</p>
 <blockquote>
 <div><dl>
@@ -938,9 +938,9 @@ return None</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_pygimli">
-<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -969,9 +969,9 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_syscal_bin">
-<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syscal import</p>
 <blockquote>
 <div><dl class="simple">
@@ -1027,9 +1027,9 @@ return None</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_syscal_txt">
-<code class="sig-name descname">import_syscal_txt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_syscal_txt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Syscal import</p>
 <dl class="simple">
@@ -1083,9 +1083,9 @@ return None</p>
 <div class="section" id="module-reda.containers.SIP">
 <span id="reda-containers-sip-module"></span><h2>reda.containers.SIP module<a class="headerlink" href="#module-reda.containers.SIP" title="Permalink to this headline">¶</a></h2>
 <p>Container for Spectral Induced Polarization (SIP) measurements</p>
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.SIP.SIP">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.SIP.</code><code class="sig-name descname">SIP</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.SIP.</code><code class="sig-name descname">SIP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">electrode_positions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">topography</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.SIP.SIPImporters" title="reda.containers.SIP.SIPImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.SIP.SIPImporters</span></code></a></p>
 <p>.</p>
 <p class="rubric">Methods</p>
@@ -1162,15 +1162,15 @@ return None</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.SIP.SIP.check_dataframe">
-<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required type and columns</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.SIP.SIP.reduce_duplicate_frequencies">
-<code class="sig-name descname">reduce_duplicate_frequencies</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP.reduce_duplicate_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP.reduce_duplicate_frequencies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">reduce_duplicate_frequencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIP.reduce_duplicate_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIP.reduce_duplicate_frequencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>In case multiple frequencies were measured, average them and compute
 std, min, max values for zt.</p>
 <p>In case timesteps were added (i.e., multiple separate measurements),
@@ -1191,7 +1191,7 @@ group over those and average for each timestep.</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.SIP.SIPImporters">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.SIP.</code><code class="sig-name descname">SIPImporters</code><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
@@ -1212,9 +1212,9 @@ meant to be inherited by the data containers</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.SIP.SIPImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><p>MPT DAS 1 FD importer</p>
 <blockquote>
 <div><dl class="simple">
@@ -1246,9 +1246,9 @@ return None</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.SIP.SIPImporters.import_sip04">
-<code class="sig-name descname">import_sip04</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">timestep=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_sip04"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_sip04" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_sip04</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">timestep</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_sip04"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_sip04" title="Permalink to this definition">¶</a></dt>
 <dd><p>SIP04 data import</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1275,9 +1275,9 @@ return None</p>
 <div class="section" id="module-reda.containers.TDIP">
 <span id="reda-containers-tdip-module"></span><h2>reda.containers.TDIP module<a class="headerlink" href="#module-reda.containers.TDIP" title="Permalink to this headline">¶</a></h2>
 <p>Time-domain IP (induced polarization) container</p>
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.TDIP.TDIP">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.TDIP.</code><code class="sig-name descname">TDIP</code><span class="sig-paren">(</span><em class="sig-param">data=None</em>, <em class="sig-param">electrode_positions=None</em>, <em class="sig-param">topography=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.TDIP.</code><code class="sig-name descname">TDIP</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">electrode_positions</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">topography</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.TDIP.TDIPImporters" title="reda.containers.TDIP.TDIPImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.TDIP.TDIPImporters</span></code></a></p>
 <p>.</p>
 <p class="rubric">Methods</p>
@@ -1357,15 +1357,15 @@ return None</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.TDIP.TDIP.check_dataframe">
-<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required type and columns</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.TDIP.TDIP.plot_decay_curve">
-<code class="sig-name descname">plot_decay_curve</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">index_nor=None</em>, <em class="sig-param">index_rec=None</em>, <em class="sig-param">nr_id=None</em>, <em class="sig-param">abmn=None</em>, <em class="sig-param">return_fig=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.plot_decay_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_decay_curve</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">index_nor</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">index_rec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">nr_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">abmn</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_fig</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.plot_decay_curve"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot decay curve</p>
 <p>Input scheme: We recognize three ways to specify the quadrupoles to
 plot (in descending priority):</p>
@@ -1394,9 +1394,9 @@ will not be used).</p></li>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.TDIP.TDIP.to_cr">
-<code class="sig-name descname">to_cr</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.to_cr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.to_cr" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">to_cr</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIP.to_cr"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIP.to_cr" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert container to a complex resistivity container, using the
 CPA-conversion.</p>
 <p>Kemna, 2000</p>
@@ -1415,7 +1415,7 @@ of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.TDIP.TDIPImporters">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.TDIP.</code><code class="sig-name descname">TDIPImporters</code><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
@@ -1442,9 +1442,9 @@ meant to be inherited by the TDIP data container.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.TDIP.TDIPImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><p>MPT DAS 1 TD importer</p>
 <blockquote>
 <div><dl class="simple">
@@ -1476,9 +1476,9 @@ return None</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.TDIP.TDIPImporters.import_syscal_bin">
-<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syscal import</p>
 <blockquote>
 <div><dl class="simple">
@@ -1543,9 +1543,9 @@ return None</p>
 <p>This container holds multi-frequency (spectral) imaging data, that is multipl
 SIP/EIS spectra for different four-point spreads, usually used for subsequent
 tomographic analysis.</p>
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.sEIT.sEIT">
-<em class="property">class </em><code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">sEIT</code><span class="sig-paren">(</span><em class="sig-param">dataframe=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">sEIT</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataframe</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer" title="reda.containers.BaseContainer.BaseContainer"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.BaseContainer</span></code></a>, <a class="reference internal" href="#reda.containers.sEIT.sEITImporters" title="reda.containers.sEIT.sEITImporters"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.sEIT.sEITImporters</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
@@ -1608,7 +1608,7 @@ tomographic analysis.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.fix_sign_with_K" title="reda.containers.sEIT.sEIT.fix_sign_with_K"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fix_sign_with_K</span></code></a>(self)</p></td>
 <td><p>Swap electrode denotations so that geometrical (K) factors become positive.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.get_spectrum" title="reda.containers.sEIT.sEIT.get_spectrum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spectrum</span></code></a>(self[, nr_id, abmn, plot_filename])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.get_spectrum" title="reda.containers.sEIT.sEIT.get_spectrum"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_spectrum</span></code></a>(self[, nr_id, abmn, withK, …])</p></td>
 <td><p>Return a spectrum and its reciprocal counter part, if present in the dataset.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>(self)</p></td>
@@ -1682,26 +1682,26 @@ tomographic analysis.</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.Nf">
 <em class="property">property </em><code class="sig-name descname">Nf</code><a class="headerlink" href="#reda.containers.sEIT.sEIT.Nf" title="Permalink to this definition">¶</a></dt>
 <dd><p>Shortcut for self.nr_frequencies</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.abmn">
 <em class="property">property </em><code class="sig-name descname">abmn</code><a class="headerlink" href="#reda.containers.sEIT.sEIT.abmn" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.check_dataframe">
-<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">dataframe</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.check_dataframe" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">check_dataframe</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">dataframe</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.check_dataframe"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.check_dataframe" title="Permalink to this definition">¶</a></dt>
 <dd><p>Check the given dataframe for the required columns</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.compute_K_analytical">
-<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">spacing</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">spacing</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Assuming an equal electrode spacing, compute the K-factor over a
 homogeneous half-space.</p>
 <p>For more complex grids, please refer to the module:
@@ -1716,9 +1716,9 @@ reda.utils.geometric_factors</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.export_to_crtomo_multi_frequency">
-<code class="sig-name descname">export_to_crtomo_multi_frequency</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">directory</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_multi_frequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_multi_frequency" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_to_crtomo_multi_frequency</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">norrec</span><span class="o">=</span><span class="default_value">'norrec'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_multi_frequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_multi_frequency" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export the sEIT data into data files that can be read by CRTomo.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1732,9 +1732,9 @@ reda.utils.geometric_factors</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.export_to_crtomo_one_frequency">
-<code class="sig-name descname">export_to_crtomo_one_frequency</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">volt_file</em>, <em class="sig-param">frequency</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_one_frequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_one_frequency" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_to_crtomo_one_frequency</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">volt_file</span></em>, <em class="sig-param"><span class="n">frequency</span></em>, <em class="sig-param"><span class="n">norrec</span><span class="o">=</span><span class="default_value">'norrec'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_one_frequency"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_one_frequency" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export one frequency into a CRTomo volt.dat file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1750,9 +1750,9 @@ reda.utils.geometric_factors</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager">
-<code class="sig-name descname">export_to_crtomo_seit_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_seit_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_to_crtomo_seit_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">norrec</span><span class="o">=</span><span class="default_value">'norrec'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_seit_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_seit_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a ready-initialized seit-manager object from the CRTomo
 tools. This function only works if the crtomo_tools are installed.</p>
 <p>WARNING: Not timestep aware!</p>
@@ -1768,9 +1768,9 @@ tools. This function only works if the crtomo_tools are installed.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.export_to_crtomo_td_manager">
-<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">grid</em>, <em class="sig-param">frequency</em>, <em class="sig-param">norrec='norrec'</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">export_to_crtomo_td_manager</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">grid</span></em>, <em class="sig-param"><span class="n">frequency</span></em>, <em class="sig-param"><span class="n">norrec</span><span class="o">=</span><span class="default_value">'norrec'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_crtomo_td_manager"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_crtomo_td_manager" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a ready-initialized tdman object from the CRTomo tools. Use
 the given frequency data to initialize it.</p>
 <p>WARNING: Not timestep aware!</p>
@@ -1788,9 +1788,9 @@ the given frequency data to initialize it.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.filter">
-<code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">query</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.filter" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">filter</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">query</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.filter"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.filter" title="Permalink to this definition">¶</a></dt>
 <dd><p>Use a query statement to filter data. Note that you specify the data
 to be removed!</p>
 <dl class="field-list">
@@ -1812,9 +1812,9 @@ pandas.DataFrame.query</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.filter_incomplete_spectra">
-<code class="sig-name descname">filter_incomplete_spectra</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">flimit=1000</em>, <em class="sig-param">percAccept=85</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.filter_incomplete_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.filter_incomplete_spectra" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">filter_incomplete_spectra</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">flimit</span><span class="o">=</span><span class="default_value">1000</span></em>, <em class="sig-param"><span class="n">percAccept</span><span class="o">=</span><span class="default_value">85</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.filter_incomplete_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.filter_incomplete_spectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove all data points that belong to spectra that did not retain at
 least <strong>percAccept</strong> percent of the number of data points.</p>
 <p>..warning:</p>
@@ -1824,9 +1824,9 @@ timesteps) yet!
 </div>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.fix_sign_with_K">
-<code class="sig-name descname">fix_sign_with_K</code><span class="sig-paren">(</span><em class="sig-param">self</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fix_sign_with_K</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
 <dd><p>Swap electrode denotations so that geometrical (K) factors become
 positive. Also, swap signs of all parameters affected by this process.</p>
 <p>Affected parameters, at the moment, are:</p>
@@ -1856,15 +1856,15 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.frequencies">
 <em class="property">property </em><code class="sig-name descname">frequencies</code><a class="headerlink" href="#reda.containers.sEIT.sEIT.frequencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the frequencies contained in the data set</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.get_spectrum">
-<code class="sig-name descname">get_spectrum</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">nr_id=None</em>, <em class="sig-param">abmn=None</em>, <em class="sig-param">plot_filename=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.get_spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.get_spectrum" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">get_spectrum</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">nr_id</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">abmn</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">withK</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">plot_filename</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.get_spectrum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.get_spectrum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a spectrum and its reciprocal counter part, if present in the
 dataset. Optimally, refer to the spectrum by its normal-reciprocal id.</p>
 <p>If the timestep column is present, then return dictionaries for normal
@@ -1876,8 +1876,15 @@ If multiple timesteps are present, then the parameter plot_filename
 will be used as a template, and the timesteps will be appended for each
 plot.</p>
 <dl class="field-list">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><dl>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>withK</strong><span class="classifier">bool</span></dt><dd><p>If True, and the column “k” exists, then return an apparent
+spectrum with geometric factors included</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
 <dt><strong>spectrum_nor</strong><span class="classifier"><a class="reference internal" href="reda.eis.html#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.eis.plots.sip_response</span></code></a> or dict or None</span></dt><dd><p>Normal spectrum. None if no normal spectrum is available</p>
 </dd>
 <dt><strong>spectrum_rec</strong><span class="classifier"><a class="reference internal" href="reda.eis.html#reda.eis.plots.sip_response" title="reda.eis.plots.sip_response"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.eis.plots.sip_response</span></code></a> or dict or None</span></dt><dd><p>Reciprocal spectrum. None if no reciprocal spectrum is available</p>
@@ -1889,21 +1896,21 @@ plot.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.nr_frequencies">
 <em class="property">property </em><code class="sig-name descname">nr_frequencies</code><a class="headerlink" href="#reda.containers.sEIT.sEIT.nr_frequencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of frequencies in the data set</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.nr_timesteps">
 <em class="property">property </em><code class="sig-name descname">nr_timesteps</code><a class="headerlink" href="#reda.containers.sEIT.sEIT.nr_timesteps" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the number of timesteps registered with this container</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.plot_all_spectra">
-<code class="sig-name descname">plot_all_spectra</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">outdir</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_all_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_all_spectra" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_all_spectra</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">outdir</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_all_spectra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_all_spectra" title="Permalink to this definition">¶</a></dt>
 <dd><p>This is a convenience function to plot ALL spectra currently
 stored in the container. It is useful to asses whether data filters
 do perform correctly.</p>
@@ -1921,9 +1928,9 @@ exist.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.plot_histograms">
-<code class="sig-name descname">plot_histograms</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">primary_dim=None</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_histograms" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_histograms</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">primary_dim=None</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_histograms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a histograms for all frequencies of one data column</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1945,9 +1952,9 @@ string will be appended here.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.plot_pseudosections">
-<code class="sig-name descname">plot_pseudosections</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">return_fig=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_pseudosections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_pseudosections" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_pseudosections</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">column</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">return_fig</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_pseudosections"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_pseudosections" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a multi-plot with one pseudosection for each frequency.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -1972,21 +1979,21 @@ generated Figure object</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.query">
-<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">query</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.query" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">query</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">query</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.query"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.query" title="Permalink to this definition">¶</a></dt>
 <dd><p>State what you want to keep</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.remove_frequencies">
-<code class="sig-name descname">remove_frequencies</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">fmin</em>, <em class="sig-param">fmax</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.remove_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">remove_frequencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">fmin</span></em>, <em class="sig-param"><span class="n">fmax</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.remove_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="Permalink to this definition">¶</a></dt>
 <dd><p>Remove frequencies from the dataset</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.scatter_norrec">
-<code class="sig-name descname">scatter_norrec</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">individual=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.scatter_norrec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">scatter_norrec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">individual</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.scatter_norrec"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a scatter plot for all diff pairs</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -2008,9 +2015,9 @@ generated Figure object</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.subquery">
-<code class="sig-name descname">subquery</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">subset</em>, <em class="sig-param">filter</em>, <em class="sig-param">inplace=True</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.subquery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.subquery" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">subquery</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">subset</span></em>, <em class="sig-param"><span class="n">filter</span></em>, <em class="sig-param"><span class="n">inplace</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.subquery"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.subquery" title="Permalink to this definition">¶</a></dt>
 <dd><p class="rubric">Examples</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">subquery</span><span class="p">(</span>
     <span class="s1">&#39;timestep == 2&#39;</span><span class="p">,</span>
@@ -2022,7 +2029,7 @@ generated Figure object</p>
 
 </dd></dl>
 
-<dl class="class">
+<dl class="py class">
 <dt id="reda.containers.sEIT.sEITImporters">
 <em class="property">class </em><code class="sig-prename descclassname">reda.containers.sEIT.</code><code class="sig-name descname">sEITImporters</code><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.containers.BaseContainer.ImportersBase" title="reda.containers.BaseContainer.ImportersBase"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.containers.BaseContainer.ImportersBase</span></code></a></p>
@@ -2049,9 +2056,9 @@ meant to be inherited by the data containers</p>
 </tr>
 </tbody>
 </table>
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_crtomo">
-<code class="sig-name descname">import_crtomo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">directory</em>, <em class="sig-param">frequency_file='frequencies.dat'</em>, <em class="sig-param">data_prefix='volt_'</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_crtomo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_crtomo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_crtomo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">directory</em>, <em class="sig-param">frequency_file='frequencies.dat'</em>, <em class="sig-param">data_prefix='volt_'</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_crtomo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_crtomo" title="Permalink to this definition">¶</a></dt>
 <dd><p>CRTomo importerLoad sEIT data from data directory. This function loads data previously
 exported from reda using reda.exporters.crtomo.write_files_to_directory</p>
 <dl class="field-list simple">
@@ -2081,15 +2088,15 @@ data_prefix</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_eit_fzj">
-<code class="sig-name descname">import_eit_fzj</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">configfile</em>, <em class="sig-param">correction_file=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_eit_fzj</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">configfile</em>, <em class="sig-param">correction_file=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
 <dd><p>EIT data import for FZJ Medusa systems</p>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_mpt_das1">
-<code class="sig-name descname">import_mpt_das1</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_mpt_das1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_mpt_das1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt_das1</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_mpt_das1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_mpt_das1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import MPT DAS-1 SIP data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2103,9 +2110,9 @@ data_prefix</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_sip256c">
-<code class="sig-name descname">import_sip256c</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">settings=None</em>, <em class="sig-param">reciprocal=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_sip256c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_sip256c</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">settings=None</em>, <em class="sig-param">reciprocal=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_sip256c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radic SIP256c data import</p>
 </dd></dl>
 
@@ -2125,7 +2132,7 @@ data_prefix</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.4.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
