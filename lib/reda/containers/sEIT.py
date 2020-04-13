@@ -374,8 +374,8 @@ class sEIT(BaseContainer, sEITImporters):
             _retain_only_complete_spectra, fmax=flimit, acceptN=Naccept
         ).copy()
 
-    def get_spectrum(self, nr_id=None, abmn=None, plot_filename=None):
-
+    def get_spectrum(self, nr_id=None, abmn=None, withK=False,
+                     plot_filename=None):
         """
         Return a spectrum and its reciprocal counter part, if present in the
         dataset. Optimally, refer to the spectrum by its normal-reciprocal id.
@@ -390,6 +390,12 @@ class sEIT(BaseContainer, sEITImporters):
         will be used as a template, and the timesteps will be appended for each
         plot.
 
+        Parameters
+        ----------
+        withK : bool
+            If True, and the column "k" exists, then return an apparent
+            spectrum with geometric factors included
+
         Returns
         -------
         spectrum_nor : :py:class:`reda.eis.plots.sip_response` or dict or None
@@ -399,10 +405,13 @@ class sEIT(BaseContainer, sEITImporters):
         fig : :py:class:`matplotlib.Figure.Figure`, optional
             Figure object (only if plot_filename is set)
         """
+        assert nr_id is None or isinstance(nr_id, int)
+        assert nr_id is None or abmn is None
+
+        assert not withK or (withK and 'k' in self.data.columns)
 
         # Here are some problems with |dict|{} at end of 369 and 371
 
-        assert nr_id is None or abmn is None
         # determine nr_id for given abmn tuple
         if abmn is not None:
             subdata = self.data.query(
@@ -439,9 +448,13 @@ class sEIT(BaseContainer, sEITImporters):
 
             spectrum_nor = {}
             for timestep, item in g_nor_ts:
+                if withK:
+                    k = item['k']
+                else:
+                    k = 1
                 spectrum_nor[timestep] = eis_plot.sip_response(
                     frequencies=item['frequency'].values,
-                    rmag=item['r'],
+                    rmag=item['r'] * k,
                     rpha=item['rpha'],
                 )
 
@@ -455,9 +468,13 @@ class sEIT(BaseContainer, sEITImporters):
 
             spectrum_rec = {}
             for timestep, item in g_rec_ts:
+                if withK:
+                    k = item['k']
+                else:
+                    k = 1
                 spectrum_rec[timestep] = eis_plot.sip_response(
                     frequencies=item['frequency'].values,
-                    rmag=item['r'],
+                    rmag=item['r'] * k,
                     rpha=item['rpha'],
                 )
 
