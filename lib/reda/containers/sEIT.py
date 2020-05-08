@@ -213,7 +213,16 @@ class sEIT(BaseContainer, sEITImporters):
         return result
 
     def remove_frequencies(self, fmin, fmax):
-        """Remove frequencies from the dataset
+        """Remove frequencies outside the provided range from the dataset.
+
+        fmin and max will also be excluded.
+
+        Parameters
+        ----------
+        fmin : float
+            Minimal frequency to be excluded
+        fmax : float
+            Maximal frequency to be excluded
         """
         self.data.query(
             'frequency > {0} and frequency < {1}'.format(fmin, fmax),
