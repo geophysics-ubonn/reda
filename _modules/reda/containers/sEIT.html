@@ -328,7 +328,16 @@
         <span class="k">return</span> <span class="n">result</span></div>
 
 <div class="viewcode-block" id="sEIT.remove_frequencies"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.remove_frequencies">[docs]</a>    <span class="k">def</span> <span class="nf">remove_frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fmin</span><span class="p">,</span> <span class="n">fmax</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Remove frequencies from the dataset</span>
+        <span class="sd">&quot;&quot;&quot;Remove frequencies outside the provided range from the dataset.</span>
+
+<span class="sd">        fmin and max will also be excluded.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        fmin : float</span>
+<span class="sd">            Minimal frequency to be excluded</span>
+<span class="sd">        fmax : float</span>
+<span class="sd">            Maximal frequency to be excluded</span>
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span>
             <span class="s1">&#39;frequency &gt; </span><span class="si">{0}</span><span class="s1"> and frequency &lt; </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">fmin</span><span class="p">,</span> <span class="n">fmax</span><span class="p">),</span>
@@ -871,7 +880,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

@@ -1648,7 +1648,7 @@ tomographic analysis.</p>
 <td><p>State what you want to keep</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="reda.containers.sEIT.sEIT.remove_frequencies"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_frequencies</span></code></a>(self, fmin, fmax)</p></td>
-<td><p>Remove frequencies from the dataset</p></td>
+<td><p>Remove frequencies outside the provided range from the dataset.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.sEIT.sEIT.scatter_norrec" title="reda.containers.sEIT.sEIT.scatter_norrec"><code class="xref py py-obj docutils literal notranslate"><span class="pre">scatter_norrec</span></code></a>(self[, filename, individual])</p></td>
 <td><p>Create a scatter plot for all diff pairs</p></td>
@@ -1988,7 +1988,18 @@ generated Figure object</p>
 <dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.remove_frequencies">
 <code class="sig-name descname">remove_frequencies</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">fmin</span></em>, <em class="sig-param"><span class="n">fmax</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.remove_frequencies"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.remove_frequencies" title="Permalink to this definition">¶</a></dt>
-<dd><p>Remove frequencies from the dataset</p>
+<dd><p>Remove frequencies outside the provided range from the dataset.</p>
+<p>fmin and max will also be excluded.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>fmin</strong><span class="classifier">float</span></dt><dd><p>Minimal frequency to be excluded</p>
+</dd>
+<dt><strong>fmax</strong><span class="classifier">float</span></dt><dd><p>Maximal frequency to be excluded</p>
+</dd>
+</dl>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -2132,7 +2143,7 @@ data_prefix</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
