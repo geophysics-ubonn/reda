@@ -159,6 +159,40 @@ def get_md_data(filename, **kwargs):
         raise Exception('emmt_pp version not found: {}'.format(version))
 
 
+def get_adc_data(filename, **kwargs):
+    """Import data and return the adc-related data from the MD (i.e.,
+    injection) structure
+
+    Parameters
+    ----------
+    filename : string (usually: eit_data_mnu0.mat)
+        filename of matlab file
+
+    Keyword Arguments
+    -----------------
+    multiplexer_group : int|None, optional
+        For the multiplexer system (version 2018a) the multiplexer group MUST
+        be specified to import data. This is a number between 1 and 4.
+
+    Returns
+    -------
+    data_adc_raw : pandas.DataFrame|None
+        adc-MD data (sometimes this data is not imported, then we return None
+        here)
+    """
+    if not os.path.isfile(filename):
+        raise IOError('Data file not found! {}'.format(filename))
+
+    version = _get_file_version(filename)
+    importer = mat_version_importers.get(version, None)
+    if importer is not None:
+        mat = sio.loadmat(filename, squeeze_me=True)
+        data_md_raw = importer._extract_adc_data(mat, **kwargs)
+        return data_md_raw
+    else:
+        raise Exception('emmt_pp version not found: {}'.format(version))
+
+
 @enable_result_transforms
 @functools.wraps(get_mnu0_data)
 def read_3p_data(*args, **kwargs):
