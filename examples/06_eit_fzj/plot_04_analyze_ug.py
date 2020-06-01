@@ -6,9 +6,6 @@ EIT-FZJ: Analyze DC voltages at electrodes during injections
 """
 import matplotlib.pylab as plt
 import reda.importers.eit_fzj as eit_fzj
-import IPython
-
-IPython
 
 adc_data = eit_fzj.get_adc_data('data_eit_fzj_2013_ug/eit_data_mnu0.mat')
 
