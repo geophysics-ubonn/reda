@@ -274,6 +274,40 @@
         <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;emmt_pp version not found: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">))</span></div>
 
 
+<div class="viewcode-block" id="get_adc_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.get_adc_data">[docs]</a><span class="k">def</span> <span class="nf">get_adc_data</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Import data and return the adc-related data from the MD (i.e.,</span>
+<span class="sd">    injection) structure</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    filename : string (usually: eit_data_mnu0.mat)</span>
+<span class="sd">        filename of matlab file</span>
+
+<span class="sd">    Keyword Arguments</span>
+<span class="sd">    -----------------</span>
+<span class="sd">    multiplexer_group : int|None, optional</span>
+<span class="sd">        For the multiplexer system (version 2018a) the multiplexer group MUST</span>
+<span class="sd">        be specified to import data. This is a number between 1 and 4.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data_adc_raw : pandas.DataFrame|None</span>
+<span class="sd">        adc-MD data (sometimes this data is not imported, then we return None</span>
+<span class="sd">        here)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">IOError</span><span class="p">(</span><span class="s1">&#39;Data file not found! </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">filename</span><span class="p">))</span>
+
+    <span class="n">version</span> <span class="o">=</span> <span class="n">_get_file_version</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+    <span class="n">importer</span> <span class="o">=</span> <span class="n">mat_version_importers</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">version</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">importer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">mat</span> <span class="o">=</span> <span class="n">sio</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="n">data_md_raw</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">_extract_adc_data</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">data_md_raw</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;emmt_pp version not found: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">version</span><span class="p">))</span></div>
+
+
 <div class="viewcode-block" id="read_3p_data"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.eit_fzj.read_3p_data">[docs]</a><span class="nd">@enable_result_transforms</span>
 <span class="nd">@functools</span><span class="o">.</span><span class="n">wraps</span><span class="p">(</span><span class="n">get_mnu0_data</span><span class="p">)</span>
 <span class="k">def</span> <span class="nf">read_3p_data</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -457,7 +491,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

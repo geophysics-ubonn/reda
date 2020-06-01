@@ -83,12 +83,14 @@ create some plots in a subdirectory
     *
 
       .. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_dc_001.png
-            :class: sphx-glr-multi-img
+          :alt: plot syscal dc
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/01_ERT/images/sphx_glr_plot_syscal_dc_002.png
-            :class: sphx-glr-multi-img
+          :alt: plot syscal dc
+          :class: sphx-glr-multi-img
 
 
 .. rst-class:: sphx-glr-script-out

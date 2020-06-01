@@ -30,6 +30,7 @@ Usage of the ERT container
 .. only:: html
 
  .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_dc_thumb.png
+     :alt: Importing Syscal ERT data
 
      :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py`
 
@@ -50,6 +51,7 @@ Usage of the ERT container
 .. only:: html
 
  .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_rollalong_thumb.png
+     :alt: Importing Syscal ERT data from roll-a-long scheme
 
      :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py`
 
@@ -82,6 +84,7 @@ Importing SIP04 data
 .. only:: html
 
  .. figure:: /_examples/02_SIP04/images/thumb/sphx_glr_plot_sip04_thumb.png
+     :alt: SIP-04 Import
 
      :ref:`sphx_glr__examples_02_SIP04_plot_sip04.py`
 
@@ -114,6 +117,7 @@ Importing spectral impedance data (sEIT)
 .. only:: html
 
  .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
+     :alt: Visualizing multi-dimensional sEIT data
 
      :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py`
 
@@ -134,6 +138,7 @@ Importing spectral impedance data (sEIT)
 .. only:: html
 
  .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_radic_sip256c_thumb.png
+     :alt: Importing Radic SIP256c data
 
      :ref:`sphx_glr__examples_03_sEIT_plot_radic_sip256c.py`
 
@@ -169,6 +174,7 @@ Measurement configurations (A-B M-N)-tuples can be created using the
 .. only:: html
 
  .. figure:: /_examples/04_configurations/images/thumb/sphx_glr_plot_configurations_thumb.png
+     :alt: Various ways to create measurement configurations
 
      :ref:`sphx_glr__examples_04_configurations_plot_configurations.py`
 
@@ -201,6 +207,7 @@ Importing measurements in CRTomo format
 .. only:: html
 
  .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_CR_thumb.png
+     :alt: Single-frequency CRTomo data import
 
      :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_CR.py`
 
@@ -221,6 +228,7 @@ Importing measurements in CRTomo format
 .. only:: html
 
  .. figure:: /_examples/05_crtomo/images/thumb/sphx_glr_plot_import_data_to_sEIT_thumb.png
+     :alt: Multi-frequency CRTomo data import
 
      :ref:`sphx_glr__examples_05_crtomo_plot_import_data_to_sEIT.py`
 
@@ -253,6 +261,7 @@ Operations specific to the FZJ sEIT systems
 .. only:: html
 
  .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_check_thumb.png
+     :alt: Checking FZJ-EIT data from a test board
 
      :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_check.py`
 
@@ -273,6 +282,7 @@ Operations specific to the FZJ sEIT systems
 .. only:: html
 
  .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_leakage_currents_thumb.png
+     :alt: Analyzing leakage currents
 
      :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_leakage_currents.py`
 
@@ -288,11 +298,33 @@ Operations specific to the FZJ sEIT systems
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="EIT-FZJ: Analyze DC voltages at electrodes during injections">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_04_analyze_ug_thumb.png
+     :alt: EIT-FZJ: Analyze DC voltages at electrodes during injections
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_04_analyze_ug.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_04_analyze_ug
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="It is useful to conduct additional measurements for each sEIT setup and determine the total cap...">
 
 .. only:: html
 
  .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_li_thumb.png
+     :alt: Analyzing total capacitances at each electrode during current injection
 
      :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_li.py`
 
@@ -313,6 +345,7 @@ Operations specific to the FZJ sEIT systems
 .. only:: html
 
  .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_thumb.png
+     :alt: Importing FZJ EIT40/EIT160 data
 
      :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj.py`
 
@@ -345,6 +378,7 @@ Time-domain induced polarization
 .. only:: html
 
  .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_mpt_das_thumb.png
+     :alt: Import MPT DAS-1 data
 
      :ref:`sphx_glr__examples_07_tdip_plot_mpt_das.py`
 
@@ -365,6 +399,7 @@ Time-domain induced polarization
 .. only:: html
 
  .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_syscal_ip_2_thumb.png
+     :alt: Another three data sets
 
      :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip_2.py`
 
@@ -385,6 +420,7 @@ Time-domain induced polarization
 .. only:: html
 
  .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_syscal_ip_thumb.png
+     :alt: Importing Syscal IP data
 
      :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip.py`
 

@@ -138,6 +138,7 @@ note that no file will be saved to disk if filename parameter is not provided
 
 
 .. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_001.png
+    :alt: normed on current
     :class: sphx-glr-single-img
 
 
@@ -165,6 +166,7 @@ this will only return a figure object, but will not save to file:
 
 
 .. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_002.png
+    :alt: normed on current
     :class: sphx-glr-single-img
 
 
@@ -190,6 +192,7 @@ it does not matter if you choose normal or reciprocal
 
 
 .. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_003.png
+    :alt: normed on current
     :class: sphx-glr-single-img
 
 
@@ -215,6 +218,7 @@ plot a decay curve by specifying the index
 
 
 .. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_004.png
+    :alt: normed on current
     :class: sphx-glr-single-img
 
 
@@ -242,6 +246,7 @@ a  b  m  n
 
 
 .. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_005.png
+    :alt: normed on current
     :class: sphx-glr-single-img
 
 
@@ -266,6 +271,7 @@ reciprocal is also ok
 
 
 .. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_006.png
+    :alt: normed on current
     :class: sphx-glr-single-img
 
 

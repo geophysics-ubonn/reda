@@ -854,12 +854,14 @@ Plot pseudosection for 10 Hz
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_001.png
-            :class: sphx-glr-multi-img
+          :alt: plot radic sip256c
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_002.png
-            :class: sphx-glr-multi-img
+          :alt: plot radic sip256c
+          :class: sphx-glr-multi-img
 
 
 
@@ -894,6 +896,7 @@ Plot pseudosections of all frequencies
 
 
 .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_003.png
+    :alt: f: 0.039060000000000004 Hz, f: 0.07812999999999999 Hz, f: 0.15625 Hz, f: 0.3125 Hz, f: 0.625 Hz, f: 1.25 Hz, f: 2.5 Hz, f: 5.0 Hz, f: 10.0 Hz, f: 20.0 Hz, f: 40.0 Hz, f: 80.0 Hz, f: 125.0 Hz, f: 266.66666000000004 Hz
     :class: sphx-glr-single-img
 
 
@@ -932,6 +935,7 @@ improved in the future
 
 
 .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_004.png
+    :alt: plot radic sip256c
     :class: sphx-glr-single-img
 
 
@@ -941,7 +945,7 @@ improved in the future
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  34.585 seconds)
+   **Total running time of the script:** ( 0 minutes  35.023 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

@@ -140,7 +140,7 @@
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.check_dataframe" title="reda.containers.BaseContainer.BaseContainer.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="reda.containers.BaseContainer.BaseContainer.compute_K_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code></a>(self, spacing, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="reda.containers.BaseContainer.BaseContainer.compute_K_analytical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code></a>(self, spacing, **kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.BaseContainer.BaseContainer.delete_measurements" title="reda.containers.BaseContainer.BaseContainer.delete_measurements"><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code></a>(self, row_or_rows)</p></td>
@@ -203,7 +203,7 @@
 
 <dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.compute_K_analytical">
-<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">spacing</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">spacing</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Compute geometrical factors over the homogeneous half-space with a
 constant electrode spacing</p>
 </dd></dl>
@@ -263,13 +263,13 @@ filtered data.</p>
 
 <dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.histogram">
-<code class="sig-name descname">histogram</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.histogram" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">histogram</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">column</span><span class="o">=</span><span class="default_value">'r'</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">log10</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.histogram"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.histogram" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a histogram of one data column</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.pseudosection">
-<code class="sig-name descname">pseudosection</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">pseudosection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">column</span><span class="o">=</span><span class="default_value">'r'</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">log10</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a pseudosection of the given column. Note that this function
 only works with dipole-dipole data at the moment.</p>
 <dl class="field-list">
@@ -301,7 +301,7 @@ matplotlib axes object</p>
 
 <dl class="py method">
 <dt id="reda.containers.BaseContainer.BaseContainer.pseudosection_type3">
-<code class="sig-name descname">pseudosection_type3</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">log10=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection_type3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection_type3" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">pseudosection_type3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">column</span><span class="o">=</span><span class="default_value">'r'</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">log10</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/BaseContainer.html#BaseContainer.pseudosection_type3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.BaseContainer.BaseContainer.pseudosection_type3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a pseudosection of the given column. Note that this function
 only works with dipole-dipole data at the moment.</p>
 <dl class="field-list">
@@ -474,7 +474,7 @@ meant to be inherited by the ERT data container.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CR.check_dataframe" title="reda.containers.CR.CR.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, **kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
@@ -501,16 +501,16 @@ meant to be inherited by the ERT data container.</p>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code>(self, filename)</p></td>
 <td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 FD importer</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
@@ -580,23 +580,23 @@ meant to be inherited by the ERT data container.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_bert" title="reda.containers.CR.CRImporters.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_bert" title="reda.containers.CR.CRImporters.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_crtomo_data" title="reda.containers.CR.CRImporters.import_crtomo_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_crtomo_data</span></code></a>(self, filename)</p></td>
 <td><p>Import a CRTomo-style measurement file (usually: volt.dat).</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_mpt" title="reda.containers.CR.CRImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_mpt" title="reda.containers.CR.CRImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 FD importer</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_pygimli" title="reda.containers.CR.CRImporters.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.CR.CRImporters.import_pygimli" title="reda.containers.CR.CRImporters.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt id="reda.containers.CR.CRImporters.import_bert">
-<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_bert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -641,7 +641,7 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 
 <dl class="py method">
 <dt id="reda.containers.CR.CRImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>MPT DAS 1 FD importer</p>
 <dl class="simple">
@@ -675,7 +675,7 @@ return None</p>
 
 <dl class="py method">
 <dt id="reda.containers.CR.CRImporters.import_pygimli">
-<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/CR.html#CRImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.CR.CRImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -724,7 +724,7 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.check_dataframe" title="reda.containers.ERT.ERT.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, **kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.compute_reciprocal_errors" title="reda.containers.ERT.ERT.compute_reciprocal_errors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_reciprocal_errors</span></code></a>(self[, key])</p></td>
@@ -751,19 +751,19 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 importer</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(self, filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
 <tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>(self[, column, filename, log10])</p></td>
@@ -856,26 +856,26 @@ meant to be inherited by the ERT data container.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_bert" title="reda.containers.ERT.ERTImporters.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_bert" title="reda.containers.ERT.ERTImporters.import_bert"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_mpt" title="reda.containers.ERT.ERTImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_mpt" title="reda.containers.ERT.ERTImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 importer</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="reda.containers.ERT.ERTImporters.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="reda.containers.ERT.ERTImporters.import_pygimli"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="reda.containers.ERT.ERTImporters.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="reda.containers.ERT.ERTImporters.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="reda.containers.ERT.ERTImporters.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="reda.containers.ERT.ERTImporters.import_syscal_txt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_bert">
-<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_bert" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_bert</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_bert"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -906,7 +906,7 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 
 <dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><p>MPT DAS 1 importer</p>
 <blockquote>
 <div><dl>
@@ -940,7 +940,7 @@ return None</p>
 
 <dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_pygimli">
-<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_pygimli</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_pygimli"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_pygimli" title="Permalink to this definition">¶</a></dt>
 <dd><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -971,7 +971,7 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 
 <dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_syscal_bin">
-<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syscal import</p>
 <blockquote>
 <div><dl class="simple">
@@ -1029,7 +1029,7 @@ return None</p>
 
 <dl class="py method">
 <dt id="reda.containers.ERT.ERTImporters.import_syscal_txt">
-<code class="sig-name descname">import_syscal_txt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_syscal_txt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERTImporters.import_syscal_txt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERTImporters.import_syscal_txt" title="Permalink to this definition">¶</a></dt>
 <dd><blockquote>
 <div><p>Syscal import</p>
 <dl class="simple">
@@ -1098,7 +1098,7 @@ return None</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.SIP.SIP.check_dataframe" title="reda.containers.SIP.SIP.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, **kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
@@ -1122,7 +1122,7 @@ return None</p>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 FD importer</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code>(self, filename[, timestep])</p></td>
@@ -1204,7 +1204,7 @@ meant to be inherited by the data containers</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.SIP.SIPImporters.import_mpt" title="reda.containers.SIP.SIPImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.SIP.SIPImporters.import_mpt" title="reda.containers.SIP.SIPImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 FD importer</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.SIP.SIPImporters.import_sip04" title="reda.containers.SIP.SIPImporters.import_sip04"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_sip04</span></code></a>(self, filename[, timestep])</p></td>
@@ -1214,7 +1214,7 @@ meant to be inherited by the data containers</p>
 </table>
 <dl class="py method">
 <dt id="reda.containers.SIP.SIPImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/SIP.html#SIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.SIP.SIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><p>MPT DAS 1 FD importer</p>
 <blockquote>
 <div><dl class="simple">
@@ -1290,7 +1290,7 @@ return None</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.check_dataframe" title="reda.containers.TDIP.TDIP.check_dataframe"><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_dataframe</span></code></a>(self, dataframe)</p></td>
 <td><p>Check the given dataframe for the required type and columns</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">compute_K_analytical</span></code>(self, spacing, **kwargs)</p></td>
 <td><p>Compute geometrical factors over the homogeneous half-space with a constant electrode spacing</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">delete_measurements</span></code>(self, row_or_rows)</p></td>
@@ -1314,10 +1314,10 @@ return None</p>
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>(self[, column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 TD importer</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(self, filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIP.plot_decay_curve" title="reda.containers.TDIP.TDIP.plot_decay_curve"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_decay_curve</span></code></a>(self[, filename, …])</p></td>
@@ -1434,17 +1434,17 @@ meant to be inherited by the TDIP data container.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="reda.containers.TDIP.TDIPImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="reda.containers.TDIP.TDIPImporters.import_mpt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 TD importer</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="reda.containers.TDIP.TDIPImporters.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, \*\*kwargs)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="reda.containers.TDIP.TDIPImporters.import_syscal_bin"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code></a>(self, filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt id="reda.containers.TDIP.TDIPImporters.import_mpt">
-<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_mpt"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_mpt" title="Permalink to this definition">¶</a></dt>
 <dd><p>MPT DAS 1 TD importer</p>
 <blockquote>
 <div><dl class="simple">
@@ -1478,7 +1478,7 @@ return None</p>
 
 <dl class="py method">
 <dt id="reda.containers.TDIP.TDIPImporters.import_syscal_bin">
-<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_syscal_bin</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/TDIP.html#TDIPImporters.import_syscal_bin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.TDIP.TDIPImporters.import_syscal_bin" title="Permalink to this definition">¶</a></dt>
 <dd><p>Syscal import</p>
 <blockquote>
 <div><dl class="simple">
@@ -1930,7 +1930,7 @@ exist.</p>
 
 <dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.plot_histograms">
-<code class="sig-name descname">plot_histograms</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">column='r'</em>, <em class="sig-param">primary_dim=None</em>, <em class="sig-param">filename=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_histograms" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">plot_histograms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">column</span><span class="o">=</span><span class="default_value">'r'</span></em>, <em class="sig-param"><span class="n">primary_dim</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">filename</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.plot_histograms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot a histograms for all frequencies of one data column</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2069,7 +2069,7 @@ meant to be inherited by the data containers</p>
 </table>
 <dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_crtomo">
-<code class="sig-name descname">import_crtomo</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">directory</em>, <em class="sig-param">frequency_file='frequencies.dat'</em>, <em class="sig-param">data_prefix='volt_'</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_crtomo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_crtomo" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_crtomo</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">directory</span></em>, <em class="sig-param"><span class="n">frequency_file</span><span class="o">=</span><span class="default_value">'frequencies.dat'</span></em>, <em class="sig-param"><span class="n">data_prefix</span><span class="o">=</span><span class="default_value">'volt_'</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_crtomo"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_crtomo" title="Permalink to this definition">¶</a></dt>
 <dd><p>CRTomo importerLoad sEIT data from data directory. This function loads data previously
 exported from reda using reda.exporters.crtomo.write_files_to_directory</p>
 <dl class="field-list simple">
@@ -2101,13 +2101,13 @@ data_prefix</p>
 
 <dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_eit_fzj">
-<code class="sig-name descname">import_eit_fzj</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">configfile</em>, <em class="sig-param">correction_file=None</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_eit_fzj</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">configfile</span></em>, <em class="sig-param"><span class="n">correction_file</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">timestep</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_eit_fzj"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_eit_fzj" title="Permalink to this definition">¶</a></dt>
 <dd><p>EIT data import for FZJ Medusa systems</p>
 </dd></dl>
 
 <dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_mpt_das1">
-<code class="sig-name descname">import_mpt_das1</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">timestep=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_mpt_das1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_mpt_das1" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_mpt_das1</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">timestep</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_mpt_das1"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_mpt_das1" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import MPT DAS-1 SIP data</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -2123,7 +2123,7 @@ data_prefix</p>
 
 <dl class="py method">
 <dt id="reda.containers.sEIT.sEITImporters.import_sip256c">
-<code class="sig-name descname">import_sip256c</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">filename</em>, <em class="sig-param">settings=None</em>, <em class="sig-param">reciprocal=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_sip256c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">import_sip256c</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">filename</span></em>, <em class="sig-param"><span class="n">settings</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reciprocal</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEITImporters.import_sip256c"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEITImporters.import_sip256c" title="Permalink to this definition">¶</a></dt>
 <dd><p>Radic SIP256c data import</p>
 </dd></dl>
 
@@ -2143,7 +2143,7 @@ data_prefix</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -192,7 +192,7 @@ a,b,m,n,correction_factor</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>corr_data</strong><span class="classifier">Nx5 <a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction files as imported from the file. Columns:
+<dt><strong>corr_data</strong><span class="classifier">Nx5 <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction files as imported from the file. Columns:
 a,b,m,n,correction_factor</p>
 </dd>
 </dl>
@@ -202,7 +202,7 @@ a,b,m,n,correction_factor</p>
 
 <dl class="py function">
 <dt id="reda.utils.eit_fzj_utils.check_resistor_board_measurements">
-<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">check_resistor_board_measurements</code><span class="sig-paren">(</span><em class="sig-param">data_file</em>, <em class="sig-param">reference_data_file=None</em>, <em class="sig-param">create_plot=True</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#check_resistor_board_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">check_resistor_board_measurements</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data_file</span></em>, <em class="sig-param"><span class="n">reference_data_file</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">create_plot</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#check_resistor_board_measurements"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.check_resistor_board_measurements" title="Permalink to this definition">¶</a></dt>
 <dd><p>To check basic system function a test board was built with multiple
 resistors attached to for connectors each. Measurements can thus be
 validated against known electrical (ohmic) resistances.</p>
@@ -358,7 +358,7 @@ filter functions.  All remaining configs are stored under the keywords
 resistance measurements can be switched if the geometrical factor is negative.</p>
 <dl class="py function">
 <dt id="reda.utils.fix_sign_with_K.fix_sign_with_K">
-<code class="sig-prename descclassname">reda.utils.fix_sign_with_K.</code><code class="sig-name descname">fix_sign_with_K</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/fix_sign_with_K.html#fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.fix_sign_with_K.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.utils.fix_sign_with_K.</code><code class="sig-name descname">fix_sign_with_K</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataframe</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/fix_sign_with_K.html#fix_sign_with_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.fix_sign_with_K.fix_sign_with_K" title="Permalink to this definition">¶</a></dt>
 <dd><p>Swap electrode denotations so that geometrical (K) factors become
 positive. Also, swap signs of all parameters affected by this process.</p>
 <p>Affected parameters, at the moment, are:</p>
@@ -434,7 +434,7 @@ positive. Also, swap signs of all parameters affected by this process.</p>
 rcParams variable.</p>
 <dl class="py function">
 <dt id="reda.utils.geometric_factors.apply_K">
-<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">apply_K</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">k</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#apply_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.apply_K" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">apply_K</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">k</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#apply_K"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.apply_K" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply the geometric factors to the dataset and compute (apparent)
 resistivities/conductivities</p>
 <dl class="field-list simple">
@@ -460,7 +460,7 @@ applied</p>
 
 <dl class="py function">
 <dt id="reda.utils.geometric_factors.compute_K_analytical">
-<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param">dataframe</em>, <em class="sig-param">spacing</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.utils.geometric_factors.</code><code class="sig-name descname">compute_K_analytical</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataframe</span></em>, <em class="sig-param"><span class="n">spacing</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/geometric_factors.html#compute_K_analytical"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.geometric_factors.compute_K_analytical" title="Permalink to this definition">¶</a></dt>
 <dd><p>Given an electrode spacing, compute geometrical factors using the
 equation for the homogeneous half-space (Neumann-equation)</p>
 <p>If a dataframe is given, use the column (a, b, m, n). Otherwise, expect an
@@ -503,7 +503,7 @@ down below for more information in the required content.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>K</strong><span class="classifier"><a class="reference external" href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.17)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>K factors (are also directly written to the dataframe)</p>
+<dt><strong>K</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.18)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>K factors (are also directly written to the dataframe)</p>
 </dd>
 </dl>
 </dd>
@@ -782,7 +782,7 @@ used.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

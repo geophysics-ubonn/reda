@@ -69,6 +69,7 @@ imports
 
 
 .. image:: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_check_001.png
+    :alt: Resistor-check for FZJ-EIT systems PASSED
     :class: sphx-glr-single-img
 
 

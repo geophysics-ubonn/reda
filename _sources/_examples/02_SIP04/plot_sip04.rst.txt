@@ -125,6 +125,7 @@ plot the spectrum
 
 
 .. image:: /_examples/02_SIP04/images/sphx_glr_plot_sip04_001.png
+    :alt: plot sip04
     :class: sphx-glr-single-img
 
 

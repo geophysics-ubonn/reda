@@ -127,7 +127,7 @@
 <p>Histogram functions for raw data.</p>
 <dl class="py function">
 <dt id="reda.plotters.histograms.plot_histograms">
-<code class="sig-prename descclassname">reda.plotters.histograms.</code><code class="sig-name descname">plot_histograms</code><span class="sig-paren">(</span><em class="sig-param">ertobj</em>, <em class="sig-param">keys</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/histograms.html#plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.histograms.plot_histograms" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.histograms.</code><code class="sig-name descname">plot_histograms</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">ertobj</span></em>, <em class="sig-param"><span class="n">keys</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/histograms.html#plot_histograms"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.histograms.plot_histograms" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generate histograms for one or more keys in the given container.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -166,7 +166,7 @@ heuristic.</p>
 
 <dl class="py function">
 <dt id="reda.plotters.histograms.plot_histograms_extra_dims">
-<code class="sig-prename descclassname">reda.plotters.histograms.</code><code class="sig-name descname">plot_histograms_extra_dims</code><span class="sig-paren">(</span><em class="sig-param">dataobj</em>, <em class="sig-param">keys</em>, <em class="sig-param">primary_dim=None</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/histograms.html#plot_histograms_extra_dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.histograms.plot_histograms_extra_dims" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.histograms.</code><code class="sig-name descname">plot_histograms_extra_dims</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataobj</span></em>, <em class="sig-param"><span class="n">keys</span></em>, <em class="sig-param"><span class="n">primary_dim</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/histograms.html#plot_histograms_extra_dims"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.histograms.plot_histograms_extra_dims" title="Permalink to this definition">¶</a></dt>
 <dd><p>Produce histograms grouped by one extra dimensions. Produce additional
 figures for all extra dimensions.</p>
 <p>The dimension to spread out along subplots is called the primary extra
@@ -241,7 +241,7 @@ to the secondary dimension grouping keys</p>
 <p>2D plots of raw data. This includes pseudosections.</p>
 <dl class="py function">
 <dt id="reda.plotters.plots2d.matplot">
-<code class="sig-prename descclassname">reda.plotters.plots2d.</code><code class="sig-name descname">matplot</code><span class="sig-paren">(</span><em class="sig-param">x</em>, <em class="sig-param">y</em>, <em class="sig-param">z</em>, <em class="sig-param">ax=None</em>, <em class="sig-param">colorbar=True</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/plots2d.html#matplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.plots2d.matplot" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.plots2d.</code><code class="sig-name descname">matplot</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">z</span></em>, <em class="sig-param"><span class="n">ax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">colorbar</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/plots2d.html#matplot"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.plots2d.matplot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot x, y, z as expected with correct axis labels.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
@@ -270,7 +270,7 @@ to the secondary dimension grouping keys</p>
 
 <dl class="py function">
 <dt id="reda.plotters.plots2d.plot_pseudodepths">
-<code class="sig-prename descclassname">reda.plotters.plots2d.</code><code class="sig-name descname">plot_pseudodepths</code><span class="sig-paren">(</span><em class="sig-param">configs</em>, <em class="sig-param">nr_electrodes</em>, <em class="sig-param">spacing=1</em>, <em class="sig-param">grid=None</em>, <em class="sig-param">ctypes=None</em>, <em class="sig-param">dd_merge=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/plots2d.html#plot_pseudodepths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.plots2d.plot_pseudodepths" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.plots2d.</code><code class="sig-name descname">plot_pseudodepths</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">configs</span></em>, <em class="sig-param"><span class="n">nr_electrodes</span></em>, <em class="sig-param"><span class="n">spacing</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">grid</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">ctypes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dd_merge</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/plots2d.html#plot_pseudodepths"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.plots2d.plot_pseudodepths" title="Permalink to this definition">¶</a></dt>
 <dd><p>Plot pseudodepths for the measurements. If grid is given, then the
 actual electrode positions are used, and the parameter ‘spacing’ is
 ignored’</p>
@@ -352,7 +352,7 @@ Otherwise, return a list of figure instances.</p>
 
 <dl class="py function">
 <dt id="reda.plotters.plots2d.plot_pseudosection">
-<code class="sig-prename descclassname">reda.plotters.plots2d.</code><code class="sig-name descname">plot_pseudosection</code><span class="sig-paren">(</span><em class="sig-param">df</em>, <em class="sig-param">plot_key</em>, <em class="sig-param">spacing=1</em>, <em class="sig-param">ctypes=None</em>, <em class="sig-param">dd_merge=False</em>, <em class="sig-param">cb=False</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/plots2d.html#plot_pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.plots2d.plot_pseudosection" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.plots2d.</code><code class="sig-name descname">plot_pseudosection</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df</span></em>, <em class="sig-param"><span class="n">plot_key</span></em>, <em class="sig-param"><span class="n">spacing</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">ctypes</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">dd_merge</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">cb</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/plots2d.html#plot_pseudosection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.plots2d.plot_pseudosection" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a pseudosection plot for a given measurement</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -385,7 +385,7 @@ etc)</p>
 <span id="reda-plotters-pseudoplots-module"></span><h2>reda.plotters.pseudoplots module<a class="headerlink" href="#module-reda.plotters.pseudoplots" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
 <dt id="reda.plotters.pseudoplots.plot_ps_extra">
-<code class="sig-prename descclassname">reda.plotters.pseudoplots.</code><code class="sig-name descname">plot_ps_extra</code><span class="sig-paren">(</span><em class="sig-param">dataobj</em>, <em class="sig-param">key</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/pseudoplots.html#plot_ps_extra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.pseudoplots.plot_ps_extra" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.pseudoplots.</code><code class="sig-name descname">plot_ps_extra</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataobj</span></em>, <em class="sig-param"><span class="n">key</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/pseudoplots.html#plot_ps_extra"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.pseudoplots.plot_ps_extra" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create grouped pseudoplots for one or more time steps</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -411,7 +411,7 @@ etc)</p>
 
 <dl class="py function">
 <dt id="reda.plotters.pseudoplots.plot_pseudosection_type2">
-<code class="sig-prename descclassname">reda.plotters.pseudoplots.</code><code class="sig-name descname">plot_pseudosection_type2</code><span class="sig-paren">(</span><em class="sig-param">dataobj</em>, <em class="sig-param">column</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/pseudoplots.html#plot_pseudosection_type2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.pseudoplots.plot_pseudosection_type2" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.pseudoplots.</code><code class="sig-name descname">plot_pseudosection_type2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataobj</span></em>, <em class="sig-param"><span class="n">column</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/pseudoplots.html#plot_pseudosection_type2"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.pseudoplots.plot_pseudosection_type2" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a pseudosection plot of type 2.</p>
 <p>For a given measurement data set, create plots that graphically show
 the data in a 2D color plot. Hereby, x and y coordinates in the plot
@@ -558,7 +558,7 @@ colored “red”</p>
 
 <dl class="py function">
 <dt id="reda.plotters.pseudoplots.plot_pseudosection_type3">
-<code class="sig-prename descclassname">reda.plotters.pseudoplots.</code><code class="sig-name descname">plot_pseudosection_type3</code><span class="sig-paren">(</span><em class="sig-param">dataobj</em>, <em class="sig-param">column</em>, <em class="sig-param">\*\*kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/pseudoplots.html#plot_pseudosection_type3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.pseudoplots.plot_pseudosection_type3" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.plotters.pseudoplots.</code><code class="sig-name descname">plot_pseudosection_type3</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataobj</span></em>, <em class="sig-param"><span class="n">column</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/plotters/pseudoplots.html#plot_pseudosection_type3"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.plotters.pseudoplots.plot_pseudosection_type3" title="Permalink to this definition">¶</a></dt>
 <dd><p>Create a pseudosection plot of type 3.</p>
 <p>For a given measurement data set, create plots that graphically show
 the data in a 2D pseudoplot. Hereby, x and y coordinates (pseudodistance
@@ -735,7 +735,7 @@ required columns.</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.3</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

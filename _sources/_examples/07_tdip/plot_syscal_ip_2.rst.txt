@@ -105,6 +105,7 @@ this will only return a figure object, but will not save to file:
 
 
 .. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_2_001.png
+    :alt: normed on current
     :class: sphx-glr-single-img
 
 

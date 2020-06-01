@@ -154,22 +154,26 @@ Plot a single spectrum
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_001.png
-            :class: sphx-glr-multi-img
+          :alt: a: 1 b: 2 m: 4: n: 3
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_002.png
-            :class: sphx-glr-multi-img
+          :alt: a: 1 b: 2 m: 4: n: 3
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_003.png
-            :class: sphx-glr-multi-img
+          :alt: a: 1 b: 2 m: 4: n: 3
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_004.png
-            :class: sphx-glr-multi-img
+          :alt: a: 1 b: 2 m: 4: n: 3
+          :class: sphx-glr-multi-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -261,52 +265,62 @@ just used to close the figures to save memory
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_005.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_006.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_007.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_008.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_009.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_010.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_011.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_012.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_013.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
     *
 
       .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_014.png
-            :class: sphx-glr-multi-img
+          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+          :class: sphx-glr-multi-img
 
 
 
@@ -315,7 +329,7 @@ just used to close the figures to save memory
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  28.872 seconds)
+   **Total running time of the script:** ( 0 minutes  28.839 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:

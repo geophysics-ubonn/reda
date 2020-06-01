@@ -5,10 +5,10 @@
 
 Computation times
 =================
-**00:04.142** total execution time for **_examples_01_ERT** files:
+**00:04.255** total execution time for **_examples_01_ERT** files:
 
 +------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py` (``plot_syscal_rollalong.py``) | 00:02.519 | 0.0 MB |
+| :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py` (``plot_syscal_rollalong.py``) | 00:02.581 | 0.0 MB |
 +------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py` (``plot_syscal_dc.py``)               | 00:01.623 | 0.0 MB |
+| :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py` (``plot_syscal_dc.py``)               | 00:01.673 | 0.0 MB |
 +------------------------------------------------------------------------------------------+-----------+--------+
