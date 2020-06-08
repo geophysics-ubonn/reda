@@ -298,27 +298,6 @@ Operations specific to the FZJ sEIT systems
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="EIT-FZJ: Analyze DC voltages at electrodes during injections">
-
-.. only:: html
-
- .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_04_analyze_ug_thumb.png
-     :alt: EIT-FZJ: Analyze DC voltages at electrodes during injections
-
-     :ref:`sphx_glr__examples_06_eit_fzj_plot_04_analyze_ug.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/06_eit_fzj/plot_04_analyze_ug
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="It is useful to conduct additional measurements for each sEIT setup and determine the total cap...">
 
 .. only:: html
@@ -337,6 +316,27 @@ Operations specific to the FZJ sEIT systems
    :hidden:
 
    /_examples/06_eit_fzj/plot_eit_fzj_li
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="EIT-FZJ: Analyze DC voltages at electrodes during injections">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_04_analyze_ug_thumb.png
+     :alt: EIT-FZJ: Analyze DC voltages at electrodes during injections
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_04_analyze_ug.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_04_analyze_ug
 
 .. raw:: html
 
