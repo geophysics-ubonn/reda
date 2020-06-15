@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>reda.containers.sEIT &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
@@ -15,7 +16,7 @@
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
     <script src="../../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="../../../about.html" />
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
@@ -241,20 +242,22 @@
 
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
-        <span class="c1"># normal data (or full data, if reciprocals are not sorted</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">dataframe</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;a&#39;</span><span class="p">,</span>
             <span class="s1">&#39;b&#39;</span><span class="p">,</span>
             <span class="s1">&#39;m&#39;</span><span class="p">,</span>
             <span class="s1">&#39;n&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;r&#39;</span>
+            <span class="s1">&#39;r&#39;</span><span class="p">,</span>
             <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
-            <span class="s1">&#39;rpha&#39;</span>
-            <span class="s1">&#39;Zt&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rpha&#39;</span><span class="p">,</span>
+            <span class="c1"># &#39;Zt&#39;,</span>
         <span class="p">]</span>
+        <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
+        <span class="c1"># normal data (or full data, if reciprocals are not sorted</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="k">if</span> <span class="n">dataframe</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">dataframe</span><span class="p">)</span>
 
 <div class="viewcode-block" id="sEIT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required columns</span>
@@ -880,7 +883,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

@@ -4,6 +4,7 @@
 <html>
   <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checking FZJ-EIT data from a test board &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
@@ -15,7 +16,7 @@
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
     <script src="../../_static/language_data.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -186,15 +187,17 @@ constructing four-point measurements
 generating ids
 assigning ids
 Summary:
-               a          b          m          n
-count  232.00000  232.00000  232.00000  232.00000
-mean     7.50000    9.50000    7.50000    9.50000
-std      4.50973    4.50973    4.50973    4.50973
-min      1.00000    3.00000    1.00000    3.00000
-25%      4.25000    6.25000    4.25000    6.25000
-50%      7.50000    9.50000    7.50000    9.50000
-75%     10.75000   12.75000   10.75000   12.75000
-max     14.00000   16.00000   14.00000   16.00000
+               a          b          m  ...            r     frequency        rpha
+count  232.00000  232.00000  232.00000  ...   232.000000    232.000000  232.000000
+mean     7.50000    9.50000    7.50000  ...  1317.964245   4999.444504  -10.974077
+std      4.50973    4.50973    4.50973  ...   252.307820  10539.110294   23.327723
+min      1.00000    3.00000    1.00000  ...   973.780054      0.100000 -118.841378
+25%      4.25000    6.25000    4.25000  ...  1126.688413     14.705882   -8.896945
+50%      7.50000    9.50000    7.50000  ...  1324.014577    200.000000   -0.544584
+75%     10.75000   12.75000   10.75000  ...  1502.235327   3300.000000   -0.055741
+max     14.00000   16.00000   14.00000  ...  1647.043890  45000.000000    2.065788
+
+[8 rows x 7 columns]
 0 [  1   4   2   3 980  10  20]
 1 [  2   3   1   4 980  10  20]
 2 [   5    8    6    7 1200   10   20]
@@ -239,7 +242,7 @@ max     14.00000   16.00000   14.00000   16.00000
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.0.4</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
