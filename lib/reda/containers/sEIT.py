@@ -126,20 +126,20 @@ class sEIT(BaseContainer, sEITImporters):
 
     def __init__(self, dataframe=None):
         self.setup_logger()
-        if dataframe is not None:
-            self.check_dataframe(dataframe)
-        # normal data (or full data, if reciprocals are not sorted
-        self.data = dataframe
         self.required_columns = [
             'a',
             'b',
             'm',
             'n',
-            'r'
+            'r',
             'frequency',
-            'rpha'
-            'Zt',
+            'rpha',
+            # 'Zt',
         ]
+        if dataframe is not None:
+            self.check_dataframe(dataframe)
+        # normal data (or full data, if reciprocals are not sorted
+        self.data = dataframe
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
