@@ -139,7 +139,9 @@ class sEIT(BaseContainer, sEITImporters):
         if dataframe is not None:
             self.check_dataframe(dataframe)
         # normal data (or full data, if reciprocals are not sorted
-        self.data = dataframe
+        self.data = None
+        if dataframe is not None:
+            self._add_to_container(dataframe)
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required columns
