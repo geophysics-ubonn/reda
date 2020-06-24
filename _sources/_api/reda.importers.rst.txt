@@ -74,6 +74,14 @@ reda.importers.eit\_version\_2018a module
    :undoc-members:
    :show-inheritance:
 
+reda.importers.eit\_version\_20200609 module
+--------------------------------------------
+
+.. automodule:: reda.importers.eit_version_20200609
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 reda.importers.geotom module
 ----------------------------
 
