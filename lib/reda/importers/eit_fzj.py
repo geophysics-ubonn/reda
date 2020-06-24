@@ -14,6 +14,7 @@ import reda.importers.eit_version_2010 as eit_version_2010
 import reda.importers.eit_version_2013 as eit_version_2013
 import reda.importers.eit_version_2017 as eit_version_2017
 import reda.importers.eit_version_2018a as eit_version_2018a
+import reda.importers.eit_version_20200609 as eit_version_20200609
 
 from reda.importers.utils.decorators import enable_result_transforms
 
@@ -28,6 +29,7 @@ mat_version_importers = {
     'FZJ-EZ-2017': eit_version_2017,
     'FZJ-EZ-09.11.2010': eit_version_2010,
     'FZJ-EZ-14.02.2013': eit_version_2013,
+    'EZ-2020-06-09': eit_version_20200609,
 }
 
 
@@ -248,7 +250,7 @@ def compute_quadrupoles(df_emd, config_file):
         index += 1
 
         # keep these columns as they are (no subtracting)
-        keep_cols = [
+        keep_cols_all = [
             'datetime',
             'frequency',
             'a', 'b',
@@ -259,6 +261,8 @@ def compute_quadrupoles(df_emd, config_file):
             'Iab',
             'Ileakage',
         ]
+        # only keep those are actually there
+        keep_cols = [x for x in keep_cols_all if x in query_M.columns]
 
         df4 = pd.DataFrame()
         diff_cols = ['Zt', ]
@@ -274,7 +278,8 @@ def compute_quadrupoles(df_emd, config_file):
         dfn = pd.concat(quadpole_list)
         Rsign = np.sign(np.real(dfn['Zt']))
         dfn['r'] = Rsign * np.abs(dfn['Zt'])
-        dfn['Vmn'] = dfn['r'] * dfn['Iab']
+        if 'Iab' in dfn.columns:
+            dfn['Vmn'] = dfn['r'] * dfn['Iab']
         dfn['rpha'] = np.arctan2(
             np.imag(dfn['Zt'].values),
             np.real(dfn['Zt'].values)
@@ -282,7 +287,7 @@ def compute_quadrupoles(df_emd, config_file):
     else:
         dfn = pd.DataFrame()
 
-    return dfn
+    return dfn.sort_values(['frequency', 'a', 'b', 'm', 'n'])
 
 
 def apply_correction_factors(df, correction_data):
