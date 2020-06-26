@@ -44,7 +44,7 @@ conda install --file requirements.txt
 pip install .
 
 # alternatively: (can lead to versioning problems if multiple (development)
-versions are installed.
+# versions are installed.
 python setup.py install
 ```
 ### Documentation
