@@ -8,7 +8,7 @@ from setuptools import setup, find_packages
 # python.exe setup.py bdist --format msi
 # to create a windows installer
 
-version_long = '0.1.5.dev'
+version_long = '0.1.5'
 
 # package data
 os.chdir('lib/reda/testing')
