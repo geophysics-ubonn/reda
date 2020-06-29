@@ -520,13 +520,22 @@ class sEIT(BaseContainer, sEITImporters):
                     ts_suffix = ''
                 filename = plot_filename[:-4] + ts_suffix + ending
 
-                fig = pair[0].plot(
+                if pair[0] is None and pair[1] is not None:
+                    obj = pair[1]
+                    title = 'a: {} b: {} m: {}: n: {}'.format(
+                        *subdata_rec[['a', 'b', 'm', 'n']].values[0, :]
+                    )
+                else:
+                    obj = pair[0]
+                    title = 'a: {} b: {} m: {}: n: {}'.format(
+                        *subdata_nor[['a', 'b', 'm', 'n']].values[0, :]
+                    )
+
+                fig = obj.plot(
                     filename,
                     reciprocal=pair[1],
                     return_fig=True,
-                    title='a: {} b: {} m: {}: n: {}'.format(
-                        *subdata_nor[['a', 'b', 'm', 'n']].values[0, :]
-                    )
+                    title=title,
                 )
             return [*_reduce_dicts(spectrum_nor, spectrum_rec), fig]
 
