@@ -149,46 +149,46 @@ the container-inherent .logger object</p></li>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">acquire</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">acquire</span></code>()</p></td>
 <td><p>Acquire the I/O thread lock.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">addFilter</span></code>(self, filter)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">addFilter</span></code>(filter)</p></td>
 <td><p>Add the specified filter to this handler.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">close</span></code>()</p></td>
 <td><p>Tidy up any resources used by the handler.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">createLock</span></code>(self)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">createLock</span></code>()</p></td>
 <td><p>Acquire a thread lock for serializing access to the underlying I/O.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.main.logger.ListHandler.emit" title="reda.main.logger.ListHandler.emit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">emit</span></code></a>(self, record)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.main.logger.ListHandler.emit" title="reda.main.logger.ListHandler.emit"><code class="xref py py-obj docutils literal notranslate"><span class="pre">emit</span></code></a>(record)</p></td>
 <td><p>Do whatever it takes to actually log the specified logging record.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(self, record)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(record)</p></td>
 <td><p>Determine if a record is loggable by consulting all the filters.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">flush</span></code>()</p></td>
 <td><p>Ensure all logging output has been flushed.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code>(self, record)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">format</span></code>(record)</p></td>
 <td><p>Format the specified record.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handle</span></code>(self, record)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handle</span></code>(record)</p></td>
 <td><p>Conditionally emit the specified logging record.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handleError</span></code>(self, record)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">handleError</span></code>(record)</p></td>
 <td><p>Handle errors which occur during an emit() call.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">release</span></code>(self)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">release</span></code>()</p></td>
 <td><p>Release the I/O thread lock.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeFilter</span></code>(self, filter)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">removeFilter</span></code>(filter)</p></td>
 <td><p>Remove the specified filter from this handler.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFormatter</span></code>(self, fmt)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setFormatter</span></code>(fmt)</p></td>
 <td><p>Set the formatter for this handler.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLevel</span></code>(self, level)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setLevel</span></code>(level)</p></td>
 <td><p>Set the logging level of this handler.</p></td>
 </tr>
 </tbody>
@@ -209,7 +209,7 @@ the container-inherent .logger object</p></li>
 </table>
 <dl class="py method">
 <dt id="reda.main.logger.ListHandler.emit">
-<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">record</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler.emit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">emit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">record</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#ListHandler.emit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.ListHandler.emit" title="Permalink to this definition">¶</a></dt>
 <dd><p>Do whatever it takes to actually log the specified logging record.</p>
 <p>This version is intended to be implemented by subclasses and so
 raises a NotImplementedError.</p>
@@ -229,7 +229,7 @@ raises a NotImplementedError.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.main.logger.LoggingClass.setup_logger" title="reda.main.logger.LoggingClass.setup_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code></a>(self)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.main.logger.LoggingClass.setup_logger" title="reda.main.logger.LoggingClass.setup_logger"><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code></a>()</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
 </tbody>
@@ -250,17 +250,17 @@ raises a NotImplementedError.</p>
 </table>
 <dl class="py method">
 <dt id="reda.main.logger.LoggingClass.print_data_journal">
-<code class="sig-name descname">print_data_journal</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_data_journal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_data_journal" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">print_data_journal</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_data_journal"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_data_journal" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="reda.main.logger.LoggingClass.print_log">
-<code class="sig-name descname">print_log</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_log" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">print_log</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.print_log"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.print_log" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="reda.main.logger.LoggingClass.setup_logger">
-<code class="sig-name descname">setup_logger</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.setup_logger" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">setup_logger</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/main/logger.html#LoggingClass.setup_logger"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.main.logger.LoggingClass.setup_logger" title="Permalink to this definition">¶</a></dt>
 <dd><p>Setup a logger</p>
 </dd></dl>
 
