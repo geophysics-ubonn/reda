@@ -153,10 +153,6 @@ class sip_response():
             self.frequencies, self.rmag, '.-', color='k',
             label=kwargs.get('label_nor', 'normal'),
         )
-        ax.set_ylim(
-            limits.get('rmag_min', None),
-            limits.get('rmag_max', None)
-        )
 
         # resistivity phase
         ax = axes[0, 1]
@@ -208,29 +204,57 @@ class sip_response():
                 reciprocal.rmag,
                 '.-',
                 color='k',
-                linestyle='dashed',
+                linestyle='dotted',
                 label=kwargs.get('label_rec', 'reciprocal'),
             )
+            axes[0, 0].relim()
+            axes[0, 0].autoscale()
+            ax.set_ylim(
+                limits.get('rmag_min', None),
+                limits.get('rmag_max', None)
+            )
+
             axes[0, 1].semilogx(
                 reciprocal.frequencies,
                 -reciprocal.rpha,
                 '.-',
                 color='k',
-                linestyle='dashed',
+                linestyle='dotted',
             )
+            axes[0, 1].relim()
+            axes[0, 1].autoscale()
+            ymin = limits.get('rpha_max', None)
+            if ymin is not None:
+                ymin *= -1
+            ymax = limits.get('rpha_min', None)
+            axes[0, 1].set_ylim(ymin, ymax)
+
             axes[1, 0].loglog(
                 reciprocal.frequencies,
                 reciprocal.cre,
                 '.-',
                 color='k',
-                linestyle='dashed',
+                linestyle='dotted',
+            )
+
+            axes[1, 0].relim()
+            axes[1, 0].autoscale()
+            axes[1, 0].set_ylim(
+                limits.get('cre_min', None),
+                limits.get('cre_max', None)
             )
             axes[1, 1].loglog(
                 reciprocal.frequencies,
                 reciprocal.cim,
                 '.-',
                 color='k',
-                linestyle='dashed',
+                linestyle='dotted',
+            )
+            axes[1, 1].relim()
+            axes[1, 1].autoscale()
+            axes[1, 1].set_ylim(
+                limits.get('cim_min', None),
+                limits.get('cim_max', None)
             )
 
             fig.subplots_adjust(
