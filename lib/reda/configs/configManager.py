@@ -501,7 +501,10 @@ class ConfigManager(object):
             Nax4 array holding all possible measurement configurations
 
         """
-        injections = injections_raw.astype(int)
+        if isinstance(injections_raw, (list, tuple)):
+            injections = np.atleast_2d(np.array(injections_raw)).astype(int)
+        else:
+            injections = np.atleast_2d(injections_raw).astype(int)
 
         N = self.nr_electrodes
         all_quadpoles = []
