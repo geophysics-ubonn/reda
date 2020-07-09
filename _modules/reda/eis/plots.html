@@ -269,10 +269,6 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">rmag</span><span class="p">,</span> <span class="s1">&#39;.-&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
             <span class="n">label</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label_nor&#39;</span><span class="p">,</span> <span class="s1">&#39;normal&#39;</span><span class="p">),</span>
         <span class="p">)</span>
-        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
-            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rmag_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
-            <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rmag_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
-        <span class="p">)</span>
 
         <span class="c1"># resistivity phase</span>
         <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
@@ -324,29 +320,57 @@
                 <span class="n">reciprocal</span><span class="o">.</span><span class="n">rmag</span><span class="p">,</span>
                 <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
-                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span>
                 <span class="n">label</span><span class="o">=</span><span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;label_rec&#39;</span><span class="p">,</span> <span class="s1">&#39;reciprocal&#39;</span><span class="p">),</span>
             <span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">autoscale</span><span class="p">()</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+                <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rmag_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rmag_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="p">)</span>
+
             <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">semilogx</span><span class="p">(</span>
                 <span class="n">reciprocal</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
                 <span class="o">-</span><span class="n">reciprocal</span><span class="o">.</span><span class="n">rpha</span><span class="p">,</span>
                 <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
-                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span>
             <span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">autoscale</span><span class="p">()</span>
+            <span class="n">ymin</span> <span class="o">=</span> <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rpha_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">ymin</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">ymin</span> <span class="o">*=</span> <span class="o">-</span><span class="mi">1</span>
+            <span class="n">ymax</span> <span class="o">=</span> <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rpha_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ymin</span><span class="p">,</span> <span class="n">ymax</span><span class="p">)</span>
+
             <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
                 <span class="n">reciprocal</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
                 <span class="n">reciprocal</span><span class="o">.</span><span class="n">cre</span><span class="p">,</span>
                 <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
-                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">autoscale</span><span class="p">()</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+                <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cre_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cre_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="p">)</span>
             <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">loglog</span><span class="p">(</span>
                 <span class="n">reciprocal</span><span class="o">.</span><span class="n">frequencies</span><span class="p">,</span>
                 <span class="n">reciprocal</span><span class="o">.</span><span class="n">cim</span><span class="p">,</span>
                 <span class="s1">&#39;.-&#39;</span><span class="p">,</span>
                 <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span>
-                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span>
+                <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dotted&#39;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">relim</span><span class="p">()</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">autoscale</span><span class="p">()</span>
+            <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span>
+                <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cim_min&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">),</span>
+                <span class="n">limits</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;cim_max&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
             <span class="p">)</span>
 
             <span class="n">fig</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span>
@@ -632,7 +656,7 @@
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.1.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

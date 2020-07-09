@@ -190,21 +190,29 @@ Plot a single spectrum
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:257: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:257: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:257: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:186: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:257: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
 
 
@@ -232,7 +240,7 @@ Plot a single spectrum
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:471: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:495: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       ax.set_xlim(*self.xlim)
 
 
@@ -337,7 +345,7 @@ just used to close the figures to save memory
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  27.255 seconds)
+   **Total running time of the script:** ( 0 minutes  30.036 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:
