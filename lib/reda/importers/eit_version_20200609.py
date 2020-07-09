@@ -65,6 +65,10 @@ def _extract_adc_data(mat, **kwargs):
     dfl.set_index('frequency', append=True, inplace=True)
     dfl.sort_index(axis=0, inplace=True)
     dfl.sort_index(axis=1, inplace=True)
+
+    dfl.columns.set_names('channel', level=0, inplace=True)
+    dfl.set_index('datetime', append=True, inplace=True)
+
     return dfl
 
 
@@ -226,6 +230,9 @@ def _extract_emd(mat, **kwargs):
         # print(fdata['ni'].shape)
         # print('nu', fdata['nu'].shape)
         # print(fdata['Zt3'].shape)
+        # exit()
+        # import IPython
+        # IPython.embed()
         # exit()
         df = pd.DataFrame(
             np.hstack((
