@@ -69,7 +69,6 @@ def _extract_adc_data(mat, **kwargs):
 
 
 def _extract_md(mat, **kwargs):
-    return
     md = mat['MD'].squeeze()
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
@@ -85,6 +84,7 @@ def _extract_md(mat, **kwargs):
         fdata = md[f_id]
         # for name in fdata.dtype.names:
         #     print(name, fdata[name].shape)
+        # exit()
 
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in fdata['Time'].squeeze()]
