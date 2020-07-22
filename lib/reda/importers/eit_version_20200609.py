@@ -84,6 +84,9 @@ def _extract_md(mat, **kwargs):
     dfl = []
     # loop over frequencies
     for f_id in range(0, md.size):
+        # import IPython
+        # IPython.embed()
+        # exit()
         # print('Frequency: ', emd[f_id]['fm'])
         fdata = md[f_id]
         timestamp = np.atleast_2d(
@@ -94,7 +97,7 @@ def _extract_md(mat, **kwargs):
                 timestamp,
                 fdata['cni'],
                 fdata['U0'][:, np.newaxis],
-                # fdata['Cl3'],
+                fdata['Cl3'],
                 # fdata['Zg3'],
                 # fdata['As3'][:, 0, :].squeeze(),
                 # fdata['As3'][:, 1, :].squeeze(),
@@ -110,9 +113,9 @@ def _extract_md(mat, **kwargs):
             'a',
             'b',
             'U0',
-            # 'Cl1',
-            # 'Cl2',
-            # 'Cl3',
+            'Cl1',
+            'Cl2',
+            'Cl3',
             # 'Zg1',
             # 'Zg2',
             # 'Zg3',
