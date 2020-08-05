@@ -84,14 +84,14 @@ def _extract_md(mat, **kwargs):
     dfl = []
     # loop over frequencies
     for f_id in range(0, md.size):
-        # import IPython
-        # IPython.embed()
-        # exit()
         # print('Frequency: ', emd[f_id]['fm'])
         fdata = md[f_id]
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in fdata['Time'].squeeze()]
         ).T
+        # import IPython
+        # IPython.embed()
+        # exit()
         df = pd.DataFrame(
             np.hstack((
                 timestamp,
@@ -226,78 +226,87 @@ def _extract_emd(mat, **kwargs):
         if len(fdata['nu']) == 2 and fdata['nu'].shape[1] == 2:
             raise Exception('Need MNU0 file, not a quadpole .mat file:')
 
-        # timestamp = np.atleast_2d(
-        #     [convert_epoch(x) for x in fdata['Time'].squeeze()]
-        # ).T
+        timestamp = pd.DataFrame(
+            np.atleast_2d(
+                [convert_epoch(x) for x in fdata['Time'].squeeze()]
+            ).T,
+            columns=['datetime', ]
+        )
+        ab = pd.DataFrame(np.unique(fdata['ni'], axis=0), columns=['a', 'b'])
+        timestamp[['a', 'b']] = ab
         # print(timestamp.shape)
         # print(fdata['ni'].shape)
         # print('nu', fdata['nu'].shape)
         # print(fdata['Zt3'].shape)
         # exit()
+        df = pd.DataFrame()
+        df[['a', 'b']] = pd.DataFrame(fdata['ni'])
+        df = pd.merge(df, timestamp, left_on=['a', 'b'], right_on=['a', 'b'])
+        df['p'] = fdata['nu']
+        df[['Zt1', 'Zt2', 'Zt3']] = pd.DataFrame(fdata['Zt3'])
+
         # import IPython
         # IPython.embed()
         # exit()
-        df = pd.DataFrame(
-            np.hstack((
-                # timestamp,
-                fdata['ni'],
-                fdata['nu'][:, np.newaxis],
-                fdata['Zt3'],
-                # fdata['Is3'],
-                # fdata['Il3'],
-                # fdata['Zg3'],
-                # fdata['As3'][:, 0, :].squeeze(),
-                # fdata['As3'][:, 1, :].squeeze(),
-                # fdata['As3'][:, 2, :].squeeze(),
-                # fdata['As3'][:, 3, :].squeeze(),
-                # fdata['Yg13'],
-                # fdata['Yg23'],
-            )),
-        )
-        df.columns = (
-            # 'datetime',
-            'a',
-            'b',
-            'p',
-            'Zt1',
-            'Zt2',
-            'Zt3',
-            # 'Is1',
-            # 'Is2',
-            # 'Is3',
-            # 'Il1',
-            # 'Il2',
-            # 'Il3',
-            # 'Zg1',
-            # 'Zg2',
-            # 'Zg3',
-            # 'ShuntVoltage1_1',
-            # 'ShuntVoltage1_2',
-            # 'ShuntVoltage1_3',
-            # 'ShuntVoltage2_1',
-            # 'ShuntVoltage2_2',
-            # 'ShuntVoltage2_3',
-            # 'ShuntVoltage3_1',
-            # 'ShuntVoltage3_2',
-            # 'ShuntVoltage3_3',
-            # 'ShuntVoltage4_1',
-            # 'ShuntVoltage4_2',
-            # 'ShuntVoltage4_3',
-            # 'Yg13_1',
-            # 'Yg13_2',
-            # 'Yg13_3',
-            # 'Yg23_1',
-            # 'Yg23_2',
-            # 'Yg23_3',
-        )
+
+        # df = pd.DataFrame(
+        #     np.hstack((
+        #         # timestamp,
+        #         fdata['ni'],
+        #         fdata['nu'][:, np.newaxis],
+        #         fdata['Zt3'],
+        #         # fdata['Is3'],
+        #         # fdata['Il3'],
+        #         # fdata['Zg3'],
+        #         # fdata['As3'][:, 0, :].squeeze(),
+        #         # fdata['As3'][:, 1, :].squeeze(),
+        #         # fdata['As3'][:, 2, :].squeeze(),
+        #         # fdata['As3'][:, 3, :].squeeze(),
+        #         # fdata['Yg13'],
+        #         # fdata['Yg23'],
+        #     )),
+        # )
+        # df.columns = (
+        #     # 'datetime',
+        #     'a',
+        #     'b',
+        #     'p',
+        #     # 'Is1',
+        #     # 'Is2',
+        #     # 'Is3',
+        #     # 'Il1',
+        #     # 'Il2',
+        #     # 'Il3',
+        #     # 'Zg1',
+        #     # 'Zg2',
+        #     # 'Zg3',
+        #     # 'ShuntVoltage1_1',
+        #     # 'ShuntVoltage1_2',
+        #     # 'ShuntVoltage1_3',
+        #     # 'ShuntVoltage2_1',
+        #     # 'ShuntVoltage2_2',
+        #     # 'ShuntVoltage2_3',
+        #     # 'ShuntVoltage3_1',
+        #     # 'ShuntVoltage3_2',
+        #     # 'ShuntVoltage3_3',
+        #     # 'ShuntVoltage4_1',
+        #     # 'ShuntVoltage4_2',
+        #     # 'ShuntVoltage4_3',
+        #     # 'Yg13_1',
+        #     # 'Yg13_2',
+        #     # 'Yg13_3',
+        #     # 'Yg23_1',
+        #     # 'Yg23_2',
+        #     # 'Yg23_3',
+        # )
 
         df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
 
         # cast to correct type
         # df['datetime'] = pd.to_datetime(df['datetime'])
-        df['a'] = df['a'].astype(int)
-        df['b'] = df['b'].astype(int)
-        df['p'] = df['p'].astype(int)
+        # df['a'] = df['a'].astype(int)
+        # df['b'] = df['b'].astype(int)
+        # df['p'] = df['p'].astype(int)
 
         df['Zt1'] = df['Zt1'].astype(complex)
         df['Zt2'] = df['Zt2'].astype(complex)
