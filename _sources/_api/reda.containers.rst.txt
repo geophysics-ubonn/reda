@@ -56,4 +56,3 @@ reda.containers.sEIT module
    :members:
    :undoc-members:
    :show-inheritance:
-

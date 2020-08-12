@@ -16,4 +16,3 @@ reda.tdip.decay\_curve module
    :members:
    :undoc-members:
    :show-inheritance:
-

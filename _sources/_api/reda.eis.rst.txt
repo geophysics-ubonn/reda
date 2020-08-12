@@ -40,4 +40,3 @@ reda.eis.units module
    :members:
    :undoc-members:
    :show-inheritance:
-

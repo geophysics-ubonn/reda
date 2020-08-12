@@ -40,4 +40,3 @@ reda.plotters.time\_series module
    :members:
    :undoc-members:
    :show-inheritance:
-

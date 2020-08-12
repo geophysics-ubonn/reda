@@ -24,4 +24,3 @@ reda.main.units module
    :members:
    :undoc-members:
    :show-inheritance:
-

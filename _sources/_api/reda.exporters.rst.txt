@@ -32,4 +32,3 @@ reda.exporters.syscal module
    :members:
    :undoc-members:
    :show-inheritance:
-

@@ -16,4 +16,3 @@ reda.configs.configManager module
    :members:
    :undoc-members:
    :show-inheritance:
-

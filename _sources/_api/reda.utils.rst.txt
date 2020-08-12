@@ -104,4 +104,3 @@ reda.utils.pseudo\_positions module
    :members:
    :undoc-members:
    :show-inheritance:
-

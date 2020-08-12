@@ -345,7 +345,7 @@ just used to close the figures to save memory
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  28.251 seconds)
+   **Total running time of the script:** ( 0 minutes  30.622 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:

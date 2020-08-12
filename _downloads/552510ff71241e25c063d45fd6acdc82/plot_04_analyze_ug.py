@@ -42,4 +42,3 @@ ax.set_xlabel('ADC Channel')
 
 fig.tight_layout()
 # fig.savefig('plot_ug3-1.pdf', dpi=300)
-plt.show(fig)
