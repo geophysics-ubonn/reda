@@ -44,7 +44,6 @@ class ConfigManager(object):
     def clear_configs(self):
         """Remove all configs. This implies deleting all measurements.
         """
-        self.clear_measurements()
         del (self.configs)
         self.configs = None
 
