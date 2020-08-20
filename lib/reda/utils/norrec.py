@@ -1,7 +1,11 @@
 """Normal-reciprocal functionality
 """
+import logging
+
 import pandas as pd
 import numpy as np
+
+logger = logging.getLogger('__name__')
 
 
 def _first(x):
@@ -35,7 +39,6 @@ def average_repetitions(df, keys_mean):
     for key in ('id', 'timestep', 'frequency', 'norrec'):
         if key in agg_dict:
             del(agg_dict[key])
-    # print(agg_dict)
 
     # average over duplicate measurements
     extra_dimensions_raw = ['id', 'norrec', 'frequency', 'timestep']
@@ -50,7 +53,7 @@ def compute_norrec_differences(df, keys_diff):
 
     """
     raise Exception('This function is depreciated!')
-    print('computing normal-reciprocal differences')
+    logger.info('computing normal-reciprocal differences')
     # df.sort_index(level='norrec')
 
     def norrec_diff(x):
@@ -108,18 +111,15 @@ def assign_norrec_to_df(df):
     # unique injections
     cu = np.unique(c, axis=0)
 
-    print('generating ids')
     # now assign unique IDs to each config in normal and reciprocal
     running_index = 0
     normal_ids = {}
     reciprocal_ids = {}
     # loop through all configurations
     for i in range(0, cu.shape[0]):
-        # print('testing', cu[i], i, cu.shape[0])
         # normalize configuration
         cu_norm = _normalize_abmn(cu[i, :]).squeeze()
         if tuple(cu_norm) in normal_ids:
-            # print('already indexed')
             continue
 
         # find pairs
@@ -146,7 +146,6 @@ def assign_norrec_to_df(df):
 
         # we found no pair
         if len(indices) == 0:
-            # print('no reciprocals, continuing')
             if not tuple(cu_norm) in normal_ids:
                 if np.min(cu_norm[0:2]) < np.min(cu_norm[2:3]):
                     # treat as normal
@@ -174,7 +173,6 @@ def assign_norrec_to_df(df):
             reciprocal_ids[tuple(cu_norm)] = running_index
         running_index += 1
 
-    print('assigning ids')
     # print(df.shape)
     # print(df.columns)
     # print('normal_ids', normal_ids)
@@ -409,8 +407,6 @@ def test2():
     diff.columns = cols
     df1 = df1.merge(diff)
     df1 = df1.sort_values(['timestep', 'frequency'])
-    # print(df1)
-    # print('@')
     assert(
         df1.query(
             'timestep == 1 and a == 1 and b == 2 and m == 3 and n == 4 ' +
