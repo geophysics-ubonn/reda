@@ -59,7 +59,7 @@ class ERTImporters(ImportersBase):
             produced dataframe. Default: 0
 
         """
-        
+
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
             del (kwargs['timestep'])
@@ -150,12 +150,14 @@ class ERT(BaseContainer, ERTImporters):
             information with columns: "x", "y", "z".
 
         """
-        self.setup_logger()
-        self.required_columns = ['a',
-                                 'b',
-                                 'm',
-                                 'n',
-                                 'r']
+        self.setup_logger(__name__)
+        self.required_columns = [
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
+        ]
         self.data = self.check_dataframe(data)
         self.electrode_positions = electrode_positions
         self.topography = topography
@@ -202,8 +204,6 @@ class ERT(BaseContainer, ERTImporters):
         ...     [3,4,2,1,-105]], columns=list("abmnr")
         ... )
         >>> ert.compute_reciprocal_errors()
-        generating ids
-        assigning ids
         >>> ert.data["error"].mean() == 0.1
         True
         """
