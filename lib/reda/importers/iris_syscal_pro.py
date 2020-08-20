@@ -7,11 +7,14 @@ electrode numbers.
 """
 import struct
 from io import StringIO
+import logging
 
 import pandas as pd
 import numpy as np
 
 from reda.importers.utils.decorators import enable_result_transforms
+
+logger = logging.getLogger(__name__)
 
 
 def _convert_coords_to_abmn_X(data, **kwargs):
@@ -114,6 +117,12 @@ def import_txt(filename, **kwargs):
 
     * TODO: we could try to infer electrode spacing from the file itself
     """
+    if 'spacing' not in kwargs:
+        logger.warning(' '.join((
+            'spacing keyword is not set.',
+            'Make sure that ALL electrodes are used in the data!',
+            'Otherwise problems will arise!',
+        )))
 
     # read in text file into a buffer
     with open(filename, 'r') as fid:
@@ -219,24 +228,28 @@ def import_bin(filename, **kwargs):
 
         # check that all measurement numbers increase by one
         if not np.all(np.diff(data_raw['measurement_num'])) == 1:
-            print(
-                'WARNING '
-                'Measurement numbers are not consecutive. '
-                'Perhaps the first measurement belongs to another measurement?'
-                ' Use the skip_rows parameter to skip those measurements'
-            )
+            logger.warning(' '.join((
+                'WARNING',
+                'Measurement numbers are not consecutive.',
+                'Perhaps the first measurement belongs to another'
+                'measurement?',
+                'Use the skip_rows parameter to skip those measurements'
+            )))
 
+        # import IPython
+        # IPython.embed()
         # now check if there is a jump in measurement numbers somewhere
         # ignore first entry as this will always be nan
         diff = data_raw['measurement_num'].diff()[1:]
         jump = np.where(diff != 1)[0]
-        if len(jump) > 0:
-            print('WARNING: One or more jumps in measurement numbers detected')
-            print('The jump indices are:')
+        if len(jump) > 0 and not np.all(data_raw['measurement_num'] == 0):
+            logger.warning(
+                'WARNING: One or more jumps in measurement numbers detected')
+            logger.warning('The jump indices are:')
             for jump_nr in jump:
-                print(jump_nr)
+                logger.warning(jump_nr)
 
-            print('Removing data points subsequent to the first jump')
+            logger.info('Removing data points subsequent to the first jump')
             data_raw = data_raw.iloc[0:jump[0] + 1, :]
 
     if data_raw.shape[0] == 0:
@@ -244,9 +257,9 @@ def import_bin(filename, **kwargs):
         return pd.DataFrame(columns=['a', 'b', 'm', 'n', 'r']), None, None
 
     data = _convert_coords_to_abmn_X(
-        data_raw[['x_a', 'x_b', 'x_m', 'x_n']],
-        **kwargs
-    )
+            data_raw[['x_a', 'x_b', 'x_m', 'x_n']],
+            **kwargs
+            )
     # [mV] / [mA]
     data['r'] = data_raw['vp'] / data_raw['Iab']
     data['Vmn'] = data_raw['vp']
@@ -262,7 +275,7 @@ def import_bin(filename, **kwargs):
     # rename electrode denotations
     rec_max = kwargs.get('reciprocals', None)
     if rec_max is not None:
-        print('renumbering electrode numbers')
+        logger.info('renumbering electrode numbers')
         data[['a', 'b', 'm', 'n']] = rec_max + 1 - data[['a', 'b', 'm', 'n']]
 
     # print(data)
