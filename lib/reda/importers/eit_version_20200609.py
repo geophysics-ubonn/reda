@@ -9,7 +9,13 @@ def _extract_adc_data(mat, **kwargs):
     """Extract adc-channel related data (i.e., data that is captured for all 48
     channels of the 40-channel medusa system
 
+    Data not imported:
+
+    * Ue3
+    * Zs3
+    * Us3
     """
+
     md = mat['MD'].squeeze()
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
@@ -89,112 +95,79 @@ def _extract_md(mat, **kwargs):
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in fdata['Time'].squeeze()]
         ).T
-        # import IPython
-        # IPython.embed()
-        # exit()
-        df = pd.DataFrame(
-            np.hstack((
-                timestamp,
-                fdata['cni'],
-                fdata['U0'][:, np.newaxis],
-                fdata['Cl3'],
-                # fdata['Zg3'],
-                # fdata['As3'][:, 0, :].squeeze(),
-                # fdata['As3'][:, 1, :].squeeze(),
-                # fdata['As3'][:, 2, :].squeeze(),
-                # fdata['As3'][:, 3, :].squeeze(),
-                # fdata['Is3'],
-                # fdata['Yl3'],
-                # fdata['Il3'],
-            ))
-        )
-        df.columns = (
-            'datetime',
-            'a',
-            'b',
-            'U0',
-            'Cl1',
-            'Cl2',
-            'Cl3',
-            # 'Zg1',
-            # 'Zg2',
-            # 'Zg3',
-            # 'ShuntVoltage1_1',
-            # 'ShuntVoltage1_2',
-            # 'ShuntVoltage1_3',
-            # 'ShuntVoltage2_1',
-            # 'ShuntVoltage2_2',
-            # 'ShuntVoltage2_3',
-            # 'ShuntVoltage3_1',
-            # 'ShuntVoltage3_2',
-            # 'ShuntVoltage3_3',
-            # 'ShuntVoltage4_1',
-            # 'ShuntVoltage4_2',
-            # 'ShuntVoltage4_3',
-            # 'Is1',
-            # 'Is2',
-            # 'Is3',
-            # 'Yl1',
-            # 'Yl2',
-            # 'Yl3',
-            # 'Il1',
-            # 'Il2',
-            # 'Il3',
-        )
+        """
+        From Egon:
+        In Zg3 sind jetzt die Werte gegen Masse dargestellt.
+        Zg3(:,1,:) ist die Impedanz U(A-Gnd)/IA und
+        Zg3(:,2,:) ist die Impedanz U(B-Gnd)/IB
+        Mit den Stromelektroden A und B.
+        Die Summe von beiden ist die Impedanz Zg3(AB)
+        """
+        Zg3_complex = np.sum(fdata['Zg3'], axis=1)
+        df = pd.DataFrame()
+        df[['a', 'b']] = pd.DataFrame(fdata['cni'])
+        df['datetime'] = timestamp
+        df['frequency'] = fdata['fm']
+        df['U0'] = fdata['U0']
+        df['Zg1_ela'] = fdata['Zg3'][:, 0, 0]
+        df['Zg2_ela'] = fdata['Zg3'][:, 0, 1]
+        df['Zg3_ela'] = fdata['Zg3'][:, 0, 2]
+        df['Zg1_elb'] = fdata['Zg3'][:, 1, 0]
+        df['Zg2_elb'] = fdata['Zg3'][:, 1, 1]
+        df['Zg3_elb'] = fdata['Zg3'][:, 1, 2]
+        df['Zg1'] = Zg3_complex[:, 0]
+        df['Zg2'] = Zg3_complex[:, 1]
+        df['Zg3'] = Zg3_complex[:, 2]
+        df['Cl1'] = fdata['Cl3'][:, 0]
+        df['Cl2'] = fdata['Cl3'][:, 1]
+        df['Cl3'] = fdata['Cl3'][:, 2]
+        df['Is1'] = fdata['Is3'][:, 0]
+        df['Is2'] = fdata['Is3'][:, 1]
+        df['Is3'] = fdata['Is3'][:, 2]
+        df['Is'] = np.mean(fdata['Is3'], axis=1)
+        df['Il1'] = fdata['Il3'][:, 0]
+        df['Il2'] = fdata['Il3'][:, 1]
+        df['Il3'] = fdata['Il3'][:, 2]
+        df['Il'] = np.mean(fdata['Il3'], axis=1)
 
-        df['datetime'] = pd.to_datetime(df['datetime'])
-        df['a'] = df['a'].astype(int)
-        df['b'] = df['b'].astype(int)
-        # df['Cl1'] = df['Cl1'].astype(complex)
-        # df['Cl2'] = df['Cl2'].astype(complex)
-        # df['Cl3'] = df['Cl3'].astype(complex)
-        # df['Zg1'] = df['Zg1'].astype(complex)
-        # df['Zg2'] = df['Zg2'].astype(complex)
-        # df['Zg3'] = df['Zg3'].astype(complex)
-
-#         df['Yl1'] = df['Yl1'].astype(complex)
-#         df['Yl2'] = df['Yl2'].astype(complex)
-#         df['Yl3'] = df['Yl3'].astype(complex)
-
-        # for key in ('Il1', 'Il2', 'Il3'):
-        #     df[key] = df[key].astype(complex)
-
-        # df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
-        # df['ShuntVoltage1_2'] = df['ShuntVoltage1_2'].astype(complex)
-        # df['ShuntVoltage1_3'] = df['ShuntVoltage1_3'].astype(complex)
-
-        # df['ShuntVoltage2_1'] = df['ShuntVoltage2_1'].astype(complex)
-        # df['ShuntVoltage2_2'] = df['ShuntVoltage2_2'].astype(complex)
-        # df['ShuntVoltage2_3'] = df['ShuntVoltage2_3'].astype(complex)
-
-        # df['ShuntVoltage3_1'] = df['ShuntVoltage3_1'].astype(complex)
-        # df['ShuntVoltage3_2'] = df['ShuntVoltage3_2'].astype(complex)
-        # df['ShuntVoltage3_3'] = df['ShuntVoltage3_3'].astype(complex)
-
-        # df['ShuntVoltage4_1'] = df['ShuntVoltage4_1'].astype(complex)
-        # df['ShuntVoltage4_2'] = df['ShuntVoltage4_2'].astype(complex)
-        # df['ShuntVoltage4_3'] = df['ShuntVoltage4_3'].astype(complex)
-
-        # df['Is1'] = df['Is1'].astype(complex)
-        # df['Is2'] = df['Is2'].astype(complex)
-        # df['Is3'] = df['Is3'].astype(complex)
-
-        # df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
         # "standard" injected current, in [mA]
-        # df['Iab'] = np.abs(df['Is']) * 1e3
-        # df['Iab'] = df['Iab'].astype(float)
+        df['Iab'] = np.abs(df['Is']) * 1e3
 
-        # df['Il'] = np.mean(df[['Il1', 'Il2', 'Il3']].values, axis=1)
         # take absolute value and convert to mA
-        # df['Ileakage'] = np.abs(df['Il']) * 1e3
-        # df['Ileakage'] = df['Ileakage'].astype(float)
+        df['Ileakage'] = np.abs(df['Il']) * 1e3
 
-        # df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
+        df['Ii1_ela'] = fdata['Ii3'][:, 0, 0]
+        df['Ii2_ela'] = fdata['Ii3'][:, 0, 1]
+        df['Ii3_ela'] = fdata['Ii3'][:, 0, 2]
+        df['Ii1_elb'] = fdata['Ii3'][:, 1, 0]
+        df['Ii2_elb'] = fdata['Ii3'][:, 1, 1]
+        df['Ii3_elb'] = fdata['Ii3'][:, 1, 2]
 
-        df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
+        df['Uc1'] = fdata['Uc3'][:, 0]
+        df['Uc2'] = fdata['Uc3'][:, 1]
+        df['Uc3'] = fdata['Uc3'][:, 2]
+
+        df['Yg1_ela'] = fdata['Yg3'][:, 0, 0]
+        df['Yg2_ela'] = fdata['Yg3'][:, 0, 1]
+        df['Yg3_ela'] = fdata['Yg3'][:, 0, 2]
+        df['Yg1_elb'] = fdata['Yg3'][:, 1, 0]
+        df['Yg2_elb'] = fdata['Yg3'][:, 1, 1]
+        df['Yg3_elb'] = fdata['Yg3'][:, 1, 2]
+
+        df['Cg1_ela'] = fdata['Cg3'][:, 0, 0]
+        df['Cg2_ela'] = fdata['Cg3'][:, 0, 1]
+        df['Cg3_ela'] = fdata['Cg3'][:, 0, 2]
+        df['Cg1_elb'] = fdata['Cg3'][:, 1, 0]
+        df['Cg2_elb'] = fdata['Cg3'][:, 1, 1]
+        df['Cg3_elb'] = fdata['Cg3'][:, 1, 2]
+
+        df['Yl1'] = fdata['Yl3'][:, 0]
+        df['Yl2'] = fdata['Yl3'][:, 1]
+        df['Yl3'] = fdata['Yl3'][:, 2]
+
         dfl.append(df)
 
-    df = pd.concat(dfl)
+    df = pd.concat(dfl).sort_values(['a', 'b', 'frequency'])
 
     return df
 
