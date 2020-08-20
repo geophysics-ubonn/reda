@@ -1,2 +1,5 @@
 *.pdf
 *.png
+data.dat
+frequencies.dat
+results/
