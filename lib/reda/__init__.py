@@ -1,3 +1,4 @@
+import reda.main.logger
 from reda.utils.enter_directory import CreateEnterDirectory
 from reda.utils.enter_directory import EnterDirectory
 import reda.importers.utils.transforms as transforms
@@ -17,8 +18,8 @@ rcParams = {}
 # for now this will stay at 'crtomo'
 rcParams['geom_factor.inversion_code'] = 'crtomo'
 
-
 # this is just to silence pep8/flake errors
+reda.main.logger
 EnterDirectory
 CreateEnterDirectory
 BaseContainer

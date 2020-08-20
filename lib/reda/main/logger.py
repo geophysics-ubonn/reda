@@ -10,12 +10,12 @@ We differentiate multiple logging types/targets
 import logging
 import datetime
 
-
-def setup_logger():
-    logging.basicConfig(
-        # filename='logfile.log',
-        level=logging.DEBUG,
-    )
+logging.basicConfig(
+    # filename='logfile.log',
+    level=logging.WARNING,
+    format='{asctime} - {name:<30} - %{levelname:<10} - {message}',
+    style='{',
+)
 
 
 class ListHandler(logging.Handler):  # Inherit from logging.Handler
@@ -34,17 +34,25 @@ class LoggingClass(object):
     """Set up logging facilities for the containers
     """
 
-    def setup_logger(self):
+    def setup_logger(self, name=None):
         """Setup a logger
+
+        Parameters
+        ----------
+        name : str, optional
+            If set, use this as the name of the logger
         """
         self.log_list = []
         handler = ListHandler(self.log_list)
 
         formatter = logging.Formatter(
-            '%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        )
         handler.setFormatter(formatter)
 
-        logger = logging.getLogger()
+        if name is None:
+            name = __name__
+        logger = logging.getLogger(name)
         logger.addHandler(handler)
 
         logger.setLevel(logging.INFO)
