@@ -972,7 +972,7 @@ class ConfigManager(object):
         # np.vstack([data.get(x).array() for x in ("abmn")]).T
         return data
 
-    def to_iris_syscal(self, filename):
+    def to_iris_syscal(self, filename, spacing=1):
         """Export to IRIS Instrument configuration file
 
         Parameters
@@ -987,7 +987,7 @@ class ConfigManager(object):
             # loop over electrodes and assign increasing x-positions
             # TODO: use proper electrode positions, if available
             for nr in range(0, self.configs.max()):
-                fid.write('{}   {}  0   0\n'.format(nr + 1, nr))
+                fid.write('{}   {}  0   0\n'.format(nr + 1, nr * spacing))
 
             # fprintf(fod, '#\t A\t B\t M\t N\n');
             fid.write('#\t A\t B\t M\t N\n')
