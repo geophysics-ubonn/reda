@@ -122,7 +122,7 @@ class TDIP(BaseContainer, TDIPImporters):
             information with columns: "x", "y", "z".
 
         """
-        self.setup_logger()
+        self.setup_logger(__name__)
         self.required_columns = ['a',
                                  'b',
                                  'm',
