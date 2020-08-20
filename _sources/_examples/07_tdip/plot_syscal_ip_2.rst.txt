@@ -56,8 +56,6 @@ normal loading of tdip data
 
  .. code-block:: none
 
-    generating ids
-    assigning ids
           a   b   m   n   id norrec
     0     1   2   3   4    0    nor
     1     1   2   4   5    1    nor

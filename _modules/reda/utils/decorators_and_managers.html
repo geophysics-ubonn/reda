@@ -148,7 +148,7 @@
 <span class="sd">    ...     ERTContainer.data.loc[0, &quot;r&quot;] = 22</span>
 <span class="sd">    ...     ERTContainer.data.query(&quot;r &lt; 10&quot;, inplace=True)</span>
 <span class="sd">    &gt;&gt;&gt; # ERTContainer.print_log()</span>
-<span class="sd">    2... - root - INFO - Data change from 22 to 21</span>
+<span class="sd">    2... - root - INFO - Data size changed from 22 to 21</span>
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
@@ -180,11 +180,11 @@
         <span class="k">if</span><span class="p">(</span>
             <span class="n">exc_type</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span>
             <span class="n">exc_value</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">or</span>
-            <span class="n">traceback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
+                <span class="n">traceback</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">):</span>
             <span class="k">return</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data_size_after</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
-            <span class="s1">&#39;Data change from </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+            <span class="s1">&#39;Data sized changed from </span><span class="si">{0}</span><span class="s1"> to </span><span class="si">{1}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data_size_before</span><span class="p">,</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">data_size_after</span><span class="p">,</span>
             <span class="p">),</span>

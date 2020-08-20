@@ -299,7 +299,24 @@
         <span class="n">p</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
         <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">group_keys</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
             <span class="n">p</span> <span class="o">=</span> <span class="n">p</span><span class="o">.</span><span class="n">swaplevel</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
-        <span class="k">return</span> <span class="n">p</span></div></div>
+        <span class="k">return</span> <span class="n">p</span></div>
+
+<div class="viewcode-block" id="SIP.frequencies"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP.frequencies">[docs]</a>    <span class="k">def</span> <span class="nf">frequencies</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return all frequencies&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">groups</span><span class="o">.</span><span class="n">keys</span><span class="p">()))</span></div>
+
+<div class="viewcode-block" id="SIP.export_specs_to_ascii"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.SIP.SIP.export_specs_to_ascii">[docs]</a>    <span class="k">def</span> <span class="nf">export_specs_to_ascii</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">frequency_file</span><span class="p">,</span> <span class="n">data_file</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">subdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">pivot_table</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;frequency&#39;</span><span class="p">),</span>
+            <span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">],</span>
+            <span class="n">columns</span><span class="o">=</span><span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+            <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]</span>
+        <span class="p">)</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">frequency_file</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">frequencies</span><span class="p">())</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">data_file</span><span class="p">,</span> <span class="n">subdata</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div></div>
 </pre></div>
 
           </div>

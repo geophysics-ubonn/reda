@@ -159,8 +159,6 @@ function. This is explained below.</p>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
-generating ids
-assigning ids
 Summary:
                 a           b  ...     frequency          rpha
 count  16280.0000  16280.0000  ...  16280.000000  16280.000000
@@ -191,8 +189,6 @@ from the current injection dipoles:</p>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
-generating ids
-assigning ids
 Summary:
                 a           b  ...     frequency          rpha
 count  16280.0000  16280.0000  ...  16280.000000  16280.000000
@@ -593,11 +589,6 @@ note that this is usually done on import once.</p>
 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seit</span><span class="o">.</span><span class="n">data</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.norrec.assign_norrec_to_df" title="reda.utils.norrec.assign_norrec_to_df" class="sphx-glr-backref-module-reda-utils-norrec sphx-glr-backref-type-py-function"><span class="n">norrec</span><span class="o">.</span><span class="n">assign_norrec_to_df</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seit</span><span class="o">.</span><span class="n">data</span></a><span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>generating ids
-assigning ids
-</pre></div>
-</div>
 <p>quadrupoles can be directly accessed using a pandas grouper</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT.abmn" title="reda.containers.sEIT.sEIT.abmn" class="sphx-glr-backref-module-reda-containers-sEIT sphx-glr-backref-type-py-method"><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span></a><span class="p">)</span>
 <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">quadpole_data</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.sEIT.sEIT.abmn" title="reda.containers.sEIT.sEIT.abmn" class="sphx-glr-backref-module-reda-containers-sEIT sphx-glr-backref-type-py-method"><span class="n">seit</span><span class="o">.</span><span class="n">abmn</span><span class="o">.</span><span class="n">get_group</span></a><span class="p">((</span><span class="mi">10</span><span class="p">,</span> <span class="mi">29</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">34</span><span class="p">))</span>
@@ -605,7 +596,7 @@ assigning ids
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f03b9c2fa58&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f5b1a895f60&gt;
         a   b   m   n     frequency         r        rpha
 748    10  29  15  34      0.100000  7.356375   -5.205543
 2228   10  29  15  34      0.314465  7.323810   -6.903037
@@ -713,7 +704,7 @@ this context manager executes all code within the given directory</p>
     <span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  52.393 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  59.155 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/838ff59b27381854f04afa4adea79a01/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></p>

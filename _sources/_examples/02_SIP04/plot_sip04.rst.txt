@@ -45,8 +45,6 @@ Import the SIP data
  .. code-block:: none
 
     Import SIP04 data from .mat file
-    generating ids
-    assigning ids
     Summary:
               a     b     m     n
     count  22.0  22.0  22.0  22.0
@@ -124,9 +122,28 @@ plot the spectrum
 
 
 
+
 .. image:: /_examples/02_SIP04/images/sphx_glr_plot_sip04_001.png
     :alt: plot sip04
     :class: sphx-glr-single-img
+
+
+
+
+
+save data to ascii file
+
+
+.. code-block:: default
+
+    sip.export_specs_to_ascii('frequencies.dat', 'data.dat')
+
+    # optionally:
+    # install ccd_tools: pip install ccd_tools
+    # then in the command line, run:
+    #   ccd_single  --plot --norm 10
+
+
 
 
 

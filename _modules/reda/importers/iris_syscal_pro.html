@@ -123,11 +123,14 @@
 <span class="sd">&quot;&quot;&quot;</span>
 <span class="kn">import</span> <span class="nn">struct</span>
 <span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">StringIO</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">_convert_coords_to_abmn_X</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -230,6 +233,12 @@
 
 <span class="sd">    * TODO: we could try to infer electrode spacing from the file itself</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="s1">&#39;spacing&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+            <span class="s1">&#39;spacing keyword is not set.&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Make sure that ALL electrodes are used in the data!&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Otherwise problems will arise!&#39;</span><span class="p">,</span>
+        <span class="p">)))</span>
 
     <span class="c1"># read in text file into a buffer</span>
     <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
@@ -335,24 +344,28 @@
 
         <span class="c1"># check that all measurement numbers increase by one</span>
         <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">data_raw</span><span class="p">[</span><span class="s1">&#39;measurement_num&#39;</span><span class="p">]))</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span>
-                <span class="s1">&#39;WARNING &#39;</span>
-                <span class="s1">&#39;Measurement numbers are not consecutive. &#39;</span>
-                <span class="s1">&#39;Perhaps the first measurement belongs to another measurement?&#39;</span>
-                <span class="s1">&#39; Use the skip_rows parameter to skip those measurements&#39;</span>
-            <span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s1">&#39;WARNING&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Measurement numbers are not consecutive.&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Perhaps the first measurement belongs to another&#39;</span>
+                <span class="s1">&#39;measurement?&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;Use the skip_rows parameter to skip those measurements&#39;</span>
+            <span class="p">)))</span>
 
+        <span class="c1"># import IPython</span>
+        <span class="c1"># IPython.embed()</span>
         <span class="c1"># now check if there is a jump in measurement numbers somewhere</span>
         <span class="c1"># ignore first entry as this will always be nan</span>
         <span class="n">diff</span> <span class="o">=</span> <span class="n">data_raw</span><span class="p">[</span><span class="s1">&#39;measurement_num&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">diff</span><span class="p">()[</span><span class="mi">1</span><span class="p">:]</span>
         <span class="n">jump</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">diff</span> <span class="o">!=</span> <span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">jump</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;WARNING: One or more jumps in measurement numbers detected&#39;</span><span class="p">)</span>
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;The jump indices are:&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">jump</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data_raw</span><span class="p">[</span><span class="s1">&#39;measurement_num&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">):</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span>
+                <span class="s1">&#39;WARNING: One or more jumps in measurement numbers detected&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s1">&#39;The jump indices are:&#39;</span><span class="p">)</span>
             <span class="k">for</span> <span class="n">jump_nr</span> <span class="ow">in</span> <span class="n">jump</span><span class="p">:</span>
-                <span class="nb">print</span><span class="p">(</span><span class="n">jump_nr</span><span class="p">)</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="n">jump_nr</span><span class="p">)</span>
 
-            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Removing data points subsequent to the first jump&#39;</span><span class="p">)</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Removing data points subsequent to the first jump&#39;</span><span class="p">)</span>
             <span class="n">data_raw</span> <span class="o">=</span> <span class="n">data_raw</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">jump</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="p">:]</span>
 
     <span class="k">if</span> <span class="n">data_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
@@ -360,9 +373,9 @@
         <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">]),</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
 
     <span class="n">data</span> <span class="o">=</span> <span class="n">_convert_coords_to_abmn_X</span><span class="p">(</span>
-        <span class="n">data_raw</span><span class="p">[[</span><span class="s1">&#39;x_a&#39;</span><span class="p">,</span> <span class="s1">&#39;x_b&#39;</span><span class="p">,</span> <span class="s1">&#39;x_m&#39;</span><span class="p">,</span> <span class="s1">&#39;x_n&#39;</span><span class="p">]],</span>
-        <span class="o">**</span><span class="n">kwargs</span>
-    <span class="p">)</span>
+            <span class="n">data_raw</span><span class="p">[[</span><span class="s1">&#39;x_a&#39;</span><span class="p">,</span> <span class="s1">&#39;x_b&#39;</span><span class="p">,</span> <span class="s1">&#39;x_m&#39;</span><span class="p">,</span> <span class="s1">&#39;x_n&#39;</span><span class="p">]],</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+            <span class="p">)</span>
     <span class="c1"># [mV] / [mA]</span>
     <span class="n">data</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_raw</span><span class="p">[</span><span class="s1">&#39;vp&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">data_raw</span><span class="p">[</span><span class="s1">&#39;Iab&#39;</span><span class="p">]</span>
     <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Vmn&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_raw</span><span class="p">[</span><span class="s1">&#39;vp&#39;</span><span class="p">]</span>
@@ -378,7 +391,7 @@
     <span class="c1"># rename electrode denotations</span>
     <span class="n">rec_max</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;reciprocals&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">rec_max</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;renumbering electrode numbers&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;renumbering electrode numbers&#39;</span><span class="p">)</span>
         <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">rec_max</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span>
 
     <span class="c1"># print(data)</span>

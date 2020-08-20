@@ -81,15 +81,6 @@ normal loading of tdip data
 
  .. code-block:: none
 
-    WARNING: One or more jumps in measurement numbers detected
-    The jump indices are:
-    989
-    Removing data points subsequent to the first jump
-    generating ids
-    assigning ids
-    renumbering electrode numbers
-    generating ids
-    assigning ids
            a   b   m   n    id norrec
     0      1   2   4   5   170    nor
     1      5   4   2   1   170    rec

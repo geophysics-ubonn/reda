@@ -30,3 +30,12 @@ spectrum = sip_response(
 
 # note the dtype indicates that no geometric factor was applied to the data
 fig = spectrum.plot(filename='spectrum.png', dtype='r', return_fig=True)
+
+#############################################################################
+# save data to ascii file
+sip.export_specs_to_ascii('frequencies.dat', 'data.dat')
+
+# optionally:
+# install ccd_tools: pip install ccd_tools
+# then in the command line, run:
+#   ccd_single  --plot --norm 10

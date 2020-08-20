@@ -51,8 +51,6 @@ import the data
 
     number of readings 47
     keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
-    generating ids
-    assigning ids
     Summary:
                       a             b  ...     frequency          rpha
     count  17296.000000  17296.000000  ...  17296.000000  17296.000000
@@ -67,8 +65,6 @@ import the data
     [8 rows x 7 columns]
     number of readings 47
     keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
-    generating ids
-    assigning ids
     Summary:
                       a             b  ...     frequency          rpha
     count  17296.000000  17296.000000  ...  17296.000000  17296.000000
@@ -949,7 +945,7 @@ improved in the future
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  37.108 seconds)
+   **Total running time of the script:** ( 0 minutes  40.132 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

@@ -87,8 +87,6 @@ create the container
 
  .. code-block:: none
 
-    generating ids
-    assigning ids
     Summary:
                      a            b  ...    frequency         rpha
     count  4125.000000  4125.000000  ...  4125.000000  4125.000000

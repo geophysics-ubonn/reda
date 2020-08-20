@@ -175,7 +175,7 @@
 <span class="sd">            produced dataframe. Default: 0</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        
+
         <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
         <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
             <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
@@ -266,12 +266,14 @@
 <span class="sd">            information with columns: &quot;x&quot;, &quot;y&quot;, &quot;z&quot;.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">()</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;b&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;m&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;n&#39;</span><span class="p">,</span>
-                                 <span class="s1">&#39;r&#39;</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;b&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;n&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;r&#39;</span><span class="p">,</span>
+        <span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_positions</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">topography</span> <span class="o">=</span> <span class="n">topography</span>
@@ -318,8 +320,6 @@
 <span class="sd">        ...     [3,4,2,1,-105]], columns=list(&quot;abmnr&quot;)</span>
 <span class="sd">        ... )</span>
 <span class="sd">        &gt;&gt;&gt; ert.compute_reciprocal_errors()</span>
-<span class="sd">        generating ids</span>
-<span class="sd">        assigning ids</span>
 <span class="sd">        &gt;&gt;&gt; ert.data[&quot;error&quot;].mean() == 0.1</span>
 <span class="sd">        True</span>
 <span class="sd">        &quot;&quot;&quot;</span>

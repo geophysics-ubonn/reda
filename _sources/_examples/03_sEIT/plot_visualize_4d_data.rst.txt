@@ -50,8 +50,6 @@ load the data set
 
  .. code-block:: none
 
-    generating ids
-    assigning ids
     Summary:
                       a             b  ...     frequency          rpha
     count  21090.000000  21090.000000  ...  21090.000000  21090.000000
@@ -64,8 +62,6 @@ load the data set
     max       39.000000     40.000000  ...   1000.000000      9.153910
 
     [8 rows x 7 columns]
-    generating ids
-    assigning ids
     Summary:
                       a             b  ...     frequency          rpha
     count  21090.000000  21090.000000  ...  21090.000000  21090.000000
@@ -78,8 +74,6 @@ load the data set
     max       39.000000     40.000000  ...   1000.000000      0.547236
 
     [8 rows x 7 columns]
-    generating ids
-    assigning ids
     Summary:
                       a             b  ...     frequency          rpha
     count  21090.000000  21090.000000  ...  21090.000000  21090.000000
@@ -92,8 +86,6 @@ load the data set
     max       39.000000     40.000000  ...   1000.000000      0.151707
 
     [8 rows x 7 columns]
-    generating ids
-    assigning ids
     Summary:
                       a             b  ...     frequency          rpha
     count  21090.000000  21090.000000  ...  21090.000000  21090.000000
@@ -345,7 +337,7 @@ just used to close the figures to save memory
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  32.920 seconds)
+   **Total running time of the script:** ( 0 minutes  36.362 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:

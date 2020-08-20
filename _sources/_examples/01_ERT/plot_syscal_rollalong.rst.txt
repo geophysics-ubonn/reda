@@ -52,11 +52,9 @@ create an ERT container and import first dataset
 
  .. code-block:: none
 
-    generating ids
-    assigning ids
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7f03c07e7c50>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7f5b1ac94f28>)
 
 
 
@@ -90,11 +88,9 @@ create an ERT container and import second dataset
 
  .. code-block:: none
 
-    generating ids
-    assigning ids
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7f03c0793a20>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7f5b1abdab38>)
 
 
 
@@ -152,10 +148,6 @@ thereby shifting electrode notations of the second dataset by 24 electrodes
 
  .. code-block:: none
 
-    generating ids
-    assigning ids
-    generating ids
-    assigning ids
     found duplicate coordinates!
     Generating histogram plot for key: r
     Generating histogram plot for key: rho_a

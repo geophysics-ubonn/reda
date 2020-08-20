@@ -55,11 +55,7 @@ data import:
 
  .. code-block:: none
 
-    generating ids
-    assigning ids
     renumbering electrode numbers
-    generating ids
-    assigning ids
 
 
 
