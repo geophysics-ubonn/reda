@@ -32,7 +32,7 @@ class LogDataChanges():
     ...     ERTContainer.data.loc[0, "r"] = 22
     ...     ERTContainer.data.query("r < 10", inplace=True)
     >>> # ERTContainer.print_log()
-    2... - root - INFO - Data change from 22 to 21
+    2... - root - INFO - Data size changed from 22 to 21
 
     """
 
@@ -64,11 +64,11 @@ class LogDataChanges():
         if(
             exc_type is not None or
             exc_value is not None or
-            traceback is not None):
+                traceback is not None):
             return
         self.data_size_after = self.container.data.shape[0]
         self.logger.info(
-            'Data change from {0} to {1}'.format(
+            'Data sized changed from {0} to {1}'.format(
                 self.data_size_before,
                 self.data_size_after,
             ),
