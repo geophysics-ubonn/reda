@@ -184,3 +184,20 @@ class SIP(BaseContainer, SIPImporters):
         if len(group_keys) > 1:
             p = p.swaplevel(0, 1).sort_index()
         return p
+
+    def frequencies(self):
+        """Return all frequencies"""
+        return np.array(list(self.data.groupby('frequency').groups.keys()))
+
+    def export_specs_to_ascii(self, frequency_file, data_file):
+        """
+
+        """
+        subdata = pd.pivot_table(
+            self.data.sort_values('frequency'),
+            index=['a', 'b', 'm', 'n'],
+            columns='frequency',
+            values=['r', 'rpha']
+        )
+        np.savetxt(frequency_file, self.frequencies())
+        np.savetxt(data_file, subdata.values)
