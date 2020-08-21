@@ -12,6 +12,7 @@ from .containers.CR import CR
 from .containers.TDIP import TDIP
 from .containers.ERT import ERT
 from .testing import test
+import reda.importers.eit_fzj as eit_fzj
 rcParams = {}
 
 # which inversion code should be used to compute geometric factors
@@ -33,6 +34,7 @@ search
 data
 ConfigManager
 transforms
+eit_fzj
 
 
 def version():

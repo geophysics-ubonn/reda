@@ -710,6 +710,10 @@ class sEIT(BaseContainer, sEITImporters):
         tdman = crtomo.tdMan(grid=grid, volt_data=data)
         return tdman
 
+    def export_to_ascii(
+            file_frequency='frequencies.dat', file_data='data.dat'):
+        pass
+
     def plot_histograms(
             self, column='r', primary_dim=None, filename=None, **kwargs):
         """Plot a histograms for all frequencies of one data column
