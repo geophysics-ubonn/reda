@@ -1,3 +1,4 @@
+import logging
 import functools
 import os
 
@@ -13,6 +14,8 @@ from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
 from reda.utils.decorators_and_managers import append_doc_of
 from reda.utils.decorators_and_managers import LogDataChanges
+
+logger = logging.getLogger(__name__)
 
 
 class ERTImporters(ImportersBase):
@@ -236,3 +239,51 @@ class ERT(BaseContainer, ERTImporters):
             error.to_frame().reset_index(), how='outer',
             on='id'
         )
+
+    def export_to_pygimli_scheme(self, norrec='nor', timestep=None):
+        """Export the data into a pygimili.DataContainerERT object.
+
+        For now, do NOT set any sensor positions
+
+        Parameters
+        ----------
+
+
+        Returns
+        -------
+        """
+        logger.info('Exporting to pygimli DataContainer')
+        logger.info('{} data will be exported'.format(norrec))
+        if timestep is None:
+            logger.info('No timestep selection is applied')
+        else:
+            logger.info('timestep(s) {} will be used'.format(timestep))
+
+        import pygimli as pg
+        data_container = pg.DataContainerERT()
+
+        query = ' '.join((
+            'norrec = "{}"'.format(norrec),
+        ))
+
+        if timestep is not None:
+            query += ' and timestep="{}"'.format(timestep)
+
+        logger.debug('Query: {}'.format(query))
+
+        subdata = self.data.query(query)
+        assert subdata.shape[0] != 0
+
+        data_container['a'] = subdata['a']
+        data_container['b'] = subdata['b']
+        data_container['m'] = subdata['m']
+        data_container['n'] = subdata['n']
+        data_container['r'] = subdata['r']
+
+        if 'k' in subdata.columns:
+            data_container['k'] = subdata['k']
+
+        if 'rho_a' in subdata.columns:
+            data_container['rhoa'] = subdata['rho_a']
+
+        return data_container
