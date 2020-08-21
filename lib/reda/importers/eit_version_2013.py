@@ -11,6 +11,7 @@ def _extract_adc_data(mat, **kwargs):
 
     """
     md = mat['MD'].squeeze()
+    frequencies = mat['MP']['fm'].take(0)
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
@@ -20,56 +21,57 @@ def _extract_adc_data(mat, **kwargs):
 
     dfl = []
     # loop over frequencies
-    for f_id in range(0, md.size):
-        # print('Frequency: ', emd[f_id]['fm'])
-        fdata = md[f_id]
-        # for name in fdata.dtype.names:
-        #     print(name, fdata[name].shape)
+    for f_id in range(0, frequencies.size):
+        frequency = frequencies[f_id]
+
+        def get_field(key):
+            indices = np.where(md['fm'].take(0) == frequencies[f_id])
+            return md[key].take(0)[indices]
 
         timestamp = np.atleast_2d(
-            [convert_epoch(x) for x in fdata['Time'].squeeze()]
-        ).T
-        data_list = []
-        for key, data in zip(
-                (
-                    'Ug3_1',
-                    'Ug3_2',
-                    'Ug3_3',
-                ), (
-                    fdata['Ug3'][:, :, 0],
-                    fdata['Ug3'][:, :, 1],
-                    fdata['Ug3'][:, :, 2],
-                )):
-            df = pd.DataFrame(
-                data, columns=['ch{:02}'.format(i) for i in range(48)]).T
-            df['parameter'] = key
-            df.set_index('parameter', append=True, inplace=True)
-            df = df.T
-            df['b'] = fdata['cni'][:, 1]
-            df['a'] = fdata['cni'][:, 0]
-            df.set_index(['a', 'b'], inplace=True)
-            data_list.append(df)
+            [convert_epoch(x) for x in get_field('Time')]
+        ).T.squeeze()
 
-        # merge everything
-        df_all = data_list[0]
-        if len(data_list) > 1:
-            for subdata in data_list[1:]:
-                df_all = pd.merge(
-                    df_all, subdata, left_index=True, right_index=True)
+        column_names = ['ch{:02}'.format(i) for i in range(48)]
+        ab = get_field('cni')
 
-        df_all['datetime'] = timestamp
-        df_all['frequency'] = fdata['fm']
-        dfl.append(df_all)
+        index_pairs = [
+            (channel, 'Ug3_{}'.format(i)) for channel in column_names
+            for i in range(3)
+        ]
+
+        Ug3 = get_field('Ug3')
+        ug3_reshaped = Ug3.reshape([Ug3.shape[0], Ug3.shape[1] * 3])
+        df = pd.DataFrame(
+            ug3_reshaped,
+            index=pd.MultiIndex.from_arrays(
+                [
+                    ab[:, 0], ab[:, 1], np.ones(ab.shape[0]) * frequency,
+                    timestamp
+                ],
+                names=['a', 'b', 'frequency', 'datetime']
+            ),
+            columns=pd.MultiIndex.from_tuples(
+               index_pairs, names=['channel', 'parameter'])
+        )
+        dfl.append(df)
 
     dfl = pd.concat(dfl)
-    dfl.set_index('frequency', append=True, inplace=True)
     dfl.sort_index(axis=0, inplace=True)
     dfl.sort_index(axis=1, inplace=True)
+
+    # import IPython
+    # IPython.embed()
     return dfl
 
 
 def _extract_md(mat, **kwargs):
+    """Note that the md struct for this version is structured differently than
+    the others...
+    """
     md = mat['MD'].squeeze()
+    frequencies = mat['MP']['fm'].take(0)
+
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
@@ -79,116 +81,37 @@ def _extract_md(mat, **kwargs):
 
     dfl = []
     # loop over frequencies
-    for f_id in range(0, md.size):
-        # print('Frequency: ', emd[f_id]['fm'])
-        fdata = md[f_id]
-        # for name in fdata.dtype.names:
-        #     print(name, fdata[name].shape)
-        # exit()
+    for f_id in range(0, frequencies.size):
+        def get_field(key):
+            indices = np.where(md['fm'].take(0) == frequencies[f_id])
+            return md[key].take(0)[indices]
 
         timestamp = np.atleast_2d(
-            [convert_epoch(x) for x in fdata['Time'].squeeze()]
-        ).T
-        df = pd.DataFrame(
-            np.hstack((
-                timestamp,
-                fdata['cni'],
-                fdata['U0'][:, np.newaxis],
-                # fdata['Cl3'],
-                fdata['Zg3'],
-                fdata['As3'][:, 0, :].squeeze(),
-                fdata['As3'][:, 1, :].squeeze(),
-                fdata['As3'][:, 2, :].squeeze(),
-                fdata['As3'][:, 3, :].squeeze(),
-                fdata['Is3'],
-                # fdata['Yl3'],
-                fdata['Il3'],
-            ))
-        )
-        df.columns = (
-            'datetime',
-            'a',
-            'b',
-            'U0',
-            # 'Cl1',
-            # 'Cl2',
-            # 'Cl3',
-            'Zg1',
-            'Zg2',
-            'Zg3',
-            'ShuntVoltage1_1',
-            'ShuntVoltage1_2',
-            'ShuntVoltage1_3',
-            'ShuntVoltage2_1',
-            'ShuntVoltage2_2',
-            'ShuntVoltage2_3',
-            'ShuntVoltage3_1',
-            'ShuntVoltage3_2',
-            'ShuntVoltage3_3',
-            'ShuntVoltage4_1',
-            'ShuntVoltage4_2',
-            'ShuntVoltage4_3',
-            'Is1',
-            'Is2',
-            'Is3',
-            # 'Yl1',
-            # 'Yl2',
-            # 'Yl3',
-            'Il1',
-            'Il2',
-            'Il3',
-        )
+            [convert_epoch(x) for x in get_field('Time')]
+        ).T.squeeze()
 
-        df['datetime'] = pd.to_datetime(df['datetime'])
-        df['a'] = df['a'].astype(int)
-        df['b'] = df['b'].astype(int)
-        # df['Cl1'] = df['Cl1'].astype(complex)
-        # df['Cl2'] = df['Cl2'].astype(complex)
-        # df['Cl3'] = df['Cl3'].astype(complex)
-        df['Zg1'] = df['Zg1'].astype(complex)
-        df['Zg2'] = df['Zg2'].astype(complex)
-        df['Zg3'] = df['Zg3'].astype(complex)
+        df = pd.DataFrame()
+        df['datetime'] = timestamp
+        ab = get_field('cni')
+        df['a'] = ab[:, 0]
+        df['b'] = ab[:, 1]
+        df['U0'] = get_field('U0')
+        Is3 = get_field('Is3')
+        df['Is1'] = Is3[:, 0]
+        df['Is2'] = Is3[:, 1]
+        df['Is3'] = Is3[:, 2]
+        df['Is'] = np.mean(Is3, axis=1)
+        # [mA]
+        df['Iab'] = df['Is'] * 1000
+        Il3 = get_field('Il3')
+        df['Il1'] = Il3[:, 0]
+        df['Il2'] = Il3[:, 1]
+        df['Il3'] = Il3[:, 2]
+        df['Il'] = np.mean(Il3, axis=1)
+        # [mA]
+        df['Ileakage'] = df['Il'] * 1000
 
-        # df['Yl1'] = df['Yl1'].astype(complex)
-        # df['Yl2'] = df['Yl2'].astype(complex)
-        # df['Yl3'] = df['Yl3'].astype(complex)
-
-        for key in ('Il1', 'Il2', 'Il3'):
-            df[key] = df[key].astype(complex)
-
-        df['ShuntVoltage1_1'] = df['ShuntVoltage1_1'].astype(complex)
-        df['ShuntVoltage1_2'] = df['ShuntVoltage1_2'].astype(complex)
-        df['ShuntVoltage1_3'] = df['ShuntVoltage1_3'].astype(complex)
-
-        df['ShuntVoltage2_1'] = df['ShuntVoltage2_1'].astype(complex)
-        df['ShuntVoltage2_2'] = df['ShuntVoltage2_2'].astype(complex)
-        df['ShuntVoltage2_3'] = df['ShuntVoltage2_3'].astype(complex)
-
-        df['ShuntVoltage3_1'] = df['ShuntVoltage3_1'].astype(complex)
-        df['ShuntVoltage3_2'] = df['ShuntVoltage3_2'].astype(complex)
-        df['ShuntVoltage3_3'] = df['ShuntVoltage3_3'].astype(complex)
-
-        df['ShuntVoltage4_1'] = df['ShuntVoltage4_1'].astype(complex)
-        df['ShuntVoltage4_2'] = df['ShuntVoltage4_2'].astype(complex)
-        df['ShuntVoltage4_3'] = df['ShuntVoltage4_3'].astype(complex)
-
-        df['Is1'] = df['Is1'].astype(complex)
-        df['Is2'] = df['Is2'].astype(complex)
-        df['Is3'] = df['Is3'].astype(complex)
-
-        df['Is'] = np.mean(df[['Is1', 'Is2', 'Is3']].values, axis=1)
-        # "standard" injected current, in [mA]
-        df['Iab'] = np.abs(df['Is']) * 1e3
-        df['Iab'] = df['Iab'].astype(float)
-
-        df['Il'] = np.mean(df[['Il1', 'Il2', 'Il3']].values, axis=1)
-        # take absolute value and convert to mA
-        df['Ileakage'] = np.abs(df['Il']) * 1e3
-        df['Ileakage'] = df['Ileakage'].astype(float)
-
-        df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']], axis=1)
-
-        df['frequency'] = np.ones(df.shape[0]) * fdata['fm']
+        df['frequency'] = frequencies[f_id]
         dfl.append(df)
 
     df = pd.concat(dfl)

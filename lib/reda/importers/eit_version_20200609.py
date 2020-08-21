@@ -80,6 +80,13 @@ def _extract_adc_data(mat, **kwargs):
 
 def _extract_md(mat, **kwargs):
     md = mat['MD'].squeeze()
+    # current channel adc numbers:
+    # 1: before shunt, first channel
+    # 2: second shunt, first channel
+    # 3: before shunt, second channel
+    # 4: second shunt, second channel
+    nai = mat['MP']['NAI'].take(0)
+
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
@@ -164,6 +171,22 @@ def _extract_md(mat, **kwargs):
         df['Yl1'] = fdata['Yl3'][:, 0]
         df['Yl2'] = fdata['Yl3'][:, 1]
         df['Yl3'] = fdata['Yl3'][:, 2]
+
+        df['U1_Shunt1_before'] = fdata['Us3'][:, nai[0], 0]
+        df['U2_Shunt1_before'] = fdata['Us3'][:, nai[0], 1]
+        df['U3_Shunt1_before'] = fdata['Us3'][:, nai[0], 2]
+
+        df['U1_Shunt1_after'] = fdata['Us3'][:, nai[1], 0]
+        df['U2_Shunt1_after'] = fdata['Us3'][:, nai[1], 1]
+        df['U3_Shunt1_after'] = fdata['Us3'][:, nai[1], 2]
+
+        df['U1_Shunt2_before'] = fdata['Us3'][:, nai[2], 0]
+        df['U2_Shunt2_before'] = fdata['Us3'][:, nai[2], 1]
+        df['U3_Shunt2_before'] = fdata['Us3'][:, nai[2], 2]
+
+        df['U1_Shunt2_after'] = fdata['Us3'][:, nai[3], 0]
+        df['U2_Shunt2_after'] = fdata['Us3'][:, nai[3], 1]
+        df['U3_Shunt2_after'] = fdata['Us3'][:, nai[3], 2]
 
         dfl.append(df)
 
