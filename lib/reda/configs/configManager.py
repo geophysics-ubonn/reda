@@ -1028,3 +1028,7 @@ class ConfigManager(object):
         if self.configs is None:
             return None
         return np.unique(self.configs[:, 0:2], axis=0)
+
+    @property
+    def unique_injections(self):
+        return self.get_unique_current_injections()
