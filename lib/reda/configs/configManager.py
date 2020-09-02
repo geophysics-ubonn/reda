@@ -126,20 +126,26 @@ class ConfigManager(object):
         ----------
         filename: string
             absolute or relative path to a mcf-file
-        
+
         Returns
         -------
         Nx2 numpy array with current injections
         """
 
         injections = []
-        #load all injections
+        # load all injections
         with open(filename, encoding="latin-1") as mcf:
             for line in mcf:
                 if line[:2] == "SE":
-                    injections.append((line[3:6],line[7:10]))
-        #remove every second line to remove double entries
-        injections = np.asarray(injections[0::2], dtype=int)
+                    injections.append((line[3:6], line[7:10]))
+
+        # convert to array
+        injections = np.asarray(injections, dtype=int)
+        # remove double entries because only one current injection
+        # is needed for configs
+        mask = np.less(injections[:, 0], injections[:, 1])
+        injections = injections[mask]
+
         return(injections)
 
     def load_crmod_config(self, filename):
