@@ -743,43 +743,46 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 <tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_pygimli</span></code>(electrodes, filename)</p></td>
 <td><p>Export to unified data format used in pyGIMLi &amp; BERT.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(query[, inplace])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.containers.ERT.ERT.export_to_pygimli_scheme" title="reda.containers.ERT.ERT.export_to_pygimli_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">export_to_pygimli_scheme</span></code></a>([norrec, timestep])</p></td>
+<td><p>Export the data into a pygimili.DataContainerERT object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">filter</span></code>(query[, inplace])</p></td>
 <td><p>Use a query statement to filter data.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>()</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">has_multiple_timesteps</span></code>()</p></td>
 <td><p>Return True if container has multiple timesteps.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>([column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">histogram</span></code>([column, filename, log10])</p></td>
 <td><p>Plot a histogram of one data column</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename, **kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_bert</span></code>(filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(filename, **kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_mpt</span></code>(filename, **kwargs)</p></td>
 <td><p>MPT DAS 1 importer</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename, **kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_pygimli</span></code>(filename, **kwargs)</p></td>
 <td><p>BERT .ohm file importConstruct pandas data frame from BERT`s unified data format (.ohm).</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename, **kwargs)</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_bin</span></code>(filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename, **kwargs)</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_syscal_txt</span></code>(filename, **kwargs)</p></td>
 <td><p>Syscal import</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>([column, filename, log10])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection</span></code>([column, filename, log10])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>([column, filename, log10])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">pseudosection_type3</span></code>([column, filename, log10])</p></td>
 <td><p>Plot a pseudosection of the given column.</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>([name])</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">setup_logger</span></code>([name])</p></td>
 <td><p>Setup a logger</p></td>
 </tr>
-<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset, filter[, inplace])</p></td>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">sub_filter</span></code>(subset, filter[, inplace])</p></td>
 <td><p>Apply a filter to subset of the data</p></td>
 </tr>
-<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>()</p></td>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_configs</span></code>()</p></td>
 <td><p>Return a config object that contains the measurement configurations (a,b,m,n) from the data</p></td>
 </tr>
 </tbody>
@@ -832,6 +835,13 @@ to:</p>
 <span class="go">True</span>
 </pre></div>
 </div>
+</dd></dl>
+
+<dl class="py method">
+<dt id="reda.containers.ERT.ERT.export_to_pygimli_scheme">
+<code class="sig-name descname">export_to_pygimli_scheme</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">norrec</span><span class="o">=</span><span class="default_value">'nor'</span></em>, <em class="sig-param"><span class="n">timestep</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/ERT.html#ERT.export_to_pygimli_scheme"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.ERT.ERT.export_to_pygimli_scheme" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the data into a pygimili.DataContainerERT object.</p>
+<p>For now, do NOT set any sensor positions</p>
 </dd></dl>
 
 </dd></dl>
@@ -1690,10 +1700,13 @@ tomographic analysis.</p>
 <col style="width: 31%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><strong>print_data_journal</strong></p></td>
+<tr class="row-odd"><td><p><strong>export_to_ascii</strong></p></td>
 <td></td>
 </tr>
-<tr class="row-even"><td><p><strong>print_log</strong></p></td>
+<tr class="row-even"><td><p><strong>print_data_journal</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>print_log</strong></p></td>
 <td></td>
 </tr>
 </tbody>
@@ -1731,6 +1744,11 @@ reda.utils.geometric_factors</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="py method">
+<dt id="reda.containers.sEIT.sEIT.export_to_ascii">
+<code class="sig-name descname">export_to_ascii</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file_data</span><span class="o">=</span><span class="default_value">'data.dat'</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/containers/sEIT.html#sEIT.export_to_ascii"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.containers.sEIT.sEIT.export_to_ascii" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="reda.containers.sEIT.sEIT.export_to_crtomo_multi_frequency">

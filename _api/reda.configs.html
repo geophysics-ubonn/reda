@@ -135,6 +135,7 @@
 <dd class="field-odd"><dl class="simple">
 <dt><a class="reference internal" href="#reda.configs.configManager.ConfigManager.nr_of_configs" title="reda.configs.configManager.ConfigManager.nr_of_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">nr_of_configs</span></code></a></dt><dd><p>Return number of configurations</p>
 </dd>
+<dt><strong>unique_injections</strong></dt><dd></dd>
 </dl>
 </dd>
 </dl>
@@ -193,28 +194,31 @@
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_crmod_volt" title="reda.configs.configManager.ConfigManager.load_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_crmod_volt</span></code></a>(filename)</p></td>
 <td><p>Load a CRMod measurement file (commonly called volt.dat)</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_duplicates" title="reda.configs.configManager.ConfigManager.remove_duplicates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_duplicates</span></code></a>([configs])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.load_injections_from_mcf" title="reda.configs.configManager.ConfigManager.load_injections_from_mcf"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_injections_from_mcf</span></code></a>()</p></td>
+<td><p>Load injections from a mcf-file used by the sEIT-systems from FZJ; Injections in the file must be formatted like the following: SE 001 002 SE 002 001 .</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_duplicates" title="reda.configs.configManager.ConfigManager.remove_duplicates"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_duplicates</span></code></a>([configs])</p></td>
 <td><p>remove duplicate entries from 4-point configurations.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_max_dipole_sep" title="reda.configs.configManager.ConfigManager.remove_max_dipole_sep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_max_dipole_sep</span></code></a>([maxsep])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.remove_max_dipole_sep" title="reda.configs.configManager.ConfigManager.remove_max_dipole_sep"><code class="xref py py-obj docutils literal notranslate"><span class="pre">remove_max_dipole_sep</span></code></a>([maxsep])</p></td>
 <td><p>Remove configurations with dipole separations higher than <cite>maxsep</cite>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal" title="reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_into_normal_and_reciprocal</span></code></a>([pad, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal" title="reda.configs.configManager.ConfigManager.split_into_normal_and_reciprocal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">split_into_normal_and_reciprocal</span></code></a>([pad, …])</p></td>
 <td><p>Split the stored configurations into normal and reciprocal measurements</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_iris_syscal" title="reda.configs.configManager.ConfigManager.to_iris_syscal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_iris_syscal</span></code></a>(filename[, spacing])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_iris_syscal" title="reda.configs.configManager.ConfigManager.to_iris_syscal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_iris_syscal</span></code></a>(filename[, spacing])</p></td>
 <td><p>Export to IRIS Instrument configuration file</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_pg_scheme" title="reda.configs.configManager.ConfigManager.to_pg_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pg_scheme</span></code></a>([container, positions])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.to_pg_scheme" title="reda.configs.configManager.ConfigManager.to_pg_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">to_pg_scheme</span></code></a>([container, positions])</p></td>
 <td><p>Convert the configuration to a pygimli measurement scheme</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_configs" title="reda.configs.configManager.ConfigManager.write_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_configs</span></code></a>(filename)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_configs" title="reda.configs.configManager.ConfigManager.write_configs"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_configs</span></code></a>(filename)</p></td>
 <td><p>Write configs to file in four columns</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_config" title="reda.configs.configManager.ConfigManager.write_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_config</span></code></a>(filename)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_config" title="reda.configs.configManager.ConfigManager.write_crmod_config"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_config</span></code></a>(filename)</p></td>
 <td><p>Write the configurations to a configuration file in the CRMod format All configurations are merged into one previor to writing to file</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_volt" title="reda.configs.configManager.ConfigManager.write_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_volt</span></code></a>(filename, mid)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.configs.configManager.ConfigManager.write_crmod_volt" title="reda.configs.configManager.ConfigManager.write_crmod_volt"><code class="xref py py-obj docutils literal notranslate"><span class="pre">write_crmod_volt</span></code></a>(filename, mid)</p></td>
 <td><p>Write the measurements to the output file in the volt.dat file format that can be read by CRTomo.</p></td>
 </tr>
 </tbody>
@@ -648,6 +652,31 @@ cfg.get_unique_current_injections()</p>
 </dd></dl>
 
 <dl class="py method">
+<dt id="reda.configs.configManager.ConfigManager.load_injections_from_mcf">
+<code class="sig-name descname">load_injections_from_mcf</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/configs/configManager.html#ConfigManager.load_injections_from_mcf"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.configs.configManager.ConfigManager.load_injections_from_mcf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load injections from a mcf-file used by the sEIT-systems from FZJ;
+Injections in the file must be formatted like the following:
+SE 001 002
+SE 002 001
+.
+.
+.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>filename: string</strong></dt><dd><p>absolute or relative path to a mcf-file</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>Nx2 numpy array with current injections</dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt id="reda.configs.configManager.ConfigManager.nr_of_configs">
 <em class="property">property </em><code class="sig-name descname">nr_of_configs</code><a class="headerlink" href="#reda.configs.configManager.ConfigManager.nr_of_configs" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return number of configurations</p>
@@ -782,6 +811,11 @@ xyz = np.vstack((x, y, z)).T
 scheme = configs.to_pg_scheme(positions=xyz)
 print(scheme)</p>
 </dd></dl>
+
+<dl class="py method">
+<dt id="reda.configs.configManager.ConfigManager.unique_injections">
+<em class="property">property </em><code class="sig-name descname">unique_injections</code><a class="headerlink" href="#reda.configs.configManager.ConfigManager.unique_injections" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 <dl class="py method">
 <dt id="reda.configs.configManager.ConfigManager.write_configs">

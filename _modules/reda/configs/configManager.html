@@ -229,6 +229,41 @@
         <span class="n">configs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">add_to_configs</span><span class="p">(</span><span class="n">configs</span><span class="p">)</span></div>
 
+<div class="viewcode-block" id="ConfigManager.load_injections_from_mcf"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_injections_from_mcf">[docs]</a>    <span class="k">def</span> <span class="nf">load_injections_from_mcf</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Load injections from a mcf-file used by the sEIT-systems from FZJ;</span>
+<span class="sd">        Injections in the file must be formatted like the following:</span>
+<span class="sd">        SE 001 002</span>
+<span class="sd">        SE 002 001</span>
+<span class="sd">        .</span>
+<span class="sd">        .</span>
+<span class="sd">        .</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename: string</span>
+<span class="sd">            absolute or relative path to a mcf-file</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        Nx2 numpy array with current injections</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">injections</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="c1"># load all injections</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;latin-1&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">mcf</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">mcf</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">line</span><span class="p">[:</span><span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&quot;SE&quot;</span><span class="p">:</span>
+                    <span class="n">injections</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">6</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">7</span><span class="p">:</span><span class="mi">10</span><span class="p">]))</span>
+
+        <span class="c1"># convert to array</span>
+        <span class="n">injections</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">injections</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+        <span class="c1"># remove double entries because only one current injection</span>
+        <span class="c1"># is needed for configs</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">less</span><span class="p">(</span><span class="n">injections</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">injections</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span>
+        <span class="n">injections</span> <span class="o">=</span> <span class="n">injections</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+        <span class="k">return</span><span class="p">(</span><span class="n">injections</span><span class="p">)</span></div>
+
 <div class="viewcode-block" id="ConfigManager.load_crmod_config"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_config">[docs]</a>    <span class="k">def</span> <span class="nf">load_crmod_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load a CRMod configuration file</span>
 
@@ -1143,7 +1178,11 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
             <span class="k">return</span> <span class="kc">None</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div></div>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">unique_injections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_unique_current_injections</span><span class="p">()</span></div>
 </pre></div>
 
           </div>
