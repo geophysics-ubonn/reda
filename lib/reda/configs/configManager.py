@@ -113,6 +113,35 @@ class ConfigManager(object):
         configs = np.loadtxt(filename)
         self.add_to_configs(configs)
 
+    def load_injections_from_mcf(filename):
+        """Load injections from a mcf-file used by the sEIT-systems from FZJ;
+        Injections in the file must be formatted like the following:
+        SE 001 002
+        SE 002 001
+        .
+        .
+        .
+
+        Parameters
+        ----------
+        filename: string
+            absolute or relative path to a mcf-file
+        
+        Returns
+        -------
+        Nx2 numpy array with current injections
+        """
+
+        injections = []
+        #load all injections
+        with open(filename, encoding="latin-1") as mcf:
+            for line in mcf:
+                if line[:2] == "SE":
+                    injections.append((line[3:6],line[7:10]))
+        #remove every second line to remove double entries
+        injections = np.asarray(injections[0::2], dtype=int)
+        return(injections)
+
     def load_crmod_config(self, filename):
         """Load a CRMod configuration file
 
