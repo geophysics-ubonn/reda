@@ -12,6 +12,9 @@ def _extract_adc_data(mat, **kwargs):
     """
     md = mat['MD'].squeeze()
     frequencies = mat['MP']['fm'].take(0)
+    # import IPython
+    # IPython.embed()
+    # exit()
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
 
@@ -25,8 +28,8 @@ def _extract_adc_data(mat, **kwargs):
         frequency = frequencies[f_id]
 
         def get_field(key):
-            indices = np.where(md['fm'].take(0) == frequencies[f_id])
-            return md[key].take(0)[indices]
+            indices = np.where(md['fm'].take(f_id) == frequencies[f_id])
+            return md[key].take(f_id)[indices]
 
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in get_field('Time')]
@@ -46,7 +49,9 @@ def _extract_adc_data(mat, **kwargs):
             ug3_reshaped,
             index=pd.MultiIndex.from_arrays(
                 [
-                    ab[:, 0], ab[:, 1], np.ones(ab.shape[0]) * frequency,
+                    ab[:, 0],
+                    ab[:, 1],
+                    np.ones(ab.shape[0]) * frequency,
                     timestamp
                 ],
                 names=['a', 'b', 'frequency', 'datetime']
@@ -60,8 +65,6 @@ def _extract_adc_data(mat, **kwargs):
     dfl.sort_index(axis=0, inplace=True)
     dfl.sort_index(axis=1, inplace=True)
 
-    # import IPython
-    # IPython.embed()
     return dfl
 
 
@@ -83,8 +86,8 @@ def _extract_md(mat, **kwargs):
     # loop over frequencies
     for f_id in range(0, frequencies.size):
         def get_field(key):
-            indices = np.where(md['fm'].take(0) == frequencies[f_id])
-            return md[key].take(0)[indices]
+            indices = np.where(md['fm'].take(f_id) == frequencies[f_id])
+            return md[key].take(f_id)[indices]
 
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in get_field('Time')]
