@@ -9,6 +9,7 @@ import os
 from numbers import Number
 
 import numpy as np
+import pandas as pd
 
 from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
@@ -771,3 +772,45 @@ class sEIT(BaseContainer, sEITImporters):
             return 0
         group_ts = self.data.groupby('timestep')
         return group_ts.ngroups
+
+    def correct_for_cable_inductances(self, inductance_matrix):
+        if isinstance(inductance_matrix, np.ndarray):
+            L_matrix = inductance_matrix
+        else:
+            # assume this is a filename
+            import scipy.io
+            mat = scipy.io.loadmat('MDSH.mat', squeeze_me=True)
+            L_matrix = mat['L12']
+
+        def get_mutual_inductance(item):
+            # determine single elements
+            m_1_1 = L_matrix[item['a'] - 1, item['m'] - 1]
+            m_1_2 = L_matrix[item['a'] - 1, item['n'] - 1]
+            m_2_1 = L_matrix[item['b'] - 1, item['m'] - 1]
+            m_2_2 = L_matrix[item['b'] - 1, item['n'] - 1]
+            # Zhao  et al 2015
+            M = (m_1_1 - m_1_2) - (m_2_1 - m_2_2)
+            inductance = item['frequency'] * 2 * np.pi * M
+            return inductance
+
+        self.data['inductance'] = self.data.apply(
+            get_mutual_inductance, axis=1
+        )
+
+        def apply_inductance(item):
+            # we need to change Zt, and then compute r, rpha
+            Zt = item['Zt'] - 1j * item['inductance']
+            rpha = np.arctan2(np.imag(Zt), np.real(Zt)) * 1000
+            r = np.abs(Zt)
+
+            return pd.Series({
+                'Zt': Zt,
+                'r': r,
+                'rpha': rpha
+            })
+
+        tmpdf = self.data.apply(apply_inductance, axis=1)
+        tmpdf['rpha'] = tmpdf['rpha'].astype(float)
+        tmpdf['r'] = tmpdf['r'].astype(float)
+
+        self.data[['Zt', 'r', 'rpha']] = tmpdf[['Zt', 'r', 'rpha']]
