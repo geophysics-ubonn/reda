@@ -447,13 +447,13 @@ Time-domain induced polarization
 
   .. container:: sphx-glr-download sphx-glr-download-python
 
-    :download:`Download all examples in Python source code: _examples_python.zip <//home/travis/build/geophysics-ubonn/reda/doc/_examples/_examples_python.zip>`
+    :download:`Download all examples in Python source code: _examples_python.zip </_examples/_examples_python.zip>`
 
 
 
   .. container:: sphx-glr-download sphx-glr-download-jupyter
 
-    :download:`Download all examples in Jupyter notebooks: _examples_jupyter.zip <//home/travis/build/geophysics-ubonn/reda/doc/_examples/_examples_jupyter.zip>`
+    :download:`Download all examples in Jupyter notebooks: _examples_jupyter.zip </_examples/_examples_jupyter.zip>`
 
 
 .. only:: html

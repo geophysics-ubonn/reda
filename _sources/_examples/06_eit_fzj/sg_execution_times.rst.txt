@@ -5,16 +5,16 @@
 
 Computation times
 =================
-**00:57.001** total execution time for **_examples_06_eit_fzj** files:
+**00:49.972** total execution time for **_examples_06_eit_fzj** files:
 
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj.py` (``plot_eit_fzj.py``)                                   | 00:52.030 | 0.0 MB |
+| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj.py` (``plot_eit_fzj.py``)                                   | 00:45.419 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_06_eit_fzj_plot_04_analyze_ug.py` (``plot_04_analyze_ug.py``)                       | 00:02.540 | 0.0 MB |
+| :ref:`sphx_glr__examples_06_eit_fzj_plot_04_analyze_ug.py` (``plot_04_analyze_ug.py``)                       | 00:02.368 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_check.py` (``plot_eit_fzj_check.py``)                       | 00:01.106 | 0.0 MB |
+| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_check.py` (``plot_eit_fzj_check.py``)                       | 00:00.976 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_leakage_currents.py` (``plot_eit_fzj_leakage_currents.py``) | 00:01.045 | 0.0 MB |
+| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_leakage_currents.py` (``plot_eit_fzj_leakage_currents.py``) | 00:00.950 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_li.py` (``plot_eit_fzj_li.py``)                             | 00:00.280 | 0.0 MB |
+| :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_li.py` (``plot_eit_fzj_li.py``)                             | 00:00.260 | 0.0 MB |
 +--------------------------------------------------------------------------------------------------------------+-----------+--------+

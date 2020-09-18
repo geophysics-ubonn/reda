@@ -125,6 +125,7 @@
 <span class="kn">from</span> <span class="nn">numbers</span> <span class="kn">import</span> <span class="n">Number</span>
 
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
 <span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">ImportersBase</span>
 <span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">BaseContainer</span>
@@ -886,7 +887,49 @@
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">:</span>
             <span class="k">return</span> <span class="mi">0</span>
         <span class="n">group_ts</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">group_ts</span><span class="o">.</span><span class="n">ngroups</span></div>
+        <span class="k">return</span> <span class="n">group_ts</span><span class="o">.</span><span class="n">ngroups</span>
+
+<div class="viewcode-block" id="sEIT.correct_for_cable_inductances"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.sEIT.sEIT.correct_for_cable_inductances">[docs]</a>    <span class="k">def</span> <span class="nf">correct_for_cable_inductances</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inductance_matrix</span><span class="p">):</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">inductance_matrix</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+            <span class="n">L_matrix</span> <span class="o">=</span> <span class="n">inductance_matrix</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># assume this is a filename</span>
+            <span class="kn">import</span> <span class="nn">scipy.io</span>
+            <span class="n">mat</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">io</span><span class="o">.</span><span class="n">loadmat</span><span class="p">(</span><span class="s1">&#39;MDSH.mat&#39;</span><span class="p">,</span> <span class="n">squeeze_me</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <span class="n">L_matrix</span> <span class="o">=</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;L12&#39;</span><span class="p">]</span>
+
+        <span class="k">def</span> <span class="nf">get_mutual_inductance</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="c1"># determine single elements</span>
+            <span class="n">m_1_1</span> <span class="o">=</span> <span class="n">L_matrix</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">m_1_2</span> <span class="o">=</span> <span class="n">L_matrix</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">m_2_1</span> <span class="o">=</span> <span class="n">L_matrix</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="n">m_2_2</span> <span class="o">=</span> <span class="n">L_matrix</span><span class="p">[</span><span class="n">item</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+            <span class="c1"># Zhao  et al 2015</span>
+            <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">m_1_1</span> <span class="o">-</span> <span class="n">m_1_2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="n">m_2_1</span> <span class="o">-</span> <span class="n">m_2_2</span><span class="p">)</span>
+            <span class="n">inductance</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="n">M</span>
+            <span class="k">return</span> <span class="n">inductance</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;inductance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span>
+            <span class="n">get_mutual_inductance</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span>
+        <span class="p">)</span>
+
+        <span class="k">def</span> <span class="nf">apply_inductance</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
+            <span class="c1"># we need to change Zt, and then compute r, rpha</span>
+            <span class="n">Zt</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;inductance&#39;</span><span class="p">]</span>
+            <span class="n">rpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">Zt</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Zt</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1000</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Zt</span><span class="p">)</span>
+
+            <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">({</span>
+                <span class="s1">&#39;Zt&#39;</span><span class="p">:</span> <span class="n">Zt</span><span class="p">,</span>
+                <span class="s1">&#39;r&#39;</span><span class="p">:</span> <span class="n">r</span><span class="p">,</span>
+                <span class="s1">&#39;rpha&#39;</span><span class="p">:</span> <span class="n">rpha</span>
+            <span class="p">})</span>
+
+        <span class="n">tmpdf</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">apply_inductance</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">tmpdf</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmpdf</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+        <span class="n">tmpdf</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmpdf</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">tmpdf</span><span class="p">[[</span><span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rpha&#39;</span><span class="p">]]</span></div></div>
 </pre></div>
 
           </div>
