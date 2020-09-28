@@ -184,17 +184,22 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">df_all</span> <span class="o">=</span> <span class="n">import_sip04_data_all</span><span class="p">(</span><span class="n">data_filename</span><span class="p">)</span>
-    <span class="n">columns_to_keep</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Temp_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Temp_2&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Zm_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Zm_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Zm_3&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Zg_m&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;zt&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;Rs&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;r&#39;</span><span class="p">,</span>
-        <span class="s1">&#39;rpha&#39;</span><span class="p">,</span>
-    <span class="p">]</span>
+    <span class="n">columns_to_keep</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span>
+        <span class="nb">set</span><span class="p">(</span><span class="n">df_all</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span> <span class="o">&amp;</span>
+        <span class="nb">set</span><span class="p">([</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;frequency&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Temp_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Temp_2&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zm_1&#39;</span><span class="p">,</span> <span class="s1">&#39;Zm_2&#39;</span><span class="p">,</span> <span class="s1">&#39;Zm_3&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Zg_m&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;zt&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;Rs&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;r&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;rpha&#39;</span><span class="p">,</span>
+        <span class="p">])</span>
+    <span class="p">)</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df_all</span><span class="p">[</span><span class="n">columns_to_keep</span><span class="p">]</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span>
         <span class="s1">&#39;Rs&#39;</span><span class="p">:</span> <span class="s1">&#39;ShuntResistance&#39;</span><span class="p">,</span>
@@ -244,8 +249,16 @@
 
     <span class="c1"># loading all parameters from the .mat file to the DataFrame &#39;df&#39;</span>
     <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;fm&#39;</span><span class="p">],</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;fm&#39;</span><span class="p">])</span>  <span class="c1"># frequencies</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
+    <span class="k">if</span> <span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Temp&#39;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_1&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_2&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
+            <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
+        <span class="p">)</span>
+
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Time&#39;</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zm_1&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Zm&#39;</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zm_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Zm&#39;</span><span class="p">][:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
@@ -301,10 +314,6 @@
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Us4_m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">mat</span><span class="p">[</span><span class="s1">&#39;Usm&#39;</span><span class="p">][:,</span> <span class="mi">3</span><span class="p">],</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
 
     <span class="c1"># calculate other values, e.g. used in the .csv-file</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span>
-        <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">([</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_1&#39;</span><span class="p">],</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Temp_2&#39;</span><span class="p">]],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span>
-        <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span>
-    <span class="p">)</span>
     <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zm_mAbs&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zm_m&#39;</span><span class="p">]),</span> <span class="n">index</span><span class="o">=</span><span class="n">df</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
     <span class="n">Zm_1Abs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zm_1&#39;</span><span class="p">])</span>
     <span class="n">Zm_2Abs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Zm_2&#39;</span><span class="p">])</span>
@@ -493,8 +502,11 @@
     <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;Zm_m&#39;</span><span class="p">]</span>
 
     <span class="c1"># compute magnitude and phase [in mrad]</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">])</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]))</span> <span class="o">*</span> <span class="mi">1000</span>
+    <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">])</span>
+    <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;rpha&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">]),</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;zt&#39;</span><span class="p">])</span>
+    <span class="p">)</span> <span class="o">*</span> <span class="mi">1000</span>
 
     <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;frequency&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_merged</span><span class="p">[</span><span class="s1">&#39;fm&#39;</span><span class="p">]</span>
 
