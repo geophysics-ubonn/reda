@@ -68,17 +68,22 @@ def import_sip04_data(data_filename):
 
     """
     df_all = import_sip04_data_all(data_filename)
-    columns_to_keep = [
-        'a', 'b', 'm', 'n',
-        'frequency',
-        'Temp_1', 'Temp_2',
-        'Zm_1', 'Zm_2', 'Zm_3',
-        'Zg_m',
-        'zt',
-        'Rs',
-        'r',
-        'rpha',
-    ]
+    columns_to_keep = list(
+        set(df_all.columns) &
+        set([
+            'a', 'b', 'm', 'n',
+            'frequency',
+            'Temp_1', 'Temp_2',
+            'Zm_1', 'Zm_2', 'Zm_3',
+            'Zg_m',
+            'zt',
+            'Rs',
+            'r',
+            'rpha',
+        ])
+    )
+    # import IPython
+    # IPython.embed()
     df = df_all[columns_to_keep]
     df = df.rename(columns={
         'Rs': 'ShuntResistance',
@@ -128,8 +133,16 @@ def _import_mat_file(mat_filename):
 
     # loading all parameters from the .mat file to the DataFrame 'df'
     df = pd.DataFrame(mat['fm'], columns=['fm'])  # frequencies
-    df['Temp_1'] = pd.Series(mat['Temp'][:, 0], index=df.index)
-    df['Temp_2'] = pd.Series(mat['Temp'][:, 1], index=df.index)
+    # import IPython
+    # IPython.embed()
+    if mat['Temp'].size > 0:
+        df['Temp_1'] = pd.Series(mat['Temp'][:, 0], index=df.index)
+        df['Temp_2'] = pd.Series(mat['Temp'][:, 1], index=df.index)
+        df['Temp_m'] = pd.Series(
+            np.mean([df['Temp_1'], df['Temp_2']], axis=0),
+            index=df.index
+        )
+
     df['Time'] = pd.Series(mat['Time'], index=df.index)
     df['Zm_1'] = pd.Series(mat['Zm'][:, 0], index=df.index)
     df['Zm_2'] = pd.Series(mat['Zm'][:, 1], index=df.index)
@@ -185,10 +198,6 @@ def _import_mat_file(mat_filename):
     df['Us4_m'] = pd.Series(mat['Usm'][:, 3], index=df.index)
 
     # calculate other values, e.g. used in the .csv-file
-    df['Temp_m'] = pd.Series(
-        np.mean([df['Temp_1'], df['Temp_2']], axis=0),
-        index=df.index
-    )
     df['Zm_mAbs'] = pd.Series(np.abs(df['Zm_m']), index=df.index)
     Zm_1Abs = np.abs(df['Zm_1'])
     Zm_2Abs = np.abs(df['Zm_2'])
@@ -377,8 +386,11 @@ def _import_csv_file(csv_filename):
     df_merged['zt'] = df_merged['Zm_m']
 
     # compute magnitude and phase [in mrad]
-    df['r'] = np.abs(df['zt'])
-    df['rpha'] = np.arctan2(np.imag(df['zt']), np.real(df['zt'])) * 1000
+    df_merged['r'] = np.abs(df_merged['zt'])
+    df_merged['rpha'] = np.arctan2(
+        np.imag(df_merged['zt']),
+        np.real(df_merged['zt'])
+    ) * 1000
 
     df_merged['frequency'] = df_merged['fm']
 
