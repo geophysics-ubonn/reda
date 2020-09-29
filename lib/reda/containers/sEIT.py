@@ -778,9 +778,14 @@ class sEIT(BaseContainer, sEITImporters):
             L_matrix = inductance_matrix
         else:
             # assume this is a filename
-            import scipy.io
-            mat = scipy.io.loadmat('MDSH.mat', squeeze_me=True)
-            L_matrix = mat['L12']
+            ending = inductance_matrix[-3:]
+            if ending == '.mat':
+                import scipy.io
+                mat = scipy.io.loadmat(inductance_matrix, squeeze_me=True)
+                L_matrix = mat['L12']
+            else:
+                # assume numpy-saved .dat file
+                L_matrix = np.loadtxt(inductance_matrix)
 
         def get_mutual_inductance(item):
             # determine single elements
