@@ -1,0 +1,5 @@
+
+< 18.08.2020 07:58:56 > Connect to SYSCAL Pro / 19.2k Bds
+< 18.08.2020 07:59:56 > Start Standard acquisition
+Aquisition filename C:\20200818_etest_kelmis\rd_data\p01_nor_dd\data.bin
+< 18.08.2020 09:00:26 > Standard acquisition Ended
