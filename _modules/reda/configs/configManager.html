@@ -284,40 +284,40 @@
             <span class="n">ABMN</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crmod_to_abmn</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="o">=</span> <span class="n">ABMN</span></div>
 
-<div class="viewcode-block" id="ConfigManager.load_crmod_volt"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_volt">[docs]</a>    <span class="k">def</span> <span class="nf">load_crmod_volt</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Load a CRMod measurement file (commonly called volt.dat)</span>
+    <span class="c1"># def load_crmod_volt(self, filename):</span>
+    <span class="c1">#     &quot;&quot;&quot;Load a CRMod measurement file (commonly called volt.dat)</span>
 
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-<span class="sd">        filename: string</span>
-<span class="sd">            path to filename</span>
+    <span class="c1">#     Parameters</span>
+    <span class="c1">#     ----------</span>
+    <span class="c1">#     filename: string</span>
+    <span class="c1">#         path to filename</span>
 
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        list</span>
-<span class="sd">            list of measurement ids</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
-            <span class="n">nr_of_configs</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">fid</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">strip</span><span class="p">())</span>
-            <span class="n">measurements</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">fid</span><span class="p">)</span>
-            <span class="k">if</span> <span class="n">nr_of_configs</span> <span class="o">!=</span> <span class="n">measurements</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s1">&#39;indicated number of measurements does not equal &#39;</span> <span class="o">+</span>
-                    <span class="s1">&#39;to actual number of measurements&#39;</span><span class="p">)</span>
-        <span class="n">ABMN</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crmod_to_abmn</span><span class="p">(</span><span class="n">measurements</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
-        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="o">=</span> <span class="n">ABMN</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="c1"># check that configs match</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">ABMN</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span><span class="p">):</span>
-                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
-                    <span class="s1">&#39;previously stored configurations do not match new &#39;</span> <span class="o">+</span>
-                    <span class="s1">&#39;configurations&#39;</span><span class="p">)</span>
+    <span class="c1">#     Returns</span>
+    <span class="c1">#     -------</span>
+    <span class="c1">#     list</span>
+    <span class="c1">#         list of measurement ids</span>
+    <span class="c1">#     &quot;&quot;&quot;</span>
+    <span class="c1">#     with open(filename, &#39;r&#39;) as fid:</span>
+    <span class="c1">#         nr_of_configs = int(fid.readline().strip())</span>
+    <span class="c1">#         measurements = np.loadtxt(fid)</span>
+    <span class="c1">#         if nr_of_configs != measurements.shape[0]:</span>
+    <span class="c1">#             raise Exception(</span>
+    <span class="c1">#                 &#39;indicated number of measurements does not equal &#39; +</span>
+    <span class="c1">#                 &#39;to actual number of measurements&#39;)</span>
+    <span class="c1">#     ABMN = self._crmod_to_abmn(measurements[:, 0:2])</span>
+    <span class="c1">#     if self.configs is None:</span>
+    <span class="c1">#         self.configs = ABMN</span>
+    <span class="c1">#     else:</span>
+    <span class="c1">#         # check that configs match</span>
+    <span class="c1">#         if not np.all(ABMN == self.configs):</span>
+    <span class="c1">#             raise Exception(</span>
+    <span class="c1">#                 &#39;previously stored configurations do not match new &#39; +</span>
+    <span class="c1">#                 &#39;configurations&#39;)</span>
 
-        <span class="c1"># add data</span>
-        <span class="n">cid_mag</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_measurements</span><span class="p">(</span><span class="n">measurements</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span>
-        <span class="n">cid_pha</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">add_measurements</span><span class="p">(</span><span class="n">measurements</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">])</span>
-        <span class="k">return</span> <span class="p">[</span><span class="n">cid_mag</span><span class="p">,</span> <span class="n">cid_pha</span><span class="p">]</span></div>
+    <span class="c1">#     # add data</span>
+    <span class="c1">#     cid_mag = self.add_measurements(measurements[:, 2])</span>
+    <span class="c1">#     cid_pha = self.add_measurements(measurements[:, 3])</span>
+    <span class="c1">#     return [cid_mag, cid_pha]</span>
 
     <span class="k">def</span> <span class="nf">_get_crmod_abmn</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;return a Nx2 array with the measurement configurations formatted</span>
