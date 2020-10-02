@@ -168,40 +168,40 @@ class ConfigManager(object):
             ABMN = self._crmod_to_abmn(configs[:, 0:2])
             self.configs = ABMN
 
-    def load_crmod_volt(self, filename):
-        """Load a CRMod measurement file (commonly called volt.dat)
+    # def load_crmod_volt(self, filename):
+    #     """Load a CRMod measurement file (commonly called volt.dat)
 
-        Parameters
-        ----------
-        filename: string
-            path to filename
+    #     Parameters
+    #     ----------
+    #     filename: string
+    #         path to filename
 
-        Returns
-        -------
-        list
-            list of measurement ids
-        """
-        with open(filename, 'r') as fid:
-            nr_of_configs = int(fid.readline().strip())
-            measurements = np.loadtxt(fid)
-            if nr_of_configs != measurements.shape[0]:
-                raise Exception(
-                    'indicated number of measurements does not equal ' +
-                    'to actual number of measurements')
-        ABMN = self._crmod_to_abmn(measurements[:, 0:2])
-        if self.configs is None:
-            self.configs = ABMN
-        else:
-            # check that configs match
-            if not np.all(ABMN == self.configs):
-                raise Exception(
-                    'previously stored configurations do not match new ' +
-                    'configurations')
+    #     Returns
+    #     -------
+    #     list
+    #         list of measurement ids
+    #     """
+    #     with open(filename, 'r') as fid:
+    #         nr_of_configs = int(fid.readline().strip())
+    #         measurements = np.loadtxt(fid)
+    #         if nr_of_configs != measurements.shape[0]:
+    #             raise Exception(
+    #                 'indicated number of measurements does not equal ' +
+    #                 'to actual number of measurements')
+    #     ABMN = self._crmod_to_abmn(measurements[:, 0:2])
+    #     if self.configs is None:
+    #         self.configs = ABMN
+    #     else:
+    #         # check that configs match
+    #         if not np.all(ABMN == self.configs):
+    #             raise Exception(
+    #                 'previously stored configurations do not match new ' +
+    #                 'configurations')
 
-        # add data
-        cid_mag = self.add_measurements(measurements[:, 2])
-        cid_pha = self.add_measurements(measurements[:, 3])
-        return [cid_mag, cid_pha]
+    #     # add data
+    #     cid_mag = self.add_measurements(measurements[:, 2])
+    #     cid_pha = self.add_measurements(measurements[:, 3])
+    #     return [cid_mag, cid_pha]
 
     def _get_crmod_abmn(self):
         """return a Nx2 array with the measurement configurations formatted
