@@ -263,11 +263,11 @@ class ERT(BaseContainer, ERTImporters):
         data_container = pg.DataContainerERT()
 
         query = ' '.join((
-            'norrec = "{}"'.format(norrec),
+            'norrec == "{}"'.format(norrec),
         ))
 
         if timestep is not None:
-            query += ' and timestep="{}"'.format(timestep)
+            query += ' and timestep=="{}"'.format(timestep)
 
         logger.debug('Query: {}'.format(query))
 
