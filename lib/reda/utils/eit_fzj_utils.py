@@ -302,3 +302,151 @@ def get_md_data_2018a(filename):
     importer = eit_fzj.mat_version_importers['FZJ-EZ-2018A']
     md = importer._extract_md(mat, multiplexer_group=1)
     return md
+
+
+def testboard_evaluation(datapath, configdat,
+                         outputname, frequencies=np.logspace(-1, 4, 40),
+                         error_percentage=1):
+    """
+    A testboard with resistors and capacitors was built to test the
+    basic operation performance of eit-systems from FZJ. This function plots
+    the results of measurements on this board in terms of impedance magnitude
+    and phase.
+
+    Parameters
+    ----------
+    datapath : str
+        Path to the eit_data_mnu0.mat file containing the measurements.
+
+    configdat: np.ndarray or txt-file
+        input configuration of the used testboard configurations,
+        e.g. for first two rows of the board:
+        1 4 2 3
+        2 3 1 4
+        5 8 6 7
+        6 7 5 8
+        Note that normal and reciprocal measurements have to be measured.
+
+    outputname: str
+        output name of plot in png-format
+
+    frequencies: numpy array
+        frequency range (in log10-space) to compare the measurements to;
+        default range is from 0.1 Hz to 10 kHz
+
+    error_percentage: float
+        percentage of allowed measurement error. The range inside this
+        limit will be shown as a grey shadow in the plot.
+
+    Returns
+    -------
+    fig: figure object
+        Saves the plot with the given output name in the execution location of
+        the script.
+
+    """
+
+    def calc_response(frequencies):
+        # calculates theoretical |Z| and Zpha of the testboard for given
+        # frequencies
+        omega = 2 * np.pi * frequencies
+        # settings of the specific testboard; if a new testboard with different
+        # resistors/capacitors is built, parameters can be changed here
+        rs = 1000
+        r1 = 500
+
+        #
+        c1 = 330e-9
+
+        r2 = 500
+        c2 = 47e-6
+
+        cp = 5e-12
+
+        # the terms
+        term1 = (r1 - 1j * omega * r1 ** 2 * c1) / \
+            (1 + omega ** 2 * c1 ** 2 * r1 ** 2)
+        term2 = (r2 - 1j * omega * r2 ** 2 * c2) / \
+            (1 + omega ** 2 * c2 ** 2 * r2 ** 2)
+
+        z1 = rs + term1 + term2
+        z2 = - 1j / (omega * cp)
+
+        z = 1 / (1 / z1 + 1 / z2)
+
+        rmag = np.abs(z)
+        rpha = np.arctan2(z.imag, z.real) * 1000
+
+        return rmag, rpha
+
+    # load configurations
+    if type(configdat) == np.ndarray:
+        configs = configdat
+    else:
+        configs = np.loadtxt(configdat)
+
+    # load measurements
+    seit = reda.sEIT()
+    seit.import_eit_fzj(datapath, configs)
+
+    # append measurements to either the "normal" or "reciprocal" list
+    nor = []
+    rec = []
+    for i in configs:
+        data = seit.abmn.get_group((i[0], i[1], i[2], i[3]))
+        if data['norrec'].all() == 'nor':
+            nor.append(data)
+        else:
+            rec.append(data)
+
+    # calculate theoretical testboard response and error
+    rmag, rpha = calc_response(frequencies)
+    error_rmag = rmag*error_percentage/100
+    error_rpha = rpha*error_percentage/100
+
+    # plotting results
+
+    fig, axes = plt.subplots(
+        int(len(nor)), 2, figsize=(12, 3*len(nor)), sharex=True)
+
+    # plot normal measurements and theoretical response
+    for num, n in enumerate(nor):
+        axes[num-1][0].set_title('Magnitude {} {} {} {}'.format(
+            n.iloc[0]['a'], n.iloc[0]['b'], n.iloc[0]['m'], n.iloc[0]['n']))
+        axes[num-1][0].plot(n["frequency"], n['r'],
+                            marker='o', linestyle=' ', label='nor')
+        axes[num-1][0].plot(frequencies, rmag, label='calculated')
+        axes[num-1][0].fill_between(frequencies, rmag+error_rmag,
+                                    rmag-error_rmag, color='grey', alpha=0.3)
+        axes[num-1][0].set_ylabel(r'|Z| [$\Omega$]')
+        axes[num-1][1].set_title('Phase {} {} {} {}'.format(
+            n.iloc[0]['a'], n.iloc[0]['b'], n.iloc[0]['m'], n.iloc[0]['n']))
+        axes[num-1][1].plot(n["frequency"], -1*n['rpha'],
+                            marker='o', linestyle=' ', label='nor')
+        axes[num-1][1].plot(frequencies, -1*rpha, label='calculated')
+        axes[num-1][1].fill_between(
+            frequencies, -1*rpha + error_rpha, -1*rpha-error_rpha,
+            color='grey', alpha=0.3)
+        axes[num-1][1].set_ylabel(r'-$\varphi_{Z}$ [mrad]')
+
+    # plot reciprocal measurements
+    for num, r in enumerate(rec):
+        axes[num-1][0].plot(r["frequency"], r['r'],
+                            marker='x', linestyle=' ', label='rec')
+        axes[num-1][1].plot(r["frequency"], -1*r['rpha'],
+                            marker='x', linestyle=' ', label='rec')
+
+    # axis scaling and legends
+    for ax in axes.reshape(-1):
+        ax.grid()
+        ax.legend()
+        ax.set_xscale("log")
+        ax.set_xlim(min(frequencies), max(frequencies))
+
+    # axis labels for two bottom plots
+    axes[len(nor)-1][0].set_xlabel("frequency [Hz]")
+    axes[len(nor)-1][1].set_xlabel("frequency [Hz]")
+
+    fig.tight_layout()
+    fig.savefig('{}.png'.format(outputname), dpi=300)
+
