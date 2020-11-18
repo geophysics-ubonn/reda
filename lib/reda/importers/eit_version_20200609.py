@@ -125,6 +125,9 @@ def _extract_md(mat, **kwargs):
         df['Zg1'] = Zg3_complex[:, 0]
         df['Zg2'] = Zg3_complex[:, 1]
         df['Zg3'] = Zg3_complex[:, 2]
+
+        df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']].values, axis=1)
+
         df['Cl1'] = fdata['Cl3'][:, 0]
         df['Cl2'] = fdata['Cl3'][:, 1]
         df['Cl3'] = fdata['Cl3'][:, 2]
@@ -240,6 +243,9 @@ def _extract_emd(mat, **kwargs):
         df = pd.merge(df, timestamp, left_on=['a', 'b'], right_on=['a', 'b'])
         df['p'] = fdata['nu']
         df[['Zt1', 'Zt2', 'Zt3']] = pd.DataFrame(fdata['Zt3'])
+        # df[['Zg1', 'Zg2', 'Zg3']] = pd.DataFrame(fdata['Zg3'])
+        # df[['Is1', 'Is2', 'Is3']] = pd.DataFrame(fdata['Is3'])
+        # df[['Il1', 'Il2', 'Il3']] = pd.DataFrame(fdata['Il3'])
 
         # import IPython
         # IPython.embed()
@@ -370,7 +376,7 @@ def _extract_emd(mat, **kwargs):
     # df['Iab'] = df['Iab'].astype(float)
     # df['Is_std'] = np.std(df[['Is1', 'Is2', 'Is3']].values, axis=1)
 
-    # take absolute value and convert to mA
+    # # take absolute value and convert to mA
     # df['Ileakage'] = np.abs(df['Il']) * 1e3
     # df['Ileakage'] = df['Ileakage'].astype(float)
 

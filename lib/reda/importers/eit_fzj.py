@@ -114,7 +114,8 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
             configs_abmn = configs
 
         if data_emd_3p is not None:
-            data_emd_4p = compute_quadrupoles(data_emd_3p, configs_abmn)
+            data_emd_4p = compute_quadrupoles(
+                data_emd_3p, configs_abmn, data_md_raw)
         else:
             data_emd_4p = None
     else:
@@ -204,15 +205,17 @@ def read_3p_data(*args, **kwargs):
     return df_emd, None, None
 
 
-def compute_quadrupoles(df_emd, config_file):
+def compute_quadrupoles(df_emd, config_file, df_md=None):
     """
     Parameters
     ----------
-    df_emd: pandas.DataFrame
+    df_emd : pandas.DataFrame
         The EMD data, as imported from the .mat file (3P-data)
-    config_file: string
+    config_file : string
         filename for configuration file. The configuration file contains N rows
         with 4 columns each (A, B, M, N)
+    df_md : pandas.DataFrame (optional)
+        The MD data
 
     Returns
     -------
@@ -227,7 +230,7 @@ def compute_quadrupoles(df_emd, config_file):
     configs = np.atleast_2d(configs)
 
     # construct four-point measurements via superposition
-    print('constructing four-point measurements')
+    print('Constructing four-point measurements')
     quadpole_list = []
     index = 0
     for Ar, Br, M, N in configs:
@@ -255,9 +258,9 @@ def compute_quadrupoles(df_emd, config_file):
             'frequency',
             'a', 'b',
             'Zg1', 'Zg2', 'Zg3',
+            'Zg',
             'Is',
             'Il',
-            'Zg',
             'Iab',
             'Ileakage',
         ]
@@ -284,6 +287,24 @@ def compute_quadrupoles(df_emd, config_file):
             np.imag(dfn['Zt'].values),
             np.real(dfn['Zt'].values)
         ) * 1e3
+        # Depending on the specific analysis software ware, some columns are
+        # located in the md struct and need to be merged to the dfn
+        check_md_columns = [
+            'Zg',
+            'Iab',
+            'Ileakage',
+        ]
+        for column in check_md_columns:
+            if(column not in dfn.columns and df_md is not None and
+                    column in df_md.columns):
+                print('Adding column {} from MD'.format(column))
+                # import IPython
+                # IPython.embed()
+                dfn = pd.merge(
+                    dfn,
+                    df_md[['a', 'b', 'frequency', column]],
+                    on=['a', 'b', 'frequency']
+                )
     else:
         dfn = pd.DataFrame()
 
