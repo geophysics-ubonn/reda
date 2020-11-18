@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>reda.importers package &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
@@ -289,14 +289,16 @@ merged, or directly as a numpy array</p>
 
 <dl class="py function">
 <dt id="reda.importers.eit_fzj.compute_quadrupoles">
-<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">compute_quadrupoles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_emd</span></em>, <em class="sig-param"><span class="n">config_file</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_quadrupoles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_quadrupoles" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">reda.importers.eit_fzj.</code><code class="sig-name descname">compute_quadrupoles</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">df_emd</span></em>, <em class="sig-param"><span class="n">config_file</span></em>, <em class="sig-param"><span class="n">df_md</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_quadrupoles"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_quadrupoles" title="Permalink to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
-<dt><strong>df_emd: pandas.DataFrame</strong></dt><dd><p>The EMD data, as imported from the .mat file (3P-data)</p>
+<dt><strong>df_emd</strong><span class="classifier">pandas.DataFrame</span></dt><dd><p>The EMD data, as imported from the .mat file (3P-data)</p>
 </dd>
-<dt><strong>config_file: string</strong></dt><dd><p>filename for configuration file. The configuration file contains N rows
+<dt><strong>config_file</strong><span class="classifier">string</span></dt><dd><p>filename for configuration file. The configuration file contains N rows
 with 4 columns each (A, B, M, N)</p>
+</dd>
+<dt><strong>df_md</strong><span class="classifier">pandas.DataFrame (optional)</span></dt><dd><p>The MD data</p>
 </dd>
 </dl>
 </dd>
@@ -960,7 +962,7 @@ file!</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

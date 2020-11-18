@@ -6,8 +6,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Importing FZJ EIT40/EIT160 data &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
@@ -158,7 +158,7 @@ function. This is explained below.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Constructing four-point measurements
 Summary:
                 a           b  ...     frequency          rpha
 count  16280.0000  16280.0000  ...  16280.000000  16280.000000
@@ -188,7 +188,7 @@ from the current injection dipoles:</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>constructing four-point measurements
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Constructing four-point measurements
 Summary:
                 a           b  ...     frequency          rpha
 count  16280.0000  16280.0000  ...  16280.000000  16280.000000
@@ -239,9 +239,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <th>Zg1</th>
       <th>Zg2</th>
       <th>Zg3</th>
+      <th>Zg</th>
       <th>Is</th>
       <th>Il</th>
-      <th>Zg</th>
       <th>Iab</th>
       <th>Ileakage</th>
       <th>Zt</th>
@@ -270,9 +270,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1845.514039-309.918615j</td>
       <td>1830.103481-336.538264j</td>
       <td>1830.135759-348.659106j</td>
+      <td>1835.251093-331.705328j</td>
       <td>0.004369+0.000378j</td>
       <td>-7.781986e-07-2.016430e-07j</td>
-      <td>1835.251093-331.705328j</td>
       <td>4.384991</td>
       <td>0.000804</td>
       <td>67.613572-0.476405j</td>
@@ -299,9 +299,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1740.676857-298.630656j</td>
       <td>1729.294712-322.735738j</td>
       <td>1730.518216-332.929183j</td>
+      <td>1733.496595-318.098526j</td>
       <td>0.004488+0.000382j</td>
       <td>-2.603903e-06-6.249216e-07j</td>
-      <td>1733.496595-318.098526j</td>
       <td>4.504308</td>
       <td>0.002678</td>
       <td>67.753805-0.448498j</td>
@@ -328,9 +328,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1882.449148-332.761564j</td>
       <td>1867.017051-353.821789j</td>
       <td>1868.918746-358.069064j</td>
+      <td>1872.794982-348.217472j</td>
       <td>0.004324+0.000389j</td>
       <td>8.166327e-07+2.159040e-07j</td>
-      <td>1872.794982-348.217472j</td>
       <td>4.341069</td>
       <td>0.000845</td>
       <td>68.595685-0.552429j</td>
@@ -357,9 +357,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1740.676857-298.630656j</td>
       <td>1729.294712-322.735738j</td>
       <td>1730.518216-332.929183j</td>
+      <td>1733.496595-318.098526j</td>
       <td>0.004488+0.000382j</td>
       <td>-2.603903e-06-6.249216e-07j</td>
-      <td>1733.496595-318.098526j</td>
       <td>4.504308</td>
       <td>0.002678</td>
       <td>68.489745-0.511118j</td>
@@ -386,9 +386,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1845.514039-309.918615j</td>
       <td>1830.103481-336.538264j</td>
       <td>1830.135759-348.659106j</td>
+      <td>1835.251093-331.705328j</td>
       <td>0.004369+0.000378j</td>
       <td>-7.781986e-07-2.016430e-07j</td>
-      <td>1835.251093-331.705328j</td>
       <td>4.384991</td>
       <td>0.000804</td>
       <td>61.405722-0.426200j</td>
@@ -444,9 +444,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1214.971601-99.776976j</td>
       <td>1214.970677-99.777250j</td>
       <td>1214.970820-99.776733j</td>
+      <td>1214.971033-99.776987j</td>
       <td>0.005267+0.000167j</td>
       <td>3.035386e-04-5.237910e-05j</td>
-      <td>1214.971033-99.776987j</td>
       <td>5.269442</td>
       <td>0.308025</td>
       <td>14.400491-0.787052j</td>
@@ -473,9 +473,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1487.062804-137.106700j</td>
       <td>1487.062909-137.107755j</td>
       <td>1487.061286-137.107605j</td>
+      <td>1487.062333-137.107354j</td>
       <td>0.004855+0.000194j</td>
       <td>-1.159057e-04-8.547126e-05j</td>
-      <td>1487.062333-137.107354j</td>
       <td>4.858639</td>
       <td>0.144012</td>
       <td>24.556856-1.833682j</td>
@@ -502,9 +502,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1214.971601-99.776976j</td>
       <td>1214.970677-99.777250j</td>
       <td>1214.970820-99.776733j</td>
+      <td>1214.971033-99.776987j</td>
       <td>0.005267+0.000167j</td>
       <td>3.035386e-04-5.237910e-05j</td>
-      <td>1214.971033-99.776987j</td>
       <td>5.269442</td>
       <td>0.308025</td>
       <td>24.331140-1.525221j</td>
@@ -531,9 +531,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1420.095538-150.390175j</td>
       <td>1420.096385-150.391266j</td>
       <td>1420.096148-150.391203j</td>
+      <td>1420.096023-150.390881j</td>
       <td>0.004947+0.000221j</td>
       <td>-2.085763e-04-4.436973e-05j</td>
-      <td>1420.096023-150.390881j</td>
       <td>4.952257</td>
       <td>0.213243</td>
       <td>62.432660-5.558812j</td>
@@ -560,9 +560,9 @@ max       21.0000     40.0000  ...  10000.000000   3141.586023
       <td>1214.971601-99.776976j</td>
       <td>1214.970677-99.777250j</td>
       <td>1214.970820-99.776733j</td>
+      <td>1214.971033-99.776987j</td>
       <td>0.005267+0.000167j</td>
       <td>3.035386e-04-5.237910e-05j</td>
-      <td>1214.971033-99.776987j</td>
       <td>5.269442</td>
       <td>0.308025</td>
       <td>62.492054-4.551339j</td>
@@ -596,7 +596,7 @@ note that this is usually done on import once.</p>
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7feb20342828&gt;
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fe33705d9b0&gt;
         a   b   m   n     frequency         r        rpha
 748    10  29  15  34      0.100000  7.356375   -5.205543
 2228   10  29  15  34      0.314465  7.323810   -6.903037
@@ -704,7 +704,7 @@ this context manager executes all code within the given directory</p>
     <span class="p">)</span>
 </pre></div>
 </div>
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  45.492 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  48.263 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/838ff59b27381854f04afa4adea79a01/plot_eit_fzj.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj.py</span></code></a></p>
@@ -727,7 +727,7 @@ this context manager executes all code within the given directory</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.2.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

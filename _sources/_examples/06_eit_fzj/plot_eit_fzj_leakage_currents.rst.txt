@@ -34,7 +34,7 @@ doi:10.1088/1361-6501/ab1b09, 2019.
 
     selecting multiplexer group 1
     selecting multiplexer group 1
-    constructing four-point measurements
+    Constructing four-point measurements
 
 
 

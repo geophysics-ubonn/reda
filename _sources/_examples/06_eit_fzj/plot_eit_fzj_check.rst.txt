@@ -100,7 +100,7 @@ imports
     17  34  35  33  36        2630           10               20
     18  37  40  38  39        2930           10               20
     19  38  39  37  40        2930           10               20
-    constructing four-point measurements
+    Constructing four-point measurements
     Summary:
                    a          b          m  ...            r     frequency        rpha
     count  232.00000  232.00000  232.00000  ...   232.000000    232.000000  232.000000
