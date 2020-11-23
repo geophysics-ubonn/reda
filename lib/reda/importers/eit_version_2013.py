@@ -85,9 +85,11 @@ def _extract_md(mat, **kwargs):
     dfl = []
     # loop over frequencies
     for f_id in range(0, frequencies.size):
+
         def get_field(key):
-            indices = np.where(md['fm'].take(f_id) == frequencies[f_id])
-            return md[key].take(f_id)[indices]
+            indices = np.where(
+                md['fm'].take(0) == frequencies[f_id])
+            return md[key].take(0)[indices]
 
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in get_field('Time')]
