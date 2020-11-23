@@ -41,10 +41,22 @@ def _extract_adc_data(mat, **kwargs):
                     'Ug3_1',
                     'Ug3_2',
                     'Ug3_3',
+                    'Us3_1',
+                    'Us3_2',
+                    'Us3_3',
+                    'Ue3_1',
+                    'Ue3_2',
+                    'Ue3_3',
                 ), (
                     fdata['Ug3'][:, :, 0],
                     fdata['Ug3'][:, :, 1],
                     fdata['Ug3'][:, :, 2],
+                    fdata['Us3'][:, :, 0],
+                    fdata['Us3'][:, :, 1],
+                    fdata['Us3'][:, :, 2],
+                    fdata['Ue3'][:, :, 0],
+                    fdata['Ue3'][:, :, 1],
+                    fdata['Ue3'][:, :, 2],
                 )):
             df = pd.DataFrame(
                 data, columns=['ch{:02}'.format(i) for i in range(48)]).T
