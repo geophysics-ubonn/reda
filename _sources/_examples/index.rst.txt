@@ -298,6 +298,27 @@ Operations specific to the FZJ sEIT systems
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to execute the helper function &quot;testboard_evaluation&quot;">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_testboard_check_thumb.png
+     :alt: This example shows how to execute the helper function "testboard_evaluation"
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_testboard_check.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_eit_fzj_testboard_check
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="It is useful to conduct additional measurements for each sEIT setup and determine the total cap...">
 
 .. only:: html

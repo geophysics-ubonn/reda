@@ -1,0 +1,210 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>&lt;no title&gt; &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
+    <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Analyzing total capacitances at each electrode during current injection" href="plot_eit_fzj_li.html" />
+    <link rel="prev" title="Analyzing leakage currents" href="plot_eit_fzj_leakage_currents.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="plot_eit_fzj_leakage_currents.html" title="previous chapter">Analyzing leakage currents</a></li>
+      <li>Next: <a href="plot_eit_fzj_li.html" title="next chapter">Analyzing total capacitances at each electrode during current injection</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-testboard-check-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
+</div>
+<p class="sphx-glr-example-title" id="sphx-glr-examples-06-eit-fzj-plot-eit-fzj-testboard-check-py">This example shows how to execute the helper function “testboard_evaluation”
+from the eit_fzj_utils. It is used to plot the results of measurements
+conducted on the testboard that was built to check the functionality of the
+eit systems. A theoretical calculated response that is based on the built-in
+resistors and capicitors is plotted together with the measurement results.</p>
+<img alt="Magnitude 5 8 6 7, Phase 5 8 6 7, Magnitude 1 4 2 3, Phase 1 4 2 3" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_eit_fzj_testboard_check_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Constructing four-point measurements
+Adding column Zg from MD
+Adding column Iab from MD
+Adding column Ileakage from MD
+Summary:
+               a          b          m  ...            r     frequency        rpha
+count  92.000000  92.000000  92.000000  ...    92.000000     92.000000   92.000000
+mean    3.500000   5.500000   3.500000  ...  1495.079488   1411.945427 -103.775425
+std     2.072849   2.072849   2.072849  ...   349.615040   2499.461903   60.876602
+min     1.000000   3.000000   1.000000  ...  1009.722262      0.100000 -203.176382
+25%     1.750000   3.750000   1.750000  ...  1191.964147      3.125000 -158.334102
+50%     3.500000   5.500000   3.500000  ...  1499.604785    175.000000 -101.997050
+75%     5.250000   7.250000   5.250000  ...  1894.325500   1450.000000  -53.526973
+max     6.000000   8.000000   6.000000  ...  2021.093567  10000.000000   -4.632527
+
+[8 rows x 7 columns]
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># A config with the used channels/configurations has to be put in. This can be</span>
+<span class="c1"># a numpy array or a config.dat-file. It is important that normal and</span>
+<span class="c1"># reciprocal measurements are taken for the check.</span>
+
+<a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">configs</span></a> <span class="o">=</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.array.html#numpy.array" title="numpy.array" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">array</span></a><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">4</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">6</span><span class="p">,</span><span class="mi">7</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">8</span><span class="p">]</span>
+    <span class="p">])</span>
+
+<span class="c1"># The function can be executed with the following command. The first parameter</span>
+<span class="c1"># has to lead to the datapath of the measurement, the second to the config.dat</span>
+<span class="c1"># or config array and the third one denotes the output name. Optional</span>
+<span class="c1"># parameters are the frequency range to compare the measurements to</span>
+<span class="c1"># (input has to be in log10-space) and the error-percentage of the</span>
+<span class="c1"># measurements.</span>
+
+<a href="../../_api/reda.utils.html#reda.utils.eit_fzj_utils.testboard_evaluation" title="reda.utils.eit_fzj_utils.testboard_evaluation" class="sphx-glr-backref-module-reda-utils-eit_fzj_utils sphx-glr-backref-type-py-function"><span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">eit_fzj_utils</span><span class="o">.</span><span class="n">testboard_evaluation</span></a><span class="p">(</span>
+    <span class="s2">&quot;data_eit_fzj_testboard/eit_data_mnu0.mat&quot;</span><span class="p">,</span>
+     <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">configs</span></a><span class="p">,</span>
+    <span class="s1">&#39;data_eit_fzj_testboard/testboard&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-06-eit-fzj-plot-eit-fzj-testboard-check-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/e4a31d88a206cfcd777324e4cc66cf67/plot_eit_fzj_testboard_check.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_eit_fzj_testboard_check.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/c8858b4d3fd8699caeedd1c79af441db/plot_eit_fzj_testboard_check.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_eit_fzj_testboard_check.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2019, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/06_eit_fzj/plot_eit_fzj_testboard_check.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

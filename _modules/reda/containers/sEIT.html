@@ -921,6 +921,10 @@
         <span class="k">def</span> <span class="nf">apply_inductance</span><span class="p">(</span><span class="n">item</span><span class="p">):</span>
             <span class="c1"># we need to change Zt, and then compute r, rpha</span>
             <span class="n">Zt</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;Zt&#39;</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">item</span><span class="p">[</span><span class="s1">&#39;inductance&#39;</span><span class="p">]</span>
+            <span class="c1"># if item[&#39;Zt&#39;].real &gt; 0 and Zt.real &lt; 0:</span>
+            <span class="c1">#     # assume pi shift</span>
+            <span class="c1">#     Zt *= -1</span>
+
             <span class="n">rpha</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">Zt</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">Zt</span><span class="p">))</span> <span class="o">*</span> <span class="mi">1000</span>
             <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">Zt</span><span class="p">)</span>
 

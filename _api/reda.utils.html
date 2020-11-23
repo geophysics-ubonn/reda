@@ -293,6 +293,46 @@ reside here until it can be properly integrated.</p>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt id="reda.utils.eit_fzj_utils.testboard_evaluation">
+<code class="sig-prename descclassname">reda.utils.eit_fzj_utils.</code><code class="sig-name descname">testboard_evaluation</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">datapath</span></em>, <em class="sig-param"><span class="n">configdat</span></em>, <em class="sig-param"><span class="n">outputname</span></em>, <em class="sig-param"><span class="n">frequencies</span><span class="o">=</span><span class="default_value">array([0.1, 0.134339933, 0.180472177, 0.242446202, 0.325702066, 0.437547938, 0.587801607, 0.789652287, 1.06081836, 1.42510267, 1.91448198, 2.57191381, 3.45510729, 4.64158883, 6.23550734, 8.3767764, 11.2533558, 15.1177507, 20.3091762, 27.2833338, 36.6524124, 49.2388263, 66.1474064, 88.8623816, 119.377664, 160.371874, 215.443469, 289.426612, 388.815518, 522.334507, 701.703829, 942.668455, 1266.38017, 1701.25428, 2285.46386, 3070.29063, 4124.62638, 5541.02033, 7443.80301, 10000.0])</span></em>, <em class="sig-param"><span class="n">error_percentage</span><span class="o">=</span><span class="default_value">1</span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#testboard_evaluation"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.testboard_evaluation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A testboard with resistors and capacitors was built to test the
+basic operation performance of eit-systems from FZJ. This function plots
+the results of measurements on this board in terms of impedance magnitude
+and phase.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>datapath</strong><span class="classifier">str</span></dt><dd><p>Path to the eit_data_mnu0.mat file containing the measurements.</p>
+</dd>
+<dt><strong>configdat: np.ndarray or txt-file</strong></dt><dd><p>input configuration of the used testboard configurations,
+e.g. for first two rows of the board:
+1 4 2 3
+2 3 1 4
+5 8 6 7
+6 7 5 8
+Note that normal and reciprocal measurements have to be measured.</p>
+</dd>
+<dt><strong>outputname: str</strong></dt><dd><p>output name of plot in png-format</p>
+</dd>
+<dt><strong>frequencies: numpy array</strong></dt><dd><p>frequency range (in log10-space) to compare the measurements to;
+default range is from 0.1 Hz to 10 kHz</p>
+</dd>
+<dt><strong>error_percentage: float</strong></dt><dd><p>percentage of allowed measurement error. The range inside this
+limit will be shown as a grey shadow in the plot.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt>fig: figure object</dt><dd><p>Saves the plot with the given output name in the execution location of
+the script.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
 </div>
 <div class="section" id="module-reda.utils.enter_directory">
 <span id="reda-utils-enter-directory-module"></span><h2>reda.utils.enter_directory module<a class="headerlink" href="#module-reda.utils.enter_directory" title="Permalink to this headline">¶</a></h2>
