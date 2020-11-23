@@ -113,7 +113,7 @@ class ConfigManager(object):
         configs = np.loadtxt(filename)
         self.add_to_configs(configs)
 
-    def load_injections_from_mcf(filename):
+    def load_injections_from_mcf(self, filename):
         """Load injections from a mcf-file used by the sEIT-systems from FZJ;
         Injections in the file must be formatted like the following:
         SE 001 002
