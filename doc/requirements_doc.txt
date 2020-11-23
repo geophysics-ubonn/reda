@@ -2,4 +2,4 @@ sphinx
 numpydoc
 sphinx-gallery
 crtomo-tools
-pillow < 7.0
+Pillow>=7.1.0
