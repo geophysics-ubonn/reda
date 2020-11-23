@@ -4,4 +4,4 @@ pandas>=0.23 # Due to sort method in pd.concat
 scipy
 pytest==3.6.4
 twine
-pillow < 7.0
+pillow

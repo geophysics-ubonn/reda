@@ -30,7 +30,18 @@ if __name__ == '__main__':
         packages=find_packages("lib"),
         package_dir={'': 'lib'},
         package_data={'reda.testing': package_data},
-        install_requires=['numpy', 'scipy', 'pandas', 'matplotlib'],
+        install_requires=[
+            'numpy',
+            'scipy',
+            'pandas',
+            'matplotlib',
+            'pillow'
+        ],
+        extras_require={
+            "crtomo":  [
+                "crtomo_tools",
+            ],
+        },
         classifiers=(
             "Programming Language :: Python :: 3",
             "License :: OSI Approved :: MIT License",
