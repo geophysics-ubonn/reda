@@ -805,6 +805,10 @@ class sEIT(BaseContainer, sEITImporters):
         def apply_inductance(item):
             # we need to change Zt, and then compute r, rpha
             Zt = item['Zt'] - 1j * item['inductance']
+            # if item['Zt'].real > 0 and Zt.real < 0:
+            #     # assume pi shift
+            #     Zt *= -1
+
             rpha = np.arctan2(np.imag(Zt), np.real(Zt)) * 1000
             r = np.abs(Zt)
 
