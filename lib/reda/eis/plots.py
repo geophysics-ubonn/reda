@@ -128,6 +128,10 @@ class sip_response():
         label_rec : str
             label for reciprocal data (default: "reciprocal")
 
+        Additional Parameters
+        ---------------------
+
+
         Returns
         -------
         fig : figure object
@@ -372,10 +376,10 @@ class multi_sip_response(object):
         objects : list|None
             If provided, assume the list to contain multiple spectra in the
             form of sip_response objects
-        labels: list|None
+        labels : list|None
             If provided, use the string entries of this list as labels for the
             spectra in objects. Must have the same length as objects, or None.
-        obj_dict: dict|None
+        obj_dict : dict|None
             Only works if objects is None. Use keys as labels, items as spectra
 
         """
@@ -395,6 +399,13 @@ class multi_sip_response(object):
             self.objects = []
             self.labels = []
         self.xlim = [None, None]
+        self.legend_kwargs = {
+            'ncol': 4,
+            'fontsize': 6.0,
+            'loc': "lower center",
+            'bbox_to_anchor': (0, 0, 1, 1),
+        }
+        self.margin_bottom = 0.3
 
     def set_xlim(self, xmin, xmax):
         self.xlim = [xmin, xmax]
@@ -402,7 +413,7 @@ class multi_sip_response(object):
     def add(self, response, label=None):
         """add one response object to the list
         """
-        if not isinstance(response, sip_response.sip_response):
+        if not isinstance(response, sip_response):
             raise Exception(
                 'can only add sip_reponse.sip_response objects'
             )
@@ -414,12 +425,13 @@ class multi_sip_response(object):
             self.labels.append(label)
 
     def _add_legend(self, ax):
+        params = {
+            'bbox_transform': ax.get_figure().transFigure,
+        }
+        params.update(self.legend_kwargs)
+
         leg = ax.legend(
-            loc="lower center",
-            ncol=4,
-            bbox_to_anchor=(0, 0, 1, 1),
-            bbox_transform=ax.get_figure().transFigure,
-            fontsize=6.0,
+            **params
         )
         return leg
 
@@ -446,7 +458,7 @@ class multi_sip_response(object):
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.3)
+        fig.subplots_adjust(bottom=self.margin_bottom)
         fig.savefig(filename, dpi=300, bbox_inches='tight')
         plt.close(fig)
 
@@ -473,7 +485,7 @@ class multi_sip_response(object):
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.3)
+        fig.subplots_adjust(bottom=self.margin_bottom)
         fig.savefig(filename, dpi=300)
         plt.close(fig)
 
@@ -499,7 +511,7 @@ class multi_sip_response(object):
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.3)
+        fig.subplots_adjust(bottom=self.margin_bottom)
         fig.savefig(filename, dpi=300)
         plt.close(fig)
 
@@ -525,6 +537,6 @@ class multi_sip_response(object):
             ax.set_title(title)
         self._add_legend(ax)
         fig.tight_layout()
-        fig.subplots_adjust(bottom=0.3, top=0.9)
+        fig.subplots_adjust(bottom=self.margin_bottom, top=0.9)
         fig.savefig(filename, dpi=300)
         plt.close(fig)
