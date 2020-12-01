@@ -54,7 +54,7 @@ create an ERT container and import first dataset
 
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7fe8784a14a8>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7fdbb2b29198>)
 
 
 
@@ -90,7 +90,7 @@ create an ERT container and import second dataset
 
     found duplicate coordinates!
 
-    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7fe8785d1668>)
+    (<Figure size 590.551x393.701 with 2 Axes>, <AxesSubplot:xlabel='current dipoles', ylabel='voltage dipoles'>, <matplotlib.colorbar.Colorbar object at 0x7fdbb2bf5ba8>)
 
 
 
