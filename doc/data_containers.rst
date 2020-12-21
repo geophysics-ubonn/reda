@@ -32,14 +32,28 @@ By default we deal with logical electrode numbers in the columns **a**, **b**,
 **m**, **n**. That is, electrode positions must be declared separately. This
 has some advantages, but also disadvantages:
 
-* we can easily create new measurement configurations without needing to know
+.. note::
+
+   The logical electrode numbers **a*, **b**, **m**, **n** are assumed to be
+   1-indexed in the sense that no offsets are automatically applied when
+   dealing with those numbers.
+
+   While arbitrary electrode numbers are not forbidden, we still
+   encourage you to denote the first electrode number with 1 for single-profile
+   measurements.
+
+   Also note that electrode numbers do not need to be continuous, for example,
+   in the case when only certain electrodes of a multi-electrode profile are
+   used.
+
+* We can easily create new measurement configurations without needing to know
   the exact electrode positions
-* some analysis steps can be simplified if we do not take electrode positions
+* Some analysis steps can be simplified if we do not take electrode positions
   into account
-* consistency: we also support measurement modes that do not have an inherent
+* Consistency: we also support measurement modes that do not have an inherent
   spatial aspect (SIP) in the sense of a distributed measurement. Here we only
   have four electrodes used to measure one (complex) resistance.
-* disadvantage: we need to be careful that data keeps consistent if new data is
+* Disadvantage: we need to be careful that data keeps consistent if new data is
   added.
 
 Container basics
@@ -51,6 +65,13 @@ Container basics
   `container.electrode_positions` (columns **x**, **y**, **z**).
 * Topograhy nodes (if available) are stored in a pandas DataFrame in
   `container.topography` (columns **x**, **y**, **z**).
+
+The integer index hereby refers to electrode numbers in **container.data[['a',
+'b', 'm', 'n']]**.
+The index is not required to be continuous and numbers do not need to start
+with 1. For example, the index **0, 1, 10, 20, 21** would be allowed (although
+we suggest to start with 1 to not falsely indicate a zero-indexing of the
+electrode numbers.
 
 Required data columns
 ---------------------
