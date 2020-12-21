@@ -5,8 +5,8 @@
 
 Computation times
 =================
-**00:01.056** total execution time for **_examples_02_SIP04** files:
+**00:01.121** total execution time for **_examples_02_SIP04** files:
 
 +----------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_02_SIP04_plot_sip04.py` (``plot_sip04.py``) | 00:01.056 | 0.0 MB |
+| :ref:`sphx_glr__examples_02_SIP04_plot_sip04.py` (``plot_sip04.py``) | 00:01.121 | 0.0 MB |
 +----------------------------------------------------------------------+-----------+--------+

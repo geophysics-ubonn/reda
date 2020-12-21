@@ -11,11 +11,11 @@
     <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/gallery-rendered-html.css" />
     <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -139,15 +139,27 @@ polarization data.</p></li>
 <p>By default we deal with logical electrode numbers in the columns <strong>a</strong>, <strong>b</strong>,
 <strong>m</strong>, <strong>n</strong>. That is, electrode positions must be declared separately. This
 has some advantages, but also disadvantages:</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The logical electrode numbers <strong>a*, **b</strong>, <strong>m</strong>, <strong>n</strong> are assumed to be
+1-indexed in the sense that no offsets are automatically applied when
+dealing with those numbers.</p>
+<p>While arbitrary electrode numbers are not forbidden, we still
+encourage you to denote the first electrode number with 1 for single-profile
+measurements.</p>
+<p>Also note that electrode numbers do not need to be continuous, for example,
+in the case when only certain electrodes of a multi-electrode profile are
+used.</p>
+</div>
 <ul class="simple">
-<li><p>we can easily create new measurement configurations without needing to know
+<li><p>We can easily create new measurement configurations without needing to know
 the exact electrode positions</p></li>
-<li><p>some analysis steps can be simplified if we do not take electrode positions
+<li><p>Some analysis steps can be simplified if we do not take electrode positions
 into account</p></li>
-<li><p>consistency: we also support measurement modes that do not have an inherent
+<li><p>Consistency: we also support measurement modes that do not have an inherent
 spatial aspect (SIP) in the sense of a distributed measurement. Here we only
 have four electrodes used to measure one (complex) resistance.</p></li>
-<li><p>disadvantage: we need to be careful that data keeps consistent if new data is
+<li><p>Disadvantage: we need to be careful that data keeps consistent if new data is
 added.</p></li>
 </ul>
 </div>
@@ -161,6 +173,12 @@ DataFrame located in <cite>container.data</cite>.</p></li>
 <li><p>Topograhy nodes (if available) are stored in a pandas DataFrame in
 <cite>container.topography</cite> (columns <strong>x</strong>, <strong>y</strong>, <strong>z</strong>).</p></li>
 </ul>
+<p>The integer index hereby refers to electrode numbers in <strong>container.data[[‘a’,
+‘b’, ‘m’, ‘n’]]</strong>.
+The index is not required to be continuous and numbers do not need to start
+with 1. For example, the index <strong>0, 1, 10, 20, 21</strong> would be allowed (although
+we suggest to start with 1 to not falsely indicate a zero-indexing of the
+electrode numbers.</p>
 </div>
 <div class="section" id="required-data-columns">
 <h2>Required data columns<a class="headerlink" href="#required-data-columns" title="Permalink to this headline">¶</a></h2>
@@ -473,7 +491,7 @@ and Mx as column; Tm deriveable from there</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

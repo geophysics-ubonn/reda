@@ -11,11 +11,11 @@
     <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-rendered-html.css" />
     <script id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
     <script src="../../_static/jquery.js"></script>
     <script src="../../_static/underscore.js"></script>
     <script src="../../_static/doctools.js"></script>
-    <script src="../../_static/language_data.js"></script>
     <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="author" title="About these documents" href="../../about.html" />
     <link rel="index" title="Index" href="../../genindex.html" />
@@ -117,7 +117,8 @@
             
   <div class="sphx-glr-download-link-note admonition note">
 <p class="admonition-title">Note</p>
-<p>Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-radic-sip256c-py"><span class="std std-ref">here</span></a>     to download the full example code</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-03-seit-plot-radic-sip256c-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
 </div>
 <div class="sphx-glr-example-title section" id="importing-radic-sip256c-data">
 <span id="sphx-glr-examples-03-seit-plot-radic-sip256c-py"></span><h1>Importing Radic SIP256c data<a class="headerlink" href="#importing-radic-sip256c-data" title="Permalink to this headline">¶</a></h1>
@@ -172,6 +173,7 @@ max       49.000000     48.000000  ...   1000.000000   1526.862201
 <a href="../../_api/reda.utils.html#reda.utils.geometric_factors.apply_K" title="reda.utils.geometric_factors.apply_K" class="sphx-glr-backref-module-reda-utils-geometric_factors sphx-glr-backref-type-py-function"><span class="n">redaK</span><span class="o">.</span><span class="n">apply_K</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seit</span><span class="o">.</span><span class="n">data</span></a><span class="p">,</span> <a href="https://docs.scipy.org/doc/numpy/reference/generated/numpy.ndarray.html#numpy.ndarray" title="numpy.ndarray" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">K</span></a><span class="p">)</span>
 </pre></div>
 </div>
+<div class="output_subarea output_html rendered_html output_result">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -505,6 +507,7 @@ max       49.000000     48.000000  ...   1000.000000   1526.862201
   </tbody>
 </table>
 <p>34592 rows × 23 columns</p>
+</div>
 </div>
 <br />
 <br /><p>fix signs/pi-shifts caused by negative geometric factors</p>
@@ -512,6 +515,7 @@ max       49.000000     48.000000  ...   1000.000000   1526.862201
 <a href="../../_api/reda.utils.html#reda.utils.fix_sign_with_K.fix_sign_with_K" title="reda.utils.fix_sign_with_K.fix_sign_with_K" class="sphx-glr-backref-module-reda-utils-fix_sign_with_K sphx-glr-backref-type-py-function"><span class="n">redaFixK</span><span class="o">.</span><span class="n">fix_sign_with_K</span></a><span class="p">(</span><a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">seit</span><span class="o">.</span><span class="n">data</span></a><span class="p">)</span>
 </pre></div>
 </div>
+<div class="output_subarea output_html rendered_html output_result">
 <div>
 <style scoped>
     .dataframe tbody tr th:only-of-type {
@@ -845,6 +849,7 @@ max       49.000000     48.000000  ...   1000.000000   1526.862201
   </tbody>
 </table>
 <p>34592 rows × 23 columns</p>
+</div>
 </div>
 <br />
 <br /><p>Plot histograms of raw data</p>
@@ -925,7 +930,7 @@ improved in the future</p>
 </pre></div>
 </div>
 <img alt="plot radic sip256c" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_radic_sip256c_004.png" />
-<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  33.504 seconds)</p>
+<p class="sphx-glr-timing"><strong>Total running time of the script:</strong> ( 0 minutes  35.557 seconds)</p>
 <div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-03-seit-plot-radic-sip256c-py">
 <div class="sphx-glr-download sphx-glr-download-python docutils container">
 <p><a class="reference download internal" download="" href="../../_downloads/6fa8579aca6819c5129cdae56cab9079/plot_radic_sip256c.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_radic_sip256c.py</span></code></a></p>
@@ -948,7 +953,7 @@ improved in the future</p>
       &copy;2019, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.3.1</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.4.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
