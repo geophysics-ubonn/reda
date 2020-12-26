@@ -28,8 +28,13 @@ def _extract_adc_data(mat, **kwargs):
         frequency = frequencies[f_id]
 
         def get_field(key):
-            indices = np.where(md['fm'].take(f_id) == frequencies[f_id])
-            return md[key].take(f_id)[indices]
+            indices = np.where(
+                md['fm'].take(0) == frequencies[f_id])
+            return md[key].take(0)[indices]
+
+        # def get_field(key):
+        #     indices = np.where(md['fm'].take(f_id) == frequencies[f_id])
+        #     return md[key].take(f_id)[indices]
 
         timestamp = np.atleast_2d(
             [convert_epoch(x) for x in get_field('Time')]
