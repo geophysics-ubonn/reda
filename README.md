@@ -7,6 +7,10 @@
 
 *Latest release: 0.1.5 (28. June 2020)*
 
+See [!Releases Page])(https://github.com/geophysics-ubonn/reda/releases) for a
+complete list of releases. Releases are also published to
+[!Pypi](https://pypi.org/project/reda/).
+
 REDA is a scientific Python library for reproducible geoelectrical data
 analysis. It aims to provide a unified interface for common and advanced data
 processing steps while bridging the gap between a multitude of geoelectric
