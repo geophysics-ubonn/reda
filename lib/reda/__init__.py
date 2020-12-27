@@ -13,6 +13,7 @@ from .containers.TDIP import TDIP
 from .containers.ERT import ERT
 from .testing import test
 import reda.importers.eit_fzj as eit_fzj
+from reda.utils.electrode_manager import electrode_manager
 rcParams = {}
 
 # which inversion code should be used to compute geometric factors
@@ -35,6 +36,7 @@ data
 ConfigManager
 transforms
 eit_fzj
+electrode_manager
 
 
 def version():
