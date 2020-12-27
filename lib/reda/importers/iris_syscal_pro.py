@@ -160,7 +160,7 @@ def import_txt(filename, **kwargs):
     # rename electrode denotations
     rec_max = kwargs.get('reciprocals', None)
     if rec_max is not None:
-        print('renumbering electrode numbers')
+        logger.warning('renumbering electrode numbers')
         data[['a', 'b', 'm', 'n']] = rec_max + 1 - data[['a', 'b', 'm', 'n']]
 
     return data, None, None
@@ -220,11 +220,14 @@ def import_bin(filename, **kwargs):
         data_raw.drop(data_raw.index[range(0, skip_rows)], inplace=True)
         data_raw = data_raw.reset_index()
 
-    if kwargs.get('check_meas_nums', True):
+    if kwargs.get(
+            'check_meas_nums', True) and 'measurement_num' in data_raw.columns:
         # check that first number is 0
         if data_raw['measurement_num'].iloc[0] != 0:
-            print('WARNING: Measurement numbers do not start with 0 ' +
-                  '(did you download ALL data?)')
+            logger.warning(
+                'WARNING: Measurement numbers do not start with 0 ' +
+                '(did you download ALL data?)'
+            )
 
         # check that all measurement numbers increase by one
         if not np.all(np.diff(data_raw['measurement_num'])) == 1:
@@ -263,8 +266,10 @@ def import_bin(filename, **kwargs):
     # [mV] / [mA]
     data['r'] = data_raw['vp'] / data_raw['Iab']
     data['Vmn'] = data_raw['vp']
-    data['vab'] = data_raw['vab']
     data['Iab'] = data_raw['Iab']
+
+    if 'vab' in data_raw.columns:
+        data['vab'] = data_raw['vab']
 
     data['mdelay'] = data_raw['mdelay']
     data['Tm'] = data_raw['Tm']
@@ -278,7 +283,6 @@ def import_bin(filename, **kwargs):
         logger.info('renumbering electrode numbers')
         data[['a', 'b', 'm', 'n']] = rec_max + 1 - data[['a', 'b', 'm', 'n']]
 
-    # print(data)
     return data, None, None
 
 
@@ -341,6 +345,8 @@ def _import_bin(filename):
     # for each measurement
     counter = 0
     while(fid.tell() < total_size):
+        dataentry = {}
+
         # print('COUNTER', counter)
         buffer = fid.read(2)
         array_type = struct.unpack('h', buffer)
@@ -391,96 +397,102 @@ def _import_bin(filename):
         # chargeabilities
         Mx = fget(fid, '20f', 20 * 4)
         Mx = np.array(Mx)
-        # print('Mx', Mx)
-        # this is 4 bytes used to store information on the measured channel
-        # Channel + NbChannel
-        buffer = fid.read(1)
-        buffer_bin = bin(ord(buffer))[2:].rjust(8, '0')
-        # print(buffer_bin)
-        channel = int(buffer_bin[4:], 2)
-        channelnb = int(buffer_bin[0:4], 2)
-        # print('ChannelNB:', channelnb)
-        # print('Channel:', channel)
-        # 4 binaries + unused
-        buffer = fid.read(1)
-        buffer_bin = bin(ord(buffer))[2:].rjust(8, '0')
-        # print(buffer_bin)
-        overload = bool(int(buffer_bin[4]))
-        channel_valid = bool(int(buffer_bin[5]))
-        channel_sync = bool(int(buffer_bin[6]))
-        gap_filler = bool(int(buffer_bin[7]))
-        # print(overload, channel_valid, channel_sync, gap_filler)
-        measurement_num = fget(fid, 'H', 2)
-        # print('measurement_num', measurement_num)
-        filename = fget(fid, '12s', 12)
-        # print('filename', filename)
-        latitude = fget(fid, 'f', 4)
-        # print('lat', latitude)
-        longitude = fget(fid, 'f', 4)
-        # print('long', longitude)
-        # number of stacks
-        NbCren = fget(fid, 'f', 4)
-        # print('Stacks', NbCren)
-        # RS check
-        RsChk = fget(fid, 'f', 4)
-        # print('RsChk', RsChk)
-        # absolute applied voltage
-        vab = fget(fid, 'f', 4)
-        # print('Vab', vab)
-        # tx battery voltage [V]
-        batTX = fget(fid, 'f', 4)
-        # print('batTX', batTX)
-        # rx battery voltage [V]
-        batRX = fget(fid, 'f', 4)
-        # print('batRX', batRX)
-        temperature = fget(fid, 'f', 4)
-        # print('Temp.', temperature)
-        # TODO: date and time not analyzed
-        b = struct.unpack('2f', fid.read(2 * 4))
-        # print('b', b)
-        b
 
-        measurements.append({
-            'version': version,
-            'mtime': mtime,
-            'x_a': xpos[0],
-            'x_b': xpos[1],
-            'x_m': xpos[2],
-            'x_n': xpos[3],
-            'y_a': ypos[0],
-            'y_b': ypos[1],
-            'y_m': ypos[2],
-            'y_n': ypos[3],
-            'z_a': zpos[0],
-            'z_b': zpos[1],
-            'z_m': zpos[2],
-            'z_n': zpos[3],
-            'mdelay': mdelay,
-            'vp': vp,
-            'q': q,
-            'overload': overload,
-            'channel_valid': channel_valid,
-            'channel_sync': channel_sync,
-            'gap_filler': gap_filler,
-            'NbStacks': NbCren,
-            'm': m,
-            'Tm': Tm,
-            'Mx': Mx,
-            'nr': measurement_num,
-            'vab': vab,
-            'channel': channel,
-            'sp': sp,
-            'Iab': Iab,
-            'rho': rho,
-            'latitude': latitude,
-            'longitude': longitude,
-            'channelnb': channelnb,
-            'RsCHk': RsChk,
-            'batTX': batTX,
-            'batRX': batRX,
-            'temperature': temperature,
-            'measurement_num': measurement_num,
-        })
+        dataentry['version'] = version
+        dataentry['mtime'] = mtime
+        dataentry['x_a'] = xpos[0]
+        dataentry['x_b'] = xpos[1]
+        dataentry['x_m'] = xpos[2]
+        dataentry['x_n'] = xpos[3]
+        dataentry['y_a'] = ypos[0]
+        dataentry['y_b'] = ypos[1]
+        dataentry['y_m'] = ypos[2]
+        dataentry['y_n'] = ypos[3]
+        dataentry['z_a'] = zpos[0]
+        dataentry['z_b'] = zpos[1]
+        dataentry['z_m'] = zpos[2]
+        dataentry['z_n'] = zpos[3]
+        dataentry['mdelay'] = mdelay
+        dataentry['vp'] = vp
+        dataentry['q'] = q
+        dataentry['m'] = m
+        dataentry['Tm'] = Tm
+        dataentry['Mx'] = Mx
+        dataentry['sp'] = sp
+        dataentry['Iab'] = Iab
+        dataentry['rho'] = rho
+
+        if moretmeasure > 0:
+            # print('Mx', Mx)
+            # this is 4 bytes used to store information on the measured channel
+            # Channel + NbChannel
+            buffer = fid.read(1)
+            buffer_bin = bin(ord(buffer))[2:].rjust(8, '0')
+            # print(buffer_bin)
+            channel = int(buffer_bin[4:], 2)
+            channelnb = int(buffer_bin[0:4], 2)
+            # print('ChannelNB:', channelnb)
+            # print('Channel:', channel)
+            # 4 binaries + unused
+            buffer = fid.read(1)
+            buffer_bin = bin(ord(buffer))[2:].rjust(8, '0')
+            # print(buffer_bin)
+            overload = bool(int(buffer_bin[4]))
+            channel_valid = bool(int(buffer_bin[5]))
+            channel_sync = bool(int(buffer_bin[6]))
+            gap_filler = bool(int(buffer_bin[7]))
+            # print(overload, channel_valid, channel_sync, gap_filler)
+            measurement_num = fget(fid, 'H', 2)
+            # print('measurement_num', measurement_num)
+            filename = fget(fid, '12s', 12)
+            # print('filename', filename)
+            latitude = fget(fid, 'f', 4)
+            # print('lat', latitude)
+            longitude = fget(fid, 'f', 4)
+            # print('long', longitude)
+            # number of stacks
+            NbCren = fget(fid, 'f', 4)
+            # print('Stacks', NbCren)
+            # RS check
+            RsChk = fget(fid, 'f', 4)
+            # print('RsChk', RsChk)
+            dataentry['channel'] = channel
+            dataentry['overload'] = overload
+            dataentry['channel_valid'] = channel_valid
+            dataentry['channel_sync'] = channel_sync
+            dataentry['gap_filler'] = gap_filler
+            dataentry['NbStacks'] = NbCren
+            dataentry['RsCHk'] = RsChk,
+            dataentry['latitude'] = latitude
+            dataentry['longitude'] = longitude
+            dataentry['channelnb'] = channelnb
+            dataentry['measurement_num'] = measurement_num
+            dataentry['nr'] = measurement_num
+
+            if moretmeasure >= 2:
+                # absolute applied voltage
+                vab = fget(fid, 'f', 4)
+                # print('Vab', vab)
+                # tx battery voltage [V]
+                batTX = fget(fid, 'f', 4)
+                # print('batTX', batTX)
+                # rx battery voltage [V]
+                batRX = fget(fid, 'f', 4)
+                # print('batRX', batRX)
+                temperature = fget(fid, 'f', 4)
+                # print('Temp.', temperature)
+                dataentry['vab'] = vab
+                dataentry['batTX'] = batTX
+                dataentry['batRX'] = batRX
+                dataentry['temperature'] = temperature
+
+            if moretmeasure == 3:
+                # TODO: date and time not analyzed
+                b = struct.unpack('2f', fid.read(2 * 4))
+                # print('b', b)
+                b
+
+        measurements.append(dataentry)
 
         counter += 1
 
