@@ -12,6 +12,15 @@ def _extract_adc_data(mat, **kwargs):
     """
     md = mat['MD'].squeeze()
     frequencies = mat['MP']['fm'].take(0)
+
+    # it seems that there exist different file formats under this same official
+    # version.
+    if md['fm'].size == frequencies.size:
+        use_v = 0
+    else:
+        use_v = 1
+
+    # print('@@@')
     # import IPython
     # IPython.embed()
     # exit()
@@ -27,10 +36,14 @@ def _extract_adc_data(mat, **kwargs):
     for f_id in range(0, frequencies.size):
         frequency = frequencies[f_id]
 
-        def get_field(key):
-            indices = np.where(
-                md['fm'].take(0) == frequencies[f_id])
-            return md[key].take(0)[indices]
+        if use_v == 0:
+            def get_field(key):
+                return md[key][f_id]
+        elif use_v == 1:
+            def get_field(key):
+                indices = np.where(
+                    md['fm'].take(0) == frequencies[f_id])
+                return md[key].take(0)[indices]
 
         # def get_field(key):
         #     indices = np.where(md['fm'].take(f_id) == frequencies[f_id])
