@@ -29,7 +29,7 @@ with reda.CreateEnterDirectory('output_04_ug3'):
     ax.set_aspect('auto')
 
     ax.set_yticks(list(range(subdata.index.shape[0])))
-    ax.set_yticklabels(subdata.index.values)
+    ax.set_yticklabels(subdata.index.droplevel(2).values)
 
     cb = fig.colorbar(im, ax=ax)
     cb.set_label(r'Ug [V]')
