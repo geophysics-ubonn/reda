@@ -6,9 +6,13 @@ data that does not come with actual electrode positions.
 
 ## Possible future features
 
-* Merge two datasets by their electrode coordinates:
+* How to deal with the ongoing addition of new data to containers, i.e. for
+  time-lapse data? This is directly relevant to the merging issue down below.
+  For now I think that the coordinates of each new dataset should be merged
+  with the existing ones, resulting in a completely new electrode_manager
+  instance being used (?).
 
-    .merge_with(elec_manager|(nr<->coordinate dict|arrays))
+* Need tests and functionality for normal-reciprocal usage.
 
 ## Implemented features
     * [done] Generate electrode numbers from a set of electrode coordinates
@@ -29,6 +33,7 @@ data that does not come with actual electrode positions.
     * [done] need proper tests for all sorters
     * [done] how to deal with incorrect electrode positions, e.g. for the case
       where default Syscal settings are used?
+    * [done] Merge two datasets by their electrode coordinates:
 
 
 ## User Stories
@@ -71,6 +76,14 @@ electrode positions with the correct ones.
 """
 import pandas as pd
 import numpy as np
+
+
+def decorator_name_index(func):
+    def rename_index(ref, *args, **kwargs):
+        result = func(ref)
+        result.index.name = 'electrode_number'
+        return result
+    return rename_index
 
 
 class electrode_manager(object):
@@ -205,7 +218,7 @@ class electrode_manager(object):
 
         def fixed_sorter(x):
             subdata = data_raw.set_index('electrode_number')
-            subdata.index.rename('index', inplace=True)
+            # subdata.index.rename('electrode_number', inplace=True)
             return subdata
 
         self.sorter = fixed_sorter
@@ -278,10 +291,15 @@ class electrode_manager(object):
     def get_all_electrode_numbers(self):
         """Return the assignment between electrode numbers and coordinates
         """
-        return self.sorter(self._electrode_positions)
+        return self.electrode_positions
 
     @property
+    @decorator_name_index
     def electrode_positions(self):
+        return self.sorter(self._electrode_positions)
+
+    @decorator_name_index
+    def __call__(self):
         return self.sorter(self._electrode_positions)
 
     def get_electrode_numbers_for_positions(self, positions_raw):
@@ -317,7 +335,7 @@ class electrode_manager(object):
         position = positions.merge(
             self.electrode_positions.reset_index(),
             on=['x', 'y', 'z']
-        )['index'].values
+        )['electrode_number'].values
         if position.size == 0:
             position = None
         # else:
@@ -461,3 +479,66 @@ class electrode_manager(object):
         index = np.where(
             np.all(old_coordinates == self._electrode_positions, axis=1))
         self._electrode_positions.iloc[index] = new_coords
+
+    def plot_coordinates_x_z_to_ax(self, ax, plot_electrode_numbers=True):
+        coordinates = self.electrode_positions
+        ax.scatter(
+            coordinates['x'],
+            coordinates['z'],
+            color='k',
+        )
+        if plot_electrode_numbers:
+            for electrode_number, xyz in coordinates.iterrows():
+                ax.text(
+                    xyz['x'], xyz['z'], '{}'.format(electrode_number),
+                    bbox=dict(boxstyle='circle', facecolor='red', alpha=0.8)
+                )
+
+    def align_assignments(self, pos1, pos2, data1, data2):
+        """
+
+        """
+        assert isinstance(pos1, pd.DataFrame)
+        assert isinstance(pos2, pd.DataFrame)
+        assert isinstance(data1, pd.DataFrame)
+        assert isinstance(data2, pd.DataFrame)
+        assert 'x' in pos1.columns
+        assert 'y' in pos1.columns
+        assert 'z' in pos1.columns
+        assert 'x' in pos2.columns
+        assert 'y' in pos2.columns
+        assert 'z' in pos2.columns
+
+        for col in ['a', 'b', 'm', 'n']:
+            for pos in (data1, data2):
+                assert col in pos.columns
+
+        elecs = electrode_manager()
+        elecs.add_by_position(pos1)
+        elecs.add_by_position(pos2)
+
+        if pos1.index.name == 'electrode_number':
+            pos1 = pos1.reset_index()
+
+        if pos2.index.name == 'electrode_number':
+            pos2 = pos2.reset_index()
+
+        replacement_table1 = pd.merge(
+            pos1, elecs().reset_index(), on=['x', 'y', 'z'], how='left')
+        replacement_table2 = pd.merge(
+            pos2, elecs().reset_index(), on=['x', 'y', 'z'], how='left')
+
+        data1_aligned = data1.replace(
+            replacement_table1['electrode_number_x'].values,
+            replacement_table1['electrode_number_y'].values
+        )
+
+        data2_aligned = data2.replace(
+            replacement_table2['electrode_number_x'].values,
+            replacement_table2['electrode_number_y'].values
+        )
+
+        return elecs(), data1_aligned, data2_aligned
+
+        # import IPython
+        # IPython.embed()

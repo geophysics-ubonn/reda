@@ -491,3 +491,102 @@ def test_replace_one_coordinate():
 
     elecs.replace_coordinate_of_electrode_number(1, [555, 0])
     assert np.all(elecs.get_position_of_number(1) == [555, 0, 0])
+
+
+def test_callable_class():
+    electrode_positions = pd.DataFrame(
+        (
+            (0, 0, 0),
+            (1, 0, 0),
+            (2, 0, 0),
+            (3, 0, 0),
+        ),
+        columns=['x', 'y', 'z'],
+    )
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+
+    assert np.all(
+        electrode_positions.values == elecs().values
+    )
+
+
+def test_merging():
+    positions1 = pd.DataFrame(
+        (
+            (1, 0, 0, 0),
+            (2, 1, 0, 0),
+            (3, 2, 0, 0),
+            # note gap here in positions!
+            (4, 4, 0, 0),
+        ),
+        columns=['electrode_number', 'x', 'y', 'z'],
+    )
+    data1 = pd.DataFrame(
+        (
+            (1, 2, 4, 3),
+            (1, 4, 3, 2),
+
+        ),
+        columns=['a', 'b', 'm', 'n'],
+    )
+
+    positions2 = pd.DataFrame(
+        (
+            (1, 3, 0, 0),
+            (2, 4, 0, 0),
+            (3, 5, 0, 0),
+            (4, 6, 0, 0),
+        ),
+        columns=['electrode_number', 'x', 'y', 'z'],
+    )
+    data2 = pd.DataFrame(
+        (
+            (1, 2, 4, 3),
+            (1, 4, 3, 2),
+
+        ),
+        columns=['a', 'b', 'm', 'n'],
+    )
+
+    elecs = electrode_manager()
+
+    positions_aligned, data1_aligned, data2_aligned = elecs.align_assignments(
+        positions1,
+        positions2,
+        data1,
+        data2,
+    )
+
+    positions_expected = pd.DataFrame(
+        (
+            (1, 0, 0, 0),
+            (2, 1, 0, 0),
+            (3, 2, 0, 0),
+            (4, 4, 0, 0),
+            (5, 3, 0, 0),
+            (6, 5, 0, 0),
+            (7, 6, 0, 0),
+        ),
+        columns=['electrode_number', 'x', 'y', 'z'],
+    ).astype(float).set_index('electrode_number')
+
+    assert np.all(
+        positions_expected == positions_aligned
+    ), 'aligned positions'
+
+    data2_expected = pd.DataFrame(
+        (
+            (5, 4, 7, 6),
+            (5, 7, 6, 4),
+
+        ),
+        columns=['a', 'b', 'm', 'n'],
+    )
+
+    assert np.all(data1_aligned == data1)
+    assert np.all(data2_aligned == data2_expected)
+
+
+if __name__ == '__main__':
+    test_merging()
