@@ -41,12 +41,12 @@ class ERTImporters(ImportersBase):
             del (kwargs['timestep'])
         self.logger.info('IRIS Syscal Pro bin import')
         with LogDataChanges(self, filter_action='import'):
-            data, electrodes, topography = reda_syscal.import_bin(
+            data, electrode_positions, topography = reda_syscal.import_bin(
                 filename, **kwargs
             )
             if timestep is not None:
                 data['timestep'] = timestep
-            self._add_to_container(data)
+            self._add_to_container(data, electrode_positions, topography)
         if kwargs.get('verbose', False):
             print('Summary:')
             self._describe_data(data)

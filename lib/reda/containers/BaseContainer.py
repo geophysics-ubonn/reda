@@ -1,5 +1,6 @@
 """."""
 import functools
+import logging
 
 import pandas as pd
 
@@ -17,6 +18,8 @@ from reda.utils.norrec import assign_norrec_to_df
 
 from reda.utils.decorators_and_managers import LogDataChanges
 
+logger = logging.getLogger(__name__)
+
 
 class ImportersBase(object):
 
@@ -25,22 +28,58 @@ class ImportersBase(object):
 
     """
 
-    def _add_to_container(self, df):
-        """Add a given DataFrame to the container
+    def _add_to_container(
+            self, data_to_add, electrode_positions=None, topography=None):
+        """Add a given dataset to the container
 
         Parameters
         ----------
-        df : pandas.DataFrame
-            DataFrame, must adhere to the container contraints (i.e., must have
-            all required columns)
+        data_to_add : pandas.DataFrame
+            Measurement data in the form of a DataFrame, must adhere to the
+            container contraints (i.e., must have all required columns)
+        electrode_positions : :py:class:`reda.electrode_manager`|None
+            If set, this electrode manager will be merged with any existing
+            electrode positions, resulting in a unified electrode position
+            assignment.
+        topography : None
+            Will be used to store topography in the future (not implemented
+            yet).
 
         """
 
+        if electrode_positions is not None:
+            if self.electrode_positions is None:
+                self.electrode_positions = electrode_positions()
+            else:
+                logger.debug('Merging electrode positions of old and new data')
+                # need to merge
+                positions_aligned, abmn_old, abmn_addition = \
+                    electrode_positions.align_assignments(
+                        self.electrode_positions,
+                        electrode_positions.electrode_positions,
+                        self.data[['a', 'b', 'm', 'n']],
+                        data_to_add[['a', 'b', 'm', 'n']],
+                    )
+                self.data[['a', 'b', 'm', 'n']] = abmn_old
+                data_to_add[['a', 'b', 'm', 'n']] = abmn_addition
+                self.electrode_positions = positions_aligned
+
+        self._add_to_data(data_to_add)
+
+    def _add_to_data(self, data):
+        """Add data to the container
+
+        Parameters
+        ----------
+        data : pandas.DataFrame
+            Measurement data in the form of a DataFrame, must adhere to the
+            container contraints (i.e., must have all required columns)
+        """
         if self.data is None:
-            self.data = df
+            self.data = data
         else:
             self.data = pd.concat(
-                (self.data, df), ignore_index=True, sort=True
+                (self.data, data), ignore_index=True, sort=True
             )
 
         # clean any previous norrec-assignments
