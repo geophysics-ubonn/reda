@@ -66,9 +66,18 @@ def test_get_electrode_position():
         elecs.get_position_of_number(10)
 
     assert elecs.get_electrode_numbers_for_positions([-10, 2, 4]) is None
+    # 1D/2D/3D
+    assert elecs.get_electrode_numbers_for_positions([2]) == 1
+    assert elecs.get_electrode_numbers_for_positions([2, 0]) == 1
     assert elecs.get_electrode_numbers_for_positions([2, 0, 0]) == 1
+
     assert elecs.get_electrode_numbers_for_positions([0, 0, 0]) == 2
     assert elecs.get_electrode_numbers_for_positions([1, 0, 0]) == 3
+
+    # multiple 1D
+    assert np.all(
+        elecs.get_electrode_numbers_for_positions([[2, ], [0, ]]) == [1, 2]
+    )
 
 
 def test_get_electrode_numbers_for_positions():
@@ -178,14 +187,42 @@ def test_add_positions():
     elecs.add_by_position(test_pandas_3d)
     assert np.all(test_pandas_3d.values == elecs.electrode_positions.values)
 
+    test_pandas_2d = pd.DataFrame(
+        (
+            (0, 0),
+            (1, 0),
+            (2, 0),
+        ),
+        columns=['x', 'z'],
+    )
+    elecs = electrode_manager()
+    elecs.add_by_position(test_pandas_2d)
+    assert np.all(test_pandas_3d.values == elecs.electrode_positions.values)
+
+    test_pandas_1d = pd.DataFrame(
+        (
+            (0),
+            (1),
+            (2),
+        ),
+        columns=['x'],
+    )
+    elecs = electrode_manager()
+    elecs.add_by_position(test_pandas_1d)
+    assert np.all(test_pandas_3d.values == elecs.electrode_positions.values)
+
     # lists
     elecs = electrode_manager()
+
+    elecs.add_by_position([[1, ], [2, ]])
     elecs.add_by_position([4.5, 0])
     elecs.add_by_position([[5.5, 0], [7.0, 0]])
     elecs.add_by_position([8, 0, 0])
     elecs.add_by_position([[9, 0, 0], [10, 0, 0]])
 
     result_expected = np.array((
+        (1, 0, 0),
+        (2, 0, 0),
         (4.5, 0, 0),
         (5.5, 0, 0),
         (7.0, 0, 0),
@@ -197,10 +234,27 @@ def test_add_positions():
 
     # numpy arrays
     elecs = electrode_manager()
-    elecs.add_by_position(np.array([4.5, 0]))
+    # 1D
+    elecs.add_by_position(np.array([[1.5, 1.7, 1.9, 1.95], ]).T)
+
+    elecs.add_by_position(np.array([3.5, 0]))
     elecs.add_by_position(np.array([[4.5, 0], [7.0, 0]]))
     elecs.add_by_position(np.array([8, 0, 0]))
     elecs.add_by_position(np.array([[9, 0, 0], [10, 0, 0]]))
+
+    result_expected = np.array((
+        (1.5, 0, 0),
+        (1.7, 0, 0),
+        (1.9, 0, 0),
+        (1.95, 0, 0),
+        (3.5, 0, 0),
+        (4.5, 0, 0),
+        (7.0, 0, 0),
+        (8.0, 0, 0),
+        (9.0, 0, 0),
+        (10.0, 0, 0),
+    ))
+    assert np.all(result_expected == elecs.electrode_positions.values)
 
 
 def test_conform_to_regular_x_spacing():
@@ -589,4 +643,5 @@ def test_merging():
 
 
 if __name__ == '__main__':
-    test_merging()
+    # test_merging()
+    pass

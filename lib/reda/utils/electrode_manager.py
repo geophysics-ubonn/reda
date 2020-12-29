@@ -6,14 +6,6 @@ data that does not come with actual electrode positions.
 
 ## Possible future features
 
-* How to deal with the ongoing addition of new data to containers, i.e. for
-  time-lapse data? This is directly relevant to the merging issue down below.
-  For now I think that the coordinates of each new dataset should be merged
-  with the existing ones, resulting in a completely new electrode_manager
-  instance being used (?).
-
-* Need tests and functionality for normal-reciprocal usage.
-
 ## Implemented features
     * [done] Generate electrode numbers from a set of electrode coordinates
     * [done] Add new positions, including a .assume_regular_electrodes
@@ -230,7 +222,14 @@ class electrode_manager(object):
 
         1) pandas.DataFrame with columns (x/z) or (x/y/z)
         2) list (one position) or nested list (multiple positions)
-        3) numpy array (1d, one dimension), (2d, 2 dimensions)
+        3) numpy array
+
+        WARNING: For lists/tuples/arrays the number of supplied dimensions is
+        determined by the second dimension after applying::
+
+            nr_dimensions = np.atleast_2d(input_data).shape[1]
+
+        As such, make sure to properly format 1d arrays!
 
         Parameters
         ----------
@@ -244,16 +243,23 @@ class electrode_manager(object):
             data = data_raw
         elif isinstance(data_raw, (np.ndarray, list, tuple)):
             data = pd.DataFrame(np.atleast_2d(data_raw))
+            print('shape', data.shape)
+            if data.shape[1] == 1:
+                # assume only x coordinate
+                data.columns = ['x', ]
             if data.shape[1] == 2:
                 # assume only x/z coordinates
                 data.columns = ['x', 'z']
             elif data.shape[1] == 3:
                 data.columns = ['x', 'y', 'z']
 
-        assert 'x' in data and 'z' in data, 'columns x and z must be present'
+        print(data)
+        assert 'x' in data, 'column x must be present'
         subdata = data.copy()
         if 'y' not in subdata.columns:
             subdata['y'] = 0
+        if 'z' not in subdata.columns:
+            subdata['z'] = 0
 
         # make sure we have the correct order of columns before working with
         # numpy
@@ -317,6 +323,14 @@ class electrode_manager(object):
             'a pandas.DataFrame'
         if isinstance(positions_raw, (list, tuple, np.ndarray)):
             positions_np = np.atleast_2d(positions_raw)
+            if positions_np.shape[1] == 1:
+                positions_np = np.vstack(
+                    (
+                        positions_np[:, 0],
+                        np.zeros(positions_np.shape[0]),
+                        np.zeros(positions_np.shape[0]),
+                    )).T
+
             if positions_np.shape[1] == 2:
                 positions_np = np.vstack(
                     (
@@ -331,15 +345,17 @@ class electrode_manager(object):
             )
         else:
             positions = positions_raw
+        print(positions)
 
         position = positions.merge(
             self.electrode_positions.reset_index(),
-            on=['x', 'y', 'z']
+            on=['x', 'y', 'z'],
+            how='left',
         )['electrode_number'].values
-        if position.size == 0:
+        # import IPython
+        # IPython.embed()
+        if position.size == 1 and np.isnan(position[0]):
             position = None
-        # else:
-        #     position.take(0)
         return position
 
     def reflect_on_position_x(self, reflect_on_x):
@@ -368,7 +384,6 @@ class electrode_manager(object):
         This is useful when dealing with multiple measurements using
         multi-channel/multiplexer systems where not all electrodes are used in
         every measurement.
-        print(elecs._electrode_positions)
 
         This function works for simple setups - for specialized cases it is
         recommended to provide a complete electrode position list using the XXX
