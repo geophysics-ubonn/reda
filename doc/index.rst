@@ -36,8 +36,8 @@ license. Any contributions from the community are highly welcome.
     test_data.rst
     debugging.rst
     data_containers.rst
-    filtering.rst
     importers.rst
+    filtering.rst
     _examples/index.rst
     api.rst
     Source code <https://github.com/geophysics-ubonn/reda>

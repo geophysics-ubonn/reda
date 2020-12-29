@@ -47,7 +47,8 @@ Container basics
 
 * If not otherwise stated, a container stores measurement data in a pandas
   DataFrame located in `container.data`.
-* Electrode positions (if available) are stored in a pandas DataFrame in
+* Electrode positions (if available) are stored in an electrode manager
+  :py:class:`reda.utils.electrode_manager.electrode_manager` in
   `container.electrode_positions` (columns **x**, **y**, **z**).
 * Topograhy nodes (if available) are stored in a pandas DataFrame in
   `container.topography` (columns **x**, **y**, **z**).

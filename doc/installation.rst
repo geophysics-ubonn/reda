@@ -4,14 +4,15 @@ Installation
 Reda can be installed in any up-to-date python 3 environment.
 This can be a system-installed Python, but also a fully self-contained
 distribution, such as `Anaconda <https://www.continuum.io/downloads>`_.
-For Windows system at this point we recommend to use Anaconda.
+For Windows systems we recommend to use Anaconda.
 
 There are two basic ways to obtain reda: Either using the Python Packaging
 Index (PyPI), or by using the source code directly from github.
 For most cases we recommend to use the latest release from PyPI, but if newer
 features or bug fixes are required, a source installation should be considered.
 
-Please note that the handling of Python interpreters and work environments can be done in various ways, which sometimes overlap in their principal approaches.
+Please note that the handling of Python interpreters and work environments can
+be done in various ways, which sometimes overlap in their principal approaches.
 As a rule of thumb you should stick with any procedures you already use - reda
 is a pure python package that should work on most environments - and only use
 the notes below in case you don't have any established work procedures.
