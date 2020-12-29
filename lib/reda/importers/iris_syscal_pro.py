@@ -12,6 +12,7 @@ import logging
 import pandas as pd
 import numpy as np
 
+import reda
 from reda.importers.utils.decorators import enable_result_transforms
 
 logger = logging.getLogger(__name__)
@@ -176,10 +177,22 @@ def import_bin(filename, **kwargs):
     reda.importers.iris_syscal_pro_binary._import_bin to extract ALL
     information from a given .bin file.
 
+    todo:
+
+    * add pipe-through parameters for the electrode manager:
+
+        shift_xyz -> move all coordinates by this vector
+        old_spacing
+        new_spacing
+
+    * then: Remove spacing parameter and x0
+
     Parameters
     ----------
     filename : string
         path to input filename
+    # system_spacing : float, optional
+    #     If set
     x0 : float, optional
         position of first electrode. If not given, then use the smallest
         x-position in the data as the first electrode.
@@ -206,8 +219,8 @@ def import_bin(filename, **kwargs):
     -------
     data : :py:class:`pandas.DataFrame`
         Contains the measurement data
-    electrodes : :py:class:`pandas.DataFrame`
-        Contains electrode positions (None at the moment)
+    elec_mgr : :py:class:`reda.utils.electrode_manager.electrode_manager`
+        Electrode manager
     topography : None
         No topography information is contained in the text files, so we always
         return None
@@ -259,10 +272,34 @@ def import_bin(filename, **kwargs):
         # no data present, return a bare DataFrame
         return pd.DataFrame(columns=['a', 'b', 'm', 'n', 'r']), None, None
 
-    data = _convert_coords_to_abmn_X(
-            data_raw[['x_a', 'x_b', 'x_m', 'x_n']],
-            **kwargs
-            )
+    # convert coordinates to logical electrode numbers
+    elec_mgr = reda.electrode_manager()
+    elec_mgr.set_ordering_to_sort_zyx()
+
+    elec_mgr.add_by_position(data_raw[['x_a', 'y_a', 'z_a']].values)
+    elec_mgr.add_by_position(data_raw[['x_b', 'y_b', 'z_b']].values)
+    elec_mgr.add_by_position(data_raw[['x_m', 'y_m', 'z_m']].values)
+    elec_mgr.add_by_position(data_raw[['x_n', 'y_n', 'z_n']].values)
+
+    data = pd.DataFrame()
+    data['a'] = elec_mgr.get_electrode_numbers_for_positions(
+        data_raw[['x_a', 'y_a', 'z_a']].values
+    )
+    data['b'] = elec_mgr.get_electrode_numbers_for_positions(
+        data_raw[['x_b', 'y_b', 'z_b']].values
+    )
+    data['m'] = elec_mgr.get_electrode_numbers_for_positions(
+        data_raw[['x_m', 'y_m', 'z_m']].values
+    )
+    data['n'] = elec_mgr.get_electrode_numbers_for_positions(
+        data_raw[['x_n', 'y_n', 'z_n']].values
+    )
+    # exit()
+
+    # data = _convert_coords_to_abmn_X(
+    #         data_raw[['x_a', 'x_b', 'x_m', 'x_n']],
+    #         **kwargs
+    #         )
     # [mV] / [mA]
     data['r'] = data_raw['vp'] / data_raw['Iab']
     data['Vmn'] = data_raw['vp']
@@ -283,7 +320,7 @@ def import_bin(filename, **kwargs):
         logger.info('renumbering electrode numbers')
         data[['a', 'b', 'm', 'n']] = rec_max + 1 - data[['a', 'b', 'm', 'n']]
 
-    return data, None, None
+    return data, elec_mgr, None
 
 
 def _import_bin(filename):
