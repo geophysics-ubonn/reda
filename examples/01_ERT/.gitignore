@@ -1,6 +1,7 @@
 .ipynb_checkpoints/
 *.png
 ip.pickle
+output_*/
 
 data_export/
 plots/
