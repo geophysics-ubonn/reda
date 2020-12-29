@@ -73,7 +73,7 @@ class ImportersBase(object):
         ----------
         data : pandas.DataFrame
             Measurement data in the form of a DataFrame, must adhere to the
-            container contraints (i.e., must have all required columns)
+            container constraints (i.e., must have all required columns)
         """
         if self.data is None:
             self.data = data
@@ -126,6 +126,19 @@ class ImportersBase(object):
             if test_col in df_to_use.columns:
                 cols.append(test_col)
         print(df_to_use[cols].describe())
+
+    def add_dataframe(self, data, timestep=None, **kwargs):
+        """Add data to the container using another DataFrame
+
+        Parameters
+        ----------
+        data : pandas.DataFrame
+            Measurement data in the form of a DataFrame, must adhere to the
+            container constraints (i.e., must have all required columns)
+        """
+        if timestep is not None:
+            data['timestep'] = timestep
+        self._add_to_data(data)
 
 
 class ExportersBase(object):
