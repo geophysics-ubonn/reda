@@ -8,9 +8,15 @@ Importing Syscal ERT data from roll-a-long scheme
 import reda
 ###############################################################################
 # create an ERT container and import first dataset
+# The 'elecs_transform_reg_spacing_x' parameter transforms the spacing in x
+# direction from the spacing stored in the data file (here 1 m) to the true
+# spacing of 0.2 m. This is useful if the spacing on the measurement system is
+# not changed between measurements and only changed in the postprocessing (this
+# is common practice in some work groups).
 ert_p1 = reda.ERT()
 ert_p1.import_syscal_bin(
-    'data_syscal_rollalong/profile_1.bin'
+    'data_syscal_rollalong/profile_1.bin',
+    elecs_transform_reg_spacing_x=(1, 0.2),
 )
 ert_p1.compute_K_analytical(spacing=0.2)
 with reda.CreateEnterDirectory('output_02_rollalong'):
@@ -24,6 +30,7 @@ with reda.CreateEnterDirectory('output_02_rollalong'):
 ert_p2 = reda.ERT()
 ert_p2.import_syscal_bin(
     'data_syscal_rollalong/profile_2.bin',
+    elecs_transform_reg_spacing_x=(1, 0.2),
 )
 ert_p2.compute_K_analytical(spacing=0.2)
 with reda.CreateEnterDirectory('output_02_rollalong'):
@@ -34,29 +41,55 @@ with reda.CreateEnterDirectory('output_02_rollalong'):
     )
 
 ###############################################################################
-# create an ERT container and jointly import the first and second dataset,
-# thereby shifting electrode notations of the second dataset by 24 electrodes
+# Now we start over again and fix the coordinates of the second profile by
+# using the 'shift_by_xyz' parameter, which can be used to move the electrode
+# positions by a fixed offset. In our case this offset amounts to the position
+# of the 25th position (first electrode starts at 0, therefore 24 * 0.25 m).
 ert = reda.ERT()
 
 # first profile
 ert.import_syscal_bin(
-    'data_syscal_rollalong/profile_1.bin'
+    'data_syscal_rollalong/profile_1.bin',
+    elecs_transform_reg_spacing_x=(1, 0.2),
 )
 
+ert2 = reda.ERT()
 # second profile
-ert.import_syscal_bin(
+ert2.import_syscal_bin(
     'data_syscal_rollalong/profile_2.bin',
-    electrode_transformator=reda.transforms.transform_electrodes_roll_along(
-        shiftby=24
-    )
+    elecs_transform_reg_spacing_x=(1, 0.2),
+    shift_by_xyz=[24 * 0.2],
 )
 
+###############################################################################
+# Electrode positions of first dataset
+with reda.CreateEnterDirectory('output_02_rollalong'):
+    fig, ax = ert.plot_electrode_positions_xz()
+    fig.show()
+###############################################################################
+# Electrode positions of second dataset
+with reda.CreateEnterDirectory('output_02_rollalong'):
+    fig, ax = ert2.plot_electrode_positions_xz()
+    fig.show()
+###############################################################################
+# Now we merge the datasets and plot the electrode positions
+ert.merge_container(ert2)
+
+with reda.CreateEnterDirectory('output_02_rollalong'):
+    fig, ax = ert.plot_electrode_positions_xz()
+    fig.show()
+
+###############################################################################
 # compute geometric factors
 ert.compute_K_analytical(spacing=0.2)
 
+###############################################################################
+# Plot Pseudosection
 with reda.CreateEnterDirectory('output_02_rollalong'):
     ert.pseudosection(filename='pseudosection_both_profiles.pdf',
                       column='r', log10=True)
 
+###############################################################################
+with reda.CreateEnterDirectory('output_02_rollalong'):
     ert.histogram(filename='hist_both_profiles.pdf',
                   column=['r', 'rho_a', 'Iab', ])
