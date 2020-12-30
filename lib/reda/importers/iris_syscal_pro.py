@@ -1,9 +1,6 @@
 # *-* coding: utf-8 *-*
 """Read binary data from the IRIS Instruments Syscal Pro system
 
-TODO: Properly sort out handling of electrode positions and conversion to
-electrode numbers.
-
 """
 import struct
 from io import StringIO
@@ -18,85 +15,37 @@ from reda.importers.utils.decorators import enable_result_transforms
 logger = logging.getLogger(__name__)
 
 
-def _convert_coords_to_abmn_X(data, **kwargs):
-    """The syscal only stores positions for the electrodes. Yet, we need to
-    infer electrode numbers for (a,b,m,n) by means of some heuristics. This
-    heuristic uses the x-coordinates to infer an electrode spacing (y/z
-    coordinates are ignored). We also assume a constant spacing of electrodes
-    (i.e., a gap in electrode positions would indicate unused electrodes). This
-    is usually a good estimate as hardly anybody does change the electrode
-    positions stored in the Syscal system (talk to us if you do).
-
-    Note that this function can use user input to simplify the process by using
-    a user-supplied x0 value for the smallest electrode position (corresponding
-    to electrode 1) and a user-supplied spacing (removing the need to infer
-    from the positions).
-
-    Parameters
-    ----------
-    data : Nx4 array|Nx4 :py:class:`pandas.DataFrame`
-        The x positions of a, b, m, n electrodes. N is the number of
-        measurements
-    x0 : float, optional
-        position of first electrode. If not given, then use the smallest
-        x-position in the data as the first electrode.
-    spacing : float
-        electrode spacing. This is important if not all electrodes are used in
-        a given measurement setup. If not given, then the smallest distance
-        between electrodes is assumed to be the electrode spacing. Naturally,
-        this requires measurements (or injections) with subsequent electrodes.
-
-    Returns
-    -------
-    data_new : Nx4 :py:class:`pandas.DataFrame`
-        The electrode number columns a,b,m,n
-
-    """
-    assert data.shape[1] == 4, 'data variable must only contain four columns'
-
-    x0 = kwargs.get(
-        'x0',
-        data.min().min()
-    )
-    electrode_spacing = kwargs.get('spacing', None)
-
-    # try to determine from the data itself
-    if electrode_spacing is None:
-        electrode_positions = data.values
-        electrode_spacing = np.abs(
-            electrode_positions[:, 1:] - electrode_positions[:, 0:-1]
-        ).min()
-
-    data_new = pd.DataFrame()
-    data_new['a'] = (data.iloc[:, 0] - x0) / electrode_spacing + 1
-    data_new['b'] = (data.iloc[:, 1] - x0) / electrode_spacing + 1
-    data_new['m'] = (data.iloc[:, 2] - x0) / electrode_spacing + 1
-    data_new['n'] = (data.iloc[:, 3] - x0) / electrode_spacing + 1
-
-    # convert to integers
-    for col in (('a', 'b', 'm', 'n')):
-        data_new[col] = data_new[col].astype(int)
-
-    return data_new
-
-
 @enable_result_transforms
 def import_txt(filename, **kwargs):
-    """
-    Import Syscal measurements from a text file, exported as 'Spreadsheet'.
+    """Import Syscal measurements from a text file, exported as 'Spreadsheet'.
+
+    At this point we expect only x-coordinates to be exported. As such the
+    columns Spa.1 to Spa.4 are assumed to be x coordinates for a,b,m,n.
 
     Parameters
     ----------
-    filename: string
-        input filename
-    x0: float, optional
-        position of first electrode. If not given, then use the smallest
-        x-position in the data as the first electrode.
-    spacing: float
-        electrode spacing. This is important if not all electrodes are used in
-        a given measurement setup. If not given, then the smallest distance
-        between electrodes is assumed to be the electrode spacing. Naturally,
-        this requires measurements (or injections) with subsequent electrodes.
+    filename: str
+        Input filename
+    assume_regular_electrodes_x : None|tuple(nr_electrodes, spacing)
+        If not None, then assume measurements were taken using a profile of
+        regular electrodes in x directions. Fill in any electrodes not used in
+        the data to align the logical electrode numbers wit the physical
+        electrode numbers. Use the electrode spacing set in the system (usually
+        a default of 1 m is used), and then change this to the real spacing
+        using the 'elecs_transform_reg_spacing_x' parameter.
+    elecs_transform_reg_spacing_x : tuple(old, new)|None, optional
+        If not None, then assume a regular electrode spacing in x direction
+        with spacing 'old'. This is often 1 m, a default of the systems.
+        However, in reality often other spacings are used, and this parameter
+        will lead to a transformation of the old (device-specific) spacing to
+        the true spacing.
+    shift_by_xyz : tuple|list|numpy.ndarray of size 1 or 2 or 3, optional
+        If set, shift electrode positions by adding this vector Length of 1
+        assumes that only the x coordinate of the vector differs from zero.
+        Length of 2 assume a shift in (x,z) direction.
+
+        This parameter is evaluated after the 'elecs_transform_reg_spacing_x'
+        parameter - as such you can and must use real spacings in this case.
     reciprocals: int, optional
         if provided, then assume that this is a reciprocal measurements where
         only the electrode cables were switched. The provided number N is
@@ -107,24 +56,13 @@ def import_txt(filename, **kwargs):
     -------
     data: :py:class:`pandas.DataFrame`
         Contains the measurement data
-    electrodes: :py:class:`pandas.DataFrame`
-        Contains electrode positions (None at the moment)
+    elec_mgr : :py:class:`reda.utils.electrode_manager.electrode_manager`
+        Electrode manager that manages the electrode positions
     topography: None
         No topography information is contained in the text files, so we always
         return None
 
-    Notes
-    -----
-
-    * TODO: we could try to infer electrode spacing from the file itself
     """
-    if 'spacing' not in kwargs:
-        logger.warning(' '.join((
-            'spacing keyword is not set.',
-            'Make sure that ALL electrodes are used in the data!',
-            'Otherwise problems will arise!',
-        )))
-
     # read in text file into a buffer
     with open(filename, 'r') as fid:
         text = fid.read()
@@ -147,11 +85,6 @@ def import_txt(filename, **kwargs):
     # clean up column names
     data_raw.columns = [x.strip() for x in data_raw.columns.tolist()]
 
-    # generate electrode positions
-    # data = _convert_coords_to_abmn_X(
-    #     data_raw[['Spa.1', 'Spa.2', 'Spa.3', 'Spa.4']],
-    #     **kwargs
-    # )
     # convert coordinates to logical electrode numbers
     elec_mgr = reda.electrode_manager()
     elec_mgr.set_ordering_to_sort_zyx()
@@ -196,6 +129,10 @@ def import_txt(filename, **kwargs):
             'x'
         ] / old_spacing * new_spacing
 
+    shift_by_xyz = kwargs.get('shift_by_xyz', None)
+    if shift_by_xyz is not None:
+        elec_mgr.shift_positions_xyz(shift_by_xyz)
+
     # [mV] / [mA]
     data['r'] = data_raw['Vp'] / data_raw['In']
     data['Vmn'] = data_raw['Vp']
@@ -223,10 +160,6 @@ def import_bin(filename,  **kwargs):
     * add pipe-through parameters for the electrode manager:
 
         shift_xyz -> move all coordinates by this vector
-        old_spacing
-        new_spacing
-
-    * then: Remove spacing parameter and x0
 
     Parameters
     ----------
@@ -245,15 +178,13 @@ def import_bin(filename,  **kwargs):
         However, in reality often other spacings are used, and this parameter
         will lead to a transformation of the old (device-specific) spacing to
         the true spacing.
+    shift_by_xyz : tuple|list|numpy.ndarray of size 1 or 2 or 3, optional
+        If set, shift electrode positions by adding this vector Length of 1
+        assumes that only the x coordinate of the vector differs from zero.
+        Length of 2 assume a shift in (x,z) direction.
 
-    x0 : float, optional
-        position of first electrode. If not given, then use the smallest
-        x-position in the data as the first electrode.
-    spacing : float
-        electrode spacing. This is important if not all electrodes are used in
-        a given measurement setup. If not given, then the smallest distance
-        between electrodes is assumed to be the electrode spacing. Naturally,
-        this requires measurements (or injections) with subsequent electrodes.
+        This parameter is evaluated after the 'elecs_transform_reg_spacing_x'
+        parameter - as such you can and must use real spacings in this case.
     reciprocals : int, optional
         if provided, then assume that this is a reciprocal measurement where
         only the electrode cables were switched. The provided number N is
@@ -305,8 +236,6 @@ def import_bin(filename,  **kwargs):
                 'Use the skip_rows parameter to skip those measurements'
             )))
 
-        # import IPython
-        # IPython.embed()
         # now check if there is a jump in measurement numbers somewhere
         # ignore first entry as this will always be nan
         diff = data_raw['measurement_num'].diff()[1:]
@@ -368,12 +297,11 @@ def import_bin(filename,  **kwargs):
         elec_mgr._electrode_positions['x'] = elec_mgr._electrode_positions[
             'x'
         ] / old_spacing * new_spacing
-    # exit()
 
-    # data = _convert_coords_to_abmn_X(
-    #         data_raw[['x_a', 'x_b', 'x_m', 'x_n']],
-    #         **kwargs
-    #         )
+    shift_by_xyz = kwargs.get('shift_by_xyz', None)
+    if shift_by_xyz is not None:
+        elec_mgr.shift_positions_xyz(shift_by_xyz)
+
     # [mV] / [mA]
     data['r'] = data_raw['vp'] / data_raw['Iab']
     data['Vmn'] = data_raw['vp']
