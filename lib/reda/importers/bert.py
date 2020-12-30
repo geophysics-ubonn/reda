@@ -1,14 +1,16 @@
 """ Importer to load the unified data format used in pyGIMLi, BERT, and
 dc2dinvres."""
+import logging
 
 import pandas as pd
 import numpy as np
 
-from reda.importers.utils.decorators import enable_result_transforms
+import reda
+
+logger = logging.getLogger(__name__)
 
 
-@enable_result_transforms
-def import_ohm(filename, verbose=False, reciprocals=False):
+def import_ohm(filename, verbose=False, reciprocals=False, **kwargs):
     """Construct pandas data frame from BERT`s unified data format (.ohm).
 
     Parameters
@@ -22,6 +24,16 @@ def import_ohm(filename, verbose=False, reciprocals=False):
         only the electrode cables were switched. The provided number N is
         treated as the maximum electrode number, and denotations are renamed
         according to the equation :math:`X_n = N - (X_a - 1)`
+
+    Additional Parameters
+    ---------------------
+    shift_by_xyz : tuple|list|numpy.ndarray of size 1 or 2 or 3, optional
+        If set, shift electrode positions by adding this vector Length of 1
+        assumes that only the x coordinate of the vector differs from zero.
+        Length of 2 assume a shift in (x,z) direction.
+
+        This parameter is evaluated after the 'elecs_transform_reg_spacing_x'
+        parameter - as such you can and must use real spacings in this case.
 
     Returns
     -------
@@ -40,7 +52,7 @@ def import_ohm(filename, verbose=False, reciprocals=False):
     eleccount = int(file.readline().split("#")[0])
     elecs_str = file.readline().split("#")[1]
     elecs_dim = len(elecs_str.split())
-    elecs_ix = elecs_str.split()
+    # elecs_ix = elecs_str.split()
 
     elecs = np.zeros((eleccount, elecs_dim), 'float')
     for i in range(eleccount):
@@ -78,24 +90,32 @@ def import_ohm(filename, verbose=False, reciprocals=False):
             # 'i': 'I'
         }
     )
+    data_reda[['a', 'b', 'm', 'n']] = data_reda[['a', 'b', 'm', 'n']].astype(
+        int
+    )
     if ('r' not in data_reda.keys()) and \
        ('rho_a' in data_reda.keys() and 'k' in data_reda.keys()):
         data_reda['r'] = data_reda['rho_a'] / data_reda['k']
-        print(
+        logger.info(
             "Calculating resistance from apparent resistivity and "
             "geometric factors. (r = rhoa_ / k)")
 
-    elecs = pd.DataFrame(elecs, columns=elecs_ix)
-    # Ensure uppercase labels (X, Y, Z) in electrode positions
-    elecs.columns = elecs.columns.str.upper()
-
     # rename electrode denotations
     if type(reciprocals) == int:
-        print('renumbering electrode numbers')
+        logger.info('renumbering electrode numbers')
         data_reda[['a', 'b', 'm', 'n']] = reciprocals + 1 - data_reda[
             ['a', 'b', 'm', 'n']]
 
     if verbose:
         print((_string_))
 
-    return data_reda, elecs, None
+    elec_mgr = reda.electrode_manager()
+    elec_mgr.set_ordering_to_as_is_plus_one()
+
+    elec_mgr.add_by_position(elecs)
+
+    shift_by_xyz = kwargs.get('shift_by_xyz', None)
+    if shift_by_xyz is not None:
+        elec_mgr.shift_positions_xyz(shift_by_xyz)
+
+    return data_reda, elec_mgr, None
