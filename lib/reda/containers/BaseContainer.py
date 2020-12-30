@@ -3,6 +3,7 @@ import functools
 import logging
 
 import pandas as pd
+import matplotlib.pylab as plt
 
 import reda
 from reda.main.logger import LoggingClass
@@ -52,11 +53,17 @@ class ImportersBase(object):
                 self.electrode_positions = electrode_positions()
             else:
                 logger.debug('Merging electrode positions of old and new data')
-                # need to merge
+                elec_mgr = reda.electrode_manager()
+
+                if isinstance(
+                        electrode_positions,
+                        reda.utils.electrode_manager.electrode_manager):
+                    electrode_positions = electrode_positions()
+
                 positions_aligned, abmn_old, abmn_addition = \
-                    electrode_positions.align_assignments(
+                    elec_mgr.align_assignments(
                         self.electrode_positions,
-                        electrode_positions.electrode_positions,
+                        electrode_positions,
                         self.data[['a', 'b', 'm', 'n']],
                         data_to_add[['a', 'b', 'm', 'n']],
                     )
@@ -134,11 +141,23 @@ class ImportersBase(object):
         ----------
         data : pandas.DataFrame
             Measurement data in the form of a DataFrame, must adhere to the
-            container constraints (i.e., must have all required columns)
+            container constraints (i.e., must have all required columns) and
+            electrode positions already registered must match.
         """
         if timestep is not None:
             data['timestep'] = timestep
         self._add_to_data(data)
+
+    def merge_container(self, container):
+        """Merge the data and electrode positions from another container into
+        this one.
+        """
+        logger.debug('Merging containers')
+        print(type(self))
+
+        self._add_to_container(
+            container.data,
+            container.electrode_positions, container.topography)
 
 
 class ExportersBase(object):
@@ -375,3 +394,37 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         config_obj = reda.configs.configManager.ConfigManager()
         config_obj.add_to_configs(self.data[['a', 'b', 'm', 'n']].values)
         return config_obj
+
+    def plot_electrode_positions_xz(self, ax=None):
+        """Create a 2D scatter plot for the electrode positions.
+
+        Parameters
+        ----------
+        ax : matplotlib.axes, optional
+            Axes object to plot to. If None, create a new figure
+
+        Returns
+        -------
+        fig : matplotlib.Figure
+            The Figure object related to ax. None if no electrode positions
+            were registered yet.
+        ax : matplotlib.Axes
+            The axes object plotted to. None if no electrode positions were
+            registered yet.
+        """
+        if self.electrode_positions is None:
+            return None, None
+
+        if ax is None:
+            fig, ax_plot = plt.subplots(figsize=(14 / 2.54, 4 / 2.54))
+        else:
+            ax_plot = ax
+            fig = ax.get_figure()
+
+        elecs = reda.electrode_manager()
+        elecs.add_fixed_assignments(self.electrode_positions)
+        elecs.plot_coordinates_x_z_to_ax(ax_plot)
+        if ax is None:
+            # only touch the layout if we created the figure
+            fig.tight_layout()
+        return fig, ax
