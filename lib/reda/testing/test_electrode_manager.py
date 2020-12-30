@@ -494,6 +494,16 @@ def test_fixed_assignments():
         elecs.get_position_of_number(10).values == np.array((2, 0, 0))
     )
 
+    fixed2 = fixed_assignments.set_index('electrode_number')
+    elecs = electrode_manager()
+    elecs.add_fixed_assignments(fixed2)
+
+    assert elecs.get_electrode_numbers_for_positions([2, 0, 0]) == 10
+    assert elecs.get_electrode_numbers_for_positions([4, 0, 0]) == 7
+    assert np.all(
+        elecs.get_position_of_number(10).values == np.array((2, 0, 0))
+    )
+
 
 def test_replace_coordinates_with_fixed_regular_grid_x():
     electrode_positions = pd.DataFrame(
@@ -642,6 +652,118 @@ def test_merging():
     assert np.all(data2_aligned == data2_expected)
 
 
+def test_merging2():
+    pos1 = pd.DataFrame(np.arange(0, 2, 0.2), columns=['x', ])
+    pos1['y'] = 0
+    pos1['z'] = 0
+    pos1.index.name = 'electrode_number'
+
+    pos2 = pd.DataFrame(np.arange(1, 3, 0.2), columns=['x', ])
+    pos2['y'] = 0
+    pos2['z'] = 0
+    pos2.index.name = 'electrode_number'
+
+    data1 = pd.DataFrame(
+        (
+            (1, 2, 4, 3),
+            (1, 4, 3, 2),
+
+        ),
+        columns=['a', 'b', 'm', 'n'],
+    )
+
+    elecs = electrode_manager()
+
+    positions_aligned, data1_aligned, data2_aligned = elecs.align_assignments(
+        pos1,
+        pos2,
+        data1,
+        data1.copy(),
+    )
+
+    pos_expected = pd.DataFrame(np.arange(0, 3, 0.2), columns=['x', ])
+    pos_expected['y'] = 0
+    pos_expected['z'] = 0
+
+    assert np.all(
+        np.isclose(pos_expected.values, positions_aligned.values)
+    ), 'aligned positions'
+
+    # data2_expected = pd.DataFrame(
+    #     (
+    #         (5, 4, 7, 6),
+    #         (5, 7, 6, 4),
+
+    #     ),
+    #     columns=['a', 'b', 'm', 'n'],
+    # )
+
+    # assert np.all(data1_aligned == data1)
+    # assert np.all(data2_aligned == data2_expected)
+
+
+def test_shift_positions_by_xyz():
+    electrode_positions = pd.DataFrame(
+        (
+            (0, 0, 0),
+            (1, 0, 0),
+            (2, 0, 0),
+        ),
+        columns=['x', 'y', 'z'],
+    )
+
+    result_expected = pd.DataFrame(
+        (
+            (10, 0, 0),
+            (11, 0, 0),
+            (12, 0, 0),
+        ),
+        columns=['x', 'y', 'z'],
+    )
+
+    # list
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+    elecs.shift_positions_xyz([10, ])
+    assert np.all(elecs().values == result_expected)
+
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+    elecs.shift_positions_xyz([10, 0])
+    assert np.all(elecs().values == result_expected)
+
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+    elecs.shift_positions_xyz([10, 0, 0])
+    assert np.all(elecs().values == result_expected)
+
+    # array
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+    elecs.shift_positions_xyz(np.array([10, ]))
+    assert np.all(elecs().values == result_expected)
+
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+    elecs.shift_positions_xyz(np.array([10, 0]))
+    assert np.all(elecs().values == result_expected)
+
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+    elecs.shift_positions_xyz(np.array([10, 0, 0]))
+    assert np.all(elecs().values == result_expected)
+
+    # assertions
+    elecs = electrode_manager()
+    elecs.add_by_position(electrode_positions)
+    with pytest.raises(Exception):
+        elecs.shift_positions_xyz(np.array([10, 0, 0, 0]))
+    with pytest.raises(Exception):
+        elecs.shift_positions_xyz(np.array([[10, 0, 0], [2, 0, 0]]))
+
+
 if __name__ == '__main__':
     # test_merging()
+    test_merging2()
+    # test_shift_positions_by_xyz()
     pass

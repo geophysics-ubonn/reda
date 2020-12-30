@@ -81,6 +81,8 @@ def decorator_name_index(func):
 class electrode_manager(object):
 
     def __init__(self):
+        self.round_to_decimals = 6
+
         # overview of built-in ordering schemes
         self.ordering_schemes = {
             'as_is': self._order_as_is,
@@ -90,7 +92,7 @@ class electrode_manager(object):
 
         # if this is True, then we cannot change the electrode positions any
         # more. It used in case the user supplies her own assignment table
-        self.is_locked_down = False
+        # self.is_locked_down = False
         self.fixed_assigment_table = None
 
         self._electrode_positions = pd.DataFrame()
@@ -201,22 +203,29 @@ class electrode_manager(object):
         """
         self.set_ordering_to_as_is()
         assert isinstance(data_raw, pd.DataFrame)
-        assert 'electrode_number' in data_raw.columns, \
-            'Column electrode_number must be present'
+        assert 'electrode_number' in data_raw.columns or \
+            data_raw.index.name == 'electrode_number', \
+            'Column electrode_number must be present as column or named index'
         assert 'x' in data_raw.columns, 'Column x must be present'
         assert 'y' in data_raw.columns, 'Column y must be present'
         assert 'z' in data_raw.columns, 'Column z must be present'
-        self.fixed_assigment_table = data_raw
+
+        if data_raw.index.name == 'electrode_number':
+            self.fixed_assigment_table = data_raw
+        else:
+            self.fixed_assigment_table = data_raw.set_index('electrode_number')
 
         def fixed_sorter(x):
-            subdata = data_raw.set_index('electrode_number')
-            # subdata.index.rename('electrode_number', inplace=True)
-            return subdata
+            return self.fixed_assigment_table
 
         self.sorter = fixed_sorter
 
     def add_by_position(self, data_raw, remove_duplicates=True, **kwargs):
-        """Add electrodes by using only their positions (2D/3D).
+        """Add electrodes by using only their positions (1D/2D/3D).
+
+        Electrode positions are rounded to the self.round_to_decimals decimal
+        to ensure we can do proper comparison and identification with the
+        floats.
 
         Multiple formats are possible:
 
@@ -243,7 +252,6 @@ class electrode_manager(object):
             data = data_raw
         elif isinstance(data_raw, (np.ndarray, list, tuple)):
             data = pd.DataFrame(np.atleast_2d(data_raw))
-            print('shape', data.shape)
             if data.shape[1] == 1:
                 # assume only x coordinate
                 data.columns = ['x', ]
@@ -253,7 +261,6 @@ class electrode_manager(object):
             elif data.shape[1] == 3:
                 data.columns = ['x', 'y', 'z']
 
-        print(data)
         assert 'x' in data, 'column x must be present'
         subdata = data.copy()
         if 'y' not in subdata.columns:
@@ -263,7 +270,9 @@ class electrode_manager(object):
 
         # make sure we have the correct order of columns before working with
         # numpy
-        subdata = subdata.reindex(columns=['x', 'y', 'z']).astype(float)
+        subdata = subdata.reindex(
+            columns=['x', 'y', 'z']
+        ).astype(float).round(decimals=self.round_to_decimals)
 
         data_pre = None
         if self._electrode_positions.size > 0:
@@ -277,10 +286,26 @@ class electrode_manager(object):
             else:
                 already_there = np.where(
                     np.all(
-                        data_pre == row.values,
+                        np.isclose(data_pre, row.values),
                         axis=1
                     )
                 )[0].size
+                if kwargs.get('debug', False):
+                    print('----------------------')
+                    print(data_pre)
+                    print('row', row.values)
+                    print(data_pre == row.values)
+                    print(np.isclose(data_pre, row.values))
+                    print(
+                        np.where(
+                            np.all(
+                                data_pre == row.values,
+                                axis=1
+                            )
+                        )
+                    )
+                    print('--------------------')
+
                 if already_there == 0:
                     data_pre = np.vstack(
                         (
@@ -311,6 +336,9 @@ class electrode_manager(object):
     def get_electrode_numbers_for_positions(self, positions_raw):
         """For a given set of coordinates, return electrode coordinates
 
+        In order to prevent problems with floating point representation and
+        comparison, positions are rounded to the decimal given in
+        self.round_to_decimals.
 
         Returns
         -------
@@ -345,7 +373,8 @@ class electrode_manager(object):
             )
         else:
             positions = positions_raw
-        print(positions)
+
+        positions = positions.round(decimals=self.round_to_decimals)
 
         position = positions.merge(
             self.electrode_positions.reset_index(),
@@ -374,6 +403,8 @@ class electrode_manager(object):
         self._electrode_positions[
             'x'
         ] = reflect_on_x - self._electrode_positions['x']
+
+        self._electrode_positions.round(decimals=self.round_to_decimals)
 
     def conform_to_regular_x_spacing(
             self, spacing_x, nr_electrodes=None, y_level=0, z_level=0):
@@ -419,7 +450,8 @@ class electrode_manager(object):
             max_x = self._electrode_positions['x'].max()
 
         new_positions = pd.DataFrame()
-        new_positions['x'] = np.arange(0, max_x, step=spacing_x)
+        new_positions['x'] = np.arange(0, max_x, step=spacing_x).round(
+            decimals=self.round_to_decimals)
         new_positions['y'] = y_level
         new_positions['z'] = z_level
 
@@ -492,8 +524,9 @@ class electrode_manager(object):
         old_coordinates = self.electrode_positions.loc[electrode_number]
 
         index = np.where(
-            np.all(old_coordinates == self._electrode_positions, axis=1))
-        self._electrode_positions.iloc[index] = new_coords
+            np.isclose(old_coordinates, self._electrode_positions, axis=1))
+        self._electrode_positions.iloc[index] = new_coords.round(
+            decimals=self.round_to_decimals)
 
     def plot_coordinates_x_z_to_ax(self, ax, plot_electrode_numbers=True):
         coordinates = self.electrode_positions
@@ -509,14 +542,44 @@ class electrode_manager(object):
                     bbox=dict(boxstyle='circle', facecolor='red', alpha=0.8)
                 )
 
-    def align_assignments(self, pos1, pos2, data1, data2):
-        """
+    def align_assignments(self, pos1, pos2, abmn1, abmn2):
+        """Align the positions and logical electrode numbers of two datasets.
 
+        Parameters
+        ----------
+        pos1 : pandas.DataFrame
+            Dataframe containing the electrode positions of the first dataset.
+            Required columns: x, y, z and either a column 'electrode_number' or
+            an index named 'electrode_number'.
+        pos2 : pandas.DataFrame
+            Dataframe containing the electrode positions of the second dataset.
+            Required columns: x, y, z and either a column 'electrode_number' or
+            an index named 'electrode_number'.
+        abmn1 : pandas.DataFrame
+            Dataframe containing the logical electrode numbers a,b,m,n for the
+            data set 1.
+        abmn2 : pandas.DataFrame
+            Dataframe containing the logical electrode numbers a,b,m,n for the
+            data set 2.
+
+        Returns
+        -------
+        electrode_positions_aligned : pandas.DataFrame
+            Aligned electrode positions with new electrode numbers (index is
+            named 'electrode_number').
+        abmn1_aligned  : pandas.DataFrame
+            Dataframe containing the logical electrode numbers a,b,m,n of the
+            first data set after merging (aligning) the electrode positions of
+            both datasets.
+        abmn2_aligned  : pandas.DataFrame
+            Dataframe containing the logical electrode numbers a,b,m,n of the
+            second data set after merging (aligning) the electrode positions of
+            both datasets.
         """
         assert isinstance(pos1, pd.DataFrame)
         assert isinstance(pos2, pd.DataFrame)
-        assert isinstance(data1, pd.DataFrame)
-        assert isinstance(data2, pd.DataFrame)
+        assert isinstance(abmn1, pd.DataFrame)
+        assert isinstance(abmn2, pd.DataFrame)
         assert 'x' in pos1.columns
         assert 'y' in pos1.columns
         assert 'z' in pos1.columns
@@ -525,35 +588,64 @@ class electrode_manager(object):
         assert 'z' in pos2.columns
 
         for col in ['a', 'b', 'm', 'n']:
-            for pos in (data1, data2):
+            for pos in (abmn1, abmn2):
                 assert col in pos.columns
 
+        pos1_rounded = pos1.round(decimals=self.round_to_decimals)
+        pos2_rounded = pos2.round(decimals=self.round_to_decimals)
+
         elecs = electrode_manager()
-        elecs.add_by_position(pos1)
-        elecs.add_by_position(pos2)
+        elecs.add_by_position(pos1_rounded)
+        elecs.add_by_position(pos2_rounded)
+        # print('merging here')
+        # import IPython
+        # IPython.embed()
 
-        if pos1.index.name == 'electrode_number':
-            pos1 = pos1.reset_index()
+        if pos1_rounded.index.name == 'electrode_number':
+            pos1_rounded = pos1_rounded.reset_index()
 
-        if pos2.index.name == 'electrode_number':
-            pos2 = pos2.reset_index()
+        if pos2_rounded.index.name == 'electrode_number':
+            pos2_rounded = pos2_rounded.reset_index()
 
         replacement_table1 = pd.merge(
-            pos1, elecs().reset_index(), on=['x', 'y', 'z'], how='left')
+            pos1_rounded,
+            elecs().reset_index(), on=['x', 'y', 'z'], how='left')
         replacement_table2 = pd.merge(
-            pos2, elecs().reset_index(), on=['x', 'y', 'z'], how='left')
+            pos2_rounded,
+            elecs().reset_index(), on=['x', 'y', 'z'], how='left')
 
-        data1_aligned = data1.replace(
+        abmn1_aligned = abmn1.replace(
             replacement_table1['electrode_number_x'].values,
             replacement_table1['electrode_number_y'].values
         )
 
-        data2_aligned = data2.replace(
+        abmn2_aligned = abmn2.replace(
             replacement_table2['electrode_number_x'].values,
             replacement_table2['electrode_number_y'].values
         )
 
-        return elecs(), data1_aligned, data2_aligned
+        return elecs(), abmn1_aligned, abmn2_aligned
 
         # import IPython
         # IPython.embed()
+
+    def shift_positions_xyz(self, shift_by_xyz):
+        """Shift electrode positions by adding the vector 'shift_by_xyz' to
+        each position.
+
+        Parameters
+        ----------
+        shift_by_xyz : tuple|list|numpy.ndarray of size 1 or 2 or 3
+            The vector to shift the data by. Length of 1 assumes that only the
+            x coordinate of the vector differs from zero. Length of 2 assume a
+            shift in (x,z) direction.
+        """
+        shift = np.atleast_1d(np.squeeze(np.array(shift_by_xyz)))
+        assert len(shift.shape) == 1, 'only one 1D array is accepted'
+
+        if shift.size == 1:
+            shift = np.hstack((shift, 0, 0))
+        elif shift.size == 2:
+            shift = np.hstack((shift[0], 0, shift[1]))
+        assert shift.size == 3, 'only arrays of length 1/2/3 are allowed'
+        self._electrode_positions[['x', 'y', 'z']] += shift
