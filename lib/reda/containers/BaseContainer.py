@@ -1,9 +1,11 @@
 """."""
+import os
 import functools
 import logging
 
 import pandas as pd
 import matplotlib.pylab as plt
+import numpy as np
 
 import reda
 from reda.main.logger import LoggingClass
@@ -428,3 +430,54 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             # only touch the layout if we created the figure
             fig.tight_layout()
         return fig, ax
+
+    def replace_electrode_positions(self, coordinates):
+        """Replace the imported electrode coordinates by new ones. This
+        function assumes and expected that the number of new coordinates is the
+        same as the old ones (i.e., a simple replacement).
+
+        Parameters
+        ----------
+        coordinates : str|numpy.ndarray|pandas.DataFrame
+        """
+        assert isinstance(self.electrode_positions, pd.DataFrame), \
+            'There are not electrode positions to replace'
+
+        if isinstance(coordinates, pd.DataFrame):
+            assert 'x' in coordinates.columns
+            assert 'y' in coordinates.columns
+            assert 'z' in coordinates.columns
+            coords = coordinates
+        else:
+            if isinstance(coordinates, str):
+                # assume this is a file
+                if os.path.isfile(coordinates):
+                    coords_raw = np.loadtxt(coordinates)
+                    print('raw')
+                    print(coords_raw)
+                else:
+                    raise Exception(
+                        'filename {} not found'.format(coordinates))
+            elif isinstance(coordinates, np.ndarray):
+                assert len(coordinates.shape) == 2, \
+                    'array must be 2D: Nx(1/2/3)'
+                coords_raw = coordinates
+
+            if coords_raw.shape[1] == 1:
+                cols = ['x', ]
+            elif coords_raw.shape[1] == 2:
+                cols = ['x', 'z']
+            elif coords_raw.shape[1] == 3:
+                cols = ['x', 'y', 'z']
+            coords = pd.DataFrame(coords_raw, columns=cols)
+            print(coords)
+            for key in ['x', 'y', 'z']:
+                if key not in coords.columns:
+                    coords[key] = 0
+
+        assert coords.shape[0] == self.electrode_positions.shape[0]
+
+        # now finally replace the coordinates
+        self.electrode_positions[['x', 'y', 'z']] = coords[
+            ['x', 'y', 'z']
+        ].values
