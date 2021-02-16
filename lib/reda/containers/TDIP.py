@@ -122,6 +122,7 @@ class TDIP(BaseContainer, TDIPImporters):
             information with columns: "x", "y", "z".
 
         """
+
         self.setup_logger(__name__)
         self.required_columns = ['a',
                                  'b',
@@ -285,7 +286,19 @@ class TDIP(BaseContainer, TDIPImporters):
             fig.clf()
             plt.close(fig)
 
-    def to_cr(self):
+    def to_cr(self,
+              b=-1.5,
+              estimate_b=False,
+              conversion_parameters={
+                  "phi_min" : -100,
+                  "phi_max" : -1,
+                  "n" : 100,
+                  "nhc" : 4,
+                  "tpuls" : 2,
+                  "tmin" : 0.12,
+                  "tmax" : 1.7
+              }):
+
         """Convert container to a complex resistivity container, using the
         CPA-conversion.
 
@@ -305,9 +318,89 @@ class TDIP(BaseContainer, TDIPImporters):
         of Cole-Cole parameters.” GEOPHYSICS, 77(3), E213-E225.
         https://doi.org/10.1190/geo2011-0217.1
 
+        Parameters
+        ----------
+
+        b : float
+            Factor for the conversion of chargeability into phase:
+            phase = b * chargeability
+            Default value equals -1.5, which is a good approximation for many cases
+        
+        estimate_b : bool
+            If "True" the factor b is estimated according to the CPA model, for a given
+            set of conversion parameters (provided via "conversion_paramaters")
+
+        conversion_parameters : dict
+            Holds the conversion parameters which are the basis for the estimation of
+            the factor b. Parameters in the dictionary:
+
+            phi_min : float
+                Lower phase boundary
+            phi_max : float
+                Upper phase boundary
+            n : int
+                Number of values in the phase field
+            nhc : int
+                Number of half cycles
+            tpuls : float
+                Duration of one puls
+            tmin : float
+                Lower time boundary
+            tmax : float
+                Upper time boundary
+
         """
+
+        if estimate_b:
+
+            phi_min = conversion_parameters["phi_min"]
+            phi_max = conversion_parameters["phi_max"]
+            n = conversion_parameters["n"]
+            nhc = conversion_parameters["nhc"] * 2
+            tpuls = conversion_parameters["tpuls"]
+            tmax = conversion_parameters["tmax"]
+            tmin = conversion_parameters["tmin"]
+
+            phi = np.linspace(phi_min, phi_max, n)
+
+            b = -2 * phi / np.pi / 1e3
+
+            v0 = 0
+            for k in range(0, nhc):
+                for j in range(0, k):
+                    temp = ((1 * j) * tpuls) ** b - ((2 * j + 1) * tpuls) ** b
+                    v0 = v0 + ((-1)**(j + 1) * temp)
+
+
+
+            ztemp = 0
+            for k in range(0, nhc):
+                for j in range(0, k):
+                    temp = ((tmax + (2 * j    ) * tpuls) ** (b + 1)
+                        -(tmax + (2 * j + 1) * tpuls) ** (b + 1)
+                        -(tmin + (2 * j    ) * tpuls) ** (b + 1)
+                        +(tmin + (2 * j + 1) * tpuls) ** (b + 1))
+                    ztemp = ztemp + ((-1) ** (j + 1)) * temp
+            ztemp = ztemp / (b + 1) / (tmax - tmin)
+            m = 1e3 * ztemp / v0
+
+            # fit line through m and phi
+            # phi = afit + bfit * m
+
+            A = np.ones((n, 2))
+            A[:, 0] = m
+
+            bfit, afit = np.linalg.lstsq(A, phi, rcond=None)[0]
+
+            b = bfit
+
+            print("Estimated conversion factor b: {}".format(b))
+
+        else:
+            b = b
+
         data_new = self.data.copy()
-        data_new['rpha'] = -1.5 * data_new['chargeability']
+        data_new['rpha'] = b * data_new['chargeability']
         # now that we have magnitude and phase, compute the impedance Zt
         data_new['Zt'] = data_new['r'] * np.exp(data_new['rpha'] * 1j / 1000.0)
         cr = reda.CR(data=data_new)
