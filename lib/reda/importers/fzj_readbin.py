@@ -247,3 +247,23 @@ class fzj_readbin(object):
         fig.tight_layout()
         fig.savefig(filename, dpi=300)
         plt.close(fig)
+
+    def plot_per_frequency(self):
+        for fnr in np.arange(self.frequencies.size):
+            d = self.data[fnr]
+            df = pd.DataFrame(d.T)
+            # dfmax = df.cummax(axis=1)
+            fig, ax = plt.subplots(figsize=(20 / 2.54, 10 / 2.54))
+            ax.plot(df.iloc[:, 0:40], color='gray', linewidth=2)
+            ax.plot(df.iloc[:, 40:44], color='g', label='Current 40-44')
+            # ax.plot(df.iloc[:, 44], color='r', label='refSignal')
+            ax.legend()
+            ax.set_xlabel('Sample Nr')
+            ax.set_ylabel('Voltage [V]')
+            ax.set_title(
+                'Frequency: {} Hz'.format(self.frequencies[fnr]), loc='left')
+            ax.axhline(y=9, color='k')
+            ax.axhline(y=-9, color='k')
+            # fig.show()
+            fig.savefig('ts_f_{}.jpg'.format(fnr), dpi=300)
+            plt.close(fig)
