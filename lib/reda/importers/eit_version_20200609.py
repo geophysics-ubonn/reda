@@ -97,7 +97,7 @@ def _extract_md(mat, **kwargs):
     # 2: second shunt, first channel
     # 3: before shunt, second channel
     # 4: second shunt, second channel
-    nai = mat['MP']['NAI'].take(0)
+    nai = mat['MP']['NAI'].take(0) - 1
 
     # Labview epoch
     epoch = datetime.datetime(1904, 1, 1)
