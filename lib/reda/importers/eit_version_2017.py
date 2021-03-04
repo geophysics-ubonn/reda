@@ -5,6 +5,139 @@ import pandas as pd
 import numpy as np
 
 
+def _extract_adc_data(mat, **kwargs):
+    """Extract adc-channel related data (i.e., data that is captured for all 48
+    channels of the 40-channel medusa system
+
+    """
+    print('WARNING: the dataframe must be better formatted!!!')
+    md = mat['MD'].squeeze()
+    frequencies = mat['MP']['fm'].take(0)
+
+    # it seems that there exist different file formats under this same official
+    # version.
+    if md['fm'].size == frequencies.size:
+        use_v = 0
+    else:
+        use_v = 1
+
+    # print('@@@')
+    # import IPython
+    # IPython.embed()
+    # exit()
+    # Labview epoch
+    epoch = datetime.datetime(1904, 1, 1)
+
+    def convert_epoch(x):
+        timestamp = epoch + datetime.timedelta(seconds=x.astype(float))
+        return timestamp
+
+    dfl = []
+    # loop over frequencies
+    for f_id in range(0, frequencies.size):
+        frequency = frequencies[f_id]
+
+        if use_v == 0:
+            def get_field(key):
+                return md[key][f_id]
+        elif use_v == 1:
+            def get_field(key):
+                indices = np.where(
+                    md['fm'].take(0) == frequencies[f_id])
+                return md[key].take(0)[indices]
+
+        # def get_field(key):
+        #     indices = np.where(md['fm'].take(f_id) == frequencies[f_id])
+        #     return md[key].take(f_id)[indices]
+
+        # timestamp = np.atleast_2d(
+        #     [convert_epoch(x) for x in get_field('Time')]
+        # ).T.squeeze()
+
+        column_names = ['ch{:02}'.format(i) for i in range(48)]
+        ab = get_field('cni')
+
+        # Ug3
+        index_pairs = [
+            (channel, 'Ug3_{}'.format(i)) for channel in column_names
+            for i in range(3)
+        ]
+
+        Ug3 = get_field('Ug3')
+        ug3_reshaped = Ug3.reshape([Ug3.shape[0], Ug3.shape[1] * 3])
+        df = pd.DataFrame(
+            ug3_reshaped,
+            index=pd.MultiIndex.from_arrays(
+                [
+                    ab[:, 0],
+                    ab[:, 1],
+                    np.ones(ab.shape[0]) * frequency,
+                    # timestamp
+                ],
+                names=[
+                    'a', 'b', 'frequency'
+                ]
+            ),
+            columns=pd.MultiIndex.from_tuples(
+               index_pairs, names=['channel', 'parameter'])
+        )
+        dfl.append(df)
+
+        # Ue3
+        index_pairs = [
+            (channel, 'Ue3_{}'.format(i)) for channel in column_names
+            for i in range(3)
+        ]
+
+        Ue3 = get_field('Ue3')
+        ue3_reshaped = Ue3.reshape([Ue3.shape[0], Ue3.shape[1] * 3])
+        df = pd.DataFrame(
+            ue3_reshaped,
+            index=pd.MultiIndex.from_arrays(
+                [
+                    ab[:, 0],
+                    ab[:, 1],
+                    np.ones(ab.shape[0]) * frequency,
+                    # timestamp
+                ],
+                names=['a', 'b', 'frequency']
+            ),
+            columns=pd.MultiIndex.from_tuples(
+               index_pairs, names=['channel', 'parameter'])
+        )
+        dfl.append(df)
+
+        # Us3
+        index_pairs = [
+            (channel, 'Us3_{}'.format(i)) for channel in column_names
+            for i in range(3)
+        ]
+
+        Us3 = get_field('Us3')
+        ue3_reshaped = Us3.reshape([Us3.shape[0], Us3.shape[1] * 3])
+        df = pd.DataFrame(
+            ue3_reshaped,
+            index=pd.MultiIndex.from_arrays(
+                [
+                    ab[:, 0],
+                    ab[:, 1],
+                    np.ones(ab.shape[0]) * frequency,
+                    # timestamp
+                ],
+                names=['a', 'b', 'frequency']
+            ),
+            columns=pd.MultiIndex.from_tuples(
+               index_pairs, names=['channel', 'parameter'])
+        )
+        dfl.append(df)
+
+    dfl = pd.concat(dfl)
+    dfl.sort_index(axis=0, inplace=True)
+    dfl.sort_index(axis=1, inplace=True)
+
+    return dfl
+
+
 def _extract_md(mat, **kwargs):
     md = mat['MD'].squeeze()
     # Labview epoch
