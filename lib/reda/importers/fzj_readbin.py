@@ -9,6 +9,7 @@ measurement signal) can help in understanding and analyzing the final SIP/sEIT
 data and associated problems.
 
 """
+import logging
 import struct
 import re
 import os
@@ -16,6 +17,10 @@ import os
 import matplotlib.pylab as plt
 import numpy as np
 import pandas as pd
+
+# just import to set up the logger
+import reda.main.logger as not_needed
+not_needed
 
 
 class fzj_readbin(object):
@@ -36,6 +41,9 @@ class fzj_readbin(object):
         self.nr_frequencies = None
         self.data = None
         self.number_injections = None
+        self.injections = None
+
+        self.logger = logging.getLogger(__name__)
 
         # load on initialization?
         if filename is not None and os.path.isfile(filename):
@@ -55,7 +63,8 @@ class fzj_readbin(object):
         self.filebase = filebase
 
         self._read_frequencies(filebase + '.mff')
-        self._read_nr_channels(filebase + '.mcf')
+
+        self._read_mcf_file(filebase + '.mcf')
         self._read_data(filebase + '.bin')
 
     def _read_frequencies(self, mff_filename):
@@ -72,6 +81,12 @@ class fzj_readbin(object):
         frequency_data['fa'] = frequency_data[
             'sampling_frequency'
         ] / frequency_data['oversampling']
+
+        frequency_data['tmax'] = frequency_data[
+            'oversampling'
+        ] / frequency_data[
+            'sampling_frequency'
+        ] * frequency_data['nr_samples']
 
         self.frequency_data = frequency_data
         self.frequencies = frequency_data.query(
@@ -126,15 +141,23 @@ class fzj_readbin(object):
         frequency_data['inj_number'] = 1
         return frequency_data
 
-    def _read_nr_channels(self, filename):
+    def _read_mcf_file(self, filename):
         # encoding as iso-8859 seems to work also for utf-8
         mcf_content = open(filename, 'r', encoding='ISO-8859-1').read()
+
         self.NCh = int(
             re.search(
                 r'NCh ([0-9]*)',
                 mcf_content
             ).groups()[0]
         )
+
+        # extract current injections
+        self.injections = np.array(
+            re.findall(
+                r'ABMG ([0-9][0-9][0-9]) ([0-9][0-9][0-9])', mcf_content
+            )
+        ).astype(int)
 
     def _read_data(self, binary_file):
         data = []
@@ -267,3 +290,48 @@ class fzj_readbin(object):
             # fig.show()
             fig.savefig('ts_f_{}.jpg'.format(fnr), dpi=300)
             plt.close(fig)
+
+    def list_injections(self):
+        """List the available injections
+        """
+        for index, row in enumerate(self.injections):
+            print('{} - {}'.format(index + 1, row))
+
+    def get_ts_abm(self, a, b, m, frequency):
+        """Return the time series for a given trio of a, b, m electrodes
+
+        All values are 1-indexed!!!
+
+        """
+        self.logger.warn(
+            'Returning time-series for: {}-{} {} at {} Hz'.format(
+                a, b, m, frequency
+            )
+        )
+
+        # find number of injection
+        try:
+            ab_nr = np.where(
+                (self.injections[:, 0] == a) & (self.injections[:, 1] == b)
+            )[0].take(0)
+        except Exception:
+            print('Injection not found')
+            return
+
+        index_frequency = np.where(frequency == self.frequencies)[0].take(0)
+        self.logger.info('index frequency: {}'.format(index_frequency))
+
+        # compute starting index in data
+        index_ab = self.nr_frequencies * ab_nr + index_frequency
+
+        print('index_ab', index_ab)
+        # add offset for m-channel
+        subdata = self.data[index_ab][m - 1, :]
+        return subdata
+
+    def get_sample_times(self, frequency):
+        fdata = self.frequency_data.query(
+            'frequency == {}'.format(frequency)
+        ).iloc[0, :]
+        tmax = fdata['tmax']
+        return np.linspace(0, tmax, fdata['nr_samples'].astype(int))
