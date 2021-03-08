@@ -290,13 +290,13 @@ class TDIP(BaseContainer, TDIPImporters):
               b=-1.5,
               estimate_b=False,
               conversion_parameters={
-                  "phi_min" : -100,
-                  "phi_max" : -1,
-                  "n" : 100,
-                  "nhc" : 4,
-                  "tpuls" : 2,
-                  "tmin" : 0.12,
-                  "tmax" : 1.7
+                  "phi_min": -100,
+                  "phi_max": -1,
+                  "n": 100,
+                  "nhc": 4,
+                  "tpuls": 2,
+                  "tmin": 0.12,
+                  "tmax": 1.7
               }):
 
         """Convert container to a complex resistivity container, using the
@@ -324,15 +324,17 @@ class TDIP(BaseContainer, TDIPImporters):
         b : float
             Factor for the conversion of chargeability into phase:
             phase = b * chargeability
-            Default value equals -1.5, which is a good approximation for many cases
-        
+            Default value equals -1.5, which is a good approximation for many
+            cases
+
         estimate_b : bool
-            If "True" the factor b is estimated according to the CPA model, for a given
-            set of conversion parameters (provided via "conversion_paramaters")
+            If "True" the factor b is estimated according to the CPA model, for
+            a given set of conversion parameters (provided via
+            "conversion_paramaters")
 
         conversion_parameters : dict
-            Holds the conversion parameters which are the basis for the estimation of
-            the factor b. Parameters in the dictionary:
+            Holds the conversion parameters which are the basis for the
+            estimation of the factor b. Parameters in the dictionary:
 
             phi_min : float
                 Lower phase boundary
@@ -371,15 +373,14 @@ class TDIP(BaseContainer, TDIPImporters):
                     temp = ((1 * j) * tpuls) ** b - ((2 * j + 1) * tpuls) ** b
                     v0 = v0 + ((-1)**(j + 1) * temp)
 
-
-
             ztemp = 0
             for k in range(0, nhc):
                 for j in range(0, k):
-                    temp = ((tmax + (2 * j    ) * tpuls) ** (b + 1)
-                        -(tmax + (2 * j + 1) * tpuls) ** (b + 1)
-                        -(tmin + (2 * j    ) * tpuls) ** (b + 1)
-                        +(tmin + (2 * j + 1) * tpuls) ** (b + 1))
+                    temp = (
+                        (tmax + (2 * j) * tpuls) ** (b + 1)
+                        - (tmax + (2 * j + 1) * tpuls) ** (b + 1)
+                        - (tmin + (2 * j) * tpuls) ** (b + 1)
+                        + (tmin + (2 * j + 1) * tpuls) ** (b + 1))
                     ztemp = ztemp + ((-1) ** (j + 1)) * temp
             ztemp = ztemp / (b + 1) / (tmax - tmin)
             m = 1e3 * ztemp / v0
