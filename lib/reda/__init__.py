@@ -38,7 +38,6 @@ transforms
 eit_fzj
 electrode_manager
 
-
 def version():
     """Return the installed version of reda, using the pkg_resources package"""
     import pkg_resources

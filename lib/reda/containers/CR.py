@@ -65,7 +65,7 @@ class CRImporters(ImportersBase):
             produced dataframe. Default: 0
 
         """
-        
+
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
             del (kwargs['timestep'])
@@ -76,7 +76,9 @@ class CRImporters(ImportersBase):
             if timestep is not None:
                 data['timestep'] = timestep
             if 'frequency' in data.columns:
-                data = data.query('frequency == {}'.format(data.frequency.min()))
+                data = data.query(
+                    'frequency == {}'.format(data.frequency.min())
+                )
                 data = data.drop('frequency')
             self._add_to_container(data)
 
