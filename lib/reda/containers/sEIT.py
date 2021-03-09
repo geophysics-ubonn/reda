@@ -803,6 +803,10 @@ class sEIT(BaseContainer, sEITImporters):
         )
 
         def apply_inductance(item):
+            # If r and rpha are present, but Zt not, compute it first
+            if 'Zt' not in item:
+                item['Zt'] = item['r'] * np.exp(1j * item['rpha'] / 1000)
+
             # we need to change Zt, and then compute r, rpha
             Zt = item['Zt'] - 1j * item['inductance']
             # if item['Zt'].real > 0 and Zt.real < 0:
@@ -819,7 +823,7 @@ class sEIT(BaseContainer, sEITImporters):
             })
 
         tmpdf = self.data.apply(apply_inductance, axis=1)
-        tmpdf['rpha'] = tmpdf['rpha'].astype(float)
-        tmpdf['r'] = tmpdf['r'].astype(float)
+        tmpdf['rpha'] = np.real(tmpdf['rpha']).astype(float)
+        tmpdf['r'] = np.real(tmpdf['r']).astype(float)
 
         self.data[['Zt', 'r', 'rpha']] = tmpdf[['Zt', 'r', 'rpha']]

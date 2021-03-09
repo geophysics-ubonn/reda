@@ -16,12 +16,41 @@ must provide the following functionality:
 Internal structure (for developers)
 -----------------------------------
 
-* All import functions should start *import_*. Multiple `import_*` functions in
-  an import module are allowed, i.e. to import variations of a given data
-  format (e.g., text files and binary data).
+* All import functions should start with *import_*.
+  Multiple `import_*` functions in an imported module are allowed, i.e. to
+  provide import variations of a given data format (e.g., text files and binary
+  data).
 * Each `import_*` function must return three variables: data, electrode
   positions, topography. Return `None` for electrode positions and topography
   if not available.
+
+A basic structure for an importer would be located in **reda.importers**::
+
+   def import_new_data_file(filename, **kwargs):
+      """Provide a proper docstring !
+
+      Parameters
+      ----------
+      filename : str
+         Path to datafile
+
+      Additional Parameters
+      ---------------------
+      individual_parameter_1: bool
+         Something that the user can change for the import
+
+      Returns
+      -------
+      data : pandas.DataFrame
+         The data, in proper format
+      electrode_positions : pandas.DataFrame
+         Electrode positions, columns x, y, z.
+      topography : pandas.DataFrame
+         Topography, columns x, y, z
+      """
+      # code here
+      [...]
+      return data, electrode_positions, topography
 
 .. note::
 

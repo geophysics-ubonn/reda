@@ -3,13 +3,15 @@
 Testing utilities
 """
 
+# import required for some doctests
 from .containers import ERTContainer
 
-import os
+# import os
 import sys
-from os.path import isdir, join, realpath
+from os.path import join, realpath
 
 import matplotlib.pyplot as plt
+ERTContainer
 
 
 def test(target=None, show=False, onlydoctests=False, abort=False,
@@ -55,8 +57,10 @@ def test(target=None, show=False, onlydoctests=False, abort=False,
     try:
         import pytest
     except ImportError:
-        raise ImportError("pytest is required to run test suite. "
-                          "Try 'sudo pip install pytest'.")
+        raise ImportError(
+            "pytest is required to run test suite. " "Try 'pip install" +
+            "pytest'."
+        )
 
     cwd = join(realpath(__path__[0]), '..')
 
@@ -69,7 +73,7 @@ def test(target=None, show=False, onlydoctests=False, abort=False,
 
     cmd = ([
         "-v", "-rsxX", "--color", "yes", "--doctest-modules",
-        "--durations", 5, cwd
+        "--durations", "5", cwd
     ])
     for directory in excluded:
         cmd.extend(["--ignore", join(cwd, directory)])

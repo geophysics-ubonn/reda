@@ -1,8 +1,21 @@
+"""Exporter for BERT and pyGimli to unified data format. See:
+
+https://gitlab.com/resistivity-net/bert#the-unified-data-format
+"""
 # import numpy as np
+import logging
+
+import pandas as pd
+
 from reda.utils import has_multiple_timesteps, split_timesteps
+
+logger = logging.getLogger(__name__)
+
 
 def export_bert(data, electrodes, filename):
     """Export to unified data format used in pyGIMLi & BERT.
+
+    Multiple timesteps are exported to multiple filenames.
 
     Parameters
     ----------
@@ -13,19 +26,24 @@ def export_bert(data, electrodes, filename):
     filename : str
         String of the output filename.
     """
+    assert isinstance(electrodes, pd.DataFrame), \
+        'This file format requires electrodes! Cannot proceed without them.'
+
     # Check for multiple timesteps
     if has_multiple_timesteps(data):
         for i, timestep in enumerate(split_timesteps(data)):
-            export_bert(timestep, electrodes,
-                        filename.replace(".", "_%.3d." % i))
+            export_bert(
+                timestep, electrodes, filename.replace(".", "_%.3d." % i))
 
         # TODO: Make ABMN consistent
         # index_full = ert.data.groupby(list("abmn")).groups.keys()
         # g = ert.data.groupby('timestep')
-        # q = ert.data.pivot_table(values='r', index=list("abmn"), columns="timestep", dropna=True)
+        # q = ert.data.pivot_table(
+        #   values='r', index=list("abmn"), columns="timestep", dropna=True)
         # ert.data.reset_index(list("abmn"))
 
     f = open(filename, 'w')
+
     f.write("%d\n" % len(electrodes))
     f.write("# ")
 

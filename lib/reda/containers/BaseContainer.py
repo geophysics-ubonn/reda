@@ -1,7 +1,11 @@
 """."""
+import os
 import functools
+import logging
 
 import pandas as pd
+import matplotlib.pylab as plt
+import numpy as np
 
 import reda
 from reda.main.logger import LoggingClass
@@ -17,6 +21,8 @@ from reda.utils.norrec import assign_norrec_to_df
 
 from reda.utils.decorators_and_managers import LogDataChanges
 
+logger = logging.getLogger(__name__)
+
 
 class ImportersBase(object):
 
@@ -25,22 +31,64 @@ class ImportersBase(object):
 
     """
 
-    def _add_to_container(self, df):
-        """Add a given DataFrame to the container
+    def _add_to_container(
+            self, data_to_add, electrode_positions=None, topography=None):
+        """Add a given dataset to the container
 
         Parameters
         ----------
-        df : pandas.DataFrame
-            DataFrame, must adhere to the container contraints (i.e., must have
-            all required columns)
+        data_to_add : pandas.DataFrame
+            Measurement data in the form of a DataFrame, must adhere to the
+            container contraints (i.e., must have all required columns)
+        electrode_positions : :py:class:`reda.electrode_manager`|None
+            If set, this electrode manager will be merged with any existing
+            electrode positions, resulting in a unified electrode position
+            assignment.
+        topography : None
+            Will be used to store topography in the future (not implemented
+            yet).
 
         """
 
+        if electrode_positions is not None:
+            if self.electrode_positions is None:
+                self.electrode_positions = electrode_positions()
+            else:
+                logger.debug('Merging electrode positions of old and new data')
+                elec_mgr = reda.electrode_manager()
+
+                if isinstance(
+                        electrode_positions,
+                        reda.utils.electrode_manager.electrode_manager):
+                    electrode_positions = electrode_positions()
+
+                positions_aligned, abmn_old, abmn_addition = \
+                    elec_mgr.align_assignments(
+                        self.electrode_positions,
+                        electrode_positions,
+                        self.data[['a', 'b', 'm', 'n']],
+                        data_to_add[['a', 'b', 'm', 'n']],
+                    )
+                self.data[['a', 'b', 'm', 'n']] = abmn_old
+                data_to_add[['a', 'b', 'm', 'n']] = abmn_addition
+                self.electrode_positions = positions_aligned
+
+        self._add_to_data(data_to_add)
+
+    def _add_to_data(self, data):
+        """Add data to the container
+
+        Parameters
+        ----------
+        data : pandas.DataFrame
+            Measurement data in the form of a DataFrame, must adhere to the
+            container constraints (i.e., must have all required columns)
+        """
         if self.data is None:
-            self.data = df
+            self.data = data
         else:
             self.data = pd.concat(
-                (self.data, df), ignore_index=True, sort=True
+                (self.data, data), ignore_index=True, sort=True
             )
 
         # clean any previous norrec-assignments
@@ -87,6 +135,31 @@ class ImportersBase(object):
             if test_col in df_to_use.columns:
                 cols.append(test_col)
         print(df_to_use[cols].describe())
+
+    def add_dataframe(self, data, timestep=None, **kwargs):
+        """Add data to the container using another DataFrame
+
+        Parameters
+        ----------
+        data : pandas.DataFrame
+            Measurement data in the form of a DataFrame, must adhere to the
+            container constraints (i.e., must have all required columns) and
+            electrode positions already registered must match.
+        """
+        if timestep is not None:
+            data['timestep'] = timestep
+        self._add_to_data(data)
+
+    def merge_container(self, container):
+        """Merge the data and electrode positions from another container into
+        this one.
+        """
+        logger.debug('Merging containers')
+        print(type(self))
+
+        self._add_to_container(
+            container.data,
+            container.electrode_positions, container.topography)
 
 
 class ExportersBase(object):
@@ -323,3 +396,88 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         config_obj = reda.configs.configManager.ConfigManager()
         config_obj.add_to_configs(self.data[['a', 'b', 'm', 'n']].values)
         return config_obj
+
+    def plot_electrode_positions_xz(self, ax=None):
+        """Create a 2D scatter plot for the electrode positions.
+
+        Parameters
+        ----------
+        ax : matplotlib.axes, optional
+            Axes object to plot to. If None, create a new figure
+
+        Returns
+        -------
+        fig : matplotlib.Figure
+            The Figure object related to ax. None if no electrode positions
+            were registered yet.
+        ax : matplotlib.Axes
+            The axes object plotted to. None if no electrode positions were
+            registered yet.
+        """
+        if self.electrode_positions is None:
+            return None, None
+
+        if ax is None:
+            fig, ax_plot = plt.subplots(figsize=(14 / 2.54, 4 / 2.54))
+        else:
+            ax_plot = ax
+            fig = ax.get_figure()
+
+        elecs = reda.electrode_manager()
+        elecs.add_fixed_assignments(self.electrode_positions)
+        elecs.plot_coordinates_x_z_to_ax(ax_plot)
+        if ax is None:
+            # only touch the layout if we created the figure
+            fig.tight_layout()
+        return fig, ax
+
+    def replace_electrode_positions(self, coordinates):
+        """Replace the imported electrode coordinates by new ones. This
+        function assumes and expected that the number of new coordinates is the
+        same as the old ones (i.e., a simple replacement).
+
+        Parameters
+        ----------
+        coordinates : str|numpy.ndarray|pandas.DataFrame
+        """
+        assert isinstance(self.electrode_positions, pd.DataFrame), \
+            'There are not electrode positions to replace'
+
+        if isinstance(coordinates, pd.DataFrame):
+            assert 'x' in coordinates.columns
+            assert 'y' in coordinates.columns
+            assert 'z' in coordinates.columns
+            coords = coordinates
+        else:
+            if isinstance(coordinates, str):
+                # assume this is a file
+                if os.path.isfile(coordinates):
+                    coords_raw = np.loadtxt(coordinates)
+                    print('raw')
+                    print(coords_raw)
+                else:
+                    raise Exception(
+                        'filename {} not found'.format(coordinates))
+            elif isinstance(coordinates, np.ndarray):
+                assert len(coordinates.shape) == 2, \
+                    'array must be 2D: Nx(1/2/3)'
+                coords_raw = coordinates
+
+            if coords_raw.shape[1] == 1:
+                cols = ['x', ]
+            elif coords_raw.shape[1] == 2:
+                cols = ['x', 'z']
+            elif coords_raw.shape[1] == 3:
+                cols = ['x', 'y', 'z']
+            coords = pd.DataFrame(coords_raw, columns=cols)
+            print(coords)
+            for key in ['x', 'y', 'z']:
+                if key not in coords.columns:
+                    coords[key] = 0
+
+        assert coords.shape[0] == self.electrode_positions.shape[0]
+
+        # now finally replace the coordinates
+        self.electrode_positions[['x', 'y', 'z']] = coords[
+            ['x', 'y', 'z']
+        ].values

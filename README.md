@@ -1,4 +1,4 @@
-## REDA - Reproducible Electrical Data Analysis
+# REDA - Reproducible Electrical Data Analysis
 
 [![Build Status](https://travis-ci.org/geophysics-ubonn/reda.svg?branch=master)](https://travis-ci.org/geophysics-ubonn/reda)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -6,6 +6,10 @@
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/geophysics-ubonn/try-reda/master?filepath=reda_test.ipynb)
 
 *Latest release: 0.1.5 (28. June 2020)*
+
+See [!Releases Page])(https://github.com/geophysics-ubonn/reda/releases) for a
+complete list of releases. Releases are also published to
+[!Pypi](https://pypi.org/project/reda/).
 
 REDA is a scientific Python library for reproducible geoelectrical data
 analysis. It aims to provide a unified interface for common and advanced data
@@ -24,7 +28,22 @@ specific functionality. Please see the
 [status page](https://geophysics-ubonn.github.io/reda/about.html#status-of-reda) for more
 information.
 
-### Installation
+## In which scenarios is reda useful?
+
+### Import data from a device-specific file format
+
+Example::
+
+	import reda
+    ert = reda.ERT()
+	ert.import_syscal_bin('data_from_a_syscal_device.bin')
+	print(ert.data[['a', 'b', 'm', 'n', 'r']])
+
+See the [!status
+page](https://geophysics-ubonn.github.io/reda/about.html#status-of-reda) for
+supported device/software file formats.
+
+## Installation
 
 Install latest release from PyPI (https://pypi.org/project/reda/):
 
@@ -34,29 +53,16 @@ Install current development version from git:
 
 	pip install git+https://github.com/geophysics-ubonn/reda
 
-or:
+For more information, refer to the [!installation
+page](https://geophysics-ubonn.github.io/reda/installation.html) of the
+documentation.
 
-```bash
-git clone https://github.com/geophysics-ubonn/reda
-cd reda
-
-# 1) Install dependencies with pip
-pip install -r requirements.txt
-# 2) or Install dependencies with conda
-conda install --file requirements.txt
-
-pip install .
-
-# alternatively: (can lead to versioning problems if multiple (development)
-# versions are installed.
-python setup.py install
-```
-### Documentation
+## Documentation
 
 An online version of the docs can be found here:
 <https://geophysics-ubonn.github.io/reda>
 
-### Contributing
+## Contributing
 
 We look forward to any type of contributions:
 
@@ -67,29 +73,3 @@ We look forward to any type of contributions:
 
 If in doubt, use the gitter chat to contact us (click the Gitter badge above to
 join the chat).
-
-<!--
-
-## Roadmap
-
-Milestones for beta versions of the EDF framework. For detailed TODO items,
-please refer to the TODO section down below.
-
-### 0.1
-
--   proof-of-concept for the ERT container
--   proof-of-concept for the SIP container
--   importers: Syscal, ABEM (text), SIP-04
--   plots: histograms, pseudosections (regular, normal-vs-reciprocal), decay
-    curves
-
-### 0.1.1
-
--   proof-of-concept for the EIT container
--   saving of containers to file
-
-### 0.1.2
-
--   logfile/log of applied filters/apply filters to other data sets
-
--->
