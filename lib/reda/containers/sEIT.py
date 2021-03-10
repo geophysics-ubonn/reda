@@ -1,6 +1,6 @@
-"""spectral Electrical Impedance Tomography (sEIT) container
+"""Spectral Electrical Impedance Tomography (sEIT) container
 
-This container holds multi-frequency (spectral) imaging data, that is multipl
+This container holds multi-frequency (spectral) imaging data, that is multiple
 SIP/EIS spectra for different four-point spreads, usually used for subsequent
 tomographic analysis.
 """
@@ -73,6 +73,7 @@ class sEITImporters(ImportersBase):
             data['timestep'] = timestep
         self._add_to_container(data)
 
+        self.log.info('Summary:' )
         print('Summary:')
         self._describe_data(data)
 
