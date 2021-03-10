@@ -5,11 +5,48 @@ data and real usage to improve upon this.
 
 """
 from io import StringIO
+import logging
 
 import pandas as pd
 
-from reda.containers.ERT import ERT
-from reda.importers.utils.decorators import enable_result_transforms
+from reda.utils.electrode_manager import electrode_manager
+
+logger = logging.getLogger(__name__)
+
+
+def import_res2dinv(filename, **kwargs):
+    """ Read a RES2DINV-style
+
+    Parameters
+    ---------
+
+    Returns
+    -------
+    data : :py:class:`pandas.DataFrame`
+        Contains the measurement data
+    elec_mgr : :py:class:`reda.utils.electrode_manager.electrode_manager`
+        Electrode manager that manages the electrode positions
+    topography : None
+        No topography information is contained in the text files, so we always
+        return None
+    """
+    # each type is read by a different function
+    importers = {
+        # general array type
+        11: _read_general_type,
+    }
+
+    file_type, content = _read_file(filename)
+
+    if file_type not in importers:
+        raise Exception(
+            'type of RES2DINV data file not recognized: {0}'.format(file_type)
+        )
+
+    header, data, elec_mgr = importers[file_type](content)
+
+    topography = None
+    return data, elec_mgr, topography
 
 
 def _read_file(filename):
@@ -18,7 +55,7 @@ def _read_file(filename):
 
     Parameters
     ----------
-    filename : string
+    filename : str
         Data filename
 
     Returns
@@ -28,10 +65,11 @@ def _read_file(filename):
     file_data : :py:class:`StringIO.StringIO`
         content of file in a StringIO object
     """
-    # read data
+    # read data from file
     with open(filename, 'r') as fid2:
         abem_data_orig = fid2.read()
 
+    # for easy access, store the data in a StringIO container
     fid = StringIO()
     fid.write(abem_data_orig)
     fid.seek(0)
@@ -39,6 +77,7 @@ def _read_file(filename):
     # determine type of array
     fid.readline()
     fid.readline()
+
     file_type = int(fid.readline().strip())
 
     # reset file pointer
@@ -46,15 +85,13 @@ def _read_file(filename):
     return file_type, fid
 
 
-def _read_general_type(content, settings):
+def _read_general_type(content):
     """Read a type 11 (general type) RES2DINV data block
 
     Parameters
     ----------
     content : :py:class:`StringIO.StringIO`
         Content of data file
-    settings : dict
-        Settings for the importer. Not used at the moment
 
     Returns
     -------
@@ -75,7 +112,7 @@ def _read_general_type(content, settings):
         'name': header_raw[0],
         # unit is meters?
         'unit_spacing': float(header_raw[1]),
-        'type': int(header_raw[2]),
+        'array_type': int(header_raw[2]),
         'type2': int(header_raw[3]),
         'type_of_measurements': int(header_raw[5]),
         'nr_measurements': int(header_raw[6]),
@@ -102,7 +139,15 @@ def _read_general_type(content, settings):
             'z4',
             'value',
         ),
+        nrows=header['nr_measurements'],
     )
+
+    # type of x-location
+    # 0: true horizontal distance
+    # 1: true horizontal distance
+    # 2: surface distance
+
+    elec_mgr = electrode_manager()
 
     # for now ignore the z coordinates and compute simple electrode denotations
     df['a'] = df['x1'] / header['unit_spacing'] + 1
@@ -113,14 +158,14 @@ def _read_general_type(content, settings):
     # for now assume value in resistances
     df['r'] = df['value']
 
-    # remove any nan values
-    df.dropna(axis=0, subset=['a', 'b', 'm', 'n', 'r'], inplace=True)
-
     # ABMN are integers
     df['a'] = df['a'].astype(int)
     df['b'] = df['b'].astype(int)
     df['m'] = df['m'].astype(int)
     df['n'] = df['n'].astype(int)
+
+    # remove any nan values
+    df.dropna(axis=0, subset=['a', 'b', 'm', 'n', 'r'], inplace=True)
 
     # drop unused columns
     df.drop(
@@ -133,36 +178,4 @@ def _read_general_type(content, settings):
             'value',
         ], axis=1, inplace=True
     )
-    return header, df
-
-
-@enable_result_transforms
-def add_dat_file(filename, settings, container=None, **kwargs):
-    """ Read a RES2DINV-style file produced by the ABEM export program.
-    """
-    # each type is read by a different function
-    importers = {
-        # general array type
-        11: _read_general_type,
-    }
-
-    file_type, content = _read_file(filename)
-
-    if file_type not in importers:
-        raise Exception(
-            'type of RES2DINV data file not recognized: {0}'.format(file_type)
-        )
-
-    header, data = importers[file_type](content, settings)
-
-    timestep = settings.get('timestep', 0)
-
-    # add timestep column
-    data['timestep'] = timestep
-
-    if container is None:
-        container = ERT(data)
-    else:
-        container.data = pd.concat((container.data, data))
-
-    return container
+    return header, df, elec_mgr
