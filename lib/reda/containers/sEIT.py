@@ -73,8 +73,7 @@ class sEITImporters(ImportersBase):
             data['timestep'] = timestep
         self._add_to_container(data)
 
-        self.log.info('Summary:' )
-        print('Summary:')
+        self.log.info('Summary:')
         self._describe_data(data)
 
     def import_eit_fzj(self, filename, configfile, correction_file=None,
