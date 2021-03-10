@@ -524,7 +524,11 @@ class electrode_manager(object):
         old_coordinates = self.electrode_positions.loc[electrode_number]
 
         index = np.where(
-            np.isclose(old_coordinates, self._electrode_positions, axis=1))
+            np.all(
+                old_coordinates == self._electrode_positions,
+                axis=1
+            )
+        )
         self._electrode_positions.iloc[index] = new_coords.round(
             decimals=self.round_to_decimals)
 
