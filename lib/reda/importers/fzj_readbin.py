@@ -198,7 +198,8 @@ class fzj_readbin(object):
         )
 
     def plot_timeseries_to_axes(
-            self, axes, frequency_index, injection_number, channel):
+            self, axes, frequency_index, injection_number, channel,
+            range_fraction=1.0, plot_style='.-'):
         """
         injection_number is 1-indexed
 
@@ -219,13 +220,27 @@ class fzj_readbin(object):
         ax.grid()
         ax.set_title('Frequency: {} Hz'.format(fdata['frequency']))
         ax.set_title(
-            'a-b: {}-{}'.format(int(fdata['a']), int(fdata['b'])), loc='right')
+            'a-b: {}-{}, channel: {}'.format(
+                int(fdata['a']),
+                int(fdata['b']),
+                channel,
+            ), loc='right')
         print('a-b: {}-{}'.format(fdata['a'], fdata['b']))
         ax.set_ylabel('Voltage [mV]')
+
+        # sometimes we only want to plot a fraction of the time-series, i.e.,
+        # to better see higher frequencies
+        index = int(t.size * range_fraction) - 1
+
+        x = t[0:index]
+        y = data[channel, :][0:index]
+
         ax.plot(
-            t,
-            data[channel, :],
-            '.-',
+            # t,
+            # data[channel, :],
+            x,
+            y,
+            plot_style,
             ms=2,
             color='k',
             linewidth=4,
@@ -261,11 +276,18 @@ class fzj_readbin(object):
         ax.set_xlabel('Frequency [Hz]')
 
     def plot_timeseries(
-            self, filename, frequency_index, injection_number, channel):
+            self, filename, frequency_index, injection_number, channel,
+            range_fraction=1.0, plot_style='.-'):
         fig, axes = plt.subplots(2, 1, figsize=(16 / 2.54, 10 / 2.54))
 
         self.plot_timeseries_to_axes(
-            axes, frequency_index, injection_number, channel)
+            axes,
+            frequency_index,
+            injection_number,
+            channel,
+            range_fraction=range_fraction,
+            plot_style=plot_style,
+        )
 
         fig.tight_layout()
         fig.savefig(filename, dpi=300)
