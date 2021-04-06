@@ -143,6 +143,10 @@ def _extract_md(mat, **kwargs):
         df['Cl1'] = fdata['Cl3'][:, 0]
         df['Cl2'] = fdata['Cl3'][:, 1]
         df['Cl3'] = fdata['Cl3'][:, 2]
+
+        # leakage capacitance
+        df['Cl'] = np.mean(df[['Cl1', 'Cl2', 'Cl3']].values, axis=1)
+
         df['Is1'] = fdata['Is3'][:, 0]
         df['Is2'] = fdata['Is3'][:, 1]
         df['Is3'] = fdata['Is3'][:, 2]
