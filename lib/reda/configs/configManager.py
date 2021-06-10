@@ -168,6 +168,29 @@ class ConfigManager(object):
             ABMN = self._crmod_to_abmn(configs[:, 0:2])
             self.configs = ABMN
 
+
+    def load_crmod_or_4c_configs(self, filename):
+        """Load configurations either from a CRMod measurement file, or from a
+        four-column file. Assume 1-indexed data (start with electrode 1).
+
+        Parameters
+        ----------
+        filename : str
+            Path to file that shall be imported
+
+        Returns
+        -------
+        None
+        """
+        # The first line decides
+        first_line = np.genfromtxt(filename, max_rows=1)
+        if first_line.size == 4:
+            self.load_configs(filename)
+        elif first_line.size == 1:
+            self.load_crmod_config(filename)
+        else:
+            raise Exception('File format not recognized')
+
     # def load_crmod_volt(self, filename):
     #     """Load a CRMod measurement file (commonly called volt.dat)
 
