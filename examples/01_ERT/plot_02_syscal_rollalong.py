@@ -24,6 +24,13 @@ with reda.CreateEnterDirectory('output_02_rollalong'):
         filename='profile1_pseudosection.pdf',
         column='r', log10=True
     )
+###############################################################################
+# Print statistics
+ert_p1.print_data_journal()
+
+###############################################################################
+# This here is an activity list
+ert_p1.print_log()
 
 ###############################################################################
 # create an ERT container and import second dataset
@@ -39,6 +46,10 @@ with reda.CreateEnterDirectory('output_02_rollalong'):
         column='r',
         log10=True
     )
+###############################################################################
+# Again print the data journal to see what changed in terms of imported data
+# points
+ert_p2.print_data_journal()
 
 ###############################################################################
 # Now we start over again and fix the coordinates of the second profile by
