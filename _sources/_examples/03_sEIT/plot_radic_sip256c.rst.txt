@@ -66,7 +66,6 @@ import the data
 
     number of readings 47
     keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
-    Summary:
                       a             b  ...     frequency          rpha
     count  17296.000000  17296.000000  ...  17296.000000  17296.000000
     mean      16.000000     17.000000  ...    128.226725    -26.094259
@@ -80,7 +79,6 @@ import the data
     [8 rows x 7 columns]
     number of readings 47
     keys [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46]
-    Summary:
                       a             b  ...     frequency          rpha
     count  17296.000000  17296.000000  ...  17296.000000  17296.000000
     mean      34.000000     33.000000  ...    128.226725    -30.295630
@@ -978,13 +976,28 @@ improved in the future
     :class: sphx-glr-single-img
 
 
+.. rst-class:: sphx-glr-script-out
+
+ Out:
+
+ .. code-block:: none
+
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      label=kwargs.get('label_rec', 'reciprocal'),
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+
 
 
 
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  34.989 seconds)
+   **Total running time of the script:** ( 0 minutes  35.621 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

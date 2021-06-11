@@ -4,23 +4,25 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Filtering Data &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Data Importers" href="importers.html" />
-    <link rel="prev" title="Data Containers" href="data_containers.html" />
+    <link rel="next" title="Examples" href="_examples/index.html" />
+    <link rel="prev" title="Concept: Electrode numbers and positions" href="concept_electrodes.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -66,13 +68,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -81,8 +84,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="data_containers.html" title="previous chapter">Data Containers</a></li>
-      <li>Next: <a href="importers.html" title="next chapter">Data Importers</a></li>
+      <li>Previous: <a href="concept_electrodes.html" title="previous chapter">Concept: Electrode numbers and positions</a></li>
+      <li>Next: <a href="_examples/index.html" title="next chapter">Examples</a></li>
   </ul></li>
 </ul>
 </div>
@@ -112,11 +115,11 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="filtering-data">
+  <section id="filtering-data">
 <h1>Filtering Data<a class="headerlink" href="#filtering-data" title="Permalink to this headline">¶</a></h1>
 <p>Data filtering should be done using of the provided filter functions. This way
 we can track the impact of each filter operation for later review.</p>
-<div class="section" id="working-with-nan-data">
+<section id="working-with-nan-data">
 <h2>Working with NaN data<a class="headerlink" href="#working-with-nan-data" title="Permalink to this headline">¶</a></h2>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -140,8 +143,8 @@ The following filter function will retain all NaN valued rows:</p>
 <span class="n">seit</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;(rdiff != rdiff) or (rdiff &gt; -5 and rdiff &lt; -5&#39;</span><span class="p">))</span>
 </pre></div>
 </div>
-</div>
-<div class="section" id="implementing-new-filter-methods">
+</section>
+<section id="implementing-new-filter-methods">
 <h2>Implementing new filter methods<a class="headerlink" href="#implementing-new-filter-methods" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes the generic filter interface using the <cite>.filter</cite> functions of the
 containers is not sufficient or convenient for complex filter procedures.
@@ -155,8 +158,8 @@ processing results.  If possible, those functions should internally use the
 <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;filter&#39;</span><span class="p">,</span> <span class="n">filter_query</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -169,7 +172,7 @@ processing results.  If possible, those functions should internally use the
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

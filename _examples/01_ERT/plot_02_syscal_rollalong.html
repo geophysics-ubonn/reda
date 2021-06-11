@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Importing Syscal ERT data from roll-a-long scheme &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery-rendered-html.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Importing Syscal ERT data" href="plot_01_syscal_import.html" />
+    <link rel="prev" title="Examples" href="../index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Examples</a></li>
+      <li>Next: <a href="plot_01_syscal_import.html" title="next chapter">Importing Syscal ERT data</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-01-ert-plot-02-syscal-rollalong-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="importing-syscal-ert-data-from-roll-a-long-scheme">
+<span id="sphx-glr-examples-01-ert-plot-02-syscal-rollalong-py"></span><h1>Importing Syscal ERT data from roll-a-long scheme<a class="headerlink" href="#importing-syscal-ert-data-from-roll-a-long-scheme" title="Permalink to this headline">¶</a></h1>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+</pre></div>
+</div>
+<p>create an ERT container and import first dataset
+The ‘elecs_transform_reg_spacing_x’ parameter transforms the spacing in x
+direction from the spacing stored in the data file (here 1 m) to the true
+spacing of 0.2 m. This is useful if the spacing on the measurement system is
+not changed between measurements and only changed in the postprocessing (this
+is common practice in some work groups).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert_p1</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">ERT</span></a><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_bin" title="reda.containers.ERT.ERTImporters.import_syscal_bin" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert_p1</span><span class="o">.</span><span class="n">import_syscal_bin</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_syscal_rollalong/profile_1.bin&#39;</span><span class="p">,</span>
+    <span class="n">elecs_transform_reg_spacing_x</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="reda.containers.BaseContainer.BaseContainer.compute_K_analytical" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert_p1</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;output_02_rollalong&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.pseudosection" title="reda.containers.BaseContainer.BaseContainer.pseudosection" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert_p1</span><span class="o">.</span><span class="n">pseudosection</span></a><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;profile1_pseudosection.pdf&#39;</span><span class="p">,</span>
+        <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<img alt="plot 02 syscal rollalong" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_02_syscal_rollalong_001.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>found duplicate coordinates!
+</pre></div>
+</div>
+<p>Print statistics</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.main.html#reda.main.logger.LoggingClass.print_data_journal" title="reda.main.logger.LoggingClass.print_data_journal" class="sphx-glr-backref-module-reda-main-logger sphx-glr-backref-type-py-method"><span class="n">ert_p1</span><span class="o">.</span><span class="n">print_data_journal</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>--- Data Journal Start ---
+2021-06-11 14:14:45.351586
+Data was imported from file  (1460 data points)
+--- Data Journal End ---
+</pre></div>
+</div>
+<p>This here is an activity list</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.main.html#reda.main.logger.LoggingClass.print_log" title="reda.main.logger.LoggingClass.print_log" class="sphx-glr-backref-module-reda-main-logger sphx-glr-backref-type-py-method"><span class="n">ert_p1</span><span class="o">.</span><span class="n">print_log</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2021-06-11 14:14:43,971 - reda.containers.ERT - INFO - IRIS Syscal Pro bin import
+2021-06-11 14:14:44,790 - reda.containers.ERT - INFO - Data sized changed from 0 to 1460
+</pre></div>
+</div>
+<p>create an ERT container and import second dataset</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert_p2</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">ERT</span></a><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_bin" title="reda.containers.ERT.ERTImporters.import_syscal_bin" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert_p2</span><span class="o">.</span><span class="n">import_syscal_bin</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_syscal_rollalong/profile_2.bin&#39;</span><span class="p">,</span>
+    <span class="n">elecs_transform_reg_spacing_x</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="reda.containers.BaseContainer.BaseContainer.compute_K_analytical" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert_p2</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+<span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;output_02_rollalong&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.pseudosection" title="reda.containers.BaseContainer.BaseContainer.pseudosection" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert_p2</span><span class="o">.</span><span class="n">pseudosection</span></a><span class="p">(</span>
+        <span class="n">filename</span><span class="o">=</span><span class="s1">&#39;profile2_pseudosection.pdf&#39;</span><span class="p">,</span>
+        <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span>
+        <span class="n">log10</span><span class="o">=</span><span class="kc">True</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+<img alt="plot 02 syscal rollalong" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_02_syscal_rollalong_002.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>found duplicate coordinates!
+</pre></div>
+</div>
+<p>Again print the data journal to see what changed in terms of imported data
+points</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.main.html#reda.main.logger.LoggingClass.print_data_journal" title="reda.main.logger.LoggingClass.print_data_journal" class="sphx-glr-backref-module-reda-main-logger sphx-glr-backref-type-py-method"><span class="n">ert_p2</span><span class="o">.</span><span class="n">print_data_journal</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>--- Data Journal Start ---
+2021-06-11 14:14:46.581368
+Data was imported from file  (1460 data points)
+--- Data Journal End ---
+</pre></div>
+</div>
+<p>Now we start over again and fix the coordinates of the second profile by
+using the ‘shift_by_xyz’ parameter, which can be used to move the electrode
+positions by a fixed offset. In our case this offset amounts to the position
+of the 25th position (first electrode starts at 0, therefore 24 * 0.25 m).</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">ERT</span></a><span class="p">()</span>
+
+<span class="c1"># first profile</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_bin" title="reda.containers.ERT.ERTImporters.import_syscal_bin" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">import_syscal_bin</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_syscal_rollalong/profile_1.bin&#39;</span><span class="p">,</span>
+    <span class="n">elecs_transform_reg_spacing_x</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+<span class="p">)</span>
+
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert2</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">ERT</span></a><span class="p">()</span>
+<span class="c1"># second profile</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_bin" title="reda.containers.ERT.ERTImporters.import_syscal_bin" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert2</span><span class="o">.</span><span class="n">import_syscal_bin</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_syscal_rollalong/profile_2.bin&#39;</span><span class="p">,</span>
+    <span class="n">elecs_transform_reg_spacing_x</span><span class="o">=</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span>
+    <span class="n">shift_by_xyz</span><span class="o">=</span><span class="p">[</span><span class="mi">24</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">],</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Electrode positions of first dataset</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;output_02_rollalong&#39;</span><span class="p">):</span>
+    <a href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz" title="reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">plot_electrode_positions_xz</span></a><span class="p">()</span>
+    <a href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.show" title="matplotlib.figure.Figure.show" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="plot 02 syscal rollalong" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_02_syscal_rollalong_003.png" />
+<p>Electrode positions of second dataset</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;output_02_rollalong&#39;</span><span class="p">):</span>
+    <a href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz" title="reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert2</span><span class="o">.</span><span class="n">plot_electrode_positions_xz</span></a><span class="p">()</span>
+    <a href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.show" title="matplotlib.figure.Figure.show" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="plot 02 syscal rollalong" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_02_syscal_rollalong_004.png" />
+<p>Now we merge the datasets and plot the electrode positions</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.BaseContainer.ImportersBase.merge_container" title="reda.containers.BaseContainer.ImportersBase.merge_container" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">merge_container</span></a><span class="p">(</span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert2</span></a><span class="p">)</span>
+
+<span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;output_02_rollalong&#39;</span><span class="p">):</span>
+    <a href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure" title="matplotlib.figure.Figure" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">fig</span></a><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz" title="reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">plot_electrode_positions_xz</span></a><span class="p">()</span>
+    <a href="https://matplotlib.org/api/figure_api.html#matplotlib.figure.Figure.show" title="matplotlib.figure.Figure.show" class="sphx-glr-backref-module-matplotlib-figure sphx-glr-backref-type-py-method"><span class="n">fig</span><span class="o">.</span><span class="n">show</span></a><span class="p">()</span>
+</pre></div>
+</div>
+<img alt="plot 02 syscal rollalong" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_02_syscal_rollalong_005.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;reda.containers.ERT.ERT&#39;&gt;
+</pre></div>
+</div>
+<p>compute geometric factors</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.compute_K_analytical" title="reda.containers.BaseContainer.BaseContainer.compute_K_analytical" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">compute_K_analytical</span></a><span class="p">(</span><span class="n">spacing</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Plot Pseudosection</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;output_02_rollalong&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.pseudosection" title="reda.containers.BaseContainer.BaseContainer.pseudosection" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">pseudosection</span></a><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;pseudosection_both_profiles.pdf&#39;</span><span class="p">,</span>
+                      <span class="n">column</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">log10</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<img alt="plot 02 syscal rollalong" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_02_syscal_rollalong_006.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>found duplicate coordinates!
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <a href="../../_api/reda.utils.html#reda.utils.enter_directory.CreateEnterDirectory" title="reda.utils.enter_directory.CreateEnterDirectory" class="sphx-glr-backref-module-reda-utils-enter_directory sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">CreateEnterDirectory</span></a><span class="p">(</span><span class="s1">&#39;output_02_rollalong&#39;</span><span class="p">):</span>
+    <a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.histogram" title="reda.containers.BaseContainer.BaseContainer.histogram" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">histogram</span></a><span class="p">(</span><span class="n">filename</span><span class="o">=</span><span class="s1">&#39;hist_both_profiles.pdf&#39;</span><span class="p">,</span>
+                  <span class="n">column</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">,</span> <span class="s1">&#39;Iab&#39;</span><span class="p">,</span> <span class="p">])</span>
+</pre></div>
+</div>
+<img alt="plot 02 syscal rollalong" class="sphx-glr-single-img" src="../../_images/sphx_glr_plot_02_syscal_rollalong_007.png" />
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>Generating histogram plot for key: r
+Generating histogram plot for key: rho_a
+Generating histogram plot for key: Iab
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-01-ert-plot-02-syscal-rollalong-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/6c4a5349836b49db549981d6440e67cb/plot_02_syscal_rollalong.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_02_syscal_rollalong.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/6b8a6c4ba93b7aab62c3be04bfbcc062/plot_02_syscal_rollalong.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_02_syscal_rollalong.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2021, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/01_ERT/plot_02_syscal_rollalong.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

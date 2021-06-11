@@ -213,18 +213,50 @@ Plot a single spectrum
       limits.get('cim_max', None)
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      label=kwargs.get('label_rec', 'reciprocal'),
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      label=kwargs.get('label_rec', 'reciprocal'),
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      label=kwargs.get('label_rec', 'reciprocal'),
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      label=kwargs.get('label_rec', 'reciprocal'),
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
+    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      linestyle='dotted',
     /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       limits.get('cim_max', None)
 
@@ -362,7 +394,7 @@ just used to close the figures to save memory
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  32.061 seconds)
+   **Total running time of the script:** ( 0 minutes  32.037 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:

@@ -6,13 +6,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>reda.containers.BaseContainer &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -64,13 +65,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -114,9 +116,13 @@
             
   <h1>Source code for reda.containers.BaseContainer</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot;.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">functools</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
 <span class="kn">import</span> <span class="nn">reda</span>
 <span class="kn">from</span> <span class="nn">reda.main.logger</span> <span class="kn">import</span> <span class="n">LoggingClass</span>
@@ -132,6 +138,8 @@
 
 <span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">LogDataChanges</span>
 
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+
 
 <div class="viewcode-block" id="ImportersBase"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.ImportersBase">[docs]</a><span class="k">class</span> <span class="nc">ImportersBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
 
@@ -140,22 +148,64 @@
 
 <span class="sd">    &quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">df</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Add a given DataFrame to the container</span>
+    <span class="k">def</span> <span class="nf">_add_to_container</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">data_to_add</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">topography</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add a given dataset to the container</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        df : pandas.DataFrame</span>
-<span class="sd">            DataFrame, must adhere to the container contraints (i.e., must have</span>
-<span class="sd">            all required columns)</span>
+<span class="sd">        data_to_add : pandas.DataFrame</span>
+<span class="sd">            Measurement data in the form of a DataFrame, must adhere to the</span>
+<span class="sd">            container contraints (i.e., must have all required columns)</span>
+<span class="sd">        electrode_positions : :py:class:`reda.electrode_manager`|None</span>
+<span class="sd">            If set, this electrode manager will be merged with any existing</span>
+<span class="sd">            electrode positions, resulting in a unified electrode position</span>
+<span class="sd">            assignment.</span>
+<span class="sd">        topography : None</span>
+<span class="sd">            Will be used to store topography in the future (not implemented</span>
+<span class="sd">            yet).</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
 
+        <span class="k">if</span> <span class="n">electrode_positions</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_positions</span><span class="p">()</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Merging electrode positions of old and new data&#39;</span><span class="p">)</span>
+                <span class="n">elec_mgr</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">electrode_manager</span><span class="p">()</span>
+
+                <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span>
+                        <span class="n">electrode_positions</span><span class="p">,</span>
+                        <span class="n">reda</span><span class="o">.</span><span class="n">utils</span><span class="o">.</span><span class="n">electrode_manager</span><span class="o">.</span><span class="n">electrode_manager</span><span class="p">):</span>
+                    <span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_positions</span><span class="p">()</span>
+
+                <span class="n">positions_aligned</span><span class="p">,</span> <span class="n">abmn_old</span><span class="p">,</span> <span class="n">abmn_addition</span> <span class="o">=</span> \
+                    <span class="n">elec_mgr</span><span class="o">.</span><span class="n">align_assignments</span><span class="p">(</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span><span class="p">,</span>
+                        <span class="n">electrode_positions</span><span class="p">,</span>
+                        <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]],</span>
+                        <span class="n">data_to_add</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]],</span>
+                    <span class="p">)</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">abmn_old</span>
+                <span class="n">data_to_add</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">abmn_addition</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">positions_aligned</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_data</span><span class="p">(</span><span class="n">data_to_add</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">_add_to_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add data to the container</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pandas.DataFrame</span>
+<span class="sd">            Measurement data in the form of a DataFrame, must adhere to the</span>
+<span class="sd">            container constraints (i.e., must have all required columns)</span>
+<span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">df</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">data</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">(</span>
-                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">df</span><span class="p">),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span>
+                <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">),</span> <span class="n">ignore_index</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">True</span>
             <span class="p">)</span>
 
         <span class="c1"># clean any previous norrec-assignments</span>
@@ -201,7 +251,32 @@
         <span class="k">for</span> <span class="n">test_col</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span><span class="p">:</span>
             <span class="k">if</span> <span class="n">test_col</span> <span class="ow">in</span> <span class="n">df_to_use</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
                 <span class="n">cols</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">test_col</span><span class="p">)</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span></div>
+        <span class="nb">print</span><span class="p">(</span><span class="n">df_to_use</span><span class="p">[</span><span class="n">cols</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+
+<div class="viewcode-block" id="ImportersBase.add_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.ImportersBase.add_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">add_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add data to the container using another DataFrame</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pandas.DataFrame</span>
+<span class="sd">            Measurement data in the form of a DataFrame, must adhere to the</span>
+<span class="sd">            container constraints (i.e., must have all required columns) and</span>
+<span class="sd">            electrode positions already registered must match.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ImportersBase.merge_container"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.ImportersBase.merge_container">[docs]</a>    <span class="k">def</span> <span class="nf">merge_container</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">container</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Merge the data and electrode positions from another container into</span>
+<span class="sd">        this one.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Merging containers&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">))</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span>
+            <span class="n">container</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
+            <span class="n">container</span><span class="o">.</span><span class="n">electrode_positions</span><span class="p">,</span> <span class="n">container</span><span class="o">.</span><span class="n">topography</span><span class="p">)</span></div></div>
 
 
 <div class="viewcode-block" id="ExportersBase"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.ExportersBase">[docs]</a><span class="k">class</span> <span class="nc">ExportersBase</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
@@ -437,7 +512,92 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="n">config_obj</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">configs</span><span class="o">.</span><span class="n">configManager</span><span class="o">.</span><span class="n">ConfigManager</span><span class="p">()</span>
         <span class="n">config_obj</span><span class="o">.</span><span class="n">add_to_configs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">config_obj</span></div></div>
+        <span class="k">return</span> <span class="n">config_obj</span></div>
+
+<div class="viewcode-block" id="BaseContainer.plot_electrode_positions_xz"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz">[docs]</a>    <span class="k">def</span> <span class="nf">plot_electrode_positions_xz</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a 2D scatter plot for the electrode positions.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        ax : matplotlib.axes, optional</span>
+<span class="sd">            Axes object to plot to. If None, create a new figure</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        fig : matplotlib.Figure</span>
+<span class="sd">            The Figure object related to ax. None if no electrode positions</span>
+<span class="sd">            were registered yet.</span>
+<span class="sd">        ax : matplotlib.Axes</span>
+<span class="sd">            The axes object plotted to. None if no electrode positions were</span>
+<span class="sd">            registered yet.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">fig</span><span class="p">,</span> <span class="n">ax_plot</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">,</span> <span class="mi">4</span> <span class="o">/</span> <span class="mf">2.54</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">ax_plot</span> <span class="o">=</span> <span class="n">ax</span>
+            <span class="n">fig</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
+
+        <span class="n">elecs</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">electrode_manager</span><span class="p">()</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">add_fixed_assignments</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span><span class="p">)</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">plot_coordinates_x_z_to_ax</span><span class="p">(</span><span class="n">ax_plot</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># only touch the layout if we created the figure</span>
+            <span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span></div>
+
+<div class="viewcode-block" id="BaseContainer.replace_electrode_positions"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.replace_electrode_positions">[docs]</a>    <span class="k">def</span> <span class="nf">replace_electrode_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">coordinates</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Replace the imported electrode coordinates by new ones. This</span>
+<span class="sd">        function assumes and expected that the number of new coordinates is the</span>
+<span class="sd">        same as the old ones (i.e., a simple replacement).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        coordinates : str|numpy.ndarray|pandas.DataFrame</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">),</span> \
+            <span class="s1">&#39;There are not electrode positions to replace&#39;</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">columns</span>
+            <span class="k">assert</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">columns</span>
+            <span class="k">assert</span> <span class="s1">&#39;z&#39;</span> <span class="ow">in</span> <span class="n">coordinates</span><span class="o">.</span><span class="n">columns</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">coordinates</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+                <span class="c1"># assume this is a file</span>
+                <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">coordinates</span><span class="p">):</span>
+                    <span class="n">coords_raw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">loadtxt</span><span class="p">(</span><span class="n">coordinates</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;raw&#39;</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">coords_raw</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                        <span class="s1">&#39;filename </span><span class="si">{}</span><span class="s1"> not found&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">coordinates</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">coordinates</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+                <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">coordinates</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> \
+                    <span class="s1">&#39;array must be 2D: Nx(1/2/3)&#39;</span>
+                <span class="n">coords_raw</span> <span class="o">=</span> <span class="n">coordinates</span>
+
+            <span class="k">if</span> <span class="n">coords_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">]</span>
+            <span class="k">elif</span> <span class="n">coords_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+                <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="n">coords_raw</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">3</span><span class="p">:</span>
+                <span class="n">cols</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+            <span class="n">coords</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">coords_raw</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">cols</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]:</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">coords</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+                    <span class="n">coords</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="k">assert</span> <span class="n">coords</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1"># now finally replace the coordinates</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">coords</span><span class="p">[</span>
+            <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]</span>
+        <span class="p">]</span><span class="o">.</span><span class="n">values</span></div></div>
 </pre></div>
 
           </div>
@@ -450,7 +610,7 @@
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

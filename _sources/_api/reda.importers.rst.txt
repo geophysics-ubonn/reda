@@ -82,6 +82,14 @@ reda.importers.eit\_version\_20200609 module
    :undoc-members:
    :show-inheritance:
 
+reda.importers.fzj\_readbin module
+----------------------------------
+
+.. automodule:: reda.importers.fzj_readbin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 reda.importers.geotom module
 ----------------------------
 

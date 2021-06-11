@@ -1,0 +1,910 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>reda.testing.test_electrode_manager &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+    
+
+<p>
+<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
+    <img
+        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
+    />
+</a>
+</p>
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  <li><a href="../testing.html">reda.testing</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.testing.test_electrode_manager</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">pytest</span>
+<span class="kn">from</span> <span class="nn">reda.utils.electrode_manager</span> <span class="kn">import</span> <span class="n">electrode_manager</span>
+
+
+<div class="viewcode-block" id="test_user_supplied_sorter"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_user_supplied_sorter">[docs]</a><span class="k">def</span> <span class="nf">test_user_supplied_sorter</span><span class="p">():</span>
+
+    <span class="k">def</span> <span class="nf">reversed_sorter</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+        <span class="n">coordinates_sorted</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span>
+            <span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">coordinates_sorted</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">coordinates_sorted</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;SORTED&#39;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">coordinates_sorted</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">coordinates_sorted</span>
+
+    <span class="c1"># provide only positions of electrodes</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+
+    <span class="c1"># default behavior</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">elecs</span><span class="o">.</span><span class="n">register_custom_ordering_scheme</span><span class="p">(</span><span class="n">reversed_sorter</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="test_get_electrode_position"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_get_electrode_position">[docs]</a><span class="k">def</span> <span class="nf">test_get_electrode_position</span><span class="p">():</span>
+    <span class="c1"># provide only positions of electrodes</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">AssertionError</span><span class="p">):</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">AssertionError</span><span class="p">):</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">AssertionError</span><span class="p">):</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span> <span class="ow">is</span> <span class="kc">None</span>
+    <span class="c1"># 1D/2D/3D</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># multiple 1D</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([[</span><span class="mi">2</span><span class="p">,</span> <span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">]])</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_get_electrode_numbers_for_positions"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_get_electrode_numbers_for_positions">[docs]</a><span class="k">def</span> <span class="nf">test_get_electrode_numbers_for_positions</span><span class="p">():</span>
+    <span class="c1"># provide only positions of electrodes</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+
+    <span class="c1"># test as is</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_as_is</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;2D, pos 1&#39;</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;2D, pos 2&#39;</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span><span class="p">,</span> <span class="s1">&#39;2D, pos 3&#39;</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">(</span>
+            <span class="p">[[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]</span>
+        <span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+    <span class="p">),</span> <span class="s1">&#39;multiple positions, nested list&#39;</span></div>
+
+
+<div class="viewcode-block" id="test_sorters"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_sorters">[docs]</a><span class="k">def</span> <span class="nf">test_sorters</span><span class="p">():</span>
+    <span class="c1"># provide only positions of electrodes</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+
+    <span class="c1"># test as is</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_as_is</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">0</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="c1"># test as is plus one</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_as_is_plus_one</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span>
+
+    <span class="c1"># test sorted</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_sort_zyx</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">3</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">1</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">2</span></div>
+
+
+<div class="viewcode-block" id="test_duplicates"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_duplicates">[docs]</a><span class="k">def</span> <span class="nf">test_duplicates</span><span class="p">():</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="c1"># add a second time</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="c1"># import IPython</span>
+    <span class="c1"># IPython.embed()</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="n">test_3d_positions</span><span class="o">.</span><span class="n">shape</span></div>
+
+
+<div class="viewcode-block" id="test_add_positions"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_add_positions">[docs]</a><span class="k">def</span> <span class="nf">test_add_positions</span><span class="p">():</span>
+    <span class="n">test_pandas_3d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_pandas_3d</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">test_pandas_3d</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="n">test_pandas_2d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_pandas_2d</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">test_pandas_3d</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="n">test_pandas_1d</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_pandas_1d</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">test_pandas_3d</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="c1"># lists</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="p">]])</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">([</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">([[</span><span class="mf">5.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">([[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]])</span>
+
+    <span class="n">result_expected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span>
+        <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">5.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">8.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">))</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">result_expected</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="c1"># numpy arrays</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="c1"># 1D</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.7</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mf">1.95</span><span class="p">],</span> <span class="p">])</span><span class="o">.</span><span class="n">T</span><span class="p">)</span>
+
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">3.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mf">7.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]))</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">8</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]))</span>
+
+    <span class="n">result_expected</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span>
+        <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">1.7</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">1.9</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">1.95</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">3.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">7.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">8.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">9.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">(</span><span class="mf">10.0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+    <span class="p">))</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">result_expected</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_conform_to_regular_x_spacing"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing">[docs]</a><span class="k">def</span> <span class="nf">test_conform_to_regular_x_spacing</span><span class="p">():</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">result_expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="c1"># this is important, we want a sorted output</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_sort_zyx</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">conform_to_regular_x_spacing</span><span class="p">(</span><span class="n">spacing_x</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">result_expected</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+
+    <span class="c1"># new test</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">result_expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="c1"># this is important, we want a sorted output</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_sort_zyx</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">conform_to_regular_x_spacing</span><span class="p">(</span><span class="n">spacing_x</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nr_electrodes</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">result_expected</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_conform_to_regular_x_spacing_exception"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing_exception">[docs]</a><span class="k">def</span> <span class="nf">test_conform_to_regular_x_spacing_exception</span><span class="p">():</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mf">2.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">conform_to_regular_x_spacing</span><span class="p">(</span><span class="n">spacing_x</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_reflect_on_x"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_reflect_on_x">[docs]</a><span class="k">def</span> <span class="nf">test_reflect_on_x</span><span class="p">():</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">reflect_on_position_x</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">result_expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">10</span> <span class="o">-</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">result_expected</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_electrode_numbers"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_electrode_numbers">[docs]</a><span class="k">def</span> <span class="nf">test_electrode_numbers</span><span class="p">():</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="n">number_assignments</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_all_electrode_numbers</span><span class="p">()</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">number_assignments</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="o">==</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="test_bad_input"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_bad_input">[docs]</a><span class="k">def</span> <span class="nf">test_bad_input</span><span class="p">():</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="c1"># we expect this function to raise an error</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">AssertionError</span><span class="p">:</span>
+        <span class="k">pass</span></div>
+
+
+<div class="viewcode-block" id="test_simple_ordering_3d"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_simple_ordering_3d">[docs]</a><span class="k">def</span> <span class="nf">test_simple_ordering_3d</span><span class="p">():</span>
+    <span class="c1"># provide only positions of electrodes</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_sort_zyx</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_index</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span>
+        <span class="n">c_unsorted</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+        <span class="n">c_sorted</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">sorter</span><span class="p">(</span><span class="n">c_unsorted</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">c_sorted</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_simple_ordering_2d"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_simple_ordering_2d">[docs]</a><span class="k">def</span> <span class="nf">test_simple_ordering_2d</span><span class="p">():</span>
+    <span class="c1"># provide only positions of electrodes</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">test_2d_positions</span> <span class="o">=</span> <span class="n">test_3d_positions</span><span class="p">[[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">]]</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_sort_zyx</span><span class="p">()</span>
+
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_2d_positions</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">seed</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">50</span><span class="p">):</span>
+        <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
+        <span class="n">c</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">new_index</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+        <span class="n">rng</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span>
+        <span class="n">c_unsorted</span> <span class="o">=</span> <span class="n">c</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="n">new_index</span><span class="p">)</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span>
+
+        <span class="n">c_sorted</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">sorter</span><span class="p">(</span><span class="n">c_unsorted</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">c_sorted</span><span class="o">.</span><span class="n">values</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_number_assignment"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_number_assignment">[docs]</a><span class="k">def</span> <span class="nf">test_number_assignment</span><span class="p">():</span>
+    <span class="c1"># provide only positions of electrodes</span>
+    <span class="n">test_3d_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">set_ordering_to_as_is_plus_one</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">test_3d_positions</span><span class="p">)</span>
+
+    <span class="n">input_coords</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">expected_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+    <span class="n">elec_numbers</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">(</span><span class="n">input_coords</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">expected_numbers</span> <span class="o">==</span> <span class="n">elec_numbers</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="test_fixed_assignments"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_fixed_assignments">[docs]</a><span class="k">def</span> <span class="nf">test_fixed_assignments</span><span class="p">():</span>
+    <span class="n">fixed_assignments</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;electrode_number&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_fixed_assignments</span><span class="p">(</span><span class="n">fixed_assignments</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">10</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">7</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="p">)</span>
+
+    <span class="n">fixed2</span> <span class="o">=</span> <span class="n">fixed_assignments</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;electrode_number&#39;</span><span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_fixed_assignments</span><span class="p">(</span><span class="n">fixed2</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">10</span>
+    <span class="k">assert</span> <span class="n">elecs</span><span class="o">.</span><span class="n">get_electrode_numbers_for_positions</span><span class="p">([</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">==</span> <span class="mi">7</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">((</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_replace_coordinates_with_fixed_regular_grid_x"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_replace_coordinates_with_fixed_regular_grid_x">[docs]</a><span class="k">def</span> <span class="nf">test_replace_coordinates_with_fixed_regular_grid_x</span><span class="p">():</span>
+    <span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+
+    <span class="n">elecs</span><span class="o">.</span><span class="n">replace_coordinates_with_fixed_regular_grid_x</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+
+    <span class="n">expected_result</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">expected_result</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="o">.</span><span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span>
+    <span class="p">),</span> <span class="s1">&#39;x position replacement did not work&#39;</span></div>
+
+
+<div class="viewcode-block" id="test_replace_one_coordinate"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_replace_one_coordinate">[docs]</a><span class="k">def</span> <span class="nf">test_replace_one_coordinate</span><span class="p">():</span>
+    <span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">AssertionError</span><span class="p">):</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">replace_coordinate_of_electrode_number</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">elecs</span><span class="o">.</span><span class="n">replace_coordinate_of_electrode_number</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">elecs</span><span class="o">.</span><span class="n">replace_coordinate_of_electrode_number</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">555</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="o">.</span><span class="n">get_position_of_number</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="p">[</span><span class="mi">555</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span></div>
+
+
+<div class="viewcode-block" id="test_callable_class"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_callable_class">[docs]</a><span class="k">def</span> <span class="nf">test_callable_class</span><span class="p">():</span>
+    <span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">electrode_positions</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">elecs</span><span class="p">()</span><span class="o">.</span><span class="n">values</span>
+    <span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_merging"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_merging">[docs]</a><span class="k">def</span> <span class="nf">test_merging</span><span class="p">():</span>
+    <span class="n">positions1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="c1"># note gap here in positions!</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;electrode_number&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">data1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">positions2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;electrode_number&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+    <span class="n">data2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+
+    <span class="n">positions_aligned</span><span class="p">,</span> <span class="n">data1_aligned</span><span class="p">,</span> <span class="n">data2_aligned</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">align_assignments</span><span class="p">(</span>
+        <span class="n">positions1</span><span class="p">,</span>
+        <span class="n">positions2</span><span class="p">,</span>
+        <span class="n">data1</span><span class="p">,</span>
+        <span class="n">data2</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">positions_expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;electrode_number&#39;</span><span class="p">,</span> <span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;electrode_number&#39;</span><span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">positions_expected</span> <span class="o">==</span> <span class="n">positions_aligned</span>
+    <span class="p">),</span> <span class="s1">&#39;aligned positions&#39;</span>
+
+    <span class="n">data2_expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data1_aligned</span> <span class="o">==</span> <span class="n">data1</span><span class="p">)</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">data2_aligned</span> <span class="o">==</span> <span class="n">data2_expected</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="test_merging2"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_merging2">[docs]</a><span class="k">def</span> <span class="nf">test_merging2</span><span class="p">():</span>
+    <span class="n">pos1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">])</span>
+    <span class="n">pos1</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pos1</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pos1</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;electrode_number&#39;</span>
+
+    <span class="n">pos2</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">])</span>
+    <span class="n">pos2</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pos2</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pos2</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;electrode_number&#39;</span>
+
+    <span class="n">data1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+
+    <span class="n">positions_aligned</span><span class="p">,</span> <span class="n">data1_aligned</span><span class="p">,</span> <span class="n">data2_aligned</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">align_assignments</span><span class="p">(</span>
+        <span class="n">pos1</span><span class="p">,</span>
+        <span class="n">pos2</span><span class="p">,</span>
+        <span class="n">data1</span><span class="p">,</span>
+        <span class="n">data1</span><span class="o">.</span><span class="n">copy</span><span class="p">(),</span>
+    <span class="p">)</span>
+
+    <span class="n">pos_expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">),</span> <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="p">])</span>
+    <span class="n">pos_expected</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">pos_expected</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span>
+        <span class="n">np</span><span class="o">.</span><span class="n">isclose</span><span class="p">(</span><span class="n">pos_expected</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">positions_aligned</span><span class="o">.</span><span class="n">values</span><span class="p">)</span>
+    <span class="p">),</span> <span class="s1">&#39;aligned positions&#39;</span></div>
+
+    <span class="c1"># data2_expected = pd.DataFrame(</span>
+    <span class="c1">#     (</span>
+    <span class="c1">#         (5, 4, 7, 6),</span>
+    <span class="c1">#         (5, 7, 6, 4),</span>
+
+    <span class="c1">#     ),</span>
+    <span class="c1">#     columns=[&#39;a&#39;, &#39;b&#39;, &#39;m&#39;, &#39;n&#39;],</span>
+    <span class="c1"># )</span>
+
+    <span class="c1"># assert np.all(data1_aligned == data1)</span>
+    <span class="c1"># assert np.all(data2_aligned == data2_expected)</span>
+
+
+<div class="viewcode-block" id="test_shift_positions_by_xyz"><a class="viewcode-back" href="../../../_api/reda.testing.html#reda.testing.test_electrode_manager.test_shift_positions_by_xyz">[docs]</a><span class="k">def</span> <span class="nf">test_shift_positions_by_xyz</span><span class="p">():</span>
+    <span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="n">result_expected</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">(</span>
+            <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+            <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span>
+        <span class="p">),</span>
+        <span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">],</span>
+    <span class="p">)</span>
+
+    <span class="c1"># list</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">result_expected</span><span class="p">)</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">result_expected</span><span class="p">)</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">result_expected</span><span class="p">)</span>
+
+    <span class="c1"># array</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="p">]))</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">result_expected</span><span class="p">)</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">result_expected</span><span class="p">)</span>
+
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="n">elecs</span><span class="p">()</span><span class="o">.</span><span class="n">values</span> <span class="o">==</span> <span class="n">result_expected</span><span class="p">)</span>
+
+    <span class="c1"># assertions</span>
+    <span class="n">elecs</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elecs</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">)</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span>
+    <span class="k">with</span> <span class="n">pytest</span><span class="o">.</span><span class="n">raises</span><span class="p">(</span><span class="ne">Exception</span><span class="p">):</span>
+        <span class="n">elecs</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]]))</span></div>
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="c1"># test_merging()</span>
+    <span class="n">test_merging2</span><span class="p">()</span>
+    <span class="c1"># test_shift_positions_by_xyz()</span>
+    <span class="k">pass</span>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2021, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

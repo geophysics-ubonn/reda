@@ -4,15 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>reda.exporters package &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -66,13 +68,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -116,18 +119,21 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-reda.exporters">
+  <section id="module-reda.exporters">
 <span id="reda-exporters-package"></span><h1>reda.exporters package<a class="headerlink" href="#module-reda.exporters" title="Permalink to this headline">¶</a></h1>
 <p>Exporters to different modeling and inversion codes</p>
-<div class="section" id="submodules">
+<section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-reda.exporters.bert">
+</section>
+<section id="module-reda.exporters.bert">
 <span id="reda-exporters-bert-module"></span><h2>reda.exporters.bert module<a class="headerlink" href="#module-reda.exporters.bert" title="Permalink to this headline">¶</a></h2>
+<p>Exporter for BERT and pyGimli to unified data format. See:</p>
+<p><a class="reference external" href="https://gitlab.com/resistivity-net/bert#the-unified-data-format">https://gitlab.com/resistivity-net/bert#the-unified-data-format</a></p>
 <dl class="py function">
-<dt id="reda.exporters.bert.export_bert">
-<code class="sig-prename descclassname"><span class="pre">reda.exporters.bert.</span></code><code class="sig-name descname"><span class="pre">export_bert</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">electrodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/bert.html#export_bert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.bert.export_bert" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.exporters.bert.export_bert">
+<span class="sig-prename descclassname"><span class="pre">reda.exporters.bert.</span></span><span class="sig-name descname"><span class="pre">export_bert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">electrodes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/bert.html#export_bert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.bert.export_bert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Export to unified data format used in pyGIMLi &amp; BERT.</p>
+<p>Multiple timesteps are exported to multiple filenames.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
@@ -142,13 +148,13 @@
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-reda.exporters.crtomo">
+</section>
+<section id="module-reda.exporters.crtomo">
 <span id="reda-exporters-crtomo-module"></span><h2>reda.exporters.crtomo module<a class="headerlink" href="#module-reda.exporters.crtomo" title="Permalink to this headline">¶</a></h2>
 <p>Write CRMod/CRTomo (Kemna, 2000) compatible files</p>
 <dl class="py function">
-<dt id="reda.exporters.crtomo.save_block_to_crt">
-<code class="sig-prename descclassname"><span class="pre">reda.exporters.crtomo.</span></code><code class="sig-name descname"><span class="pre">save_block_to_crt</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norrec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/crtomo.html#save_block_to_crt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.crtomo.save_block_to_crt" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.exporters.crtomo.save_block_to_crt">
+<span class="sig-prename descclassname"><span class="pre">reda.exporters.crtomo.</span></span><span class="sig-name descname"><span class="pre">save_block_to_crt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">group</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">norrec</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">store_errors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/crtomo.html#save_block_to_crt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.crtomo.save_block_to_crt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Save a dataset to a CRTomo-compatible .crt file</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -167,8 +173,8 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="reda.exporters.crtomo.write_files_to_directory">
-<code class="sig-prename descclassname"><span class="pre">reda.exporters.crtomo.</span></code><code class="sig-name descname"><span class="pre">write_files_to_directory</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/crtomo.html#write_files_to_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.crtomo.write_files_to_directory" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.exporters.crtomo.write_files_to_directory">
+<span class="sig-prename descclassname"><span class="pre">reda.exporters.crtomo.</span></span><span class="sig-name descname"><span class="pre">write_files_to_directory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/crtomo.html#write_files_to_directory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.crtomo.write_files_to_directory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write sEIT data ta files. Data of each frequency is written in a
 separate file that conforms to the CRMod/CRTomo standard, and can directly
 be used for inversions using CRTomo.</p>
@@ -193,13 +199,13 @@ columns). Default: False</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-reda.exporters.syscal">
+</section>
+<section id="module-reda.exporters.syscal">
 <span id="reda-exporters-syscal-module"></span><h2>reda.exporters.syscal module<a class="headerlink" href="#module-reda.exporters.syscal" title="Permalink to this headline">¶</a></h2>
 <p>Exporter functions for IRIS Instruments Syscal Pro</p>
 <dl class="py function">
-<dt id="reda.exporters.syscal.syscal_save_to_config_txt">
-<code class="sig-prename descclassname"><span class="pre">reda.exporters.syscal.</span></code><code class="sig-name descname"><span class="pre">syscal_save_to_config_txt</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/syscal.html#syscal_save_to_config_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.syscal.syscal_save_to_config_txt" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.exporters.syscal.syscal_save_to_config_txt">
+<span class="sig-prename descclassname"><span class="pre">reda.exporters.syscal.</span></span><span class="sig-name descname"><span class="pre">syscal_save_to_config_txt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spacing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/exporters/syscal.html#syscal_save_to_config_txt"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.exporters.syscal.syscal_save_to_config_txt" title="Permalink to this definition">¶</a></dt>
 <dd><p>Write configurations to a Syscal ascii file that can be read by the
 Electre Pro program.</p>
 <dl class="field-list simple">
@@ -214,8 +220,8 @@ Electre Pro program.</p>
 </dl>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -228,7 +234,7 @@ Electre Pro program.</p>
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

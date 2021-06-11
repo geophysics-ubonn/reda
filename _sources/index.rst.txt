@@ -32,12 +32,13 @@ license. Any contributions from the community are highly welcome.
 
     about.rst
     installation.rst
-    contributing.rst
-    test_data.rst
-    debugging.rst
     data_containers.rst
+    concept_electrodes.rst
     filtering.rst
-    importers.rst
     _examples/index.rst
+    debugging.rst
+    contributing.rst
+    importers.rst
+    test_data.rst
     api.rst
     Source code <https://github.com/geophysics-ubonn/reda>

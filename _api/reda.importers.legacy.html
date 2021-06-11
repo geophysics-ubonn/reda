@@ -4,15 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>reda.importers.legacy package &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -66,13 +68,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -118,12 +121,12 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-reda.importers.legacy">
+  <section id="module-reda.importers.legacy">
 <span id="reda-importers-legacy-package"></span><h1>reda.importers.legacy package<a class="headerlink" href="#module-reda.importers.legacy" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
+<section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-reda.importers.legacy.eit160">
+</section>
+<section id="module-reda.importers.legacy.eit160">
 <span id="reda-importers-legacy-eit160-module"></span><h2>reda.importers.legacy.eit160 module<a class="headerlink" href="#module-reda.importers.legacy.eit160" title="Permalink to this headline">¶</a></h2>
 <p>Work with result files from the EIT-40/160 tomograph (also called medusa).</p>
 <p>Data structure of .mat files:</p>
@@ -172,8 +175,8 @@ required if we use the arctan2 function?)</p></li>
 <li><p>should we provide a time delta between the two measurements?</p></li>
 </ul>
 <dl class="py function">
-<dt id="reda.importers.legacy.eit160.import_medusa_data">
-<code class="sig-prename descclassname"><span class="pre">reda.importers.legacy.eit160.</span></code><code class="sig-name descname"><span class="pre">import_medusa_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit160.html#import_medusa_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.legacy.eit160.import_medusa_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.importers.legacy.eit160.import_medusa_data">
+<span class="sig-prename descclassname"><span class="pre">reda.importers.legacy.eit160.</span></span><span class="sig-name descname"><span class="pre">import_medusa_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">config_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit160.html#import_medusa_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.legacy.eit160.import_medusa_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Import measurement data (a .mat file) of the FZJ EIT160 system. This
 data format is identified as ‘FZJ-EZ-2017’.</p>
 <dl class="field-list simple">
@@ -190,8 +193,8 @@ with 4 columns each (a, b, m, n)</p>
 </dl>
 </dd></dl>
 
-</div>
-<div class="section" id="module-reda.importers.legacy.eit40">
+</section>
+<section id="module-reda.importers.legacy.eit40">
 <span id="reda-importers-legacy-eit40-module"></span><h2>reda.importers.legacy.eit40 module<a class="headerlink" href="#module-reda.importers.legacy.eit40" title="Permalink to this headline">¶</a></h2>
 <p>Work with result files from the EIT-40 tomograph (also called medusa).</p>
 <p>NOTE that the results for EIT40 and EIT160 are, at this time, slightly
@@ -241,19 +244,19 @@ required if we use the arctan2 function?)</p></li>
 <li><p>should we provide a time delta between the two measurements?</p></li>
 </ul>
 <dl class="py function">
-<dt id="reda.importers.legacy.eit40.apply_correction_factors">
-<code class="sig-prename descclassname"><span class="pre">reda.importers.legacy.eit40.</span></code><code class="sig-name descname"><span class="pre">apply_correction_factors</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#apply_correction_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.legacy.eit40.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.importers.legacy.eit40.apply_correction_factors">
+<span class="sig-prename descclassname"><span class="pre">reda.importers.legacy.eit40.</span></span><span class="sig-name descname"><span class="pre">apply_correction_factors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">correction_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#apply_correction_factors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.legacy.eit40.apply_correction_factors" title="Permalink to this definition">¶</a></dt>
 <dd><p>Apply correction factors for a pseudo-2D measurement setup. See Weigand
 and Kemna, 2017, Biogeosciences, for detailed information.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="reda.importers.legacy.eit40.import_medusa_data">
-<code class="sig-prename descclassname"><span class="pre">reda.importers.legacy.eit40.</span></code><code class="sig-name descname"><span class="pre">import_medusa_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#import_medusa_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.legacy.eit40.import_medusa_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.importers.legacy.eit40.import_medusa_data">
+<span class="sig-prename descclassname"><span class="pre">reda.importers.legacy.eit40.</span></span><span class="sig-name descname"><span class="pre">import_medusa_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat_filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/legacy/eit40.html#import_medusa_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.legacy.eit40.import_medusa_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -266,7 +269,7 @@ and Kemna, 2017, Biogeosciences, for detailed information.</p>
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

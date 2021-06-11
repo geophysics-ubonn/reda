@@ -4,19 +4,21 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>reda.eis package &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -67,13 +69,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -117,16 +120,16 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-reda.eis">
+  <section id="module-reda.eis">
 <span id="reda-eis-package"></span><h1>reda.eis package<a class="headerlink" href="#module-reda.eis" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="submodules">
+<section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-reda.eis.convert">
+</section>
+<section id="module-reda.eis.convert">
 <span id="reda-eis-convert-module"></span><h2>reda.eis.convert module<a class="headerlink" href="#module-reda.eis.convert" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="reda.eis.convert.convert">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">convert</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_spectrum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.convert" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.convert">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">convert</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_format</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">one_spectrum</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.convert" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert from the given format to the requested format</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -142,66 +145,66 @@
 </dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_ccomplex">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_ccomplex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_ccomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_ccomplex" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_ccomplex">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_ccomplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_ccomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_ccomplex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_cmag_cpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_cmag_cpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_cmag_cpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_cmag_cpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_cmag_cpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_cmag_cpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_cre_cim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_cre_cim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_cre_cim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_cre_cim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_cre_cim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_cre_cim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_cre_cmim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_cre_cmim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_cre_cmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_cre_cmim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_cre_cmim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_cre_cmim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_cre_cmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_cre_cmim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_lnrmag_rpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_lnrmag_rpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_lnrmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_lnrmag_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_lnrmag_rpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_lnrmag_rpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_lnrmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_lnrmag_rpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_log10rmag_rpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_log10rmag_rpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_log10rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_log10rmag_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_log10rmag_rpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_log10rmag_rpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_log10rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_log10rmag_rpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_rcomplex">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_rcomplex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rcomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rcomplex" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_rcomplex">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_rcomplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rcomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rcomplex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_rmag_rpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_rmag_rpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rmag_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_rmag_rpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_rmag_rpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rmag_rpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_rre_rim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_rre_rim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rre_rim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_rre_rim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_rre_rim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rre_rim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.from_rre_rmim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">from_rre_rmim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rre_rmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rre_rmim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.from_rre_rmim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">from_rre_rmim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#from_rre_rmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.from_rre_rmim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.generic_magpha_to_reim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">generic_magpha_to_reim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#generic_magpha_to_reim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.generic_magpha_to_reim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.generic_magpha_to_reim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">generic_magpha_to_reim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#generic_magpha_to_reim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.generic_magpha_to_reim" title="Permalink to this definition">¶</a></dt>
 <dd><p>Generically convert magnitude and phase to real and imaginary part using
 the formula <span class="math notranslate nohighlight">\(mag \cdot exp(1j / 1000 * pha)\)</span></p>
 <p>Thus it is suitable for resistivities, multiply conductivity phases with -1</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.split_data">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">split_data</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">squeeze</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#split_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.split_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.split_data">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">split_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">squeeze</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#split_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.split_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Split 1D or 2D into two parts, using the last axis</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -214,66 +217,66 @@ the formula <span class="math notranslate nohighlight">\(mag \cdot exp(1j / 1000
 </dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_ccomplex">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_ccomplex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_ccomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_ccomplex" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_ccomplex">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_ccomplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_ccomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_ccomplex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_cmag_cpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_cmag_cpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_cmag_cpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_cmag_cpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_cmag_cpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_cmag_cpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_complex">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_complex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_complex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_complex" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_complex">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_complex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mag</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pha</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_complex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_complex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_cre_cim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_cre_cim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_cre_cim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_cre_cim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_cre_cim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_cre_cim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_cre_cmim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_cre_cmim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_cre_cmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_cre_cmim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_cre_cmim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_cre_cmim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_cre_cmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_cre_cmim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_lnrmag_rpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_lnrmag_rpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_lnrmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_lnrmag_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_lnrmag_rpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_lnrmag_rpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_lnrmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_lnrmag_rpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_log10rmag_rpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_log10rmag_rpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_log10rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_log10rmag_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_log10rmag_rpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_log10rmag_rpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_log10rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_log10rmag_rpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_rcomplex">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_rcomplex</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rcomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rcomplex" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_rcomplex">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_rcomplex</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rcomplex"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rcomplex" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_rmag_rpha">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_rmag_rpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rmag_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_rmag_rpha">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_rmag_rpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rmag_rpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_rre_rim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_rre_rim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rre_rim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_rre_rim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_rre_rim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rre_rim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.eis.convert.to_rre_rmim">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></code><code class="sig-name descname"><span class="pre">to_rre_rmim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rre_rmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rre_rmim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.convert.to_rre_rmim">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.convert.</span></span><span class="sig-name descname"><span class="pre">to_rre_rmim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cre</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cim</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/convert.html#to_rre_rmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.convert.to_rre_rmim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-<div class="section" id="module-reda.eis.plots">
+</section>
+<section id="module-reda.eis.plots">
 <span id="reda-eis-plots-module"></span><h2>reda.eis.plots module<a class="headerlink" href="#module-reda.eis.plots" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
-<dt id="reda.eis.plots.multi_sip_response">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">reda.eis.plots.</span></code><code class="sig-name descname"><span class="pre">multi_sip_response</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.multi_sip_response">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.eis.plots.</span></span><span class="sig-name descname"><span class="pre">multi_sip_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">objects</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">labels</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">obj_dict</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>manage multiple sip_response objects and provide some nice overview
 plots</p>
@@ -313,43 +316,43 @@ plots</p>
 </tbody>
 </table>
 <dl class="py method">
-<dt id="reda.eis.plots.multi_sip_response.add">
-<code class="sig-name descname"><span class="pre">add</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.add" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.multi_sip_response.add">
+<span class="sig-name descname"><span class="pre">add</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">response</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.add"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.add" title="Permalink to this definition">¶</a></dt>
 <dd><p>add one response object to the list</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.plots.multi_sip_response.plot_cim">
-<code class="sig-name descname"><span class="pre">plot_cim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_cim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.multi_sip_response.plot_cim">
+<span class="sig-name descname"><span class="pre">plot_cim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_cim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.plots.multi_sip_response.plot_cre">
-<code class="sig-name descname"><span class="pre">plot_cre</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_cre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_cre" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.multi_sip_response.plot_cre">
+<span class="sig-name descname"><span class="pre">plot_cre</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_cre"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_cre" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.plots.multi_sip_response.plot_rmag">
-<code class="sig-name descname"><span class="pre">plot_rmag</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_rmag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_rmag" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.multi_sip_response.plot_rmag">
+<span class="sig-name descname"><span class="pre">plot_rmag</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_rmag"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_rmag" title="Permalink to this definition">¶</a></dt>
 <dd><p>plot all resistance/resistivity magnitude spectra</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.plots.multi_sip_response.plot_rpha">
-<code class="sig-name descname"><span class="pre">plot_rpha</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.multi_sip_response.plot_rpha">
+<span class="sig-name descname"><span class="pre">plot_rpha</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">pmax</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.plot_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.plot_rpha" title="Permalink to this definition">¶</a></dt>
 <dd><p>plot all resistance/resistivity phase spectra</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.plots.multi_sip_response.set_xlim">
-<code class="sig-name descname"><span class="pre">set_xlim</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.set_xlim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.set_xlim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.multi_sip_response.set_xlim">
+<span class="sig-name descname"><span class="pre">set_xlim</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">xmin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">xmax</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#multi_sip_response.set_xlim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.multi_sip_response.set_xlim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="reda.eis.plots.sip_response">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">reda.eis.plots.</span></code><code class="sig-name descname"><span class="pre">sip_response</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcomplex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccomplex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rmag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.sip_response" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.sip_response">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.eis.plots.</span></span><span class="sig-name descname"><span class="pre">sip_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequencies</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rcomplex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ccomplex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rmag</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">rpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.sip_response" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Hold one EIS/SIP spectrum and return it in various formats</p>
 <p class="rubric">Methods</p>
@@ -368,8 +371,8 @@ plots</p>
 </tbody>
 </table>
 <dl class="py method">
-<dt id="reda.eis.plots.sip_response.plot">
-<code class="sig-name descname"><span class="pre">plot</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reciprocal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rho'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.sip_response.plot" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.sip_response.plot">
+<span class="sig-name descname"><span class="pre">plot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reciprocal</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtype</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'rho'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_fig</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response.plot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.sip_response.plot" title="Permalink to this definition">¶</a></dt>
 <dd><p>Standard plot of spectrum</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
@@ -433,23 +436,23 @@ and return the figure object. Default: False</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.plots.sip_response.to_one_line">
-<code class="sig-name descname"><span class="pre">to_one_line</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response.to_one_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.sip_response.to_one_line" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.plots.sip_response.to_one_line">
+<span class="sig-name descname"><span class="pre">to_one_line</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/plots.html#sip_response.to_one_line"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.plots.sip_response.to_one_line" title="Permalink to this definition">¶</a></dt>
 <dd><p>Flatten the array to one dimension using the ‘F’ (Fortran) style and
 return a 2D array</p>
 </dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-reda.eis.test_convert">
+</section>
+<section id="module-reda.eis.test_convert">
 <span id="reda-eis-test-convert-module"></span><h2>reda.eis.test_convert module<a class="headerlink" href="#module-reda.eis.test_convert" title="Permalink to this headline">¶</a></h2>
 <p>Tests for converter functions</p>
 <p>Run with</p>
 <p>nosetests test_convert.py -s -v</p>
 <dl class="py class">
-<dt id="reda.eis.test_convert.TestClass_input_styles">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">reda.eis.test_convert.</span></code><code class="sig-name descname"><span class="pre">TestClass_input_styles</span></code><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_input_styles">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.eis.test_convert.</span></span><span class="sig-name descname"><span class="pre">TestClass_input_styles</span></span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Test the three input styles:</p>
 <blockquote>
@@ -478,25 +481,25 @@ return a 2D array</p>
 </tbody>
 </table>
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_input_styles.precompute_values">
-<code class="sig-name descname"><span class="pre">precompute_values</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles.precompute_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles.precompute_values" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_input_styles.precompute_values">
+<span class="sig-name descname"><span class="pre">precompute_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles.precompute_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles.precompute_values" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_input_styles.setup">
-<code class="sig-name descname"><span class="pre">setup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles.setup" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_input_styles.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles.setup" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_input_styles.test_input_styles">
-<code class="sig-name descname"><span class="pre">test_input_styles</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles.test_input_styles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles.test_input_styles" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_input_styles.test_input_styles">
+<span class="sig-name descname"><span class="pre">test_input_styles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_input_styles.test_input_styles"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_input_styles.test_input_styles" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
 <dl class="py class">
-<dt id="reda.eis.test_convert.TestClass_test_converters">
-<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">reda.eis.test_convert.</span></code><code class="sig-name descname"><span class="pre">TestClass_test_converters</span></code><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters">
+<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.eis.test_convert.</span></span><span class="sig-name descname"><span class="pre">TestClass_test_converters</span></span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p class="rubric">Methods</p>
 <table class="longtable docutils align-default">
@@ -564,33 +567,33 @@ return a 2D array</p>
 </tbody>
 </table>
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.check_from_function">
-<code class="sig-name descname"><span class="pre">check_from_function</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.check_from_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.check_from_function" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.check_from_function">
+<span class="sig-name descname"><span class="pre">check_from_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.check_from_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.check_from_function" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.check_to_function">
-<code class="sig-name descname"><span class="pre">check_to_function</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.check_to_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.check_to_function" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.check_to_function">
+<span class="sig-name descname"><span class="pre">check_to_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.check_to_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.check_to_function" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.precompute_values">
-<code class="sig-name descname"><span class="pre">precompute_values</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.precompute_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.precompute_values" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.precompute_values">
+<span class="sig-name descname"><span class="pre">precompute_values</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.precompute_values"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.precompute_values" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.setup">
-<code class="sig-name descname"><span class="pre">setup</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.setup" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.setup">
+<span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.setup" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.teardown">
-<em class="property"><span class="pre">classmethod</span> </em><code class="sig-name descname"><span class="pre">teardown</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.teardown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.teardown" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.teardown">
+<em class="property"><span class="pre">classmethod</span> </em><span class="sig-name descname"><span class="pre">teardown</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.teardown"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.teardown" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_convert">
-<code class="sig-name descname"><span class="pre">test_convert</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_convert" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_convert">
+<span class="sig-name descname"><span class="pre">test_convert</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_convert"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_convert" title="Permalink to this definition">¶</a></dt>
 <dd><p>We test by converting to all values, from all values. This is a chain
 test, i.e. we only provide the first input data, and then we use the
 output of this conversion to feed the next conversion. The last
@@ -599,63 +602,63 @@ can compare those outputs to the hardcoded values.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_from_cmag_cpha">
-<code class="sig-name descname"><span class="pre">test_from_cmag_cpha</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_cmag_cpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_from_cmag_cpha">
+<span class="sig-name descname"><span class="pre">test_from_cmag_cpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_cmag_cpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_from_cre_cim">
-<code class="sig-name descname"><span class="pre">test_from_cre_cim</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_cre_cim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_from_cre_cim">
+<span class="sig-name descname"><span class="pre">test_from_cre_cim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_cre_cim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_from_cre_cmim">
-<code class="sig-name descname"><span class="pre">test_from_cre_cmim</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_cre_cmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_cre_cmim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_from_cre_cmim">
+<span class="sig-name descname"><span class="pre">test_from_cre_cmim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_cre_cmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_cre_cmim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_from_rmag_rpha">
-<code class="sig-name descname"><span class="pre">test_from_rmag_rpha</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_rmag_rpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_from_rmag_rpha">
+<span class="sig-name descname"><span class="pre">test_from_rmag_rpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_rmag_rpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_rmag_rpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_from_rre_rim">
-<code class="sig-name descname"><span class="pre">test_from_rre_rim</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_rre_rim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_from_rre_rim">
+<span class="sig-name descname"><span class="pre">test_from_rre_rim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_rre_rim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_from_rre_rmim">
-<code class="sig-name descname"><span class="pre">test_from_rre_rmim</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_rre_rmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_rre_rmim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_from_rre_rmim">
+<span class="sig-name descname"><span class="pre">test_from_rre_rmim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_from_rre_rmim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_from_rre_rmim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_to_cmag_cpha">
-<code class="sig-name descname"><span class="pre">test_to_cmag_cpha</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_cmag_cpha" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_to_cmag_cpha">
+<span class="sig-name descname"><span class="pre">test_to_cmag_cpha</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_cmag_cpha"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_cmag_cpha" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_to_cre_cim">
-<code class="sig-name descname"><span class="pre">test_to_cre_cim</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_cre_cim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_to_cre_cim">
+<span class="sig-name descname"><span class="pre">test_to_cre_cim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_cre_cim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_cre_cim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_to_cre_mim">
-<code class="sig-name descname"><span class="pre">test_to_cre_mim</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_cre_mim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_cre_mim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_to_cre_mim">
+<span class="sig-name descname"><span class="pre">test_to_cre_mim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_cre_mim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_cre_mim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
-<dt id="reda.eis.test_convert.TestClass_test_converters.test_to_rre_rim">
-<code class="sig-name descname"><span class="pre">test_to_rre_rim</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_rre_rim" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.test_convert.TestClass_test_converters.test_to_rre_rim">
+<span class="sig-name descname"><span class="pre">test_to_rre_rim</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/test_convert.html#TestClass_test_converters.test_to_rre_rim"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.test_convert.TestClass_test_converters.test_to_rre_rim" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
 
-</div>
-<div class="section" id="module-reda.eis.units">
+</section>
+<section id="module-reda.eis.units">
 <span id="reda-eis-units-module"></span><h2>reda.eis.units module<a class="headerlink" href="#module-reda.eis.units" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="reda.eis.units.get_label">
-<code class="sig-prename descclassname"><span class="pre">reda.eis.units.</span></code><code class="sig-name descname"><span class="pre">get_label</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/units.html#get_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.units.get_label" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.eis.units.get_label">
+<span class="sig-prename descclassname"><span class="pre">reda.eis.units.</span></span><span class="sig-name descname"><span class="pre">get_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">parameter</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ptype</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">flavor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mpl</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/eis/units.html#get_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.eis.units.get_label" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the label of a given SIP parameter</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -682,8 +685,8 @@ set</p>
 </dl>
 </dd></dl>
 
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -696,7 +699,7 @@ set</p>
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

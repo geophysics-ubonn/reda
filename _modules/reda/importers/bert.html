@@ -6,13 +6,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>reda.importers.bert &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../../../" src="../../../_static/documentation_options.js"></script>
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
     <script src="../../../_static/doctools.js"></script>
@@ -64,13 +65,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -115,15 +117,17 @@
   <h1>Source code for reda.importers.bert</h1><div class="highlight"><pre>
 <span></span><span class="sd">&quot;&quot;&quot; Importer to load the unified data format used in pyGIMLi, BERT, and</span>
 <span class="sd">dc2dinvres.&quot;&quot;&quot;</span>
+<span class="kn">import</span> <span class="nn">logging</span>
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 
-<span class="kn">from</span> <span class="nn">reda.importers.utils.decorators</span> <span class="kn">import</span> <span class="n">enable_result_transforms</span>
+<span class="kn">import</span> <span class="nn">reda</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="import_ohm"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.bert.import_ohm">[docs]</a><span class="nd">@enable_result_transforms</span>
-<span class="k">def</span> <span class="nf">import_ohm</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="import_ohm"><a class="viewcode-back" href="../../../_api/reda.importers.html#reda.importers.bert.import_ohm">[docs]</a><span class="k">def</span> <span class="nf">import_ohm</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">reciprocals</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;Construct pandas data frame from BERT`s unified data format (.ohm).</span>
 
 <span class="sd">    Parameters</span>
@@ -137,6 +141,16 @@
 <span class="sd">        only the electrode cables were switched. The provided number N is</span>
 <span class="sd">        treated as the maximum electrode number, and denotations are renamed</span>
 <span class="sd">        according to the equation :math:`X_n = N - (X_a - 1)`</span>
+
+<span class="sd">    Additional Parameters</span>
+<span class="sd">    ---------------------</span>
+<span class="sd">    shift_by_xyz : tuple|list|numpy.ndarray of size 1 or 2 or 3, optional</span>
+<span class="sd">        If set, shift electrode positions by adding this vector Length of 1</span>
+<span class="sd">        assumes that only the x coordinate of the vector differs from zero.</span>
+<span class="sd">        Length of 2 assume a shift in (x,z) direction.</span>
+
+<span class="sd">        This parameter is evaluated after the &#39;elecs_transform_reg_spacing_x&#39;</span>
+<span class="sd">        parameter - as such you can and must use real spacings in this case.</span>
 
 <span class="sd">    Returns</span>
 <span class="sd">    -------</span>
@@ -155,7 +169,7 @@
     <span class="n">eleccount</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
     <span class="n">elecs_str</span> <span class="o">=</span> <span class="n">file</span><span class="o">.</span><span class="n">readline</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;#&quot;</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
     <span class="n">elecs_dim</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elecs_str</span><span class="o">.</span><span class="n">split</span><span class="p">())</span>
-    <span class="n">elecs_ix</span> <span class="o">=</span> <span class="n">elecs_str</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
+    <span class="c1"># elecs_ix = elecs_str.split()</span>
 
     <span class="n">elecs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">eleccount</span><span class="p">,</span> <span class="n">elecs_dim</span><span class="p">),</span> <span class="s1">&#39;float&#39;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">eleccount</span><span class="p">):</span>
@@ -193,27 +207,35 @@
             <span class="c1"># &#39;i&#39;: &#39;I&#39;</span>
         <span class="p">}</span>
     <span class="p">)</span>
+    <span class="n">data_reda</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">data_reda</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+        <span class="nb">int</span>
+    <span class="p">)</span>
     <span class="k">if</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="ow">and</span> \
        <span class="p">(</span><span class="s1">&#39;rho_a&#39;</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span> <span class="ow">and</span> <span class="s1">&#39;k&#39;</span> <span class="ow">in</span> <span class="n">data_reda</span><span class="o">.</span><span class="n">keys</span><span class="p">()):</span>
         <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">data_reda</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
-        <span class="nb">print</span><span class="p">(</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
             <span class="s2">&quot;Calculating resistance from apparent resistivity and &quot;</span>
             <span class="s2">&quot;geometric factors. (r = rhoa_ / k)&quot;</span><span class="p">)</span>
 
-    <span class="n">elecs</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">elecs</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">elecs_ix</span><span class="p">)</span>
-    <span class="c1"># Ensure uppercase labels (X, Y, Z) in electrode positions</span>
-    <span class="n">elecs</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">elecs</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
-
     <span class="c1"># rename electrode denotations</span>
     <span class="k">if</span> <span class="nb">type</span><span class="p">(</span><span class="n">reciprocals</span><span class="p">)</span> <span class="o">==</span> <span class="nb">int</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;renumbering electrode numbers&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;renumbering electrode numbers&#39;</span><span class="p">)</span>
         <span class="n">data_reda</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span> <span class="o">=</span> <span class="n">reciprocals</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">data_reda</span><span class="p">[</span>
             <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;m&#39;</span><span class="p">,</span> <span class="s1">&#39;n&#39;</span><span class="p">]]</span>
 
     <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
         <span class="nb">print</span><span class="p">((</span><span class="n">_string_</span><span class="p">))</span>
 
-    <span class="k">return</span> <span class="n">data_reda</span><span class="p">,</span> <span class="n">elecs</span><span class="p">,</span> <span class="kc">None</span></div>
+    <span class="n">elec_mgr</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">electrode_manager</span><span class="p">()</span>
+    <span class="n">elec_mgr</span><span class="o">.</span><span class="n">set_ordering_to_as_is_plus_one</span><span class="p">()</span>
+
+    <span class="n">elec_mgr</span><span class="o">.</span><span class="n">add_by_position</span><span class="p">(</span><span class="n">elecs</span><span class="p">)</span>
+
+    <span class="n">shift_by_xyz</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;shift_by_xyz&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">shift_by_xyz</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">elec_mgr</span><span class="o">.</span><span class="n">shift_positions_xyz</span><span class="p">(</span><span class="n">shift_by_xyz</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">data_reda</span><span class="p">,</span> <span class="n">elec_mgr</span><span class="p">,</span> <span class="kc">None</span></div>
 </pre></div>
 
           </div>
@@ -226,7 +248,7 @@
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

@@ -4,15 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>reda package &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -66,13 +68,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -114,15 +117,15 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-reda">
+  <section id="module-reda">
 <span id="reda-package"></span><h1>reda package<a class="headerlink" href="#module-reda" title="Permalink to this headline">¶</a></h1>
 <dl class="py function">
-<dt id="reda.version">
-<code class="sig-prename descclassname"><span class="pre">reda.</span></code><code class="sig-name descname"><span class="pre">version</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda.html#version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.version" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.version">
+<span class="sig-prename descclassname"><span class="pre">reda.</span></span><span class="sig-name descname"><span class="pre">version</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda.html#version"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.version" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return the installed version of reda, using the pkg_resources package</p>
 </dd></dl>
 
-<div class="section" id="subpackages">
+<section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -181,6 +184,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reda.importers.html#module-reda.importers.eit_version_2017">reda.importers.eit_version_2017 module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.importers.html#module-reda.importers.eit_version_2018a">reda.importers.eit_version_2018a module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.importers.html#module-reda.importers.eit_version_20200609">reda.importers.eit_version_20200609 module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.importers.html#module-reda.importers.fzj_readbin">reda.importers.fzj_readbin module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.importers.html#module-reda.importers.geotom">reda.importers.geotom module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.importers.html#module-reda.importers.iris_syscal_pro">reda.importers.iris_syscal_pro module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.importers.html#module-reda.importers.mpt_das1">reda.importers.mpt_das1 module</a></li>
@@ -221,6 +225,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reda.testing.html#module-reda.testing.containers">reda.testing.containers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.testing.html#module-reda.testing.test_container_ert">reda.testing.test_container_ert module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.testing.html#module-reda.testing.test_container_seit">reda.testing.test_container_seit module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.testing.html#module-reda.testing.test_electrode_manager">reda.testing.test_electrode_manager module</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reda.utils.html">reda.utils package</a><ul>
@@ -228,6 +233,7 @@
 <li class="toctree-l2"><a class="reference internal" href="reda.utils.html#module-reda.utils.data">reda.utils.data module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.utils.html#module-reda.utils.decorators_and_managers">reda.utils.decorators_and_managers module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.utils.html#module-reda.utils.eit_fzj_utils">reda.utils.eit_fzj_utils module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="reda.utils.html#module-reda.utils.electrode_manager">reda.utils.electrode_manager module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.utils.html#module-reda.utils.enter_directory">reda.utils.enter_directory module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.utils.html#module-reda.utils.filter_config_types">reda.utils.filter_config_types module</a></li>
 <li class="toctree-l2"><a class="reference internal" href="reda.utils.html#module-reda.utils.fix_sign_with_K">reda.utils.fix_sign_with_K module</a></li>
@@ -244,8 +250,8 @@
 </li>
 </ul>
 </div>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -258,7 +264,7 @@
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

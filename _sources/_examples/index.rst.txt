@@ -25,35 +25,14 @@ Usage of the ERT container
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data">
-
-.. only:: html
-
- .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_dc_thumb.png
-     :alt: Importing Syscal ERT data
-
-     :ref:`sphx_glr__examples_01_ERT_plot_syscal_dc.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/01_ERT/plot_syscal_dc
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data from roll-a-long scheme">
 
 .. only:: html
 
- .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_syscal_rollalong_thumb.png
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_02_syscal_rollalong_thumb.png
      :alt: Importing Syscal ERT data from roll-a-long scheme
 
-     :ref:`sphx_glr__examples_01_ERT_plot_syscal_rollalong.py`
+     :ref:`sphx_glr__examples_01_ERT_plot_02_syscal_rollalong.py`
 
 .. raw:: html
 
@@ -63,7 +42,28 @@ Usage of the ERT container
 .. toctree::
    :hidden:
 
-   /_examples/01_ERT/plot_syscal_rollalong
+   /_examples/01_ERT/plot_02_syscal_rollalong
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example is all about import data from IRIS Instruments Syscal systems. There is a variety ...">
+
+.. only:: html
+
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_01_syscal_import_thumb.png
+     :alt: Importing Syscal ERT data
+
+     :ref:`sphx_glr__examples_01_ERT_plot_01_syscal_import.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/01_ERT/plot_01_syscal_import
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
@@ -298,12 +298,12 @@ Operations specific to the FZJ sEIT systems
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to execute the helper function &quot;testboard_evaluation&quot;">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to execute the helper function &quot;testboard_evaluation&quot; from the eit_fzj_u...">
 
 .. only:: html
 
  .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_testboard_check_thumb.png
-     :alt: This example shows how to execute the helper function "testboard_evaluation"
+     :alt: EIT40 Testboard V2
 
      :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_testboard_check.py`
 

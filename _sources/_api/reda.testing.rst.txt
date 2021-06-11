@@ -40,3 +40,11 @@ reda.testing.test\_container\_seit module
    :members:
    :undoc-members:
    :show-inheritance:
+
+reda.testing.test\_electrode\_manager module
+--------------------------------------------
+
+.. automodule:: reda.testing.test_electrode_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:

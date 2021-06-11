@@ -6,13 +6,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Index &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
@@ -64,13 +65,14 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -138,22 +140,28 @@
 <h2 id="A">A</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.abmn">abmn() (reda.containers.sEIT.sEIT property)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.abmn">abmn (reda.containers.sEIT.sEIT property)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.abmn_to_dataframe">abmn_to_dataframe() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.add">add() (reda.eis.plots.multi_sip_response method)</a>
 </li>
-      <li><a href="_api/reda.importers.html#reda.importers.res2dinv.add_dat_file">add_dat_file() (in module reda.importers.res2dinv)</a>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.add_by_position">add_by_position() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.ImportersBase.add_dataframe">add_dataframe() (reda.containers.BaseContainer.ImportersBase method)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.geotom.add_file">add_file() (in module reda.importers.geotom)</a>
 </li>
-      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.add_to_configs">add_to_configs() (reda.configs.configManager.ConfigManager method)</a>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.add_fixed_assignments">add_fixed_assignments() (reda.utils.electrode_manager.electrode_manager method)</a>
 </li>
-      <li><a href="_api/reda.utils.html#reda.utils.decorators_and_managers.append_doc_of">append_doc_of() (in module reda.utils.decorators_and_managers)</a>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.add_to_configs">add_to_configs() (reda.configs.configManager.ConfigManager method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.align_assignments">align_assignments() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.decorators_and_managers.append_doc_of">append_doc_of() (in module reda.utils.decorators_and_managers)</a>
+</li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_fzj.apply_correction_factors">apply_correction_factors() (in module reda.importers.eit_fzj)</a>
 
       <ul>
@@ -184,6 +192,8 @@
 <h2 id="C">C</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.characterize">characterize() (reda.importers.fzj_readbin.fzj_readbin method)</a>
+</li>
       <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.check_dataframe">check_dataframe() (reda.containers.BaseContainer.BaseContainer method)</a>
 
       <ul>
@@ -234,6 +244,8 @@
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager">ConfigManager (class in reda.configs.configManager)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.conform_to_regular_x_spacing">conform_to_regular_x_spacing() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.convert">convert() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_version_2018a.convert_electrode">convert_electrode() (in module reda.importers.eit_version_2018a)</a>
@@ -254,6 +266,8 @@
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.tdip.html#reda.tdip.decay_curve.DecayCurveObj">DecayCurveObj (class in reda.tdip.decay_curve)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.decorator_name_index">decorator_name_index() (in module reda.utils.electrode_manager)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.delete_measurements">delete_measurements() (reda.containers.BaseContainer.BaseContainer method)</a>
@@ -266,6 +280,10 @@
 <h2 id="E">E</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager">electrode_manager (class in reda.utils.electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.electrode_positions">electrode_positions (reda.utils.electrode_manager.electrode_manager property)</a>
+</li>
       <li><a href="_api/reda.main.html#reda.main.logger.ListHandler.emit">emit() (reda.main.logger.ListHandler method)</a>
 </li>
       <li><a href="_api/reda.importers.utils.html#reda.importers.utils.decorators.enable_result_transforms">enable_result_transforms() (in module reda.importers.utils.decorators)</a>
@@ -284,10 +302,10 @@
       </ul></li>
       <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.ExportersBase.export_crtomo">export_crtomo() (reda.containers.BaseContainer.ExportersBase method)</a>
 </li>
-      <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.ExportersBase.export_pygimli">export_pygimli() (reda.containers.BaseContainer.ExportersBase method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.ExportersBase.export_pygimli">export_pygimli() (reda.containers.BaseContainer.ExportersBase method)</a>
+</li>
       <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP.export_specs_to_ascii">export_specs_to_ascii() (reda.containers.SIP.SIP method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.export_to_ascii">export_to_ascii() (reda.containers.sEIT.sEIT method)</a>
@@ -330,12 +348,10 @@
         <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.fix_sign_with_K">(reda.containers.sEIT.sEIT method)</a>
 </li>
       </ul></li>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.frequencies">frequencies() (reda.containers.sEIT.sEIT property)</a>
-
-      <ul>
-        <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP.frequencies">(reda.containers.SIP.SIP method)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.frequencies">frequencies (reda.containers.sEIT.sEIT property)</a>
 </li>
-      </ul></li>
+      <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP.frequencies">frequencies() (reda.containers.SIP.SIP method)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_ccomplex">from_ccomplex() (in module reda.eis.convert)</a>
 </li>
   </ul></td>
@@ -357,6 +373,8 @@
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_rre_rim">from_rre_rim() (in module reda.eis.convert)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.convert.from_rre_rmim">from_rre_rmim() (in module reda.eis.convert)</a>
+</li>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin">fzj_readbin (class in reda.importers.fzj_readbin)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -386,7 +404,11 @@
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_fzj.get_adc_data">get_adc_data() (in module reda.importers.eit_fzj)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.get_all_electrode_numbers">get_all_electrode_numbers() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
       <li><a href="_api/reda.utils.html#reda.utils.geom_fac_crtomo.get_default_settings">get_default_settings() (in module reda.utils.geom_fac_crtomo)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.get_electrode_numbers_for_positions">get_electrode_numbers_for_positions() (reda.utils.electrode_manager.electrode_manager method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
@@ -406,11 +428,17 @@
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_fzj.get_mnu0_data">get_mnu0_data() (in module reda.importers.eit_fzj)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.get_position_of_number">get_position_of_number() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.get_sample_times">get_sample_times() (reda.importers.fzj_readbin.fzj_readbin method)</a>
+</li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.get_spectrum">get_spectrum() (reda.containers.sEIT.sEIT method)</a>
 </li>
       <li><a href="_api/reda.utils.html#reda.utils.norrec.get_test_df">get_test_df() (in module reda.utils.norrec)</a>
 </li>
       <li><a href="_api/reda.utils.html#reda.utils.norrec.get_test_df_advanced">get_test_df_advanced() (in module reda.utils.norrec)</a>
+</li>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.get_ts_abm">get_ts_abm() (reda.importers.fzj_readbin.fzj_readbin method)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.get_unique_current_injections">get_unique_current_injections() (reda.configs.configManager.ConfigManager method)</a>
 </li>
@@ -460,6 +488,8 @@
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEITImporters.import_eit_fzj">import_eit_fzj() (reda.containers.sEIT.sEITImporters method)</a>
 </li>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.import_file">import_file() (reda.importers.fzj_readbin.fzj_readbin method)</a>
+</li>
       <li><a href="_api/reda.importers.legacy.html#reda.importers.legacy.eit160.import_medusa_data">import_medusa_data() (in module reda.importers.legacy.eit160)</a>
 
       <ul>
@@ -488,6 +518,8 @@
         <li><a href="_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_pygimli">(reda.containers.ERT.ERTImporters method)</a>
 </li>
       </ul></li>
+      <li><a href="_api/reda.importers.html#reda.importers.res2dinv.import_res2dinv">import_res2dinv() (in module reda.importers.res2dinv)</a>
+</li>
       <li><a href="_api/reda.containers.html#reda.containers.SIP.SIPImporters.import_sip04">import_sip04() (reda.containers.SIP.SIPImporters method)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.sip04.import_sip04_data">import_sip04_data() (in module reda.importers.sip04)</a>
@@ -514,16 +546,20 @@
 <h2 id="L">L</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.list_injections">list_injections() (reda.importers.fzj_readbin.fzj_readbin method)</a>
+</li>
       <li><a href="_api/reda.main.html#reda.main.logger.ListHandler">ListHandler (class in reda.main.logger)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_configs">load_configs() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_config">load_crmod_config() (reda.configs.configManager.ConfigManager method)</a>
 </li>
-      <li><a href="_api/reda.testing.html#reda.testing.test_container_seit.load_data_into_container">load_data_into_container() (in module reda.testing.test_container_seit)</a>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_or_4c_configs">load_crmod_or_4c_configs() (reda.configs.configManager.ConfigManager method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.testing.html#reda.testing.test_container_seit.load_data_into_container">load_data_into_container() (in module reda.testing.test_container_seit)</a>
+</li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_injections_from_mcf">load_injections_from_mcf() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.crtomo.load_mod_file">load_mod_file() (in module reda.importers.crtomo)</a>
@@ -543,6 +579,8 @@
       <li><a href="_api/reda.plotters.html#reda.plotters.plots2d.matplot">matplot() (in module reda.plotters.plots2d)</a>
 </li>
       <li><a href="_api/reda.importers.html#reda.importers.eit_fzj.MD_ConfigsPermutate">MD_ConfigsPermutate() (in module reda.importers.eit_fzj)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.ImportersBase.merge_container">merge_container() (reda.containers.BaseContainer.ImportersBase method)</a>
 </li>
       <li>
     module
@@ -604,6 +642,8 @@
 </li>
         <li><a href="_api/reda.importers.html#module-reda.importers.eit_version_20200609">reda.importers.eit_version_20200609</a>
 </li>
+        <li><a href="_api/reda.importers.html#module-reda.importers.fzj_readbin">reda.importers.fzj_readbin</a>
+</li>
         <li><a href="_api/reda.importers.html#module-reda.importers.geotom">reda.importers.geotom</a>
 </li>
         <li><a href="_api/reda.importers.html#module-reda.importers.iris_syscal_pro">reda.importers.iris_syscal_pro</a>
@@ -660,6 +700,8 @@
 </li>
         <li><a href="_api/reda.testing.html#module-reda.testing.test_container_seit">reda.testing.test_container_seit</a>
 </li>
+        <li><a href="_api/reda.testing.html#module-reda.testing.test_electrode_manager">reda.testing.test_electrode_manager</a>
+</li>
         <li><a href="_api/reda.utils.html#module-reda.utils">reda.utils</a>
 </li>
         <li><a href="_api/reda.utils.html#module-reda.utils.data">reda.utils.data</a>
@@ -667,6 +709,8 @@
         <li><a href="_api/reda.utils.html#module-reda.utils.decorators_and_managers">reda.utils.decorators_and_managers</a>
 </li>
         <li><a href="_api/reda.utils.html#module-reda.utils.eit_fzj_utils">reda.utils.eit_fzj_utils</a>
+</li>
+        <li><a href="_api/reda.utils.html#module-reda.utils.electrode_manager">reda.utils.electrode_manager</a>
 </li>
         <li><a href="_api/reda.utils.html#module-reda.utils.enter_directory">reda.utils.enter_directory</a>
 </li>
@@ -701,15 +745,15 @@
 <h2 id="N">N</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.Nf">Nf() (reda.containers.sEIT.sEIT property)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.Nf">Nf (reda.containers.sEIT.sEIT property)</a>
 </li>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_frequencies">nr_frequencies() (reda.containers.sEIT.sEIT property)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_frequencies">nr_frequencies (reda.containers.sEIT.sEIT property)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.nr_of_configs">nr_of_configs() (reda.configs.configManager.ConfigManager property)</a>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.nr_of_configs">nr_of_configs (reda.configs.configManager.ConfigManager property)</a>
 </li>
-      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_timesteps">nr_timesteps() (reda.containers.sEIT.sEIT property)</a>
+      <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.nr_timesteps">nr_timesteps (reda.containers.sEIT.sEIT property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -735,9 +779,13 @@
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_cim">plot_cim() (reda.eis.plots.multi_sip_response method)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.plot_coordinates_x_z_to_ax">plot_coordinates_x_z_to_ax() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_cre">plot_cre() (reda.eis.plots.multi_sip_response method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.TDIP.TDIP.plot_decay_curve">plot_decay_curve() (reda.containers.TDIP.TDIP method)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.plot_electrode_positions_xz">plot_electrode_positions_xz() (reda.containers.BaseContainer.BaseContainer method)</a>
 </li>
       <li><a href="_api/reda.plotters.html#reda.plotters.histograms.plot_histograms">plot_histograms() (in module reda.plotters.histograms)</a>
 
@@ -747,16 +795,18 @@
       </ul></li>
       <li><a href="_api/reda.plotters.html#reda.plotters.histograms.plot_histograms_extra_dims">plot_histograms_extra_dims() (in module reda.plotters.histograms)</a>
 </li>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.plot_per_frequency">plot_per_frequency() (reda.importers.fzj_readbin.fzj_readbin method)</a>
+</li>
       <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.plot_ps_extra">plot_ps_extra() (in module reda.plotters.pseudoplots)</a>
 </li>
       <li><a href="_api/reda.plotters.html#reda.plotters.plots2d.plot_pseudodepths">plot_pseudodepths() (in module reda.plotters.plots2d)</a>
 </li>
       <li><a href="_api/reda.plotters.html#reda.plotters.plots2d.plot_pseudosection">plot_pseudosection() (in module reda.plotters.plots2d)</a>
 </li>
-      <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2">plot_pseudosection_type2() (in module reda.plotters.pseudoplots)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type2">plot_pseudosection_type2() (in module reda.plotters.pseudoplots)</a>
+</li>
       <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.plot_pseudosection_type3">plot_pseudosection_type3() (in module reda.plotters.pseudoplots)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.plot_pseudosections">plot_pseudosections() (reda.containers.sEIT.sEIT method)</a>
@@ -768,6 +818,10 @@
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_rmag">plot_rmag() (reda.eis.plots.multi_sip_response method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.plot_rpha">plot_rpha() (reda.eis.plots.multi_sip_response method)</a>
+</li>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries">plot_timeseries() (reda.importers.fzj_readbin.fzj_readbin method)</a>
+</li>
+      <li><a href="_api/reda.importers.html#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes">plot_timeseries_to_axes() (reda.importers.fzj_readbin.fzj_readbin method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_input_styles.precompute_values">precompute_values() (reda.eis.test_convert.TestClass_input_styles method)</a>
 
@@ -1000,6 +1054,13 @@
 </li>
       </ul></li>
       <li>
+    reda.importers.fzj_readbin
+
+      <ul>
+        <li><a href="_api/reda.importers.html#module-reda.importers.fzj_readbin">module</a>
+</li>
+      </ul></li>
+      <li>
     reda.importers.geotom
 
       <ul>
@@ -1048,8 +1109,6 @@
         <li><a href="_api/reda.importers.html#module-reda.importers.radic_sip256c">module</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     reda.importers.res2dinv
 
@@ -1064,6 +1123,8 @@
         <li><a href="_api/reda.importers.html#module-reda.importers.sip04">module</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     reda.importers.utils
 
@@ -1198,6 +1259,13 @@
 </li>
       </ul></li>
       <li>
+    reda.testing.test_electrode_manager
+
+      <ul>
+        <li><a href="_api/reda.testing.html#module-reda.testing.test_electrode_manager">module</a>
+</li>
+      </ul></li>
+      <li>
     reda.utils
 
       <ul>
@@ -1223,6 +1291,13 @@
 
       <ul>
         <li><a href="_api/reda.utils.html#module-reda.utils.eit_fzj_utils">module</a>
+</li>
+      </ul></li>
+      <li>
+    reda.utils.electrode_manager
+
+      <ul>
+        <li><a href="_api/reda.utils.html#module-reda.utils.electrode_manager">module</a>
 </li>
       </ul></li>
       <li>
@@ -1290,11 +1365,21 @@
       </ul></li>
       <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP.reduce_duplicate_frequencies">reduce_duplicate_frequencies() (reda.containers.SIP.SIP method)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.reflect_on_position_x">reflect_on_position_x() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.register_custom_ordering_scheme">register_custom_ordering_scheme() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.remove_duplicates">remove_duplicates() (reda.configs.configManager.ConfigManager method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEIT.remove_frequencies">remove_frequencies() (reda.containers.sEIT.sEIT method)</a>
 </li>
       <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.remove_max_dipole_sep">remove_max_dipole_sep() (reda.configs.configManager.ConfigManager method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.replace_coordinate_of_electrode_number">replace_coordinate_of_electrode_number() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.replace_coordinates_with_fixed_regular_grid_x">replace_coordinates_with_fixed_regular_grid_x() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.replace_electrode_positions">replace_electrode_positions() (reda.containers.BaseContainer.BaseContainer method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1312,6 +1397,12 @@
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.sEIT.sEITImporters">sEITImporters (class in reda.containers.sEIT)</a>
 </li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.set_ordering_to_as_is">set_ordering_to_as_is() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.set_ordering_to_as_is_plus_one">set_ordering_to_as_is_plus_one() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.set_ordering_to_sort_zyx">set_ordering_to_sort_zyx() (reda.utils.electrode_manager.electrode_manager method)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.plots.multi_sip_response.set_xlim">set_xlim() (reda.eis.plots.multi_sip_response method)</a>
 </li>
       <li><a href="_api/reda.utils.html#reda.utils.mpl.setup">setup() (in module reda.utils.mpl)</a>
@@ -1325,6 +1416,8 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="_api/reda.main.html#reda.main.logger.LoggingClass.setup_logger">setup_logger() (reda.main.logger.LoggingClass method)</a>
+</li>
+      <li><a href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.shift_positions_xyz">shift_positions_xyz() (reda.utils.electrode_manager.electrode_manager method)</a>
 </li>
       <li><a href="_api/reda.containers.html#reda.containers.SIP.SIP">SIP (class in reda.containers.SIP)</a>
 </li>
@@ -1360,11 +1453,29 @@
 </li>
       <li><a href="_api/reda.utils.html#reda.utils.norrec.test2">test2() (in module reda.utils.norrec)</a>
 </li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_add_positions">test_add_positions() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_container_ert.test_bad_init">test_bad_init() (in module reda.testing.test_container_ert)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_bad_input">test_bad_input() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_callable_class">test_callable_class() (in module reda.testing.test_electrode_manager)</a>
+</li>
       <li><a href="_api/reda.testing.html#reda.testing.test_container_seit.test_check_4d_data">test_check_4d_data() (in module reda.testing.test_container_seit)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing">test_conform_to_regular_x_spacing() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing_exception">test_conform_to_regular_x_spacing_exception() (in module reda.testing.test_electrode_manager)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_convert">test_convert() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_duplicates">test_duplicates() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_electrode_numbers">test_electrode_numbers() (in module reda.testing.test_electrode_manager)</a>
+</li>
       <li><a href="_api/reda.utils.html#reda.utils.fix_sign_with_K.test_fix_sign_with_K">test_fix_sign_with_K() (in module reda.utils.fix_sign_with_K)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_fixed_assignments">test_fixed_assignments() (in module reda.testing.test_electrode_manager)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_from_cmag_cpha">test_from_cmag_cpha() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
@@ -1378,6 +1489,10 @@
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_from_rre_rmim">test_from_rre_rmim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_get_electrode_numbers_for_positions">test_get_electrode_numbers_for_positions() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_get_electrode_position">test_get_electrode_position() (in module reda.testing.test_electrode_manager)</a>
+</li>
       <li><a href="_api/reda.plotters.html#reda.plotters.pseudoplots.test_get_unique_identifiers">test_get_unique_identifiers() (in module reda.plotters.pseudoplots)</a>
 </li>
       <li><a href="_api/reda.testing.html#reda.testing.test_container_seit.test_histogram_plotting">test_histogram_plotting() (in module reda.testing.test_container_seit)</a>
@@ -1390,19 +1505,41 @@
 </li>
       <li><a href="_api/reda.testing.html#reda.testing.test_container_seit.test_load_4d_data">test_load_4d_data() (in module reda.testing.test_container_seit)</a>
 </li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_merging">test_merging() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_merging2">test_merging2() (in module reda.testing.test_electrode_manager)</a>
+</li>
       <li><a href="_api/reda.testing.ert_container.html#reda.testing.ert_container.test_K_computation.test_neg_K">test_neg_K() (in module reda.testing.ert_container.test_K_computation)</a>
-</li>
-      <li><a href="_api/reda.utils.html#reda.utils.norrec.test_norrec_assignments1">test_norrec_assignments1() (in module reda.utils.norrec)</a>
-</li>
-      <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cmag_cpha">test_to_cmag_cpha() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="_api/reda.utils.html#reda.utils.norrec.test_norrec_assignments1">test_norrec_assignments1() (in module reda.utils.norrec)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_number_assignment">test_number_assignment() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_reflect_on_x">test_reflect_on_x() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_replace_coordinates_with_fixed_regular_grid_x">test_replace_coordinates_with_fixed_regular_grid_x() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_replace_one_coordinate">test_replace_one_coordinate() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_shift_positions_by_xyz">test_shift_positions_by_xyz() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_simple_ordering_2d">test_simple_ordering_2d() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_simple_ordering_3d">test_simple_ordering_3d() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_sorters">test_sorters() (in module reda.testing.test_electrode_manager)</a>
+</li>
+      <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cmag_cpha">test_to_cmag_cpha() (reda.eis.test_convert.TestClass_test_converters method)</a>
+</li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cre_cim">test_to_cre_cim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_cre_mim">test_to_cre_mim() (reda.eis.test_convert.TestClass_test_converters method)</a>
 </li>
       <li><a href="_api/reda.eis.html#reda.eis.test_convert.TestClass_test_converters.test_to_rre_rim">test_to_rre_rim() (reda.eis.test_convert.TestClass_test_converters method)</a>
+</li>
+      <li><a href="_api/reda.testing.html#reda.testing.test_electrode_manager.test_user_supplied_sorter">test_user_supplied_sorter() (in module reda.testing.test_electrode_manager)</a>
 </li>
       <li><a href="_api/reda.utils.html#reda.utils.eit_fzj_utils.testboard_evaluation">testboard_evaluation() (in module reda.utils.eit_fzj_utils)</a>
 </li>
@@ -1452,7 +1589,7 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.unique_injections">unique_injections() (reda.configs.configManager.ConfigManager property)</a>
+      <li><a href="_api/reda.configs.html#reda.configs.configManager.ConfigManager.unique_injections">unique_injections (reda.configs.configManager.ConfigManager property)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1497,7 +1634,7 @@
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

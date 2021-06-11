@@ -4,15 +4,17 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>reda.testing package &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
@@ -66,13 +68,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -116,12 +119,12 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="module-reda.testing">
+  <section id="module-reda.testing">
 <span id="reda-testing-package"></span><h1>reda.testing package<a class="headerlink" href="#module-reda.testing" title="Permalink to this headline">¶</a></h1>
 <p>Testing utilities</p>
 <dl class="py function">
-<dt id="reda.testing.test">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.</span></code><code class="sig-name descname"><span class="pre">test</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">onlydoctests</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing.html#test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.</span></span><span class="sig-name descname"><span class="pre">test</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">onlydoctests</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">abort</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing.html#test"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test" title="Permalink to this definition">¶</a></dt>
 <dd><p>Run docstring examples and additional tests.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -141,7 +144,7 @@ fails.</p>
 </dl>
 </dd></dl>
 
-<div class="section" id="subpackages">
+<section id="subpackages">
 <h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
@@ -152,40 +155,59 @@ fails.</p>
 </li>
 </ul>
 </div>
-</div>
-<div class="section" id="submodules">
+</section>
+<section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
-</div>
-<div class="section" id="module-reda.testing.containers">
+</section>
+<section id="module-reda.testing.containers">
 <span id="reda-testing-containers-module"></span><h2>reda.testing.containers module<a class="headerlink" href="#module-reda.testing.containers" title="Permalink to this headline">¶</a></h2>
 <p>Dummy data containers for testing purposes.</p>
-</div>
-<div class="section" id="module-reda.testing.test_container_ert">
+</section>
+<section id="module-reda.testing.test_container_ert">
 <span id="reda-testing-test-container-ert-module"></span><h2>reda.testing.test_container_ert module<a class="headerlink" href="#module-reda.testing.test_container_ert" title="Permalink to this headline">¶</a></h2>
-<p>Container tests</p>
+<p>Container tests for the ERT container</p>
+<p># Missing test cases</p>
+<ul class="simple">
+<li><p>Add data with and without electrode positions</p></li>
+<li><p>Add data with and without timesteps (i.e., import multiple data for one time
+step, or for multiple ones)</p></li>
+<li><p>How to proceed if electrode positions were already imported, but a newly
+added dataset does not provide electrode coordinates?
+-&gt; throw an error if there are any electrode numbers to accounted for yet
+-&gt; make sure the documentation knows how to add electrode numbers</p></li>
+<li><p>test the verbose switch. Is this the same as debugging?</p></li>
+<li><p>How to test the journal?</p></li>
+<li><p>Check the initialization with a dataframe (or better: try to initialize with
+something else and check for the exception)</p></li>
+</ul>
 <dl class="py function">
-<dt id="reda.testing.test_container_ert.test_init">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.test_container_ert.</span></code><code class="sig-name descname"><span class="pre">test_init</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test_container_ert.test_bad_init">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_ert.</span></span><span class="sig-name descname"><span class="pre">test_bad_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_bad_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_bad_init" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_container_ert.test_init">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_ert.</span></span><span class="sig-name descname"><span class="pre">test_init</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init" title="Permalink to this definition">¶</a></dt>
 <dd><p>test initializing an empty ERT container</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="reda.testing.test_container_ert.test_init_with_data">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.test_container_ert.</span></code><code class="sig-name descname"><span class="pre">test_init_with_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init_with_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init_with_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test_container_ert.test_init_with_data">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_ert.</span></span><span class="sig-name descname"><span class="pre">test_init_with_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_ert.html#test_init_with_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_ert.test_init_with_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>test initializing an ERT container and provide good data</p>
 </dd></dl>
 
-</div>
-<div class="section" id="module-reda.testing.test_container_seit">
+</section>
+<section id="module-reda.testing.test_container_seit">
 <span id="reda-testing-test-container-seit-module"></span><h2>reda.testing.test_container_seit module<a class="headerlink" href="#module-reda.testing.test_container_seit" title="Permalink to this headline">¶</a></h2>
 <dl class="py function">
-<dt id="reda.testing.test_container_seit.load_data_into_container">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></code><code class="sig-name descname"><span class="pre">load_data_into_container</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datadir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#load_data_into_container"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.load_data_into_container" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test_container_seit.load_data_into_container">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></span><span class="sig-name descname"><span class="pre">load_data_into_container</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datadir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#load_data_into_container"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.load_data_into_container" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.testing.test_container_seit.prepare_4d_data">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></code><code class="sig-name descname"><span class="pre">prepare_4d_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#prepare_4d_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.prepare_4d_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test_container_seit.prepare_4d_data">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></span><span class="sig-name descname"><span class="pre">prepare_4d_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#prepare_4d_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.prepare_4d_data" title="Permalink to this definition">¶</a></dt>
 <dd><p>Unzip included 4D data into a temp directory.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns</dt>
@@ -198,22 +220,130 @@ fails.</p>
 </dd></dl>
 
 <dl class="py function">
-<dt id="reda.testing.test_container_seit.test_check_4d_data">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></code><code class="sig-name descname"><span class="pre">test_check_4d_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_check_4d_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_check_4d_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test_container_seit.test_check_4d_data">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></span><span class="sig-name descname"><span class="pre">test_check_4d_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_check_4d_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_check_4d_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.testing.test_container_seit.test_histogram_plotting">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></code><code class="sig-name descname"><span class="pre">test_histogram_plotting</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_histogram_plotting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_histogram_plotting" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test_container_seit.test_histogram_plotting">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></span><span class="sig-name descname"><span class="pre">test_histogram_plotting</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_histogram_plotting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_histogram_plotting" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py function">
-<dt id="reda.testing.test_container_seit.test_load_4d_data">
-<code class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></code><code class="sig-name descname"><span class="pre">test_load_4d_data</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_load_4d_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_load_4d_data" title="Permalink to this definition">¶</a></dt>
+<dt class="sig sig-object py" id="reda.testing.test_container_seit.test_load_4d_data">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_container_seit.</span></span><span class="sig-name descname"><span class="pre">test_load_4d_data</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_container_seit.html#test_load_4d_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_container_seit.test_load_4d_data" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</div>
-</div>
+</section>
+<section id="module-reda.testing.test_electrode_manager">
+<span id="reda-testing-test-electrode-manager-module"></span><h2>reda.testing.test_electrode_manager module<a class="headerlink" href="#module-reda.testing.test_electrode_manager" title="Permalink to this headline">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_add_positions">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_add_positions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_add_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_add_positions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_bad_input">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_bad_input</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_bad_input"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_bad_input" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_callable_class">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_callable_class</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_callable_class"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_callable_class" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_conform_to_regular_x_spacing</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_conform_to_regular_x_spacing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing_exception">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_conform_to_regular_x_spacing_exception</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_conform_to_regular_x_spacing_exception"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_conform_to_regular_x_spacing_exception" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_duplicates">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_duplicates</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_duplicates"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_duplicates" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_electrode_numbers">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_electrode_numbers</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_electrode_numbers"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_electrode_numbers" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_fixed_assignments">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_fixed_assignments</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_fixed_assignments"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_fixed_assignments" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_get_electrode_numbers_for_positions">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_get_electrode_numbers_for_positions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_get_electrode_numbers_for_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_get_electrode_numbers_for_positions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_get_electrode_position">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_get_electrode_position</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_get_electrode_position"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_get_electrode_position" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_merging">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_merging</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_merging"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_merging" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_merging2">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_merging2</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_merging2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_merging2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_number_assignment">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_number_assignment</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_number_assignment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_number_assignment" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_reflect_on_x">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_reflect_on_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_reflect_on_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_reflect_on_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_replace_coordinates_with_fixed_regular_grid_x">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_replace_coordinates_with_fixed_regular_grid_x</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_replace_coordinates_with_fixed_regular_grid_x"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_replace_coordinates_with_fixed_regular_grid_x" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_replace_one_coordinate">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_replace_one_coordinate</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_replace_one_coordinate"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_replace_one_coordinate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_shift_positions_by_xyz">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_shift_positions_by_xyz</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_shift_positions_by_xyz"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_shift_positions_by_xyz" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_simple_ordering_2d">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_simple_ordering_2d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_simple_ordering_2d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_simple_ordering_2d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_simple_ordering_3d">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_simple_ordering_3d</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_simple_ordering_3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_simple_ordering_3d" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_sorters">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_sorters</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_sorters"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_sorters" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.testing.test_electrode_manager.test_user_supplied_sorter">
+<span class="sig-prename descclassname"><span class="pre">reda.testing.test_electrode_manager.</span></span><span class="sig-name descname"><span class="pre">test_user_supplied_sorter</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/testing/test_electrode_manager.html#test_user_supplied_sorter"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.testing.test_electrode_manager.test_user_supplied_sorter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</section>
+</section>
 
 
           </div>
@@ -226,7 +356,7 @@ fails.</p>
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -33,6 +33,14 @@ reda.utils.eit\_fzj\_utils module
    :undoc-members:
    :show-inheritance:
 
+reda.utils.electrode\_manager module
+------------------------------------
+
+.. automodule:: reda.utils.electrode_manager
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 reda.utils.enter\_directory module
 ----------------------------------
 

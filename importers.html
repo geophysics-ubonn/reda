@@ -4,23 +4,25 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Data Importers &#8212; REDA 0.1.0 documentation</title>
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
     <link rel="stylesheet" type="text/css" href="_static/gallery-rendered-html.css" />
-    <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Examples" href="_examples/index.html" />
-    <link rel="prev" title="Filtering Data" href="filtering.html" />
+    <link rel="next" title="Test data" href="test_data.html" />
+    <link rel="prev" title="Contributing" href="contributing.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -66,13 +68,14 @@
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering Data</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
 </ul>
@@ -81,8 +84,8 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="filtering.html" title="previous chapter">Filtering Data</a></li>
-      <li>Next: <a href="_examples/index.html" title="next chapter">Examples</a></li>
+      <li>Previous: <a href="contributing.html" title="previous chapter">Contributing</a></li>
+      <li>Next: <a href="test_data.html" title="next chapter">Test data</a></li>
   </ul></li>
 </ul>
 </div>
@@ -112,9 +115,9 @@
 
           <div class="body" role="main">
             
-  <div class="section" id="data-importers">
+  <section id="data-importers">
 <h1>Data Importers<a class="headerlink" href="#data-importers" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="introduction">
+<section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
 <p>Importer functions are managed in <a class="reference internal" href="_api/reda.importers.html#module-reda.importers" title="reda.importers"><code class="xref py py-mod docutils literal notranslate"><span class="pre">reda.importers</span></code></a>. An importer module
 must provide the following functionality:</p>
@@ -125,25 +128,54 @@ in this data format</p></li>
 <li><p>import topography into a <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a>, if available in this
 data format</p></li>
 </ul>
-</div>
-<div class="section" id="internal-structure-for-developers">
+</section>
+<section id="internal-structure-for-developers">
 <h2>Internal structure (for developers)<a class="headerlink" href="#internal-structure-for-developers" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li><p>All import functions should start <em>import_</em>. Multiple <cite>import_*</cite> functions in
-an import module are allowed, i.e. to import variations of a given data
-format (e.g., text files and binary data).</p></li>
+<li><p>All import functions should start with <em>import_</em>.
+Multiple <cite>import_*</cite> functions in an imported module are allowed, i.e. to
+provide import variations of a given data format (e.g., text files and binary
+data).</p></li>
 <li><p>Each <cite>import_*</cite> function must return three variables: data, electrode
 positions, topography. Return <cite>None</cite> for electrode positions and topography
 if not available.</p></li>
 </ul>
+<p>A basic structure for an importer would be located in <strong>reda.importers</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">import_new_data_file</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+   <span class="sd">&quot;&quot;&quot;Provide a proper docstring !</span>
+
+<span class="sd">   Parameters</span>
+<span class="sd">   ----------</span>
+<span class="sd">   filename : str</span>
+<span class="sd">      Path to datafile</span>
+
+<span class="sd">   Additional Parameters</span>
+<span class="sd">   ---------------------</span>
+<span class="sd">   individual_parameter_1: bool</span>
+<span class="sd">      Something that the user can change for the import</span>
+
+<span class="sd">   Returns</span>
+<span class="sd">   -------</span>
+<span class="sd">   data : pandas.DataFrame</span>
+<span class="sd">      The data, in proper format</span>
+<span class="sd">   electrode_positions : pandas.DataFrame</span>
+<span class="sd">      Electrode positions, columns x, y, z.</span>
+<span class="sd">   topography : pandas.DataFrame</span>
+<span class="sd">      Topography, columns x, y, z</span>
+<span class="sd">   &quot;&quot;&quot;</span>
+   <span class="c1"># code here</span>
+   <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+   <span class="k">return</span> <span class="n">data</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="p">,</span> <span class="n">topography</span>
+</pre></div>
+</div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>We retained from introducing importer objects by means of classes to make
 usage as simple as possible. If at some point it will be necessary to use
 classes for the importers, they can be built upon the import functions.</p>
 </div>
-</div>
-<div class="section" id="test-data">
+</section>
+<section id="test-data">
 <h2>Test data<a class="headerlink" href="#test-data" title="Permalink to this headline">¶</a></h2>
 <p>We require at least one test data set for each importer in order to make sure
 the importer works, now and in the future.</p>
@@ -152,8 +184,8 @@ the importer works, now and in the future.</p>
 repository size of reda small. However, if data sets are not too large, one
 import/analysis example is fine for the documentation gallery (in the
 <strong>examples/</strong> subdirectory of the reda repository).</p>
-</div>
-</div>
+</section>
+</section>
 
 
           </div>
@@ -166,7 +198,7 @@ import/analysis example is fine for the documentation gallery (in the
       &copy;2021, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 3.5.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |
