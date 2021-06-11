@@ -409,32 +409,76 @@ def testboard_evaluation(datapath, configdat,
     fig, axes = plt.subplots(
         int(len(nor)), 2, figsize=(12, 3*len(nor)), sharex=True)
 
-    # plot normal measurements and theoretical response
-    for num, n in enumerate(nor):
-        axes[num-1][0].set_title('Magnitude {} {} {} {}'.format(
-            n.iloc[0]['a'], n.iloc[0]['b'], n.iloc[0]['m'], n.iloc[0]['n']))
-        axes[num-1][0].plot(n["frequency"], n['r'],
-                            marker='o', linestyle=' ', label='nor')
-        axes[num-1][0].plot(frequencies, rmag, label='calculated')
-        axes[num-1][0].fill_between(frequencies, rmag+error_rmag,
-                                    rmag-error_rmag, color='grey', alpha=0.3)
-        axes[num-1][0].set_ylabel(r'|Z| [$\Omega$]')
-        axes[num-1][1].set_title('Phase {} {} {} {}'.format(
-            n.iloc[0]['a'], n.iloc[0]['b'], n.iloc[0]['m'], n.iloc[0]['n']))
-        axes[num-1][1].plot(n["frequency"], -1*n['rpha'],
-                            marker='o', linestyle=' ', label='nor')
-        axes[num-1][1].plot(frequencies, -1*rpha, label='calculated')
-        axes[num-1][1].fill_between(
-            frequencies, -1*rpha + error_rpha, -1*rpha-error_rpha,
-            color='grey', alpha=0.3)
-        axes[num-1][1].set_ylabel(r'-$\varphi_{Z}$ [mrad]')
+    # in case of only one measurement
+    if len(nor) <= 1:
+        # plot normal measurements and theoretical response
+        for num, n in enumerate(nor):
+            axes[0].set_title('Magnitude {} {} {} {}'.format(
+                n.iloc[0]['a'], n.iloc[0]['b'],
+                n.iloc[0]['m'], n.iloc[0]['n']))
+            axes[0].plot(n["frequency"], n['r'],
+                         marker='o', linestyle=' ', label='nor')
+            axes[0].plot(frequencies, rmag, label='calculated')
+            axes[0].fill_between(frequencies, rmag+error_rmag,
+                                 rmag-error_rmag, color='grey', alpha=0.3)
+            axes[0].set_ylabel(r'|Z| [$\Omega$]')
+            axes[1].set_title('Phase {} {} {} {}'.format(
+                n.iloc[0]['a'], n.iloc[0]['b'],
+                n.iloc[0]['m'], n.iloc[0]['n']))
+            axes[1].plot(n["frequency"], -1*n['rpha'],
+                         marker='o', linestyle=' ', label='nor')
+            axes[1].plot(frequencies, -1*rpha, label='calculated')
+            axes[1].fill_between(
+                frequencies, -1*rpha + error_rpha, -1*rpha-error_rpha,
+                color='grey', alpha=0.3)
+            axes[1].set_ylabel(r'-$\varphi_{Z}$ [mrad]')
 
-    # plot reciprocal measurements
-    for num, r in enumerate(rec):
-        axes[num-1][0].plot(r["frequency"], r['r'],
-                            marker='x', linestyle=' ', label='rec')
-        axes[num-1][1].plot(r["frequency"], -1*r['rpha'],
-                            marker='x', linestyle=' ', label='rec')
+        # plot reciprocal measurements
+        for num, r in enumerate(rec):
+            axes[0].plot(r["frequency"], r['r'],
+                         marker='x', linestyle=' ', label='rec')
+            axes[1].plot(r["frequency"], -1*r['rpha'],
+                         marker='x', linestyle=' ', label='rec')
+
+        # axis labels for two plots
+        axes[0].set_xlabel("frequency [Hz]")
+        axes[1].set_xlabel("frequency [Hz]")
+
+    # in case of several measurements
+    else:
+        # plot normal measurements and theoretical response
+        for num, n in enumerate(nor):
+            axes[num-1][0].set_title('Magnitude {} {} {} {}'.format(
+                n.iloc[0]['a'], n.iloc[0]['b'],
+                n.iloc[0]['m'], n.iloc[0]['n']))
+            axes[num-1][0].plot(n["frequency"], n['r'],
+                                marker='o', linestyle=' ', label='nor')
+            axes[num-1][0].plot(frequencies, rmag, label='calculated')
+            axes[num-1][0].fill_between(frequencies, rmag+error_rmag,
+                                        rmag-error_rmag, color='grey',
+                                        alpha=0.3)
+            axes[num-1][0].set_ylabel(r'|Z| [$\Omega$]')
+            axes[num-1][1].set_title('Phase {} {} {} {}'.format(
+                n.iloc[0]['a'], n.iloc[0]['b'],
+                n.iloc[0]['m'], n.iloc[0]['n']))
+            axes[num-1][1].plot(n["frequency"], -1*n['rpha'],
+                                marker='o', linestyle=' ', label='nor')
+            axes[num-1][1].plot(frequencies, -1*rpha, label='calculated')
+            axes[num-1][1].fill_between(
+                frequencies, -1*rpha + error_rpha, -1*rpha-error_rpha,
+                color='grey', alpha=0.3)
+            axes[num-1][1].set_ylabel(r'-$\varphi_{Z}$ [mrad]')
+
+        # plot reciprocal measurements
+        for num, r in enumerate(rec):
+            axes[num-1][0].plot(r["frequency"], r['r'],
+                                marker='x', linestyle=' ', label='rec')
+            axes[num-1][1].plot(r["frequency"], -1*r['rpha'],
+                                marker='x', linestyle=' ', label='rec')
+
+        # axis labels for two bottom plots
+        axes[len(nor)-1][0].set_xlabel("frequency [Hz]")
+        axes[len(nor)-1][1].set_xlabel("frequency [Hz]")
 
     # axis scaling and legends
     for ax in axes.reshape(-1):
@@ -443,10 +487,5 @@ def testboard_evaluation(datapath, configdat,
         ax.set_xscale("log")
         ax.set_xlim(min(frequencies), max(frequencies))
 
-    # axis labels for two bottom plots
-    axes[len(nor)-1][0].set_xlabel("frequency [Hz]")
-    axes[len(nor)-1][1].set_xlabel("frequency [Hz]")
-
     fig.tight_layout()
     fig.savefig('{}.png'.format(outputname), dpi=300)
-
