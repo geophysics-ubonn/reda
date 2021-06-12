@@ -6,6 +6,8 @@ Importing Syscal ERT data
 
 This example is all about import data from IRIS Instruments Syscal systems.
 There is a variety of different options that should cover most use cases.
+Also, shortly introduced are the data journal, action log, filtering, and
+accessing data using the underlying dataframe.
 
 """
 import numpy as np
