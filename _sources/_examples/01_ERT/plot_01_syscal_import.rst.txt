@@ -23,8 +23,10 @@ Importing Syscal ERT data
 
 This example is all about import data from IRIS Instruments Syscal systems.
 There is a variety of different options that should cover most use cases.
+Also, shortly introduced are the data journal, action log, filtering, and
+accessing data using the underlying dataframe.
 
-.. GENERATED FROM PYTHON SOURCE LINES 11-16
+.. GENERATED FROM PYTHON SOURCE LINES 13-18
 
 .. code-block:: default
 
@@ -40,11 +42,11 @@ There is a variety of different options that should cover most use cases.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 17-18
+.. GENERATED FROM PYTHON SOURCE LINES 19-20
 
 data import:
 
-.. GENERATED FROM PYTHON SOURCE LINES 18-35
+.. GENERATED FROM PYTHON SOURCE LINES 20-37
 
 .. code-block:: default
 
@@ -72,7 +74,7 @@ data import:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 36-38
+.. GENERATED FROM PYTHON SOURCE LINES 38-40
 
 .. code-block:: default
 
@@ -90,7 +92,7 @@ data import:
 
 
     --- Data Journal Start ---
-    2021-06-11 14:14:52.068439
+    2021-06-13 09:20:03.266349
     Data was imported from file  (990 data points)
     Data was imported from file  (990 data points)
     --- Data Journal End ---
@@ -99,7 +101,7 @@ data import:
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 39-41
+.. GENERATED FROM PYTHON SOURCE LINES 41-43
 
 .. code-block:: default
 
@@ -115,19 +117,19 @@ data import:
 
  .. code-block:: none
 
-    2021-06-11 14:14:50,680 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
-    2021-06-11 14:14:51,265 - reda.containers.ERT - INFO - Data sized changed from 0 to 990
-    2021-06-11 14:14:51,265 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
-    2021-06-11 14:14:52,054 - reda.containers.ERT - INFO - Data sized changed from 990 to 1980
+    2021-06-13 09:20:01,895 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
+    2021-06-13 09:20:02,467 - reda.containers.ERT - INFO - Data sized changed from 0 to 990
+    2021-06-13 09:20:02,467 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
+    2021-06-13 09:20:03,253 - reda.containers.ERT - INFO - Data sized changed from 990 to 1980
 
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 42-43
+.. GENERATED FROM PYTHON SOURCE LINES 44-45
 
 create some plots in a subdirectory
 
-.. GENERATED FROM PYTHON SOURCE LINES 43-48
+.. GENERATED FROM PYTHON SOURCE LINES 45-50
 
 .. code-block:: default
 
@@ -168,11 +170,11 @@ create some plots in a subdirectory
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 49-50
+.. GENERATED FROM PYTHON SOURCE LINES 51-52
 
 export to various data files
 
-.. GENERATED FROM PYTHON SOURCE LINES 50-55
+.. GENERATED FROM PYTHON SOURCE LINES 52-57
 
 .. code-block:: default
 
@@ -188,13 +190,13 @@ export to various data files
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 56-59
+.. GENERATED FROM PYTHON SOURCE LINES 58-61
 
 The data is internally stored in a pandas.DataFrame
 As such, you can always use the data directly and build your custom
 functionality on top of REDA
 
-.. GENERATED FROM PYTHON SOURCE LINES 59-61
+.. GENERATED FROM PYTHON SOURCE LINES 61-63
 
 .. code-block:: default
 
@@ -228,13 +230,13 @@ functionality on top of REDA
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 62-65
+.. GENERATED FROM PYTHON SOURCE LINES 64-67
 
 Lets apply an arbitrary filter. Note that the change in data numbers is
 logged.
 You can use all columns defined in the data frame for more complex filters
 
-.. GENERATED FROM PYTHON SOURCE LINES 65-69
+.. GENERATED FROM PYTHON SOURCE LINES 67-71
 
 .. code-block:: default
 
@@ -254,7 +256,7 @@ You can use all columns defined in the data frame for more complex filters
 
 
     --- Data Journal Start ---
-    2021-06-11 14:14:53.355154
+    2021-06-13 09:20:04.518190
     Data was imported from file  (990 data points)
     Data was imported from file  (990 data points)
     A filter was applied with query "r <= 0". In total 0 records were removed
@@ -265,11 +267,11 @@ You can use all columns defined in the data frame for more complex filters
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 70-71
+.. GENERATED FROM PYTHON SOURCE LINES 72-73
 
 Also note that normal-reciprocal differences were directly computed.
 
-.. GENERATED FROM PYTHON SOURCE LINES 71-82
+.. GENERATED FROM PYTHON SOURCE LINES 73-84
 
 .. code-block:: default
 
@@ -295,12 +297,12 @@ Also note that normal-reciprocal differences were directly computed.
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 83-85
+.. GENERATED FROM PYTHON SOURCE LINES 85-87
 
 The column 'id' groups quadrupoles belonging to the same normal-reciprocal
 pair. For example, plot some of the groups
 
-.. GENERATED FROM PYTHON SOURCE LINES 85-94
+.. GENERATED FROM PYTHON SOURCE LINES 87-96
 
 .. code-block:: default
 
@@ -351,12 +353,12 @@ pair. For example, plot some of the groups
 
 
 
-.. GENERATED FROM PYTHON SOURCE LINES 95-97
+.. GENERATED FROM PYTHON SOURCE LINES 97-99
 
 There are various ways to import Syscal data, relating to the electrode
 numbering:
 
-.. GENERATED FROM PYTHON SOURCE LINES 97-130
+.. GENERATED FROM PYTHON SOURCE LINES 99-132
 
 .. code-block:: default
 

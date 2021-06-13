@@ -125,7 +125,9 @@ to download the full example code</p>
 <section class="sphx-glr-example-title" id="importing-syscal-ert-data">
 <span id="sphx-glr-examples-01-ert-plot-01-syscal-import-py"></span><h1>Importing Syscal ERT data<a class="headerlink" href="#importing-syscal-ert-data" title="Permalink to this headline">¶</a></h1>
 <p>This example is all about import data from IRIS Instruments Syscal systems.
-There is a variety of different options that should cover most use cases.</p>
+There is a variety of different options that should cover most use cases.
+Also, shortly introduced are the data journal, action log, filtering, and
+accessing data using the underlying dataframe.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pylab</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">reda</span>
@@ -155,7 +157,7 @@ There is a variety of different options that should cover most use cases.</p>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>--- Data Journal Start ---
-2021-06-11 14:14:52.068439
+2021-06-13 09:20:03.266349
 Data was imported from file  (990 data points)
 Data was imported from file  (990 data points)
 --- Data Journal End ---
@@ -165,10 +167,10 @@ Data was imported from file  (990 data points)
 </pre></div>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
-<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2021-06-11 14:14:50,680 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
-2021-06-11 14:14:51,265 - reda.containers.ERT - INFO - Data sized changed from 0 to 990
-2021-06-11 14:14:51,265 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
-2021-06-11 14:14:52,054 - reda.containers.ERT - INFO - Data sized changed from 990 to 1980
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>2021-06-13 09:20:01,895 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
+2021-06-13 09:20:02,467 - reda.containers.ERT - INFO - Data sized changed from 0 to 990
+2021-06-13 09:20:02,467 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
+2021-06-13 09:20:03,253 - reda.containers.ERT - INFO - Data sized changed from 990 to 1980
 </pre></div>
 </div>
 <p>create some plots in a subdirectory</p>
@@ -230,7 +232,7 @@ You can use all columns defined in the data frame for more complex filters</p>
 </div>
 <p class="sphx-glr-script-out">Out:</p>
 <div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>--- Data Journal Start ---
-2021-06-11 14:14:53.355154
+2021-06-13 09:20:04.518190
 Data was imported from file  (990 data points)
 Data was imported from file  (990 data points)
 A filter was applied with query &quot;r &lt;= 0&quot;. In total 0 records were removed
