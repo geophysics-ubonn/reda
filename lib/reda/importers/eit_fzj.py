@@ -242,13 +242,19 @@ def compute_quadrupoles(df_emd, config_file, df_md=None):
         # first choice: correct ordering
         query_M = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
             A, B, M
-        ))
+        )).sort_values('datetime')
         query_N = df_emd.query('a=={0} and b=={1} and p=={2}'.format(
             A, B, N
-        ))
+        )).sort_values('datetime')
 
         if query_M.size == 0 or query_N.size == 0:
             continue
+
+        if query_M.size != query_N.size:
+            raise Exception(
+                'There is something wrong with the data, different sized ' +
+                'data sets for M and N'
+            )
 
         index += 1
 
@@ -302,8 +308,9 @@ def compute_quadrupoles(df_emd, config_file, df_md=None):
                 # IPython.embed()
                 dfn = pd.merge(
                     dfn,
-                    df_md[['a', 'b', 'frequency', column]],
-                    on=['a', 'b', 'frequency']
+                    df_md[['a', 'b', 'frequency', 'datetime', column]],
+                    on=['a', 'b', 'frequency', 'datetime'],
+                    how='left',
                 )
     else:
         dfn = pd.DataFrame()
