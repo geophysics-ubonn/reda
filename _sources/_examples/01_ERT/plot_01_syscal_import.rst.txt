@@ -92,7 +92,7 @@ data import:
 
 
     --- Data Journal Start ---
-    2021-06-13 09:20:03.266349
+    2021-06-15 19:36:43.901882
     Data was imported from file  (990 data points)
     Data was imported from file  (990 data points)
     --- Data Journal End ---
@@ -117,10 +117,10 @@ data import:
 
  .. code-block:: none
 
-    2021-06-13 09:20:01,895 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
-    2021-06-13 09:20:02,467 - reda.containers.ERT - INFO - Data sized changed from 0 to 990
-    2021-06-13 09:20:02,467 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
-    2021-06-13 09:20:03,253 - reda.containers.ERT - INFO - Data sized changed from 990 to 1980
+    2021-06-15 19:36:42,500 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
+    2021-06-15 19:36:43,080 - reda.containers.ERT - INFO - Data sized changed from 0 to 990
+    2021-06-15 19:36:43,080 - reda.containers.ERT - INFO - IRIS Syscal Pro text import
+    2021-06-15 19:36:43,887 - reda.containers.ERT - INFO - Data sized changed from 990 to 1980
 
 
 
@@ -256,7 +256,7 @@ You can use all columns defined in the data frame for more complex filters
 
 
     --- Data Journal Start ---
-    2021-06-13 09:20:04.518190
+    2021-06-15 19:36:45.187789
     Data was imported from file  (990 data points)
     Data was imported from file  (990 data points)
     A filter was applied with query "r <= 0". In total 0 records were removed

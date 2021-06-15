@@ -359,13 +359,19 @@
         <span class="c1"># first choice: correct ordering</span>
         <span class="n">query_M</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">M</span>
-        <span class="p">))</span>
+        <span class="p">))</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
         <span class="n">query_N</span> <span class="o">=</span> <span class="n">df_emd</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">&#39;a==</span><span class="si">{0}</span><span class="s1"> and b==</span><span class="si">{1}</span><span class="s1"> and p==</span><span class="si">{2}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
             <span class="n">A</span><span class="p">,</span> <span class="n">B</span><span class="p">,</span> <span class="n">N</span>
-        <span class="p">))</span>
+        <span class="p">))</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="s1">&#39;datetime&#39;</span><span class="p">)</span>
 
         <span class="k">if</span> <span class="n">query_M</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">query_N</span><span class="o">.</span><span class="n">size</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
             <span class="k">continue</span>
+
+        <span class="k">if</span> <span class="n">query_M</span><span class="o">.</span><span class="n">size</span> <span class="o">!=</span> <span class="n">query_N</span><span class="o">.</span><span class="n">size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;There is something wrong with the data, different sized &#39;</span> <span class="o">+</span>
+                <span class="s1">&#39;data sets for M and N&#39;</span>
+            <span class="p">)</span>
 
         <span class="n">index</span> <span class="o">+=</span> <span class="mi">1</span>
 
@@ -419,8 +425,9 @@
                 <span class="c1"># IPython.embed()</span>
                 <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">merge</span><span class="p">(</span>
                     <span class="n">dfn</span><span class="p">,</span>
-                    <span class="n">df_md</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">]],</span>
-                    <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">]</span>
+                    <span class="n">df_md</span><span class="p">[[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">,</span> <span class="n">column</span><span class="p">]],</span>
+                    <span class="n">on</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;frequency&#39;</span><span class="p">,</span> <span class="s1">&#39;datetime&#39;</span><span class="p">],</span>
+                    <span class="n">how</span><span class="o">=</span><span class="s1">&#39;left&#39;</span><span class="p">,</span>
                 <span class="p">)</span>
     <span class="k">else</span><span class="p">:</span>
         <span class="n">dfn</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
