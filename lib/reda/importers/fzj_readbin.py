@@ -154,11 +154,15 @@ class fzj_readbin(object):
         )
 
         # extract current injections
+        # Note this only works with new EIT160-based mcf files
         self.injections = np.array(
             re.findall(
                 r'ABMG ([0-9]?[0-9]?[0-9]) ([0-9]?[0-9]?[0-9])', mcf_content
             )
         ).astype(int)
+
+        assert self.injections.size > 0, \
+            "Error reading injections from mcf file"
 
     def _read_data(self, binary_file):
         data = []
