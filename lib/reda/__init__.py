@@ -13,6 +13,7 @@ from .containers.TDIP import TDIP
 from .containers.ERT import ERT
 from .testing import test
 import reda.importers.eit_fzj as eit_fzj
+from reda.importers.fzj_readbin import fzj_readbin
 from reda.utils.electrode_manager import electrode_manager
 rcParams = {}
 
@@ -36,7 +37,9 @@ data
 ConfigManager
 transforms
 eit_fzj
+fzj_readbin
 electrode_manager
+
 
 def version():
     """Return the installed version of reda, using the pkg_resources package"""

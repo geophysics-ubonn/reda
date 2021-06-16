@@ -16,6 +16,7 @@ import re
 import os
 
 import matplotlib.pylab as plt
+import scipy.signal
 import numpy as np
 import pandas as pd
 
@@ -120,6 +121,7 @@ class fzj_readbin(object):
         )
         frequency_data['a'] = frequency_data['a'].astype(int)
         frequency_data['b'] = frequency_data['b'].astype(int)
+        frequency_data['nr_samples'] = frequency_data['nr_samples'].astype(int)
 
         epoch = datetime.datetime(1904, 1, 1)
         frequency_data['datetime'] = [
@@ -385,3 +387,165 @@ class fzj_readbin(object):
         ).iloc[0, :]
         tmax = fdata['tmax']
         return np.linspace(0, tmax, fdata['nr_samples'].astype(int))
+
+    def _plot_fft_analysis(
+            self, measurement_index, tsdata, fft, u_peaks, noise_level,
+            partnr
+            ):
+        """
+
+        """
+        frequency_data = self.frequency_data.iloc[measurement_index]
+
+        tstime = self.get_sample_times(frequency_data['frequency'])
+        if tstime.size > tsdata.size:
+            tstime = np.split(tstime, 3)[partnr]
+
+        fig, axes = plt.subplots(2, 1, figsize=(12 / 2.54, 6 / 2.54))
+        ax = axes[0]
+        ax.set_title(
+            'Frequency: {} Hz'.format(frequency_data['frequency']),
+            loc='left',
+        )
+        ax.plot(
+            tstime,
+            tsdata,
+        )
+        ax.set_xlabel('Time [s]')
+        ax.set_ylabel('Signal [V]')
+
+        ax = axes[1]
+        ax.set_title('Noise level: {}'.format(noise_level))
+
+        fftfreq = np.fft.rfftfreq(
+            tsdata.siz,
+            frequency_data[
+                'oversampling'
+            ] / frequency_data['sampling_frequency']
+        )
+
+        ax.plot(
+            fftfreq[1:],
+            fft[1:],
+        )
+        ax.scatter(
+           fftfreq[u_peaks + 1],
+           fft[u_peaks + 1],
+           color='orange',
+        )
+        ax.axhline(
+            y=noise_level, color='k', linestyle='dashed', label='noise level')
+        ax.legend()
+        ax.set_xlabel('Frequency [Hz]')
+        ax.set_ylabel('|Amplitude|')
+        ax.set_yscale('log')
+
+        fig.tight_layout()
+        return fig
+
+    def fft_analysis_one_channel(
+            self, measurement_index, channel,
+            split_into_three=False, plot=False, **kwargs):
+        """On one specific measurement at one channel, conduct an FFT analysis
+        to estimate the noise level.
+
+        Parameters
+        ----------
+        measurement_index : int
+            Index of injection related to index in self.frequency_data.
+        channel : int
+            Channel to analyze. 1-indexed.
+        split_into_three : bool, optional (default: False)
+            If True, apply analysis to each third of the time-series
+            separately.
+        plot: bool, optional (default: False)
+            If True, generate plots of the time-series and noise level
+
+        Additional Parameters
+        ---------------------
+        peak_distance : int, optional (default: 20)
+            Distance parameter of scipy.signal.find_peaks used to detect peaks
+            in the FFT spectrum
+
+        Returns
+        -------
+        noise_levels : list
+            The estimated white noise leves for the parts of the time-series.
+            If split_into_three is False, then the list contains only one entry
+        plots : list, optional
+            If generated return plots in this list
+        """
+        ts = self.data[measurement_index][channel - 1, :]
+        if split_into_three:
+            ts_parts = np.split(ts, 3)
+        else:
+            # analyze the full ts
+            ts_parts = [ts, ]
+
+        noise_levels = []
+        plot_figs = []
+        for partnr, part in enumerate(ts_parts):
+            # This would be a good place to try to clean-up the time-series by
+            # removing the excitation frequency, harmonics, and 50/60 Hz, as
+            # well as 16 2/3 train noise
+            fft = np.abs(np.fft.rfft(part - part.mean()))
+            u_peaks, _ = scipy.signal.find_peaks(
+                fft[1:], distance=kwargs.get('peak_distance', 20))
+            peak_values = fft[1 + u_peaks]
+            # fit a horizontal line
+            noise_level = 10 ** np.polyfit(
+                u_peaks, np.log10(peak_values), deg=0
+            )
+            noise_levels.append(noise_level)
+            if plot:
+                plot_figs.append(
+                    self._plot_fft_analysis(
+                        measurement_index,
+                        part,
+                        fft,
+                        u_peaks,
+                        noise_level,
+                        partnr,
+                    )
+                )
+        if plot:
+            return noise_levels, plot_figs
+
+        return noise_levels
+
+    def find_swapped_measurement_indices(
+            self, a, b, frequency, mean_measurement_time):
+        """For a given set of injection electrodes and a frequency, try to find
+        the two injections that will make up the final measurement (i.e., the
+        regular injection (a,b) and its swapped injection (b,a).
+
+        Parameters
+        ----------
+        a : int
+            1. Current electrode
+        b : int
+            2. Current electrode
+        frequency : float
+            Measurement frequency
+        mean_measurement_time : datetime.datetime|pandas.Timestamp
+            For swapped measurements the datetime entry in the MD and EMD
+            structs will be the mean time between the singular measurements.
+
+        Returns
+        -------
+        findices : [int, int]
+            Indices of the rows in fzj_readbin.frequency_data corresponding to
+            the measurement. If only one measurement was found, then the second
+            index is None.
+
+        """
+        subset = self.frequency_data.query(
+            'a in ({0}, {1}) and b == ({0}, {1}) and frequency == {2}'.format(
+                a, b, frequency
+             )
+        )
+
+        indices_all = np.argsort(
+            np.abs(subset['datetime'] - mean_measurement_time))
+        print('indices_all', indices_all)
+        return indices_all[0:2]
