@@ -401,7 +401,7 @@ class fzj_readbin(object):
         if tstime.size > tsdata.size:
             tstime = np.split(tstime, 3)[partnr]
 
-        fig, axes = plt.subplots(2, 1, figsize=(12 / 2.54, 6 / 2.54))
+        fig, axes = plt.subplots(2, 1, figsize=(12 / 2.54, 9 / 2.54))
         ax = axes[0]
         ax.set_title(
             'Frequency: {} Hz'.format(frequency_data['frequency']),
@@ -418,7 +418,7 @@ class fzj_readbin(object):
         ax.set_title('Noise level: {}'.format(noise_level))
 
         fftfreq = np.fft.rfftfreq(
-            tsdata.siz,
+            tsdata.size,
             frequency_data[
                 'oversampling'
             ] / frequency_data['sampling_frequency']
@@ -514,7 +514,7 @@ class fzj_readbin(object):
         return noise_levels
 
     def find_swapped_measurement_indices(
-            self, a, b, frequency, mean_measurement_time):
+            self, a, b, frequency, mean_measurement_time=None):
         """For a given set of injection electrodes and a frequency, try to find
         the two injections that will make up the final measurement (i.e., the
         regular injection (a,b) and its swapped injection (b,a).
@@ -539,13 +539,58 @@ class fzj_readbin(object):
             index is None.
 
         """
+
         subset = self.frequency_data.query(
             'a in ({0}, {1}) and b == ({0}, {1}) and frequency == {2}'.format(
                 a, b, frequency
              )
         )
+        if mean_measurement_time is None:
+            self.logger.info(
+                'info: mean_measurement_time not provided, will select ' +
+                'earliest measurements'
+            )
+            mean_measurement_time = np.sort(subset['datetime'])[0]
 
         indices_all = np.argsort(
-            np.abs(subset['datetime'] - mean_measurement_time))
-        print('indices_all', indices_all)
-        return indices_all[0:2]
+            np.abs(subset['datetime'] - mean_measurement_time)).values
+
+        indices = indices_all[0:min(indices_all.size, 2)]
+
+        # TODO: Checks
+        return subset.index.values[indices]
+
+    def plot_noise_level_for_one_injection(
+            self, measurement_index, nch=None, **kwargs):
+        """
+
+        measurement_index can be found by using the search function:
+
+            indices = self.find_swapped_measurement_indices(1, 22, 1)
+            fig = plot_noise_level_for_one_injection(indices[0])
+
+        """
+        if nch is None:
+            nch = self.NCh
+
+        noise = {}
+        max_values = {}
+        for i in range(1, nch):
+            level = self.fft_analysis_one_channel(measurement_index, i)
+            noise[i] = level[0].take(0)
+            ts = self.data[measurement_index][i - 1, :]
+            max_value = np.max(ts - ts.mean())
+            max_values[i] = max_value
+
+        fig, ax = plt.subplots(
+            figsize=kwargs.get('figsize', (12 / 2.54, 6 / 2.54))
+        )
+        ax.set_title(kwargs.get('title', None))
+        ax.bar(noise.keys(), noise.values())
+        ax.set_xlabel('Channel')
+        ax.set_ylabel('Noise Level')
+        ax2 = ax.twinx()
+        ax2.plot(max_values.keys(), max_values.values(), '.-', color='orange')
+        ax2.set_ylabel('Max. Signal [V]', color='orange')
+        ax.grid()
+        return fig
