@@ -9,6 +9,7 @@ measurement signal) can help in understanding and analyzing the final SIP/sEIT
 data and associated problems.
 
 """
+import datetime
 import logging
 import struct
 import re
@@ -119,6 +120,13 @@ class fzj_readbin(object):
         )
         frequency_data['a'] = frequency_data['a'].astype(int)
         frequency_data['b'] = frequency_data['b'].astype(int)
+
+        epoch = datetime.datetime(1904, 1, 1)
+        frequency_data['datetime'] = [
+            epoch + datetime.timedelta(
+                seconds=x
+            ) for x in frequency_data['timestamp'].values
+        ]
         return frequency_data
 
     def _read_frequencies_sip04(self, mff_filename):
@@ -324,9 +332,13 @@ class fzj_readbin(object):
             print('{} - {}'.format(index + 1, row))
 
     def get_ts_abm(self, a, b, m, frequency):
-        """Return the time series for a given trio of a, b, m electrodes
+        """Return the time series for a given set of (a, b, m electrodes)
 
         All values are 1-indexed!!!
+
+        WARNING: This interface always chooses the first result related to the
+        input set in case duplicate measurements are present! This relates to
+        duplicate frequencies and duplicate injections.
 
         """
         self.logger.warn(
@@ -337,20 +349,32 @@ class fzj_readbin(object):
 
         # find number of injection
         try:
-            ab_nr = np.where(
+            ab_nr_raw = np.where(
                 (self.injections[:, 0] == a) & (self.injections[:, 1] == b)
-            )[0].take(0)
+            )[0]
+            if len(ab_nr_raw) > 1:
+                self.logger.warn(
+                    'This injection was measured multiple times.' +
+                    ' Selecting the first one.'
+                )
+
+            ab_nr = ab_nr_raw.take(0)
         except Exception:
             print('Injection not found')
             return
 
-        index_frequency = np.where(frequency == self.frequencies)[0].take(0)
+        index_frequency_raw = np.where(frequency == self.frequencies)[0]
+        if len(index_frequency_raw) > 1:
+            self.logger.warn(
+                'This frequency was measured multiple times.' +
+                ' Selecting the first one.'
+            )
+        index_frequency = index_frequency_raw.take(0)
         self.logger.info('index frequency: {}'.format(index_frequency))
 
         # compute starting index in data
         index_ab = self.nr_frequencies * ab_nr + index_frequency
 
-        print('index_ab', index_ab)
         # add offset for m-channel
         subdata = self.data[index_ab][m - 1, :]
         return subdata
