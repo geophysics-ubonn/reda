@@ -144,7 +144,6 @@ class fzj_readbin(object):
     def _read_mcf_file(self, filename):
         # encoding as iso-8859 seems to work also for utf-8
         mcf_content = open(filename, 'r', encoding='ISO-8859-1').read()
-        print(mcf_content)
 
         self.NCh = int(
             re.search(
