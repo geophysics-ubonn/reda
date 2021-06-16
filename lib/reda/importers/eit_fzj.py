@@ -15,6 +15,7 @@ import reda.importers.eit_version_2013 as eit_version_2013
 import reda.importers.eit_version_2017 as eit_version_2017
 import reda.importers.eit_version_2018a as eit_version_2018a
 import reda.importers.eit_version_20200609 as eit_version_20200609
+from reda.importers.fzj_readbin import fzj_readbin
 
 from reda.importers.utils.decorators import enable_result_transforms
 
@@ -87,6 +88,10 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
     multiplexer_group : int|None, optional
         For the multiplexer system (version 2018a) the multiplexer group MUST
         be specified to import data. This is a number between 1 and 4.
+    compute_errors : None|str, optional
+        If this parameter points to the .bin file containing the raw data, then
+        compute data errors based on a noise level analysis of individual time
+        series. Time-consuming!
 
     Returns
     -------
@@ -118,6 +123,19 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
                 data_emd_3p, configs_abmn, data_md_raw)
         else:
             data_emd_4p = None
+
+        binary_file = kwargs.get('compute_errors', None)
+        if binary_file is not None:
+            assert os.path.isfile(
+                binary_file), 'compute_errors must point to a valid .bin file'
+
+            adc_data = importer._extract_adc_data(mat, **kwargs)
+            data_emd_4p = compute_data_errors(
+                data_emd_4p,
+                data_md_raw,
+                adc_data,
+                binary_file,
+            )
     else:
         raise Exception(
             'The file version "{}" is not supported yet.'.format(
@@ -397,3 +415,72 @@ def apply_correction_factors(df, correction_data):
             df['corr_fac'] = np.nan
         df.iloc[item, df.columns.get_loc('corr_fac')] = factor
     return df, corr_data
+
+
+def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
+    """Compute data errors based on a noise-level analysis and subsequent
+    linear error propagation.
+
+    What we need in data_emd_4p:
+
+        * phi_m
+        * phi_n
+        * dphi_m
+        * dphi_n
+        * current (complex)
+
+    """
+    print('Preparing data_emd_4p')
+    print('Merging in complex current')
+    data_emd_4p = pd.merge(
+        data_emd_4p,
+        data_md_raw[['a', 'b', 'frequency', 'datetime', 'Is']],
+        on=['a', 'b', 'frequency', 'datetime'],
+        how='left',
+    )
+
+    print('Add electrode potentials')
+    us3 = adc_data.xs('Us3_1', axis=1, level=1)
+    us3_selected = pd.merge(
+        data_emd_4p[['a', 'b', 'frequency', 'datetime']],
+        us3,
+        on=['a', 'b', 'frequency', 'datetime'],
+        how='left',
+    ).set_index(['a', 'b', 'frequency', 'datetime'])
+    data_emd_4p['pot_m'] = us3_selected.values[
+        np.array(range(us3_selected.shape[0])), data_emd_4p['m'].values - 1]
+    data_emd_4p['pot_n'] = us3_selected.values[
+        np.array(range(us3_selected.shape[0])), data_emd_4p['n'].values - 1]
+
+    obj = fzj_readbin(binary_file)
+
+    # check = (data_emd_4p['pot_m'] - data_emd_4p['pot_n']) / data_emd_4p['Is']
+    print('Compute noise levels')
+
+    def get_noise_levels(row):
+        indices = obj.find_swapped_measurement_indices(
+            row['a'], row['b'],
+            row['frequency'],
+            row['datetime']
+        )
+        noise_levels = []
+        for index in indices:
+            level = obj.fft_analysis_one_channel(
+                index,
+                row['m'],
+            )
+            noise_levels.append(level)
+
+        return np.array(noise_levels)
+
+    noise_levels = data_emd_4p[
+        ['a', 'b', 'frequency', 'datetime']
+    ].apply(get_noise_levels, axis=1)
+
+    data_emd_4p['dpot_m_1'] = noise_levels[:, 0]
+    data_emd_4p['dpot_m_2'] = noise_levels[:, 1]
+    data_emd_4p['dpot_n_1'] = noise_levels[:, 2]
+    data_emd_4p['dpot_n_2'] = noise_levels[:, 3]
+
+    import IPython
+    IPython.embed()
