@@ -42,6 +42,7 @@ def _extract_adc_data(mat, **kwargs):
                     'Ug3_2',
                     'Ug3_3',
                     'Us3_1',
+                    'Us',
                     'Us3_2',
                     'Us3_3',
                     'Ue3_1',
@@ -51,6 +52,10 @@ def _extract_adc_data(mat, **kwargs):
                     fdata['Ug3'][:, :, 0],
                     fdata['Ug3'][:, :, 1],
                     fdata['Ug3'][:, :, 2],
+                    np.mean(
+                        fdata['Us3'],
+                        axis=2,
+                    ),
                     fdata['Us3'][:, :, 0],
                     fdata['Us3'][:, :, 1],
                     fdata['Us3'][:, :, 2],
