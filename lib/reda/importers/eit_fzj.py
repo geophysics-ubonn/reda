@@ -5,6 +5,7 @@ this module acts as an selector for the appropriate import functions.
 """
 import functools
 import os
+# import logging
 
 import numpy as np
 import pandas as pd
@@ -135,6 +136,7 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
                 data_md_raw,
                 adc_data,
                 binary_file,
+                **kwargs,
             )
     else:
         raise Exception(
@@ -417,9 +419,14 @@ def apply_correction_factors(df, correction_data):
     return df, corr_data
 
 
-def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
+def compute_data_errors(
+        data_emd_4p, data_md_raw, adc_data, binary_file, **kwargs):
     """Compute data errors based on a noise-level analysis and subsequent
     linear error propagation.
+
+    Additional Parameters
+    ---------------------
+    error_model_use_diff_noise_level : bool, optional (default: False)
 
     What we need in data_emd_4p:
 
@@ -431,7 +438,10 @@ def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
 
     """
     print('Preparing data_emd_4p')
-    print('Merging in complex current')
+    # print('Merging in complex current')
+    # import IPython
+    # IPython.embed()
+
     data_emd_4p = pd.merge(
         data_emd_4p,
         data_md_raw[['a', 'b', 'frequency', 'datetime', 'Is']],
@@ -440,7 +450,7 @@ def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
     )
 
     print('Add electrode potentials')
-    us3 = adc_data.xs('Us3_1', axis=1, level=1)
+    us3 = adc_data.xs('Us', axis=1, level=1)
     us3_selected = pd.merge(
         data_emd_4p[['a', 'b', 'frequency', 'datetime']],
         us3,
@@ -459,22 +469,58 @@ def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
 
     def get_noise_levels(row):
         indices = obj.find_swapped_measurement_indices(
-            row['a'], row['b'],
+            row['a'],
+            row['b'],
             row['frequency'],
             row['datetime']
         )
         noise_levels = []
         for index in indices:
-            level = obj.fft_analysis_one_channel(
+            # try to remove systematic components
+            ts_m = obj.data[index][row['m'] - 1, :]
+            ts_n = obj.data[index][row['n'] - 1, :]
+            ts_diff = (ts_m - ts_m.mean()) - (ts_n - ts_n.mean())
+
+            fft, u_peaks, noise_level = obj._get_noise_level_from_fft(
+                ts_diff
+            )
+
+            # now analyze the channels separately
+            level1 = obj.fft_analysis_one_channel(
                 index,
                 row['m'],
             )[0]
-            noise_levels.append(level)
-            level = obj.fft_analysis_one_channel(
+            level2 = obj.fft_analysis_one_channel(
                 index,
                 row['n'],
             )[0]
-            noise_levels.append(level)
+
+            # noise level of difference of both time series
+            # logger = logging.getLogger()
+            # logger.warning(
+            #     "IMPORTANT: I'm using the noise level of the ts-difference!")
+            # we assume that the resulting noise component is the result of
+            # both equally sized noise components of the single time series:
+            # diff = t1 - t2
+            # -> d_diff = sqrt(dt1** 2 + dt2 ** 2)
+            # if we assume dt1 == dt2, then
+            # dt1 = dt2 = 1 / np.sqrt(2) d_diff
+            if kwargs.get('error_model_use_diff_noise_level', False):
+                noise_levels.append(noise_level / np.sqrt(2))
+                noise_levels.append(noise_level / np.sqrt(2))
+            else:
+                # individual channel noise levels
+                noise_levels.append(level1)
+                noise_levels.append(level2)
+
+            # current channel noise analysis
+            # TODO: Do properly, for now we only analyse channel 41
+            ts_current = obj.data[index][41, :]
+
+            fft, u_peaks, noise_level_current = obj._get_noise_level_from_fft(
+                ts_current - ts_current.mean()
+            )
+            noise_levels.append(noise_level_current / 1000)
 
         return np.array(noise_levels)
 
@@ -490,10 +536,15 @@ def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
     # import IPython
     # IPython.embed()
 
+    # regular injection
     data_emd_4p['dpot_m_1'] = noise_levels[:, 0]
-    data_emd_4p['dpot_m_2'] = noise_levels[:, 2]
     data_emd_4p['dpot_n_1'] = noise_levels[:, 1]
-    data_emd_4p['dpot_n_2'] = noise_levels[:, 3]
+    data_emd_4p['dcurrent_1'] = noise_levels[:, 2]
+    # swapped injection
+    data_emd_4p['dpot_m_2'] = noise_levels[:, 3]
+    data_emd_4p['dpot_n_2'] = noise_levels[:, 4]
+    data_emd_4p['dcurrent_2'] = noise_levels[:, 5]
+
     data_emd_4p['dpot_m'] = np.sqrt(
         data_emd_4p['dpot_m_1'] ** 2 / 2 +
         data_emd_4p['dpot_m_2'] ** 2 / 2
@@ -502,17 +553,34 @@ def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
         data_emd_4p['dpot_n_1'] ** 2 / 2 +
         data_emd_4p['dpot_n_2'] ** 2 / 2
     )
+    data_emd_4p['dcurrent'] = np.sqrt(
+        data_emd_4p['dcurrent_1'] ** 2 / 2 +
+        data_emd_4p['dcurrent_2'] ** 2 / 2
+    )
 
-    phase_errors = compute_phase_error(
+    magnitude_errors = compute_magnitude_errors(
         data_emd_4p['pot_m'].values,
         data_emd_4p['pot_n'].values,
         data_emd_4p['Is'].values,
         # test: 1 / sqrt(3) to simulate the three repetitions
         data_emd_4p['dpot_m'].values / np.sqrt(3),
         data_emd_4p['dpot_n'].values / np.sqrt(3),
-        dcurrent=np.array(0)
+        dcurrent=data_emd_4p['dcurrent'].values,
+        # dcurrent=np.array(0),
     )
 
+    phase_errors = compute_phase_errors(
+        data_emd_4p['pot_m'].values,
+        data_emd_4p['pot_n'].values,
+        data_emd_4p['Is'].values,
+        # test: 1 / sqrt(3) to simulate the three repetitions
+        data_emd_4p['dpot_m'].values / np.sqrt(3),
+        data_emd_4p['dpot_n'].values / np.sqrt(3),
+        dcurrent=data_emd_4p['dcurrent'].values,
+        # dcurrent=np.array(0),
+    )
+
+    data_emd_4p['r_error'] = magnitude_errors
     data_emd_4p['rpha_error'] = phase_errors * 1000
 
     # import IPython
@@ -520,7 +588,25 @@ def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
     return data_emd_4p
 
 
-def compute_phase_error(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
+def compute_magnitude_errors(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
+    """Compute magnitude errors based on linear error propagation
+    """
+    error_m = np.abs(dphi_m) / np.abs(current)
+    error_n = np.abs(dphi_n) / np.abs(current)
+    error_current = -np.abs(
+        phi_m - phi_n
+    ) / current ** 2 * dcurrent
+
+    error_magnitude = np.sqrt(
+        error_m ** 2 +
+        error_n ** 2 +
+        error_current ** 2 +
+        0
+    )
+    return np.abs(error_magnitude)
+
+
+def compute_phase_errors(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
     """Compute the phase error based on linear error propagation of the
     transfer impedance equation:
 
@@ -577,7 +663,6 @@ def compute_phase_error(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
         -current.real / B - A / B ** 2 * current.imag
     ) * dphi_n.imag
 
-    # TODO: current erms
     error_current_real = prefix * (
         (phi_m.imag - phi_n.imag) / B + A / B ** 2 * (phi_m.real - phi_n.real)
     ) * dcurrent.real
