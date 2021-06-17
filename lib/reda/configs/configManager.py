@@ -168,7 +168,6 @@ class ConfigManager(object):
             ABMN = self._crmod_to_abmn(configs[:, 0:2])
             self.configs = ABMN
 
-
     def load_crmod_or_4c_configs(self, filename):
         """Load configurations either from a CRMod measurement file, or from a
         four-column file. Assume 1-indexed data (start with electrode 1).
@@ -267,6 +266,54 @@ class ConfigManager(object):
                 'utf-8',
             ))
             np.savetxt(fid, all_data, fmt='%i %i %f %f')
+
+    def write_crmod_volt_with_individual_errors(
+            self, filename, data_mids, error_mids,
+            ):
+        """
+
+        """
+        ABMN = self._get_crmod_abmn()
+
+        if isinstance(data_mids, (list, tuple)):
+            mag_data = self.measurements[data_mids[0]]
+            pha_data = self.measurements[data_mids[1]]
+            mag_error = self.measurements[error_mids[0]]
+            pha_error = self.measurements[error_mids[1]]
+        else:
+            raise Exception(
+                'Individual errors for mag-only not implemented yet')
+            mag_data = self.measurements[data_mids]
+            pha_data = np.zeros(data_mids.shape)
+
+        all_data = np.hstack(
+            (
+                ABMN,
+                mag_data[:, np.newaxis],
+                pha_data[:, np.newaxis],
+                mag_error[:, np.newaxis],
+                pha_error[:, np.newaxis],
+            )
+        )
+
+        norm_factor_mag = 1
+        norm_factor_pha = 1
+
+        with open(filename, 'wb') as fid:
+            fid.write(bytes(
+                '{0} T\n'.format(ABMN.shape[0]),
+                'utf-8',
+            ))
+            np.savetxt(fid, all_data, fmt='%i %i %f %f %f %f')
+            fid.write(
+                bytes(
+                    '{} {}\n'.format(
+                        np.sqrt(norm_factor_mag),
+                        np.sqrt(norm_factor_pha)
+                    ),
+                    'utf-8',
+                )
+            )
 
     def write_crmod_config(self, filename):
         """Write the configurations to a configuration file in the CRMod format
