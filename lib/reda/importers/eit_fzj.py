@@ -442,12 +442,13 @@ def compute_data_errors(
     # import IPython
     # IPython.embed()
 
-    data_emd_4p = pd.merge(
-        data_emd_4p,
-        data_md_raw[['a', 'b', 'frequency', 'datetime', 'Is']],
-        on=['a', 'b', 'frequency', 'datetime'],
-        how='left',
-    )
+    if 'Is' not in data_emd_4p.columns:
+        data_emd_4p = pd.merge(
+            data_emd_4p,
+            data_md_raw[['a', 'b', 'frequency', 'datetime', 'Is']],
+            on=['a', 'b', 'frequency', 'datetime'],
+            how='left',
+        )
 
     print('Add electrode potentials')
     us3 = adc_data.xs('Us', axis=1, level=1)
