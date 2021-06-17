@@ -468,19 +468,133 @@ def compute_data_errors(data_emd_4p, data_md_raw, adc_data, binary_file):
             level = obj.fft_analysis_one_channel(
                 index,
                 row['m'],
-            )
+            )[0]
+            noise_levels.append(level)
+            level = obj.fft_analysis_one_channel(
+                index,
+                row['n'],
+            )[0]
             noise_levels.append(level)
 
         return np.array(noise_levels)
 
     noise_levels = data_emd_4p[
-        ['a', 'b', 'frequency', 'datetime']
-    ].apply(get_noise_levels, axis=1)
+        ['a', 'b', 'frequency', 'datetime', 'm', 'n']
+    ].apply(get_noise_levels, axis=1).values
+
+    noise_levels = np.concatenate(noise_levels, axis=1).T
+
+    # hack: convert to voltages
+    noise_levels /= 48
+
+    # import IPython
+    # IPython.embed()
 
     data_emd_4p['dpot_m_1'] = noise_levels[:, 0]
-    data_emd_4p['dpot_m_2'] = noise_levels[:, 1]
-    data_emd_4p['dpot_n_1'] = noise_levels[:, 2]
+    data_emd_4p['dpot_m_2'] = noise_levels[:, 2]
+    data_emd_4p['dpot_n_1'] = noise_levels[:, 1]
     data_emd_4p['dpot_n_2'] = noise_levels[:, 3]
+    data_emd_4p['dpot_m'] = np.sqrt(
+        data_emd_4p['dpot_m_1'] ** 2 / 2 +
+        data_emd_4p['dpot_m_2'] ** 2 / 2
+    )
+    data_emd_4p['dpot_n'] = np.sqrt(
+        data_emd_4p['dpot_n_1'] ** 2 / 2 +
+        data_emd_4p['dpot_n_2'] ** 2 / 2
+    )
 
-    import IPython
-    IPython.embed()
+    phase_errors = compute_phase_error(
+        data_emd_4p['pot_m'].values,
+        data_emd_4p['pot_n'].values,
+        data_emd_4p['Is'].values,
+        # test: 1 / sqrt(3) to simulate the three repetitions
+        data_emd_4p['dpot_m'].values / np.sqrt(3),
+        data_emd_4p['dpot_n'].values / np.sqrt(3),
+        dcurrent=np.array(0)
+    )
+
+    data_emd_4p['rpha_error'] = phase_errors * 1000
+
+    # import IPython
+    # IPython.embed()
+    return data_emd_4p
+
+
+def compute_phase_error(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
+    """Compute the phase error based on linear error propagation of the
+    transfer impedance equation:
+
+        Zt = U_mn / I_ab = (phi_m - phi_n) / I_ab
+
+    Parameters
+    ----------
+    phi_m : numpy.ndarray|complex float
+        Complex potential at electrode m
+    phi_n : numpy.ndarray|complex float
+        Complex potential at electrode n
+    current : numpy.ndarray|complex float
+        Complex current injected at electrodes a and b
+    dphi_m : numpy.ndarray|complex float
+        potential error at electrode m. Real part corresponds to error of the
+        real part of the potential, vice versa for the imaginary part
+    dphi_n : numpy.ndarray|complex float
+        potential error at electrode m. Real part corresponds to error of the
+        real part of the potential, vice versa for the imaginary part
+    dcurrent : numpy.ndarray|complex float
+        current error at electrode m. Real part corresponds to error of the
+        real part of the potential, vice versa for the imaginary part
+
+    Returns
+    -------
+    error_phase : numpy.ndarray|float
+        Phase error in [rad]
+    """
+
+    A = - current.imag * (
+        phi_m.real - phi_n.real
+    ) + current.real * (phi_m.imag - phi_n.imag)
+
+    B = current.real * (phi_m.real - phi_n.real) + current.imag * (
+        phi_m.imag - phi_n.imag
+    )
+
+    # chain rule: d/dx arctan(x) = 1 / (1 + x^2)
+    prefix = 1 / (1 + (A / B) ** 2)
+
+    error_dphi_m_real = prefix * (
+        -current.imag / B + A / B ** 2 * current.real
+    ) * dphi_m.real
+
+    error_dphi_n_real = prefix * (
+        current.imag / B - A / B ** 2 * current.real
+    ) * dphi_m.real
+
+    error_dphi_m_imag = prefix * (
+        current.real / B + A / B ** 2 * current.imag
+    ) * dphi_m.imag
+
+    error_dphi_n_imag = prefix * (
+        -current.real / B - A / B ** 2 * current.imag
+    ) * dphi_n.imag
+
+    # TODO: current erms
+    error_current_real = prefix * (
+        (phi_m.imag - phi_n.imag) / B + A / B ** 2 * (phi_m.real - phi_n.real)
+    ) * dcurrent.real
+
+    error_current_imag = prefix * (
+        -1 * (phi_m.real - phi_n.real) / B +
+        A / B ** 2 * (phi_m.imag - phi_n.imag)
+    ) * dcurrent.imag
+
+    phase_error = np.sqrt(
+        error_dphi_m_real ** 2 +
+        error_dphi_n_real ** 2 +
+        error_dphi_m_imag ** 2 +
+        error_dphi_n_imag ** 2 +
+        error_current_real ** 2 +
+        error_current_imag ** 2 +
+        0
+    )
+
+    return phase_error

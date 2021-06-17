@@ -443,6 +443,20 @@ class fzj_readbin(object):
         fig.tight_layout()
         return fig
 
+    def _get_noise_level_from_fft(self, data, **kwargs):
+        # This would be a good place to try to clean-up the time-series by
+        # removing the excitation frequency, harmonics, and 50/60 Hz, as
+        # well as 16 2/3 train noise
+        fft = np.abs(np.fft.rfft(data - data.mean()))
+        u_peaks, _ = scipy.signal.find_peaks(
+            fft[1:], distance=kwargs.get('peak_distance', 20))
+        peak_values = fft[1 + u_peaks]
+        # fit a horizontal line
+        noise_level = 10 ** np.polyfit(
+            u_peaks, np.log10(peak_values), deg=0
+        )
+        return fft, u_peaks, noise_level
+
     def fft_analysis_one_channel(
             self, measurement_index, channel,
             split_into_three=False, plot=False, **kwargs):
@@ -485,17 +499,8 @@ class fzj_readbin(object):
         noise_levels = []
         plot_figs = []
         for partnr, part in enumerate(ts_parts):
-            # This would be a good place to try to clean-up the time-series by
-            # removing the excitation frequency, harmonics, and 50/60 Hz, as
-            # well as 16 2/3 train noise
-            fft = np.abs(np.fft.rfft(part - part.mean()))
-            u_peaks, _ = scipy.signal.find_peaks(
-                fft[1:], distance=kwargs.get('peak_distance', 20))
-            peak_values = fft[1 + u_peaks]
-            # fit a horizontal line
-            noise_level = 10 ** np.polyfit(
-                u_peaks, np.log10(peak_values), deg=0
-            )
+            fft, u_peaks, noise_level = self._get_noise_level_from_fft(
+                part, **kwargs)
             noise_levels.append(noise_level)
             if plot:
                 plot_figs.append(
@@ -524,6 +529,7 @@ class fzj_readbin(object):
         a : int
             1. Current electrode
         b : int
+
             2. Current electrode
         frequency : float
             Measurement frequency
