@@ -4,7 +4,7 @@ This container holds multi-frequency (spectral) imaging data, that is multiple
 SIP/EIS spectra for different four-point spreads, usually used for subsequent
 tomographic analysis.
 """
-# import functools
+import gc
 import os
 from numbers import Number
 
@@ -594,6 +594,7 @@ class sEIT(BaseContainer, sEITImporters):
                 plot_filename=plot_filename
             )
             plt.close(spec_fig)
+            gc.collect()
 
     def plot_pseudosections(self, column, filename=None, return_fig=False):
         """Create a multi-plot with one pseudosection for each frequency.
