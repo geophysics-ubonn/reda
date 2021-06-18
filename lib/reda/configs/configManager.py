@@ -268,7 +268,7 @@ class ConfigManager(object):
             np.savetxt(fid, all_data, fmt='%i %i %f %f')
 
     def write_crmod_volt_with_individual_errors(
-            self, filename, data_mids, error_mids,
+            self, filename, data_mids, error_mids, norm_mag=1, norm_pha=1,
             ):
         """
 
@@ -296,9 +296,6 @@ class ConfigManager(object):
             )
         )
 
-        norm_factor_mag = 1
-        norm_factor_pha = 1
-
         with open(filename, 'wb') as fid:
             fid.write(bytes(
                 '{0} T\n'.format(ABMN.shape[0]),
@@ -307,10 +304,7 @@ class ConfigManager(object):
             np.savetxt(fid, all_data, fmt='%i %i %f %f %f %f')
             fid.write(
                 bytes(
-                    '{} {}\n'.format(
-                        np.sqrt(norm_factor_mag),
-                        np.sqrt(norm_factor_pha)
-                    ),
+                    '{} {}\n'.format(norm_mag, norm_pha),
                     'utf-8',
                 )
             )
