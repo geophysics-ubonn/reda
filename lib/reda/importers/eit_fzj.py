@@ -568,6 +568,7 @@ def compute_data_errors(
         data_emd_4p['dpot_n'].values / np.sqrt(3),
         dcurrent=data_emd_4p['dcurrent'].values,
         # dcurrent=np.array(0),
+        **kwargs
     )
 
     phase_errors = compute_phase_errors(
@@ -579,6 +580,7 @@ def compute_data_errors(
         data_emd_4p['dpot_n'].values / np.sqrt(3),
         dcurrent=data_emd_4p['dcurrent'].values,
         # dcurrent=np.array(0),
+        **kwargs
     )
 
     data_emd_4p['r_error'] = magnitude_errors
@@ -589,7 +591,8 @@ def compute_data_errors(
     return data_emd_4p
 
 
-def compute_magnitude_errors(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
+def compute_magnitude_errors(
+        phi_m, phi_n, current, dphi_m, dphi_n, dcurrent, **kwargs):
     """Compute magnitude errors based on linear error propagation
     """
     error_m = np.abs(dphi_m) / np.abs(current)
@@ -607,7 +610,8 @@ def compute_magnitude_errors(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
     return np.abs(error_magnitude)
 
 
-def compute_phase_errors(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
+def compute_phase_errors(
+        phi_m, phi_n, current, dphi_m, dphi_n, dcurrent, **kwargs):
     """Compute the phase error based on linear error propagation of the
     transfer impedance equation:
 
@@ -673,14 +677,15 @@ def compute_phase_errors(phi_m, phi_n, current, dphi_m, dphi_n, dcurrent):
         A / B ** 2 * (phi_m.imag - phi_n.imag)
     ) * dcurrent.imag
 
-    phase_error = np.sqrt(
-        error_dphi_m_real ** 2 +
-        error_dphi_n_real ** 2 +
-        error_dphi_m_imag ** 2 +
-        error_dphi_n_imag ** 2 +
-        error_current_real ** 2 +
-        error_current_imag ** 2 +
-        0
-    )
+    inner_term = 0
+    inner_term += error_dphi_m_real ** 2
+    inner_term += error_dphi_n_real ** 2
+    inner_term += error_dphi_m_imag ** 2
+    inner_term += error_dphi_n_imag ** 2
+    if not kwargs.get('errmod_pha_no_current_error', False):
+        inner_term += error_current_real ** 2
+        inner_term += error_current_imag ** 2
+
+    phase_error = np.sqrt(inner_term)
 
     return phase_error
