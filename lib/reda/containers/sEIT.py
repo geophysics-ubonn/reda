@@ -199,7 +199,7 @@ class sEIT(BaseContainer, sEITImporters):
         query : string
             The query string to be evaluated. Is directly provided to
             pandas.DataFrame.query
-        inplace : bool
+        inplace : bool, optional (default: True)
             if True, change the container dataframe in place (defaults to True)
 
         Returns
@@ -339,13 +339,23 @@ class sEIT(BaseContainer, sEITImporters):
         """Remove all data points that belong to spectra that did not retain at
         least **percAccept** percent of the number of data points.
 
+        Parameters
+        ----------
+        flimit : float, optional (default: 1000)
+            The frequency limit up to which the criterium will be applied. The
+            value is included into the range (<= flimit)
+        percAccept : float, optional (default: 85)
+            The percentage of retained data points below which a spectrum is
+            removed
+
         ..warning::
 
             This function does not honor additional dimensions (e.g.,
             timesteps) yet!
 
         """
-        assert percAccept > 0 and percAccept < 100
+        assert percAccept > 0 and percAccept < 100, \
+            'percAccept must lie within ]0, 100)'
 
         def _retain_only_complete_spectra(item, fmax, acceptN):
             """Function called using pd.filter, applied to all spectra in the
