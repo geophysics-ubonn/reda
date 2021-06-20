@@ -657,28 +657,28 @@ def compute_phase_errors(
 
     error_dphi_m_real = prefix * (
         -current.imag / B + A / B ** 2 * current.real
-    ) * dphi_m.real
+    ) * dphi_m
 
     error_dphi_n_real = prefix * (
         current.imag / B - A / B ** 2 * current.real
-    ) * dphi_m.real
+    ) * dphi_m
 
     error_dphi_m_imag = prefix * (
         current.real / B + A / B ** 2 * current.imag
-    ) * dphi_m.imag
+    ) * dphi_m
 
     error_dphi_n_imag = prefix * (
         -current.real / B - A / B ** 2 * current.imag
-    ) * dphi_n.imag
+    ) * dphi_n
 
     error_current_real = prefix * (
         (phi_m.imag - phi_n.imag) / B + A / B ** 2 * (phi_m.real - phi_n.real)
-    ) * dcurrent.real
+    ) * dcurrent
 
     error_current_imag = prefix * (
         -1 * (phi_m.real - phi_n.real) / B +
         A / B ** 2 * (phi_m.imag - phi_n.imag)
-    ) * dcurrent.imag
+    ) * dcurrent
 
     inner_term = 0
     inner_term += error_dphi_m_real ** 2
