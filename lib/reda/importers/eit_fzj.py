@@ -531,8 +531,11 @@ def compute_data_errors(
 
     noise_levels = np.concatenate(noise_levels, axis=1).T
 
-    # hack: convert to voltages
+    # hack: convert to voltages: FFT <-> voltage noise level
     noise_levels /= 48
+
+    # propagate noise level on time -series down through the lockin
+    noise_levels /= 40
 
     # import IPython
     # IPython.embed()
@@ -564,8 +567,8 @@ def compute_data_errors(
         data_emd_4p['pot_n'].values,
         data_emd_4p['Is'].values,
         # test: 1 / sqrt(3) to simulate the three repetitions
-        data_emd_4p['dpot_m'].values / np.sqrt(3),
-        data_emd_4p['dpot_n'].values / np.sqrt(3),
+        data_emd_4p['dpot_m'].values,  # / np.sqrt(3),
+        data_emd_4p['dpot_n'].values,  # / np.sqrt(3),
         dcurrent=data_emd_4p['dcurrent'].values,
         # dcurrent=np.array(0),
         **kwargs
@@ -576,8 +579,8 @@ def compute_data_errors(
         data_emd_4p['pot_n'].values,
         data_emd_4p['Is'].values,
         # test: 1 / sqrt(3) to simulate the three repetitions
-        data_emd_4p['dpot_m'].values / np.sqrt(3),
-        data_emd_4p['dpot_n'].values / np.sqrt(3),
+        data_emd_4p['dpot_m'].values,  # / np.sqrt(3),
+        data_emd_4p['dpot_n'].values,  # / np.sqrt(3),
         dcurrent=data_emd_4p['dcurrent'].values,
         # dcurrent=np.array(0),
         **kwargs
