@@ -12,8 +12,11 @@ class sip_response():
     """Hold one EIS/SIP spectrum and return it in various formats
     """
     def __init__(self, frequencies, rcomplex=None, ccomplex=None,
-                 rmag=None, rpha=None):
+                 rmag=None, rpha=None, rmag_err=None, rpha_err=None):
         """
+
+        WARNING: rmag_err and rpha_err are only used for plotting. At this
+        point no error propagation is done.
 
         Parameters
         ----------
@@ -27,6 +30,10 @@ class sip_response():
             Real valued resistance/resistivity magnitude values (size N)
         rpha : :class:`numpy.ndarray`, optional
             Real valued resistance/resistivity phase values (size N)
+        rmag_err : :class:`numpy.ndarray`, optional
+            Magnitude error
+        rpha_err : :class:`numpy.ndarray`, optional
+            Phase error
 
         """
         if rcomplex is None and ccomplex is None and (
@@ -46,6 +53,13 @@ class sip_response():
         elif rmag is not None and rpha is not None:
             self.rcomplex = rmag * np.exp(1j * rpha / 1000.0)
             self.ccomplex = convert('rcomplex', 'ccomplex', self.rcomplex)
+
+        self.rmag_error = None
+        self.rpha_error = None
+        if rmag_err:
+            self.rmag_error = rmag_err
+        if rpha_err:
+            self.rpha_error = rpha_err
 
         self.rmag = np.abs(self.rcomplex)
         self.rpha = np.arctan2(
@@ -161,6 +175,15 @@ class sip_response():
         # resistivity phase
         ax = axes[0, 1]
         ax.semilogx(self.frequencies, -self.rpha, '.-', color='k')
+        if self.rpha_error is not None:
+            ax.fill_between(
+                self.frequencies,
+                -self.rpha - self.rpha_error,
+                -self.rpha + self.rpha_error,
+                hatch='/',
+                alpha=0.5,
+            )
+
         # note the switch of _min/_max because we change the sign while
         # plotting
         ymin = limits.get('rpha_max', None)
