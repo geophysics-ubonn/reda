@@ -98,7 +98,7 @@ Print statistics
 
 
     --- Data Journal Start ---
-    2021-06-21 09:30:02.914958
+    2021-06-21 10:03:41.392176
     Data was imported from file  (1460 data points)
     --- Data Journal End ---
 
@@ -126,8 +126,8 @@ This here is an activity list
 
  .. code-block:: none
 
-    2021-06-21 09:30:01,568 - reda.containers.ERT - INFO - IRIS Syscal Pro bin import
-    2021-06-21 09:30:02,378 - reda.containers.ERT - INFO - Data sized changed from 0 to 1460
+    2021-06-21 10:03:40,011 - reda.containers.ERT - INFO - IRIS Syscal Pro bin import
+    2021-06-21 10:03:40,838 - reda.containers.ERT - INFO - Data sized changed from 0 to 1460
 
 
 
@@ -194,7 +194,7 @@ points
 
 
     --- Data Journal Start ---
-    2021-06-21 09:30:04.108138
+    2021-06-21 10:03:42.612829
     Data was imported from file  (1460 data points)
     --- Data Journal End ---
 

@@ -504,7 +504,7 @@
                 <span class="s1">&#39;No correction factor found for this configuration&#39;</span>
             <span class="p">)</span>
 
-        <span class="n">factor</span> <span class="o">=</span> <span class="n">corr_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
+        <span class="n">factor</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones_like</span><span class="p">(</span><span class="n">item</span><span class="p">)</span> <span class="o">*</span> <span class="n">corr_data</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
         <span class="c1"># apply correction factor</span>
         <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="s1">&#39;Zt&#39;</span><span class="p">,</span> <span class="s1">&#39;Vmn&#39;</span><span class="p">,</span> <span class="s1">&#39;rho_a&#39;</span><span class="p">):</span>
             <span class="k">if</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
