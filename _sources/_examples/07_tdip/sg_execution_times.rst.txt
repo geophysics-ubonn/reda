@@ -5,12 +5,12 @@
 
 Computation times
 =================
-**00:05.704** total execution time for **_examples_07_tdip** files:
+**00:05.375** total execution time for **_examples_07_tdip** files:
 
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip.py` (``plot_syscal_ip.py``)     | 00:03.494 | 0.0 MB |
+| :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip.py` (``plot_syscal_ip.py``)     | 00:03.287 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_07_tdip_plot_mpt_das.py` (``plot_mpt_das.py``)         | 00:01.371 | 0.0 MB |
+| :ref:`sphx_glr__examples_07_tdip_plot_mpt_das.py` (``plot_mpt_das.py``)         | 00:01.327 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip_2.py` (``plot_syscal_ip_2.py``) | 00:00.839 | 0.0 MB |
+| :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip_2.py` (``plot_syscal_ip_2.py``) | 00:00.761 | 0.0 MB |
 +---------------------------------------------------------------------------------+-----------+--------+

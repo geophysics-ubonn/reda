@@ -285,7 +285,6 @@
             <span class="n">ABMN</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_crmod_to_abmn</span><span class="p">(</span><span class="n">configs</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">])</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="o">=</span> <span class="n">ABMN</span></div>
 
-
 <div class="viewcode-block" id="ConfigManager.load_crmod_or_4c_configs"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.load_crmod_or_4c_configs">[docs]</a>    <span class="k">def</span> <span class="nf">load_crmod_or_4c_configs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Load configurations either from a CRMod measurement file, or from a</span>
 <span class="sd">        four-column file. Assume 1-indexed data (start with electrode 1).</span>
@@ -384,6 +383,54 @@
                 <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
             <span class="p">))</span>
             <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">all_data</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%i</span><span class="s1"> </span><span class="si">%i</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ConfigManager.write_crmod_volt_with_individual_errors"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.write_crmod_volt_with_individual_errors">[docs]</a>    <span class="k">def</span> <span class="nf">write_crmod_volt_with_individual_errors</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">data_mids</span><span class="p">,</span> <span class="n">error_mids</span><span class="p">,</span>
+            <span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">ABMN</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_get_crmod_abmn</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">data_mids</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span> <span class="nb">tuple</span><span class="p">)):</span>
+            <span class="n">mag_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span><span class="p">[</span><span class="n">data_mids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">pha_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span><span class="p">[</span><span class="n">data_mids</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="n">mag_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span><span class="p">[</span><span class="n">error_mids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+            <span class="n">pha_error</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span><span class="p">[</span><span class="n">error_mids</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span>
+                <span class="s1">&#39;Individual errors for mag-only not implemented yet&#39;</span><span class="p">)</span>
+            <span class="n">mag_data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">measurements</span><span class="p">[</span><span class="n">data_mids</span><span class="p">]</span>
+            <span class="n">pha_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">data_mids</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+        <span class="n">all_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">hstack</span><span class="p">(</span>
+            <span class="p">(</span>
+                <span class="n">ABMN</span><span class="p">,</span>
+                <span class="n">mag_data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="n">pha_data</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="n">mag_error</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+                <span class="n">pha_error</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">],</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+
+        <span class="n">norm_factor_mag</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">norm_factor_pha</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">fid</span><span class="p">:</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span>
+                <span class="s1">&#39;</span><span class="si">{0}</span><span class="s1"> T</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ABMN</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span>
+                <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+            <span class="p">))</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">savetxt</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span> <span class="n">all_data</span><span class="p">,</span> <span class="n">fmt</span><span class="o">=</span><span class="s1">&#39;</span><span class="si">%i</span><span class="s1"> </span><span class="si">%i</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1"> </span><span class="si">%f</span><span class="s1">&#39;</span><span class="p">)</span>
+            <span class="n">fid</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="nb">bytes</span><span class="p">(</span>
+                    <span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> </span><span class="si">{}</span><span class="se">\n</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">norm_factor_mag</span><span class="p">),</span>
+                        <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">norm_factor_pha</span><span class="p">)</span>
+                    <span class="p">),</span>
+                    <span class="s1">&#39;utf-8&#39;</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="p">)</span></div>
 
 <div class="viewcode-block" id="ConfigManager.write_crmod_config"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.write_crmod_config">[docs]</a>    <span class="k">def</span> <span class="nf">write_crmod_config</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Write the configurations to a configuration file in the CRMod format</span>
