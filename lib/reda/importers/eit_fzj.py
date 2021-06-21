@@ -387,7 +387,7 @@ def apply_correction_factors(df, correction_data):
                 'No correction factor found for this configuration'
             )
 
-        factor = corr_data[index, 4]
+        factor = np.ones_like(item) * corr_data[index, 4]
         # apply correction factor
         for col in ('r', 'Zt', 'Vmn', 'rho_a'):
             if col in df.columns:
