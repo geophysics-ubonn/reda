@@ -482,18 +482,34 @@ def compute_data_errors(
             ts_n = obj.data[index][row['n'] - 1, :]
             ts_diff = (ts_m - ts_m.mean()) - (ts_n - ts_n.mean())
 
+            fdata = obj.frequency_data.iloc[index]
+            fs = fdata['sampling_frequency'] / fdata['oversampling']
+
             fft, u_peaks, noise_level = obj._get_noise_level_from_fft(
-                ts_diff
+                ts_diff,
+                fs=fs,
             )
 
             # now analyze the channels separately
             level1 = obj.fft_analysis_one_channel(
                 index,
                 row['m'],
+                remove_excitation_frequency=kwargs.get(
+                    'remove_excitation_frequency', False
+                ),
+                remove_noise_harmonics=kwargs.get(
+                    'remove_noise_harmonics', False
+                ),
             )[0]
             level2 = obj.fft_analysis_one_channel(
                 index,
                 row['n'],
+                remove_excitation_frequency=kwargs.get(
+                    'remove_excitation_frequency', False
+                ),
+                remove_noise_harmonics=kwargs.get(
+                    'remove_noise_harmonics', False
+                ),
             )[0]
 
             # noise level of difference of both time series
@@ -519,7 +535,8 @@ def compute_data_errors(
             ts_current = obj.data[index][41, :]
 
             fft, u_peaks, noise_level_current = obj._get_noise_level_from_fft(
-                ts_current - ts_current.mean()
+                ts_current - ts_current.mean(),
+                fs=fs,
             )
             noise_levels.append(noise_level_current / 1000)
 
