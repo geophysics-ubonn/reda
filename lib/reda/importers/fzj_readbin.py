@@ -443,14 +443,37 @@ class fzj_readbin(object):
         fig.tight_layout()
         return fig
 
-    def _get_noise_level_from_fft(self, data, **kwargs):
+    def _get_noise_level_from_fft(self, data, fs=None, **kwargs):
         # This would be a good place to try to clean-up the time-series by
         # removing the excitation frequency, harmonics, and 50/60 Hz, as
         # well as 16 2/3 train noise
         fft = np.abs(np.fft.rfft(data - data.mean()))
+
+        if fs is not None:
+            freqs = np.fft.rfftfreq(data.size, 1 / fs)
+            for i in range(1, 11):
+                fmin = i * 50 - 5
+                fmax = i * 50 + 5
+                if fmin >= freqs.max() or fmax >= freqs.max():
+                    continue
+                index_min = np.argmin(np.abs(freqs - fmin))
+                index_max = np.argmin(np.abs(freqs - fmax))
+                fft[index_min:index_max] = 0
+
+        # hack: only look at data above 50 hz
+        index = np.argmin(np.abs(freqs - 50))
+        fft[0:index] = 0
+
         u_peaks, _ = scipy.signal.find_peaks(
-            fft[1:], distance=kwargs.get('peak_distance', 20))
+            fft[1:], distance=kwargs.get('peak_distance', 20)
+        )
         peak_values = fft[1 + u_peaks]
+
+#         print('peak_values')
+#         import IPython
+#         IPython.embed()
+#         exit()
+
         # fit a horizontal line
         noise_level = 10 ** np.polyfit(
             u_peaks, np.log10(peak_values), deg=0
@@ -474,6 +497,10 @@ class fzj_readbin(object):
             separately.
         plot: bool, optional (default: False)
             If True, generate plots of the time-series and noise level
+        remove_excitation_frequency : bool, optional (default: False)
+            .
+        remove_noise_harmonics : bool (default, False)
+            .
 
         Additional Parameters
         ---------------------
@@ -490,17 +517,60 @@ class fzj_readbin(object):
             If generated return plots in this list
         """
         ts = self.data[measurement_index][channel - 1, :]
+        if kwargs.get('remove_excitation_frequency', False):
+            print('REMOVING EXCITATION SIGNAL')
+            fdata = self.frequency_data.iloc[measurement_index]
+            frequency = fdata['frequency']
+            fs = fdata['sampling_frequency'] / fdata['oversampling']
+            mage, phae = self._get_lockin(ts, frequency, fs)
+            ts_signal = self._gen_signal(mage, phae, frequency, fs, ts.size)
+
+            # ts = ts_signal
+            # print(ts, ts.shape)
+            ts = ts - ts_signal
+            pass
+
+        if kwargs.get('remove_noise_harmonics', False):
+            print('REMOVING HARMONICS')
+            pass
+            # remove harmonics of signal
+            fdata = self.frequency_data.iloc[measurement_index]
+            frequency = fdata['frequency']
+            fs = fdata['sampling_frequency'] / fdata['oversampling']
+            for i in range(1, 5):
+                fs_harmonic = frequency * i
+                mage, phae = self._get_lockin(ts, fs_harmonic, fs)
+                ts_signal = self._gen_signal(
+                    mage, phae, fs_harmonic, fs, ts.size
+                )
+                ts = ts - ts_signal
+
+            for i in range(1, 10):
+                fs_harmonic = 50 * i
+                mage, phae = self._get_lockin(ts, fs_harmonic, fs)
+                ts_signal = self._gen_signal(
+                    mage, phae, fs_harmonic, fs, ts.size
+                )
+                ts = ts - ts_signal
+
         if split_into_three:
             ts_parts = np.split(ts, 3)
         else:
             # analyze the full ts
             ts_parts = [ts, ]
 
+        fdata = self.frequency_data.iloc[measurement_index]
+        frequency = fdata['frequency']
+        fs = fdata['sampling_frequency'] / fdata['oversampling']
+
         noise_levels = []
         plot_figs = []
         for partnr, part in enumerate(ts_parts):
             fft, u_peaks, noise_level = self._get_noise_level_from_fft(
-                part, **kwargs)
+                part,
+                fs,
+                **kwargs
+            )
             noise_levels.append(noise_level)
             if plot:
                 plot_figs.append(
@@ -600,3 +670,78 @@ class fzj_readbin(object):
         ax2.set_ylabel('Max. Signal [V]', color='orange')
         ax.grid()
         return fig
+
+    @staticmethod
+    def _get_lockin(data, f, fs):
+        """Conduct a lockin-analysis of the given signal
+
+        https://doi.org/10.1109/TIM.2007.908604
+
+        Note that a phase of 0 mrad will be realized for cos functions, not
+        sines!
+
+        https://en.wikipedia.org/wiki/Phase_(waves)#Phase_shift
+
+        Parameters
+        ----------
+        data : numpy.ndarray, size 3000
+            Measured data
+        f : float
+            Analysis frequency
+        fs : float
+            Sampling frequency
+
+        Returns
+        -------
+        magnitude : float
+            Magnitude of signal at frequency f
+        phase : float
+            Phase of signal at frequency f [rad]
+
+        """
+        Ns = data.size
+        Ni = np.arange(Ns)
+
+        # reference signal sine
+        ref_x = np.cos(2 * np.pi * f * Ni / fs)
+        ref_y = np.sin(2 * np.pi * f * Ni / fs)
+
+        # uncomment to plot reference signals
+        # fig, ax = plt.subplots()
+        # ax.plot(ref_x)
+        # ax.plot(ref_y)
+        # ax.set_xlabel('Time [s]')
+        # fig.tight_layout()
+        # fig.savefig('lockin_reference_signals.jpg', dpi=300)
+
+        X = ref_x @ data / Ns
+        Y = ref_y @ data / Ns
+
+        u = np.sum(X) - 1j * np.sum(Y)
+        # u = 2 * u / N
+        magnitude = 2 * np.abs(u)
+
+        # phase_mrad = np.arctan2(np.imag(u), np.real(u)) * 1000
+        phase_mrad = np.arctan2(-Y, X)
+
+        # fft
+        # fft_signal = np.fft.rfft(data)
+        # frequencies_fft = np.fft.rfftfreq(N, T / N)
+        # print(frequencies_fft[3])
+
+        # print('FFT entry:', fft_signal[3] * 2 / N)
+        # phase_fft = (
+        #     np.arctan2(
+        #         np.imag(fft_signal[3]), np.real(fft_signal[3])
+        #     ) + np.pi / 2
+        # ) * 1000
+        # print(
+        #     'From fft: {}, {} mrad'.format(
+        #         np.abs(fft_signal[3] * 2 / N), phase_fft))
+        return magnitude, phase_mrad
+
+    @staticmethod
+    def _gen_signal(mag, pha, f, fs, Ni):
+        t = np.linspace(0, Ni - 1, Ni)
+        signal = mag * np.cos(2 * np.pi * f * t / fs + pha)
+        return signal
