@@ -56,9 +56,9 @@ class sip_response():
 
         self.rmag_error = None
         self.rpha_error = None
-        if rmag_err:
+        if rmag_err is not None:
             self.rmag_error = rmag_err
-        if rpha_err:
+        if rpha_err is not None:
             self.rpha_error = rpha_err
 
         self.rmag = np.abs(self.rcomplex)
@@ -171,6 +171,13 @@ class sip_response():
             self.frequencies, self.rmag, '.-', color='k',
             label=kwargs.get('label_nor', 'normal'),
         )
+        if self.rmag_error is not None:
+            ax.fill_between(
+                self.frequencies,
+                self.rmag - self.rmag_error,
+                self.rmag + self.rmag_error,
+                alpha=0.5,
+            )
 
         # resistivity phase
         ax = axes[0, 1]
@@ -180,7 +187,6 @@ class sip_response():
                 self.frequencies,
                 -self.rpha - self.rpha_error,
                 -self.rpha + self.rpha_error,
-                hatch='/',
                 alpha=0.5,
             )
 
