@@ -449,7 +449,8 @@ class fzj_readbin(object):
         # well as 16 2/3 train noise
         fft = np.abs(np.fft.rfft(data - data.mean()))
 
-        if fs is not None:
+        if fs is not None and kwargs.get('mask_noise_harmonics', False):
+            # just mask 50 Hz harmonic ranges in the fft
             freqs = np.fft.rfftfreq(data.size, 1 / fs)
             for i in range(1, 11):
                 fmin = i * 50 - 5
@@ -460,9 +461,9 @@ class fzj_readbin(object):
                 index_max = np.argmin(np.abs(freqs - fmax))
                 fft[index_min:index_max] = 0
 
-        # hack: only look at data above 50 hz
-        index = np.argmin(np.abs(freqs - 50))
-        fft[0:index] = 0
+            # hack: in addition only look at data above 50 hz
+            index = np.argmin(np.abs(freqs - 50))
+            fft[0:index] = 0
 
         u_peaks, _ = scipy.signal.find_peaks(
             fft[1:], distance=kwargs.get('peak_distance', 20)
