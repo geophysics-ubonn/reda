@@ -235,6 +235,23 @@ class sEIT(BaseContainer, sEITImporters):
         print('Remaining frequencies:')
         print(sorted(g.groups.keys()))
 
+    def keep_frequencies(self, frequencies):
+        """Keep only the requested frequencies, remove everything else.
+
+        Parameters
+        ----------
+        frequencies : tuple
+            Tuple of frequencies to keep.
+        """
+        assert isinstance(frequencies, tuple), \
+            'Parameter frequencies must be a tuple!'
+        self.data.query(
+            'frequency in {}'.format(
+                frequencies
+            ),
+            inplace=True,
+        )
+
     def compute_K_analytical(self, spacing):
         """Assuming an equal electrode spacing, compute the K-factor over a
         homogeneous half-space.
