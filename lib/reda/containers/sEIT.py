@@ -866,3 +866,33 @@ class sEIT(BaseContainer, sEITImporters):
             The configurations, 1. indexed (starting with 1)
         """
         return np.array(list(self.abmn.groups.keys()))
+
+    def keep_only_configs(self, configs_to_keep, frequency=None):
+        """Keep only the supplied configs. If frequency is provided, only this
+        frequency is filtered and all other frequencies are left as is.
+
+        Parameters
+        ----------
+
+        """
+        if frequency is not None:
+            g = self.data.groupby(['frequency', 'a', 'b', 'm', 'n'])
+        else:
+            g = self.data.groupby(['a', 'b', 'm', 'n'])
+
+        def filter_groups_abmn(x):
+            if frequency is not None:
+                if x['frequency'].iloc[0] != frequency:
+                    return True
+
+            abmn = x[['a', 'b', 'm', 'n']].values[0]
+
+            keep_config = np.any(
+                np.all(abmn == configs_to_keep, axis=1)
+            )
+
+            if keep_config:
+                return True
+            return False
+
+        self.data = g.filter(filter_groups_abmn)
