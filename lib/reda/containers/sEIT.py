@@ -855,3 +855,14 @@ class sEIT(BaseContainer, sEITImporters):
         tmpdf['r'] = np.real(tmpdf['r']).astype(float)
 
         self.data[['Zt', 'r', 'rpha']] = tmpdf[['Zt', 'r', 'rpha']]
+
+    def get_configs(self):
+        """Return all unique (a,b,m,n) configurations in this container. Does
+        not differentiate between frequencies.
+
+        Returns
+        -------
+        unique_configs : Nx4 numpy.ndarray
+            The configurations, 1. indexed (starting with 1)
+        """
+        return np.array(list(self.abmn.groups.keys()))
