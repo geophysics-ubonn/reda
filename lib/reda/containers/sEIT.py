@@ -24,6 +24,7 @@ import reda.eis.plots as eis_plot
 
 from reda.utils.decorators_and_managers import append_doc_of
 from reda.utils.decorators_and_managers import LogDataChanges
+from reda.utils import opt_import
 
 import reda.exporters.crtomo as exporter_crtomo
 
@@ -491,10 +492,23 @@ class sEIT(BaseContainer, sEITImporters):
                     k = item['k']
                 else:
                     k = 1
+
+                if 'r_error' in item.columns:
+                    rmag_error = item['r_error']
+                else:
+                    rmag_error = None
+
+                if 'rpha_error' in item.columns:
+                    rpha_error = item['rpha_error']
+                else:
+                    rpha_error = None
+
                 spectrum_nor[timestep] = eis_plot.sip_response(
                     frequencies=item['frequency'].values,
                     rmag=item['r'] * k,
                     rpha=item['rpha'],
+                    rmag_err=rmag_error,
+                    rpha_err=rpha_error,
                 )
 
         if subdata_rec.shape[0] > 0:
@@ -896,3 +910,65 @@ class sEIT(BaseContainer, sEITImporters):
             return False
 
         self.data = g.filter(filter_groups_abmn)
+
+    def debye_decomposition_one_spectrum(
+            self, abmn, spectrum, gen_plots_in_dir=None):
+        """Conduct a Debye Decomposition on each spectrum. Save certain
+        parameters in sEIT.data columns and/or return fit data
+        """
+        opt_import('lib_dd')
+        import lib_dd.decomposition.ccd_single as ccd_single
+        import lib_dd.config.cfg_single as cfg_single
+
+        print(abmn)
+
+        # set options using this dict-like object
+        config = cfg_single.cfg_single()
+        config['frequency_file'] = spectrum['frequency'].values
+        rmag_rpha = np.hstack(
+            (
+                spectrum['r'],
+                spectrum['rpha'],
+            )
+        )
+        # print('rmag_rpha')
+        # print(rmag_rpha)
+        config['data_file'] = rmag_rpha
+        ccd_obj = ccd_single.ccd_single(config)
+        ccd_obj.fit_data()
+        last_it = ccd_obj.results[0].iterations[-1]
+
+        if gen_plots_in_dir is not None:
+            pwd = os.getcwd()
+            os.makedirs(gen_plots_in_dir, exist_ok=True)
+            os.chdir(gen_plots_in_dir)
+            filename = 'plot_{}.jpg'.format(
+                abmn.values[0, :]
+            )
+            print('FILENAME', filename)
+            last_it.plot(filename=filename)
+            os.chdir(pwd)
+
+        return last_it
+
+    def debye_decomposition_all_spectra(self, gen_plots_in_dir=None):
+        def apply_dd(spectrum):
+            # print(abmn)
+            # return 1
+            last_it = self.debye_decomposition_one_spectrum(
+                spectrum[['a', 'b', 'm', 'n']],
+                spectrum,
+                gen_plots_in_dir,
+            )
+            rms_re, rms_im = last_it.rms_values['rms_re_im_noerr']
+            return rms_im
+
+        r = self.abmn.apply(apply_dd)
+        # for abmn, spectrum in self.abmn:
+        #     last_it = self.debye_decomposition_one_spectrum(abmn, spectrum)
+        #     rms_re, rms_im = last_it.rms_values['rms_re_im_noerr']
+        #     print(rms_re)
+        #     print(rms_im)
+        #     exit()
+        import IPython
+        IPython.embed()
