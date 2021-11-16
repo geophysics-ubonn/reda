@@ -161,7 +161,11 @@ class ERT(BaseContainer, ERTImporters):
             'n',
             'r',
         ]
-        self.data = self.check_dataframe(data)
+        self.data = None
+        if data is not None:
+            self.check_dataframe(data)
+            self._add_to_data(data)
+            # self.data = self.check_dataframe(data)
         self.electrode_positions = electrode_positions
         self.topography = topography
 

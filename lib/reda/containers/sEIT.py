@@ -4,7 +4,7 @@ This container holds multi-frequency (spectral) imaging data, that is multiple
 SIP/EIS spectra for different four-point spreads, usually used for subsequent
 tomographic analysis.
 """
-# import functools
+import gc
 import os
 from numbers import Number
 
@@ -24,6 +24,7 @@ import reda.eis.plots as eis_plot
 
 from reda.utils.decorators_and_managers import append_doc_of
 from reda.utils.decorators_and_managers import LogDataChanges
+from reda.utils import opt_import
 
 import reda.exporters.crtomo as exporter_crtomo
 
@@ -199,7 +200,7 @@ class sEIT(BaseContainer, sEITImporters):
         query : string
             The query string to be evaluated. Is directly provided to
             pandas.DataFrame.query
-        inplace : bool
+        inplace : bool, optional (default: True)
             if True, change the container dataframe in place (defaults to True)
 
         Returns
@@ -234,6 +235,23 @@ class sEIT(BaseContainer, sEITImporters):
         g = self.data.groupby('frequency')
         print('Remaining frequencies:')
         print(sorted(g.groups.keys()))
+
+    def keep_frequencies(self, frequencies):
+        """Keep only the requested frequencies, remove everything else.
+
+        Parameters
+        ----------
+        frequencies : tuple
+            Tuple of frequencies to keep.
+        """
+        assert isinstance(frequencies, tuple), \
+            'Parameter frequencies must be a tuple!'
+        self.data.query(
+            'frequency in {}'.format(
+                frequencies
+            ),
+            inplace=True,
+        )
 
     def compute_K_analytical(self, spacing):
         """Assuming an equal electrode spacing, compute the K-factor over a
@@ -339,13 +357,23 @@ class sEIT(BaseContainer, sEITImporters):
         """Remove all data points that belong to spectra that did not retain at
         least **percAccept** percent of the number of data points.
 
+        Parameters
+        ----------
+        flimit : float, optional (default: 1000)
+            The frequency limit up to which the criterium will be applied. The
+            value is included into the range (<= flimit)
+        percAccept : float, optional (default: 85)
+            The percentage of retained data points below which a spectrum is
+            removed
+
         ..warning::
 
             This function does not honor additional dimensions (e.g.,
             timesteps) yet!
 
         """
-        assert percAccept > 0 and percAccept < 100
+        assert percAccept > 0 and percAccept < 100, \
+            'percAccept must lie within ]0, 100)'
 
         def _retain_only_complete_spectra(item, fmax, acceptN):
             """Function called using pd.filter, applied to all spectra in the
@@ -464,10 +492,23 @@ class sEIT(BaseContainer, sEITImporters):
                     k = item['k']
                 else:
                     k = 1
+
+                if 'r_error' in item.columns:
+                    rmag_error = item['r_error']
+                else:
+                    rmag_error = None
+
+                if 'rpha_error' in item.columns:
+                    rpha_error = item['rpha_error']
+                else:
+                    rpha_error = None
+
                 spectrum_nor[timestep] = eis_plot.sip_response(
                     frequencies=item['frequency'].values,
                     rmag=item['r'] * k,
                     rpha=item['rpha'],
+                    rmag_err=rmag_error,
+                    rpha_err=rpha_error,
                 )
 
         if subdata_rec.shape[0] > 0:
@@ -584,6 +625,7 @@ class sEIT(BaseContainer, sEITImporters):
                 plot_filename=plot_filename
             )
             plt.close(spec_fig)
+            gc.collect()
 
     def plot_pseudosections(self, column, filename=None, return_fig=False):
         """Create a multi-plot with one pseudosection for each frequency.
@@ -827,3 +869,106 @@ class sEIT(BaseContainer, sEITImporters):
         tmpdf['r'] = np.real(tmpdf['r']).astype(float)
 
         self.data[['Zt', 'r', 'rpha']] = tmpdf[['Zt', 'r', 'rpha']]
+
+    def get_configs(self):
+        """Return all unique (a,b,m,n) configurations in this container. Does
+        not differentiate between frequencies.
+
+        Returns
+        -------
+        unique_configs : Nx4 numpy.ndarray
+            The configurations, 1. indexed (starting with 1)
+        """
+        return np.array(list(self.abmn.groups.keys()))
+
+    def keep_only_configs(self, configs_to_keep, frequency=None):
+        """Keep only the supplied configs. If frequency is provided, only this
+        frequency is filtered and all other frequencies are left as is.
+
+        Parameters
+        ----------
+
+        """
+        if frequency is not None:
+            g = self.data.groupby(['frequency', 'a', 'b', 'm', 'n'])
+        else:
+            g = self.data.groupby(['a', 'b', 'm', 'n'])
+
+        def filter_groups_abmn(x):
+            if frequency is not None:
+                if x['frequency'].iloc[0] != frequency:
+                    return True
+
+            abmn = x[['a', 'b', 'm', 'n']].values[0]
+
+            keep_config = np.any(
+                np.all(abmn == configs_to_keep, axis=1)
+            )
+
+            if keep_config:
+                return True
+            return False
+
+        self.data = g.filter(filter_groups_abmn)
+
+    def debye_decomposition_one_spectrum(
+            self, abmn, spectrum, gen_plots_in_dir=None):
+        """Conduct a Debye Decomposition on each spectrum. Save certain
+        parameters in sEIT.data columns and/or return fit data
+        """
+        opt_import('lib_dd')
+        import lib_dd.decomposition.ccd_single as ccd_single
+        import lib_dd.config.cfg_single as cfg_single
+
+        print(abmn)
+
+        # set options using this dict-like object
+        config = cfg_single.cfg_single()
+        config['frequency_file'] = spectrum['frequency'].values
+        rmag_rpha = np.hstack(
+            (
+                spectrum['r'],
+                spectrum['rpha'],
+            )
+        )
+        # print('rmag_rpha')
+        # print(rmag_rpha)
+        config['data_file'] = rmag_rpha
+        ccd_obj = ccd_single.ccd_single(config)
+        ccd_obj.fit_data()
+        last_it = ccd_obj.results[0].iterations[-1]
+
+        if gen_plots_in_dir is not None:
+            pwd = os.getcwd()
+            os.makedirs(gen_plots_in_dir, exist_ok=True)
+            os.chdir(gen_plots_in_dir)
+            filename = 'plot_{}.jpg'.format(
+                abmn.values[0, :]
+            )
+            print('FILENAME', filename)
+            last_it.plot(filename=filename)
+            os.chdir(pwd)
+
+        return last_it
+
+    def debye_decomposition_all_spectra(self, gen_plots_in_dir=None):
+        def apply_dd(spectrum):
+            # print(abmn)
+            # return 1
+            last_it = self.debye_decomposition_one_spectrum(
+                spectrum[['a', 'b', 'm', 'n']],
+                spectrum,
+                gen_plots_in_dir,
+            )
+            rms_re, rms_im = last_it.rms_values['rms_re_im_noerr']
+            return rms_im
+
+        r = self.abmn.apply(apply_dd)
+        # for abmn, spectrum in self.abmn:
+        #     last_it = self.debye_decomposition_one_spectrum(abmn, spectrum)
+        #     rms_re, rms_im = last_it.rms_values['rms_re_im_noerr']
+        #     print(rms_re)
+        #     print(rms_im)
+        #     exit()
+        import IPython
+        IPython.embed()

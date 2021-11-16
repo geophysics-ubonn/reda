@@ -42,6 +42,7 @@ def _extract_adc_data(mat, **kwargs):
                     'Ug3_2',
                     'Ug3_3',
                     'Us3_1',
+                    'Us',
                     'Us3_2',
                     'Us3_3',
                     'Ue3_1',
@@ -51,6 +52,10 @@ def _extract_adc_data(mat, **kwargs):
                     fdata['Ug3'][:, :, 0],
                     fdata['Ug3'][:, :, 1],
                     fdata['Ug3'][:, :, 2],
+                    np.mean(
+                        fdata['Us3'],
+                        axis=2,
+                    ),
                     fdata['Us3'][:, :, 0],
                     fdata['Us3'][:, :, 1],
                     fdata['Us3'][:, :, 2],
@@ -63,8 +68,12 @@ def _extract_adc_data(mat, **kwargs):
             df['parameter'] = key
             df.set_index('parameter', append=True, inplace=True)
             df = df.T
-            df['b'] = fdata['cni'][:, 1]
-            df['a'] = fdata['cni'][:, 0]
+            # I THINK we can just sort a, b - the actual data should already
+            # conform to the notation that the lower electrode number is
+            # assigned to a
+            df[['a', 'b']] = pd.DataFrame(np.sort(fdata['cni'], axis=1))
+            # df['b'] = fdata['cni'][:, 1]
+            # df['a'] = fdata['cni'][:, 0]
             df.set_index(['a', 'b'], inplace=True)
             data_list.append(df)
 
@@ -124,7 +133,10 @@ def _extract_md(mat, **kwargs):
         """
         Zg3_complex = np.sum(fdata['Zg3'], axis=1)
         df = pd.DataFrame()
-        df[['a', 'b']] = pd.DataFrame(fdata['cni'])
+        # I THINK we can just sort a, b - the actual data should already
+        # conform to the notation that the lower electrode number is assigned
+        # to a
+        df[['a', 'b']] = pd.DataFrame(np.sort(fdata['cni'], axis=1))
         df['datetime'] = timestamp
         df['frequency'] = fdata['fm']
         df['U0'] = fdata['U0']
@@ -210,6 +222,9 @@ def _extract_md(mat, **kwargs):
         dfl.append(df)
 
     df = pd.concat(dfl).sort_values(['a', 'b', 'frequency'])
+    # print('df')
+    # import IPython
+    # IPython.embed()
 
     return df
 
@@ -247,7 +262,15 @@ def _extract_emd(mat, **kwargs):
             ).T,
             columns=['datetime', ]
         )
-        ab = pd.DataFrame(np.unique(fdata['ni'], axis=0), columns=['a', 'b'])
+        # well, this must be the most complicated way to get the unique
+        # injections
+        y = np.ascontiguousarray(fdata['ni']).view(
+            np.dtype(
+                (np.void, fdata['ni'].dtype.itemsize * fdata['ni'].shape[1])
+            )
+        )
+        _, idx = np.unique(y, return_index=True)
+        ab = pd.DataFrame(fdata['ni'][np.sort(idx)], columns=['a', 'b'])
         timestamp[['a', 'b']] = ab
         # print(timestamp.shape)
         # print(fdata['ni'].shape)

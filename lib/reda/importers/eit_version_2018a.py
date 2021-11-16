@@ -11,6 +11,101 @@ def convert_electrode(i):
     return int(np.floor((i - 1) / 4) + 1)
 
 
+def _extract_adc_data(mat, **kwargs):
+    """Extract adc-channel related data (i.e., data that is captured for all 48
+    channels of the 40-channel medusa system
+
+    Data not imported:
+
+    * Ue3
+    * Zs3
+    * Us3
+    """
+    raise Exception('NOT implemented for this 2018 version!!')
+
+    md = mat['MD'].squeeze()
+    # Labview epoch
+    epoch = datetime.datetime(1904, 1, 1)
+
+    def convert_epoch(x):
+        timestamp = epoch + datetime.timedelta(seconds=x.astype(float))
+        return timestamp
+
+    dfl = []
+    # loop over frequencies
+    for f_id in range(0, md.size):
+        # print('Frequency: ', emd[f_id]['fm'])
+        fdata = md[f_id]
+        # for name in fdata.dtype.names:
+        #     print(name, fdata[name].shape)
+
+        timestamp = np.atleast_2d(
+            [convert_epoch(x) for x in fdata['Time'].squeeze()]
+        ).T
+        data_list = []
+        for key, data in zip(
+                (
+                    'Ug3_1',
+                    'Ug3_2',
+                    'Ug3_3',
+                    'Us3_1',
+                    'Us',
+                    'Us3_2',
+                    'Us3_3',
+                    'Ue3_1',
+                    'Ue3_2',
+                    'Ue3_3',
+                ), (
+                    fdata['Ug3'][:, :, 0],
+                    fdata['Ug3'][:, :, 1],
+                    fdata['Ug3'][:, :, 2],
+                    np.mean(
+                        fdata['Us3'],
+                        axis=2,
+                    ),
+                    fdata['Us3'][:, :, 0],
+                    fdata['Us3'][:, :, 1],
+                    fdata['Us3'][:, :, 2],
+                    fdata['Ue3'][:, :, 0],
+                    fdata['Ue3'][:, :, 1],
+                    fdata['Ue3'][:, :, 2],
+                )):
+            df = pd.DataFrame(
+                data, columns=['ch{:02}'.format(i) for i in range(48)]).T
+            df['parameter'] = key
+            df.set_index('parameter', append=True, inplace=True)
+            df = df.T
+            # I THINK we can just sort a, b - the actual data should already
+            # conform to the notation that the lower electrode number is
+            # assigned to a
+            df[['a', 'b']] = pd.DataFrame(np.sort(fdata['cni'], axis=1))
+            # df['b'] = fdata['cni'][:, 1]
+            # df['a'] = fdata['cni'][:, 0]
+            df.set_index(['a', 'b'], inplace=True)
+            data_list.append(df)
+
+        # merge everything
+        df_all = data_list[0]
+        if len(data_list) > 1:
+            for subdata in data_list[1:]:
+                df_all = pd.merge(
+                    df_all, subdata, left_index=True, right_index=True)
+
+        df_all['datetime'] = timestamp
+        df_all['frequency'] = fdata['fm']
+        dfl.append(df_all)
+
+    dfl = pd.concat(dfl)
+    dfl.set_index('frequency', append=True, inplace=True)
+    dfl.sort_index(axis=0, inplace=True)
+    dfl.sort_index(axis=1, inplace=True)
+
+    dfl.columns.set_names('channel', level=0, inplace=True)
+    dfl.set_index('datetime', append=True, inplace=True)
+
+    return dfl
+
+
 def _extract_md(mat, **kwargs):
     if 'multiplexer_group' not in kwargs:
         raise Exception(

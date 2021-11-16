@@ -5,6 +5,7 @@ this module acts as an selector for the appropriate import functions.
 """
 import functools
 import os
+# import logging
 
 import numpy as np
 import pandas as pd
@@ -15,6 +16,7 @@ import reda.importers.eit_version_2013 as eit_version_2013
 import reda.importers.eit_version_2017 as eit_version_2017
 import reda.importers.eit_version_2018a as eit_version_2018a
 import reda.importers.eit_version_20200609 as eit_version_20200609
+from reda.importers.fzj_readbin import fzj_readbin
 
 from reda.importers.utils.decorators import enable_result_transforms
 
@@ -87,6 +89,10 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
     multiplexer_group : int|None, optional
         For the multiplexer system (version 2018a) the multiplexer group MUST
         be specified to import data. This is a number between 1 and 4.
+    compute_errors : None|str, optional
+        If this parameter points to the .bin file containing the raw data, then
+        compute data errors based on a noise level analysis of individual time
+        series. Time-consuming!
 
     Returns
     -------
@@ -118,6 +124,20 @@ def get_mnu0_data(filename, configs, return_3p=False, **kwargs):
                 data_emd_3p, configs_abmn, data_md_raw)
         else:
             data_emd_4p = None
+
+        binary_file = kwargs.get('compute_errors', None)
+        if binary_file is not None:
+            assert os.path.isfile(
+                binary_file), 'compute_errors must point to a valid .bin file'
+
+            adc_data = importer._extract_adc_data(mat, **kwargs)
+            data_emd_4p = compute_data_errors(
+                data_emd_4p,
+                data_md_raw,
+                adc_data,
+                binary_file,
+                **kwargs,
+            )
     else:
         raise Exception(
             'The file version "{}" is not supported yet.'.format(
@@ -397,3 +417,295 @@ def apply_correction_factors(df, correction_data):
             df['corr_fac'] = np.nan
         df.iloc[item, df.columns.get_loc('corr_fac')] = factor
     return df, corr_data
+
+
+def compute_data_errors(
+        data_emd_4p, data_md_raw, adc_data, binary_file, **kwargs):
+    """Compute data errors based on a noise-level analysis and subsequent
+    linear error propagation.
+
+    Additional Parameters
+    ---------------------
+    error_model_use_diff_noise_level : bool, optional (default: False)
+
+    What we need in data_emd_4p:
+
+        * phi_m
+        * phi_n
+        * dphi_m
+        * dphi_n
+        * current (complex)
+
+    """
+    print('Preparing data_emd_4p')
+    # print('Merging in complex current')
+    # import IPython
+    # IPython.embed()
+
+    if 'Is' not in data_emd_4p.columns:
+        data_emd_4p = pd.merge(
+            data_emd_4p,
+            data_md_raw[['a', 'b', 'frequency', 'datetime', 'Is']],
+            on=['a', 'b', 'frequency', 'datetime'],
+            how='left',
+        )
+
+    print('Add electrode potentials')
+    us3 = adc_data.xs('Us', axis=1, level=1)
+    us3_selected = pd.merge(
+        data_emd_4p[['a', 'b', 'frequency', 'datetime']],
+        us3,
+        on=['a', 'b', 'frequency', 'datetime'],
+        how='left',
+    ).set_index(['a', 'b', 'frequency', 'datetime'])
+    data_emd_4p['pot_m'] = us3_selected.values[
+        np.array(range(us3_selected.shape[0])), data_emd_4p['m'].values - 1]
+    data_emd_4p['pot_n'] = us3_selected.values[
+        np.array(range(us3_selected.shape[0])), data_emd_4p['n'].values - 1]
+
+    obj = fzj_readbin(binary_file)
+
+    # check = (data_emd_4p['pot_m'] - data_emd_4p['pot_n']) / data_emd_4p['Is']
+    print('Compute noise levels')
+
+    def get_noise_levels(row):
+        indices = obj.find_swapped_measurement_indices(
+            row['a'],
+            row['b'],
+            row['frequency'],
+            row['datetime']
+        )
+        noise_levels = []
+        for index in indices:
+            # try to remove systematic components
+            ts_m = obj.data[index][row['m'] - 1, :]
+            ts_n = obj.data[index][row['n'] - 1, :]
+            ts_diff = (ts_m - ts_m.mean()) - (ts_n - ts_n.mean())
+
+            fdata = obj.frequency_data.iloc[index]
+            fs = fdata['sampling_frequency'] / fdata['oversampling']
+
+            fft, u_peaks, noise_level = obj._get_noise_level_from_fft(
+                ts_diff,
+                fs=fs,
+            )
+
+            # now analyze the channels separately
+            level1 = obj.fft_analysis_one_channel(
+                index,
+                row['m'],
+                remove_excitation_frequency=kwargs.get(
+                    'remove_excitation_frequency', False
+                ),
+                remove_noise_harmonics=kwargs.get(
+                    'remove_noise_harmonics', False
+                ),
+            )[0]
+            level2 = obj.fft_analysis_one_channel(
+                index,
+                row['n'],
+                remove_excitation_frequency=kwargs.get(
+                    'remove_excitation_frequency', False
+                ),
+                remove_noise_harmonics=kwargs.get(
+                    'remove_noise_harmonics', False
+                ),
+            )[0]
+
+            # noise level of difference of both time series
+            # logger = logging.getLogger()
+            # logger.warning(
+            #     "IMPORTANT: I'm using the noise level of the ts-difference!")
+            # we assume that the resulting noise component is the result of
+            # both equally sized noise components of the single time series:
+            # diff = t1 - t2
+            # -> d_diff = sqrt(dt1** 2 + dt2 ** 2)
+            # if we assume dt1 == dt2, then
+            # dt1 = dt2 = 1 / np.sqrt(2) d_diff
+            if kwargs.get('error_model_use_diff_noise_level', False):
+                noise_levels.append(noise_level / np.sqrt(2))
+                noise_levels.append(noise_level / np.sqrt(2))
+            else:
+                # individual channel noise levels
+                noise_levels.append(level1)
+                noise_levels.append(level2)
+
+            # current channel noise analysis
+            # TODO: Do properly, for now we only analyse channel 41
+            ts_current = obj.data[index][41, :]
+
+            fft, u_peaks, noise_level_current = obj._get_noise_level_from_fft(
+                ts_current - ts_current.mean(),
+                fs=fs,
+            )
+            noise_levels.append(noise_level_current / 1000)
+
+        return np.array(noise_levels)
+
+    noise_levels = data_emd_4p[
+        ['a', 'b', 'frequency', 'datetime', 'm', 'n']
+    ].apply(get_noise_levels, axis=1).values
+
+    noise_levels = np.concatenate(noise_levels, axis=1).T
+
+    # hack: convert to voltages: FFT <-> voltage noise level
+    noise_levels /= 48
+
+    # propagate noise level on time -series down through the lockin
+    noise_levels /= 40
+
+    # import IPython
+    # IPython.embed()
+
+    # regular injection
+    data_emd_4p['dpot_m_1'] = noise_levels[:, 0]
+    data_emd_4p['dpot_n_1'] = noise_levels[:, 1]
+    data_emd_4p['dcurrent_1'] = noise_levels[:, 2]
+    # swapped injection
+    data_emd_4p['dpot_m_2'] = noise_levels[:, 3]
+    data_emd_4p['dpot_n_2'] = noise_levels[:, 4]
+    data_emd_4p['dcurrent_2'] = noise_levels[:, 5]
+
+    data_emd_4p['dpot_m'] = np.sqrt(
+        data_emd_4p['dpot_m_1'] ** 2 / 2 +
+        data_emd_4p['dpot_m_2'] ** 2 / 2
+    )
+    data_emd_4p['dpot_n'] = np.sqrt(
+        data_emd_4p['dpot_n_1'] ** 2 / 2 +
+        data_emd_4p['dpot_n_2'] ** 2 / 2
+    )
+    data_emd_4p['dcurrent'] = np.sqrt(
+        data_emd_4p['dcurrent_1'] ** 2 / 2 +
+        data_emd_4p['dcurrent_2'] ** 2 / 2
+    )
+
+    magnitude_errors = compute_magnitude_errors(
+        data_emd_4p['pot_m'].values,
+        data_emd_4p['pot_n'].values,
+        data_emd_4p['Is'].values,
+        # test: 1 / sqrt(3) to simulate the three repetitions
+        data_emd_4p['dpot_m'].values,  # / np.sqrt(3),
+        data_emd_4p['dpot_n'].values,  # / np.sqrt(3),
+        dcurrent=data_emd_4p['dcurrent'].values,
+        # dcurrent=np.array(0),
+        **kwargs
+    )
+
+    phase_errors = compute_phase_errors(
+        data_emd_4p['pot_m'].values,
+        data_emd_4p['pot_n'].values,
+        data_emd_4p['Is'].values,
+        # test: 1 / sqrt(3) to simulate the three repetitions
+        data_emd_4p['dpot_m'].values,  # / np.sqrt(3),
+        data_emd_4p['dpot_n'].values,  # / np.sqrt(3),
+        dcurrent=data_emd_4p['dcurrent'].values,
+        # dcurrent=np.array(0),
+        **kwargs
+    )
+
+    data_emd_4p['r_error'] = magnitude_errors
+    data_emd_4p['rpha_error'] = phase_errors * 1000
+
+    # import IPython
+    # IPython.embed()
+    return data_emd_4p
+
+
+def compute_magnitude_errors(
+        phi_m, phi_n, current, dphi_m, dphi_n, dcurrent, **kwargs):
+    """Compute magnitude errors based on linear error propagation
+    """
+    error_m = np.abs(dphi_m) / np.abs(current)
+    error_n = np.abs(dphi_n) / np.abs(current)
+    error_current = -np.abs(
+        phi_m - phi_n
+    ) / current ** 2 * dcurrent
+
+    error_magnitude = np.sqrt(
+        error_m ** 2 +
+        error_n ** 2 +
+        error_current ** 2 +
+        0
+    )
+    return np.abs(error_magnitude)
+
+
+def compute_phase_errors(
+        phi_m, phi_n, current, dphi_m, dphi_n, dcurrent, **kwargs):
+    """Compute the phase error based on linear error propagation of the
+    transfer impedance equation:
+
+        Zt = U_mn / I_ab = (phi_m - phi_n) / I_ab
+
+    Parameters
+    ----------
+    phi_m : numpy.ndarray|complex float
+        Complex potential at electrode m
+    phi_n : numpy.ndarray|complex float
+        Complex potential at electrode n
+    current : numpy.ndarray|complex float
+        Complex current injected at electrodes a and b
+    dphi_m : numpy.ndarray|complex float
+        potential error at electrode m. Real part corresponds to error of the
+        real part of the potential, vice versa for the imaginary part
+    dphi_n : numpy.ndarray|complex float
+        potential error at electrode m. Real part corresponds to error of the
+        real part of the potential, vice versa for the imaginary part
+    dcurrent : numpy.ndarray|complex float
+        current error at electrode m. Real part corresponds to error of the
+        real part of the potential, vice versa for the imaginary part
+
+    Returns
+    -------
+    error_phase : numpy.ndarray|float
+        Phase error in [rad]
+    """
+
+    A = - current.imag * (
+        phi_m.real - phi_n.real
+    ) + current.real * (phi_m.imag - phi_n.imag)
+
+    B = current.real * (phi_m.real - phi_n.real) + current.imag * (
+        phi_m.imag - phi_n.imag
+    )
+
+    # chain rule: d/dx arctan(x) = 1 / (1 + x^2)
+    prefix = 1 / (1 + (A / B) ** 2)
+
+    error_dphi_m_real = prefix * (
+        -current.imag / B + A / B ** 2 * current.real
+    ) * dphi_m
+
+    error_dphi_n_real = prefix * (
+        current.imag / B - A / B ** 2 * current.real
+    ) * dphi_m
+
+    error_dphi_m_imag = prefix * (
+        current.real / B + A / B ** 2 * current.imag
+    ) * dphi_m
+
+    error_dphi_n_imag = prefix * (
+        -current.real / B - A / B ** 2 * current.imag
+    ) * dphi_n
+
+    error_current_real = prefix * (
+        (phi_m.imag - phi_n.imag) / B + A / B ** 2 * (phi_m.real - phi_n.real)
+    ) * dcurrent
+
+    error_current_imag = prefix * (
+        -1 * (phi_m.real - phi_n.real) / B +
+        A / B ** 2 * (phi_m.imag - phi_n.imag)
+    ) * dcurrent
+
+    inner_term = 0
+    inner_term += error_dphi_m_real ** 2
+    inner_term += error_dphi_n_real ** 2
+    inner_term += error_dphi_m_imag ** 2
+    inner_term += error_dphi_n_imag ** 2
+    if not kwargs.get('errmod_pha_no_current_error', False):
+        inner_term += error_current_real ** 2
+        inner_term += error_current_imag ** 2
+
+    phase_error = np.sqrt(inner_term)
+
+    return phase_error
