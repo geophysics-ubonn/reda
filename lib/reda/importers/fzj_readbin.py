@@ -213,7 +213,9 @@ class fzj_readbin(object):
 
     def plot_timeseries_to_axes(
             self, axes, frequency_index, injection_number, channel,
-            range_fraction=1.0, plot_style='.-'):
+            range_fraction=1.0, plot_style='.-',
+            index_start=0,
+            ):
         """
         injection_number is 1-indexed
 
@@ -244,10 +246,11 @@ class fzj_readbin(object):
 
         # sometimes we only want to plot a fraction of the time-series, i.e.,
         # to better see higher frequencies
-        index = int(t.size * range_fraction) - 1
+        index_end = min(t.size, index_start + int(t.size * range_fraction)) - 1
+        print('index_end', index_end)
 
-        x = t[0:index]
-        y = data[channel, :][0:index]
+        x = t[index_start:index_end]
+        y = data[channel, :][index_start:index_end]
 
         ax.plot(
             # t,
@@ -266,18 +269,23 @@ class fzj_readbin(object):
 
         ax = axes[1]
         ax.grid()
-        y_raw = data[channel, :]
-        p = np.polyfit(t, y_raw, 1)
-        trend = np.polyval(p, t)
+        # y_raw = data[channel, :]
+        y_raw = y.copy()
+        p = np.polyfit(x, y_raw, 1)
+        trend = np.polyval(p, x)
         y = y_raw - trend
-        ax.plot(t, y, '.-', color='r')
+        ax.plot(x, y, '.-', color='r')
 
         y_transf = np.fft.rfft(y)
         y_freqs = np.fft.rfftfreq(
-            n=fdata['nr_samples'].astype(int), d=1/fdata['fa'])
+            n=y.size, d=1/fdata['fa']
+        )
 
         ax.semilogx(
-            y_freqs[1:], np.abs(y_transf[1:]) ** 2, '.-', ms=8, color='k')
+            y_freqs[1:],
+            np.abs(y_transf[1:]) ** 2,
+            '.-', ms=8, color='k'
+        )
         ax.set_ylabel('$A^2$')
         print(fdata['frequency'])
         for i in range(1, 7):
@@ -291,7 +299,10 @@ class fzj_readbin(object):
 
     def plot_timeseries(
             self, filename, frequency_index, injection_number, channel,
-            range_fraction=1.0, plot_style='.-'):
+            range_fraction=1.0, plot_style='.-',
+            index_start=0,
+
+            ):
         fig, axes = plt.subplots(2, 1, figsize=(16 / 2.54, 10 / 2.54))
 
         self.plot_timeseries_to_axes(
@@ -301,6 +312,7 @@ class fzj_readbin(object):
             channel,
             range_fraction=range_fraction,
             plot_style=plot_style,
+            index_start=index_start,
         )
 
         fig.tight_layout()
