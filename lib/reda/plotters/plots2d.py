@@ -429,7 +429,7 @@ def matplot(x, y, z, ax=None, colorbar=True, **kwargs):
     >>> x, y = np.meshgrid(a, b)
     >>> c = sum(x, y)
     >>> fig, (ax1, ax2) = plt.subplots(1, 2)
-    >>> im = ax1.pcolormesh(x, y, c)
+    >>> im = ax1.pcolormesh(x, y, c, shading='auto')
     >>> _ = plt.colorbar(im, ax=ax1)
     >>> _ = ax1.set_title("plt.pcolormesh")
     >>> _, _ = matplot(x, y, c, ax=ax2)
@@ -457,7 +457,11 @@ def matplot(x, y, z, ax=None, colorbar=True, **kwargs):
     else:
         fig = ax.figure
 
-    im = ax.pcolormesh(x2, y2, z, **kwargs)
+    im = ax.pcolormesh(
+        x2, y2, z,
+        shading='auto',
+        **kwargs
+    )
     ax.axis([x2.min(), x2.max(), y2.min(), y2.max()])
     ax.set_xticks(np.arange(xmin, xmax + dx, dx))
     ax.set_yticks(np.arange(ymin, ymax + dx, dy))
