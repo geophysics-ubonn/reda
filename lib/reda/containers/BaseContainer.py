@@ -18,6 +18,7 @@ import reda.utils.geometric_factors as redaK
 from reda.utils import has_multiple_timesteps
 from reda.utils.norrec import assign_norrec_diffs
 from reda.utils.norrec import assign_norrec_to_df
+from reda.utils.geometric_factors import apply_K
 
 from reda.utils.decorators_and_managers import LogDataChanges
 
@@ -481,3 +482,9 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         self.electrode_positions[['x', 'y', 'z']] = coords[
             ['x', 'y', 'z']
         ].values
+
+    def apply_k(self, k):
+        """Apply geometric factors to the data
+
+        """
+        apply_K(self.data, k)
