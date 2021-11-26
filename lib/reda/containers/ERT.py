@@ -10,6 +10,8 @@ from reda.containers.BaseContainer import BaseContainer
 import reda.importers.bert as reda_bert_import
 import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.mpt_das1 as reda_mpt
+from reda.importers.crtomo import load_mod_file
+
 from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
 from reda.utils.decorators_and_managers import append_doc_of
@@ -26,6 +28,18 @@ class ERTImporters(ImportersBase):
     --------
     Exporters
     """
+    def import_crtomo_data(self, filename):
+        """
+        Import a CRTomo-style measurement file (usually: volt.dat).
+
+        Parameters
+        ----------
+        filename : str
+            path to data file
+        """
+
+        data = load_mod_file(filename)
+        self._add_to_container(data)
 
     @append_doc_of(reda_syscal.import_bin)
     def import_syscal_bin(self, filename, **kwargs):
