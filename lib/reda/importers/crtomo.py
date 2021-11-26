@@ -42,7 +42,9 @@ def load_mod_file(filename):
 
     """
     df_raw = pd.read_csv(
-        filename, skiprows=1, delim_whitespace=True,
+        filename,
+        skiprows=1,
+        delim_whitespace=True,
         names=['ab', 'mn', 'r', 'rpha']
     )
     df_raw['Zt'] = df_raw['r'] * np.exp(1j * df_raw['rpha'] / 1000.0)
@@ -63,6 +65,9 @@ def load_mod_file(filename):
     df_raw['n'] = (df_raw['mn'] % 1e4).astype(int)
 
     df = df_raw.drop(['ab', 'mn'], axis=1)
+    if np.all(np.isnan(df['rpha'])):
+        df = df.drop(['rpha', 'Zt'], axis=1)
+
     return df
 
 
