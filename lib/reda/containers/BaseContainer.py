@@ -434,15 +434,20 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
 
     def replace_electrode_positions(self, coordinates):
         """Replace the imported electrode coordinates by new ones. This
-        function assumes and expected that the number of new coordinates is the
+        function assumes and expects that the number of new coordinates is the
         same as the old ones (i.e., a simple replacement).
+
+        If the input is a pandas DataFrame, assume that the columns x, y, z are
+        present.
+
+
 
         Parameters
         ----------
         coordinates : str|numpy.ndarray|pandas.DataFrame
         """
         assert isinstance(self.electrode_positions, pd.DataFrame), \
-            'There are not electrode positions to replace'
+            'There are no electrode positions to replace'
 
         if isinstance(coordinates, pd.DataFrame):
             assert 'x' in coordinates.columns
@@ -461,7 +466,7 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
                         'filename {} not found'.format(coordinates))
             elif isinstance(coordinates, np.ndarray):
                 assert len(coordinates.shape) == 2, \
-                    'array must be 2D: Nx(1/2/3)'
+                    'array must be 2D: N x (1/2/3)'
                 coords_raw = coordinates
 
             if coords_raw.shape[1] == 1:
