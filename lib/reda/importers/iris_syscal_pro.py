@@ -155,11 +155,8 @@ def import_bin(filename,  **kwargs):
     function reda.importers.iris_syscal_pro_binary._import_bin to extract ALL
     information from a given .bin file.
 
-    todo:
-
-    * add pipe-through parameters for the electrode manager:
-
-        shift_xyz -> move all coordinates by this vector
+    Note that the .bin files contain electrodes positions for the electrodes.
+    Electrode numbers are then inferred from those.
 
     Parameters
     ----------
