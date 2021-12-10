@@ -1,6 +1,5 @@
 # REDA - Reproducible Electrical Data Analysis
 
-[![Build Status](https://travis-ci.org/geophysics-ubonn/reda.svg?branch=master)](https://travis-ci.org/geophysics-ubonn/reda)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Binder](https://mybinder.org/badge.svg)](https://mybinder.org/v2/gh/geophysics-ubonn/try-reda/master?filepath=reda_test.ipynb)
