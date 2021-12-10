@@ -394,20 +394,22 @@ def testboard_evaluation(datapath, configdat,
     rec = []
     for i in configs:
         data = seit.abmn.get_group((i[0], i[1], i[2], i[3]))
-        if data['norrec'].all() == 'nor':
+        if (data['norrec'] == 'nor').all():
             nor.append(data)
         else:
             rec.append(data)
 
     # calculate theoretical testboard response and error
     rmag, rpha = calc_response(frequencies)
-    error_rmag = rmag*error_percentage/100
-    error_rpha = rpha*error_percentage/100
+    error_rmag = rmag * error_percentage / 100
+    error_rpha = rpha * error_percentage / 100
 
-    # plotting results
-
+    # plot results
+    assert len(nor) > 0 or len(rec) > 0, \
+        'we got neither normal or reciprocal data'
+    nr_y = max((len(nor), len(rec)))
     fig, axes = plt.subplots(
-        int(len(nor)), 2, figsize=(12, 3*len(nor)), sharex=True)
+        nr_y, 2, figsize=(12, 3*len(nor)), sharex=True)
 
     # in case of only one measurement
     if len(nor) <= 1:
