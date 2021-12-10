@@ -19,11 +19,11 @@ import numpy as np
 # reciprocal measurements are taken for the check.
 
 configs = np.array([
-    [1,4,2,3],
-    [2,3,1,4],
-    [5,8,6,7],
-    [6,7,5,8]
-    ])
+    [1, 4, 2, 3],
+    [2, 3, 1, 4],
+    [5, 8, 6, 7],
+    [6, 7, 5, 8]
+])
 
 # The function can be executed with the following command. The first parameter
 # has to lead to the datapath of the measurement, the second to the config.dat
@@ -35,5 +35,6 @@ configs = np.array([
 reda.utils.eit_fzj_utils.testboard_evaluation(
     "data_eit_fzj_testboard/eit_data_mnu0.mat",
      configs,
-    'data_eit_fzj_testboard/testboard')
+    'data_eit_fzj_testboard/testboard'
+)
 # %%
