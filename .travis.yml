@@ -3,8 +3,9 @@ sudo: false # Use docker containers rather than VMs -> faster
 language: python
 
 python:
-  - "3.6"
   - "3.7"
+  - "3.8"
+  - "3.9"
 
 install:
   - sudo apt-get update -qq
@@ -36,4 +37,4 @@ deploy:
   verbose: true
   on:
     branch: master
-    condition: $TRAVIS_PYTHON_VERSION = "3.7"
+    condition: $TRAVIS_PYTHON_VERSION = "3.9"
