@@ -28,7 +28,7 @@ class ERTImporters(ImportersBase):
     --------
     Exporters
     """
-    def import_crtomo_data(self, filename):
+    def import_crtomo_data(self, filename, **kwargs):
         """
         Import a CRTomo-style measurement file (usually: volt.dat).
 
@@ -37,9 +37,19 @@ class ERTImporters(ImportersBase):
         filename : str
             path to data file
         """
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
 
-        data = load_mod_file(filename)
-        self._add_to_container(data)
+        with LogDataChanges(self, filter_action='import'):
+            data = load_mod_file(filename)
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data)
+
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
 
     @append_doc_of(reda_syscal.import_bin)
     def import_syscal_bin(self, filename, **kwargs):
