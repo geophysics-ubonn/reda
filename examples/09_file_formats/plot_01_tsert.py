@@ -18,7 +18,7 @@ ert = reda.ERT()
 # ert.import_crtomo_data('data/2018-08-02_09-00-14+00-00.dat', timestep=3)
 
 # version 2: MANY timesteps
-for i in range(0, 100):
+for i in range(0, 1):
     ert.import_crtomo_data('data/2018-08-02_09-00-14+00-00.dat', timestep=i)
 
 
@@ -35,6 +35,6 @@ for timestep, item in g:
     ))
     item.to_hdf(
         filename, key, append=True,
-        complevel=9,
-        complib='lzo',
+        # complevel=9,
+        # complib='lzo',
     )
