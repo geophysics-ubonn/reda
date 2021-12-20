@@ -226,11 +226,11 @@ def import_bin(filename,  **kwargs):
         # check that all measurement numbers increase by one
         if not np.all(np.diff(data_raw['measurement_num'])) == 1:
             logger.warning(' '.join((
-                'WARNING',
+                'WARNING: ',
                 'Measurement numbers are not consecutive.',
                 'Perhaps the first measurement belongs to another'
-                'measurement?',
-                'Use the skip_rows parameter to skip those measurements'
+                ' measurement?',
+                ' Use the skip_rows parameter to skip those measurements'
             )))
 
         # now check if there is a jump in measurement numbers somewhere
