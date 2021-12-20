@@ -2,6 +2,7 @@
 import os
 import functools
 import logging
+import copy
 
 import pandas as pd
 import matplotlib.pylab as plt
@@ -493,3 +494,20 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
 
         """
         apply_K(self.data, k)
+
+    def create_copy(self):
+        """Create a copy if the object.
+        This is useful to investigate different filtering strategies.
+        """
+        print('WARNING: Implementation and testing still in progress!!!!')
+
+        new_obj = self.__class__()
+        new_obj.data = copy.deepcopy(self.data)
+        new_obj.topography = copy.deepcopy(self.topography)
+        new_obj.electrode_positions = copy.deepcopy(
+            self.electrode_positions)
+
+        # what about the log?
+        print('WARNING: Journal and log is not copied!')
+
+        return new_obj
