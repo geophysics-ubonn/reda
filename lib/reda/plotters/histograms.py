@@ -101,7 +101,7 @@ def plot_histograms(ertobj, keys, **kwargs):
             fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
 
         label = units.get_label(key)
-        if mpl.rcParams['text.usetex']:
+        if not mpl.rcParams['text.usetex']:
             label = label.replace('_', '-')
         ax = axes[0]
         ax.hist(

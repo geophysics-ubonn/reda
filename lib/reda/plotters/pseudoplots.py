@@ -297,7 +297,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     if not kwargs.get('nocb', False):
         cb = fig.colorbar(im, ax=ax)
         label = units.get_label(column)
-        if mpl.rcParams['text.usetex']:
+        if not mpl.rcParams['text.usetex']:
             label = label.replace('_', '-')
         cb.set_label(
             kwargs.get('cblabel', label)
