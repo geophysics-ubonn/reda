@@ -46,6 +46,9 @@ Structure
 * Group structure:
   Each time step is stored in its own group
 
+    /
+    /.attrs['file_format'] = 'tsert'
+    /.attrs['format_version'] = 0.1
     ELECTRODES/
         [...]
     TOPOGRAPHY/
