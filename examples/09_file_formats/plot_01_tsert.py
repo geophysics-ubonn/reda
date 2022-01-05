@@ -21,20 +21,7 @@ ert = reda.ERT()
 for i in range(0, 1):
     ert.import_crtomo_data('data/2018-08-02_09-00-14+00-00.dat', timestep=i)
 
-
-g = ert.data.groupby('timestep')
-
-filename = 'data.h5'
-
-for timestep, item in g:
-    # print(name)
-    key = '/'.join((
-        'ERT_DATA',
-        '{}'.format(timestep),
-        'base',
-    ))
-    item.to_hdf(
-        filename, key, append=True,
-        # complevel=9,
-        # complib='lzo',
-    )
+ert.export_tsert(
+    'data.h5',
+    version='base',
+)

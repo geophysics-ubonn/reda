@@ -11,6 +11,7 @@ import reda.importers.bert as reda_bert_import
 import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.mpt_das1 as reda_mpt
 from reda.importers.crtomo import load_mod_file
+from reda.importers.tsert_import import tsert_import
 
 from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
@@ -28,6 +29,46 @@ class ERTImporters(ImportersBase):
     --------
     Exporters
     """
+    def tsert_summary(self, filename):
+        """Try to open a given filename (usually a .h5 file) as a TSERT file
+        and print out a summary of contained data.
+
+        Parameters
+        ----------
+        filename : str
+            Filename of data file
+        """
+        importer = tsert_import(filename)
+        importer.summary()
+
+    def import_tsert(self, filename, **kwargs):
+        """TSERT import
+        """
+
+        timestep = kwargs.get('timestep', None)
+        if 'timestep' in kwargs:
+            del (kwargs['timestep'])
+        self.logger.info('TSERT import')
+        importer = tsert_import(filename)
+        with LogDataChanges(self, filter_action='import'):
+            data = importer.import_data(
+                kwargs.get('timesteps', 'all'),
+                kwargs.get('version', 'base'),
+            )
+            print('TODO: import elecs positions; topography')
+            print('TODO: import metadata')
+            electrode_positions = None
+            topography = None
+            # data, electrode_positions, topography = importer.import_data(
+            #     filename, **kwargs
+            # )
+            if timestep is not None:
+                data['timestep'] = timestep
+            self._add_to_container(data, electrode_positions, topography)
+        if kwargs.get('verbose', False):
+            print('Summary:')
+            self._describe_data(data)
+
     def import_crtomo_data(self, filename, **kwargs):
         """
         Import a CRTomo-style measurement file (usually: volt.dat).
@@ -158,7 +199,87 @@ class ERTImporters(ImportersBase):
         self.import_bert(*args, **kargs)
 
 
-class ERT(BaseContainer, ERTImporters):
+class ERTExporters(object):
+    def export_tsert(self, filename, version, **kwargs):
+        """Export data to TSERT
+
+        """
+        import h5py
+        print('Exporting to tsert', filename)
+        g = self.data.groupby('timestep')
+
+        for timestep, item in g:
+            # print(name)
+            key = '/'.join((
+                'ERT_DATA',
+                '{}'.format(timestep),
+                version,
+            ))
+            print(key)
+            # check if key is already present
+            if os.path.isfile(filename):
+                fid = h5py.File(filename, 'a')
+                if key in fid:
+                    # delete data before adding it
+                    del fid[key]
+                fid.close()
+
+            item.to_hdf(
+                filename, key, append=True,
+                # complevel=9,
+                # complib='lzo',
+            )
+
+    def export_to_pygimli_scheme(self, norrec='nor', timestep=None):
+        """Export the data into a pygimili.DataContainerERT object.
+
+        For now, do NOT set any sensor positions
+
+        Parameters
+        ----------
+
+
+        Returns
+        -------
+        """
+        logger.info('Exporting to pygimli DataContainer')
+        logger.info('{} data will be exported'.format(norrec))
+        if timestep is None:
+            logger.info('No timestep selection is applied')
+        else:
+            logger.info('timestep(s) {} will be used'.format(timestep))
+
+        import pygimli as pg
+        data_container = pg.DataContainerERT()
+
+        query = ' '.join((
+            'norrec == "{}"'.format(norrec),
+        ))
+
+        if timestep is not None:
+            query += ' and timestep=="{}"'.format(timestep)
+
+        logger.debug('Query: {}'.format(query))
+
+        subdata = self.data.query(query)
+        assert subdata.shape[0] != 0
+
+        data_container['a'] = subdata['a']
+        data_container['b'] = subdata['b']
+        data_container['m'] = subdata['m']
+        data_container['n'] = subdata['n']
+        data_container['r'] = subdata['r']
+
+        if 'k' in subdata.columns:
+            data_container['k'] = subdata['k']
+
+        if 'rho_a' in subdata.columns:
+            data_container['rhoa'] = subdata['rho_a']
+
+        return data_container
+
+
+class ERT(BaseContainer, ERTImporters, ERTExporters):
     """."""
 
     def __init__(self, data=None, electrode_positions=None, topography=None):
@@ -267,51 +388,3 @@ class ERT(BaseContainer, ERTImporters):
             error.to_frame().reset_index(), how='outer',
             on='id'
         )
-
-    def export_to_pygimli_scheme(self, norrec='nor', timestep=None):
-        """Export the data into a pygimili.DataContainerERT object.
-
-        For now, do NOT set any sensor positions
-
-        Parameters
-        ----------
-
-
-        Returns
-        -------
-        """
-        logger.info('Exporting to pygimli DataContainer')
-        logger.info('{} data will be exported'.format(norrec))
-        if timestep is None:
-            logger.info('No timestep selection is applied')
-        else:
-            logger.info('timestep(s) {} will be used'.format(timestep))
-
-        import pygimli as pg
-        data_container = pg.DataContainerERT()
-
-        query = ' '.join((
-            'norrec == "{}"'.format(norrec),
-        ))
-
-        if timestep is not None:
-            query += ' and timestep=="{}"'.format(timestep)
-
-        logger.debug('Query: {}'.format(query))
-
-        subdata = self.data.query(query)
-        assert subdata.shape[0] != 0
-
-        data_container['a'] = subdata['a']
-        data_container['b'] = subdata['b']
-        data_container['m'] = subdata['m']
-        data_container['n'] = subdata['n']
-        data_container['r'] = subdata['r']
-
-        if 'k' in subdata.columns:
-            data_container['k'] = subdata['k']
-
-        if 'rho_a' in subdata.columns:
-            data_container['rhoa'] = subdata['rho_a']
-
-        return data_container
