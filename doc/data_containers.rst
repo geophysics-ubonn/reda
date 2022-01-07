@@ -77,6 +77,7 @@ Container basics
   *electrode_manager.electrode_positions*
 * Topograhy nodes (if available) are stored in a pandas DataFrame in
   `container.topography` (columns **x**, **y**, **z**).
+  Electrodes located on the topography should be included here.
 
 
 Required data columns
