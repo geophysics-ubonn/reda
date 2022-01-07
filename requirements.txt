@@ -5,3 +5,4 @@ scipy
 pytest==3.6.4
 twine
 Pillow>=7.1.0
+h5py
