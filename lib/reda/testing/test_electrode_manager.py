@@ -215,15 +215,16 @@ def test_add_positions():
     elecs = electrode_manager()
 
     elecs.add_by_position([[1, ], [2, ]])
-    elecs.add_by_position([4.5, 0])
+    elecs.add_by_position([4.5, 4.7])
     elecs.add_by_position([[5.5, 0], [7.0, 0]])
-    elecs.add_by_position([8, 0, 0])
+    elecs.add_by_position([[8, 0, 0], ])
     elecs.add_by_position([[9, 0, 0], [10, 0, 0]])
 
     result_expected = np.array((
         (1, 0, 0),
         (2, 0, 0),
         (4.5, 0, 0),
+        (4.7, 0, 0),
         (5.5, 0, 0),
         (7.0, 0, 0),
         (8.0, 0, 0),
@@ -237,9 +238,9 @@ def test_add_positions():
     # 1D
     elecs.add_by_position(np.array([[1.5, 1.7, 1.9, 1.95], ]).T)
 
-    elecs.add_by_position(np.array([3.5, 0]))
+    elecs.add_by_position(np.array([3.5, 0])[np.newaxis, :])
     elecs.add_by_position(np.array([[4.5, 0], [7.0, 0]]))
-    elecs.add_by_position(np.array([8, 0, 0]))
+    elecs.add_by_position(np.array([8, 0, 0])[np.newaxis, :])
     elecs.add_by_position(np.array([[9, 0, 0], [10, 0, 0]]))
 
     result_expected = np.array((

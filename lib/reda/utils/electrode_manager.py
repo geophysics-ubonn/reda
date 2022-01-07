@@ -251,7 +251,10 @@ class electrode_manager(object):
         if isinstance(data_raw, pd.DataFrame):
             data = data_raw
         elif isinstance(data_raw, (np.ndarray, list, tuple)):
-            data = pd.DataFrame(np.atleast_2d(data_raw))
+            data = np.atleast_1d(data_raw)
+            if len(data.shape) == 1:
+                data = data[:, np.newaxis]
+            data = pd.DataFrame(data)
             if data.shape[1] == 1:
                 # assume only x coordinate
                 data.columns = ['x', ]
