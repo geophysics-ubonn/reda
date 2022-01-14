@@ -75,6 +75,17 @@ class ImportersBase(object):
                 data_to_add[['a', 'b', 'm', 'n']] = abmn_addition
                 self.electrode_positions = positions_aligned
 
+        if topography is not None:
+            if self.topography is not None:
+                # check if the provided topography is equal to those points
+                # already saved.
+                is_same = (topography == self.topography).all()
+                if not is_same:
+                    raise Exception(
+                        'Merging of topographies is not implemented yet')
+            else:
+                self.topography = topography
+
         self._add_to_data(data_to_add)
 
     def _add_to_data(self, data):

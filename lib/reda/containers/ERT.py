@@ -4,6 +4,7 @@ import os
 
 import pandas as pd
 
+from reda.utils.electrode_manager import electrode_manager
 from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
 
@@ -12,6 +13,7 @@ import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.mpt_das1 as reda_mpt
 from reda.importers.crtomo import load_mod_file
 from reda.importers.tsert_import import tsert_import
+from reda.exporters.tsert_export import tsert_export
 
 from reda.utils.norrec import assign_norrec_to_df, average_repetitions
 
@@ -41,29 +43,30 @@ class ERTImporters(ImportersBase):
         importer = tsert_import(filename)
         importer.summary()
 
-    def import_tsert(self, filename, **kwargs):
+    def import_tsert(self, filename, timesteps='all', **kwargs):
         """TSERT import
+
+        Parameters
+        ----------
+        filename : str
+            Path to hdf file to import data from
+        timesteps : str|list|datetime.datetime
+            Timesteps that should be imported
         """
 
-        timestep = kwargs.get('timestep', None)
-        if 'timestep' in kwargs:
-            del (kwargs['timestep'])
         self.logger.info('TSERT import')
         importer = tsert_import(filename)
         with LogDataChanges(self, filter_action='import'):
             data = importer.import_data(
-                kwargs.get('timesteps', 'all'),
-                kwargs.get('version', 'base'),
+                timesteps=timesteps,
+                version=kwargs.get('version', 'base'),
+                **kwargs,
             )
-            print('TODO: import elecs positions; topography')
             print('TODO: import metadata')
-            electrode_positions = None
-            topography = None
-            # data, electrode_positions, topography = importer.import_data(
-            #     filename, **kwargs
-            # )
-            if timestep is not None:
-                data['timestep'] = timestep
+            electrode_positions_df = importer.load_electrode_positions()
+            electrode_positions = electrode_manager(electrode_positions_df)
+            topography = importer.load_topography()
+
             self._add_to_container(data, electrode_positions, topography)
         if kwargs.get('verbose', False):
             print('Summary:')
@@ -204,31 +207,10 @@ class ERTExporters(object):
         """Export data to TSERT
 
         """
-        import h5py
-        print('Exporting to tsert', filename)
-        g = self.data.groupby('timestep')
-
-        for timestep, item in g:
-            # print(name)
-            key = '/'.join((
-                'ERT_DATA',
-                '{}'.format(timestep),
-                version,
-            ))
-            print(key)
-            # check if key is already present
-            if os.path.isfile(filename):
-                fid = h5py.File(filename, 'a')
-                if key in fid:
-                    # delete data before adding it
-                    del fid[key]
-                fid.close()
-
-            item.to_hdf(
-                filename, key, append=True,
-                # complevel=9,
-                # complib='lzo',
-            )
+        exporter = tsert_export(filename)
+        exporter.set_electrode_positions(self.electrode_positions)
+        exporter.set_topography(self.topography)
+        exporter.add_data(self.data, version, **kwargs)
 
     def export_to_pygimli_scheme(self, norrec='nor', timestep=None):
         """Export the data into a pygimili.DataContainerERT object.

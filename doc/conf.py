@@ -172,7 +172,7 @@ html_theme_options = {
     'logo_name': False,
     'description': 'Reproducible electrical data analysis',
     'logo': 'reda_logo.png',
-    'travis_button': True,
+    'travis_button': False,
     'page_width': '1200px',
     'fixed_sidebar': True,
 }
