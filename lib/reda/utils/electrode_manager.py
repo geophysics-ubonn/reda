@@ -80,7 +80,7 @@ def decorator_name_index(func):
 
 class electrode_manager(object):
 
-    def __init__(self):
+    def __init__(self, electrode_positions=None):
         self.round_to_decimals = 6
 
         # overview of built-in ordering schemes
@@ -95,7 +95,10 @@ class electrode_manager(object):
         # self.is_locked_down = False
         self.fixed_assigment_table = None
 
-        self._electrode_positions = pd.DataFrame()
+        if electrode_positions is None:
+            self._electrode_positions = pd.DataFrame()
+        else:
+            self._electrode_positions = electrode_positions
         self.sorter = self.ordering_schemes['as_is_plus_one']
 
     def _order_coords_ascending_xyz(self, subdata):
