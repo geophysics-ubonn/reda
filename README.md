@@ -70,5 +70,5 @@ We look forward to any type of contributions:
 * documentation help
 * issuing bug reports
 
-If in doubt, use the gitter chat to contact us (click the Gitter badge above to
+If in doubt, use the Gitter chat to contact us (click the Gitter badge above to
 join the chat).
