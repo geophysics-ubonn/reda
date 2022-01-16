@@ -97,7 +97,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'REDA'
-copyright = u'2021, M. Weigand and F. M. Wagner and others'
+copyright = u'2022, M. Weigand and F. M. Wagner and others'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
