@@ -67,8 +67,8 @@ ert.tsert_summary('data.h5')
 # do the actual import
 ert.import_tsert(
     'data.h5',
-    not_before=datetime.datetime(2018, 5, 20),
-    not_after=datetime.datetime(2018, 7, 20),
+    # not_before=datetime.datetime(2018, 5, 20),
+    # not_after=datetime.datetime(2018, 7, 20),
 )
 
 print(ert.data.groupby('timestep').groups.keys())
