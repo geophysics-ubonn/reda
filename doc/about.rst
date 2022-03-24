@@ -66,6 +66,10 @@ Status of REDA
     * - Res2DInv
       - :red:`work in progress`
       -
+    * - TSERT
+      - :orange:`experimental`
+      - Experimental time-lapse ERT file format. Subject to change. Works, but
+        needs more testing.
 
 .. list-table:: Exporters
     :widths: 15 10 30
@@ -83,6 +87,10 @@ Status of REDA
     * - Res2DInv
       - :red:`work in progress`
       -
+    * - TSERT
+      - :orange:`experimental`
+      - Experimental time-lapse ERT file format. Subject to change. Works, but
+        needs more testing.
 
 Contributing
 ------------

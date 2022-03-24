@@ -14,6 +14,7 @@
 
 # import sys
 # import os
+from sphinx_gallery.sorting import FileNameSortKey
 import matplotlib
 matplotlib.use("Agg")
 
@@ -79,7 +80,9 @@ sphinx_gallery_conf = {
     'backreferences_dir': '_api',
 
     # Your documented modules. You can use a string or a list of strings
-    'doc_module': 'reda'
+    'doc_module': 'reda',
+
+    'within_subsection_order': FileNameSortKey,
 }
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
