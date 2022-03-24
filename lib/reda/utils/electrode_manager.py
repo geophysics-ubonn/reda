@@ -538,17 +538,31 @@ class electrode_manager(object):
         self._electrode_positions.iloc[index] = new_coords.round(
             decimals=self.round_to_decimals)
 
-    def plot_coordinates_x_z_to_ax(self, ax, plot_electrode_numbers=True):
+    def plot_coordinates_x_z_to_ax(
+            self, ax, plot_electrode_numbers=True, use_y_axis=False):
         coordinates = self.electrode_positions
+        x = coordinates['x']
+        if use_y_axis:
+            y = coordinates['y']
+        else:
+            y = coordinates['z']
+
         ax.scatter(
-            coordinates['x'],
-            coordinates['z'],
+            x,
+            y,
             color='k',
         )
         if plot_electrode_numbers:
             for electrode_number, xyz in coordinates.iterrows():
+                if use_y_axis:
+                    y = xyz['y']
+                else:
+                    y = xyz['z']
                 ax.text(
-                    xyz['x'], xyz['z'], '{}'.format(electrode_number),
+                    xyz['x'],
+                    y,
+                    '{}'.format(electrode_number),
+                    fontsize=7,
                     bbox=dict(boxstyle='circle', facecolor='red', alpha=0.8)
                 )
 
