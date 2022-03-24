@@ -75,19 +75,19 @@ ert2.import_syscal_bin(
 ###############################################################################
 # Electrode positions of first dataset
 with reda.CreateEnterDirectory('output_02_rollalong'):
-    fig, ax = ert.plot_electrode_positions_xz()
+    fig, ax = ert.plot_electrode_positions_2d()
     fig.show()
 ###############################################################################
 # Electrode positions of second dataset
 with reda.CreateEnterDirectory('output_02_rollalong'):
-    fig, ax = ert2.plot_electrode_positions_xz()
+    fig, ax = ert2.plot_electrode_positions_2d()
     fig.show()
 ###############################################################################
 # Now we merge the datasets and plot the electrode positions
 ert.merge_container(ert2)
 
 with reda.CreateEnterDirectory('output_02_rollalong'):
-    fig, ax = ert.plot_electrode_positions_xz()
+    fig, ax = ert.plot_electrode_positions_2d()
     fig.show()
 
 ###############################################################################
