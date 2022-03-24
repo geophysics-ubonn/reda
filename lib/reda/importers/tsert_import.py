@@ -193,8 +193,12 @@ class tsert_import(tsert_base):
             return electrode_positions
         return None
 
-    def summary(self):
+    def summary(self, print_index=False):
         """Short summary of the filename
+
+        Parameters
+        ----------
+        print_index : bool, optional
         """
         print(80 * '#')
         print('Summary of file: {}'.format(self.filename))
@@ -221,12 +225,35 @@ class tsert_import(tsert_base):
                 ' - Version {} is present {} times'.format(version, numbers)
             )
         print(80 * '#')
+        f.close()
+
+        if print_index:
+            print('-----------------')
+            print('Index dataframe:')
+            index = pd.read_hdf(
+                self.filename,
+                '/INDEX/index',
+            )
+            print(index)
+            print('-----------------')
+
+    def _load_metadata_from_group(self, f, base):
+        metadata = {}
+        for key, item in f[base].attrs.items():
+            metadata[key] = item
+
+        for subgroup in f[base].keys():
+            new_base = base + '/' + subgroup
+            metadata[subgroup] = self._load_metadata_from_group(
+                f, new_base
+            )
+
+        return metadata
 
     def load_metadata(self):
         f = self._open_file('r')
         assert 'METADATA' in f.keys(), "key METADATA not present!"
+        metadata = self._load_metadata_from_group(f, 'METADATA')
 
-        metadata = {}
-        for key, item in f['METADATA'].attrs.items():
-            metadata[key] = item
+        self._close_file()
         return metadata

@@ -1,6 +1,7 @@
 import os
 import logging
 import warnings
+import datetime
 
 import pandas as pd
 import h5py
@@ -107,7 +108,7 @@ class tsert_export(tsert_base):
     def __init__(self, filename):
         super().__init__(filename)
         if not os.path.isfile(filename):
-            self.add_file_metadata()
+            self.add_file_information()
 
     def write_index(self, data_index):
         key = '/INDEX/index'
@@ -128,11 +129,28 @@ class tsert_export(tsert_base):
         # index.index.name = 'index'
         return index
 
-    def add_file_metadata(self):
+    def add_file_information(self):
         self._open_file('w')
         self.fid.attrs['file_format'] = 'tsert'
         self.fid.attrs['format_version'] = self.version
         self._close_file()
+
+    def _add_to_attr(self, f, base, metadata):
+        if base not in f:
+            f.create_group(base)
+
+        allowed_types = (
+            str,
+            int,
+            float,
+            datetime.datetime,
+        )
+        for key, item in metadata.items():
+            if isinstance(item, allowed_types):
+                f[base].attrs[key] = item
+            elif isinstance(item, dict):
+                new_base = base + '/' + key
+                self._add_to_attr(f, new_base, item)
 
     def test_add_metadata(self):
         """Test function that investigates how metadata can be added to the hdf
@@ -142,13 +160,21 @@ class tsert_export(tsert_base):
         metadata = {
             'a': 'pla',
             'b': 'bum',
+            'c': {
+                'd': 1,
+                'e': 1000,
+            },
         }
-        f.create_group('METADATA')
 
-        for key, item in metadata.items():
-            f['METADATA'].attrs[key] = item
+        self._add_to_attr(f, 'METADATA', metadata)
 
-        f['METADATA'].attrs.keys()
+        f.close()
+
+    def add_metadata(self, metadata):
+        """
+        """
+        f = self._open_file('a')
+        self._add_to_attr(f, 'METADATA', metadata)
         f.close()
 
     def add_data(self, data, version, **kwargs):
@@ -159,11 +185,22 @@ class tsert_export(tsert_base):
         data : pandas.DataFrame
 
         """
+        assert 'timestep' in data.columns, "timestep column must be present"
+
         self.logger.info('Exporting to tsert: {}'.format(self.filename))
         self._close_file()
         g = data.groupby('timestep')
 
         data_index = self.get_index()
+
+        # we must check that the types of the new data and the old data
+        # timesteps match (we allow arbitrary types of timestep keys)
+        if data_index.shape[0] > 0:
+            assert data['timestep'].dtype == data_index['value'].dtype, \
+                'types of timestep-keys do not match: new: {} old: {}'.format(
+                    data['timestep'].dtype,
+                    data_index['value'].dtype
+                )
 
         for timestep, item in g:
             print('@@@@@@@@@@@@@@@@@@@@@@@')
