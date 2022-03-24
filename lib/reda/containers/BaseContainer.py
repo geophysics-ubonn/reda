@@ -105,6 +105,20 @@ class ImportersBase(object):
         if self.data is None:
             self.data = data
         else:
+            # we have existing data
+            if 'timestep' in self.data.columns and 'timestep' in data.columns:
+                # we must check that the types of the new data and the old data
+                # timesteps match (we allow arbitrary types of timestep keys)
+                check = data['timestep'].dtype == self.data['timestep'].dtype
+                error_msg = ''.join((
+                    'types of timestep-keys do not match: new:'
+                    '{} old: {}'.format(
+                        data['timestep'].dtype,
+                        self.data['timestep'].dtype
+                    )
+                ))
+                assert check, error_msg
+
             self.data = pd.concat(
                 (self.data, data), ignore_index=True, sort=True
             )
