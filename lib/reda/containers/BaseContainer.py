@@ -3,6 +3,7 @@ import os
 import functools
 import logging
 import copy
+import json
 
 import pandas as pd
 import matplotlib.pylab as plt
@@ -34,7 +35,8 @@ class ImportersBase(object):
     """
 
     def _add_to_container(
-            self, data_to_add, electrode_positions=None, topography=None):
+            self, data_to_add, electrode_positions=None, topography=None,
+            metadata=None):
         """Add a given dataset to the container
 
         Parameters
@@ -47,9 +49,9 @@ class ImportersBase(object):
             electrode positions, resulting in a unified electrode position
             assignment.
         topography : None
-            Will be used to store topography in the future (not implemented
-            yet).
-
+            Topography of the subsurface environment
+        metadata : dict|None
+            Metadata that is added to the metadata dict of the container
         """
 
         if electrode_positions is not None:
@@ -85,6 +87,9 @@ class ImportersBase(object):
                         'Merging of topographies is not implemented yet')
             else:
                 self.topography = topography
+
+        if metadata is not None:
+            self.metadata.update(metadata)
 
         self._add_to_data(data_to_add)
 
@@ -205,7 +210,9 @@ class ExportersBase(object):
 class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
     """."""
 
-    def __init__(self, data=None, electrode_positions=None, topography=None):
+    def __init__(
+            self, data=None, electrode_positions=None, topography=None,
+            metadata=None, **kwargs):
         """
         Parameters
         ----------
@@ -225,6 +232,20 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         self.data = self.check_dataframe(data)
         self.electrode_positions = electrode_positions
         self.topography = topography
+        if metadata is None:
+            self.metadata = {}
+        else:
+            assert isinstance(metadata, dict), "metadata must be a dict"
+            self.metadata = metadata
+
+    def save_metadata(self, filename):
+        with open(filename, 'w') as fid:
+            json.dump(self.metadata, fid)
+
+    def load_metadata(self, filename):
+        with open(filename, 'r') as fid:
+            metadata = json.load(fid)
+            self.metadata.update(metadata)
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
