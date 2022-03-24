@@ -242,8 +242,12 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             information with columns: "x", "y", "z".
 
         """
-        self.setup_logger()
-        self.data = self.check_dataframe(data)
+        self.setup_logger(__name__)
+        self.data = None
+        if data is not None:
+            self.check_dataframe(data)
+            self._add_to_data(data)
+
         self.electrode_positions = electrode_positions
         self.topography = topography
         if metadata is None:
