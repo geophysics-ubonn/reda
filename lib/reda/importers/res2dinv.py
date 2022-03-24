@@ -18,7 +18,7 @@ def import_res2dinv(filename, **kwargs):
     """ Read a RES2DINV-style
 
     Parameters
-    ---------
+    ----------
 
     Returns
     -------
