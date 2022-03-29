@@ -449,20 +449,24 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         config_obj.add_to_configs(self.data[['a', 'b', 'm', 'n']].values)
         return config_obj
 
-    def plot_electrode_positions_xz(self, ax=None):
-        """Create a 2D scatter plot for the electrode positions.
+    def plot_electrode_positions_2d(self, ax=None, use_y_axis=False):
+        """Create a 2D scatter plot for the electrode positions. By default use
+        the x and z coordinates.
 
         Parameters
         ----------
         ax : matplotlib.axes, optional
             Axes object to plot to. If None, create a new figure
+        use_y_axis : bool, optional
+            If true then use the y coordinates instead of z coordinates for
+            plotting
 
         Returns
         -------
-        fig : matplotlib.Figure
+        fig : matplotlib.Figure|None
             The Figure object related to ax. None if no electrode positions
             were registered yet.
-        ax : matplotlib.Axes
+        ax : matplotlib.Axes|None
             The axes object plotted to. None if no electrode positions were
             registered yet.
         """
@@ -470,14 +474,14 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             return None, None
 
         if ax is None:
-            fig, ax_plot = plt.subplots(figsize=(14 / 2.54, 4 / 2.54))
+            fig, ax_plot = plt.subplots(figsize=(16 / 2.54, 4 / 2.54))
         else:
             ax_plot = ax
             fig = ax.get_figure()
 
         elecs = reda.electrode_manager()
         elecs.add_fixed_assignments(self.electrode_positions)
-        elecs.plot_coordinates_x_z_to_ax(ax_plot)
+        elecs.plot_coordinates_x_z_to_ax(ax_plot, use_y_axis=use_y_axis)
         if ax is None:
             # only touch the layout if we created the figure
             fig.tight_layout()
@@ -561,3 +565,70 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         print('WARNING: Journal and log is not copied!')
 
         return new_obj
+
+    def plot_topography_2d(self, ax=None, use_y_axis=False):
+        """
+        Plot topography points for x/z coordinates. If present, also plot
+        electrode positions.
+
+        Parameters
+        ----------
+        ax : matplotlib.Axes|None, optional
+            If provided, plot into this axes object
+        use_y_axis : bool, optional
+            If true then use the y coordinates instead of z coordinates for
+            plotting
+
+        Returns
+        -------
+        fig : matplotlib.Figure|None
+            figure object or None if not topography data is present
+        ax : matplotlib.Axes|None
+            axes object or None if not topography data is present
+        """
+        if self.topography is None:
+            return None, None
+
+        if ax is None:
+            fig, ax = plt.subplots(figsize=(16 / 2.54, 5 / 2.54))
+            we_created_the_figure = True
+        else:
+            fig = ax.get_figure()
+            we_created_the_figure = False
+
+        x_topo = self.topography['x']
+        if use_y_axis:
+            y_topo = self.topography['y']
+        else:
+            y_topo = self.topography['z']
+
+        ax.plot(
+            x_topo,
+            y_topo,
+            '.-',
+            color='k',
+            label='topography',
+        )
+
+        if self.electrode_positions is not None:
+            x_el = self.electrode_positions['x']
+            if use_y_axis:
+                y_el = self.electrode_positions['y']
+            else:
+                y_el = self.electrode_positions['z']
+            ax.scatter(
+                x_el,
+                y_el,
+                label='electrodes',
+            )
+        ax.set_xlabel('x [m]')
+        if use_y_axis:
+            ax.set_ylabel('y [m]')
+        else:
+            ax.set_ylabel('z [m]')
+        ax.legend()
+        if we_created_the_figure:
+            # only touch the layout if we created the figure
+            fig.tight_layout()
+
+        return fig, ax
