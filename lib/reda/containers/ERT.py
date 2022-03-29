@@ -31,7 +31,7 @@ class ERTImporters(ImportersBase):
     --------
     Exporters
     """
-    def tsert_summary(self, filename):
+    def tsert_summary(self, filename, **kwargs):
         """Try to open a given filename (usually a .h5 file) as a TSERT file
         and print out a summary of contained data.
 
@@ -41,9 +41,10 @@ class ERTImporters(ImportersBase):
             Filename of data file
         """
         importer = tsert_import(filename)
-        importer.summary()
+        importer.summary(**kwargs)
 
-    def import_tsert(self, filename, timesteps='all', **kwargs):
+    def import_tsert(
+            self, filename, timesteps='all', version='base', **kwargs):
         """TSERT import
 
         Parameters
@@ -52,6 +53,9 @@ class ERTImporters(ImportersBase):
             Path to hdf file to import data from
         timesteps : str|list|datetime.datetime
             Timesteps that should be imported
+        version : str
+            Which version of the data to load. Time steps that do not have this
+            specific version are ignored. Default: base version
         """
 
         self.logger.info('TSERT import')
@@ -59,15 +63,17 @@ class ERTImporters(ImportersBase):
         with LogDataChanges(self, filter_action='import'):
             data = importer.import_data(
                 timesteps=timesteps,
-                version=kwargs.get('version', 'base'),
+                version=version,
                 **kwargs,
             )
-            print('TODO: import metadata')
             electrode_positions_df = importer.load_electrode_positions()
             electrode_positions = electrode_manager(electrode_positions_df)
             topography = importer.load_topography()
+            metadata = importer.load_metadata()
 
-            self._add_to_container(data, electrode_positions, topography)
+            self._add_to_container(
+                data, electrode_positions, topography, metadata
+            )
         if kwargs.get('verbose', False):
             print('Summary:')
             self._describe_data(data)
@@ -211,6 +217,7 @@ class ERTExporters(object):
         exporter.set_electrode_positions(self.electrode_positions)
         exporter.set_topography(self.topography)
         exporter.add_data(self.data, version, **kwargs)
+        exporter.add_metadata(self.metadata)
 
     def export_to_pygimli_scheme(self, norrec='nor', timestep=None):
         """Export the data into a pygimili.DataContainerERT object.
@@ -264,7 +271,9 @@ class ERTExporters(object):
 class ERT(BaseContainer, ERTImporters, ERTExporters):
     """."""
 
-    def __init__(self, data=None, electrode_positions=None, topography=None):
+    def __init__(
+            self, data=None, electrode_positions=None, topography=None,
+            metadata=None, **kwargs):
         """
         Parameters
         ----------
@@ -280,7 +289,6 @@ class ERT(BaseContainer, ERTImporters, ERTExporters):
             information with columns: "x", "y", "z".
 
         """
-        self.setup_logger(__name__)
         self.required_columns = [
             'a',
             'b',
@@ -288,13 +296,13 @@ class ERT(BaseContainer, ERTImporters, ERTExporters):
             'n',
             'r',
         ]
-        self.data = None
-        if data is not None:
-            self.check_dataframe(data)
-            self._add_to_data(data)
-            # self.data = self.check_dataframe(data)
-        self.electrode_positions = electrode_positions
-        self.topography = topography
+        super().__init__(
+            data,
+            electrode_positions,
+            topography,
+            metadata,
+            **kwargs
+        )
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
