@@ -33,7 +33,7 @@ def _extract_adc_data(mat, **kwargs):
         #     print(name, fdata[name].shape)
 
         timestamp = np.atleast_2d(
-            [convert_epoch(x) for x in fdata['Time'].squeeze()]
+            [convert_epoch(x) for x in np.atleast_1d(fdata['Time']).flatten()]
         ).T
         data_list = []
         for key, data in zip(
@@ -121,7 +121,7 @@ def _extract_md(mat, **kwargs):
         # print('Frequency: ', emd[f_id]['fm'])
         fdata = md[f_id]
         timestamp = np.atleast_2d(
-            [convert_epoch(x) for x in fdata['Time'].squeeze()]
+            [convert_epoch(x) for x in np.atleast_1d(fdata['Time']).flatten()]
         ).T
         """
         From Egon:
@@ -131,42 +131,51 @@ def _extract_md(mat, **kwargs):
         Mit den Stromelektroden A und B.
         Die Summe von beiden ist die Impedanz Zg3(AB)
         """
-        Zg3_complex = np.sum(fdata['Zg3'], axis=1)
+
+        def _to_3d(array):
+            if len(array.shape) == 2:
+                return array[np.newaxis, :, :]
+            return array
+
+        Zg3_complex = np.atleast_2d(
+            np.sum(_to_3d(fdata['Zg3']), axis=1)
+        )
         df = pd.DataFrame()
         # I THINK we can just sort a, b - the actual data should already
         # conform to the notation that the lower electrode number is assigned
         # to a
-        df[['a', 'b']] = pd.DataFrame(np.sort(fdata['cni'], axis=1))
+        df[['a', 'b']] = pd.DataFrame(
+            np.sort(np.atleast_2d(fdata['cni']), axis=1))
         df['datetime'] = timestamp
         df['frequency'] = fdata['fm']
         df['U0'] = fdata['U0']
-        df['Zg1_ela'] = fdata['Zg3'][:, 0, 0]
-        df['Zg2_ela'] = fdata['Zg3'][:, 0, 1]
-        df['Zg3_ela'] = fdata['Zg3'][:, 0, 2]
-        df['Zg1_elb'] = fdata['Zg3'][:, 1, 0]
-        df['Zg2_elb'] = fdata['Zg3'][:, 1, 1]
-        df['Zg3_elb'] = fdata['Zg3'][:, 1, 2]
+        df['Zg1_ela'] = _to_3d(fdata['Zg3'])[:, 0, 0]
+        df['Zg2_ela'] = _to_3d(fdata['Zg3'])[:, 0, 1]
+        df['Zg3_ela'] = _to_3d(fdata['Zg3'])[:, 0, 2]
+        df['Zg1_elb'] = _to_3d(fdata['Zg3'])[:, 1, 0]
+        df['Zg2_elb'] = _to_3d(fdata['Zg3'])[:, 1, 1]
+        df['Zg3_elb'] = _to_3d(fdata['Zg3'])[:, 1, 2]
         df['Zg1'] = Zg3_complex[:, 0]
         df['Zg2'] = Zg3_complex[:, 1]
         df['Zg3'] = Zg3_complex[:, 2]
 
         df['Zg'] = np.mean(df[['Zg1', 'Zg2', 'Zg3']].values, axis=1)
 
-        df['Cl1'] = fdata['Cl3'][:, 0]
-        df['Cl2'] = fdata['Cl3'][:, 1]
-        df['Cl3'] = fdata['Cl3'][:, 2]
+        df['Cl1'] = np.atleast_2d(fdata['Cl3'])[:, 0]
+        df['Cl2'] = np.atleast_2d(fdata['Cl3'])[:, 1]
+        df['Cl3'] = np.atleast_2d(fdata['Cl3'])[:, 2]
 
         # leakage capacitance
         df['Cl'] = np.mean(df[['Cl1', 'Cl2', 'Cl3']].values, axis=1)
 
-        df['Is1'] = fdata['Is3'][:, 0]
-        df['Is2'] = fdata['Is3'][:, 1]
-        df['Is3'] = fdata['Is3'][:, 2]
-        df['Is'] = np.mean(fdata['Is3'], axis=1)
-        df['Il1'] = fdata['Il3'][:, 0]
-        df['Il2'] = fdata['Il3'][:, 1]
-        df['Il3'] = fdata['Il3'][:, 2]
-        df['Il'] = np.mean(fdata['Il3'], axis=1)
+        df['Is1'] = np.atleast_2d(fdata['Is3'])[:, 0]
+        df['Is2'] = np.atleast_2d(fdata['Is3'])[:, 1]
+        df['Is3'] = np.atleast_2d(fdata['Is3'])[:, 2]
+        df['Is'] = np.mean(np.atleast_2d(fdata['Is3']), axis=1)
+        df['Il1'] = np.atleast_2d(fdata['Il3'])[:, 0]
+        df['Il2'] = np.atleast_2d(fdata['Il3'])[:, 1]
+        df['Il3'] = np.atleast_2d(fdata['Il3'])[:, 2]
+        df['Il'] = np.mean(np.atleast_2d(fdata['Il3']), axis=1)
 
         # "standard" injected current, in [mA]
         df['Iab'] = np.abs(df['Is']) * 1e3
@@ -174,50 +183,50 @@ def _extract_md(mat, **kwargs):
         # take absolute value and convert to mA
         df['Ileakage'] = np.abs(df['Il']) * 1e3
 
-        df['Ii1_ela'] = fdata['Ii3'][:, 0, 0]
-        df['Ii2_ela'] = fdata['Ii3'][:, 0, 1]
-        df['Ii3_ela'] = fdata['Ii3'][:, 0, 2]
-        df['Ii1_elb'] = fdata['Ii3'][:, 1, 0]
-        df['Ii2_elb'] = fdata['Ii3'][:, 1, 1]
-        df['Ii3_elb'] = fdata['Ii3'][:, 1, 2]
+        df['Ii1_ela'] = _to_3d(fdata['Ii3'])[:, 0, 0]
+        df['Ii2_ela'] = _to_3d(fdata['Ii3'])[:, 0, 1]
+        df['Ii3_ela'] = _to_3d(fdata['Ii3'])[:, 0, 2]
+        df['Ii1_elb'] = _to_3d(fdata['Ii3'])[:, 1, 0]
+        df['Ii2_elb'] = _to_3d(fdata['Ii3'])[:, 1, 1]
+        df['Ii3_elb'] = _to_3d(fdata['Ii3'])[:, 1, 2]
 
-        df['Uc1'] = fdata['Uc3'][:, 0]
-        df['Uc2'] = fdata['Uc3'][:, 1]
-        df['Uc3'] = fdata['Uc3'][:, 2]
+        df['Uc1'] = np.atleast_2d(fdata['Uc3'])[:, 0]
+        df['Uc2'] = np.atleast_2d(fdata['Uc3'])[:, 1]
+        df['Uc3'] = np.atleast_2d(fdata['Uc3'])[:, 2]
 
-        df['Yg1_ela'] = fdata['Yg3'][:, 0, 0]
-        df['Yg2_ela'] = fdata['Yg3'][:, 0, 1]
-        df['Yg3_ela'] = fdata['Yg3'][:, 0, 2]
-        df['Yg1_elb'] = fdata['Yg3'][:, 1, 0]
-        df['Yg2_elb'] = fdata['Yg3'][:, 1, 1]
-        df['Yg3_elb'] = fdata['Yg3'][:, 1, 2]
+        df['Yg1_ela'] = _to_3d(fdata['Yg3'])[:, 0, 0]
+        df['Yg2_ela'] = _to_3d(fdata['Yg3'])[:, 0, 1]
+        df['Yg3_ela'] = _to_3d(fdata['Yg3'])[:, 0, 2]
+        df['Yg1_elb'] = _to_3d(fdata['Yg3'])[:, 1, 0]
+        df['Yg2_elb'] = _to_3d(fdata['Yg3'])[:, 1, 1]
+        df['Yg3_elb'] = _to_3d(fdata['Yg3'])[:, 1, 2]
 
-        df['Cg1_ela'] = fdata['Cg3'][:, 0, 0]
-        df['Cg2_ela'] = fdata['Cg3'][:, 0, 1]
-        df['Cg3_ela'] = fdata['Cg3'][:, 0, 2]
-        df['Cg1_elb'] = fdata['Cg3'][:, 1, 0]
-        df['Cg2_elb'] = fdata['Cg3'][:, 1, 1]
-        df['Cg3_elb'] = fdata['Cg3'][:, 1, 2]
+        df['Cg1_ela'] = _to_3d(fdata['Cg3'])[:, 0, 0]
+        df['Cg2_ela'] = _to_3d(fdata['Cg3'])[:, 0, 1]
+        df['Cg3_ela'] = _to_3d(fdata['Cg3'])[:, 0, 2]
+        df['Cg1_elb'] = _to_3d(fdata['Cg3'])[:, 1, 0]
+        df['Cg2_elb'] = _to_3d(fdata['Cg3'])[:, 1, 1]
+        df['Cg3_elb'] = _to_3d(fdata['Cg3'])[:, 1, 2]
 
-        df['Yl1'] = fdata['Yl3'][:, 0]
-        df['Yl2'] = fdata['Yl3'][:, 1]
-        df['Yl3'] = fdata['Yl3'][:, 2]
+        df['Yl1'] = np.atleast_2d(fdata['Yl3'])[:, 0]
+        df['Yl2'] = np.atleast_2d(fdata['Yl3'])[:, 1]
+        df['Yl3'] = np.atleast_2d(fdata['Yl3'])[:, 2]
 
-        df['U1_Shunt1_before'] = fdata['Us3'][:, nai[0], 0]
-        df['U2_Shunt1_before'] = fdata['Us3'][:, nai[0], 1]
-        df['U3_Shunt1_before'] = fdata['Us3'][:, nai[0], 2]
+        df['U1_Shunt1_before'] = _to_3d(fdata['Us3'])[:, nai[0], 0]
+        df['U2_Shunt1_before'] = _to_3d(fdata['Us3'])[:, nai[0], 1]
+        df['U3_Shunt1_before'] = _to_3d(fdata['Us3'])[:, nai[0], 2]
 
-        df['U1_Shunt1_after'] = fdata['Us3'][:, nai[1], 0]
-        df['U2_Shunt1_after'] = fdata['Us3'][:, nai[1], 1]
-        df['U3_Shunt1_after'] = fdata['Us3'][:, nai[1], 2]
+        df['U1_Shunt1_after'] = _to_3d(fdata['Us3'])[:, nai[1], 0]
+        df['U2_Shunt1_after'] = _to_3d(fdata['Us3'])[:, nai[1], 1]
+        df['U3_Shunt1_after'] = _to_3d(fdata['Us3'])[:, nai[1], 2]
 
-        df['U1_Shunt2_before'] = fdata['Us3'][:, nai[2], 0]
-        df['U2_Shunt2_before'] = fdata['Us3'][:, nai[2], 1]
-        df['U3_Shunt2_before'] = fdata['Us3'][:, nai[2], 2]
+        df['U1_Shunt2_before'] = _to_3d(fdata['Us3'])[:, nai[2], 0]
+        df['U2_Shunt2_before'] = _to_3d(fdata['Us3'])[:, nai[2], 1]
+        df['U3_Shunt2_before'] = _to_3d(fdata['Us3'])[:, nai[2], 2]
 
-        df['U1_Shunt2_after'] = fdata['Us3'][:, nai[3], 0]
-        df['U2_Shunt2_after'] = fdata['Us3'][:, nai[3], 1]
-        df['U3_Shunt2_after'] = fdata['Us3'][:, nai[3], 2]
+        df['U1_Shunt2_after'] = _to_3d(fdata['Us3'])[:, nai[3], 0]
+        df['U2_Shunt2_after'] = _to_3d(fdata['Us3'])[:, nai[3], 1]
+        df['U3_Shunt2_after'] = _to_3d(fdata['Us3'])[:, nai[3], 2]
 
         dfl.append(df)
 
@@ -258,7 +267,8 @@ def _extract_emd(mat, **kwargs):
 
         timestamp = pd.DataFrame(
             np.atleast_2d(
-                [convert_epoch(x) for x in fdata['Time'].squeeze()]
+                [convert_epoch(x) for x in np.atleast_1d(
+                    fdata['Time']).flatten()]
             ).T,
             columns=['datetime', ]
         )
