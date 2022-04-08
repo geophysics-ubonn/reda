@@ -6,7 +6,7 @@
 
 *Latest release: 0.1.5 (28. June 2020)*
 
-See [!Releases Page])(https://github.com/geophysics-ubonn/reda/releases) for a
+See [!releases page](https://github.com/geophysics-ubonn/reda/releases) for a
 complete list of releases. Releases are also published to
 [!Pypi](https://pypi.org/project/reda/).
 
