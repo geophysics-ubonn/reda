@@ -884,15 +884,17 @@ Plot pseudosection for 10 Hz
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_001.png
-          :alt: plot radic sip256c
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_001.png
+         :alt: plot radic sip256c
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_001.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_002.png
-          :alt: plot radic sip256c
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_002.png
+         :alt: plot radic sip256c
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_002.png
+         :class: sphx-glr-multi-img
 
 
 
@@ -929,9 +931,10 @@ Plot pseudosections of all frequencies
 
 
 
-.. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_003.png
-    :alt: f: 0.03906 Hz, f: 0.07813 Hz, f: 0.15625 Hz, f: 0.3125 Hz, f: 0.625 Hz, f: 1.25 Hz, f: 2.5 Hz, f: 5.0 Hz, f: 10.0 Hz, f: 20.0 Hz, f: 40.0 Hz, f: 80.0 Hz, f: 125.0 Hz, f: 266.66666 Hz
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_003.png
+   :alt: f: 0.03906 Hz, f: 0.07813 Hz, f: 0.15625 Hz, f: 0.3125 Hz, f: 0.625 Hz, f: 1.25 Hz, f: 2.5 Hz, f: 5.0 Hz, f: 10.0 Hz, f: 20.0 Hz, f: 40.0 Hz, f: 80.0 Hz, f: 125.0 Hz, f: 266.66666 Hz
+   :srcset: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_003.png
+   :class: sphx-glr-single-img
 
 
 
@@ -971,9 +974,10 @@ improved in the future
 
 
 
-.. image:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_004.png
-    :alt: plot radic sip256c
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_004.png
+   :alt: plot radic sip256c
+   :srcset: /_examples/03_sEIT/images/sphx_glr_plot_radic_sip256c_004.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -982,14 +986,14 @@ improved in the future
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      label=kwargs.get('label_rec', 'reciprocal'),
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:235: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 0].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:250: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 1].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:265: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 0].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:279: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 1].loglog(
 
 
 
@@ -997,7 +1001,7 @@ improved in the future
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  35.326 seconds)
+   **Total running time of the script:** ( 0 minutes  32.498 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:

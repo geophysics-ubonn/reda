@@ -137,3 +137,11 @@ reda.importers.sip04 module
    :members:
    :undoc-members:
    :show-inheritance:
+
+reda.importers.tsert\_import module
+-----------------------------------
+
+.. automodule:: reda.importers.tsert_import
+   :members:
+   :undoc-members:
+   :show-inheritance:

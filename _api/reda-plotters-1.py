@@ -8,7 +8,7 @@ def sum(a, b):
 x, y = np.meshgrid(a, b)
 c = sum(x, y)
 fig, (ax1, ax2) = plt.subplots(1, 2)
-im = ax1.pcolormesh(x, y, c)
+im = ax1.pcolormesh(x, y, c, shading='auto')
 _ = plt.colorbar(im, ax=ax1)
 _ = ax1.set_title("plt.pcolormesh")
 _, _ = matplot(x, y, c, ax=ax2)

@@ -10,10 +10,10 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -21,8 +21,8 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Concept: Electrode numbers and positions" href="concept_electrodes.html" />
-    <link rel="prev" title="Installation" href="installation.html" />
+    <link rel="next" title="&lt;no title&gt;" href="file_formats.html" />
+    <link rel="prev" title="&lt;no title&gt;" href="concepts_and_internals.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
   
@@ -52,29 +52,18 @@
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
-    <img
-        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
@@ -84,8 +73,10 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
-      <li>Previous: <a href="installation.html" title="previous chapter">Installation</a></li>
-      <li>Next: <a href="concept_electrodes.html" title="next chapter">Concept: Electrode numbers and positions</a></li>
+  <li><a href="concepts_and_internals.html">&lt;no title&gt;</a><ul>
+      <li>Previous: <a href="concepts_and_internals.html" title="previous chapter">&lt;no title&gt;</a></li>
+      <li>Next: <a href="file_formats.html" title="next chapter">&lt;no title&gt;</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -93,7 +84,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -143,7 +134,7 @@ polarization data.</p></li>
 has some advantages, but also disadvantages:</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>The logical electrode numbers <strong>a*, **b</strong>, <strong>m</strong>, <strong>n</strong> are assumed to be
+<p>The logical electrode numbers <strong>a</strong>, <strong>b</strong>, <strong>m</strong>, <strong>n</strong> are assumed to be
 1-indexed in the sense that no offsets are automatically applied when
 dealing with those numbers.</p>
 <p>While arbitrary electrode numbers are not forbidden, we still
@@ -170,28 +161,29 @@ added.</p></li>
 <ul class="simple">
 <li><p>If not otherwise stated, a container stores measurement data in a pandas
 DataFrame located in <cite>container.data</cite>.</p></li>
-<li><p>Electrode positions (if available) are stored in an electrode manager
-<a class="reference internal" href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager" title="reda.utils.electrode_manager.electrode_manager"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.utils.electrode_manager.electrode_manager</span></code></a> in
-<cite>container.electrode_positions</cite> (columns <strong>x</strong>, <strong>y</strong>, <strong>z</strong>).</p></li>
-<li><p>Topograhy nodes (if available) are stored in a pandas DataFrame in
-<cite>container.topography</cite> (columns <strong>x</strong>, <strong>y</strong>, <strong>z</strong>).</p></li>
-</ul>
-<p>The integer index hereby refers to electrode numbers in <strong>container.data[[‘a’,
-‘b’, ‘m’, ‘n’]]</strong>.
+<li><p>Electrode positions (if available) are stored in an
+<a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a> in <cite>container.electrode_positions</cite> (columns
+<strong>x</strong>, <strong>y</strong>, <strong>z</strong>, plus an integer index).
+The integer index hereby connects the positions to the electrode numbers in
+<strong>container.data[[‘a’, ‘b’, ‘m’, ‘n’]]</strong>.
 The index is not required to be continuous and numbers do not need to start
-with 1. For example, the index <strong>0, 1, 10, 20, 21</strong> would be allowed (although
-we suggest to start with 1 to not falsely indicate a zero-indexing of the
-electrode numbers.</p>
+with 1. For example, the index <strong>0, 1, 10, 20, 21</strong> would be allowed
+(although we suggest to start with 1 to not falsely indicate a zero-indexing
+of the electrode numbers.
+Electrode positions, and complex operations with them, can be handled with
+the electrode manager
+<a class="reference internal" href="_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager" title="reda.utils.electrode_manager.electrode_manager"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.utils.electrode_manager.electrode_manager</span></code></a>.
+The corresponding data frame can then easily be access via
+<em>electrode_manager.electrode_positions</em></p></li>
+<li><p>Topograhy nodes (if available) are stored in a pandas DataFrame in
+<cite>container.topography</cite> (columns <strong>x</strong>, <strong>y</strong>, <strong>z</strong>).
+Electrodes located on the topography should be included here.</p></li>
+</ul>
 </section>
 <section id="required-data-columns">
 <h2>Required data columns<a class="headerlink" href="#required-data-columns" title="Permalink to this headline">¶</a></h2>
 <p>Each data container requires a minimal set of data variables (columns) that any
 importer must return.</p>
-<div class="admonition warning">
-<p class="admonition-title">Warning</p>
-<p>We are in the process of unifying the column names across containers. In
-the future the default will be to use lower case column names.</p>
-</div>
 <section id="ert">
 <h3>ERT<a class="headerlink" href="#ert" title="Permalink to this headline">¶</a></h3>
 <table class="docutils align-default">
@@ -491,10 +483,10 @@ and Mx as column; Tm deriveable from there</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, M. Weigand and F. M. Wagner and others.
+      &copy;2022, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

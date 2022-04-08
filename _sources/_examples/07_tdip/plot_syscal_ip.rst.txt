@@ -148,9 +148,10 @@ note that no file will be saved to disk if filename parameter is not provided
 
 
 
-.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_001.png
-    :alt: normed on current
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_001.png
+   :alt: normed on current
+   :srcset: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_001.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -179,9 +180,10 @@ this will only return a figure object, but will not save to file:
 
 
 
-.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_002.png
-    :alt: normed on current
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_002.png
+   :alt: normed on current
+   :srcset: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_002.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -208,9 +210,10 @@ it does not matter if you choose normal or reciprocal
 
 
 
-.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_003.png
-    :alt: normed on current
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_003.png
+   :alt: normed on current
+   :srcset: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_003.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -237,9 +240,10 @@ plot a decay curve by specifying the index
 
 
 
-.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_004.png
-    :alt: normed on current
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_004.png
+   :alt: normed on current
+   :srcset: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_004.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -268,9 +272,10 @@ a  b  m  n
 
 
 
-.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_005.png
-    :alt: normed on current
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_005.png
+   :alt: normed on current
+   :srcset: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_005.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -296,9 +301,10 @@ reciprocal is also ok
 
 
 
-.. image:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_006.png
-    :alt: normed on current
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_006.png
+   :alt: normed on current
+   :srcset: /_examples/07_tdip/images/sphx_glr_plot_syscal_ip_006.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out

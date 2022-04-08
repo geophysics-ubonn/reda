@@ -25,6 +25,14 @@ reda.testing.containers module
    :undoc-members:
    :show-inheritance:
 
+reda.testing.fzj\_readbin module
+--------------------------------
+
+.. automodule:: reda.testing.fzj_readbin
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 reda.testing.test\_container\_ert module
 ----------------------------------------
 
@@ -37,6 +45,14 @@ reda.testing.test\_container\_seit module
 -----------------------------------------
 
 .. automodule:: reda.testing.test_container_seit
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+reda.testing.test\_crtomo\_import module
+----------------------------------------
+
+.. automodule:: reda.testing.test_crtomo_import
    :members:
    :undoc-members:
    :show-inheritance:

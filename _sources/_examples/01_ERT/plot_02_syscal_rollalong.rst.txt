@@ -60,9 +60,10 @@ is common practice in some work groups).
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_001.png
-    :alt: plot 02 syscal rollalong
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_001.png
+   :alt: plot 02 syscal rollalong
+   :srcset: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_001.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -98,7 +99,7 @@ Print statistics
 
 
     --- Data Journal Start ---
-    2021-06-21 10:03:41.392176
+    2022-04-08 07:58:42.094618
     Data was imported from file  (1460 data points)
     --- Data Journal End ---
 
@@ -126,8 +127,8 @@ This here is an activity list
 
  .. code-block:: none
 
-    2021-06-21 10:03:40,011 - reda.containers.ERT - INFO - IRIS Syscal Pro bin import
-    2021-06-21 10:03:40,838 - reda.containers.ERT - INFO - Data sized changed from 0 to 1460
+    2022-04-08 07:58:40,840 - reda.containers.BaseContainer - INFO - IRIS Syscal Pro bin import
+    2022-04-08 07:58:41,591 - reda.containers.BaseContainer - INFO - Data sized changed from 0 to 1460
 
 
 
@@ -155,9 +156,10 @@ create an ERT container and import second dataset
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_002.png
-    :alt: plot 02 syscal rollalong
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_002.png
+   :alt: plot 02 syscal rollalong
+   :srcset: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_002.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -194,7 +196,7 @@ points
 
 
     --- Data Journal Start ---
-    2021-06-21 10:03:42.612829
+    2022-04-08 07:58:43.372511
     Data was imported from file  (1460 data points)
     --- Data Journal End ---
 
@@ -245,14 +247,15 @@ Electrode positions of first dataset
 .. code-block:: default
 
     with reda.CreateEnterDirectory('output_02_rollalong'):
-        fig, ax = ert.plot_electrode_positions_xz()
+        fig, ax = ert.plot_electrode_positions_2d()
         fig.show()
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_003.png
-    :alt: plot 02 syscal rollalong
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_003.png
+   :alt: plot 02 syscal rollalong
+   :srcset: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_003.png
+   :class: sphx-glr-single-img
 
 
 
@@ -267,14 +270,15 @@ Electrode positions of second dataset
 .. code-block:: default
 
     with reda.CreateEnterDirectory('output_02_rollalong'):
-        fig, ax = ert2.plot_electrode_positions_xz()
+        fig, ax = ert2.plot_electrode_positions_2d()
         fig.show()
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_004.png
-    :alt: plot 02 syscal rollalong
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_004.png
+   :alt: plot 02 syscal rollalong
+   :srcset: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_004.png
+   :class: sphx-glr-single-img
 
 
 
@@ -291,15 +295,16 @@ Now we merge the datasets and plot the electrode positions
     ert.merge_container(ert2)
 
     with reda.CreateEnterDirectory('output_02_rollalong'):
-        fig, ax = ert.plot_electrode_positions_xz()
+        fig, ax = ert.plot_electrode_positions_2d()
         fig.show()
 
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_005.png
-    :alt: plot 02 syscal rollalong
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_005.png
+   :alt: plot 02 syscal rollalong
+   :srcset: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_005.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -345,9 +350,10 @@ Plot Pseudosection
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_006.png
-    :alt: plot 02 syscal rollalong
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_006.png
+   :alt: plot 02 syscal rollalong
+   :srcset: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_006.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -371,9 +377,10 @@ Plot Pseudosection
 
 
 
-.. image:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_007.png
-    :alt: plot 02 syscal rollalong
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_007.png
+   :alt: plot 02 syscal rollalong
+   :srcset: /_examples/01_ERT/images/sphx_glr_plot_02_syscal_rollalong_007.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out

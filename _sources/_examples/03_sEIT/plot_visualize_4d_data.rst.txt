@@ -174,27 +174,31 @@ Plot a single spectrum
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_001.png
-          :alt: a: 1 b: 2 m: 4: n: 3
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_001.png
+         :alt: a: 1 b: 2 m: 4: n: 3
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_001.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_002.png
-          :alt: a: 1 b: 2 m: 4: n: 3
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_002.png
+         :alt: a: 1 b: 2 m: 4: n: 3
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_002.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_003.png
-          :alt: a: 1 b: 2 m: 4: n: 3
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_003.png
+         :alt: a: 1 b: 2 m: 4: n: 3
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_003.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_004.png
-          :alt: a: 1 b: 2 m: 4: n: 3
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_004.png
+         :alt: a: 1 b: 2 m: 4: n: 3
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_004.png
+         :class: sphx-glr-multi-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -203,62 +207,62 @@ Plot a single spectrum
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      label=kwargs.get('label_rec', 'reciprocal'),
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      label=kwargs.get('label_rec', 'reciprocal'),
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      label=kwargs.get('label_rec', 'reciprocal'),
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:190: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:212: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      label=kwargs.get('label_rec', 'reciprocal'),
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:226: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:241: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:255: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
-      linestyle='dotted',
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:261: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
-      limits.get('cim_max', None)
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:235: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 0].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:250: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 1].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:265: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 0].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:279: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 1].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:288: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      axes[1, 1].set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:235: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 0].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:250: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 1].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:265: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 0].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:279: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 1].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:288: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      axes[1, 1].set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:235: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 0].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:250: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 1].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:265: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 0].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:279: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 1].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:288: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      axes[1, 1].set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:217: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      ax.set_ylim(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:235: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 0].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:250: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[0, 1].semilogx(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:265: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 0].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:279: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+      axes[1, 1].loglog(
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:288: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+      axes[1, 1].set_ylim(
 
 
 
@@ -286,7 +290,7 @@ Plot a single spectrum
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.7.1/lib/python3.7/site-packages/reda/eis/plots.py:507: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
+    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:536: UserWarning: Data has no positive values, and therefore cannot be log-scaled.
       ax.set_xlim(*self.xlim)
 
 
@@ -329,63 +333,73 @@ just used to close the figures to save memory
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_005.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_005.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_005.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_006.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_006.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_006.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_007.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_007.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_007.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_008.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_008.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_008.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_009.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_009.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_009.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_010.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_010.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_010.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_011.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_011.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_011.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_012.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_012.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_012.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_013.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_013.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_013.png
+         :class: sphx-glr-multi-img
 
     *
 
-      .. image:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_014.png
-          :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
-          :class: sphx-glr-multi-img
+      .. image-sg:: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_014.png
+         :alt: time: 0.0000 , time: 1.0000 , time: 2.0000 , time: 3.0000 
+         :srcset: /_examples/03_sEIT/images/sphx_glr_plot_visualize_4d_data_014.png
+         :class: sphx-glr-multi-img
 
 
 
@@ -394,7 +408,7 @@ just used to close the figures to save memory
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  31.075 seconds)
+   **Total running time of the script:** ( 0 minutes  34.591 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_visualize_4d_data.py:

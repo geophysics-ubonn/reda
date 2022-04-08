@@ -9,10 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../../../_static/gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css" />
     <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
     <script src="../../../_static/jquery.js"></script>
     <script src="../../../_static/underscore.js"></script>
@@ -49,29 +49,18 @@
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
-    <img
-        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
@@ -92,7 +81,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../../../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -121,12 +110,17 @@
 
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
+<span class="kn">from</span> <span class="nn">reda.utils.electrode_manager</span> <span class="kn">import</span> <span class="n">electrode_manager</span>
 <span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">ImportersBase</span>
 <span class="kn">from</span> <span class="nn">reda.containers.BaseContainer</span> <span class="kn">import</span> <span class="n">BaseContainer</span>
 
 <span class="kn">import</span> <span class="nn">reda.importers.bert</span> <span class="k">as</span> <span class="nn">reda_bert_import</span>
 <span class="kn">import</span> <span class="nn">reda.importers.iris_syscal_pro</span> <span class="k">as</span> <span class="nn">reda_syscal</span>
 <span class="kn">import</span> <span class="nn">reda.importers.mpt_das1</span> <span class="k">as</span> <span class="nn">reda_mpt</span>
+<span class="kn">from</span> <span class="nn">reda.importers.crtomo</span> <span class="kn">import</span> <span class="n">load_mod_file</span>
+<span class="kn">from</span> <span class="nn">reda.importers.tsert_import</span> <span class="kn">import</span> <span class="n">tsert_import</span>
+<span class="kn">from</span> <span class="nn">reda.exporters.tsert_export</span> <span class="kn">import</span> <span class="n">tsert_export</span>
+
 <span class="kn">from</span> <span class="nn">reda.utils.norrec</span> <span class="kn">import</span> <span class="n">assign_norrec_to_df</span><span class="p">,</span> <span class="n">average_repetitions</span>
 
 <span class="kn">from</span> <span class="nn">reda.utils.decorators_and_managers</span> <span class="kn">import</span> <span class="n">append_doc_of</span>
@@ -143,6 +137,75 @@
 <span class="sd">    --------</span>
 <span class="sd">    Exporters</span>
 <span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="ERTImporters.tsert_summary"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.tsert_summary">[docs]</a>    <span class="k">def</span> <span class="nf">tsert_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Try to open a given filename (usually a .h5 file) as a TSERT file</span>
+<span class="sd">        and print out a summary of contained data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Filename of data file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">importer</span> <span class="o">=</span> <span class="n">tsert_import</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">importer</span><span class="o">.</span><span class="n">summary</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERTImporters.import_tsert"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_tsert">[docs]</a>    <span class="k">def</span> <span class="nf">import_tsert</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">timesteps</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;base&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;TSERT import</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            Path to hdf file to import data from</span>
+<span class="sd">        timesteps : str|list|datetime.datetime</span>
+<span class="sd">            Timesteps that should be imported</span>
+<span class="sd">        version : str</span>
+<span class="sd">            Which version of the data to load. Time steps that do not have this</span>
+<span class="sd">            specific version are ignored. Default: base version</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;TSERT import&#39;</span><span class="p">)</span>
+        <span class="n">importer</span> <span class="o">=</span> <span class="n">tsert_import</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">import_data</span><span class="p">(</span>
+                <span class="n">timesteps</span><span class="o">=</span><span class="n">timesteps</span><span class="p">,</span>
+                <span class="n">version</span><span class="o">=</span><span class="n">version</span><span class="p">,</span>
+                <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">electrode_positions_df</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">load_electrode_positions</span><span class="p">()</span>
+            <span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_manager</span><span class="p">(</span><span class="n">electrode_positions_df</span><span class="p">)</span>
+            <span class="n">topography</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">load_topography</span><span class="p">()</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="n">importer</span><span class="o">.</span><span class="n">load_metadata</span><span class="p">()</span>
+
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span>
+                <span class="n">data</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="p">,</span> <span class="n">topography</span><span class="p">,</span> <span class="n">metadata</span>
+            <span class="p">)</span>
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERTImporters.import_crtomo_data"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_crtomo_data">[docs]</a>    <span class="k">def</span> <span class="nf">import_crtomo_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Import a CRTomo-style measurement file (usually: volt.dat).</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            path to data file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">timestep</span> <span class="o">=</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">if</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">kwargs</span><span class="p">:</span>
+            <span class="k">del</span> <span class="p">(</span><span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">])</span>
+
+        <span class="k">with</span> <span class="n">LogDataChanges</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filter_action</span><span class="o">=</span><span class="s1">&#39;import&#39;</span><span class="p">):</span>
+            <span class="n">data</span> <span class="o">=</span> <span class="n">load_mod_file</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_container</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">kwargs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;verbose&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">):</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Summary:&#39;</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_describe_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="ERTImporters.import_syscal_bin"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_syscal_bin">[docs]</a>    <span class="nd">@append_doc_of</span><span class="p">(</span><span class="n">reda_syscal</span><span class="o">.</span><span class="n">import_bin</span><span class="p">)</span>
     <span class="k">def</span> <span class="nf">import_syscal_bin</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
@@ -251,10 +314,72 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">import_bert</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kargs</span><span class="p">)</span></div></div>
 
 
-<div class="viewcode-block" id="ERT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT">[docs]</a><span class="k">class</span> <span class="nc">ERT</span><span class="p">(</span><span class="n">BaseContainer</span><span class="p">,</span> <span class="n">ERTImporters</span><span class="p">):</span>
+<div class="viewcode-block" id="ERTExporters"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTExporters">[docs]</a><span class="k">class</span> <span class="nc">ERTExporters</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ERTExporters.export_tsert"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTExporters.export_tsert">[docs]</a>    <span class="k">def</span> <span class="nf">export_tsert</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export data to TSERT</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">exporter</span> <span class="o">=</span> <span class="n">tsert_export</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">set_electrode_positions</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">set_topography</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">topography</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">metadata</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="ERTExporters.export_to_pygimli_scheme"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERTExporters.export_to_pygimli_scheme">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_pygimli_scheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export the data into a pygimili.DataContainerERT object.</span>
+
+<span class="sd">        For now, do NOT set any sensor positions</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Exporting to pygimli DataContainer&#39;</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> data will be exported&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">norrec</span><span class="p">))</span>
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;No timestep selection is applied&#39;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;timestep(s) </span><span class="si">{}</span><span class="s1"> will be used&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestep</span><span class="p">))</span>
+
+        <span class="kn">import</span> <span class="nn">pygimli</span> <span class="k">as</span> <span class="nn">pg</span>
+        <span class="n">data_container</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">DataContainerERT</span><span class="p">()</span>
+
+        <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+            <span class="s1">&#39;norrec == &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">norrec</span><span class="p">),</span>
+        <span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">query</span> <span class="o">+=</span> <span class="s1">&#39; and timestep==&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span>
+
+        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Query: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
+
+        <span class="n">subdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
+        <span class="k">assert</span> <span class="n">subdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
+
+        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
+        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
+        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
+        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
+        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="s1">&#39;k&#39;</span> <span class="ow">in</span> <span class="n">subdata</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="s1">&#39;rho_a&#39;</span> <span class="ow">in</span> <span class="n">subdata</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;rhoa&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">data_container</span></div></div>
+
+
+<div class="viewcode-block" id="ERT"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT">[docs]</a><span class="k">class</span> <span class="nc">ERT</span><span class="p">(</span><span class="n">BaseContainer</span><span class="p">,</span> <span class="n">ERTImporters</span><span class="p">,</span> <span class="n">ERTExporters</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;.&quot;&quot;&quot;</span>
 
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">topography</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">topography</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
@@ -270,7 +395,6 @@
 <span class="sd">            information with columns: &quot;x&quot;, &quot;y&quot;, &quot;z&quot;.</span>
 
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">setup_logger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">required_columns</span> <span class="o">=</span> <span class="p">[</span>
             <span class="s1">&#39;a&#39;</span><span class="p">,</span>
             <span class="s1">&#39;b&#39;</span><span class="p">,</span>
@@ -278,9 +402,13 @@
             <span class="s1">&#39;n&#39;</span><span class="p">,</span>
             <span class="s1">&#39;r&#39;</span><span class="p">,</span>
         <span class="p">]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">check_dataframe</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">electrode_positions</span> <span class="o">=</span> <span class="n">electrode_positions</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">topography</span> <span class="o">=</span> <span class="n">topography</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="n">data</span><span class="p">,</span>
+            <span class="n">electrode_positions</span><span class="p">,</span>
+            <span class="n">topography</span><span class="p">,</span>
+            <span class="n">metadata</span><span class="p">,</span>
+            <span class="o">**</span><span class="n">kwargs</span>
+        <span class="p">)</span>
 
 <div class="viewcode-block" id="ERT.check_dataframe"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.check_dataframe">[docs]</a>    <span class="k">def</span> <span class="nf">check_dataframe</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dataframe</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Check the given dataframe for the required type and columns</span>
@@ -355,55 +483,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="p">,</span>
             <span class="n">error</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(),</span> <span class="n">how</span><span class="o">=</span><span class="s1">&#39;outer&#39;</span><span class="p">,</span>
             <span class="n">on</span><span class="o">=</span><span class="s1">&#39;id&#39;</span>
-        <span class="p">)</span></div>
-
-<div class="viewcode-block" id="ERT.export_to_pygimli_scheme"><a class="viewcode-back" href="../../../_api/reda.containers.html#reda.containers.ERT.ERT.export_to_pygimli_scheme">[docs]</a>    <span class="k">def</span> <span class="nf">export_to_pygimli_scheme</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">norrec</span><span class="o">=</span><span class="s1">&#39;nor&#39;</span><span class="p">,</span> <span class="n">timestep</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-        <span class="sd">&quot;&quot;&quot;Export the data into a pygimili.DataContainerERT object.</span>
-
-<span class="sd">        For now, do NOT set any sensor positions</span>
-
-<span class="sd">        Parameters</span>
-<span class="sd">        ----------</span>
-
-
-<span class="sd">        Returns</span>
-<span class="sd">        -------</span>
-<span class="sd">        &quot;&quot;&quot;</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Exporting to pygimli DataContainer&#39;</span><span class="p">)</span>
-        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1"> data will be exported&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">norrec</span><span class="p">))</span>
-        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;No timestep selection is applied&#39;</span><span class="p">)</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;timestep(s) </span><span class="si">{}</span><span class="s1"> will be used&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestep</span><span class="p">))</span>
-
-        <span class="kn">import</span> <span class="nn">pygimli</span> <span class="k">as</span> <span class="nn">pg</span>
-        <span class="n">data_container</span> <span class="o">=</span> <span class="n">pg</span><span class="o">.</span><span class="n">DataContainerERT</span><span class="p">()</span>
-
-        <span class="n">query</span> <span class="o">=</span> <span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
-            <span class="s1">&#39;norrec == &quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">norrec</span><span class="p">),</span>
-        <span class="p">))</span>
-
-        <span class="k">if</span> <span class="n">timestep</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-            <span class="n">query</span> <span class="o">+=</span> <span class="s1">&#39; and timestep==&quot;</span><span class="si">{}</span><span class="s1">&quot;&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span>
-
-        <span class="n">logger</span><span class="o">.</span><span class="n">debug</span><span class="p">(</span><span class="s1">&#39;Query: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">query</span><span class="p">))</span>
-
-        <span class="n">subdata</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">data</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="n">query</span><span class="p">)</span>
-        <span class="k">assert</span> <span class="n">subdata</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="mi">0</span>
-
-        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span>
-        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;b&#39;</span><span class="p">]</span>
-        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;m&#39;</span><span class="p">]</span>
-        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span>
-        <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;r&#39;</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="s1">&#39;k&#39;</span> <span class="ow">in</span> <span class="n">subdata</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;k&#39;</span><span class="p">]</span>
-
-        <span class="k">if</span> <span class="s1">&#39;rho_a&#39;</span> <span class="ow">in</span> <span class="n">subdata</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
-            <span class="n">data_container</span><span class="p">[</span><span class="s1">&#39;rhoa&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">subdata</span><span class="p">[</span><span class="s1">&#39;rho_a&#39;</span><span class="p">]</span>
-
-        <span class="k">return</span> <span class="n">data_container</span></div></div>
+        <span class="p">)</span></div></div>
 </pre></div>
 
           </div>
@@ -413,10 +493,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, M. Weigand and F. M. Wagner and others.
+      &copy;2022, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

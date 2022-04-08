@@ -10,10 +10,10 @@
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="_static/gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
     <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
@@ -21,7 +21,7 @@
     <link rel="author" title="About these documents" href="about.html" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Data Importers" href="importers.html" />
+    <link rel="next" title="Test data" href="test_data.html" />
     <link rel="prev" title="Debugging reda" href="debugging.html" />
    
   <link rel="stylesheet" href="_static/custom.css" type="text/css" />
@@ -52,29 +52,18 @@
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
-    <img
-        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="metadata.html">Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
@@ -85,7 +74,7 @@
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
       <li>Previous: <a href="debugging.html" title="previous chapter">Debugging reda</a></li>
-      <li>Next: <a href="importers.html" title="next chapter">Data Importers</a></li>
+      <li>Next: <a href="test_data.html" title="next chapter">Test data</a></li>
   </ul></li>
 </ul>
 </div>
@@ -93,7 +82,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -149,6 +138,10 @@ format our docstrings.</p></li>
 <p>To avoid redundant work, please contact us before you start working on a
 non-trivial feature.</p>
 </div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Always use the <strong>dev</strong> branch for new developments and merge requests!</p>
+</div>
 <p>The preferred way to contribute to the REDA code base is via the <em>fork and
 pull</em> collaborative model pull request (PR) on GitHub, described <a class="reference external" href="https://help.github.com/en/articles/about-collaborative-development-models">here</a>.
 The general concept of working with pull requests is explained <a class="reference external" href="https://guides.github.com/introduction/flow">here</a> and involves the following
@@ -169,8 +162,11 @@ Clone this repository to your local disk:</p>
 <section id="create-a-feature-branch">
 <h3>2. Create a feature branch<a class="headerlink" href="#create-a-feature-branch" title="Permalink to this headline">¶</a></h3>
 <p>Go to the source folder and create a feature branch to hold your changes. It is
-advisable to give it a sensible name describing the overall topic of the proposed changes, such as <code class="docutils literal notranslate"><span class="pre">new_filter_methods</span></code>.</p>
+advisable to give it a sensible name describing the overall topic of the
+proposed changes, such as <code class="docutils literal notranslate"><span class="pre">new_filter_methods</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nb">cd</span> reda
+<span class="c1"># we always want to branch from the dev branch, which holds new developments</span>
+git checkout dev
 git checkout -b new_filter_methods
 </pre></div>
 </div>
@@ -233,7 +229,7 @@ git repository:</p>
 of the upstream branch <strong>master</strong>, execute the following  commands:</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>git fetch upstream
 git checkout new_filter_methods
-git merge upstream/master
+git merge upstream/dev
 </pre></div>
 </div>
 <p>Update your forked repository branch <strong>new_filter_methods</strong> on github:</p>
@@ -252,10 +248,10 @@ git merge upstream/master
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, M. Weigand and F. M. Wagner and others.
+      &copy;2022, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

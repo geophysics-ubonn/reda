@@ -32,3 +32,11 @@ reda.exporters.syscal module
    :members:
    :undoc-members:
    :show-inheritance:
+
+reda.exporters.tsert\_export module
+-----------------------------------
+
+.. automodule:: reda.exporters.tsert_export
+   :members:
+   :undoc-members:
+   :show-inheritance:

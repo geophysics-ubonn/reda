@@ -9,10 +9,10 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -49,29 +49,18 @@
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
-    <img
-        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
@@ -88,7 +77,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -126,6 +115,7 @@
 <li><a href="reda/exporters/bert.html">reda.exporters.bert</a></li>
 <li><a href="reda/exporters/crtomo.html">reda.exporters.crtomo</a></li>
 <li><a href="reda/exporters/syscal.html">reda.exporters.syscal</a></li>
+<li><a href="reda/exporters/tsert_export.html">reda.exporters.tsert_export</a></li>
 <li><a href="reda/importers/bert.html">reda.importers.bert</a></li>
 <li><a href="reda/importers/crtomo.html">reda.importers.crtomo</a></li>
 <li><a href="reda/importers/eit_fzj.html">reda.importers.eit_fzj</a></li>
@@ -139,6 +129,7 @@
 <li><a href="reda/importers/radic_sip256c.html">reda.importers.radic_sip256c</a></li>
 <li><a href="reda/importers/res2dinv.html">reda.importers.res2dinv</a></li>
 <li><a href="reda/importers/sip04.html">reda.importers.sip04</a></li>
+<li><a href="reda/importers/tsert_import.html">reda.importers.tsert_import</a></li>
 <li><a href="reda/importers/utils/decorators.html">reda.importers.utils.decorators</a></li>
 <li><a href="reda/importers/utils/transforms.html">reda.importers.utils.transforms</a></li>
 <li><a href="reda/main/logger.html">reda.main.logger</a></li>
@@ -150,8 +141,10 @@
 <li><a href="reda/tdip/decay_curve.html">reda.tdip.decay_curve</a></li>
 <li><a href="reda/testing.html">reda.testing</a></li>
 <ul><li><a href="reda/testing/ert_container/test_K_computation.html">reda.testing.ert_container.test_K_computation</a></li>
+<li><a href="reda/testing/fzj_readbin.html">reda.testing.fzj_readbin</a></li>
 <li><a href="reda/testing/test_container_ert.html">reda.testing.test_container_ert</a></li>
 <li><a href="reda/testing/test_container_seit.html">reda.testing.test_container_seit</a></li>
+<li><a href="reda/testing/test_crtomo_import.html">reda.testing.test_crtomo_import</a></li>
 <li><a href="reda/testing/test_electrode_manager.html">reda.testing.test_electrode_manager</a></li>
 </ul><li><a href="reda/utils/data.html">reda.utils.data</a></li>
 <li><a href="reda/utils/decorators_and_managers.html">reda.utils.decorators_and_managers</a></li>
@@ -175,10 +168,10 @@
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, M. Weigand and F. M. Wagner and others.
+      &copy;2022, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
     </div>

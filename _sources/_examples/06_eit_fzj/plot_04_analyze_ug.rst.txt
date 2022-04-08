@@ -25,9 +25,10 @@ EIT-FZJ: Analyze DC voltages at electrodes during injections
 
 
 
-.. image:: /_examples/06_eit_fzj/images/sphx_glr_plot_04_analyze_ug_001.png
-    :alt: Ug3-1 for 0.31446541 Hz
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/06_eit_fzj/images/sphx_glr_plot_04_analyze_ug_001.png
+   :alt: Ug3-1 for 0.31446541 Hz
+   :srcset: /_examples/06_eit_fzj/images/sphx_glr_plot_04_analyze_ug_001.png
+   :class: sphx-glr-single-img
 
 
 

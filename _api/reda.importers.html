@@ -10,10 +10,10 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -53,29 +53,18 @@
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
-    <img
-        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
@@ -98,7 +87,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -283,7 +272,57 @@ merged, or directly as a numpy array</p>
 <dd class="field-even"><dl>
 <dt><strong>df</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Corrected data</p>
 </dd>
-<dt><strong>corr_data</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction factors used</p>
+<dt><strong>corr_data</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction factors used</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.importers.eit_fzj.compute_data_errors">
+<span class="sig-prename descclassname"><span class="pre">reda.importers.eit_fzj.</span></span><span class="sig-name descname"><span class="pre">compute_data_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data_emd_4p</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_md_raw</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">adc_data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">binary_file</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_data_errors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_data_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute data errors based on a noise-level analysis and subsequent
+linear error propagation.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.importers.eit_fzj.compute_magnitude_errors">
+<span class="sig-prename descclassname"><span class="pre">reda.importers.eit_fzj.</span></span><span class="sig-name descname"><span class="pre">compute_magnitude_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dphi_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dphi_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dcurrent</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_magnitude_errors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_magnitude_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute magnitude errors based on linear error propagation</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="reda.importers.eit_fzj.compute_phase_errors">
+<span class="sig-prename descclassname"><span class="pre">reda.importers.eit_fzj.</span></span><span class="sig-name descname"><span class="pre">compute_phase_errors</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">phi_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">phi_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">current</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dphi_m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dphi_n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dcurrent</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/eit_fzj.html#compute_phase_errors"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.eit_fzj.compute_phase_errors" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute the phase error based on linear error propagation of the
+transfer impedance equation:</p>
+<blockquote>
+<div><p>Zt = U_mn / I_ab = (phi_m - phi_n) / I_ab</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>phi_m</strong><span class="classifier">numpy.ndarray|complex float</span></dt><dd><p>Complex potential at electrode m</p>
+</dd>
+<dt><strong>phi_n</strong><span class="classifier">numpy.ndarray|complex float</span></dt><dd><p>Complex potential at electrode n</p>
+</dd>
+<dt><strong>current</strong><span class="classifier">numpy.ndarray|complex float</span></dt><dd><p>Complex current injected at electrodes a and b</p>
+</dd>
+<dt><strong>dphi_m</strong><span class="classifier">numpy.ndarray|complex float</span></dt><dd><p>potential error at electrode m. Real part corresponds to error of the
+real part of the potential, vice versa for the imaginary part</p>
+</dd>
+<dt><strong>dphi_n</strong><span class="classifier">numpy.ndarray|complex float</span></dt><dd><p>potential error at electrode m. Real part corresponds to error of the
+real part of the potential, vice versa for the imaginary part</p>
+</dd>
+<dt><strong>dcurrent</strong><span class="classifier">numpy.ndarray|complex float</span></dt><dd><p>current error at electrode m. Real part corresponds to error of the
+real part of the potential, vice versa for the imaginary part</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>error_phase</strong><span class="classifier">numpy.ndarray|float</span></dt><dd><p>Phase error in [rad]</p>
 </dd>
 </dl>
 </dd>
@@ -305,6 +344,8 @@ with 4 columns each (A, B, M, N)</p>
 </dd>
 </dl>
 </dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"></dd>
 </dl>
 </dd></dl>
 
@@ -447,10 +488,10 @@ measurement signal) can help in understanding and analyzing the final SIP/sEIT
 data and associated problems.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.importers.fzj_readbin.</span></span><span class="sig-name descname"><span class="pre">fzj_readbin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reda.importers.fzj_readbin.</span></span><span class="sig-name descname"><span class="pre">fzj_readbin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -459,8 +500,14 @@ data and associated problems.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.characterize" title="reda.importers.fzj_readbin.fzj_readbin.characterize"><code class="xref py py-obj docutils literal notranslate"><span class="pre">characterize</span></code></a>()</p></td>
 <td><p>Print a few characteristics of the loaded data</p></td>
 </tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.fft_analysis_one_channel" title="reda.importers.fzj_readbin.fzj_readbin.fft_analysis_one_channel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">fft_analysis_one_channel</span></code></a>(measurement_index, ...)</p></td>
+<td><p>On one specific measurement at one channel, conduct an FFT analysis to estimate the noise level.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.find_swapped_measurement_indices" title="reda.importers.fzj_readbin.fzj_readbin.find_swapped_measurement_indices"><code class="xref py py-obj docutils literal notranslate"><span class="pre">find_swapped_measurement_indices</span></code></a>(a, b, frequency)</p></td>
+<td><p>For a given set of injection electrodes and a frequency, try to find the two injections that will make up the final measurement (i.e., the regular injection (a,b) and its swapped injection (b,a).</p></td>
+</tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.get_ts_abm" title="reda.importers.fzj_readbin.fzj_readbin.get_ts_abm"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_ts_abm</span></code></a>(a, b, m, frequency)</p></td>
-<td><p>Return the time series for a given trio of a, b, m electrodes</p></td>
+<td><p>Return the time series for a given set of (a, b, m electrodes)</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.import_file" title="reda.importers.fzj_readbin.fzj_readbin.import_file"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_file</span></code></a>(filename)</p></td>
 <td><p><dl class="field-list simple">
@@ -472,7 +519,10 @@ data and associated problems.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.list_injections" title="reda.importers.fzj_readbin.fzj_readbin.list_injections"><code class="xref py py-obj docutils literal notranslate"><span class="pre">list_injections</span></code></a>()</p></td>
 <td><p>List the available injections</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes" title="reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_timeseries_to_axes</span></code></a>(axes, …[, …])</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.plot_noise_level_for_one_injection" title="reda.importers.fzj_readbin.fzj_readbin.plot_noise_level_for_one_injection"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_noise_level_for_one_injection</span></code></a>(...[, nch])</p></td>
+<td><p>measurement_index can be found by using the search function:</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes" title="reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_timeseries_to_axes</span></code></a>(axes, ...[, ...])</p></td>
 <td><p>injection_number is 1-indexed</p></td>
 </tr>
 </tbody>
@@ -501,6 +551,76 @@ data and associated problems.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.fft_analysis_one_channel">
+<span class="sig-name descname"><span class="pre">fft_analysis_one_channel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">split_into_three</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.fft_analysis_one_channel"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.fft_analysis_one_channel" title="Permalink to this definition">¶</a></dt>
+<dd><p>On one specific measurement at one channel, conduct an FFT analysis
+to estimate the noise level.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>measurement_index</strong><span class="classifier">int</span></dt><dd><p>Index of injection related to index in self.frequency_data.</p>
+</dd>
+<dt><strong>channel</strong><span class="classifier">int</span></dt><dd><p>Channel to analyze. 1-indexed.</p>
+</dd>
+<dt><strong>split_into_three</strong><span class="classifier">bool, optional (default: False)</span></dt><dd><p>If True, apply analysis to each third of the time-series
+separately.</p>
+</dd>
+<dt><strong>plot: bool, optional (default: False)</strong></dt><dd><p>If True, generate plots of the time-series and noise level</p>
+</dd>
+<dt><strong>remove_excitation_frequency</strong><span class="classifier">bool, optional (default: False)</span></dt><dd><p>.</p>
+</dd>
+<dt><strong>remove_noise_harmonics</strong><span class="classifier">bool (default, False)</span></dt><dd><p>.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>noise_levels</strong><span class="classifier">list</span></dt><dd><p>The estimated white noise leves for the parts of the time-series.
+If split_into_three is False, then the list contains only one entry</p>
+</dd>
+<dt><strong>plots</strong><span class="classifier">list, optional</span></dt><dd><p>If generated return plots in this list</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.find_swapped_measurement_indices">
+<span class="sig-name descname"><span class="pre">find_swapped_measurement_indices</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mean_measurement_time</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.find_swapped_measurement_indices"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.find_swapped_measurement_indices" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a given set of injection electrodes and a frequency, try to find
+the two injections that will make up the final measurement (i.e., the
+regular injection (a,b) and its swapped injection (b,a).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>a</strong><span class="classifier">int</span></dt><dd><ol class="arabic simple">
+<li><p>Current electrode</p></li>
+</ol>
+</dd>
+<dt><strong>b</strong><span class="classifier">int</span></dt><dd><ol class="arabic simple" start="2">
+<li><p>Current electrode</p></li>
+</ol>
+</dd>
+<dt><strong>frequency</strong><span class="classifier">float</span></dt><dd><p>Measurement frequency</p>
+</dd>
+<dt><strong>mean_measurement_time</strong><span class="classifier">datetime.datetime|pandas.Timestamp</span></dt><dd><p>For swapped measurements the datetime entry in the MD and EMD
+structs will be the mean time between the singular measurements.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>findices</strong><span class="classifier">[int, int]</span></dt><dd><p>Indices of the rows in fzj_readbin.frequency_data corresponding to
+the measurement. If only one measurement was found, then the second
+index is None.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.get_sample_times">
 <span class="sig-name descname"><span class="pre">get_sample_times</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">frequency</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.get_sample_times"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.get_sample_times" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -508,8 +628,11 @@ data and associated problems.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.get_ts_abm">
 <span class="sig-name descname"><span class="pre">get_ts_abm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.get_ts_abm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.get_ts_abm" title="Permalink to this definition">¶</a></dt>
-<dd><p>Return the time series for a given trio of a, b, m electrodes</p>
+<dd><p>Return the time series for a given set of (a, b, m electrodes)</p>
 <p>All values are 1-indexed!!!</p>
+<p>WARNING: This interface always chooses the first result related to the
+input set in case duplicate measurements are present! This relates to
+duplicate frequencies and duplicate injections.</p>
 </dd></dl>
 
 <dl class="py method">
@@ -534,18 +657,28 @@ location with the same filename.</p>
 </dd></dl>
 
 <dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.plot_noise_level_for_one_injection">
+<span class="sig-name descname"><span class="pre">plot_noise_level_for_one_injection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">measurement_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nch</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.plot_noise_level_for_one_injection"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.plot_noise_level_for_one_injection" title="Permalink to this definition">¶</a></dt>
+<dd><p>measurement_index can be found by using the search function:</p>
+<blockquote>
+<div><p>indices = self.find_swapped_measurement_indices(1, 22, 1)
+fig = plot_noise_level_for_one_injection(indices[0])</p>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.plot_per_frequency">
 <span class="sig-name descname"><span class="pre">plot_per_frequency</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.plot_per_frequency"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.plot_per_frequency" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.plot_timeseries">
-<span class="sig-name descname"><span class="pre">plot_timeseries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">injection_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.-'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.plot_timeseries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot_timeseries</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">injection_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.plot_timeseries"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes">
-<span class="sig-name descname"><span class="pre">plot_timeseries_to_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">injection_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.-'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.plot_timeseries_to_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot_timeseries_to_axes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">axes</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequency_index</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">injection_number</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">channel</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_fraction</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'.-'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">index_start</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/fzj_readbin.html#fzj_readbin.plot_timeseries_to_axes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.fzj_readbin.fzj_readbin.plot_timeseries_to_axes" title="Permalink to this definition">¶</a></dt>
 <dd><p>injection_number is 1-indexed</p>
 </dd></dl>
 
@@ -568,7 +701,7 @@ location with the same filename.</p>
 </pre></div>
 </div>
 </dd>
-<dt><strong>container: :class:`reda.container.ERT.ERT`</strong></dt><dd><p>ERT container to add dataset to</p>
+<dt><strong>container:</strong><span class="classifier">class:<cite>reda.container.ERT.ERT</cite></span></dt><dd><p>ERT container to add dataset to</p>
 </dd>
 </dl>
 </dd>
@@ -587,14 +720,8 @@ and return a curated Pandas dataframe for further processing. This
 dataframe contains only information currently deemed important. Use the
 function reda.importers.iris_syscal_pro_binary._import_bin to extract ALL
 information from a given .bin file.</p>
-<p>todo:</p>
-<ul>
-<li><p>add pipe-through parameters for the electrode manager:</p>
-<blockquote>
-<div><p>shift_xyz -&gt; move all coordinates by this vector</p>
-</div></blockquote>
-</li>
-</ul>
+<p>Note that the .bin files contain electrodes positions for the electrodes.
+Electrode numbers are then inferred from those.</p>
 <dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl>
@@ -687,7 +814,7 @@ according to the equation <span class="math notranslate nohighlight">\(X_n = N -
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt>data: <a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></dt><dd><p>Contains the measurement data</p>
+<dt><strong>data:</strong><span class="classifier">py:class:<cite>pandas.DataFrame</cite></span></dt><dd><p>Contains the measurement data</p>
 </dd>
 <dt><strong>elec_mgr</strong><span class="classifier"><a class="reference internal" href="reda.utils.html#reda.utils.electrode_manager.electrode_manager" title="reda.utils.electrode_manager.electrode_manager"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.utils.electrode_manager.electrode_manager</span></code></a></span></dt><dd><p>Electrode manager that manages the electrode positions</p>
 </dd>
@@ -932,8 +1059,12 @@ data and real usage to improve upon this.</p>
 <span class="sig-prename descclassname"><span class="pre">reda.importers.res2dinv.</span></span><span class="sig-name descname"><span class="pre">import_res2dinv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/res2dinv.html#import_res2dinv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.res2dinv.import_res2dinv" title="Permalink to this definition">¶</a></dt>
 <dd><p>Read a RES2DINV-style</p>
 <dl class="field-list">
-<dt class="field-odd">Returns</dt>
-<dd class="field-odd"><dl>
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><blockquote>
+<div></div></blockquote>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl>
 <dt><strong>data</strong><span class="classifier"><a class="reference external" href="http://pandas-docs.github.io/pandas-docs-travis/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v0.25.0.dev0+752.g49f33f0d)"><code class="xref py py-class docutils literal notranslate"><span class="pre">pandas.DataFrame</span></code></a></span></dt><dd><p>Contains the measurement data</p>
 </dd>
 <dt><strong>elec_mgr</strong><span class="classifier"><a class="reference internal" href="reda.utils.html#reda.utils.electrode_manager.electrode_manager" title="reda.utils.electrode_manager.electrode_manager"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.utils.electrode_manager.electrode_manager</span></code></a></span></dt><dd><p>Electrode manager that manages the electrode positions</p>
@@ -1107,6 +1238,123 @@ file!</p>
 </dd></dl>
 
 </section>
+<section id="module-reda.importers.tsert_import">
+<span id="reda-importers-tsert-import-module"></span><h2>reda.importers.tsert_import module<a class="headerlink" href="#module-reda.importers.tsert_import" title="Permalink to this headline">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="reda.importers.tsert_import.tsert_import">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reda.importers.tsert_import.</span></span><span class="sig-name descname"><span class="pre">tsert_import</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filename</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/tsert_import.html#tsert_import"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.tsert_import.tsert_import" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="reda.exporters.html#reda.exporters.tsert_export.tsert_base" title="reda.exporters.tsert_export.tsert_base"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.exporters.tsert_export.tsert_base</span></code></a></p>
+<p>The TSERT file format – export functions</p>
+<p>TSERT: Time-series electrical resistivity tomography</p>
+<p class="rubric">Methods</p>
+<table class="autosummary longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">check_format</span></code>(filename)</p></td>
+<td><p>Check if a given file is actually a tsert file with correct version number</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_index</span></code>()</p></td>
+<td><p>Return the index of the file</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.importers.tsert_import.tsert_import.import_data" title="reda.importers.tsert_import.tsert_import.import_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">import_data</span></code></a>(timesteps[, version, ...])</p></td>
+<td><p>Wrapper for .load_data that merges the data into one dataframe</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.importers.tsert_import.tsert_import.load_data" title="reda.importers.tsert_import.tsert_import.load_data"><code class="xref py py-obj docutils literal notranslate"><span class="pre">load_data</span></code></a>([timesteps, version, not_before, ...])</p></td>
+<td><p><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.importers.tsert_import.tsert_import.summary" title="reda.importers.tsert_import.tsert_import.summary"><code class="xref py py-obj docutils literal notranslate"><span class="pre">summary</span></code></a>([print_index])</p></td>
+<td><p>Short summary of the filename</p></td>
+</tr>
+</tbody>
+</table>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 74%" />
+<col style="width: 26%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><strong>load_electrode_positions</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-even"><td><p><strong>load_metadata</strong></p></td>
+<td></td>
+</tr>
+<tr class="row-odd"><td><p><strong>load_topography</strong></p></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.tsert_import.tsert_import.import_data">
+<span class="sig-name descname"><span class="pre">import_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timesteps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'base'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_before</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/tsert_import.html#tsert_import.import_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.tsert_import.tsert_import.import_data" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper for .load_data that merges the data into one dataframe</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.tsert_import.tsert_import.load_data">
+<span class="sig-name descname"><span class="pre">load_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">timesteps</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'all'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">version</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'base'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_before</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">not_after</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/tsert_import.html#tsert_import.load_data"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.tsert_import.tsert_import.load_data" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>timesteps</strong><span class="classifier">iterable|’all’</span></dt><dd><p>Timesteps to import, the string ‘all’ will import all data</p>
+</dd>
+<dt><strong>version</strong></dt><dd></dd>
+<dt><strong>not_before</strong><span class="classifier">None|datetime.datetime</span></dt><dd><p>Only select data sets whose timestep lies before the given
+datetime.  Only evaluated if the timesteps parameter is set to
+‘all’.</p>
+</dd>
+<dt><strong>not_after</strong><span class="classifier">None|datetime.datetime</span></dt><dd><p>Only select data sets whose timestep lies after the given datetime.
+Only evaluated if the timesteps parameter is set to ‘all’.</p>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><dl class="simple">
+<dt><strong>data_list</strong><span class="classifier">list</span></dt><dd><p>List of dataframes</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.tsert_import.tsert_import.load_electrode_positions">
+<span class="sig-name descname"><span class="pre">load_electrode_positions</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/tsert_import.html#tsert_import.load_electrode_positions"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.tsert_import.tsert_import.load_electrode_positions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.tsert_import.tsert_import.load_metadata">
+<span class="sig-name descname"><span class="pre">load_metadata</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/tsert_import.html#tsert_import.load_metadata"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.tsert_import.tsert_import.load_metadata" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.tsert_import.tsert_import.load_topography">
+<span class="sig-name descname"><span class="pre">load_topography</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/tsert_import.html#tsert_import.load_topography"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.tsert_import.tsert_import.load_topography" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="reda.importers.tsert_import.tsert_import.summary">
+<span class="sig-name descname"><span class="pre">summary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">print_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/importers/tsert_import.html#tsert_import.summary"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.importers.tsert_import.tsert_import.summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Short summary of the filename</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><dl class="simple">
+<dt><strong>print_index</strong><span class="classifier">bool, optional</span></dt><dd></dd>
+</dl>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 </section>
 
 
@@ -1117,10 +1365,10 @@ file!</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, M. Weigand and F. M. Wagner and others.
+      &copy;2022, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

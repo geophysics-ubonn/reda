@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>TSERT: Different data versions &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../about.html" />
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Debugging reda" href="../../debugging.html" />
+    <link rel="prev" title="TSERT: data with integer indices" href="plot_02_tsert_integer_index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../metadata.html">Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Examples</a><ul>
+      <li>Previous: <a href="plot_02_tsert_integer_index.html" title="previous chapter">TSERT: data with integer indices</a></li>
+      <li>Next: <a href="../../debugging.html" title="next chapter">Debugging reda</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="sphx-glr-download-link-note admonition note">
+<p class="admonition-title">Note</p>
+<p>Click <a class="reference internal" href="#sphx-glr-download-examples-09-file-formats-plot-03-tsert-versioning-py"><span class="std std-ref">here</span></a>
+to download the full example code</p>
+</div>
+<section class="sphx-glr-example-title" id="tsert-different-data-versions">
+<span id="sphx-glr-examples-09-file-formats-plot-03-tsert-versioning-py"></span><h1>TSERT: Different data versions<a class="headerlink" href="#tsert-different-data-versions" title="Permalink to this headline">¶</a></h1>
+<p>The TSERT file format can store different versions of data.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="kn">import</span> <span class="nn">reda</span>
+<span class="c1"># import h5py</span>
+<span class="c1"># import pandas as pd</span>
+</pre></div>
+</div>
+<p>Export data to the tsert file format</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">ERT</span></a><span class="p">()</span>
+
+<span class="c1"># set electrode positions</span>
+<a href="../../_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager" title="reda.utils.electrode_manager.electrode_manager" class="sphx-glr-backref-module-reda-utils-electrode_manager sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">electrodes</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager" title="reda.utils.electrode_manager.electrode_manager" class="sphx-glr-backref-module-reda-utils-electrode_manager sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">electrode_manager</span></a><span class="p">()</span>
+<a href="../../_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.add_by_position" title="reda.utils.electrode_manager.electrode_manager.add_by_position" class="sphx-glr-backref-module-reda-utils-electrode_manager sphx-glr-backref-type-py-method"><span class="n">electrodes</span><span class="o">.</span><span class="n">add_by_position</span></a><span class="p">(</span><a href="https://numpy.org/doc/stable/reference/generated/numpy.arange.html#numpy.arange" title="numpy.arange" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.25</span><span class="p">)</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert</span><span class="o">.</span><span class="n">electrode_positions</span></a> <span class="o">=</span> <a href="../../_api/reda.utils.html#reda.utils.electrode_manager.electrode_manager.electrode_positions" title="reda.utils.electrode_manager.electrode_manager.electrode_positions" class="sphx-glr-backref-module-reda-utils-electrode_manager sphx-glr-backref-type-py-property"><span class="n">electrodes</span><span class="o">.</span><span class="n">electrode_positions</span></a>
+
+<span class="c1"># set topography</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topography</span></a> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class"><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span></a><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="s1">&#39;z&#39;</span><span class="p">])</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topography</span></a><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">]</span> <span class="o">=</span> <a href="https://numpy.org/doc/stable/reference/generated/numpy.arange.html#numpy.arange" title="numpy.arange" class="sphx-glr-backref-module-numpy sphx-glr-backref-type-py-function"><span class="n">np</span><span class="o">.</span><span class="n">arange</span></a><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">40</span><span class="p">)</span> <span class="o">*</span> <span class="mf">0.25</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topography</span></a><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topography</span></a><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert</span><span class="o">.</span><span class="n">topography</span></a> <span class="o">=</span> <a href="https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="pandas.DataFrame" class="sphx-glr-backref-module-pandas sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">topography</span></a>
+</pre></div>
+</div>
+<p>Let us store three different time steps into the hdf container</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_crtomo_data" title="reda.containers.ERT.ERTImporters.import_crtomo_data" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">import_crtomo_data</span></a><span class="p">(</span>
+    <span class="s1">&#39;data/2018-04-13_11-00-25+00-00.dat&#39;</span><span class="p">,</span>
+    <span class="n">timestep</span><span class="o">=</span><a href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="datetime.datetime" class="sphx-glr-backref-module-datetime sphx-glr-backref-type-py-class"><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span></a><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">13</span><span class="p">),</span>
+<span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_crtomo_data" title="reda.containers.ERT.ERTImporters.import_crtomo_data" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">import_crtomo_data</span></a><span class="p">(</span>
+    <span class="s1">&#39;data/2018-06-01_09-00-43+00-00.dat&#39;</span><span class="p">,</span>
+    <span class="n">timestep</span><span class="o">=</span><a href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="datetime.datetime" class="sphx-glr-backref-module-datetime sphx-glr-backref-type-py-class"><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span></a><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_crtomo_data" title="reda.containers.ERT.ERTImporters.import_crtomo_data" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">import_crtomo_data</span></a><span class="p">(</span>
+    <span class="s1">&#39;data/2018-08-02_09-00-14+00-00.dat&#39;</span><span class="p">,</span>
+    <span class="n">timestep</span><span class="o">=</span><a href="https://docs.python.org/3/library/datetime.html#datetime.datetime" title="datetime.datetime" class="sphx-glr-backref-module-datetime sphx-glr-backref-type-py-class"><span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span></a><span class="p">(</span><span class="mi">2018</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="p">)</span>
+
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTExporters.export_tsert" title="reda.containers.ERT.ERTExporters.export_tsert" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">export_tsert</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_versions.h5&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;base&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>TODO: Fix logging format
+@@@@@@@@@@@@@@@@@@@@@@@
+2018-05-13 00:00:00
+index Empty DataFrame
+Columns: [value]
+Index: []
+ts_key: 0
+key ERT_DATA/0/base
+@@@@@@@@@@@@@@@@@@@@@@@
+2018-06-01 00:00:00
+index        value
+0 2018-05-13
+ts_key: 1
+key ERT_DATA/1/base
+@@@@@@@@@@@@@@@@@@@@@@@
+2018-08-02 00:00:00
+index        value
+0 2018-05-13
+1 2018-06-01
+ts_key: 2
+key ERT_DATA/2/base
+</pre></div>
+</div>
+<p>Change the data a little bit</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.BaseContainer.BaseContainer.filter" title="reda.containers.BaseContainer.BaseContainer.filter" class="sphx-glr-backref-module-reda-containers-BaseContainer sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">filter</span></a><span class="p">(</span><span class="s1">&#39;r &lt; 40&#39;</span><span class="p">)</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTExporters.export_tsert" title="reda.containers.ERT.ERTExporters.export_tsert" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">export_tsert</span></a><span class="p">(</span>
+    <span class="s1">&#39;data_versions.h5&#39;</span><span class="p">,</span>
+    <span class="n">version</span><span class="o">=</span><span class="s1">&#39;filtered&#39;</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>TODO: Fix logging format
+@@@@@@@@@@@@@@@@@@@@@@@
+2018-05-13 00:00:00
+index        value
+0 2018-05-13
+1 2018-06-01
+2 2018-08-02
+ts_key: 0
+key ERT_DATA/0/filtered
+@@@@@@@@@@@@@@@@@@@@@@@
+2018-06-01 00:00:00
+index        value
+0 2018-05-13
+1 2018-06-01
+2 2018-08-02
+ts_key: 1
+key ERT_DATA/1/filtered
+@@@@@@@@@@@@@@@@@@@@@@@
+2018-08-02 00:00:00
+index        value
+0 2018-05-13
+1 2018-06-01
+2 2018-08-02
+ts_key: 2
+key ERT_DATA/2/filtered
+</pre></div>
+</div>
+<p>Check the content of the file. Note the listing of different versions</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.tsert_summary" title="reda.containers.ERT.ERTImporters.tsert_summary" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert</span><span class="o">.</span><span class="n">tsert_summary</span></a><span class="p">(</span><span class="s1">&#39;data_versions.h5&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>TODO: Fix logging format
+################################################################################
+Summary of file: data_versions.h5
+Format metadata:
+File format: tsert
+Format version: 0.1
+------------------------------------------------------------
+Number of time steps: 3
+1: /ERT_DATA/0
+2: /ERT_DATA/1
+3: /ERT_DATA/2
+Available versions:
+ - Version base is present 3 times
+ - Version filtered is present 3 times
+################################################################################
+</pre></div>
+</div>
+<dl class="simple">
+<dt># Loading data from the tsert file format</dt><dd><p>Here we only load the filtered data, which amounts to only 310 data points</p>
+</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class sphx-glr-backref-instance"><span class="n">ert_load</span></a> <span class="o">=</span> <a href="../../_api/reda.containers.html#reda.containers.ERT.ERT" title="reda.containers.ERT.ERT" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-class"><span class="n">reda</span><span class="o">.</span><span class="n">ERT</span></a><span class="p">()</span>
+<a href="../../_api/reda.containers.html#reda.containers.ERT.ERTImporters.import_tsert" title="reda.containers.ERT.ERTImporters.import_tsert" class="sphx-glr-backref-module-reda-containers-ERT sphx-glr-backref-type-py-method"><span class="n">ert_load</span><span class="o">.</span><span class="n">import_tsert</span></a><span class="p">(</span><span class="s1">&#39;data_versions.h5&#39;</span><span class="p">,</span> <span class="n">version</span><span class="o">=</span><span class="s1">&#39;filtered&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p class="sphx-glr-script-out">Out:</p>
+<div class="sphx-glr-script-out highlight-none notranslate"><div class="highlight"><pre><span></span>TODO: Fix logging format
+DTYPES value    datetime64[ns]
+dtype: object
+loading version: filtered
+ERT_DATA/0/filtered
+timestep 2018-05-13 00:00:00
+ERT_DATA/1/filtered
+timestep 2018-06-01 00:00:00
+ERT_DATA/2/filtered
+timestep 2018-08-02 00:00:00
+</pre></div>
+</div>
+<div class="sphx-glr-footer class sphx-glr-footer-example docutils container" id="sphx-glr-download-examples-09-file-formats-plot-03-tsert-versioning-py">
+<div class="sphx-glr-download sphx-glr-download-python docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/105edda17f372078562f445faff5cb49/plot_03_tsert_versioning.py"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Python</span> <span class="pre">source</span> <span class="pre">code:</span> <span class="pre">plot_03_tsert_versioning.py</span></code></a></p>
+</div>
+<div class="sphx-glr-download sphx-glr-download-jupyter docutils container">
+<p><a class="reference download internal" download="" href="../../_downloads/aaf349e0175a6226e47b439c9726a11a/plot_03_tsert_versioning.ipynb"><code class="xref download docutils literal notranslate"><span class="pre">Download</span> <span class="pre">Jupyter</span> <span class="pre">notebook:</span> <span class="pre">plot_03_tsert_versioning.ipynb</span></code></a></p>
+</div>
+</div>
+<p class="sphx-glr-signature"><a class="reference external" href="https://sphinx-gallery.github.io">Gallery generated by Sphinx-Gallery</a></p>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/_examples/09_file_formats/plot_03_tsert_versioning.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

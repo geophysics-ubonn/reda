@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+    <title>Metadata &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sg_gallery-rendered-html.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="about.html" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Filtering Data" href="filtering.html" />
+    <link rel="prev" title="TSERT – Time Series ERT file format" href="file_formats/example_tsert.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="index.html">
+    <img class="logo" src="_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="concepts_and_internals.html">&lt;no title&gt;</a><ul>
+      <li>Previous: <a href="file_formats/example_tsert.html" title="previous chapter">TSERT – Time Series ERT file format</a></li>
+      <li>Next: <a href="filtering.html" title="next chapter">Filtering Data</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="metadata">
+<h1>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h1>
+<p>Metadata is an important aspect of geophysical data. At this point REDA has
+rudimentary support for associating metadata with a given data set using
+(nested) dictionaries. Each container is instantiated with an empty dictionary
+that can be filled with arbitrary metadata entries in the form of key-value
+pairs. Subgroups can be included by using additional dictionaries as values of
+certain keys.</p>
+<p>Here is an example using the ERT data container:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">reda</span>
+<span class="n">ert</span> <span class="o">=</span> <span class="n">reda</span><span class="o">.</span><span class="n">ERT</span><span class="p">()</span>
+<span class="c1"># as this point ert.metadata is an empty dictionary</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;measurement_device&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;IRIS Syscal Pro 48 ch&#39;</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;person_responsible&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;Maximilian Weigand&#39;</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;nr_electrodes&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">48</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;electrode_spacing&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1"># lets add a subgroup containing device-specific information</span>
+<span class="n">ert</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">&#39;device_specific&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;max_current&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;memory_block&#39;</span><span class="p">:</span> <span class="mi">2567</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<section id="saving-and-loading">
+<h2>Saving and loading<a class="headerlink" href="#saving-and-loading" title="Permalink to this headline">¶</a></h2>
+<p>Metadata can be saved and loaded directly using json-encoded text files, or by
+using file formats that support metadata storage (such as the TSERT file
+format).</p>
+<p>Each container holds the functions <strong>.save_metadata</strong> and <strong>.load_metadata</strong>
+that can be used for on-disc storage.</p>
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="_sources/metadata.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

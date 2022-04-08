@@ -6,14 +6,14 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Example file format: TSERT – Time Series ERT &#8212; REDA 0.1.0 documentation</title>
+    <title>TSERT – Time Series ERT file format &#8212; REDA 0.1.0 documentation</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -21,6 +21,8 @@
     <link rel="author" title="About these documents" href="../about.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Metadata" href="../metadata.html" />
+    <link rel="prev" title="Data Importers" href="../importers.html" />
    
   <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
   
@@ -50,29 +52,18 @@
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
-    <img
-        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
@@ -82,6 +73,12 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../concepts_and_internals.html">&lt;no title&gt;</a><ul>
+  <li><a href="../file_formats.html">&lt;no title&gt;</a><ul>
+      <li>Previous: <a href="../importers.html" title="previous chapter">Data Importers</a></li>
+      <li>Next: <a href="../metadata.html" title="next chapter">Metadata</a></li>
+  </ul></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -89,7 +86,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -111,43 +108,118 @@
 
           <div class="body" role="main">
             
-  <section id="example-file-format-tsert-time-series-ert">
-<h1>Example file format: TSERT – Time Series ERT<a class="headerlink" href="#example-file-format-tsert-time-series-ert" title="Permalink to this headline">¶</a></h1>
+  <section id="tsert-time-series-ert-file-format">
+<h1>TSERT – Time Series ERT file format<a class="headerlink" href="#tsert-time-series-ert-file-format" title="Permalink to this headline">¶</a></h1>
 <p>This is the description of an example file format, highlighting the proposed
 process of describing and implementing new file formats.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>This section/file format is work in progress, and used to refine the
-internals of REDA and the proposed way of developing new file formats. As
-such it is strongly discourage to actually use this file format.</p>
+<p>This is an experimental file format subject to constant change. For now no
+backward compatibility between file format versions ist provided!</p>
 </div>
 <section id="name-and-aims-of-the-new-file-format">
 <h2>Name and aims of the new file format<a class="headerlink" href="#name-and-aims-of-the-new-file-format" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>Name: TSERT (name in REDA: tsert)</p></li>
-<li><p>Provide a one-file format for monitoring ERT data, including electrode
-positions.</p></li>
-<li><p>Make use of compression to reduce the file size</p></li>
+<li><p>Provide a one-file format for monitoring-ERT data, including electrode
+positions and topography and metadata.</p></li>
 <li><p>Investigate how to apply the features of the HDF5 container format to the
 storage of geoelectrical data</p></li>
 <li><p>Investigate how to best store meta data along with the data</p></li>
+<li><p>Investigate using compression techniques to reduce the file size</p></li>
 </ul>
 </section>
-<section id="implementation-details-and-notes">
-<h2>Implementation Details and Notes<a class="headerlink" href="#implementation-details-and-notes" title="Permalink to this headline">¶</a></h2>
+<section id="features">
+<h2>Features<a class="headerlink" href="#features" title="Permalink to this headline">¶</a></h2>
+<p>The TSERT file format</p>
 <ul class="simple">
-<li><p>Make use of the HDF5 container</p></li>
-<li><p>Use compression to reduce the file size</p></li>
-<li><p>Add check summing to detect data corruption</p></li>
-<li><p>httpls://docs.h5py.org/en/stable/whatsnew/index.html</p></li>
-<li><p>pytables ?</p></li>
-<li><p><a class="reference external" href="https://stackoverflow.com/questions/30773073/save-pandas-dataframe-using-h5py-for-interoperabilty-with-other-hdf5-readers">https://stackoverflow.com/questions/30773073/save-pandas-dataframe-using-h5py-for-interoperabilty-with-other-hdf5-readers</a></p></li>
+<li><p>stores multiple time steps of ERT data</p></li>
+<li><p>stores multiple versions (i.e. filtered/unfiltered) of each data set</p></li>
+<li><p>stores electrode positions</p></li>
+<li><p>stores topography information</p></li>
+<li><p>stores metadata</p></li>
 </ul>
+<p>within one HDF5 file for easy storage and distribution.</p>
 </section>
 <section id="required-external-python-libraries">
 <h2>Required external python libraries<a class="headerlink" href="#required-external-python-libraries" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p>h5py</p></li>
+</ul>
+</section>
+<section id="structure">
+<h2>Structure<a class="headerlink" href="#structure" title="Permalink to this headline">¶</a></h2>
+<ul>
+<li><p>Data is stored in one hdf5 file and structured in a hierachical tree
+structure</p></li>
+<li><p>Each timestep is stored in its own HDF group</p></li>
+<li><p>(option) We could store metadata directly in the corresponding attributes of
+each group, or we could write json-codified metadata into one attribute</p></li>
+<li><p>Each time step is stored in its own group:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span>
+<span class="o">/.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;file_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;tsert&#39;</span>
+<span class="o">/.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;format_version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">INDEX</span><span class="o">/</span><span class="n">index</span> <span class="o">&lt;-</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span> <span class="n">which</span> <span class="n">holds</span> <span class="n">TS_KEY</span><span class="o">&lt;-&gt;</span><span class="n">datetime</span><span class="o">/</span><span class="n">timestep</span>
+               <span class="n">info</span><span class="p">;</span> <span class="n">one</span> <span class="n">column</span><span class="p">:</span> <span class="n">value</span>
+<span class="n">ELECTRODES</span><span class="o">/</span>
+    <span class="n">ELECTRODE_POSITIONS</span> <span class="o">&lt;-</span> <span class="n">pandas</span><span class="o">.</span><span class="n">DataFrame</span>
+<span class="n">TOPOGRAPHY</span><span class="o">/</span>
+    <span class="p">[</span><span class="o">...</span><span class="p">]</span>
+<span class="n">ERT_DATA</span><span class="o">/</span>
+    <span class="p">[</span><span class="n">TS_KEY</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;metadata&#39;</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="n">metadata</span> <span class="k">for</span> <span class="n">this</span> <span class="n">data</span> <span class="nb">set</span>
+<span class="n">ERT_DATA</span><span class="o">/</span><span class="p">[</span><span class="n">TS_KEY</span><span class="p">]</span><span class="o">/</span><span class="n">base</span> <span class="o">&lt;-</span> <span class="n">original</span> <span class="n">data</span> <span class="nb">set</span>
+<span class="n">ERT_DATA</span><span class="o">/</span><span class="p">[</span><span class="n">TS_KEY</span><span class="p">]</span><span class="o">/</span><span class="n">v1</span> <span class="o">&lt;-</span> <span class="nb">filter</span> <span class="n">data</span> <span class="nb">set</span><span class="p">,</span> <span class="n">version</span> <span class="mi">1</span>
+<span class="n">ERT_DATA</span><span class="o">/</span><span class="p">[</span><span class="n">TS_KEY</span><span class="p">]</span><span class="o">/</span><span class="n">v1</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;filters&#39;</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="n">metadata</span> <span class="k">for</span> <span class="n">filtered</span> <span class="n">data</span> <span class="nb">set</span> <span class="p">(</span><span class="ow">not</span> <span class="n">implemented</span><span class="p">)</span>
+<span class="n">ERT_DATA</span><span class="o">/</span><span class="p">[</span><span class="n">TS_KEY</span><span class="p">]</span><span class="o">/</span><span class="n">v2</span> <span class="o">&lt;-</span> <span class="nb">filter</span> <span class="n">data</span> <span class="nb">set</span><span class="p">,</span> <span class="n">version</span> <span class="mi">2</span>
+<span class="n">ERT_DATA</span><span class="o">/</span><span class="p">[</span><span class="n">TS_KEY</span><span class="p">]</span><span class="o">/</span><span class="n">v2</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;filters&#39;</span><span class="p">]</span> <span class="o">&lt;-</span> <span class="n">metadata</span> <span class="k">for</span> <span class="n">filtered</span> <span class="n">data</span> <span class="nb">set</span> <span class="p">(</span><span class="ow">not</span> <span class="n">implemented</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>TSKEY is an integer index; actual timestep information (i.e., datetimes) are
+stored in the <em>timestep</em> column of the INDEX/index dataframe, which
+TS_KEY-values associated with the dataframe index.</p></li>
+</ul>
+</section>
+<section id="metadata">
+<h2>Metadata<a class="headerlink" href="#metadata" title="Permalink to this headline">¶</a></h2>
+<p>Metadata in REDA is implemented using nested dictionaries. This structure can
+also be saved in the HDF5 container in the group <strong>METADATA</strong>. Nested dicts are
+implemented as subgroups, and key-item pairs are stored using the .attrs
+functionality of the HDF5 container.</p>
+</section>
+<section id="implementation">
+<h2>Implementation<a class="headerlink" href="#implementation" title="Permalink to this headline">¶</a></h2>
+<p>The TSERT file format is implemented in the following reda source files:</p>
+<ul class="simple">
+<li><p>lib/reda/exporters/tsert_export.py</p></li>
+<li><p>lib/reda/importers/tsert_import.py</p></li>
+</ul>
+</section>
+<section id="shortcomings">
+<h2>Shortcomings<a class="headerlink" href="#shortcomings" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>Not sure if this file format use usable for long-term storage (5+ years).</p></li>
+</ul>
+</section>
+<section id="future-enhancements">
+<h2>Future enhancements<a class="headerlink" href="#future-enhancements" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>After the format stabilizes it will be easy to extend it to complex
+electrical data and even to spectral induced polarization data.</p></li>
+<li><p>It would be nice to extend the versioning to include the journal so one can
+see how a given version was created from the base version.</p></li>
+</ul>
+</section>
+<section id="todo">
+<h2>TODO<a class="headerlink" href="#todo" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p>set up a rudimentary set of tests for tsert</p></li>
+<li><p>investigate how we can only open the file once and then do a full export of
+data, electrodes, topography, metadata, etc. At the moment we always
+open/close the file to accommodate different handling strategies (i.e.,
+pandas uses pytables, I think, and therefore cannot work with h5py…)</p></li>
+<li><p>Use compression to reduce the file size</p></li>
+<li><p>Add check summing to detect data corruption</p></li>
 </ul>
 </section>
 </section>
@@ -160,10 +232,10 @@ storage of geoelectrical data</p></li>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, M. Weigand and F. M. Wagner and others.
+      &copy;2022, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

@@ -10,10 +10,10 @@
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
     <link rel="stylesheet" type="text/css" href="../_static/plot_directive.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-binder.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-dataframe.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sg_gallery-rendered-html.css" />
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -51,29 +51,18 @@
 
 
 
-    
-
-<p>
-<a class="badge" href="https://travis-ci.org/geophysics-ubonn/reda">
-    <img
-        alt="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-        src="https://secure.travis-ci.org/geophysics-ubonn/reda.svg?branch=master"
-    />
-</a>
-</p>
-
-
 <h3>Navigation</h3>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../about.html">About</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_containers.html">Data Containers</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../concept_electrodes.html">Concept: Electrode numbers and positions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../metadata.html">Metadata</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../filtering.html">Filtering Data</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../_examples/index.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../debugging.html">Debugging reda</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../importers.html">Data Importers</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../test_data.html">Test data</a></li>
 <li class="toctree-l1 current"><a class="reference internal" href="../api.html">API documentation</a></li>
 <li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
@@ -95,7 +84,7 @@
   <h3 id="searchlabel">Quick search</h3>
     <div class="searchformwrapper">
     <form class="search" action="../search.html" method="get">
-      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
       <input type="submit" value="Go" />
     </form>
     </div>
@@ -147,8 +136,8 @@
 <p>Utility class for context managers and decorators</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="reda.utils.decorators_and_managers.LogDataChanges">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.utils.decorators_and_managers.</span></span><span class="sig-name descname"><span class="pre">LogDataChanges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_action</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#LogDataChanges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.LogDataChanges" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reda.utils.decorators_and_managers.</span></span><span class="sig-name descname"><span class="pre">LogDataChanges</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">container</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_action</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'default'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filter_query</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/decorators_and_managers.html#LogDataChanges"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.decorators_and_managers.LogDataChanges" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>Context manager that observes the DataFrame of a data container for
 changes in the number of rows.</p>
 <p class="rubric">Examples</p>
@@ -195,7 +184,7 @@ a,b,m,n,correction_factor</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>corr_data</strong><span class="classifier">Nx5 <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction files as imported from the file. Columns:
+<dt><strong>corr_data</strong><span class="classifier">Nx5 <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>Correction files as imported from the file. Columns:
 a,b,m,n,correction_factor</p>
 </dd>
 </dl>
@@ -297,7 +286,7 @@ reside here until it can be properly integrated.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="reda.utils.eit_fzj_utils.testboard_evaluation">
-<span class="sig-prename descclassname"><span class="pre">reda.utils.eit_fzj_utils.</span></span><span class="sig-name descname"><span class="pre">testboard_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datapath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configdat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([0.1,</span> <span class="pre">0.134339933,</span> <span class="pre">0.180472177,</span> <span class="pre">0.242446202,</span> <span class="pre">0.325702066,</span> <span class="pre">0.437547938,</span> <span class="pre">0.587801607,</span> <span class="pre">0.789652287,</span> <span class="pre">1.06081836,</span> <span class="pre">1.42510267,</span> <span class="pre">1.91448198,</span> <span class="pre">2.57191381,</span> <span class="pre">3.45510729,</span> <span class="pre">4.64158883,</span> <span class="pre">6.23550734,</span> <span class="pre">8.3767764,</span> <span class="pre">11.2533558,</span> <span class="pre">15.1177507,</span> <span class="pre">20.3091762,</span> <span class="pre">27.2833338,</span> <span class="pre">36.6524124,</span> <span class="pre">49.2388263,</span> <span class="pre">66.1474064,</span> <span class="pre">88.8623816,</span> <span class="pre">119.377664,</span> <span class="pre">160.371874,</span> <span class="pre">215.443469,</span> <span class="pre">289.426612,</span> <span class="pre">388.815518,</span> <span class="pre">522.334507,</span> <span class="pre">701.703829,</span> <span class="pre">942.668455,</span> <span class="pre">1266.38017,</span> <span class="pre">1701.25428,</span> <span class="pre">2285.46386,</span> <span class="pre">3070.29063,</span> <span class="pre">4124.62638,</span> <span class="pre">5541.02033,</span> <span class="pre">7443.80301,</span> <span class="pre">10000.0])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_percentage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#testboard_evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.testboard_evaluation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">reda.utils.eit_fzj_utils.</span></span><span class="sig-name descname"><span class="pre">testboard_evaluation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datapath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">configdat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">outputname</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">frequencies</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">array([1.00000000e-01,</span> <span class="pre">1.34339933e-01,</span> <span class="pre">1.80472177e-01,</span> <span class="pre">2.42446202e-01,</span> <span class="pre">3.25702066e-01,</span> <span class="pre">4.37547938e-01,</span> <span class="pre">5.87801607e-01,</span> <span class="pre">7.89652287e-01,</span> <span class="pre">1.06081836e+00,</span> <span class="pre">1.42510267e+00,</span> <span class="pre">1.91448198e+00,</span> <span class="pre">2.57191381e+00,</span> <span class="pre">3.45510729e+00,</span> <span class="pre">4.64158883e+00,</span> <span class="pre">6.23550734e+00,</span> <span class="pre">8.37677640e+00,</span> <span class="pre">1.12533558e+01,</span> <span class="pre">1.51177507e+01,</span> <span class="pre">2.03091762e+01,</span> <span class="pre">2.72833338e+01,</span> <span class="pre">3.66524124e+01,</span> <span class="pre">4.92388263e+01,</span> <span class="pre">6.61474064e+01,</span> <span class="pre">8.88623816e+01,</span> <span class="pre">1.19377664e+02,</span> <span class="pre">1.60371874e+02,</span> <span class="pre">2.15443469e+02,</span> <span class="pre">2.89426612e+02,</span> <span class="pre">3.88815518e+02,</span> <span class="pre">5.22334507e+02,</span> <span class="pre">7.01703829e+02,</span> <span class="pre">9.42668455e+02,</span> <span class="pre">1.26638017e+03,</span> <span class="pre">1.70125428e+03,</span> <span class="pre">2.28546386e+03,</span> <span class="pre">3.07029063e+03,</span> <span class="pre">4.12462638e+03,</span> <span class="pre">5.54102033e+03,</span> <span class="pre">7.44380301e+03,</span> <span class="pre">1.00000000e+04])</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">error_percentage</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/eit_fzj_utils.html#testboard_evaluation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.eit_fzj_utils.testboard_evaluation" title="Permalink to this definition">¶</a></dt>
 <dd><p>A testboard with resistors and capacitors was built to test the
 basic operation performance of eit-systems from FZJ. This function plots
 the results of measurements on this board in terms of impedance magnitude
@@ -410,8 +399,8 @@ electrode positions with the correct ones.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="reda.utils.electrode_manager.electrode_manager">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.utils.electrode_manager.</span></span><span class="sig-name descname"><span class="pre">electrode_manager</span></span><a class="reference internal" href="../_modules/reda/utils/electrode_manager.html#electrode_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.electrode_manager.electrode_manager" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reda.utils.electrode_manager.</span></span><span class="sig-name descname"><span class="pre">electrode_manager</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">electrode_positions</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/electrode_manager.html#electrode_manager"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.electrode_manager.electrode_manager" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <dl class="field-list simple">
 <dt class="field-odd">Attributes</dt>
 <dd class="field-odd"><dl class="simple">
@@ -420,7 +409,7 @@ electrode positions with the correct ones.</p>
 </dd>
 </dl>
 <p class="rubric">Methods</p>
-<table class="longtable docutils align-default">
+<table class="autosummary longtable docutils align-default">
 <colgroup>
 <col style="width: 10%" />
 <col style="width: 90%" />
@@ -435,13 +424,13 @@ electrode positions with the correct ones.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.align_assignments" title="reda.utils.electrode_manager.electrode_manager.align_assignments"><code class="xref py py-obj docutils literal notranslate"><span class="pre">align_assignments</span></code></a>(pos1, pos2, abmn1, abmn2)</p></td>
 <td><p>Align the positions and logical electrode numbers of two datasets.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.conform_to_regular_x_spacing" title="reda.utils.electrode_manager.electrode_manager.conform_to_regular_x_spacing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conform_to_regular_x_spacing</span></code></a>(spacing_x[, …])</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.conform_to_regular_x_spacing" title="reda.utils.electrode_manager.electrode_manager.conform_to_regular_x_spacing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">conform_to_regular_x_spacing</span></code></a>(spacing_x[, ...])</p></td>
 <td><p>Assume electrodes are located on a regular grid of electrodes with spacing spacing_x.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.get_all_electrode_numbers" title="reda.utils.electrode_manager.electrode_manager.get_all_electrode_numbers"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_all_electrode_numbers</span></code></a>()</p></td>
 <td><p>Return the assignment between electrode numbers and coordinates</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.get_electrode_numbers_for_positions" title="reda.utils.electrode_manager.electrode_manager.get_electrode_numbers_for_positions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_electrode_numbers_for_positions</span></code></a>(…)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.get_electrode_numbers_for_positions" title="reda.utils.electrode_manager.electrode_manager.get_electrode_numbers_for_positions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_electrode_numbers_for_positions</span></code></a>(...)</p></td>
 <td><p>For a given set of coordinates, return electrode coordinates</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.get_position_of_number" title="reda.utils.electrode_manager.electrode_manager.get_position_of_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_position_of_number</span></code></a>(number)</p></td>
@@ -453,10 +442,10 @@ electrode positions with the correct ones.</p>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.register_custom_ordering_scheme" title="reda.utils.electrode_manager.electrode_manager.register_custom_ordering_scheme"><code class="xref py py-obj docutils literal notranslate"><span class="pre">register_custom_ordering_scheme</span></code></a>(function)</p></td>
 <td><p>Register a user-supplied function to assign electrode numbers to a given set of coordinates.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.replace_coordinate_of_electrode_number" title="reda.utils.electrode_manager.electrode_manager.replace_coordinate_of_electrode_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_coordinate_of_electrode_number</span></code></a>(…)</p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.replace_coordinate_of_electrode_number" title="reda.utils.electrode_manager.electrode_manager.replace_coordinate_of_electrode_number"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_coordinate_of_electrode_number</span></code></a>(...)</p></td>
 <td><p>Replace the coordinates of the given electrode number (in the current ordering) with the new coordinates.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.replace_coordinates_with_fixed_regular_grid_x" title="reda.utils.electrode_manager.electrode_manager.replace_coordinates_with_fixed_regular_grid_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_coordinates_with_fixed_regular_grid_x</span></code></a>(…)</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.replace_coordinates_with_fixed_regular_grid_x" title="reda.utils.electrode_manager.electrode_manager.replace_coordinates_with_fixed_regular_grid_x"><code class="xref py py-obj docutils literal notranslate"><span class="pre">replace_coordinates_with_fixed_regular_grid_x</span></code></a>(...)</p></td>
 <td><p>Using the current ordering scheme, replace the x coordinates with multiples of spaxing_x, starting with 0.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.set_ordering_to_as_is" title="reda.utils.electrode_manager.electrode_manager.set_ordering_to_as_is"><code class="xref py py-obj docutils literal notranslate"><span class="pre">set_ordering_to_as_is</span></code></a>()</p></td>
@@ -469,7 +458,7 @@ electrode positions with the correct ones.</p>
 <td><p>Helper function that activates the sorter that actually sorts electrode coordinates before assigning the electrode numbers.</p></td>
 </tr>
 <tr class="row-odd"><td><p><a class="reference internal" href="#reda.utils.electrode_manager.electrode_manager.shift_positions_xyz" title="reda.utils.electrode_manager.electrode_manager.shift_positions_xyz"><code class="xref py py-obj docutils literal notranslate"><span class="pre">shift_positions_xyz</span></code></a>(shift_by_xyz)</p></td>
-<td><p>Shift electrode positions by adding the vector ‘shift_by_xyz’ to each position.</p></td>
+<td><p>Shift electrode positions by adding the vector 'shift_by_xyz' to each position.</p></td>
 </tr>
 </tbody>
 </table>
@@ -609,7 +598,7 @@ number.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="reda.utils.electrode_manager.electrode_manager.electrode_positions">
-<em class="property"><span class="pre">property</span> </em><span class="sig-name descname"><span class="pre">electrode_positions</span></span><a class="headerlink" href="#reda.utils.electrode_manager.electrode_manager.electrode_positions" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">electrode_positions</span></span><a class="headerlink" href="#reda.utils.electrode_manager.electrode_manager.electrode_positions" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -642,7 +631,7 @@ self.round_to_decimals.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="reda.utils.electrode_manager.electrode_manager.plot_coordinates_x_z_to_ax">
-<span class="sig-name descname"><span class="pre">plot_coordinates_x_z_to_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_electrode_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/electrode_manager.html#electrode_manager.plot_coordinates_x_z_to_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.electrode_manager.electrode_manager.plot_coordinates_x_z_to_ax" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">plot_coordinates_x_z_to_ax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ax</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_electrode_numbers</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_y_axis</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/electrode_manager.html#electrode_manager.plot_coordinates_x_z_to_ax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.electrode_manager.electrode_manager.plot_coordinates_x_z_to_ax" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -758,7 +747,7 @@ shift in (x,z) direction.</p>
 <span id="reda-utils-enter-directory-module"></span><h2>reda.utils.enter_directory module<a class="headerlink" href="#module-reda.utils.enter_directory" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="reda.utils.enter_directory.CreateEnterDirectory">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.utils.enter_directory.</span></span><span class="sig-name descname"><span class="pre">CreateEnterDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#CreateEnterDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.enter_directory.CreateEnterDirectory" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reda.utils.enter_directory.</span></span><span class="sig-name descname"><span class="pre">CreateEnterDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#CreateEnterDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.enter_directory.CreateEnterDirectory" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#reda.utils.enter_directory.EnterDirectory" title="reda.utils.enter_directory.EnterDirectory"><code class="xref py py-class docutils literal notranslate"><span class="pre">reda.utils.enter_directory.EnterDirectory</span></code></a></p>
 <p>This is a context manager that enters a given directory and returns to
 the initial current directory after finishing. If the target directory does
@@ -767,8 +756,8 @@ not exist, create it.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="reda.utils.enter_directory.EnterDirectory">
-<em class="property"><span class="pre">class</span> </em><span class="sig-prename descclassname"><span class="pre">reda.utils.enter_directory.</span></span><span class="sig-name descname"><span class="pre">EnterDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#EnterDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.enter_directory.EnterDirectory" title="Permalink to this definition">¶</a></dt>
-<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.9)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">reda.utils.enter_directory.</span></span><span class="sig-name descname"><span class="pre">EnterDirectory</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/enter_directory.html#EnterDirectory"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.enter_directory.EnterDirectory" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference external" href="https://docs.python.org/3/library/functions.html#object" title="(in Python v3.10)"><code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></a></p>
 <p>This is a context manager that enters a given directory and returns to
 the initial current directory after finishing</p>
 </dd></dl>
@@ -964,7 +953,7 @@ down below for more information in the required content.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><dl>
-<dt><strong>K</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.20)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>K factors (are also directly written to the dataframe)</p>
+<dt><strong>K</strong><span class="classifier"><a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.ndarray.html#numpy.ndarray" title="(in NumPy v1.22)"><code class="xref py py-class docutils literal notranslate"><span class="pre">numpy.ndarray</span></code></a></span></dt><dd><p>K factors (are also directly written to the dataframe)</p>
 </dd>
 </dl>
 </dd>
@@ -1100,7 +1089,7 @@ settings.</p>
 <dt class="sig sig-object py" id="reda.utils.mpl.setup">
 <span class="sig-prename descclassname"><span class="pre">reda.utils.mpl.</span></span><span class="sig-name descname"><span class="pre">setup</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">use_latex</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/reda/utils/mpl.html#setup"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#reda.utils.mpl.setup" title="Permalink to this definition">¶</a></dt>
 <dd><p>Set up matplotlib imports and settings.</p>
-<dl class="field-list simple">
+<dl class="field-list">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><dl class="simple">
 <dt><strong>use_latex: bool, optional</strong></dt><dd><p>Determine if Latex output should be used. Latex will only be enable if
@@ -1111,10 +1100,10 @@ a ‘latex’ binary is found in the system.</p>
 </dl>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><dl class="simple">
-<dt>plt: <a class="reference external" href="https://matplotlib.org/api/index.html#module-pylab" title="(in Matplotlib v3.4.1)"><code class="xref py py-mod docutils literal notranslate"><span class="pre">pylab</span></code></a></dt><dd><p>pylab module imported as plt</p>
+<dd class="field-even"><dl>
+<dt><strong>plt:</strong><span class="classifier">mod:<cite>pylab</cite></span></dt><dd><p>pylab module imported as plt</p>
 </dd>
-<dt>mpl: <code class="xref py py-mod docutils literal notranslate"><span class="pre">matplotlib</span></code></dt><dd><p>matplotlib module imported as mpl</p>
+<dt><strong>mpl:</strong><span class="classifier">mod:<cite>matplotlib</cite></span></dt><dd><p>matplotlib module imported as mpl</p>
 </dd>
 </dl>
 </dd>
@@ -1240,10 +1229,10 @@ used.</p>
     <div class="clearer"></div>
   </div>
     <div class="footer">
-      &copy;2021, M. Weigand and F. M. Wagner and others.
+      &copy;2022, M. Weigand and F. M. Wagner and others.
       
       |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.0.2</a>
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
       &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
       
       |

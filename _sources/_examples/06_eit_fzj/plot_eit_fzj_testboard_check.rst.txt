@@ -27,13 +27,14 @@ conducted on the testboard that was built to check the functionality of the
 eit systems. A theoretical calculated response that is based on the built-in
 resistors and capicitors is plotted together with the measurement results.
 
-.. GENERATED FROM PYTHON SOURCE LINES 13-39
+.. GENERATED FROM PYTHON SOURCE LINES 13-40
 
 
 
-.. image:: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_testboard_check_001.png
-    :alt: Magnitude 5 8 6 7, Phase 5 8 6 7, Magnitude 1 4 2 3, Phase 1 4 2 3
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_testboard_check_001.png
+   :alt: Magnitude 5 8 6 7, Phase 5 8 6 7, Magnitude 1 4 2 3, Phase 1 4 2 3
+   :srcset: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_testboard_check_001.png
+   :class: sphx-glr-single-img
 
 
 .. rst-class:: sphx-glr-script-out
@@ -77,11 +78,11 @@ resistors and capicitors is plotted together with the measurement results.
     # reciprocal measurements are taken for the check.
 
     configs = np.array([
-        [1,4,2,3],
-        [2,3,1,4],
-        [5,8,6,7],
-        [6,7,5,8]
-        ])
+        [1, 4, 2, 3],
+        [2, 3, 1, 4],
+        [5, 8, 6, 7],
+        [6, 7, 5, 8]
+    ])
 
     # The function can be executed with the following command. The first parameter
     # has to lead to the datapath of the measurement, the second to the config.dat
@@ -93,7 +94,8 @@ resistors and capicitors is plotted together with the measurement results.
     reda.utils.eit_fzj_utils.testboard_evaluation(
         "data_eit_fzj_testboard/eit_data_mnu0.mat",
          configs,
-        'data_eit_fzj_testboard/testboard')
+        'data_eit_fzj_testboard/testboard'
+    )
 
 
 .. _sphx_glr_download__examples_06_eit_fzj_plot_eit_fzj_testboard_check.py:

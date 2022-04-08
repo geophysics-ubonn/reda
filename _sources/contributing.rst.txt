@@ -37,6 +37,10 @@ D. Contribute to the code
     To avoid redundant work, please contact us before you start working on a
     non-trivial feature.
 
+.. note::
+
+   Always use the **dev** branch for new developments and merge requests!
+
 The preferred way to contribute to the REDA code base is via the *fork and
 pull* collaborative model pull request (PR) on GitHub, described `here
 <https://help.github.com/en/articles/about-collaborative-development-models>`__.
@@ -66,11 +70,14 @@ After that you can install the software as usual.
 ++++++++++++++++++++++++++
 
 Go to the source folder and create a feature branch to hold your changes. It is
-advisable to give it a sensible name describing the overall topic of the proposed changes, such as ``new_filter_methods``.
+advisable to give it a sensible name describing the overall topic of the
+proposed changes, such as ``new_filter_methods``.
 
 .. code:: bash
 
   cd reda
+  # we always want to branch from the dev branch, which holds new developments
+  git checkout dev
   git checkout -b new_filter_methods
 
 3. Start making your changes
@@ -145,7 +152,7 @@ of the upstream branch **master**, execute the following  commands:
 
    git fetch upstream
    git checkout new_filter_methods
-   git merge upstream/master
+   git merge upstream/dev
 
 Update your forked repository branch **new_filter_methods** on github:
 

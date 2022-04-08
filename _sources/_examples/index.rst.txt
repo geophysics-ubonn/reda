@@ -25,6 +25,27 @@ Usage of the ERT container
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="This example is all about import data from IRIS Instruments Syscal systems. There is a variety ...">
+
+.. only:: html
+
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_01_syscal_import_thumb.png
+     :alt: Importing Syscal ERT data
+
+     :ref:`sphx_glr__examples_01_ERT_plot_01_syscal_import.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/01_ERT/plot_01_syscal_import
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal ERT data from roll-a-long scheme">
 
 .. only:: html
@@ -46,14 +67,14 @@ Usage of the ERT container
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example is all about import data from IRIS Instruments Syscal systems. There is a variety ...">
+    <div class="sphx-glr-thumbcontainer" tooltip="Basic metadata handling">
 
 .. only:: html
 
- .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_01_syscal_import_thumb.png
-     :alt: Importing Syscal ERT data
+ .. figure:: /_examples/01_ERT/images/thumb/sphx_glr_plot_03_basic_metadata_thumb.png
+     :alt: Basic metadata handling
 
-     :ref:`sphx_glr__examples_01_ERT_plot_01_syscal_import.py`
+     :ref:`sphx_glr__examples_01_ERT_plot_03_basic_metadata.py`
 
 .. raw:: html
 
@@ -63,7 +84,7 @@ Usage of the ERT container
 .. toctree::
    :hidden:
 
-   /_examples/01_ERT/plot_01_syscal_import
+   /_examples/01_ERT/plot_03_basic_metadata
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
@@ -112,27 +133,6 @@ Importing spectral impedance data (sEIT)
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This is work in progress">
-
-.. only:: html
-
- .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
-     :alt: Visualizing multi-dimensional sEIT data
-
-     :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/03_sEIT/plot_visualize_4d_data
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="    The SIP256c importer is incredibly slow at the moment. Sorry for that.">
 
 .. only:: html
@@ -151,6 +151,27 @@ Importing spectral impedance data (sEIT)
    :hidden:
 
    /_examples/03_sEIT/plot_radic_sip256c
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This is work in progress">
+
+.. only:: html
+
+ .. figure:: /_examples/03_sEIT/images/thumb/sphx_glr_plot_visualize_4d_data_thumb.png
+     :alt: Visualizing multi-dimensional sEIT data
+
+     :ref:`sphx_glr__examples_03_sEIT_plot_visualize_4d_data.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/03_sEIT/plot_visualize_4d_data
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
@@ -256,6 +277,48 @@ Operations specific to the FZJ sEIT systems
 
 .. raw:: html
 
+    <div class="sphx-glr-thumbcontainer" tooltip="EIT-FZJ: Analyze DC voltages at electrodes during injections">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_04_analyze_ug_thumb.png
+     :alt: EIT-FZJ: Analyze DC voltages at electrodes during injections
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_04_analyze_ug.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_04_analyze_ug
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to import data from the various versions of the EIT system developed by ...">
+
+.. only:: html
+
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_thumb.png
+     :alt: Importing FZJ EIT40/EIT160 data
+
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/06_eit_fzj/plot_eit_fzj
+
+.. raw:: html
+
     <div class="sphx-glr-thumbcontainer" tooltip="There exist multiple hardware and software versions of the of the EIT system developed by Zimme...">
 
 .. only:: html
@@ -298,27 +361,6 @@ Operations specific to the FZJ sEIT systems
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to execute the helper function &quot;testboard_evaluation&quot; from the eit_fzj_u...">
-
-.. only:: html
-
- .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_testboard_check_thumb.png
-     :alt: EIT40 Testboard V2
-
-     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_testboard_check.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/06_eit_fzj/plot_eit_fzj_testboard_check
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="It is useful to conduct additional measurements for each sEIT setup and determine the total cap...">
 
 .. only:: html
@@ -340,14 +382,14 @@ Operations specific to the FZJ sEIT systems
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="EIT-FZJ: Analyze DC voltages at electrodes during injections">
+    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to execute the helper function &quot;testboard_evaluation&quot; from the eit_fzj_u...">
 
 .. only:: html
 
- .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_04_analyze_ug_thumb.png
-     :alt: EIT-FZJ: Analyze DC voltages at electrodes during injections
+ .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_testboard_check_thumb.png
+     :alt: EIT40 Testboard V2
 
-     :ref:`sphx_glr__examples_06_eit_fzj_plot_04_analyze_ug.py`
+     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj_testboard_check.py`
 
 .. raw:: html
 
@@ -357,28 +399,7 @@ Operations specific to the FZJ sEIT systems
 .. toctree::
    :hidden:
 
-   /_examples/06_eit_fzj/plot_04_analyze_ug
-
-.. raw:: html
-
-    <div class="sphx-glr-thumbcontainer" tooltip="This example shows how to import data from the various versions of the EIT system developed by ...">
-
-.. only:: html
-
- .. figure:: /_examples/06_eit_fzj/images/thumb/sphx_glr_plot_eit_fzj_thumb.png
-     :alt: Importing FZJ EIT40/EIT160 data
-
-     :ref:`sphx_glr__examples_06_eit_fzj_plot_eit_fzj.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/06_eit_fzj/plot_eit_fzj
+   /_examples/06_eit_fzj/plot_eit_fzj_testboard_check
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>
@@ -415,27 +436,6 @@ Time-domain induced polarization
 
 .. raw:: html
 
-    <div class="sphx-glr-thumbcontainer" tooltip="Data sets from:">
-
-.. only:: html
-
- .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_syscal_ip_2_thumb.png
-     :alt: Another three data sets
-
-     :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip_2.py`
-
-.. raw:: html
-
-    </div>
-
-
-.. toctree::
-   :hidden:
-
-   /_examples/07_tdip/plot_syscal_ip_2
-
-.. raw:: html
-
     <div class="sphx-glr-thumbcontainer" tooltip="Importing Syscal IP data">
 
 .. only:: html
@@ -454,6 +454,102 @@ Time-domain induced polarization
    :hidden:
 
    /_examples/07_tdip/plot_syscal_ip
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Data sets from:">
+
+.. only:: html
+
+ .. figure:: /_examples/07_tdip/images/thumb/sphx_glr_plot_syscal_ip_2_thumb.png
+     :alt: Another three data sets
+
+     :ref:`sphx_glr__examples_07_tdip_plot_syscal_ip_2.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/07_tdip/plot_syscal_ip_2
+.. raw:: html
+
+    <div class="sphx-glr-clear"></div>
+
+
+
+.. _sphx_glr__examples_09_file_formats:
+
+Examples related to specific file formats
+-----------------------------------------
+
+
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The TSERT file format is an experimental file format that stores monitoring (time-lapse) electr...">
+
+.. only:: html
+
+ .. figure:: /_examples/09_file_formats/images/thumb/sphx_glr_plot_01_tsert_thumb.png
+     :alt: TSERT: Using the TSERT file format
+
+     :ref:`sphx_glr__examples_09_file_formats_plot_01_tsert.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/09_file_formats/plot_01_tsert
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="Note that timestep keys can have arbitrary types. However, only one type of key is supported at...">
+
+.. only:: html
+
+ .. figure:: /_examples/09_file_formats/images/thumb/sphx_glr_plot_02_tsert_integer_index_thumb.png
+     :alt: TSERT: data with integer indices
+
+     :ref:`sphx_glr__examples_09_file_formats_plot_02_tsert_integer_index.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/09_file_formats/plot_02_tsert_integer_index
+
+.. raw:: html
+
+    <div class="sphx-glr-thumbcontainer" tooltip="The TSERT file format can store different versions of data.">
+
+.. only:: html
+
+ .. figure:: /_examples/09_file_formats/images/thumb/sphx_glr_plot_03_tsert_versioning_thumb.png
+     :alt: TSERT: Different data versions
+
+     :ref:`sphx_glr__examples_09_file_formats_plot_03_tsert_versioning.py`
+
+.. raw:: html
+
+    </div>
+
+
+.. toctree::
+   :hidden:
+
+   /_examples/09_file_formats/plot_03_tsert_versioning
 .. raw:: html
 
     <div class="sphx-glr-clear"></div>

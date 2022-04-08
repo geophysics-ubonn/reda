@@ -16,4 +16,3 @@ cb1 = mpl.colorbar.ColorbarBase(
 )
 cb1.locator = mpl.ticker.FixedLocator([23, 28, 33])
 cb1.update_ticks()
-# cb1.ax.artists.remove(cb1.outline)

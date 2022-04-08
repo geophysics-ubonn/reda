@@ -140,13 +140,13 @@ from the current injection dipoles:
     Summary:
                     a           b  ...     frequency          rpha
     count  16280.0000  16280.0000  ...  16280.000000  16280.000000
-    mean      10.5250     30.4750  ...   1328.935406   1264.340068
-    std        5.8096      5.8096  ...   2885.893725   1809.580759
-    min        1.0000     20.0000  ...      0.100000  -3141.585829
-    25%        5.7500     25.7500  ...      1.000000     -9.200987
-    50%       10.5000     30.5000  ...     31.250000      1.460763
-    75%       15.2500     35.2500  ...   1000.000000   3132.397700
-    max       21.0000     40.0000  ...  10000.000000   3141.586023
+    mean      10.5250     30.4750  ...   1328.935406    217.078193
+    std        5.8096      5.8096  ...   2885.893725   1129.623431
+    min        1.0000     20.0000  ...      0.100000  -3141.556931
+    25%        5.7500     25.7500  ...      1.000000    -15.614618
+    50%       10.5000     30.5000  ...     31.250000     -7.626176
+    75%       15.2500     35.2500  ...   1000.000000     -5.227314
+    max       21.0000     40.0000  ...  10000.000000   3141.584591
 
     [8 rows x 7 columns]
 
@@ -591,7 +591,7 @@ quadrupoles can be directly accessed using a pandas grouper
 
  .. code-block:: none
 
-    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7fa1eb3bb5c0>
+    <pandas.core.groupby.generic.DataFrameGroupBy object at 0x7f6d45457a00>
             a   b   m   n     frequency         r        rpha
     748    10  29  15  34      0.100000  7.356375   -5.205543
     2228   10  29  15  34      0.314465  7.323810   -6.903037
@@ -763,9 +763,10 @@ Plot pseudosections of all frequencies
 
 
 
-.. image:: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_001.png
-    :alt: f: 0.1 Hz, f: 0.31446541 Hz, f: 1.0 Hz, f: 3.125 Hz, f: 10.0 Hz, f: 31.25 Hz, f: 110.0 Hz
-    :class: sphx-glr-single-img
+.. image-sg:: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_001.png
+   :alt: f: 0.1 Hz, f: 0.31446541 Hz, f: 1.0 Hz, f: 3.125 Hz, f: 10.0 Hz, f: 31.25 Hz, f: 110.0 Hz
+   :srcset: /_examples/06_eit_fzj/images/sphx_glr_plot_eit_fzj_001.png
+   :class: sphx-glr-single-img
 
 
 
@@ -793,7 +794,7 @@ alternative
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  51.715 seconds)
+   **Total running time of the script:** ( 0 minutes  47.495 seconds)
 
 
 .. _sphx_glr_download__examples_06_eit_fzj_plot_eit_fzj.py:

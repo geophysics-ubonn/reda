@@ -1,0 +1,452 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>reda.exporters.tsert_export &#8212; REDA 0.1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/alabaster.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/plot_directive.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sg_gallery-rendered-html.css" />
+    <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+    <script src="../../../_static/jquery.js"></script>
+    <script src="../../../_static/underscore.js"></script>
+    <script src="../../../_static/doctools.js"></script>
+    <link rel="author" title="About these documents" href="../../../about.html" />
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+   
+  <link rel="stylesheet" href="../../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  <div class="document">
+    
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../../index.html">
+    <img class="logo" src="../../../_static/reda_logo.png" alt="Logo"/>
+    
+  </a>
+</p>
+
+
+
+<p class="blurb">Reproducible electrical data analysis</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../about.html">About</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../data_containers.html">Data Containers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../importers.html">Data Importers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../file_formats/example_tsert.html">TSERT – Time Series ERT file format</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../metadata.html">Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../filtering.html">Filtering Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../_examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../debugging.html">Debugging reda</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../test_data.html">Test data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api.html">API documentation</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/geophysics-ubonn/reda">Source code</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../../index.html">Documentation overview</a><ul>
+  <li><a href="../../index.html">Module code</a><ul>
+  <li><a href="../../reda.html">reda</a><ul>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <h1>Source code for reda.exporters.tsert_export</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">warnings</span>
+<span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">h5py</span>
+
+
+<div class="viewcode-block" id="tsert_base"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_base">[docs]</a><span class="k">class</span> <span class="nc">tsert_base</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Functionality related to the tsert file format used for both import and</span>
+<span class="sd">    export</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># the version of the file format</span>
+    <span class="n">version</span> <span class="o">=</span> <span class="mf">0.1</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str</span>
+<span class="sd">            filename to work on</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># in case the file is opened, keep the object here</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fid</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fid_mode</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_setup_logger</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">filename</span> <span class="o">=</span> <span class="n">filename</span>
+        <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">check_format</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+
+<div class="viewcode-block" id="tsert_base.check_format"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_base.check_format">[docs]</a>    <span class="k">def</span> <span class="nf">check_format</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Check if a given file is actually a tsert file with correct version</span>
+<span class="sd">        number</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">()</span>
+        <span class="k">assert</span> <span class="s1">&#39;file_format&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span> \
+            <span class="s1">&#39;Attribute &quot;file_format&quot; is missing&#39;</span>
+        <span class="k">assert</span> <span class="s1">&#39;format_version&#39;</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">attrs</span><span class="p">,</span> \
+            <span class="s1">&#39;Attribute &quot;format_version&quot; is missing&#39;</span>
+
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;file_format&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;tsert&#39;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;format_version&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_setup_logger</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">formatter</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">Formatter</span><span class="p">(</span>
+            <span class="s1">&#39;</span><span class="si">%(asctime)s</span><span class="s1"> - </span><span class="si">%(name)s</span><span class="s1"> - </span><span class="si">%(levelname)s</span><span class="s1"> - </span><span class="si">%(message)s</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+
+        <span class="n">ch</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+        <span class="n">ch</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+        <span class="c1"># add formatter to ch</span>
+        <span class="n">ch</span><span class="o">.</span><span class="n">setFormatter</span><span class="p">(</span><span class="n">formatter</span><span class="p">)</span>
+
+        <span class="c1"># add ch to logger</span>
+
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;TODO: Fix logging format&#39;</span><span class="p">)</span>
+        <span class="c1"># while logger.hasHandlers():</span>
+        <span class="c1">#     logger.removeHandler(logger.handlers[0])</span>
+        <span class="c1"># logger.addHandler(ch)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span> <span class="o">=</span> <span class="n">logger</span>
+
+    <span class="k">def</span> <span class="nf">_open_file</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span> <span class="ow">or</span> <span class="n">mode</span> <span class="o">!=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid_mode</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="p">:</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fid</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fid_mode</span> <span class="o">=</span> <span class="n">mode</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span>
+
+    <span class="k">def</span> <span class="nf">_close_file</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fid_mode</span> <span class="o">=</span> <span class="kc">None</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">fid</span> <span class="o">=</span> <span class="kc">None</span>
+
+<div class="viewcode-block" id="tsert_base.get_index"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_base.get_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the index of the file&quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">):</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_empty_index</span><span class="p">()</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;/INDEX/index&#39;</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">()</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_hdf</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">key</span><span class="p">,</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_empty_index</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span>
+            <span class="k">return</span> <span class="n">index</span></div></div>
+
+
+<div class="viewcode-block" id="tsert_export"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export">[docs]</a><span class="k">class</span> <span class="nc">tsert_export</span><span class="p">(</span><span class="n">tsert_base</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;The TSERT file format -- export functions</span>
+
+<span class="sd">    TSERT: Time-series electrical resistivity tomography</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">filename</span><span class="p">):</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">add_file_information</span><span class="p">()</span>
+
+<div class="viewcode-block" id="tsert_export.write_index"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.write_index">[docs]</a>    <span class="k">def</span> <span class="nf">write_index</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data_index</span><span class="p">):</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;/INDEX/index&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="p">:</span>
+            <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span>
+        <span class="n">data_index</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+            <span class="n">key</span><span class="p">,</span>
+            <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="tsert_export.get_empty_index"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.get_empty_index">[docs]</a>    <span class="k">def</span> <span class="nf">get_empty_index</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize an empty index&quot;&quot;&quot;</span>
+        <span class="n">index</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">,</span> <span class="p">])</span>
+        <span class="c1"># index.index.name = &#39;index&#39;</span>
+        <span class="k">return</span> <span class="n">index</span></div>
+
+<div class="viewcode-block" id="tsert_export.add_file_information"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.add_file_information">[docs]</a>    <span class="k">def</span> <span class="nf">add_file_information</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;file_format&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;tsert&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="s1">&#39;format_version&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">version</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span></div>
+
+    <span class="k">def</span> <span class="nf">_add_to_attr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">base</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">base</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">create_group</span><span class="p">(</span><span class="n">base</span><span class="p">)</span>
+
+        <span class="n">allowed_types</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="nb">str</span><span class="p">,</span>
+            <span class="nb">int</span><span class="p">,</span>
+            <span class="nb">float</span><span class="p">,</span>
+            <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="n">allowed_types</span><span class="p">):</span>
+                <span class="n">f</span><span class="p">[</span><span class="n">base</span><span class="p">]</span><span class="o">.</span><span class="n">attrs</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span>
+            <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+                <span class="n">new_base</span> <span class="o">=</span> <span class="n">base</span> <span class="o">+</span> <span class="s1">&#39;/&#39;</span> <span class="o">+</span> <span class="n">key</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">new_base</span><span class="p">,</span> <span class="n">item</span><span class="p">)</span>
+
+<div class="viewcode-block" id="tsert_export.test_add_metadata"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.test_add_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">test_add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Test function that investigates how metadata can be added to the hdf</span>
+<span class="sd">        file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="n">metadata</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="s1">&#39;pla&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="s1">&#39;bum&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;c&#39;</span><span class="p">:</span> <span class="p">{</span>
+                <span class="s1">&#39;d&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+                <span class="s1">&#39;e&#39;</span><span class="p">:</span> <span class="mi">1000</span><span class="p">,</span>
+            <span class="p">},</span>
+        <span class="p">}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;METADATA&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="tsert_export.add_metadata"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.add_metadata">[docs]</a>    <span class="k">def</span> <span class="nf">add_metadata</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">metadata</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_add_to_attr</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s1">&#39;METADATA&#39;</span><span class="p">,</span> <span class="n">metadata</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="tsert_export.add_data"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.add_data">[docs]</a>    <span class="k">def</span> <span class="nf">add_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">data</span><span class="p">,</span> <span class="n">version</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Add data to the tsert file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        data : pandas.DataFrame</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;timestep&#39;</span> <span class="ow">in</span> <span class="n">data</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;timestep column must be present&quot;</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Exporting to tsert: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span>
+        <span class="n">g</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;timestep&#39;</span><span class="p">)</span>
+
+        <span class="n">data_index</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_index</span><span class="p">()</span>
+
+        <span class="c1"># we must check that the types of the new data and the old data</span>
+        <span class="c1"># timesteps match (we allow arbitrary types of timestep keys)</span>
+        <span class="k">if</span> <span class="n">data_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">assert</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="n">data_index</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span> \
+                <span class="s1">&#39;types of timestep-keys do not match: new: </span><span class="si">{}</span><span class="s1"> old: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+                    <span class="n">data</span><span class="p">[</span><span class="s1">&#39;timestep&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="p">,</span>
+                    <span class="n">data_index</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span>
+                <span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">timestep</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">g</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;@@@@@@@@@@@@@@@@@@@@@@@&#39;</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="n">timestep</span><span class="p">)</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">,</span> <span class="n">data_index</span><span class="p">)</span>
+            <span class="c1"># try to find the timestep in the index</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="n">data_index</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="n">data_index</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">timestep</span>
+            <span class="p">)</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">values</span>
+            <span class="c1"># print(&#39;row result&#39;, row, len(row))</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="c1"># found one entry</span>
+                <span class="n">ts_key</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1"># no entry</span>
+                <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">data_index</span><span class="o">.</span><span class="n">index</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">ts_key</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">ts_key</span> <span class="o">=</span> <span class="n">data_index</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+            <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">row</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">Exception</span><span class="p">(</span><span class="s1">&#39;We only allow unique values in the index&#39;</span><span class="p">)</span>
+
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;ts_key:&#39;</span><span class="p">,</span> <span class="n">ts_key</span><span class="p">)</span>
+
+            <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;/&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">((</span>
+                <span class="s1">&#39;ERT_DATA&#39;</span><span class="p">,</span>
+                <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">ts_key</span><span class="p">),</span>
+                <span class="n">version</span><span class="p">,</span>
+            <span class="p">))</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;key&#39;</span><span class="p">,</span> <span class="n">key</span><span class="p">)</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="p">:</span>
+                <span class="c1"># delete data before adding it</span>
+                <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">fid</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span>
+
+            <span class="k">with</span> <span class="n">warnings</span><span class="o">.</span><span class="n">catch_warnings</span><span class="p">():</span>
+                <span class="n">warnings</span><span class="o">.</span><span class="n">simplefilter</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+                <span class="n">item</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span>
+                    <span class="n">key</span><span class="p">,</span>
+                    <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                    <span class="c1"># complevel=9,</span>
+                    <span class="c1"># complib=&#39;lzo&#39;,</span>
+                <span class="p">)</span>
+
+            <span class="c1"># update index</span>
+            <span class="n">data_index</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">ts_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">timestep</span>
+            <span class="k">if</span> <span class="n">data_index</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span>
+                    <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">data_index</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span> <span class="o">==</span> <span class="nb">object</span><span class="p">:</span>
+                <span class="n">data_index</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data_index</span><span class="p">[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span>
+                    <span class="nb">type</span><span class="p">(</span><span class="n">timestep</span><span class="p">))</span>
+
+            <span class="c1"># write to file</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">write_index</span><span class="p">(</span><span class="n">data_index</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="tsert_export.set_electrode_positions"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.set_electrode_positions">[docs]</a>    <span class="k">def</span> <span class="nf">set_electrode_positions</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">electrode_positions</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write electrode positions into the file. Existing positions will be</span>
+<span class="sd">        deleted.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        electrode_positions : pandas.DataFrame</span>
+<span class="sd">            Electrode positions, columns x,y,z required. Do nothing if None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">electrode_positions</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">electrode_positions</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">),</span> \
+            <span class="s2">&quot;electrode_positions must be a pandas DataFrame with cols x,y,z&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">electrode_positions</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;column x not found&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">electrode_positions</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;column y not found&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;z&#39;</span> <span class="ow">in</span> <span class="n">electrode_positions</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;column z not found&quot;</span>
+
+        <span class="c1"># this path in the hdf-file is hard coded according to the tsert specs</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;/ELECTRODES/ELECTRODE_POSITIONS&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Adding electrode positions to key: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">f</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1"># make sure the file is closed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span>
+        <span class="c1"># write to file</span>
+        <span class="n">electrode_positions</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="c1"># complevel=9,</span>
+            <span class="c1"># complib=&#39;lzo&#39;,</span>
+        <span class="p">)</span></div>
+
+<div class="viewcode-block" id="tsert_export.set_topography"><a class="viewcode-back" href="../../../_api/reda.exporters.html#reda.exporters.tsert_export.tsert_export.set_topography">[docs]</a>    <span class="k">def</span> <span class="nf">set_topography</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">topography</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Write topography into the file. Existing positions will be</span>
+<span class="sd">        deleted.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        topography : pandas.DataFrame|None</span>
+<span class="sd">            Topography positions, columns x,y,z required. Do nothing if None.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">topography</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span>
+        <span class="k">assert</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">topography</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">),</span> \
+            <span class="s2">&quot;electrode_positions must be a pandas DataFrame with cols x,y,z&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;x&#39;</span> <span class="ow">in</span> <span class="n">topography</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;column x not found&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;y&#39;</span> <span class="ow">in</span> <span class="n">topography</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;column y not found&quot;</span>
+        <span class="k">assert</span> <span class="s1">&#39;z&#39;</span> <span class="ow">in</span> <span class="n">topography</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span> <span class="s2">&quot;column z not found&quot;</span>
+
+        <span class="c1"># this path in the hdf-file is hard coded according to the tsert specs</span>
+        <span class="n">key</span> <span class="o">=</span> <span class="s1">&#39;/TOPOGRAPHY/topography&#39;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">&#39;Adding topography to key: </span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_open_file</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">f</span><span class="p">:</span>
+            <span class="k">del</span> <span class="n">f</span><span class="p">[</span><span class="n">key</span><span class="p">]</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="c1"># make sure the file is closed</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_close_file</span><span class="p">()</span>
+        <span class="c1"># write to file</span>
+        <span class="n">topography</span><span class="o">.</span><span class="n">to_hdf</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">filename</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">append</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="c1"># complevel=9,</span>
+            <span class="c1"># complib=&#39;lzo&#39;,</span>
+        <span class="p">)</span></div></div>
+</pre></div>
+
+          </div>
+          
+        </div>
+      </div>
+    <div class="clearer"></div>
+  </div>
+    <div class="footer">
+      &copy;2022, M. Weigand and F. M. Wagner and others.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 4.5.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>

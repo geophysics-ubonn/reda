@@ -34,7 +34,7 @@ has some advantages, but also disadvantages:
 
 .. note::
 
-   The logical electrode numbers **a*, **b**, **m**, **n** are assumed to be
+   The logical electrode numbers **a**, **b**, **m**, **n** are assumed to be
    1-indexed in the sense that no offsets are automatically applied when
    dealing with those numbers.
 
@@ -61,29 +61,30 @@ Container basics
 
 * If not otherwise stated, a container stores measurement data in a pandas
   DataFrame located in `container.data`.
-* Electrode positions (if available) are stored in an electrode manager
-  :py:class:`reda.utils.electrode_manager.electrode_manager` in
-  `container.electrode_positions` (columns **x**, **y**, **z**).
+* Electrode positions (if available) are stored in an
+  :py:class:`pandas.DataFrame` in `container.electrode_positions` (columns
+  **x**, **y**, **z**, plus an integer index).
+  The integer index hereby connects the positions to the electrode numbers in
+  **container.data[['a', 'b', 'm', 'n']]**.
+  The index is not required to be continuous and numbers do not need to start
+  with 1. For example, the index **0, 1, 10, 20, 21** would be allowed
+  (although we suggest to start with 1 to not falsely indicate a zero-indexing
+  of the electrode numbers.
+  Electrode positions, and complex operations with them, can be handled with
+  the electrode manager
+  :py:class:`reda.utils.electrode_manager.electrode_manager`.
+  The corresponding data frame can then easily be access via
+  *electrode_manager.electrode_positions*
 * Topograhy nodes (if available) are stored in a pandas DataFrame in
   `container.topography` (columns **x**, **y**, **z**).
+  Electrodes located on the topography should be included here.
 
-The integer index hereby refers to electrode numbers in **container.data[['a',
-'b', 'm', 'n']]**.
-The index is not required to be continuous and numbers do not need to start
-with 1. For example, the index **0, 1, 10, 20, 21** would be allowed (although
-we suggest to start with 1 to not falsely indicate a zero-indexing of the
-electrode numbers.
 
 Required data columns
 ---------------------
 
 Each data container requires a minimal set of data variables (columns) that any
 importer must return.
-
-.. warning::
-
-    We are in the process of unifying the column names across containers. In
-    the future the default will be to use lower case column names.
 
 ERT
 ^^^
