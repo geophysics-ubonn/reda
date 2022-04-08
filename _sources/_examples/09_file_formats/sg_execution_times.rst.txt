@@ -5,12 +5,12 @@
 
 Computation times
 =================
-**00:03.443** total execution time for **_examples_09_file_formats** files:
+**00:03.328** total execution time for **_examples_09_file_formats** files:
 
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_09_file_formats_plot_01_tsert.py` (``plot_01_tsert.py``)                             | 00:01.757 | 0.0 MB |
+| :ref:`sphx_glr__examples_09_file_formats_plot_01_tsert.py` (``plot_01_tsert.py``)                             | 00:01.652 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_09_file_formats_plot_03_tsert_versioning.py` (``plot_03_tsert_versioning.py``)       | 00:00.871 | 0.0 MB |
+| :ref:`sphx_glr__examples_09_file_formats_plot_03_tsert_versioning.py` (``plot_03_tsert_versioning.py``)       | 00:00.853 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+
-| :ref:`sphx_glr__examples_09_file_formats_plot_02_tsert_integer_index.py` (``plot_02_tsert_integer_index.py``) | 00:00.816 | 0.0 MB |
+| :ref:`sphx_glr__examples_09_file_formats_plot_02_tsert_integer_index.py` (``plot_02_tsert_integer_index.py``) | 00:00.823 | 0.0 MB |
 +---------------------------------------------------------------------------------------------------------------+-----------+--------+

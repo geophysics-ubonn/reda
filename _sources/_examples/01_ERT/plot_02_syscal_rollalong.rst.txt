@@ -99,7 +99,7 @@ Print statistics
 
 
     --- Data Journal Start ---
-    2022-04-08 07:58:42.094618
+    2022-04-08 08:03:55.344982
     Data was imported from file  (1460 data points)
     --- Data Journal End ---
 
@@ -127,8 +127,8 @@ This here is an activity list
 
  .. code-block:: none
 
-    2022-04-08 07:58:40,840 - reda.containers.BaseContainer - INFO - IRIS Syscal Pro bin import
-    2022-04-08 07:58:41,591 - reda.containers.BaseContainer - INFO - Data sized changed from 0 to 1460
+    2022-04-08 08:03:54,108 - reda.containers.BaseContainer - INFO - IRIS Syscal Pro bin import
+    2022-04-08 08:03:54,860 - reda.containers.BaseContainer - INFO - Data sized changed from 0 to 1460
 
 
 
@@ -196,7 +196,7 @@ points
 
 
     --- Data Journal Start ---
-    2022-04-08 07:58:43.372511
+    2022-04-08 08:03:56.604310
     Data was imported from file  (1460 data points)
     --- Data Journal End ---
 
