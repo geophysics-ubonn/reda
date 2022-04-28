@@ -1236,7 +1236,54 @@
 
     <span class="nd">@property</span>
     <span class="k">def</span> <span class="nf">unique_injections</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_unique_current_injections</span><span class="p">()</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_unique_current_injections</span><span class="p">()</span>
+
+<div class="viewcode-block" id="ConfigManager.remove_reciprocals"><a class="viewcode-back" href="../../../_api/reda.configs.html#reda.configs.configManager.ConfigManager.remove_reciprocals">[docs]</a>    <span class="k">def</span> <span class="nf">remove_reciprocals</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">configs</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">configs_to_use</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">configs</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">configs_to_use</span> <span class="o">=</span> <span class="n">configs</span>
+
+        <span class="n">indices_to_delete</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="n">configs_ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">configs_to_use</span><span class="p">)</span>
+
+        <span class="n">configs_ar</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">configs_ar</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">:</span><span class="mi">2</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">configs_ar</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">configs_ar</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">configs_ar</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])):</span>
+            <span class="c1"># print(&#39;Checking&#39;, index, configs_ar[index, :])</span>
+            <span class="c1"># normalized reciprocal</span>
+            <span class="n">ar</span> <span class="o">=</span> <span class="n">configs_ar</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+            <span class="n">br</span> <span class="o">=</span> <span class="n">configs_ar</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+            <span class="n">mr</span> <span class="o">=</span> <span class="n">configs_ar</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+            <span class="n">nr</span> <span class="o">=</span> <span class="n">configs_ar</span><span class="p">[</span><span class="n">index</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+
+            <span class="c1"># we only search in lower indices</span>
+            <span class="n">subdata</span> <span class="o">=</span> <span class="n">configs_ar</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="n">index</span><span class="p">,</span> <span class="p">:]</span>
+            <span class="n">search</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+                <span class="p">(</span>
+                    <span class="p">(</span><span class="n">subdata</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">ar</span><span class="p">)</span> <span class="o">&amp;</span>
+                    <span class="p">(</span><span class="n">subdata</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">br</span><span class="p">)</span> <span class="o">&amp;</span>
+                    <span class="p">(</span><span class="n">subdata</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">==</span> <span class="n">mr</span><span class="p">)</span> <span class="o">&amp;</span>
+                    <span class="p">(</span><span class="n">subdata</span><span class="p">[:,</span> <span class="mi">3</span><span class="p">]</span> <span class="o">==</span> <span class="n">nr</span><span class="p">)</span>
+                <span class="p">)</span>
+            <span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="c1"># print(&#39;search&#39;, search)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">search</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">indices_to_delete</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># print(indices_to_delete)</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">reversed</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">indices_to_delete</span><span class="p">)):</span>
+            <span class="n">configs_ar</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="n">configs_ar</span><span class="p">,</span> <span class="n">index</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">configs</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># write back</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">configs</span> <span class="o">=</span> <span class="n">configs_ar</span>
+
+        <span class="k">return</span> <span class="n">configs_ar</span></div></div>
 </pre></div>
 
           </div>

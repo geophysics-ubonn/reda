@@ -92,7 +92,7 @@ data import:
 
 
     --- Data Journal Start ---
-    2022-04-08 08:03:51.463762
+    2022-04-28 12:35:02.119423
     Data was imported from file  (990 data points)
     Data was imported from file  (990 data points)
     --- Data Journal End ---
@@ -117,10 +117,10 @@ data import:
 
  .. code-block:: none
 
-    2022-04-08 08:03:50,232 - reda.containers.BaseContainer - INFO - IRIS Syscal Pro text import
-    2022-04-08 08:03:50,752 - reda.containers.BaseContainer - INFO - Data sized changed from 0 to 990
-    2022-04-08 08:03:50,752 - reda.containers.BaseContainer - INFO - IRIS Syscal Pro text import
-    2022-04-08 08:03:51,448 - reda.containers.BaseContainer - INFO - Data sized changed from 990 to 1980
+    2022-04-28 12:35:00,900 - reda.containers.BaseContainer - INFO - IRIS Syscal Pro text import
+    2022-04-28 12:35:01,414 - reda.containers.BaseContainer - INFO - Data sized changed from 0 to 990
+    2022-04-28 12:35:01,414 - reda.containers.BaseContainer - INFO - IRIS Syscal Pro text import
+    2022-04-28 12:35:02,105 - reda.containers.BaseContainer - INFO - Data sized changed from 990 to 1980
 
 
 
@@ -195,9 +195,9 @@ export to various data files
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/exporters/bert.py:60: FutureWarning: In a future version of pandas all arguments of DataFrame.drop except for the argument 'labels' will be keyword-only.
+    /home/travis/virtualenv/python3.9.12/lib/python3.9/site-packages/reda/exporters/bert.py:60: FutureWarning: In a future version of pandas all arguments of DataFrame.drop except for the argument 'labels' will be keyword-only.
       data.drop(data.columns.difference(cols_to_export), 1, inplace=True)
-    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/exporters/bert.py:60: FutureWarning: In a future version of pandas all arguments of DataFrame.drop except for the argument 'labels' will be keyword-only.
+    /home/travis/virtualenv/python3.9.12/lib/python3.9/site-packages/reda/exporters/bert.py:60: FutureWarning: In a future version of pandas all arguments of DataFrame.drop except for the argument 'labels' will be keyword-only.
       data.drop(data.columns.difference(cols_to_export), 1, inplace=True)
 
 
@@ -269,7 +269,7 @@ You can use all columns defined in the data frame for more complex filters
 
 
     --- Data Journal Start ---
-    2022-04-08 08:03:53.180321
+    2022-04-28 12:35:03.844097
     Data was imported from file  (990 data points)
     Data was imported from file  (990 data points)
     A filter was applied with query "r <= 0". In total 0 records were removed

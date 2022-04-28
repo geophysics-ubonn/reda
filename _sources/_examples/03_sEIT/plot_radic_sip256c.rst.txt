@@ -986,13 +986,13 @@ improved in the future
 
  .. code-block:: none
 
-    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:235: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+    /home/travis/virtualenv/python3.9.12/lib/python3.9/site-packages/reda/eis/plots.py:235: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
       axes[0, 0].semilogx(
-    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:250: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+    /home/travis/virtualenv/python3.9.12/lib/python3.9/site-packages/reda/eis/plots.py:250: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
       axes[0, 1].semilogx(
-    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:265: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+    /home/travis/virtualenv/python3.9.12/lib/python3.9/site-packages/reda/eis/plots.py:265: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
       axes[1, 0].loglog(
-    /home/travis/virtualenv/python3.9.5/lib/python3.9/site-packages/reda/eis/plots.py:279: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
+    /home/travis/virtualenv/python3.9.12/lib/python3.9/site-packages/reda/eis/plots.py:279: UserWarning: linestyle is redundantly defined by the 'linestyle' keyword argument and the fmt string ".-" (-> linestyle='-'). The keyword argument will take precedence.
       axes[1, 1].loglog(
 
 
@@ -1001,7 +1001,7 @@ improved in the future
 
 .. rst-class:: sphx-glr-timing
 
-   **Total running time of the script:** ( 0 minutes  31.881 seconds)
+   **Total running time of the script:** ( 0 minutes  31.496 seconds)
 
 
 .. _sphx_glr_download__examples_03_sEIT_plot_radic_sip256c.py:
