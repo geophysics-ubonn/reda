@@ -1131,3 +1131,50 @@ class ConfigManager(object):
     @property
     def unique_injections(self):
         return self.get_unique_current_injections()
+
+    def remove_reciprocals(self, configs=None):
+        """
+
+        """
+        if configs is None:
+            configs_to_use = self.configs
+        else:
+            configs_to_use = configs
+
+        indices_to_delete = []
+
+        configs_ar = np.array(configs_to_use)
+
+        configs_ar[:, 0:2] = np.sort(configs_ar[:, 0:2], axis=1)
+        configs_ar[:, 2:4] = np.sort(configs_ar[:, 2:4], axis=1)
+        for index in reversed(range(configs_ar.shape[0])):
+            # print('Checking', index, configs_ar[index, :])
+            # normalized reciprocal
+            ar = configs_ar[index, 2]
+            br = configs_ar[index, 3]
+            mr = configs_ar[index, 0]
+            nr = configs_ar[index, 1]
+
+            # we only search in lower indices
+            subdata = configs_ar[0:index, :]
+            search = np.where(
+                (
+                    (subdata[:, 0] == ar) &
+                    (subdata[:, 1] == br) &
+                    (subdata[:, 2] == mr) &
+                    (subdata[:, 3] == nr)
+                )
+            )[0]
+            # print('search', search)
+            if len(search) > 0:
+                indices_to_delete.append(index)
+
+        # print(indices_to_delete)
+        for index in reversed(np.sort(indices_to_delete)):
+            configs_ar = np.delete(configs_ar, index, axis=0)
+
+        if configs is None:
+            # write back
+            self.configs = configs_ar
+
+        return configs_ar
