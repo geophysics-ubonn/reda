@@ -4,7 +4,7 @@
 [![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://app.travis-ci.com/geophysics-ubonn/reda.svg?branch=master)](https://app.travis-ci.com/geophysics-ubonn/reda)
 
-*Latest release: 0.1.5 (28. June 2020)*
+*Latest release: 0.1.6 (11. July 2022)*
 
 See [!releases page](https://github.com/geophysics-ubonn/reda/releases) for a
 complete list of releases. Releases are also published to
