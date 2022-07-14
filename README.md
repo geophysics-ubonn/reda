@@ -4,11 +4,11 @@
 [![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Build Status](https://app.travis-ci.com/geophysics-ubonn/reda.svg?branch=master)](https://app.travis-ci.com/geophysics-ubonn/reda)
 
-*Latest release: 0.1.6 (11. July 2022)*
+*Latest release: 0.1.6.1 (11. July 2022)*
 
-See [!releases page](https://github.com/geophysics-ubonn/reda/releases) for a
+See [releases page](https://github.com/geophysics-ubonn/reda/releases) for a
 complete list of releases. Releases are also published to
-[!Pypi](https://pypi.org/project/reda/).
+[Pypi](https://pypi.org/project/reda/).
 
 REDA is a scientific Python library for reproducible geoelectrical data
 analysis. It aims to provide a unified interface for common and advanced data
