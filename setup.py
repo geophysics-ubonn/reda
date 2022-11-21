@@ -36,7 +36,8 @@ if __name__ == '__main__':
             'scipy',
             'pandas',
             'matplotlib',
-            'pillow'
+            'pillow',
+            'h5py',
         ],
         extras_require={
             "crtomo":  [
