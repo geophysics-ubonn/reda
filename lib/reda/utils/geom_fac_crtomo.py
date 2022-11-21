@@ -181,9 +181,25 @@ def compute_K(dataframe, settings, keep_dir=False):
 
         if return_value != 0:
             print(output)
+            print('-.-' * 30)
             print('ERROR: There was an error with the call to CRMod')
             print('The crashed tomodir can be found here: {}'.format(invdir))
-            exit()
+            print('-.-' * 30)
+            if keep_dir is not None and not os.path.isdir(keep_dir):
+                shutil.copytree('.', keep_dir)
+                print(
+                    'A copy of modelling directory is stored here: {}'.format(
+                        keep_dir
+                    )
+                )
+            else:
+                print(
+                    'Consider using the keep_dir parameter to store the'
+                    ' CRMod directory for further analysis. '
+                    'E.g., a keep_dir="tdir"'
+                )
+            print('-.-' * 30)
+            raise Exception('Error while calling CRMod')
 
         # read in results
         modeled_resistances = np.loadtxt(

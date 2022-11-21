@@ -74,6 +74,8 @@ def compute_K_numerical(dataframe, settings=None, keep_dir=None):
 
 
     """
+    assert dataframe.shape[0] > 0, \
+        "DataFrame is empty. Did you filter all data?"
     inversion_code = reda.rcParams.get('geom_factor.inversion_code', 'crtomo')
     if inversion_code == 'crtomo':
         import reda.utils.geom_fac_crtomo as geom_fac_crtomo
