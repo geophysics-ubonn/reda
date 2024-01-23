@@ -47,9 +47,9 @@ g = seit.data.groupby('frequency')
 # Plot pseudosection for 10 Hz
 import reda.plotters.pseudoplots as PS
 data_10hz = g.get_group(10)
-fig, ax, cb = PS.plot_pseudosection_type2(
+fig, ax, cb = PS.plot_pseudosection_type1(
     data_10hz, column='r', log10=True)
-fig, ax, cb = PS.plot_pseudosection_type2(
+fig, ax, cb = PS.plot_pseudosection_type1(
     data_10hz, column='rpha')
 
 ###############################################################################
@@ -63,7 +63,7 @@ with reda.CreateEnterDirectory('output_radic'):
         sharex=True, sharey=True
     )
     for ax, (key, item) in zip(axes.flat, g):
-        fig, ax, cb = PS.plot_pseudosection_type2(
+        fig, ax, cb = PS.plot_pseudosection_type1(
             item, ax=ax, column='r', log10=True)
         ax.set_title('f: {} Hz'.format(key))
     fig.subplots_adjust(

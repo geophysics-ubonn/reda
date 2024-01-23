@@ -628,7 +628,8 @@ class sEIT(BaseContainer, sEITImporters):
             gc.collect()
 
     def plot_pseudosections(self, column, filename=None, return_fig=False):
-        """Create a multi-plot with one pseudosection for each frequency.
+        """Create a multi-plot with one pseudosection of type 1 for each
+        frequency.
 
         Parameters
         ----------
@@ -656,7 +657,7 @@ class sEIT(BaseContainer, sEITImporters):
             sharex=True, sharey=True
         )
         for ax, (key, item) in zip(axes.flat, g):
-            fig, ax, cb = PS.plot_pseudosection_type2(
+            fig, ax, cb = PS.plot_pseudosection_type1(
                 item, ax=ax, column=column
             )
             ax.set_title('f: {:.3f} Hz'.format(key))

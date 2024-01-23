@@ -58,8 +58,8 @@ def test_get_unique_identifiers(c):
             print('error')
 
 
-def plot_pseudosection_type2(dataobj, column, **kwargs):
-    """Create a pseudosection plot of type 2.
+def plot_pseudosection_type1(dataobj, column, **kwargs):
+    """Create a pseudosection plot of type 1.
 
     For a given measurement data set, create plots that graphically show
     the data in a 2D color plot. Hereby, x and y coordinates in the plot
@@ -313,8 +313,8 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     return fig, ax, cb
 
 
-def plot_pseudosection_type3(dataobj, column, **kwargs):
-    """Create a pseudosection plot of type 3.
+def plot_pseudosection_type2(dataobj, column, **kwargs):
+    """Create a pseudosection plot of type 2.
 
     For a given measurement data set, create plots that graphically show
     the data in a 2D pseudoplot. Hereby, x and y coordinates (pseudodistance
@@ -391,8 +391,8 @@ def plot_pseudosection_type3(dataobj, column, **kwargs):
         df = pd.DataFrame(configs, columns=['a', 'b', 'm', 'n'])
         df['measurements'] = measurements
 
-        from reda.plotters.pseudoplots import plot_pseudosection_type3
-        fig, ax, cb = plot_pseudosection_type3(
+        from reda.plotters.pseudoplots import plot_pseudosection_type2
+        fig, ax, cb = plot_pseudosection_type2(
            dataobj=df,
            column='measurements',
         )
@@ -419,11 +419,11 @@ def plot_pseudosection_type3(dataobj, column, **kwargs):
         df['measurements'] = measurements
         df['measurements2'] = measurements2
 
-        from reda.plotters.pseudoplots import plot_pseudosection_type3
+        from reda.plotters.pseudoplots import plot_pseudosection_type2
 
         fig, axes = plt.subplots(1, 2)
 
-        plot_pseudosection_type3(
+        plot_pseudosection_type2(
             df,
             column='measurements',
             ax=axes[0],
@@ -431,7 +431,7 @@ def plot_pseudosection_type3(dataobj, column, **kwargs):
             xlabel='xlabel',
             ylabel='ylabel',
         )
-        plot_pseudosection_type3(
+        plot_pseudosection_type2(
             df,
             column='measurements2',
             ax=axes[1],
@@ -588,7 +588,7 @@ def plot_ps_extra(dataobj, key, **kwargs):
 
     cbs = []
     for ax, (name, group) in zip(axes.flat, g):
-        fig1, axes1, cb1 = plot_pseudosection_type2(
+        fig1, axes1, cb1 = plot_pseudosection_type1(
             group,
             key,
             ax=ax,

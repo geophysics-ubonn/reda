@@ -151,7 +151,7 @@ with reda.CreateEnterDirectory('output_eit_fzj'):
         sharex=True, sharey=True
     )
     for ax, (key, item) in zip(axes.flat, g):
-        fig, ax, cb = PS.plot_pseudosection_type2(item, ax=ax, column='r')
+        fig, ax, cb = PS.plot_pseudosection_type1(item, ax=ax, column='r')
         ax.set_title('f: {} Hz'.format(key))
     fig.tight_layout()
     fig.savefig('pseudosections_eit40.pdf')

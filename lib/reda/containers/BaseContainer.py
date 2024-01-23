@@ -343,8 +343,16 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         redafixK.fix_sign_with_K(self.data, **kwargs)
 
     def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
-        """Plot a pseudosection of the given column. Note that this function
-        only works with dipole-dipole data at the moment.
+        """
+
+        """
+
+        self.pseudosection_type1(column, filename, log10, **kwargs)
+
+    def pseudosection_type1(
+            self, column='r', filename=None, log10=False, **kwargs):
+        """Plot a pseudosection of type 1 for the given column. Note that this
+        function only works with dipole-dipole data at the moment.
 
         Parameters
         ----------
@@ -367,14 +375,14 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         cb : colorbar object
             matplotlib colorbar object
         """
-        fig, ax, cb = PS.plot_pseudosection_type2(
+        fig, ax, cb = PS.plot_pseudosection_type1(
             self.data, column=column, log10=log10, **kwargs
         )
         if filename is not None:
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
 
-    def pseudosection_type3(
+    def pseudosection_type2(
             self, column='r', filename=None, log10=False, **kwargs):
         """Plot a pseudosection of the given column. Note that this function
         only works with dipole-dipole data at the moment.
@@ -400,7 +408,7 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         cb : colorbar object
             matplotlib colorbar object
         """
-        fig, ax, cb = PS.plot_pseudosection_type3(
+        fig, ax, cb = PS.plot_pseudosection_type2(
             self.data, column=column, log10=log10, **kwargs
         )
         if filename is not None:
