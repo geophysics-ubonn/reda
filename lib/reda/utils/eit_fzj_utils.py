@@ -201,14 +201,20 @@ def check_resistor_board_measurements(data_file, reference_data_file=None,
     seit.import_eit_fzj(data_file, configs, **kwargs)
     seit.data = seit.data.merge(ref_data, on=('a', 'b', 'm', 'n'))
 
+    print(seit.data)
+    # import IPython
+    # IPython.embed()
     # iterate through the test configurations
     test_frequency = 1
     failing = []
     for nr, row in enumerate(ref_data.values):
-        print(nr, row)
+        print('Checking measurement {}'.format(nr))
+        # print(nr, row)
         key = tuple(row[0:4].astype(int))
         group_abmn = seit.abmn
-        if key not in group_abmn.keys:
+        print(group_abmn.keys)
+        print('row', row)
+        if key not in group_abmn.groups.keys():
             continue
         else:
             item = seit.abmn.get_group(key)
@@ -222,6 +228,9 @@ def check_resistor_board_measurements(data_file, reference_data_file=None,
         )[['r', 'rdiff']].values.squeeze()
         minr = expected_r - allowed_variation
         maxr = expected_r + allowed_variation
+        print('    Measured R: {}, Expected R: {}, Difference: {}'.format(
+            measured_r, expected_r, np.abs(measured_r - expected_r)
+        ))
         if not (minr <= measured_r and maxr >= measured_r):
             print('    ', 'not passing', row)
             print('    ', minr, maxr)
@@ -318,14 +327,18 @@ def testboard_evaluation(datapath, configdat,
     datapath : str
         Path to the eit_data_mnu0.mat file containing the measurements.
 
-    configdat: np.ndarray or txt-file
+    configdat: np.ndarray|txt-file|int
         input configuration of the used testboard configurations,
         e.g. for first two rows of the board:
         1 4 2 3
         2 3 1 4
         5 8 6 7
         6 7 5 8
+        9 12 10 11
+        10 11 9 12
         Note that normal and reciprocal measurements have to be measured.
+        If this parameter is an integer, this indicates the number of
+        electrodes used (should be a multiple of 4).
 
     outputname: str
         output name of plot in png-format
@@ -343,6 +356,8 @@ def testboard_evaluation(datapath, configdat,
     fig: figure object
         Saves the plot with the given output name in the execution location of
         the script.
+    seit: reda.sEIT
+        object with the measurement data
 
     """
 
@@ -381,8 +396,20 @@ def testboard_evaluation(datapath, configdat,
 
     # load configurations
     if type(configdat) == np.ndarray:
+        print('Configs were provided a ndarray')
         configs = configdat
+    elif type(configdat) == int:
+        print(
+            'The number of electrodes ' +
+            '({}) will be used to generate configurations'.format(configdat)
+        )
+        configs_raw = []
+        for i in range(1, configdat + 1, 4):
+            configs_raw += [[i, i + 3, i + 1, i + 2]]
+            configs_raw += [[i + 1, i + 2, i, i + 3]]
+        configs = np.array(configs_raw)
     else:
+        print('Trying to load configs from file: {}'.format(configdat))
         configs = np.loadtxt(configdat)
 
     # load measurements
@@ -399,18 +426,92 @@ def testboard_evaluation(datapath, configdat,
         else:
             rec.append(data)
 
+    # create a dataframe that only contains spectra we are interested in
+    data_testboard = pd.concat(nor + rec)
+
+    # import IPython
+    # IPython.embed()
+
     # calculate theoretical testboard response and error
     rmag, rpha = calc_response(frequencies)
     error_rmag = rmag * error_percentage / 100
     error_rpha = rpha * error_percentage / 100
 
     # plot results
-    assert len(nor) > 0 or len(rec) > 0, \
-        'we got neither normal or reciprocal data'
-    nr_y = max((len(nor), len(rec)))
     fig, axes = plt.subplots(
-        nr_y, 2, figsize=(12, 3*len(nor)), sharex=True)
+        int(len(nor)),
+        2,
+        figsize=(12, 3*len(nor)),
+        sharex=True
+    )
+    axes = np.atleast_2d(axes)
 
+    for nr, (name, item) in enumerate(data_testboard.groupby('id')):
+        subnor = item.query('norrec == "nor"')
+        subrec = item.query('norrec == "rec"')
+
+        # magnitudes
+        ax = axes[nr, 0]
+        ax.set_title(
+            'Magnitude a:{} b:{} m:{} n:{}'.format(
+                *subnor.iloc[0][['a', 'b', 'm', 'n']].values
+            ),
+            loc='left',
+        )
+        ax.plot(
+            subnor["frequency"],
+            subnor['r'],
+            marker='o', linestyle=' ', label='nor'
+        )
+        ax.plot(frequencies, rmag, label='calculated')
+        ax.fill_between(
+            frequencies,
+            rmag + error_rmag,
+            rmag - error_rmag,
+            color='grey',
+            alpha=0.3
+        )
+        ax.set_ylabel(r'|Z| [$\Omega$]')
+
+        ax.plot(
+            subrec["frequency"], subrec['r'],
+            marker='x', linestyle=' ', label='rec'
+        )
+
+        # phases
+        ax = axes[nr, 1]
+        ax.set_title(
+            'Phase a:{} b:{} m:{} n:{}'.format(
+                *subnor.iloc[0][['a', 'b', 'm', 'n']].values
+            ),
+            loc='left',
+        )
+        ax.plot(
+            subnor["frequency"],
+            -1 * subnor['rpha'],
+            marker='o',
+            linestyle=' ',
+            label='nor'
+        )
+        ax.plot(frequencies, -1*rpha, label='calculated')
+        ax.fill_between(
+            frequencies, -1*rpha + error_rpha, -1*rpha-error_rpha,
+            color='grey', alpha=0.3
+        )
+        ax.set_ylabel(r'-$\varphi_{Z}$ [mrad]')
+        ax.plot(
+            subrec["frequency"],
+            -1*subrec['rpha'],
+            marker='x',
+            linestyle=' ',
+            label='rec'
+        )
+
+    # axis labels for two bottom plots
+    axes[-1][0].set_xlabel("frequency [Hz]")
+    axes[-1][1].set_xlabel("frequency [Hz]")
+
+    """
     # in case of only one measurement
     if len(nor) <= 1:
         # plot normal measurements and theoretical response
@@ -482,6 +583,8 @@ def testboard_evaluation(datapath, configdat,
         axes[len(nor)-1][0].set_xlabel("frequency [Hz]")
         axes[len(nor)-1][1].set_xlabel("frequency [Hz]")
 
+    """
+
     # axis scaling and legends
     for ax in axes.reshape(-1):
         ax.grid()
@@ -491,3 +594,5 @@ def testboard_evaluation(datapath, configdat,
 
     fig.tight_layout()
     fig.savefig('{}.png'.format(outputname), dpi=300)
+
+    return fig, seit
