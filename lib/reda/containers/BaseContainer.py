@@ -415,6 +415,22 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
 
+    def pseudosection_type3(
+            self, column='r', filename=None, log10=False, crmod_settings=None,
+            **kwargs):
+        """Plot a pseudosection of a given column. Use sensitivity-based center
+        of gravities for locations.
+        """
+        assert crmod_settings is not None, "valid crmod config required"
+        fig, ax, cb = PS.plot_pseudosection_type3(
+            self.data, column=column, log10=log10,
+            crmod_settings=crmod_settings,
+            **kwargs
+        )
+        if filename is not None:
+            fig.savefig(filename, dpi=300)
+        return fig, ax, cb
+
     def histogram(self, column='r', filename=None, log10=False, **kwargs):
         """Plot a histogram of one data column"""
         return_dict = HS.plot_histograms(self.data, column)

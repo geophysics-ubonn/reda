@@ -2,8 +2,12 @@ import reda.main.units as units
 import numpy as np
 import pandas as pd
 
+from reda.plotters.pseudoplots_type_3_crtomo import plot_pseudosection_type3
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
+
+# satisfy flake8
+plot_pseudosection_type3
 
 
 def _get_unique_identifiers(ee_raw):
@@ -316,9 +320,9 @@ def plot_pseudosection_type1(dataobj, column, **kwargs):
 def plot_pseudosection_type2(dataobj, column, **kwargs):
     """Create a pseudosection plot of type 2.
 
-    For a given measurement data set, create plots that graphically show
-    the data in a 2D pseudoplot. Hereby, x and y coordinates (pseudodistance
-    and pseudodepth) in the plot are determined by the corresponding measurement
+    For a given measurement data set, create plots that graphically show the
+    data in a 2D pseudoplot. Hereby, x and y coordinates (pseudodistance and
+    pseudodepth) in the plot are determined by the corresponding measurement
     configuration (after Roy and Apparao (1971) and Dahlin and Zou (2005)).
 
     This type of rawdata plot can plot any type of measurement
@@ -355,8 +359,8 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     markersize: float, optional
         size of plotted data points
     spacing: float, optional
-        if set to True, the actual electrode spacing is used for the computation
-        of the pseudodepth and -distance; default value is 1 m
+        if set to True, the actual electrode spacing is used for the
+        computation of the pseudodepth and -distance; default value is 1 m
     log10: bool, optional
         if set to True, plot the log10 values of the provided data
 
@@ -459,7 +463,9 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     else:
         xmn = (c.m + c.n) / 2
         c.loc[:, 'xp'] = xmn
-        c.loc[:, 'zp'] = np.abs(np.min([xmn-c.a, c.b-xmn], axis=0) / 3)*-1  # Dahlin, Zhou
+        c.loc[:, 'zp'] = np.abs(
+            np.min([xmn-c.a, c.b-xmn], axis=0) / 3
+        )*-1  # Dahlin, Zhou
 
     # extract the values to plot
     c['plot_values'] = df[column]
@@ -491,7 +497,8 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     def smallify(markersize_array):
         """
         For a given array of markersizes (with same size) compute a stepwise
-        decreasing factor for the plotting size based on the length of the array.
+        decreasing factor for the plotting size based on the length of the
+        array.
         """
         nelems = len(markersize_array)
         factor = 1/nelems
@@ -499,7 +506,9 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
 
     # check for overlapping points and adjust markersize accordingly
     for _, common in common_pscoords.iterrows():
-        subset = pseudocoords.query('xp == {} and zp == {}'.format(common.xp, common.zp))
+        subset = pseudocoords.query(
+            'xp == {} and zp == {}'.format(common.xp, common.zp)
+        )
         pseudocoords.loc[subset.index, 'markersize'] = smallify(
             pseudocoords.loc[subset.index, 'markersize'].values)
 
