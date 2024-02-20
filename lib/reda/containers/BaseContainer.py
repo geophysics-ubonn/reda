@@ -341,6 +341,17 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         K = redaK.compute_K_analytical(self.data, spacing=spacing, **kwargs)
         self.data = redaK.apply_K(self.data, K, **kwargs)
         redafixK.fix_sign_with_K(self.data, **kwargs)
+        return K
+
+    def compute_K_numerical(self, settings=None, keep_dir=None, **kwargs):
+        K = redaK.compute_K_numerical(
+            self.data,
+            settings=settings,
+            keep_dir=keep_dir,
+        )
+        self.data = redaK.apply_K(self.data, K, **kwargs)
+        redafixK.fix_sign_with_K(self.data, **kwargs)
+        return K
 
     def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
         """
