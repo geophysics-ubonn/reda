@@ -256,6 +256,9 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             assert isinstance(metadata, dict), "metadata must be a dict"
             self.metadata = metadata
 
+        # sometimes we want to store things for reuse
+        self.cache = {}
+
     def save_metadata(self, filename):
         with open(filename, 'w') as fid:
             json.dump(self.metadata, fid)
@@ -433,11 +436,19 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         of gravities for locations.
         """
         assert crmod_settings is not None, "valid crmod config required"
-        fig, ax, cb = PS.plot_pseudosection_type3(
+
+        fwd_op = self.cache.get('ps_type3_fwd_operator', None)
+
+        fig, ax, cb, fwd_op = PS.plot_pseudosection_type3(
             self.data, column=column, log10=log10,
             crmod_settings=crmod_settings,
+            use_fwd_operator=fwd_op,
+            return_fwd_operator=True,
             **kwargs
         )
+        if fwd_op is not None:
+            self.cache['ps_type3_fwd_operator'] = fwd_op
+
         if filename is not None:
             fig.savefig(filename, dpi=300)
         return fig, ax, cb

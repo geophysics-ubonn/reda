@@ -4,10 +4,12 @@ Sensitivity-based pseudoplots
 """
 import os
 
+import pandas as pd
 import numpy as np
 
 from reda.utils import opt_import
 
+import reda.main.units as units
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
 
@@ -27,11 +29,13 @@ def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
     }
 
     """
-    print('plot_pseudosection_type3')
+    fwd_op = kwargs.get('use_fwd_operator')
+
     # set up the figure
     ax = kwargs.get('ax', None)
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 10 / 2.54))
+        figsize = kwargs.get('figsize', (15 / 2.54, 10 / 2.54))
+        fig, ax = plt.subplots(1, 1, figsize=figsize)
     fig = ax.get_figure()
 
     cmap = mpl.cm.get_cmap('inferno')
@@ -64,13 +68,18 @@ def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
         rpha = dataobj['rpha']
     data = dataobj[['a', 'b', 'm', 'n', 'r']].values
     data = np.hstack((data, rpha[:, np.newaxis]))
-    tdm = crtomo.tdMan(grid=crmod_mesh, volt_data=data)
-    tdm.add_homogeneous_model(crmod_settings['rho'], 0)
 
-    tdm.model(sensitivities=True)
-    # print(crmod_mesh)
-    # import IPython
-    # IPython.embed()
+    if fwd_op is not None:
+        # assume this tdManager object already did a forward modeling
+        tdm = fwd_op
+    else:
+        tdm = crtomo.tdMan(grid=crmod_mesh, volt_data=data)
+        tdm.add_homogeneous_model(crmod_settings['rho'], 0)
+
+    # no caching...
+    # tdm.model(sensitivities=True, silent=True)
+    # access on sensitivity to trigger forward modelling, if required
+    tdm.get_sensitivity(0)
 
     centroids = tdm.grid.get_element_centroids()
     mag_sens_indices = [
@@ -94,9 +103,24 @@ def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
 
     elecs = tdm.grid.get_electrode_positions()
 
-    colordata = dataobj[column]
+    if isinstance(column, str):
+        # assume column is a key for the dataframe
+        colordata = dataobj[column]
+    elif isinstance(column, np.ndarray):
+        # directly use the data
+        colordata = column
+    elif isinstance(column, pd.Series):
+        colordata = column.values
+    else:
+        raise Exception(
+            "No idea what to do with this data type! {}".format(
+                type(column)
+            )
+        )
+
     if log10:
-        colordata = np.log10(colordata)
+        with np.errstate(divide='ignore'):
+            colordata = np.log10(colordata)
 
     sc1 = ax.scatter(
         coms[:, 0],
@@ -111,5 +135,28 @@ def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
         color='k'
     )
 
-    cb = fig.colorbar(sc1)
-    return fig, ax, cb
+    # cb = fig.colorbar(sc1)
+    cb = None
+    if not kwargs.get('nocb', False):
+        cb = fig.colorbar(sc1, ax=ax)
+        if isinstance(column, str):
+            label = units.get_label(column)
+        else:
+            label = ''
+        if not mpl.rcParams['text.usetex']:
+            label = label.replace('_', '-')
+        cb.set_label(
+            kwargs.get('cblabel', label)
+        )
+
+    ax.set_xlabel(
+        kwargs.get('xlabel', 'x [?]')
+    )
+    ax.set_ylabel(
+        kwargs.get('ylabel', 'z [?]')
+    )
+
+    if kwargs.get('return_fwd_operator'):
+        return fig, ax, cb, tdm
+    else:
+        return fig, ax, cb
