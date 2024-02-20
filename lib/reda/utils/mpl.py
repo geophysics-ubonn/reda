@@ -15,6 +15,12 @@ Examples
 from reda.utils import which
 latex = which("latex")
 
+we_run_in_ipython = False
+try:
+    we_run_in_ipython = hasattr(get_ipython(), 'kernel')
+except Exception:
+    pass
+
 
 def setup(use_latex=False, overwrite=False):
     """Set up matplotlib imports and settings.
@@ -36,6 +42,9 @@ def setup(use_latex=False, overwrite=False):
     """
     # just make sure we can access matplotlib as mpl
     import matplotlib as mpl
+
+    if we_run_in_ipython:
+        mpl.rcParams["font.size"] = 20
 
     # general settings
     if overwrite:
