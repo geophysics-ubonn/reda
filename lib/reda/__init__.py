@@ -42,6 +42,6 @@ electrode_manager
 
 
 def version():
-    """Return the installed version of reda, using the pkg_resources package"""
-    import pkg_resources
-    return pkg_resources.require('reda')[0].version
+    """Return the installed version of reda, using the importlib_metadata"""
+    import importlib_metadata
+    return importlib_metadata.version('reda')
