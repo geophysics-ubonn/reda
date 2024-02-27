@@ -15,7 +15,7 @@ from reda.containers.BaseContainer import ImportersBase
 from reda.containers.BaseContainer import BaseContainer
 import reda.importers.eit_fzj as eit_fzj
 import reda.importers.radic_sip256c as reda_sip256c
-import reda.importers.crtomo as reda_crtomo_exporter
+import reda.importers.crtomo as reda_crtomo_importer
 import reda.importers.mpt_das1 as mpt_das1
 import reda.utils.eit_fzj_utils as eit_fzj_utils
 import reda.utils.geometric_factors as geometric_factors
@@ -39,7 +39,7 @@ class sEITImporters(ImportersBase):
     """This class provides wrappers for most of the importer functions, and is
     meant to be inherited by the data containers
     """
-    @append_doc_of(reda_crtomo_exporter.load_seit_data)
+    @append_doc_of(reda_crtomo_importer.load_seit_data)
     def import_crtomo(self, directory, frequency_file='frequencies.dat',
                       data_prefix='volt_', **kwargs):
         """CRTomo importer"""
@@ -49,7 +49,7 @@ class sEITImporters(ImportersBase):
 
         # we get no electrode positions (dummy1) and no topography data
         # (dummy2)
-        data, dummy1, dumm2 = reda_crtomo_exporter.load_seit_data(
+        data, dummy1, dumm2 = reda_crtomo_importer.load_seit_data(
             directory, frequency_file, data_prefix, **kwargs)
         if timestep is not None:
             data['timestep'] = timestep
