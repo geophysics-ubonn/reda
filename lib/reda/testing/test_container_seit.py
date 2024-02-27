@@ -1,9 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os
 import tempfile
 import zipfile
-import pkg_resources
+from importlib_resources import files
 
 import reda
 
@@ -19,19 +18,23 @@ def prepare_4d_data():
         Temporary directory
     """
     outdir = tempfile.mkdtemp()
-    filename = pkg_resources.resource_filename(
-        'reda.testing', 'data/seit_test_data.zip'
-    )
+    filename = files('reda.testing.data').joinpath('seit_test_data.zip')
+
     mzip = zipfile.ZipFile(filename)
     mzip.extractall(outdir)
     return outdir
 
+
 def load_data_into_container(datadir):
     seit = reda.sEIT()
     for nr in range(0, 4):
+        no_norrec = True
+        if nr == 3:
+            no_norrec = False
         seit.import_crtomo(
             directory=datadir + '/modV_0{}_noisy/'.format(nr),
-            timestep=nr
+            timestep=nr,
+            no_norrec=no_norrec,
         )
     seit.compute_K_analytical(spacing=1)
     return seit
@@ -40,6 +43,7 @@ def load_data_into_container(datadir):
 def test_load_4d_data():
     datadir = prepare_4d_data()
     seit = load_data_into_container(datadir)
+    seit
 
 
 def test_check_4d_data():
