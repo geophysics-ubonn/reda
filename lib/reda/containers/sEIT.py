@@ -41,7 +41,7 @@ class sEITImporters(ImportersBase):
     """
     @append_doc_of(reda_crtomo_importer.load_seit_data)
     def import_crtomo(self, directory, frequency_file='frequencies.dat',
-                      data_prefix='volt_', **kwargs):
+                      data_prefix='volt_', no_norrec=False, **kwargs):
         """CRTomo importer"""
         timestep = kwargs.get('timestep', None)
         if 'timestep' in kwargs:
@@ -53,7 +53,7 @@ class sEITImporters(ImportersBase):
             directory, frequency_file, data_prefix, **kwargs)
         if timestep is not None:
             data['timestep'] = timestep
-        self._add_to_container(data)
+        self._add_to_container(data, no_norrec=no_norrec)
 
         print('Summary:')
         self._describe_data(data)
