@@ -193,6 +193,20 @@ class ImportersBase(object):
             container.data,
             container.electrode_positions, container.topography)
 
+    def get_norrec_pairs(self, test_column='rdiff'):
+        """Return a dataframe that contains only valid normal-reciprocal pairs
+
+        Parameters
+        ----------
+        test_column: str
+            This column is used to check for valid normal-reciprocal pairs. All
+            data points for which this column is not NaN will be returned.
+        """
+        indices = np.isnan(self.data['rdiff'])
+        # retain only data points with a valid normal-reciprocal pair
+        subdf = self.data.loc[~indices]
+        return subdf
+
 
 class ExportersBase(object):
     """This class provides wrappers for most of the exporter functions and is
