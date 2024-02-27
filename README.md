@@ -2,7 +2,6 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Build Status](https://app.travis-ci.com/geophysics-ubonn/reda.svg?branch=master)](https://app.travis-ci.com/geophysics-ubonn/reda)
 
 *Latest release: 0.1.6.1 (11. July 2022)*
 
