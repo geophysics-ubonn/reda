@@ -4,14 +4,14 @@ Testing utilities
 """
 
 # import required for some doctests
-from .containers import ERTContainer
+# from .containers import ERTContainer
 
 # import os
 import sys
 from os.path import join, realpath
 
 import matplotlib.pyplot as plt
-ERTContainer
+# RTContainer
 
 
 def test(target=None, show=False, onlydoctests=False, abort=False,

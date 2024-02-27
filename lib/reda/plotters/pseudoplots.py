@@ -204,7 +204,8 @@ def plot_pseudosection_type1(dataobj, column, **kwargs):
         )
         fig.tight_layout()
 
-    >>> from reda.testing.containers import ERTContainer_nr
+    >>> from reda.testing.containers import get_simple_ert_container_norrec
+    >>> ERTContainer_nr = get_simple_ert_container_norrec()
     >>> import reda.plotters.pseudoplots as ps
     >>> fig, axes, cb = ps.plot_pseudosection_type2(ERTContainer_nr, 'r')
 
@@ -559,8 +560,8 @@ def plot_ps_extra(dataobj, key, **kwargs):
 
     Examples
     --------
-    >>> import reda.testing.containers
-    >>> ert = reda.testing.containers.ERTContainer_nr
+    >>> from reda.testing.containers import get_simple_ert_container_norrec
+    >>> ert = get_simple_ert_container_norrec()
     >>> import reda.plotters.pseudoplots as PS
     >>> fig = PS.plot_ps_extra(ert, key='r')
     """

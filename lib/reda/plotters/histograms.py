@@ -49,7 +49,8 @@ def plot_histograms(ertobj, keys, **kwargs):
     Examples
     --------
     >>> from reda.plotters import plot_histograms
-    >>> from reda.testing import ERTContainer
+    >>> from reda.testing.containers import get_simple_ert_container_nor
+    >>> ERTContainer = get_simple_ert_container_nor()
     >>> figs_dict = plot_histograms(ERTContainer, "r", merge=False)
     Generating histogram plot for key: r
 
@@ -197,13 +198,13 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
 
     Examples
     --------
-    >>> import reda.testing.containers
-    >>> ert = reda.testing.containers.ERTContainer_nr
+    >>> from reda.testing.containers import get_simple_ert_container_norrec
+    >>> ert = get_simple_ert_container_norrec()
     >>> import reda.plotters.histograms as RH
     >>> dim_name, fig = RH.plot_histograms_extra_dims(ert, ['r', ])
 
-    >>> import reda.testing.containers
-    >>> ert = reda.testing.containers.ERTContainer_nr
+    >>> from reda.testing.containers import get_simple_ert_container_norrec
+    >>> ert = get_simple_ert_container_norrec()
     >>> import reda.plotters.histograms as RH
     >>> dim_name, fig = RH.plot_histograms_extra_dims(ert, ['r', 'a'])
     """

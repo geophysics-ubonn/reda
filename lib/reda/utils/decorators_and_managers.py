@@ -25,7 +25,8 @@ class LogDataChanges():
     Examples
     --------
 
-    >>> from reda.testing.containers import ERTContainer
+    >>> from reda.testing.containers import get_simple_ert_container_nor
+    >>> ERTContainer = get_simple_ert_container_nor()
     >>> from reda.containers.ERT import LogDataChanges
     >>> with LogDataChanges(ERTContainer):
     ...     # now change the data
