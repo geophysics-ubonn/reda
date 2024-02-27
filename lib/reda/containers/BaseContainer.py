@@ -326,7 +326,7 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             result = self.data.query(full_query, inplace=inplace)
         return result
 
-    def filter(self, query, inplace=True):
+    def filter(self, query, inplace=True, reassess_norrec=True):
         """Use a query statement to filter data. Note that you specify the data
         to be removed!
 
@@ -339,6 +339,9 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             if True, change the container dataframe in place (defaults to
             True). Otherwise, return a new ERT container which contains the
             filtered data.
+        reassess_norrec : bool (True)
+            if True, then recompute normal-reciprocal differences after
+            applying the filter.
 
         Returns
         -------
@@ -352,10 +355,28 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
                 inplace=inplace,
             )
         if inplace:
+            if reassess_norrec:
+                # clean any previous norrec-assignments
+                if 'norrec' and 'id' in self.data.columns:
+                    self.data.drop(['norrec', 'id'], axis=1, inplace=True)
+                self.data = assign_norrec_to_df(self.data)
+                self.data = assign_norrec_diffs(
+                    self.data, ['r', 'rho_a', 'rpha']
+                )
+
             return self
         else:
             # create a new object of this type (e.g., ERT, IP, TDIP, ...)
-            return self.__class__(data=result)
+            obj = self.__class__(data=result)
+            if reassess_norrec:
+                # clean any previous norrec-assignments
+                if 'norrec' and 'id' in obj.data.columns:
+                    obj.data.drop(['norrec', 'id'], axis=1, inplace=True)
+                obj.data = assign_norrec_to_df(obj.data)
+                obj.data = assign_norrec_diffs(
+                    obj.data, ['r', 'rho_a', 'rpha']
+                )
+            return obj
 
     def compute_K_analytical(self, spacing, **kwargs):
         """Compute geometrical factors over the homogeneous half-space with a
