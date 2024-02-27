@@ -965,6 +965,8 @@ class sEIT(BaseContainer, sEITImporters):
             return rms_im
 
         r = self.abmn.apply(apply_dd)
+        r
+        print('debye_decomposition_all_spectra: Work in progress!!!!')
         # for abmn, spectrum in self.abmn:
         #     last_it = self.debye_decomposition_one_spectrum(abmn, spectrum)
         #     rms_re, rms_im = last_it.rms_values['rms_re_im_noerr']
