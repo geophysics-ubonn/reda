@@ -4,6 +4,9 @@ import logging
 
 import pandas as pd
 import numpy as np
+import reda.utils.mpl
+
+plt, mpl = reda.utils.mpl.setup()
 
 logger = logging.getLogger('__name__')
 
@@ -274,6 +277,142 @@ def assign_norrec_to_df(df):
     return df
 
 
+def assign_norrec_diffs(df, diff_list):
+    """Compute and write the difference between normal and reciprocal values
+    for all columns specified in the diff_list parameter.
+
+    Note that the DataFrame is directly written to. That is, it is changed
+    during the call of this function. No need to use the returned object.
+
+    Parameters
+    ----------
+    df: pandas.DataFrame
+        Dataframe containing the data
+    diff_list: list
+        list of columns to compute differences for.
+
+    Returns
+    -------
+    df_new: pandas.DataFrame
+        The data with added columns
+    """
+    extra_dims = [
+        x for x in ('timestep', 'frequency', 'id') if x in df.columns
+    ]
+    g = df.groupby(extra_dims)
+    import time
+
+    # def subrow(row):
+    #     if row.size == 2:
+    #         return row.iloc[1] - row.iloc[0]
+    #     else:
+    #         return np.nan
+
+    for diffcol in diff_list:
+        start = time.perf_counter()
+        # do nothing if the column does not exist
+        if diffcol not in df.columns:
+            continue
+
+        # compute the normal reciprocal pairs
+        # make sure to average repeated measurements
+        def ggt(sd):
+            values_avg = sd.groupby('norrec')[diffcol].mean()
+
+            has_nor = 'nor' in values_avg.index
+            has_rec = 'rec' in values_avg.index
+            if not has_nor or not has_rec:
+                return np.nan
+            return values_avg['nor'] - values_avg['rec']
+
+        aggregate = g.apply(ggt)
+        aggregate.name = '{}diff'.format(diffcol)
+
+        # import IPython
+        # IPython.embed()
+        # diff = g[['id', diffcol]].agg(subrow).reset_index()
+        # # rename the column
+        # cols = list(diff.columns)
+        # cols[-1] = diffcol + 'diff'
+        # diff.columns = cols
+        end = time.perf_counter()
+        # print('Assigning diffs took {} seconds'.format(
+            # end - start
+        # ))
+
+        df = df.drop(
+                columns='{}diff'.format(diffcol),
+                errors='ignore',
+        ).merge(aggregate, on=extra_dims)
+        # df = df.drop(
+        #     cols[-1], axis=1, errors='ignore'
+        # ).merge(diff, on=extra_dims, how='outer')
+
+    df = df.sort_values(extra_dims)
+    return df
+
+
+def compute_error_model_absolute_relative(subdf, nbin):
+    """
+
+    """
+    from scipy.optimize import least_squares
+
+    def curve(pars, x):
+        return np.log10(pars[0] * 10 ** (x) + pars[1])
+
+    def residuals(pars, x, data):
+        return curve(pars, x) - data
+
+    nord = subdf.copy()
+
+    bin_data, bins = pd.cut(np.log10(nord['r']), nbin, retbins=True)
+    print(bins)
+    nord['bin'] = bin_data
+
+    # filter all bins with only 1 entry
+    nord = nord.groupby('bin').filter(lambda x: x.shape[0] > 1)
+
+    # use only categories (bins) that include data points
+    nord['bin'] = nord['bin'].cat.remove_unused_categories()
+    rm = nord.groupby('bin')['r'].mean().values
+    stdev = nord.groupby('bin')['rdiff'].std().values
+
+    fig, ax = plt.subplots(figsize=(10, 4))
+    # ax.scatter(nord['r'], nord['rdiff'])
+    ax.scatter(rm, stdev, s=50)
+
+    for bin_edge in bins:
+        ax.axvline(
+            10 ** bin_edge,
+            color='k',
+        )
+
+    ax.set_xscale('log')
+
+    # fit
+    pars_start = [0.02, 1e-5]
+    res_lsq = least_squares(
+        residuals,
+        pars_start,
+        args=(np.log10(rm), np.log10(stdev))
+    )
+    print(res_lsq.x)
+    ax.plot(
+        rm,
+        10 ** curve(res_lsq.x, np.log10(rm)),
+        color='black',
+        linestyle='dashed',
+        label='{:.2e}, {:.2e}'.format(*res_lsq.x),
+    )
+    ax.set_title(
+        '{:.2f} R + {:.2f}'.format(
+            *res_lsq.x
+        )
+    )
+    return fig, ax
+
+
 def get_test_df():
     """Return a test dataframe suitable to test the normal-reciprocal functions
     """
@@ -328,58 +467,60 @@ def get_test_df_advanced():
     return df
 
 
-def assign_norrec_diffs(df, diff_list):
-    """Compute and write the difference between normal and reciprocal values
-    for all columns specified in the diff_list parameter.
+def test_norrec_with_repeated_measurements():
+    import reda
+    ert = reda.ERT()
 
-    Note that the DataFrame is directly written to. That is, it is changed
-    during the call of this function. No need to use the returned object.
+    def get_test_df_norrec_1():
+        """Return a test dataframe suitable to test the normal-reciprocal
+        functions
+        """
+        df = pd.DataFrame(
+            [
+                # dipole 1
+                (1, 2, 3, 4, 10),
+                (1, 2, 4, 3, 10.3),
+                (3, 4, 1, 2, 12),
+                # dipole 2
+                (2, 3, 4, 5, 20),
+                (4, 5, 3, 2, 21.5),
 
-    Parameters
-    ----------
-    df: pandas.DataFrame
-        Dataframe containing the data
-    diff_list: list
-        list of columns to compute differences for.
+            ],
+            columns=[
+                'a',
+                'b',
+                'm',
+                'n',
+                'r',
+            ]
+        )
+        return df
 
-    Returns
-    -------
-    df_new: pandas.DataFrame
-        The data with added columns
+    df = get_test_df_norrec_1()
+    ert.add_dataframe(df)
+
     """
-    extra_dims = [
-        x for x in ('timestep', 'frequency', 'id') if x in df.columns
-    ]
-    g = df.groupby(extra_dims)
+       a  b  m  n     r  id norrec  rdiff
+    0  1  2  3  4  10.0   2    nor  -1.85
+    1  1  2  4  3  10.3   2    nor  -1.85
+    2  3  4  1  2  12.0   2    rec  -1.85
+    3  2  3  4  5  20.0   3    nor  -1.50
+    4  4  5  3  2  21.5   3    rec  -1.50
+    """
 
-    def subrow(row):
-        if row.size == 2:
-            return row.iloc[1] - row.iloc[0]
-        else:
-            return np.nan
-
-    for diffcol in diff_list:
-        # do nothing if the column does not exist
-        if diffcol not in df.columns:
-            continue
-        diff = g[diffcol].agg(subrow).reset_index()
-        # rename the column
-        cols = list(diff.columns)
-        cols[-1] = diffcol + 'diff'
-        diff.columns = cols
-
-        df = df.drop(
-            cols[-1], axis=1, errors='ignore'
-        ).merge(diff, on=extra_dims, how='outer')
-
-    df = df.sort_values(extra_dims)
-    return df
+    check_rdiff = np.all(
+        np.isclose(
+            ert.data['rdiff'].values,
+            np.array([-1.85, -1.85, -1.85, -1.5, -1.5])
+        )
+    )
+    assert check_rdiff, "rdiff column is contains unexpected values"
 
 
 def test_norrec_assignments1():
     import reda.utils.norrec as redanr
     df = redanr.get_test_df()
-    redanr.assign_norrec_to_df(df)
+    df = redanr.assign_norrec_to_df(df)
     df1 = redanr.average_repetitions(df, ['r', ])
     g = df1.groupby('id')
     diffs_R = g['r'].diff()
@@ -391,7 +532,7 @@ def test_norrec_assignments1():
 
 def test2():
     df = get_test_df_advanced()
-    assign_norrec_to_df(df)
+    df = assign_norrec_to_df(df)
     df1 = average_repetitions(df, ['r', ])
     g = df1.groupby(['timestep', 'frequency', 'id'])
 
@@ -413,3 +554,43 @@ def test2():
             'and frequency == 0.3'
         )['Rdiff'].values == 5.0
     )
+
+
+def test_norrec_with_only_nor_or_rec():
+    """Check that diff columns only produce NaN for nor/rec-only data
+    """
+    import reda
+    ert = reda.ERT()
+
+    def get_test_df_nor():
+        """Return a test dataframe suitable to test the normal-reciprocal
+        functions
+        """
+        df = pd.DataFrame(
+            [
+                # dipole 1
+                (1, 2, 3, 4, 10),
+                (1, 2, 4, 3, 10.3),
+                # dipole 2
+                (2, 3, 4, 5, 20),
+            ],
+            columns=[
+                'a',
+                'b',
+                'm',
+                'n',
+                'r',
+            ]
+        )
+        return df
+
+    df = get_test_df_nor()
+    ert.add_dataframe(df)
+    check_rdiff = np.all(np.isnan(ert.data['rdiff'].values))
+
+    assert check_rdiff, "rdiff column should contain only NaN"
+    ert.filter('a == 2')
+    assert ert.data.shape[0] == 4, "four rows should remain after filtering"
+    # check that repeated applications do nothing
+    ert.filter('a == 2')
+    assert ert.data.shape[0] == 4, "four rows should remain after filtering"
