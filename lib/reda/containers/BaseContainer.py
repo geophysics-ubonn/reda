@@ -36,7 +36,7 @@ class ImportersBase(object):
 
     def _add_to_container(
             self, data_to_add, electrode_positions=None, topography=None,
-            metadata=None):
+            metadata=None, no_norrec=False):
         """Add a given dataset to the container
 
         Parameters
@@ -52,6 +52,8 @@ class ImportersBase(object):
             Topography of the subsurface environment
         metadata : dict|None
             Metadata that is added to the metadata dict of the container
+        no_norrec : bool (False)
+            If True, then do not compute norrec ids and diffs
         """
 
         if electrode_positions is not None:
@@ -91,9 +93,9 @@ class ImportersBase(object):
         if metadata is not None:
             self.metadata.update(metadata)
 
-        self._add_to_data(data_to_add)
+        self._add_to_data(data_to_add, no_norrec=no_norrec)
 
-    def _add_to_data(self, data):
+    def _add_to_data(self, data, no_norrec=False):
         """Add data to the container
 
         Parameters
@@ -101,6 +103,8 @@ class ImportersBase(object):
         data : pandas.DataFrame
             Measurement data in the form of a DataFrame, must adhere to the
             container constraints (i.e., must have all required columns)
+        no_norrec : bool (False)
+            If True, then do not compute norrec ids and diffs
         """
         if self.data is None:
             self.data = data
@@ -123,13 +127,15 @@ class ImportersBase(object):
                 (self.data, data), ignore_index=True, sort=True
             )
 
-        # clean any previous norrec-assignments
-        if 'norrec' and 'id' in self.data.columns:
-            self.data.drop(['norrec', 'id'], axis=1, inplace=True)
-        self.data = assign_norrec_to_df(self.data)
-        # note that columns not in the DataFrames are ignored, thus no problem
-        # to include rho_a and rpha
-        self.data = assign_norrec_diffs(self.data, ['r', 'rho_a', 'rpha'])
+        if not no_norrec:
+            # clean any previous norrec-assignments
+            if 'norrec' and 'id' in self.data.columns:
+                self.data.drop(['norrec', 'id'], axis=1, inplace=True)
+            self.data = assign_norrec_to_df(self.data)
+
+            # note that columns not in the DataFrames are ignored, thus no
+            # problem to include rho_a and rpha
+            self.data = assign_norrec_diffs(self.data, ['r', 'rho_a', 'rpha'])
 
         # Put a, b, m, n in the front and ensure integers
         for col in tuple("nmba"):
