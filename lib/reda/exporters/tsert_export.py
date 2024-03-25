@@ -4,6 +4,7 @@ import warnings
 import datetime
 
 import pandas as pd
+from pandas.api.types import is_datetime64_any_dtype
 import h5py
 
 
@@ -111,15 +112,25 @@ class tsert_export(tsert_base):
             self.add_file_information()
 
     def write_index(self, data_index):
+        print('write_index')
+        # import IPython
+        # IPython.embed()
         key = '/INDEX/index'
         self._open_file('a')
         if key in self.fid:
             del self.fid[key]
 
         self._close_file()
-        data_index.to_hdf(
+
+        data_index_final = data_index.copy()
+        if is_datetime64_any_dtype(data_index['value']):
+            data_index_final['value'] = data_index_final.astype(
+                'datetime64[ns]'
+            )
+
+        data_index_final.to_hdf(
             self.filename,
-            key,
+            key=key,
             append=True,
         )
 
@@ -223,14 +234,12 @@ class tsert_export(tsert_base):
             elif len(row) > 1:
                 raise Exception('We only allow unique values in the index')
 
-            print('ts_key:', ts_key)
 
             key = '/'.join((
                 'ERT_DATA',
                 '{}'.format(ts_key),
                 version,
             ))
-            print('key', key)
             self._open_file('a')
             if key in self.fid:
                 # delete data before adding it
@@ -253,6 +262,9 @@ class tsert_export(tsert_base):
                     0] == 1 and data_index['value'].dtype == object:
                 data_index['value'] = data_index['value'].astype(
                     type(timestep))
+
+            print(data_index['value'])
+            print('---------------------------------')
 
             # write to file
             self.write_index(data_index)
@@ -285,7 +297,9 @@ class tsert_export(tsert_base):
         self._close_file()
         # write to file
         electrode_positions.to_hdf(
-            self.filename, key, append=True,
+            self.filename,
+            key=key,
+            append=True,
             # complevel=9,
             # complib='lzo',
         )
@@ -318,7 +332,9 @@ class tsert_export(tsert_base):
         self._close_file()
         # write to file
         topography.to_hdf(
-            self.filename, key, append=True,
+            self.filename,
+            key=key,
+            append=True,
             # complevel=9,
             # complib='lzo',
         )
