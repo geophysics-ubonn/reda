@@ -125,7 +125,6 @@ class tsert_import(tsert_base):
         index_is_datetime = False
         if pd.api.types.is_datetime64_any_dtype(data_index["value"].dtype):
             index_is_datetime = True
-        print('DTYPES', data_index.dtypes)
 
         # all keys
         ts_keys = data_index.index.values
@@ -134,14 +133,13 @@ class tsert_import(tsert_base):
 
         if timesteps == 'all':
             if not_before is not None or not_after is not None:
-                print('TRUNCATING')
                 if not index_is_datetime:
                     raise Exception('before/after requires datetime indices')
                 ts_keys = reversed_data_index.truncate(
                     before=not_before,
                     after=not_after,
                 )['index']
-                print('TS_KEYS filtered', ts_keys)
+                print('TS_KEYS after filtering:', ts_keys)
         else:
             assert timesteps in data_index['value'].values
             ts_keys = [
@@ -153,11 +151,9 @@ class tsert_import(tsert_base):
         data_list = {}
         for ts_key in ts_keys:
             key = 'ERT_DATA/{}/{}'.format(ts_key, version)
-            print(key)
             # TODO check if key exists
             data = pd.read_hdf(self.filename, key)
             timestep = data_index.loc[ts_key, 'value']
-            print('timestep', timestep)
             data_list[timestep] = data
         return data_list
 
