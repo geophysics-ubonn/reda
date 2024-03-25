@@ -21,6 +21,8 @@ from reda.utils import has_multiple_timesteps
 from reda.utils.norrec import assign_norrec_diffs
 from reda.utils.norrec import assign_norrec_to_df
 from reda.utils.geometric_factors import apply_K
+from reda.utils.datetimes import ensure_dateteim64_is_in_ns
+
 
 from reda.utils.decorators_and_managers import LogDataChanges
 
@@ -106,6 +108,8 @@ class ImportersBase(object):
         no_norrec : bool (False)
             If True, then do not compute norrec ids and diffs
         """
+
+        ensure_dateteim64_is_in_ns(data)
         if self.data is None:
             self.data = data
         else:
@@ -193,7 +197,6 @@ class ImportersBase(object):
         this one.
         """
         logger.debug('Merging containers')
-        print(type(self))
 
         self._add_to_container(
             container.data,
