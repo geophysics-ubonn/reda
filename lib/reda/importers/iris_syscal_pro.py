@@ -79,7 +79,8 @@ def import_txt(filename, **kwargs):
     data_raw = pd.read_csv(
         buffer,
         # sep='\t',
-        delim_whitespace=True,
+        sep=r'\s+',
+        # delim_whitespace=True,
     )
 
     # clean up column names
