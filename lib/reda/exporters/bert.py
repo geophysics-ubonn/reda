@@ -57,7 +57,7 @@ def export_bert(data, electrodes, filename):
     # Remove unnecessary columns and rename according to bert conventions
     # https://gitlab.com/resistivity-net/bert#the-unified-data-format
     cols_to_export = ["a", "b", "m", "n", "u", "i", "r", "rho_a", "error"]
-    data.drop(data.columns.difference(cols_to_export), 1, inplace=True)
+    data.drop(data.columns.difference(cols_to_export), axis=1, inplace=True)
     data.rename(columns={"rho_a": "rhoa", "error": "err"}, inplace=True)
 
     for key in electrodes.keys():
