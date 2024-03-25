@@ -146,7 +146,7 @@ def _extract_md(mat, **kwargs):
         # to a
         df[['a', 'b']] = pd.DataFrame(
             np.sort(np.atleast_2d(fdata['cni']), axis=1))
-        df['datetime'] = timestamp
+        df['datetime'] = timestamp.astype(np.datetime64)
         df['frequency'] = fdata['fm']
         df['U0'] = fdata['U0']
         df['Zg1_ela'] = _to_3d(fdata['Zg3'])[:, 0, 0]
