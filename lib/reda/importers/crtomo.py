@@ -44,7 +44,8 @@ def load_mod_file(filename):
     df_raw = pd.read_csv(
         filename,
         skiprows=1,
-        delim_whitespace=True,
+        # delim_whitespace=True,
+        sep=r'\s+',
         names=['ab', 'mn', 'r', 'rpha']
     )
     df_raw['Zt'] = df_raw['r'] * np.exp(1j * df_raw['rpha'] / 1000.0)
