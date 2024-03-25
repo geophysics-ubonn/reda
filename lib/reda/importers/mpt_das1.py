@@ -187,7 +187,7 @@ def import_das1_td(filename, **kwargs):
     )
 
     ngates = len(header)
-    ipw = np.array(header.iloc[:, 0]).astype(np.float)
+    ipw = np.array(header.iloc[:, 0]).astype(np.float64)
 
     data_new = pd.DataFrame()
 
@@ -222,7 +222,7 @@ def import_das1_td(filename, **kwargs):
         index=data_new.index
     )
     data_m.loc[:, 'M1':'M' + str(ngates)] = np.array(
-        data.iloc[:, 8:8 + 2 * ngates:2]).astype(np.float)  # Mi
+        data.iloc[:, 8:8 + 2 * ngates:2]).astype(np.float64)  # Mi
 
     data_tm = pd.DataFrame(
         columns=['Tm' + str(num) for num in range(1, ngates + 1)],
@@ -236,7 +236,7 @@ def import_das1_td(filename, **kwargs):
     )
     data_devm.loc[:, 'devm1':'devm' + str(ngates)] = np.array(
         data.iloc[:, 9:9 + 2 * ngates:2]
-    ).astype(np.float)  # devMi
+    ).astype(np.float64)  # devMi
 
     # compute the global chargeability
     nominator = np.sum(
@@ -253,13 +253,13 @@ def import_das1_td(filename, **kwargs):
     datetime_series = pd.to_datetime(
         data.iloc[:, 10 + 2 * ngates],
         format='%Y%m%d_%H%M%S',
-        errors='ignore'
+        # errors='ignore'
     )
 
-    data_new['datetime'] = [
-        time for index, time in datetime_series.iteritems()]
+    data_new['datetime'] = datetime_series.sort_index().values
 
     data_new['decayCurve'] = 0
+    data_new['decayCurve'] = data_new['decayCurve'].astype(object)
     # construct a sub DataFrame for decay curve properties
     for index, meas in data_m.iterrows():
         decaycurve = pd.DataFrame(
