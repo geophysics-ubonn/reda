@@ -4,6 +4,7 @@
 """
 import struct
 from io import StringIO
+import io
 import logging
 
 import pandas as pd
@@ -29,7 +30,7 @@ def import_txt(filename, **kwargs):
     assume_regular_electrodes_x : None|tuple(nr_electrodes, spacing)
         If not None, then assume measurements were taken using a profile of
         regular electrodes in x directions. Fill in any electrodes not used in
-        the data to align the logical electrode numbers wit the physical
+        the data to align the logical electrode numbers with the physical
         electrode numbers. Use the electrode spacing set in the system (usually
         a default of 1 m is used), and then change this to the real spacing
         using the 'elecs_transform_reg_spacing_x' parameter.
@@ -161,8 +162,8 @@ def import_bin(filename,  **kwargs):
 
     Parameters
     ----------
-    filename : string
-        path to input filename
+    filename : string|io.BytesIO
+        path to input filename or io.BytesIO object containing the binary data
     assume_regular_electrodes_x : None|tuple(nr_electrodes, spacing)
         If not None, then assume measurements were taken using a profile of
         regular electrodes in x directions. Fill in any electrodes not used in
@@ -329,7 +330,7 @@ def _import_bin(filename):
 
     Parameters
     ----------
-    filename : string
+    filename : string|io.BytesIO
         Path to input filename
 
     Returns
@@ -340,7 +341,10 @@ def _import_bin(filename):
         dataframe containing all measurement data
 
     """
-    fid = open(filename, 'rb')
+    if isinstance(filename, io.BytesIO):
+        fid = filename
+    else:
+        fid = open(filename, 'rb')
 
     def fget(fid, fmt, tsize):
         buffer = fid.read(tsize)
@@ -382,7 +386,7 @@ def _import_bin(filename):
     measurements = []
     # for each measurement
     counter = 0
-    while(fid.tell() < total_size):
+    while (fid.tell() < total_size):
         dataentry = {}
 
         # print('COUNTER', counter)
@@ -533,6 +537,14 @@ def _import_bin(filename):
         measurements.append(dataentry)
 
         counter += 1
+
+    # only close the fid if we read from a file - leave BytesIO open for
+    # further use
+    if not isinstance(filename, io.BytesIO):
+        fid.seek(0)
+    else:
+        # rewind
+        fid.close()
 
     # create a dataframe with all primary data
     df = pd.DataFrame(
