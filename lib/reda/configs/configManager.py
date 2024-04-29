@@ -2,6 +2,7 @@
 """Manage measurement configurations measurements.
 """
 import itertools
+import io
 
 import numpy as np
 import pandas as pd
@@ -153,20 +154,29 @@ class ConfigManager(object):
 
         Parameters
         ----------
-        filename: string
-            absolute or relative path to a crmod config.dat file
+        filename: string|io.BytesIO
+            absolute or relative path to a crmod config.dat file. Can also be a
+            BytesIO object
 
         """
-        with open(filename, 'r') as fid:
-            nr_of_configs = int(fid.readline().strip())
-            configs = np.loadtxt(fid)
-            print('loaded configs:', configs.shape)
-            if nr_of_configs != configs.shape[0]:
-                raise Exception(
-                    'indicated number of measurements does not equal ' +
-                    'to actual number of measurements')
-            ABMN = self._crmod_to_abmn(configs[:, 0:2])
-            self.configs = ABMN
+        if isinstance(filename, io.BytesIO):
+            fid = filename
+        else:
+            fid = open(filename, 'r')
+
+        nr_of_configs = int(fid.readline().strip())
+        configs = np.loadtxt(fid)
+
+        if not isinstance(filename, io.BytesIO):
+            fid.close()
+
+        print('loaded configs:', configs.shape)
+        if nr_of_configs != configs.shape[0]:
+            raise Exception(
+                'indicated number of measurements does not equal ' +
+                'to actual number of measurements')
+        ABMN = self._crmod_to_abmn(configs[:, 0:2])
+        self.configs = ABMN
 
     def load_crmod_or_4c_configs(self, filename):
         """Load configurations either from a CRMod measurement file, or from a
@@ -239,9 +249,11 @@ class ConfigManager(object):
         """Write the measurements to the output file in the volt.dat file
         format that can be read by CRTomo.
 
+        Data is written in utf-8 encoding.
+
         Parameters
         ----------
-        filename: string
+        filename: string|io.BytesIO
             output filename
         mid: int or [int, int]
             measurement ids of magnitude and phase measurements. If only one ID
@@ -257,22 +269,51 @@ class ConfigManager(object):
             mag_data = self.measurements[mid]
             pha_data = np.zeros(mag_data.shape)
 
-        all_data = np.hstack((ABMN, mag_data[:, np.newaxis],
-                              pha_data[:, np.newaxis]))
+        all_data = np.hstack(
+            (ABMN, mag_data[:, np.newaxis], pha_data[:, np.newaxis])
+        )
 
-        with open(filename, 'wb') as fid:
-            fid.write(bytes(
+        if isinstance(filename, io.BytesIO):
+            fid = filename
+        else:
+            fid = open(filename, 'wb')
+
+        fid.write(
+            bytes(
                 '{0}\n'.format(ABMN.shape[0]),
                 'utf-8',
-            ))
-            np.savetxt(fid, all_data, fmt='%i %i %f %f')
+            )
+        )
+        np.savetxt(fid, all_data, fmt='%i %i %f %f')
+        if not isinstance(filename, io.BytesIO):
+            fid.close()
+
 
     def write_crmod_volt_with_individual_errors(
             self, filename, data_mids, error_mids, norm_mag=1, norm_pha=1,
             ):
-        """
+        """Write the measurements and individual errors to the output file in
+        the volt.dat file format that can be read by CRTomo.
+
+        Data is written in utf-8 encoding.
+
+        Parameters
+        ----------
+        filename: string|io.BytesIO
+            output filename
+        data_mids: [int, int]
+            measurement ids of magnitude and phase measurements
+        error_mids: [int, int]
+            ids of magnitude and phase error estimates
+        norm_mag: float
+            Normalization factor for magnitude errors
+        norm_pha: float
+            Normalization factor for magnitude errors
 
         """
+        assert len(data_mids) == 2, "data_mids must be length 2"
+        assert len(error_mids) == 2, "error_mids must be length 2"
+
         ABMN = self._get_crmod_abmn()
 
         if isinstance(data_mids, (list, tuple)):
@@ -296,18 +337,25 @@ class ConfigManager(object):
             )
         )
 
-        with open(filename, 'wb') as fid:
-            fid.write(bytes(
+        if isinstance(filename, io.BytesIO):
+            fid = filename
+        else:
+            fid = open(filename, 'wb')
+        fid.write(
+            bytes(
                 '{0} T\n'.format(ABMN.shape[0]),
                 'utf-8',
-            ))
-            np.savetxt(fid, all_data, fmt='%i %i %f %f %f %f')
-            fid.write(
-                bytes(
-                    '{} {}\n'.format(norm_mag, norm_pha),
-                    'utf-8',
-                )
             )
+        )
+        np.savetxt(fid, all_data, fmt='%i %i %f %f %f %f')
+        fid.write(
+            bytes(
+                '{} {}\n'.format(norm_mag, norm_pha),
+                'utf-8',
+            )
+        )
+        if not isinstance(filename, io.BytesIO):
+            fid.close()
 
     def write_crmod_config(self, filename):
         """Write the configurations to a configuration file in the CRMod format
