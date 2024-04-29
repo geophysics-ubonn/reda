@@ -504,6 +504,10 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             return_dict['all'].savefig(filename, dpi=300)
         return return_dict
 
+    def plot_histogram(self, column='r', filename=None, log10=False, **kwargs):
+        """Wrapper for self.histogram"""
+        return self.histogram(column, filename, log10, **kwargs)
+
     def has_multiple_timesteps(self):
         """Return True if container has multiple timesteps."""
         return has_multiple_timesteps(self.data)
