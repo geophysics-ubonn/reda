@@ -3,7 +3,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-*Latest release: 0.1.7 (27. Feb. 2024)*
+*Latest release: 0.2.0 (29. Apr. 2024)*
 
 See [releases page](https://github.com/geophysics-ubonn/reda/releases) for a
 complete list of releases. Releases are also published to
@@ -37,7 +37,7 @@ Example::
 	ert.import_syscal_bin('data_from_a_syscal_device.bin')
 	print(ert.data[['a', 'b', 'm', 'n', 'r']])
 
-See the [!status
+See the [status
 page](https://geophysics-ubonn.github.io/reda/about.html#status-of-reda) for
 supported device/software file formats.
 
