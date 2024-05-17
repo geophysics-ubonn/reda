@@ -14,6 +14,8 @@ from reda.containers.BaseContainer import BaseContainer
 import reda.importers.iris_syscal_pro as reda_syscal
 import reda.importers.mpt_das1 as reda_mpt
 
+from reda.utils.norrec import assign_norrec_diffs
+
 from reda.utils.decorators_and_managers import append_doc_of
 from reda.utils.decorators_and_managers import LogDataChanges
 
@@ -405,4 +407,7 @@ class TDIP(BaseContainer, TDIPImporters):
         # now that we have magnitude and phase, compute the impedance Zt
         data_new['Zt'] = data_new['r'] * np.exp(data_new['rpha'] * 1j / 1000.0)
         cr = reda.CR(data=data_new)
+
+        # recompute norrec differences to get rpha-differences
+        cr.data = assign_norrec_diffs(cr.data, ['r', 'rho_a', 'rpha'])
         return cr
