@@ -22,6 +22,14 @@ except Exception:
     pass
 
 
+def get_canvas_scaler():
+    # when we run in a Jupyter Notebook, scale images
+    if we_run_in_ipython:
+        return 2.0
+    else:
+        return 1.0
+
+
 def setup(use_latex=False, overwrite=False):
     """Set up matplotlib imports and settings.
 
@@ -44,7 +52,13 @@ def setup(use_latex=False, overwrite=False):
     import matplotlib as mpl
 
     if we_run_in_ipython:
-        mpl.rcParams["font.size"] = 20
+        # try to find yome nice defaults for the Jupyter environment
+        mpl.rcParams["font.size"] = 15
+        mpl.rcParams["axes.labelsize"] = 15
+        mpl.rcParams["xtick.labelsize"] = 15
+        mpl.rcParams["ytick.labelsize"] = 15
+        mpl.rcParams["axes.titlesize"] = 15
+        mpl.rcParams["legend.fontsize"] = 15
 
     # general settings
     if overwrite:

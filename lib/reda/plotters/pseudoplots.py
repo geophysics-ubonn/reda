@@ -5,6 +5,7 @@ import pandas as pd
 from reda.plotters.pseudoplots_type_3_crtomo import plot_pseudosection_type3
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
+image_scale = reda.utils.mpl.get_canvas_scaler()
 
 # satisfy flake8
 plot_pseudosection_type3
@@ -83,7 +84,7 @@ def plot_pseudosection_type1(dataobj, column, **kwargs):
     Note that this type of raw data plot does not take into account the
     real electrode spacing of the measurement setup.
 
-    Type 2 plots can show normal and reciprocal data at the same time.
+    Type 1 plots can show normal and reciprocal data at the same time.
     Hereby the upper left triangle of the plot area usually contains normal
     data, and the lower right triangle contains the corresponding
     reciprocal data. Therefore a quick assessment of normal-reciprocal
@@ -265,10 +266,15 @@ def plot_pseudosection_type1(dataobj, column, **kwargs):
 
     ax = kwargs.get('ax', None)
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 10 / 2.54))
+        fig, ax = plt.subplots(
+            1, 1, figsize=(
+                15 / 2.54 * image_scale,
+                10 / 2.54 * image_scale,
+            )
+        )
     fig = ax.get_figure()
 
-    cmap = mpl.cm.get_cmap('viridis')
+    cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'viridis'))
     if kwargs.get('do_not_saturate', False):
         cmap.set_over(
             color='r'
@@ -479,10 +485,16 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
 
     ax = kwargs.get('ax', None)
     if ax is None:
-        fig, ax = plt.subplots(1, 1, figsize=(15 / 2.54, 10 / 2.54))
+        fig, ax = plt.subplots(
+            1, 1,
+            figsize=(
+                15 / 2.54 * image_scale,
+                10 / 2.54 * image_scale
+            )
+        )
     fig = ax.get_figure()
 
-    cmap = mpl.cm.get_cmap('viridis')
+    cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'viridis'))
     if kwargs.get('do_not_saturate', False):
         cmap.set_over(
             color='r'
@@ -491,7 +503,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
             color='c'
         )
 
-    pseudocoords['markersize'] = kwargs.get('markersize', 10)
+    pseudocoords['markersize'] = kwargs.get('markersize', 10 * image_scale)
     # check for same pseudocoordinates
     common_pscoords = pseudocoords[['xp', 'zp']].drop_duplicates()
 
@@ -535,6 +547,11 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
             kwargs.get('cblabel', units.get_label(column))
         )
 
+    if kwargs.get('title', False):
+        ax.set_title(
+            kwargs.get('title'),
+            loc='left',
+        )
     ax.set_xlabel(
         kwargs.get('xlabel', 'Pseudodistance')
     )
@@ -588,6 +605,8 @@ def plot_ps_extra(dataobj, key, **kwargs):
     # the sizes are heuristics [inches]
     sizex = nrx * 3
     sizey = nry * 4 - 1
+    sizex *= image_scale
+    sizey *= image_scale
     fig, axes = plt.subplots(
         nry, nrx,
         sharex=True,

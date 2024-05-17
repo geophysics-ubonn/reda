@@ -9,6 +9,7 @@ import numpy as np
 
 import reda.main.units as units
 plt, mpl = reda.utils.mpl.setup()
+image_scale = reda.utils.mpl.get_canvas_scaler()
 
 
 def _get_nr_bins(count):
@@ -52,7 +53,6 @@ def plot_histograms(ertobj, keys, **kwargs):
     >>> from reda.testing.containers import get_simple_ert_container_nor
     >>> ERTContainer = get_simple_ert_container_nor()
     >>> figs_dict = plot_histograms(ERTContainer, "r", merge=False)
-    Generating histogram plot for key: r
 
     Returns
     -------
@@ -78,11 +78,13 @@ def plot_histograms(ertobj, keys, **kwargs):
         nr_y = len(keys)
         size_x = 15 / 2.54
         size_y = 5 * nr_y / 2.54
+        size_x *= image_scale
+        size_y *= image_scale
+
         fig, axes_all = plt.subplots(nr_y, nr_x, figsize=(size_x, size_y))
         axes_all = np.atleast_2d(axes_all)
 
     for row_nr, key in enumerate(keys):
-        print('Generating histogram plot for key: {0}'.format(key))
         subdata_raw = df[key].values
         subdata = subdata_raw[~np.isnan(subdata_raw)]
         subdata = subdata[np.isfinite(subdata)]
@@ -99,7 +101,13 @@ def plot_histograms(ertobj, keys, **kwargs):
         if merge_figs:
             axes = axes_all[row_nr].squeeze()
         else:
-            fig, axes = plt.subplots(1, 2, figsize=(10 / 2.54, 5 / 2.54))
+            fig, axes = plt.subplots(
+                1, 2,
+                figsize=(
+                    10 / 2.54 * image_scale,
+                    5 / 2.54 * image_scale
+                )
+            )
 
         label = units.get_label(key)
         if not mpl.rcParams['text.usetex']:
@@ -114,8 +122,8 @@ def plot_histograms(ertobj, keys, **kwargs):
         )
         ax.set_ylabel('count')
         ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
-        ax.tick_params(axis='both', which='major', labelsize=6)
-        ax.tick_params(axis='both', which='minor', labelsize=6)
+        ax.tick_params(axis='both', which='major', labelsize=6 * image_scale)
+        ax.tick_params(axis='both', which='minor', labelsize=6 * image_scale)
 
         if subdata_log10.size > 0:
             ax = axes[1]
@@ -134,6 +142,13 @@ def plot_histograms(ertobj, keys, **kwargs):
 
         if not merge_figs:
             figures[key] = fig
+
+    if kwargs.get('title', False):
+        np.atleast_2d(axes)[0, 0].set_title(
+            kwargs.get('title'),
+            loc='left',
+            fontsize=8 * image_scale,
+        )
 
     if merge_figs:
         figures['all'] = fig
@@ -341,7 +356,7 @@ def plot_histograms_extra_dims(dataobj, keys, primary_dim=None, **kwargs):
                             p_name,
                             edim_labels[primary_dim][1],
                         ),
-                        fontsize=7.0,
+                        fontsize=7.0 * image_scale,
                     )
 
                     index += 1
