@@ -41,7 +41,7 @@ def average_repetitions(df, keys_mean):
     agg_dict.update({x: np.mean for x in keys_mean})
     for key in ('id', 'timestep', 'frequency', 'norrec'):
         if key in agg_dict:
-            del(agg_dict[key])
+            del (agg_dict[key])
 
     # average over duplicate measurements
     extra_dimensions_raw = ['id', 'norrec', 'frequency', 'timestep']
@@ -71,7 +71,7 @@ def compute_norrec_differences(df, keys_diff):
     agg_dict.update({x: norrec_diff for x in keys_diff})
     for key in ('id', 'timestep', 'frequency'):
         if key in agg_dict:
-            del(agg_dict[key])
+            del (agg_dict[key])
 
     # for frequencies, we could (I think) somehow prevent grouping by
     # frequencies...
@@ -235,9 +235,10 @@ def assign_norrec_to_df(df):
 
     df_new = pd.merge(df, df_ids, how='left', on=('a', 'b', 'm', 'n'))
     df_new.rename(
-        {'id_y': 'id',
-         'norrec_y': 'norrec'
-         }, axis=1,
+        {
+            'id_y': 'id',
+            'norrec_y': 'norrec'
+        }, axis=1,
         inplace=True
     )
     return df_new
@@ -300,7 +301,7 @@ def assign_norrec_diffs(df, diff_list):
         x for x in ('timestep', 'frequency', 'id') if x in df.columns
     ]
     g = df.groupby(extra_dims)
-    import time
+    # import time
 
     # def subrow(row):
     #     if row.size == 2:
@@ -309,7 +310,7 @@ def assign_norrec_diffs(df, diff_list):
     #         return np.nan
 
     for diffcol in diff_list:
-        start = time.perf_counter()
+        # start = time.perf_counter()
         # do nothing if the column does not exist
         if diffcol not in df.columns:
             continue
@@ -335,9 +336,9 @@ def assign_norrec_diffs(df, diff_list):
         # cols = list(diff.columns)
         # cols[-1] = diffcol + 'diff'
         # diff.columns = cols
-        end = time.perf_counter()
+        # end = time.perf_counter()
         # print('Assigning diffs took {} seconds'.format(
-            # end - start
+        #     end - start
         # ))
 
         df = df.drop(
@@ -367,7 +368,7 @@ def compute_error_model_absolute_relative(subdf, nbin):
     nord = subdf.copy()
 
     bin_data, bins = pd.cut(np.log10(nord['r']), nbin, retbins=True)
-    print(bins)
+    # print(bins)
     nord['bin'] = bin_data
 
     # filter all bins with only 1 entry
@@ -397,7 +398,7 @@ def compute_error_model_absolute_relative(subdf, nbin):
         pars_start,
         args=(np.log10(rm), np.log10(stdev))
     )
-    print(res_lsq.x)
+    # print(res_lsq.x)
     ax.plot(
         rm,
         10 ** curve(res_lsq.x, np.log10(rm)),
@@ -406,10 +407,15 @@ def compute_error_model_absolute_relative(subdf, nbin):
         label='{:.2e}, {:.2e}'.format(*res_lsq.x),
     )
     ax.set_title(
-        '{:.2f} R + {:.2f}'.format(
+        'Resistivity error parameters: {:.2f} R + {:.2f}'.format(
             *res_lsq.x
-        )
+        ),
+        loc='left',
     )
+    ax.set_xlabel(
+        r'resistance $[\Omega]$',
+    )
+    ax.set_ylabel('standard deviation')
     return fig, ax
 
 
@@ -548,7 +554,7 @@ def test2():
     diff.columns = cols
     df1 = df1.merge(diff)
     df1 = df1.sort_values(['timestep', 'frequency'])
-    assert(
+    assert (
         df1.query(
             'timestep == 1 and a == 1 and b == 2 and m == 3 and n == 4 ' +
             'and frequency == 0.3'
