@@ -139,7 +139,9 @@ class ImportersBase(object):
 
             # note that columns not in the DataFrames are ignored, thus no
             # problem to include rho_a and rpha
-            self.data = assign_norrec_diffs(self.data, ['r', 'rho_a', 'rpha'])
+            self.data = assign_norrec_diffs(
+                self.data, ['r', 'rho_a', 'rpha']
+            )
 
         # Put a, b, m, n in the front and ensure integers
         for col in tuple("nmba"):
@@ -422,7 +424,7 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             if True, then plot values in log10, default: False
         **kwargs : dict
             all additional parameters are directly provided to
-            :py:func:`reda.plotters.pseudoplots.PS.plot_pseudosection_type2`
+            :py:func:`reda.plotters.pseudoplots.PS.plot_pseudosection_type1`
 
         Returns
         -------
@@ -499,7 +501,7 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
 
     def histogram(self, column='r', filename=None, log10=False, **kwargs):
         """Plot a histogram of one data column"""
-        return_dict = HS.plot_histograms(self.data, column)
+        return_dict = HS.plot_histograms(self.data, column, **kwargs)
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
         return return_dict
