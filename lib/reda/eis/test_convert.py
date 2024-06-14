@@ -45,7 +45,7 @@ class TestClass_input_styles(object):
         self.cim = cim
         self.cmim = -cim
 
-    def setup(self):
+    def setup_method(self):
         self.precompute_values()
 
     def test_input_styles(self):
@@ -96,7 +96,7 @@ class TestClass_test_converters():
         self.cim = cim
         self.cmim = -cim
 
-    def setup(self):
+    def setup_method(self):
         self.precompute_values()
 
     def check_from_function(self, func, input1, input2):

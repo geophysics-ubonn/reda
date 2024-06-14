@@ -22,6 +22,11 @@ except Exception:
     pass
 
 
+def get_mpl_version():
+    import matplotlib as mpl
+    return [int(x) for x in mpl.__version__.split('.')]
+
+
 def get_canvas_scaler():
     # when we run in a Jupyter Notebook, scale images
     if we_run_in_ipython:

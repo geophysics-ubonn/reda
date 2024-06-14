@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 import tempfile
 import zipfile
-# from importlib_resources import files
-from importlib.resources import files
+from importlib_resources import files
+# from importlib.resources import files
 
 import reda
 
