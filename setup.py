@@ -31,6 +31,7 @@ if __name__ == '__main__':
         package_dir={'': 'lib'},
         package_data={'reda.testing': package_data},
         install_requires=[
+            'importlib_resources',
             'numpy',
             'scipy',
             'pandas',
