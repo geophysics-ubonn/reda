@@ -21,7 +21,7 @@ def prepare_4d_data():
     outdir = tempfile.mkdtemp()
     filename = files('reda.testing.data').joinpath('seit_test_data.zip')
 
-    mzip = zipfile.ZipFile(filename)
+    mzip = zipfile.ZipFile(str(filename))
     mzip.extractall(outdir)
     return outdir
 
