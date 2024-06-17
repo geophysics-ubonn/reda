@@ -2,7 +2,7 @@ numpy >= 1.16.5
 matplotlib>=2
 pandas>=0.23 # Due to sort method in pd.concat
 scipy
-pytest==3.6.4
+pytest
 twine
 Pillow>=7.1.0
 # the next two are for hdf suppoort

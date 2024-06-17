@@ -10,6 +10,8 @@ image_scale = reda.utils.mpl.get_canvas_scaler()
 # satisfy flake8
 plot_pseudosection_type3
 
+mpl_version = reda.utils.mpl.get_mpl_version()
+
 
 def _get_unique_identifiers(ee_raw):
     """
@@ -274,7 +276,12 @@ def plot_pseudosection_type1(dataobj, column, **kwargs):
         )
     fig = ax.get_figure()
 
-    cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'viridis'))
+    # https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#top-level-cmap-registration-and-access-functions-in-mpl-cm
+    if mpl_version[0] <= 3 and mpl_version[1] < 9:
+        cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'viridis'))
+    else:
+        cmap = mpl.colormaps[kwargs.get('cmap', 'viridis')]
+
     if kwargs.get('do_not_saturate', False):
         cmap.set_over(
             color='r'
@@ -494,7 +501,12 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         )
     fig = ax.get_figure()
 
-    cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'viridis'))
+    # https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#top-level-cmap-registration-and-access-functions-in-mpl-cm
+    if mpl_version[0] <= 3 and mpl_version[1] < 9:
+        cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'viridis'))
+    else:
+        cmap = mpl.colormaps[kwargs.get('cmap', 'viridis')]
+
     if kwargs.get('do_not_saturate', False):
         cmap.set_over(
             color='r'
