@@ -383,6 +383,18 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
                 )
             return obj
 
+    def filter_non_equal_dipole_lengths(self):
+        """Filter quadrupoles where A-B is not equal to M-N
+
+        Only work in-place and returns this container
+        """
+        ab_distances = np.abs(self.data['b'] - self.data['a'])
+        mn_distances = np.abs(self.data['m'] - self.data['n'])
+
+        with LogDataChanges(self, filter_action='filter', filter_query=filter):
+            self.data = self.data[ab_distances == mn_distances]
+        return self
+
     def compute_K_analytical(self, spacing, **kwargs):
         """Compute geometrical factors over the homogeneous half-space with a
         constant electrode spacing
