@@ -4,11 +4,16 @@
 Visualizing ERT measurements using Pseudosections
 =================================================
 
-This example is all about import data from IRIS Instruments Syscal systems.
-There is a variety of different options that should cover most use cases.
-Also, shortly introduced are the data journal, action log, filtering, and
-accessing data using the underlying dataframe.
+Pseudosections are **raw data representations** that aim to visualize a given
+set of measurements in a spatial context.
+It is important to remember that no inversion takes place when a pseudosection
+is plotted, and spatial correlations should be interpreted carefully.
 
+[TODO: 2 sentences on the basic assumption of gradually changing values]
+
+
+Set up
+------
 """
 import os
 
@@ -42,6 +47,11 @@ ert.compute_K_analytical(spacing=0.25)
 
 ###############################################################################
 
+"""
+Type 1 Pseudosections
+---------------------
+
+"""
 ###############################################################################
 # create some plots in a subdirectory
 with reda.CreateEnterDirectory('output_04'):
@@ -51,6 +61,12 @@ with reda.CreateEnterDirectory('output_04'):
         column='r', filename='pseudosection_type2_log10_r.pdf', log10=True)
 
 ###############################################################################
+
+"""
+Type 2 Pseudosections
+---------------------
+
+"""
 with reda.CreateEnterDirectory('output_04'):
     crmod_settings = {
         'elem': pwd + os.sep + 'data_syscal_ert/elem.dat',
