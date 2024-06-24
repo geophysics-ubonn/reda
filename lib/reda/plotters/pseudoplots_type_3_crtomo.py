@@ -12,6 +12,7 @@ from reda.utils import opt_import
 import reda.main.units as units
 import reda.utils.mpl
 plt, mpl = reda.utils.mpl.setup()
+mpl_version = reda.utils.mpl.get_mpl_version()
 
 CRbinaries = opt_import("crtomo.binaries")
 CRcfg = opt_import("crtomo.cfg")
@@ -38,7 +39,12 @@ def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
         fig, ax = plt.subplots(1, 1, figsize=figsize)
     fig = ax.get_figure()
 
-    cmap = mpl.cm.get_cmap('inferno')
+    # https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#top-level-cmap-registration-and-access-functions-in-mpl-cm
+    if mpl_version[0] <= 3 and mpl_version[1] < 9:
+        cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'inferno'))
+    else:
+        cmap = mpl.colormaps[kwargs.get('cmap', 'inferno')]
+
     if kwargs.get('do_not_saturate', False):
         cmap.set_over(
             color='r'
@@ -65,7 +71,7 @@ def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
     if 'rpha' not in dataobj.columns:
         rpha = np.zeros(dataobj.shape[0])
     else:
-        rpha = dataobj['rpha']
+        rpha = dataobj['rpha'].values
     data = dataobj[['a', 'b', 'm', 'n', 'r']].values
     data = np.hstack((data, rpha[:, np.newaxis]))
 
