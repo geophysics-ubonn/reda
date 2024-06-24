@@ -94,7 +94,8 @@ class CRImporters(ImportersBase):
 class CR(BaseContainer, CRImporters):
     """."""
 
-    def __init__(self, data=None, electrode_positions=None, topography=None):
+    def __init__(self, data=None, electrode_positions=None, topography=None,
+                 metadata=None, **kwargs):
         """
         Parameters
         ----------
@@ -110,17 +111,18 @@ class CR(BaseContainer, CRImporters):
             information with columns: "x", "y", "z".
 
         """
-        self.setup_logger()
-        self.required_columns = ['a',
-                                 'b',
-                                 'm',
-                                 'n',
-                                 'r',
-                                 'rpha',
-                                 'Zt']
-        self.data = self.check_dataframe(data)
-        self.electrode_positions = electrode_positions
-        self.topography = topography
+        self.required_columns = [
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
+            'rpha',
+            'Zt',
+        ]
+        super().__init__(
+            data, electrode_positions, topography, metadata, **kwargs
+        )
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
