@@ -108,7 +108,8 @@ class TDIPImporters(ImportersBase):
 class TDIP(BaseContainer, TDIPImporters):
     """."""
 
-    def __init__(self, data=None, electrode_positions=None, topography=None):
+    def __init__(self, data=None, electrode_positions=None, topography=None,
+                 metadata=None, **kwargs):
         """
         Parameters
         ----------
@@ -125,16 +126,21 @@ class TDIP(BaseContainer, TDIPImporters):
 
         """
 
-        self.setup_logger(__name__)
-        self.required_columns = ['a',
-                                 'b',
-                                 'm',
-                                 'n',
-                                 'r',
-                                 'chargeability']
-        self.data = self.check_dataframe(data)
-        self.electrode_positions = electrode_positions
-        self.topography = topography
+        self.required_columns = [
+            'a',
+            'b',
+            'm',
+            'n',
+            'r',
+            'chargeability',
+        ]
+        super().__init__(
+            data,
+            electrode_positions,
+            topography,
+            metadata,
+            **kwargs
+        )
 
     def check_dataframe(self, dataframe):
         """Check the given dataframe for the required type and columns
@@ -411,3 +417,10 @@ class TDIP(BaseContainer, TDIPImporters):
         # recompute norrec differences to get rpha-differences
         cr.data = assign_norrec_diffs(cr.data, ['r', 'rho_a', 'rpha'])
         return cr
+
+    def to_ert(self):
+        """Return the data contained here within a ERT container
+        """
+        data_new = self.data.copy()
+        ert = reda.ERT(data=data_new)
+        return ert
