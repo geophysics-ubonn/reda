@@ -14,6 +14,12 @@ rel = {
         'label_mpl': r'$|Z| [\Omega]$',
         'unit': r'$\Ohm$',
     },
+    'log10_r': {
+        'full_name': '|Z|_[Ohm]',
+        'label_latex': r'$log_{10}(|Z|~[\Omega])$',
+        'label_mpl': r'$log_{10}(|Z| [\Omega])$',
+        'unit': r'$\Ohm$',
+    },
     'rho_a': {
         'full_name': 'rhoa_[Ohm m]',
         'label_latex': r'$\rho_a$~[$\Omega$ m]',
@@ -32,16 +38,16 @@ rel = {
         'label_mpl': r'$U_{mn}$ [mV]',
         'unit': r'mV',
     },
-    'log_rho': {
-        'full_name': 'log_rho_[Ohm m]',
-        'label_latex': r'$\log_{10}(|\rho|~[\Omega\mbox{m}])$',
-        'label_mpl': r'$\log_{10}(|\rho| [\Omega m])$',
-        'unit': r'\Ohm m',
-    },
     'rho': {
         'full_name': 'rho_[Ohm m]',
         'label_latex': r'$|\rho|~[\Omega\mbox{m}]$',
         'label_mpl': r'$|\rho|$ [$\Omega$m]',
+        'unit': r'\Ohm m',
+    },
+    'log10_rho': {
+        'full_name': 'log_rho_[Ohm m]',
+        'label_latex': r'$\log_{10}(|\rho|~[\Omega\mbox{m}])$',
+        'label_mpl': r'$\log_{10}(|\rho| [\Omega m])$',
         'unit': r'\Ohm m',
     },
     'phi': {
@@ -50,13 +56,13 @@ rel = {
         'label_mpl': r'$\phi$ [mrad]',
         'unit': r'mrad',
     },
-    'log_real': {
+    'log10_real': {
         'full_name': 'log_real_[S/m]',
         'label_latex': r"$\log_{10}(\sigma'~[\mbox{S/m}])$",
         'label_mpl': r"$\log_{10}$($\sigma$' [S/m])",
         'unit': r'S/m',
     },
-    'log_imag': {
+    'log10_imag': {
         'full_name': 'log_imag_[S/m]',
         'label_latex': r"$\log_{10}(|\sigma''|~[\mbox{S/m}])$",
         'label_mpl': r"$\log_{10}(|\sigma''| [S/m])$",
@@ -65,14 +71,19 @@ rel = {
 }
 
 
-def get_label(key):
+def get_label(key, log10=False):
     """Convenience function: return the label (latex version) of a given key,
     if available. Otherwise, return the key itself.
     """
-    if key in rel:
+    if log10:
+        search_key = 'log10_' + key
+    else:
+        search_key = key
+
+    if search_key in rel:
         if mpl.rcParams['text.usetex']:
-            return rel[key]['label_latex']
+            return rel[search_key]['label_latex']
         else:
-            return rel[key]['label_mpl']
+            return rel[search_key]['label_mpl']
     else:
         return key
