@@ -470,6 +470,9 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         **kwargs : dict
             all additional parameters are directly provided to
             :py:func:`reda.plotters.pseudoplots.PS.plot_pseudosection_type2`
+        force_to_normal : bool, default: False
+            If True, force all data points to be plotted below the y=0 axis.
+            This is useful to visualize nor-rec-merged data sets.
 
         Returns
         -------
