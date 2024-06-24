@@ -377,6 +377,9 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         computation of the pseudodepth and -distance; default value is 1 m
     log10: bool, optional
         if set to True, plot the log10 values of the provided data
+    force_to_normal : bool, optional (False)
+        If True, force all data points to be plotted below the y=0 axis.
+        This is useful to visualize nor-rec-merged data sets.
 
     Returns
     -------
@@ -489,6 +492,9 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
 
     # sort after the pseudodistance and pseudodepth
     pseudocoords = c[['xp', 'zp', 'plot_values']].sort_values(by=['xp', 'zp'])
+    if kwargs.get('force_to_normal', False):
+        print('Forcing coords to negative values')
+        pseudocoords['zp'] = -np.abs(pseudocoords['zp'])
 
     ax = kwargs.get('ax', None)
     if ax is None:
@@ -537,20 +543,30 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         pseudocoords.loc[subset.index, 'markersize'] = smallify(
             pseudocoords.loc[subset.index, 'markersize'].values)
 
-    scat = ax.scatter(pseudocoords['xp'], pseudocoords['zp'],
-                      s=pseudocoords['markersize'],
-                      c=pseudocoords['plot_values'],
-                      marker='o',
-                      edgecolors='none',
-                      cmap=cmap,
-                      vmin=kwargs.get('cbmin', None),
-                      vmax=kwargs.get('cbmax', None),
-                      alpha=1)
+    scat = ax.scatter(
+        pseudocoords['xp'], pseudocoords['zp'],
+        s=pseudocoords['markersize'],
+        c=pseudocoords['plot_values'],
+        marker='o',
+        edgecolors='none',
+        cmap=cmap,
+        vmin=kwargs.get('cbmin', None),
+        vmax=kwargs.get('cbmax', None),
+        alpha=1
+    )
 
-    ax.set_xlim([np.min(c['xp'])-1*kwargs.get('spacing', 1),
-                 np.max(c['xp'])+1*kwargs.get('spacing', 1)])
-    ax.set_ylim([np.min(c['zp'])-1*kwargs.get('spacing', 1),
-                 np.max(c['zp'])+1*kwargs.get('spacing', 1)])
+    ax.set_xlim(
+        [
+            np.min(pseudocoords['xp'])-1*kwargs.get('spacing', 1),
+            np.max(pseudocoords['xp'])+1*kwargs.get('spacing', 1)
+        ]
+    )
+    ax.set_ylim(
+        [
+            np.min(pseudocoords['zp'])-1*kwargs.get('spacing', 1),
+            np.max(pseudocoords['zp'])+1*kwargs.get('spacing', 1)
+        ]
+    )
 
     cb = None
     if not kwargs.get('nocb', False):
