@@ -183,7 +183,8 @@ def plot_pseudodepths(configs, nr_electrodes, spacing=1, grid=None,
                 labels_add.append(' - skip {0}'.format(skip))
         else:
             # merge all indices
-            plot_list = [np.hstack(index_dict.values()), ]
+            # plot_list = [np.hstack(index_dict.values()), ]
+            plot_list = [np.hstack([x for x in index_dict.values()])]
             print('schlumberger', plot_list)
             labels_add = ['', ]
 
