@@ -46,27 +46,25 @@ ert.import_syscal_txt(
 ert.compute_K_analytical(spacing=0.25)
 
 ###############################################################################
+# Type 1 Pseudo-sections
+# ----------------------
+#
 
-"""
-Type 1 Pseudosections
----------------------
-
-"""
 ###############################################################################
 # create some plots in a subdirectory
 with reda.CreateEnterDirectory('output_04'):
     ert.pseudosection_type1(
         column='r', filename='pseudosection_type1_log10_r.pdf', log10=True)
+###############################################################################
+# Type 1 Pseudo-sections
+# ----------------------
+with reda.CreateEnterDirectory('output_04'):
     ert.pseudosection_type2(
         column='r', filename='pseudosection_type2_log10_r.pdf', log10=True)
 
 ###############################################################################
-
-"""
-Type 2 Pseudosections
----------------------
-
-"""
+# Type 3 Pseudo-sections
+# ----------------------
 with reda.CreateEnterDirectory('output_04'):
     crmod_settings = {
         'elem': pwd + os.sep + 'data_syscal_ert/elem.dat',
