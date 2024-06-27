@@ -16,7 +16,7 @@ jobs:
 
     - name: Install CRTomo
       run: |
-          wget https://github.com/geophysics-ubonn/titatest/releases/download/vtest2/crtomomod_1.8.0_amd64.deb
+          wget https://github.com/geophysics-ubonn/crtomo_stable/releases/download/v1.8.0/crtomomod_1.8.0_amd64.deb
           pwd
           sudo dpkg -i crtomomod_1.8.0_amd64.deb
 
