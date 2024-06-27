@@ -1,32 +1,15 @@
 name: Build documentation for REDA
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
-
-
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 10 * * 1,4'
 
 jobs:
   build_documentation:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-22.04
     steps:
     - uses: actions/checkout@v3
-
-    - name: ls1
-      run: ls
 
     - name: Install dependencies
       run: sudo apt -y update && sudo apt install virtualenvwrapper gmsh tree texlive texlive-latex-extra cm-super-minimal
@@ -43,15 +26,8 @@ jobs:
     - name: Build the documentation
       run: bash ./build_documentation_ci.sh
 
-    - name: Setup Pages
-      uses: actions/configure-pages@v4
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
       with:
         # Upload the html page
         path: 'doc/_build/html/'
-    - name: Deploy to GitHub Pages
-      id: deployment
-      if: github.ref == 'refs/heads/master'
-      uses: actions/deploy-pages@v4
-
