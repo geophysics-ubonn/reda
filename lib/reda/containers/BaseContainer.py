@@ -743,3 +743,56 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig.tight_layout()
 
         return fig, ax
+
+    def merge_norrec_data(self, dataframe=None, inplace=True):
+        """Merge normal and reciprocal data by averaging all normal-reciprocal
+        pairs
+
+        Parameters
+        ----------
+        dataframe: pandas.DataFrame|None, default: None
+            If not None, then use this data for the averaging. Otherwise, use
+            .data of this container
+        inplace: bool, default: True
+            If True, and dataframe is None, then replace .data with the merged
+            data set
+
+        Returns
+        -------
+        data_merged: pandas.DataFrame
+            The merged data
+
+        """
+        if dataframe is None:
+            data = self.data
+        else:
+            data = dataframe
+
+        g = data.groupby('id')
+        numeric_data = data.select_dtypes(
+            include=['number', 'datetime']
+        ).sort_values(['id', ])
+
+        # we do not want to average these columns
+        cols_to_drop_all = [
+            'a', 'b', 'm', 'n', 'rdiff', 'rho_adiff', 'rphadiff',
+        ]
+        cols_to_drop = []
+        for col in cols_to_drop_all:
+            if col in numeric_data.columns:
+                cols_to_drop += [col]
+        merged_num_data = numeric_data.groupby('id').mean().drop(
+            cols_to_drop, axis=1
+        )
+        non_numeric = g.first().select_dtypes(include='object')
+
+        abmn = g.first()[['a', 'b', 'm', 'n']]
+
+        data_merged = pd.concat(
+            (abmn, merged_num_data, non_numeric), axis=1
+        ).reset_index()
+
+        if dataframe is None and inplace:
+            self.data = data_merged
+
+        return data_merged
