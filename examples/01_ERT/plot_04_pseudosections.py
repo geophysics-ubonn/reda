@@ -17,8 +17,7 @@ Set up
 """
 import os
 
-import numpy as np
-import matplotlib.pylab as plt
+# import matplotlib.pylab as plt
 import reda
 ert = reda.ERT()
 ###############################################################################
@@ -48,16 +47,23 @@ ert.compute_K_analytical(spacing=0.25)
 ###############################################################################
 # Type 1 Pseudo-sections
 # ----------------------
-#
+# Type 1 pseudo-section should be mainly used for Dipole-Dipole configurations
 
 ###############################################################################
-# create some plots in a subdirectory
 with reda.CreateEnterDirectory('output_04'):
     ert.pseudosection_type1(
         column='r', filename='pseudosection_type1_log10_r.pdf', log10=True)
 ###############################################################################
-# Type 1 Pseudo-sections
+# Type 2 Pseudo-sections
 # ----------------------
+# Type 2 pseudo-sections computes pseudo-locations depending on the logical
+# electrode denotations
+# The x-position is computed by averaging over all four a,b,m,n numbers.
+# A heuristic tries to differentiate between Dipole-Dipole configurations and
+# all other configurations and assigns z-positions accordingly:
+# * Dipole-Dipole: 0.195 * abs(b-a)
+# * The rest: max. electrode distance * 0.3
+
 with reda.CreateEnterDirectory('output_04'):
     ert.pseudosection_type2(
         column='r', filename='pseudosection_type2_log10_r.pdf', log10=True)
@@ -65,8 +71,13 @@ with reda.CreateEnterDirectory('output_04'):
 ###############################################################################
 # Type 3 Pseudo-sections
 # ----------------------
+# Type 3 pseudo-sections conduct a Finite-Element forward modelling, using a
+# provided mesh, and assigns pseudo-locations to the measurements by computing
+# center of masses for all configurations.
+# To use this type of pseudo-section, a working CRMod installation is required
 with reda.CreateEnterDirectory('output_04'):
     crmod_settings = {
+        # link to file paths of elem.dat/elec.dat, CRTomo-specific mesh format
         'elem': pwd + os.sep + 'data_syscal_ert/elem.dat',
         'elec': pwd + os.sep + 'data_syscal_ert/elec.dat',
         'rho': 100,
