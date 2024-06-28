@@ -26,16 +26,34 @@ rel = {
         'label_mpl': r'$\rho_a$ [$\Omega$m]',
         'unit': r'$\Ohm m$',
     },
+    'log10_rho_a': {
+        'full_name': 'rhoa_[Ohm m]',
+        'label_latex': r'$log_{10}(\rho_a$~[$\Omega$ m])',
+        'label_mpl': r'$log_{10}(\rho_a$ [$\Omega$m])',
+        'unit': r'$\Ohm m$',
+    },
     'Iab': {
         'full_name': 'Iab_[mA]',
         'label_latex': r'$I_{ab}~[mA]$',
         'label_mpl': r'$I_{ab}$ [mA]',
         'unit': r'mA',
     },
+    'log10_Iab': {
+        'full_name': 'Iab_[mA]',
+        'label_latex': r'$log_{10}(I_{ab}~[mA])$',
+        'label_mpl': r'$log_{10}(I_{ab}$ [mA])',
+        'unit': r'mA',
+    },
     'Vmn': {
         'full_name': 'Vmn_[mV]',
         'label_latex': r'$U_{mn}~[mV]$',
         'label_mpl': r'$U_{mn}$ [mV]',
+        'unit': r'mV',
+    },
+    'log10_Vmn': {
+        'full_name': 'Vmn_[mV]',
+        'label_latex': r'$log_{10}(U_{mn}~[mV])$',
+        'label_mpl': r'$log_{10}(U_{mn}$ [mV])',
         'unit': r'mV',
     },
     'rho': {
