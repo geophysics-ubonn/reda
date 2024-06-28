@@ -146,7 +146,7 @@ def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
     if not kwargs.get('nocb', False):
         cb = fig.colorbar(sc1, ax=ax)
         if isinstance(column, str):
-            label = units.get_label(column)
+            label = units.get_label(column, log10=log10)
         else:
             label = ''
         if not mpl.rcParams['text.usetex']:

@@ -256,8 +256,8 @@ def plot_pseudosection_type1(dataobj, column, **kwargs):
 
     # prepare matrix
     plot_values = np.squeeze(df[column].values)
-
-    if kwargs.get('log10', False):
+    use_log10 = kwargs.get('log10', False)
+    if use_log10:
         plot_values = np.log10(plot_values)
 
     C = np.zeros((len(MN_ids.items()), len(AB_ids))) * np.nan
@@ -314,7 +314,7 @@ def plot_pseudosection_type1(dataobj, column, **kwargs):
     cb = None
     if not kwargs.get('nocb', False):
         cb = fig.colorbar(im, ax=ax)
-        label = units.get_label(column)
+        label = units.get_label(column, log10=use_log10)
         if not mpl.rcParams['text.usetex']:
             label = label.replace('_', '-')
         cb.set_label(
@@ -487,7 +487,8 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     # extract the values to plot
     c['plot_values'] = df[column]
 
-    if kwargs.get('log10', False):
+    use_log10 = kwargs.get('log10', False)
+    if use_log10:
         c['plot_values'] = np.log10(c['plot_values'])
 
     # sort after the pseudodistance and pseudodepth
@@ -572,7 +573,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     if not kwargs.get('nocb', False):
         cb = fig.colorbar(scat, ax=ax)
         cb.set_label(
-            kwargs.get('cblabel', units.get_label(column))
+            kwargs.get('cblabel', units.get_label(column, log10=use_log10))
         )
 
     if kwargs.get('title', False):
