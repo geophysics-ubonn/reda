@@ -267,6 +267,30 @@ class ERTExporters(object):
 
         return data_container
 
+    def export_to_crtomo_td_manager(self, grid, norrec='norrec'):
+        """Return a ready-initialized tdman object from the CRTomo tools.
+
+        WARNING: Not timestep aware!
+
+        Parameters
+        ----------
+        grid : crtomo.crt_grid
+            A CRTomo grid instance
+        norrec : str (nor|rec|norrec)
+            Which data to export. Default: norrec (all)
+        """
+        if norrec in ('nor', 'rec'):
+            subdata = self.data.query('norrec == "{}"'.format(norrec))
+        else:
+            subdata = self.data
+        import crtomo
+        tdman = crtomo.tdMan(
+            grid=grid,
+            configs_abmn=subdata[['a', 'b', 'm', 'n']].values,
+            resistances=subdata['r'].values,
+        )
+        return tdman
+
 
 class ERT(BaseContainer, ERTImporters, ERTExporters):
     """."""
