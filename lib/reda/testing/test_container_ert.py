@@ -16,6 +16,8 @@
 
 
 """
+import numpy as np
+import datetime
 import pandas as pd
 
 import pytest
@@ -56,3 +58,60 @@ def test_init_with_data():
     )
     container_good = reda.ERT(data=df)
     assert container_good.data.shape[0] == df.shape[0]
+
+
+def test_merge_norrec_1():
+    test_df_1 = pd.DataFrame()
+    test_df_1['a'] = (1, 2, 3, 4, 4,)
+    test_df_1['b'] = (2, 3, 4, 5, 3,)
+    test_df_1['m'] = (3, 4, 5, 6, 2,)
+    test_df_1['n'] = (4, 5, 6, 7, 1,)
+    test_df_1['r'] = (10, 11, 12, 13, 14)
+
+    ert = reda.ERT(data=test_df_1)
+    merged_data = ert.merge_norrec_data()
+    # print(ert.data)
+    # print(merged_data)
+
+    assert np.all(
+        merged_data.groupby('id').count()['a'] == 1
+    ), "There are still norrec-gropus with more than one entry"
+    assert np.all(
+        merged_data.query(
+            'id == 1'
+        )[['a', 'b', 'm', 'n']].values == [2, 3, 4, 5]
+    ), "id 1 abmn changed unexpectedly"
+    assert np.all(
+        merged_data.query('id == 3')['r'].values == 12
+    ), "r (id == 3) was not properly averaged"
+
+
+def test_merge_norrec_2():
+    dt = datetime.datetime(2024, 6, 21)
+    dt_rec = datetime.datetime(2024, 6, 16)
+
+    test_df_2 = pd.DataFrame()
+    test_df_2['a'] = (1, 2, 3, 4, 4,)
+    test_df_2['b'] = (2, 3, 4, 5, 3,)
+    test_df_2['m'] = (3, 4, 5, 6, 2,)
+    test_df_2['n'] = (4, 5, 6, 7, 1,)
+    test_df_2['r'] = (10, 11, 12, 13, 14)
+    test_df_2['datetime'] = dt
+    test_df_2.iloc[-1, -1] = dt_rec
+
+    ert = reda.ERT(data=test_df_2)
+    merged_data = ert.merge_norrec_data()
+    print(ert.data)
+    print(merged_data)
+
+    assert "datetime" in merged_data.columns
+    assert np.all(
+        merged_data.query(
+            'id == 3'
+        )['datetime'] == datetime.datetime(2024, 6, 18, 12)
+    )
+    assert np.all(
+        merged_data.query(
+            'id != 3'
+        )['datetime'] == datetime.datetime(2024, 6, 21)
+    )
