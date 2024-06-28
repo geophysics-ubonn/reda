@@ -86,10 +86,11 @@ def import_ohm(filename, verbose=False, reciprocals=False, **kwargs):
         columns={
             'rhoa': 'rho_a',
             # 'k': 'k',
-            # 'u': 'U',
-            # 'i': 'I'
+            'u': 'Vmn',
+            'i': 'Iab'
         }
     )
+    print(data_reda)
     data_reda[['a', 'b', 'm', 'n']] = data_reda[['a', 'b', 'm', 'n']].astype(
         int
     )
@@ -99,6 +100,13 @@ def import_ohm(filename, verbose=False, reciprocals=False, **kwargs):
         logger.info(
             "Calculating resistance from apparent resistivity and "
             "geometric factors. (r = rhoa_ / k)")
+
+    if 'r' not in data_reda.columns:
+        print('messing r')
+        if 'Vmn' in data_reda.columns and 'Iab' in data_reda.columns:
+            print('recomputing')
+            logger.info("Calculating transfer resistance from Vmn and Iab")
+            data_reda['r'] = data_reda['Vmn'] / data_reda['Iab']
 
     # rename electrode denotations
     if type(reciprocals) == int:
