@@ -92,7 +92,7 @@ class ERTImporters(ImportersBase):
             del (kwargs['timestep'])
 
         with LogDataChanges(self, filter_action='import'):
-            data = load_mod_file(filename)
+            data = load_mod_file(filename, **kwargs)
             if timestep is not None:
                 data['timestep'] = timestep
             self._add_to_container(data)

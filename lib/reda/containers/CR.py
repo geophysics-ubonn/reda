@@ -20,7 +20,7 @@ plt, mpl = reda.utils.mpl.setup()
 
 
 class CRImporters(ImportersBase):
-    def import_crtomo_data(self, filename):
+    def import_crtomo_data(self, filename, **kwargs):
 
         """
         Import a CRTomo-style measurement file (usually: volt.dat).
@@ -32,7 +32,7 @@ class CRImporters(ImportersBase):
 
         """
 
-        data = load_mod_file(filename)
+        data = load_mod_file(filename, **kwargs)
         self._add_to_container(data)
 
     @append_doc_of(reda_bert_import.import_ohm)
