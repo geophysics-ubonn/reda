@@ -781,12 +781,31 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         for col in cols_to_drop_all:
             if col in numeric_data.columns:
                 cols_to_drop += [col]
+
         merged_num_data = numeric_data.groupby('id').mean().drop(
             cols_to_drop, axis=1
         )
-        non_numeric = g.first().select_dtypes(include='object')
 
-        abmn = g.first()[['a', 'b', 'm', 'n']]
+        def has_complex(dataframe):
+            for c in dataframe.dtypes.values:
+                if np.complex128 == c:
+                    return True
+            return False
+
+        # pandas groupby('id').first() throws an exception for complex numbers
+        # ...
+        if has_complex(data):
+            subdata = data.select_dtypes(
+                exclude=complex
+            ).groupby('id').first()
+
+            non_numeric = subdata.select_dtypes(
+                include='object'
+            )
+            abmn = subdata[['a', 'b', 'm', 'n']]
+        else:
+            non_numeric = g.first().select_dtypes(include='object')
+            abmn = g.first()[['a', 'b', 'm', 'n']]
 
         data_merged = pd.concat(
             (abmn, merged_num_data, non_numeric), axis=1
