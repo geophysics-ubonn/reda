@@ -169,18 +169,17 @@ def compute_K(dataframe, settings, keep_dir=False):
 
         os.chdir('exe')
         binary = CRbinaries.get('CRMod')
-        output = subprocess.check_output(
-            binary, shell=True, stderr=subprocess.STDOUT
-        )
-        # I couldn't bring the subprocess-function to recognize a crashed CRMod
-        # call, so do it the hard way and parse the output
-        return_value = int(
-            output[output.find('STOP'.encode('utf-8')) + 4:].strip()
-        )
-        os.chdir('..')
-
-        if return_value != 0:
-            print(output)
+        try:
+            subprocess.check_output(
+                binary, shell=True, stderr=subprocess.STDOUT
+            )
+        except subprocess.CalledProcessError as error:
+            print(
+                'ERROR: CRMod returned return value: {}'.format(
+                    error.returncode
+                )
+            )
+            print(error.output)
             print('-.-' * 30)
             print('ERROR: There was an error with the call to CRMod')
             print('The crashed tomodir can be found here: {}'.format(invdir))
@@ -200,6 +199,7 @@ def compute_K(dataframe, settings, keep_dir=False):
                 )
             print('-.-' * 30)
             raise Exception('Error while calling CRMod')
+        os.chdir('..')
 
         # read in results
         modeled_resistances = np.loadtxt(
