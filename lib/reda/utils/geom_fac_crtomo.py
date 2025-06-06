@@ -221,5 +221,5 @@ def compute_K(dataframe, settings, keep_dir=False):
             shutil.copytree('.', keep_dir)
             print('Copy of modeling dir stored here: {}'.format(keep_dir))
 
-    os.chdir(pwd)
+        os.chdir(pwd)
     return K
