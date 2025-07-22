@@ -467,7 +467,7 @@ class multi_sip_response(object):
     def plot_rmag(self, filename, pmin=None, pmax=None, title=None):
         """plot all resistance/resistivity magnitude spectra
         """
-        cmap = mpl.cm.get_cmap('viridis')
+        cmap = mpl.colormaps['viridis']
         SM = mpl.cm.ScalarMappable(norm=None, cmap=cmap)
         colors = SM.to_rgba(np.linspace(0, 1, len(self.objects)))
         fig, ax = plt.subplots(1, 1, figsize=(12 / 2.54, 7 / 2.54))
