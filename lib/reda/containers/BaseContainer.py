@@ -404,6 +404,7 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         redafixK.fix_sign_with_K(self.data, **kwargs)
         return K
 
+    @functools.wraps(redaK.compute_K_numerical)
     def compute_K_numerical(self, settings=None, keep_dir=None, **kwargs):
         K = redaK.compute_K_numerical(
             self.data,
@@ -591,12 +592,68 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig = ax.get_figure()
 
         elecs = reda.electrode_manager()
-        elecs.add_fixed_assignments(self.electrode_positions)
+        elecs.add_fixed_assignments(
+            self.electrode_positions
+        )
         elecs.plot_coordinates_x_z_to_ax(ax_plot, use_y_axis=use_y_axis)
         if ax is None:
             # only touch the layout if we created the figure
             fig.tight_layout()
         return fig, ax
+
+    def import_electrode_positions(self, filename,
+                                   delimiter=r'\s+',
+                                   header=None,
+                                   **kwargs):
+        """Import electrode positions from a text file
+
+        This function replaces all electrode positions with those found in a
+        file. Correspondingly, the number of electrodes must match the number
+        of lines in the file.
+        Electrode positions are imported using pandas.read_csv, any kwargs
+        passed to this function will be passed through to read_csv. Use this
+        to, e.g., skip header rows using the 'skiprows' parameter.
+
+        We assume that the file only contains two or three columns.
+        Two columns indicates x, z positions, three columns x, y, z [m].
+
+        Alternative ways to add electrode positions:
+
+        * directly when initializing a reda data container
+        * some importers take the electrode_positions parameter
+
+        """
+        try:
+            elec_positions = pd.read_csv(
+                filename,
+                delimiter=delimiter,
+                header=header,
+                **kwargs
+            )
+        except Exception as e:
+            print('There was an error importing electrode positions')
+            print(e)
+            return
+
+        N_positions = elec_positions.shape[0]
+        N_dimensions = elec_positions.shape[1]
+
+        assert N_positions == self.electrode_positions.shape[0], \
+            "number of imported electrode positions does not match"
+
+        if N_dimensions == 2:
+            # assume only x/z data
+            elec_positions.columns = ['x', 'z']
+            elec_positions['y'] = 0
+        elif N_dimensions == 3:
+            elec_positions.columns = ['x', 'y', 'z']
+        else:
+            print('ERROR: Number of columns must be either 2 or 3')
+            return
+
+        elec_positions.index.name = 'electrode_number'
+
+        self.electrode_positions = elec_positions[['x', 'y', 'z']]
 
     def replace_electrode_positions(self, coordinates):
         """Replace the imported electrode coordinates by new ones. This
@@ -605,8 +662,6 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
 
         If the input is a pandas DataFrame, assume that the columns x, y, z are
         present.
-
-
 
         Parameters
         ----------
@@ -642,7 +697,6 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             elif coords_raw.shape[1] == 3:
                 cols = ['x', 'y', 'z']
             coords = pd.DataFrame(coords_raw, columns=cols)
-            print(coords)
             for key in ['x', 'y', 'z']:
                 if key not in coords.columns:
                     coords[key] = 0
