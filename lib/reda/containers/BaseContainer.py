@@ -517,7 +517,8 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
 
     def histogram(self, column='r', filename=None, log10=False, **kwargs):
         """Plot a histogram of one data column"""
-        return_dict = HS.plot_histograms(self.data, column, **kwargs)
+        return_dict = HS.plot_histograms(
+            self.data, column, log10plot=log10, **kwargs)
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
         return return_dict
