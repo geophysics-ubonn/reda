@@ -239,8 +239,34 @@ class ERTExporters(object):
             logger.info('timestep(s) {} will be used'.format(timestep))
 
         import pygimli as pg
+        from pygimli.physics import ert
+
         data_container = pg.DataContainerERT()
 
+        # make a copy of the container
+        ert_copy = self.create_copy()
+
+        if 'rho_a' not in ert_copy.data.columns:
+            print('Computing numerical geometric factors using Pyglimi')
+            cont_tmp = pg.DataContainerERT()
+            cont_tmp['a'] = ert_copy.data['a'] - 1
+            cont_tmp['b'] = ert_copy.data['b'] - 1
+            cont_tmp['m'] = ert_copy.data['m'] - 1
+            cont_tmp['n'] = ert_copy.data['n'] - 1
+            cont_tmp['r'] = ert_copy.data['r']
+            cont_tmp['valid'] = 1
+
+            print(ert_copy.electrode_positions.values)
+            for electrode in ert_copy.electrode_positions.values:
+                cont_tmp.createSensor([electrode[0], electrode[2]])
+
+            # try to estimate K factors
+            k = ert.createGeometricFactors(cont_tmp, numerical=True)
+
+            del (cont_tmp)
+            ert_copy.apply_k(k)
+
+        # select timesteps
         query = ' '.join((
             'norrec == "{}"'.format(norrec),
         ))
@@ -250,13 +276,14 @@ class ERTExporters(object):
 
         logger.debug('Query: {}'.format(query))
 
-        subdata = self.data.query(query)
+        subdata = ert_copy.data.query(query)
         assert subdata.shape[0] != 0
 
-        data_container['a'] = subdata['a']
-        data_container['b'] = subdata['b']
-        data_container['m'] = subdata['m']
-        data_container['n'] = subdata['n']
+        # set data container
+        data_container['a'] = subdata['a'] - 1
+        data_container['b'] = subdata['b'] - 1
+        data_container['m'] = subdata['m'] - 1
+        data_container['n'] = subdata['n'] - 1
         data_container['r'] = subdata['r']
 
         if 'k' in subdata.columns:
@@ -264,6 +291,11 @@ class ERTExporters(object):
 
         if 'rho_a' in subdata.columns:
             data_container['rhoa'] = subdata['rho_a']
+
+        data_container['valid'] = 1
+
+        for electrode in ert_copy.electrode_positions.values:
+            data_container.createSensor([electrode[0], electrode[2]])
 
         return data_container
 
