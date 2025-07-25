@@ -38,6 +38,146 @@ def test_bad_init():
         reda.ERT(data=bad_input_data)
 
 
+def test_init_with_electrode_positions():
+    """test initializing an ERT container with data and electrode positions"""
+    df = pd.DataFrame(
+        [
+            (0, 1, 2, 4, 3, 1.1),
+            (0, 1, 2, 5, 4, 1.2),
+        ],
+        columns=['timestep', 'a', 'b', 'm', 'n', 'r'],
+    )
+
+    container = reda.ERT(data=df)
+    assert container.data.shape[0] == df.shape[0]
+
+    expected_elec_positions_x = pd.DataFrame(
+        (
+            (1, 0, 0),
+            (2, 0, 0),
+            (3, 0, 0),
+            (4, 0, 0),
+            (5, 0, 0),
+        ),
+        columns=['x', 'y', 'z'],
+    )
+
+    # 1D, x only
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=np.array((1, 2, 3, 4, 5))
+    )
+    assert expected_elec_positions_x.equals(cont1.electrode_positions)
+
+    # 2D, x only
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=np.array(((1, 2, 3, 4, 5),)).T
+    )
+    assert expected_elec_positions_x.equals(cont1.electrode_positions)
+
+    expected_elec_positions_xz = pd.DataFrame(
+        (
+            (1, 0, 20),
+            (2, 0, 21),
+            (3, 0, 22),
+            (4, 0, 23),
+            (5, 0, 24),
+        ),
+        columns=['x', 'y', 'z'],
+    )
+
+    # x, z columns
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=np.array(
+            (
+                (1, 2, 3, 4, 5),
+                (20, 21, 22, 23, 24),
+            )
+        ).T
+    )
+    assert expected_elec_positions_xz.equals(cont1.electrode_positions)
+
+    expected_elec_positions = pd.DataFrame(
+        (
+            (1, 10, 20),
+            (2, 11, 21),
+            (3, 12, 22),
+            (4, 13, 23),
+            (5, 14, 24),
+        ),
+        columns=['x', 'y', 'z'],
+    )
+
+    # x, y, z columns
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=np.array(
+            (
+                (1, 2, 3, 4, 5),
+                (10, 11, 12, 13, 14),
+                (20, 21, 22, 23, 24),
+            )
+        ).T
+    )
+    assert expected_elec_positions.equals(cont1.electrode_positions)
+
+    # x, y, z columns, dataframe input
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=expected_elec_positions
+    )
+    assert expected_elec_positions.equals(cont1.electrode_positions)
+
+    # x, y, z columns
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=np.array(
+            (
+                (1, 2, 3, 4, 5),
+                (10, 11, 12, 13, 14),
+                (20, 21, 22, 23, 24),
+            )
+        ).T
+    )
+    assert expected_elec_positions.equals(cont1.electrode_positions)
+
+    # x columns, dataframe input
+    df_copy = expected_elec_positions.copy()[['x', ]]
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=df_copy
+    )
+    assert expected_elec_positions_x.equals(cont1.electrode_positions)
+
+    # x, z columns, dataframe input
+    df_copy = expected_elec_positions.copy()[['x', 'z']]
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=df_copy
+    )
+    assert expected_elec_positions_xz.equals(cont1.electrode_positions)
+
+    # x, y columns, dataframe input
+    expected_elec_positions_xy = pd.DataFrame(
+        (
+            (1, 10, 0),
+            (2, 11, 0),
+            (3, 12, 0),
+            (4, 13, 0),
+            (5, 14, 0),
+        ),
+        columns=['x', 'y', 'z'],
+    )
+    df_copy = expected_elec_positions.copy()[['x', 'y']]
+    cont1 = reda.ERT(
+        data=df,
+        electrode_positions=df_copy
+    )
+    assert expected_elec_positions_xy.equals(cont1.electrode_positions)
+
+
 def test_init_with_data():
     """test initializing an ERT container and provide good data"""
     df = pd.DataFrame(
