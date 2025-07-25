@@ -273,7 +273,50 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             self.check_dataframe(data)
             self._add_to_data(data)
 
-        self.electrode_positions = electrode_positions
+        if isinstance(electrode_positions, np.ndarray):
+            if len(electrode_positions.shape) == 1:
+                # assume only x positions
+                nd_elecs = np.atleast_2d(electrode_positions).T
+            else:
+                nd_elecs = electrode_positions
+            print('ND_ELECS', nd_elecs.shape)
+            if nd_elecs.shape[1] == 3:
+                columns = ['x', 'y', 'z']
+            elif nd_elecs.shape[1] == 2:
+                columns = ['x', 'z']
+            elif nd_elecs.shape[1] == 1:
+                columns = ['x', ]
+            elec_pos = pd.DataFrame(
+                electrode_positions,
+                columns=columns
+            )
+        elif isinstance(electrode_positions, pd.DataFrame):
+            elec_pos = electrode_positions.copy()
+        elif electrode_positions is None:
+            elec_pos = None
+        else:
+            raise Exception(
+                'electrode positions must be numpy.ndarray or ' +
+                'pandas.DataFrame objects'
+            )
+
+        if elec_pos is not None:
+            if 'y' not in elec_pos.columns:
+                elec_pos['y'] = 0
+            if 'z' not in elec_pos.columns:
+                elec_pos['z'] = 0
+            # make sure the column order is correct
+            elec_pos = elec_pos[['x', 'y', 'z']]
+
+        if elec_pos is not None and self.data is not None:
+            # check if the number of electrodes matches the data
+            max_electrode_number = np.unique(
+                data[['a', 'b', 'm', 'n']].values
+            ).max()
+            assert elec_pos.shape[0] >= max_electrode_number, \
+                "The number of electrode positions is smaller than the " + \
+                "largest electrode index"
+        self.electrode_positions = elec_pos
         self.topography = topography
         if metadata is None:
             self.metadata = {}
@@ -404,15 +447,61 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         redafixK.fix_sign_with_K(self.data, **kwargs)
         return K
 
-    @functools.wraps(redaK.compute_K_numerical)
-    def compute_K_numerical(self, settings=None, keep_dir=None, **kwargs):
+    def compute_K_numerical(self, settings=None, keep_dir=None,
+                            fem_code=None, just_return_k=False, **kwargs):
+        """Use a finite-element modeling code to infer geometric factors for
+        meshes with topography or irregular electrode spacings.
+
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            the data frame that contains the data
+        settings : dict
+            The settings required to compute the geometric factors. See
+            examples down below for more information in the required content
+            (only for fem_code="crtomo").
+        keep_dir : path
+            if not None, copy modeling dir here (only for fem_code="crtomo")
+        fem_code: None|str
+            Select the FEM code that should be used for computing the geometric
+            factors here. If None, then defaults are used. Valid entries:
+            "crtomo", "pygimli"
+
+        Returns
+        -------
+        K : :class:`numpy.ndarray`
+            K factors (are also directly written to the dataframe)
+
+        Examples
+        --------
+
+        PyGimli settings: Just use None, no settings required
+
+        CRMod settings:
+        ::
+
+            settings = {
+                'rho': 100,
+                'elem': 'elem.dat',
+                'elec': 'elec.dat',
+                'sink_node': '100',
+                '2D': False,
+            }
+
+
+        """
+        if fem_code == 'pygimli' and settings is None:
+            settings = {'container': self}
+
         K = redaK.compute_K_numerical(
             self.data,
             settings=settings,
             keep_dir=keep_dir,
+            fem_code=fem_code,
         )
-        self.data = redaK.apply_K(self.data, K, **kwargs)
-        redafixK.fix_sign_with_K(self.data, **kwargs)
+        if not just_return_k:
+            self.data = redaK.apply_K(self.data, K, **kwargs)
+            redafixK.fix_sign_with_K(self.data, **kwargs)
         return K
 
     def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
@@ -515,10 +604,10 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
 
-    def histogram(self, column='r', filename=None, log10=False, **kwargs):
-        """Plot a histogram of one data column"""
+    def histogram(self, column='r', filename=None, **kwargs):
+        """Plot a histogram of one data column (both linear and log10)"""
         return_dict = HS.plot_histograms(
-            self.data, column, log10plot=log10, **kwargs)
+            self.data, column, **kwargs)
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
         return return_dict
@@ -639,8 +728,9 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         N_positions = elec_positions.shape[0]
         N_dimensions = elec_positions.shape[1]
 
-        assert N_positions == self.electrode_positions.shape[0], \
-            "number of imported electrode positions does not match"
+        if self.electrode_positions is not None:
+            assert N_positions == self.electrode_positions.shape[0], \
+                "number of imported electrode positions does not match"
 
         if N_dimensions == 2:
             # assume only x/z data
