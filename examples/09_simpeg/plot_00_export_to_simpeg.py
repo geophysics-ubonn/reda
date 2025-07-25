@@ -67,8 +67,8 @@ data_e.import_electrode_positions(
 data_e.compute_K_numerical(
     {
         'rho': 100,
-        'elem': '../01_ERT/data_rodderberg/mesh_creation/elem.dat',
-        'elec': '../01_ERT/data_rodderberg/mesh_creation/elec.dat',
+        'elem': '../01_ERT/data_rodderberg/mesh_creation/g1/elem.dat',
+        'elec': '../01_ERT/data_rodderberg/mesh_creation/g1/elec.dat',
     }
 )
 data_e.filter('rho_a <= 0')
@@ -108,7 +108,8 @@ plot_pseudosection(
     scatter_opts={"cmap": mpl.cm.viridis},
 )
 ax1.set_title("Normalized Voltages")
-fig.savefig('test.jpg', dpi=300)
+with reda.CreateEnterDirectory('output_00_ertinv'):
+    fig.savefig('pseudosection.jpg', dpi=300)
 
 ###############################################################################
 data_object.standard_deviation = 7e-5 + 0.01 * np.abs(data_object.dobs)
