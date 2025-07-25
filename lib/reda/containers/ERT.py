@@ -219,7 +219,7 @@ class ERTExporters(object):
         exporter.add_data(self.data, version, **kwargs)
         exporter.add_metadata(self.metadata)
 
-    def export_to_pygimli_scheme(self, norrec='nor', timestep=None):
+    def export_to_pygimli_scheme(self, norrec=None, timestep=None):
         """Export the data into a pygimili.DataContainerERT object.
 
         For now, do NOT set any sensor positions
@@ -239,7 +239,6 @@ class ERTExporters(object):
             logger.info('timestep(s) {} will be used'.format(timestep))
 
         import pygimli as pg
-        from pygimli.physics import ert
 
         data_container = pg.DataContainerERT()
 
@@ -247,50 +246,44 @@ class ERTExporters(object):
         ert_copy = self.create_copy()
 
         if 'rho_a' not in ert_copy.data.columns:
-            print('Computing numerical geometric factors using Pyglimi')
-            cont_tmp = pg.DataContainerERT()
-            cont_tmp['a'] = ert_copy.data['a'] - 1
-            cont_tmp['b'] = ert_copy.data['b'] - 1
-            cont_tmp['m'] = ert_copy.data['m'] - 1
-            cont_tmp['n'] = ert_copy.data['n'] - 1
-            cont_tmp['r'] = ert_copy.data['r']
-            cont_tmp['valid'] = 1
-
-            print(ert_copy.electrode_positions.values)
-            for electrode in ert_copy.electrode_positions.values:
-                cont_tmp.createSensor([electrode[0], electrode[2]])
-
-            # try to estimate K factors
-            k = ert.createGeometricFactors(cont_tmp, numerical=True)
-
-            del (cont_tmp)
-            ert_copy.apply_k(k)
+            ert_copy.compute_K_numerical(
+                {'container': self},
+                fem_code='pygimli',
+            )
 
         # select timesteps
-        query = ' '.join((
-            'norrec == "{}"'.format(norrec),
-        ))
+        if norrec is not None:
+            query = ' '.join((
+                'norrec == "{}"'.format(norrec),
+            ))
+        else:
+            query = ''
 
         if timestep is not None:
-            query += ' and timestep=="{}"'.format(timestep)
+            if query != '':
+                query += ' and '
+            query += 'timestep=="{}"'.format(timestep)
 
         logger.debug('Query: {}'.format(query))
 
-        subdata = ert_copy.data.query(query)
+        if query:
+            subdata = ert_copy.data.query(query)
+        else:
+            subdata = ert_copy.data
         assert subdata.shape[0] != 0
 
         # set data container
-        data_container['a'] = subdata['a'] - 1
-        data_container['b'] = subdata['b'] - 1
-        data_container['m'] = subdata['m'] - 1
-        data_container['n'] = subdata['n'] - 1
-        data_container['r'] = subdata['r']
+        data_container['a'] = subdata['a'].values - 1
+        data_container['b'] = subdata['b'].values - 1
+        data_container['m'] = subdata['m'].values - 1
+        data_container['n'] = subdata['n'].values - 1
+        data_container['r'] = subdata['r'].values
 
         if 'k' in subdata.columns:
-            data_container['k'] = subdata['k']
+            data_container['k'] = subdata['k'].values
 
         if 'rho_a' in subdata.columns:
-            data_container['rhoa'] = subdata['rho_a']
+            data_container['rhoa'] = subdata['rho_a'].values
 
         data_container['valid'] = 1
 
