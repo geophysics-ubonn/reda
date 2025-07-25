@@ -54,6 +54,7 @@ intersphinx_mapping = {
 }
 
 # Gallery conf
+# https://sphinx-gallery.github.io/stable/configuration.html
 sphinx_gallery_conf = {
     'examples_dirs': [
         '../examples',
