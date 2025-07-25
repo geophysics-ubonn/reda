@@ -326,7 +326,7 @@ def assign_norrec_diffs(df, diff_list):
                 return np.nan
             return values_avg['nor'] - values_avg['rec']
 
-        aggregate = g.apply(ggt)
+        aggregate = g.apply(ggt, include_groups=False)
         aggregate.name = '{}diff'.format(diffcol)
 
         # import IPython
