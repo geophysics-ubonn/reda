@@ -70,5 +70,8 @@ np.savetxt(
     'electrode_positions.dat',
     gps_ert_profile1[['xy_dist_cumsum', 'ellips_height']]
 )
-# with open(meshdir + os.sep + 'electrodes.dat'):
-#     pass
+with open(meshdir + os.sep + 'electrodes.dat', 'w') as fid:
+    np.savetxt(
+        fid, gps_ert_profile1[['xy_dist_cumsum', 'ellips_height']],
+        fmt='%.4f %.4f'
+    )
