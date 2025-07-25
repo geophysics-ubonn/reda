@@ -13,6 +13,7 @@ version_long = '0.2.4'
 # package data
 os.chdir('lib/reda/testing')
 package_data = glob.glob('data/*')
+package_data += glob.glob('data/geomfacs_topography/*')
 os.chdir('../../../')
 
 
@@ -42,6 +43,9 @@ if __name__ == '__main__':
         extras_require={
             "crtomo":  [
                 "crtomo_tools",
+            ],
+            "pygimli":  [
+                "pygimli",
             ],
         },
         classifiers=(
