@@ -41,7 +41,8 @@ def apply_K(df, k, **kwargs):
     return df
 
 
-def compute_K_numerical(dataframe, settings=None, keep_dir=None):
+def compute_K_numerical(dataframe, settings=None, keep_dir=None,
+                        fem_code=None):
     """Use a finite-element modeling code to infer geometric factors for meshes
     with topography or irregular electrode spacings.
 
@@ -54,6 +55,10 @@ def compute_K_numerical(dataframe, settings=None, keep_dir=None):
         down below for more information in the required content.
     keep_dir : path
         if not None, copy modeling dir here
+    fem_code: None|str
+        Select the FEM code that should be used for computing the geometric
+        factors here. If None, then defaults are used. Valid entries: "crtomo",
+        "pygimli"
 
     Returns
     -------
@@ -62,6 +67,8 @@ def compute_K_numerical(dataframe, settings=None, keep_dir=None):
 
     Examples
     --------
+
+    CRMod settings:
     ::
 
         settings = {
@@ -76,13 +83,28 @@ def compute_K_numerical(dataframe, settings=None, keep_dir=None):
     """
     assert dataframe.shape[0] > 0, \
         "DataFrame is empty. Did you filter all data?"
-    inversion_code = reda.rcParams.get('geom_factor.inversion_code', 'crtomo')
+
+    if fem_code is None:
+        inversion_code = reda.rcParams.get(
+            'geom_factor.inversion_code', 'crtomo'
+        )
+    else:
+        if fem_code in ('crtomo', 'pygimli'):
+            inversion_code = fem_code
+        else:
+            raise Exception('FEM code {} not supported'.format(fem_code))
+
     if inversion_code == 'crtomo':
         import reda.utils.geom_fac_crtomo as geom_fac_crtomo
         if keep_dir is not None:
             keep_dir = os.path.abspath(keep_dir)
         K = geom_fac_crtomo.compute_K(
             dataframe, settings, keep_dir)
+    elif inversion_code == 'pygimli':
+        import reda.utils.geom_fac_pygimli as geom_fac
+        K = geom_fac.compute_K(
+            dataframe, settings, keep_dir
+        )
     else:
         raise Exception(
             'Inversion code {0} not implemented for K computation'.format(

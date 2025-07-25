@@ -63,7 +63,6 @@ def test_load_resistance_data():
 
         assert 'rpha' not in data.columns, 'column rpha should not be present'
         assert 'Zt' not in data.columns, 'column Zt should not be present'
-    return data
 
 
 if __name__ == '__main__':
