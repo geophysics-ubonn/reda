@@ -273,7 +273,50 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             self.check_dataframe(data)
             self._add_to_data(data)
 
-        self.electrode_positions = electrode_positions
+        if isinstance(electrode_positions, np.ndarray):
+            if len(electrode_positions.shape) == 1:
+                # assume only x positions
+                nd_elecs = np.atleast_2d(electrode_positions).T
+            else:
+                nd_elecs = electrode_positions
+            print('ND_ELECS', nd_elecs.shape)
+            if nd_elecs.shape[1] == 3:
+                columns = ['x', 'y', 'z']
+            elif nd_elecs.shape[1] == 2:
+                columns = ['x', 'z']
+            elif nd_elecs.shape[1] == 1:
+                columns = ['x', ]
+            elec_pos = pd.DataFrame(
+                electrode_positions,
+                columns=columns
+            )
+        elif isinstance(electrode_positions, pd.DataFrame):
+            elec_pos = electrode_positions.copy()
+        elif electrode_positions is None:
+            elec_pos = None
+        else:
+            raise Exception(
+                'electrode positions must be numpy.ndarray or ' +
+                'pandas.DataFrame objects'
+            )
+
+        if elec_pos is not None:
+            if 'y' not in elec_pos.columns:
+                elec_pos['y'] = 0
+            if 'z' not in elec_pos.columns:
+                elec_pos['z'] = 0
+            # make sure the column order is correct
+            elec_pos = elec_pos[['x', 'y', 'z']]
+
+        if elec_pos is not None and self.data is not None:
+            # check if the number of electrodes matches the data
+            max_electrode_number = np.unique(
+                data[['a', 'b', 'm', 'n']].values
+            ).max()
+            assert elec_pos.shape[0] >= max_electrode_number, \
+                "The number of electrode positions is smaller than the " + \
+                "largest electrode index"
+        self.electrode_positions = elec_pos
         self.topography = topography
         if metadata is None:
             self.metadata = {}
@@ -404,14 +447,61 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         redafixK.fix_sign_with_K(self.data, **kwargs)
         return K
 
-    def compute_K_numerical(self, settings=None, keep_dir=None, **kwargs):
+    def compute_K_numerical(self, settings=None, keep_dir=None,
+                            fem_code=None, just_return_k=False, **kwargs):
+        """Use a finite-element modeling code to infer geometric factors for
+        meshes with topography or irregular electrode spacings.
+
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            the data frame that contains the data
+        settings : dict
+            The settings required to compute the geometric factors. See
+            examples down below for more information in the required content
+            (only for fem_code="crtomo").
+        keep_dir : path
+            if not None, copy modeling dir here (only for fem_code="crtomo")
+        fem_code: None|str
+            Select the FEM code that should be used for computing the geometric
+            factors here. If None, then defaults are used. Valid entries:
+            "crtomo", "pygimli"
+
+        Returns
+        -------
+        K : :class:`numpy.ndarray`
+            K factors (are also directly written to the dataframe)
+
+        Examples
+        --------
+
+        PyGimli settings: Just use None, no settings required
+
+        CRMod settings:
+        ::
+
+            settings = {
+                'rho': 100,
+                'elem': 'elem.dat',
+                'elec': 'elec.dat',
+                'sink_node': '100',
+                '2D': False,
+            }
+
+
+        """
+        if fem_code == 'pygimli' and settings is None:
+            settings = {'container': self}
+
         K = redaK.compute_K_numerical(
             self.data,
             settings=settings,
             keep_dir=keep_dir,
+            fem_code=fem_code,
         )
-        self.data = redaK.apply_K(self.data, K, **kwargs)
-        redafixK.fix_sign_with_K(self.data, **kwargs)
+        if not just_return_k:
+            self.data = redaK.apply_K(self.data, K, **kwargs)
+            redafixK.fix_sign_with_K(self.data, **kwargs)
         return K
 
     def pseudosection(self, column='r', filename=None, log10=False, **kwargs):
@@ -514,9 +604,10 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig.savefig(filename, dpi=300)
         return fig, ax, cb
 
-    def histogram(self, column='r', filename=None, log10=False, **kwargs):
-        """Plot a histogram of one data column"""
-        return_dict = HS.plot_histograms(self.data, column, **kwargs)
+    def histogram(self, column='r', filename=None, **kwargs):
+        """Plot a histogram of one data column (both linear and log10)"""
+        return_dict = HS.plot_histograms(
+            self.data, column, **kwargs)
         if filename is not None:
             return_dict['all'].savefig(filename, dpi=300)
         return return_dict
@@ -591,12 +682,69 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             fig = ax.get_figure()
 
         elecs = reda.electrode_manager()
-        elecs.add_fixed_assignments(self.electrode_positions)
+        elecs.add_fixed_assignments(
+            self.electrode_positions
+        )
         elecs.plot_coordinates_x_z_to_ax(ax_plot, use_y_axis=use_y_axis)
         if ax is None:
             # only touch the layout if we created the figure
             fig.tight_layout()
         return fig, ax
+
+    def import_electrode_positions(self, filename,
+                                   delimiter=r'\s+',
+                                   header=None,
+                                   **kwargs):
+        """Import electrode positions from a text file
+
+        This function replaces all electrode positions with those found in a
+        file. Correspondingly, the number of electrodes must match the number
+        of lines in the file.
+        Electrode positions are imported using pandas.read_csv, any kwargs
+        passed to this function will be passed through to read_csv. Use this
+        to, e.g., skip header rows using the 'skiprows' parameter.
+
+        We assume that the file only contains two or three columns.
+        Two columns indicates x, z positions, three columns x, y, z [m].
+
+        Alternative ways to add electrode positions:
+
+        * directly when initializing a reda data container
+        * some importers take the electrode_positions parameter
+
+        """
+        try:
+            elec_positions = pd.read_csv(
+                filename,
+                delimiter=delimiter,
+                header=header,
+                **kwargs
+            )
+        except Exception as e:
+            print('There was an error importing electrode positions')
+            print(e)
+            return
+
+        N_positions = elec_positions.shape[0]
+        N_dimensions = elec_positions.shape[1]
+
+        if self.electrode_positions is not None:
+            assert N_positions == self.electrode_positions.shape[0], \
+                "number of imported electrode positions does not match"
+
+        if N_dimensions == 2:
+            # assume only x/z data
+            elec_positions.columns = ['x', 'z']
+            elec_positions['y'] = 0
+        elif N_dimensions == 3:
+            elec_positions.columns = ['x', 'y', 'z']
+        else:
+            print('ERROR: Number of columns must be either 2 or 3')
+            return
+
+        elec_positions.index.name = 'electrode_number'
+
+        self.electrode_positions = elec_positions[['x', 'y', 'z']]
 
     def replace_electrode_positions(self, coordinates):
         """Replace the imported electrode coordinates by new ones. This
@@ -605,8 +753,6 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
 
         If the input is a pandas DataFrame, assume that the columns x, y, z are
         present.
-
-
 
         Parameters
         ----------
@@ -642,7 +788,6 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
             elif coords_raw.shape[1] == 3:
                 cols = ['x', 'y', 'z']
             coords = pd.DataFrame(coords_raw, columns=cols)
-            print(coords)
             for key in ['x', 'y', 'z']:
                 if key not in coords.columns:
                     coords[key] = 0

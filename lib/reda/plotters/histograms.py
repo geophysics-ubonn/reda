@@ -39,8 +39,6 @@ def plot_histograms(ertobj, keys, **kwargs):
     merge : bool, optional
         if True, then generate only one figure with all key-plots as columns
         (default True)
-    log10plot : bool, optional
-        default: True
     extra_dims : list, optional
         ?
     nr_bins : None|int
@@ -125,18 +123,17 @@ def plot_histograms(ertobj, keys, **kwargs):
         ax.tick_params(axis='both', which='major', labelsize=6 * image_scale)
         ax.tick_params(axis='both', which='minor', labelsize=6 * image_scale)
 
+        # log10-representation
+        ax = axes[1]
+
         if subdata_log10.size > 0:
-            ax = axes[1]
             ax.hist(
                 subdata_log10,
                 nr_of_bins,
             )
-            ax.set_xlabel(r'$log_{10}($' + label + ')')
-            ax.set_ylabel('count')
-            ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
-        else:
-            pass
-            # del(axes[1])
+        ax.set_xlabel(r'$log_{10}($' + label + ')')
+        ax.set_ylabel('count')
+        ax.xaxis.set_major_locator(mpl.ticker.MaxNLocator(5))
 
         fig.tight_layout()
 

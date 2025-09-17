@@ -4,3 +4,5 @@ sphinx-gallery
 crtomo-tools
 Pillow>=7.1.0
 tables
+pygimli
+simpeg

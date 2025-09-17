@@ -219,7 +219,7 @@ class ERTExporters(object):
         exporter.add_data(self.data, version, **kwargs)
         exporter.add_metadata(self.metadata)
 
-    def export_to_pygimli_scheme(self, norrec='nor', timestep=None):
+    def export_to_pygimli_scheme(self, norrec=None, timestep=None):
         """Export the data into a pygimili.DataContainerERT object.
 
         For now, do NOT set any sensor positions
@@ -239,31 +239,56 @@ class ERTExporters(object):
             logger.info('timestep(s) {} will be used'.format(timestep))
 
         import pygimli as pg
+
         data_container = pg.DataContainerERT()
 
-        query = ' '.join((
-            'norrec == "{}"'.format(norrec),
-        ))
+        # make a copy of the container
+        ert_copy = self.create_copy()
+
+        if 'rho_a' not in ert_copy.data.columns:
+            ert_copy.compute_K_numerical(
+                {'container': self},
+                fem_code='pygimli',
+            )
+
+        # select timesteps
+        if norrec is not None:
+            query = ' '.join((
+                'norrec == "{}"'.format(norrec),
+            ))
+        else:
+            query = ''
 
         if timestep is not None:
-            query += ' and timestep=="{}"'.format(timestep)
+            if query != '':
+                query += ' and '
+            query += 'timestep=="{}"'.format(timestep)
 
         logger.debug('Query: {}'.format(query))
 
-        subdata = self.data.query(query)
+        if query:
+            subdata = ert_copy.data.query(query)
+        else:
+            subdata = ert_copy.data
         assert subdata.shape[0] != 0
 
-        data_container['a'] = subdata['a']
-        data_container['b'] = subdata['b']
-        data_container['m'] = subdata['m']
-        data_container['n'] = subdata['n']
-        data_container['r'] = subdata['r']
+        # set data container
+        data_container['a'] = subdata['a'].values - 1
+        data_container['b'] = subdata['b'].values - 1
+        data_container['m'] = subdata['m'].values - 1
+        data_container['n'] = subdata['n'].values - 1
+        data_container['r'] = subdata['r'].values
 
         if 'k' in subdata.columns:
-            data_container['k'] = subdata['k']
+            data_container['k'] = subdata['k'].values
 
         if 'rho_a' in subdata.columns:
-            data_container['rhoa'] = subdata['rho_a']
+            data_container['rhoa'] = subdata['rho_a'].values
+
+        data_container['valid'] = 1
+
+        for electrode in ert_copy.electrode_positions.values:
+            data_container.createSensor([electrode[0], electrode[2]])
 
         return data_container
 
