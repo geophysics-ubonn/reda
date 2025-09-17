@@ -36,6 +36,11 @@ class ConfigManager(object):
         abmn_df = pd.DataFrame(self.configs, columns=['a', 'b', 'm', 'n'])
         return abmn_df
 
+    def to_pandas_dataframe(self):
+        """Alias for .abmn_to_dataframe
+        """
+        return self.abmn_to_dataframe()
+
     def _get_next_index(self):
         """
         """
@@ -147,7 +152,7 @@ class ConfigManager(object):
         mask = np.less(injections[:, 0], injections[:, 1])
         injections = injections[mask]
 
-        return(injections)
+        return (injections)
 
     def load_crmod_config(self, filename):
         """Load a CRMod configuration file
@@ -287,7 +292,6 @@ class ConfigManager(object):
         np.savetxt(fid, all_data, fmt='%i %i %f %f')
         if not isinstance(filename, io.BytesIO):
             fid.close()
-
 
     def write_crmod_volt_with_individual_errors(
             self, filename, data_mids, error_mids, norm_mag=1, norm_pha=1,

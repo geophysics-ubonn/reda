@@ -1,4 +1,4 @@
-name: Build documentation for REDA and reploy to gh-pages
+name: Build documentation for REDA and deploy to gh-pages
 
 # Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
