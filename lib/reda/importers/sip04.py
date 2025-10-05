@@ -135,7 +135,7 @@ def _import_mat_file(mat_filename):
     df = pd.DataFrame(mat['fm'], columns=['fm'])  # frequencies
     # import IPython
     # IPython.embed()
-    if mat['Temp'].size > 0:
+    if 'Temp' in mat and mat['Temp'].size > 0:
         df['Temp_1'] = pd.Series(mat['Temp'][:, 0], index=df.index)
         df['Temp_2'] = pd.Series(mat['Temp'][:, 1], index=df.index)
         df['Temp_m'] = pd.Series(
