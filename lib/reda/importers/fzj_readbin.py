@@ -72,7 +72,7 @@ class fzj_readbin(object):
     def _read_frequencies(self, mff_filename):
         testline = pd.read_csv(
             mff_filename,
-            delim_whitespace=True,
+            sep=r'\s+',
             header=None,
         )
         if testline.shape[1] == 7:
@@ -163,12 +163,29 @@ class fzj_readbin(object):
         )
 
         # extract current injections
-        # Note this only works with new EIT160-based mcf files
-        self.injections = np.array(
+        # old multiplexer styles indicate current injections by SE [A] [B]
+        self.injections_se = np.array(
+            re.findall(
+                r'SE ([0-9]?[0-9]?[0-9]) ([0-9]?[0-9]?[0-9])', mcf_content
+            )
+        ).astype(int)
+        # Newer multiplexer types indicate current injections by ABMG [A] [B]
+        # [?] [?]
+        self.injections_abmg = np.array(
             re.findall(
                 r'ABMG ([0-9]?[0-9]?[0-9]) ([0-9]?[0-9]?[0-9])', mcf_content
             )
         ).astype(int)
+
+        # for now we only allow either SE or ABMG
+        if self.injections_se.size > 0 and self.injections_abmg.size > 0:
+            raise Exception("Found SE and ABMG current injection denotations")
+
+        if self.injections_se.size > 0:
+            self.injections = self.injections_se
+
+        if self.injections_abmg.size > 0:
+            self.injections = self.injections_abmg
 
         assert self.injections.size > 0, \
             "Error reading injections from mcf file"
@@ -320,6 +337,8 @@ class fzj_readbin(object):
         plt.close(fig)
 
     def plot_per_frequency(self):
+        """For each frequency, plot all time series into a file ts_f_*.jpg
+        """
         for fnr in np.arange(self.frequencies.size):
             d = self.data[fnr]
             df = pd.DataFrame(d.T)
@@ -333,9 +352,12 @@ class fzj_readbin(object):
             ax.set_ylabel('Voltage [V]')
             ax.set_title(
                 'Frequency: {} Hz'.format(self.frequencies[fnr]), loc='left')
-            ax.axhline(y=9, color='k')
-            ax.axhline(y=-9, color='k')
+            U0 = self.frequency_data.iloc[fnr]['U0']
+            ax.axhline(y=U0, color='k', label='U0')
+            ax.axhline(y=-U0, color='k')
             # fig.show()
+            ax.legend()
+            ax.tight_layout()
             fig.savefig('ts_f_{}.jpg'.format(fnr), dpi=300)
             plt.close(fig)
 
