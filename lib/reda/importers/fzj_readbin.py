@@ -104,7 +104,7 @@ class fzj_readbin(object):
     def _read_frequencies_eit(self, mff_filename):
         frequency_data = pd.read_csv(
             mff_filename,
-            delim_whitespace=True,
+            sep=r'\s+',
             header=None,
             names=[
                 'delay',
@@ -134,7 +134,7 @@ class fzj_readbin(object):
     def _read_frequencies_sip04(self, mff_filename):
         frequency_data = pd.read_csv(
             mff_filename,
-            delim_whitespace=True,
+            sep=r'\s+',
             header=None,
             names=[
                 'delay',
