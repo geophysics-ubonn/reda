@@ -26,7 +26,7 @@ not_needed
 
 
 class fzj_readbin(object):
-    def __init__(self, filename=None):
+    def __init__(self, filename=None, sip04=False):
         """
         Parameters
         ----------
@@ -34,7 +34,9 @@ class fzj_readbin(object):
             Filename to either the .mcf or .bin file. It is assumed that the
             corresponding .mff, .mcf, and .bin files reside in the same
             location with the same filename.
-
+        sip: bool, optional
+            If True, then expect SIP04 data. SIP04 data does not require the
+            definition of current injection pairs in the .mcf file
         """
         # variables to be filled when importing data
         self.filebase = None
@@ -49,9 +51,9 @@ class fzj_readbin(object):
 
         # load on initialization?
         if filename is not None and os.path.isfile(filename):
-            self.import_file(filename)
+            self.import_file(filename, sip04=sip04)
 
-    def import_file(self, filename):
+    def import_file(self, filename, sip04=False):
         """
         Parameters
         ----------
@@ -59,6 +61,9 @@ class fzj_readbin(object):
             Filename to either the .mcf or .bin file. It is assumed that the
             corresponding .mff, .mcf, and .bin files reside in the same
             location with the same filename.
+        sip: bool, optional
+            If True, then expect SIP04 data. SIP04 data does not require the
+            definition of current injection pairs in the .mcf file
 
         """
         filebase = os.path.abspath(os.path.splitext(filename)[0])
@@ -66,7 +71,7 @@ class fzj_readbin(object):
 
         self._read_frequencies(filebase + '.mff')
 
-        self._read_mcf_file(filebase + '.mcf')
+        self._read_mcf_file(filebase + '.mcf', sip04=sip04)
         self._read_data(filebase + '.bin')
 
     def _read_frequencies(self, mff_filename):
@@ -151,7 +156,7 @@ class fzj_readbin(object):
         frequency_data['inj_number'] = 1
         return frequency_data
 
-    def _read_mcf_file(self, filename):
+    def _read_mcf_file(self, filename, sip04=False):
         # encoding as iso-8859 seems to work also for utf-8
         mcf_content = open(filename, 'r', encoding='ISO-8859-1').read()
 
@@ -162,33 +167,38 @@ class fzj_readbin(object):
             ).groups()[0]
         )
 
-        # extract current injections
-        # old multiplexer styles indicate current injections by SE [A] [B]
-        self.injections_se = np.array(
-            re.findall(
-                r'SE ([0-9]?[0-9]?[0-9]) ([0-9]?[0-9]?[0-9])', mcf_content
-            )
-        ).astype(int)
-        # Newer multiplexer types indicate current injections by ABMG [A] [B]
-        # [?] [?]
-        self.injections_abmg = np.array(
-            re.findall(
-                r'ABMG ([0-9]?[0-9]?[0-9]) ([0-9]?[0-9]?[0-9])', mcf_content
-            )
-        ).astype(int)
+        if sip04:
+            self.injections = np.array((
+                (1, 4)
+            ))
+        else:
+            # extract current injections
+            # old multiplexer styles indicate current injections by SE [A] [B]
+            self.injections_se = np.array(
+                re.findall(
+                    r'SE ([0-9]?[0-9]?[0-9]) ([0-9]?[0-9]?[0-9])', mcf_content
+                )
+            ).astype(int)
+            # Newer multiplexer types indicate current injections by ABMG [A] [B]
+            # [?] [?]
+            self.injections_abmg = np.array(
+                re.findall(
+                    r'ABMG ([0-9]?[0-9]?[0-9]) ([0-9]?[0-9]?[0-9])', mcf_content
+                )
+            ).astype(int)
 
-        # for now we only allow either SE or ABMG
-        if self.injections_se.size > 0 and self.injections_abmg.size > 0:
-            raise Exception("Found SE and ABMG current injection denotations")
+            # for now we only allow either SE or ABMG
+            if self.injections_se.size > 0 and self.injections_abmg.size > 0:
+                raise Exception("Found SE and ABMG current injection denotations")
 
-        if self.injections_se.size > 0:
-            self.injections = self.injections_se
+            if self.injections_se.size > 0:
+                self.injections = self.injections_se
 
-        if self.injections_abmg.size > 0:
-            self.injections = self.injections_abmg
+            if self.injections_abmg.size > 0:
+                self.injections = self.injections_abmg
 
-        assert self.injections.size > 0, \
-            "Error reading injections from mcf file"
+            assert self.injections.size > 0, \
+                "Error reading injections from mcf file"
 
     def _read_data(self, binary_file):
         data = []
