@@ -1,0 +1,48 @@
+* MDF = format of the measurement data.
+MDF JB11102007
+
+* ComG = Number of the Com Port for the generator.
+ComG 1
+
+* ComV = Number of the Com Port for the amplifier type ZEL-SIP04-V04.
+ComV 0
+
+* Value of the shunt resistors Rs1 and Rs2.
+* If no shunt resistor is installed then Rs1 ot Rs2 must be -1e15.
+* If no second amplifier is installed the Rs2 must be -1.
+Rs1 1000
+Rs2 -1
+
+* Type of the amplifier
+SNr ZEL-SIP04-V02
+
+* Number of the channels
+NCh 8
+
+* File name of the calibration data
+* The file must be in the directory of the measurement data
+CName calibration
+
+* File name for the impedance calculation (post processing)
+PName C:\SIP\SIP-Z\SIP-Z-20130527.bat
+
+* File name of the wave form
+* WName C:\ZEL-SIP04-V06\MParameter\WF002.wff
+WName
+
+* DC Self Calibration On / Off
+CAL OFF
+
+* Option to send an email after measurement.
+* EMail email-address email-server, e.g.:
+EMail
+
+* Option to send the status of the measurement to another PC.
+* For this the User Datagram Protocol is used which sends information to an UDP receiver.
+* UDP port number e.g.: UDP 61557
+UDP
+
+* Option to shutdown the PC after measurement.
+* For this the program Shutdown.exe is needed.
+* SHD OFF or SHD ON
+SHD OFF
