@@ -395,8 +395,7 @@ class ERT(BaseContainer, ERTImporters, ERTExporters):
         ...     [3,4,2,1,-105]], columns=list("abmnr")
         ... )
         >>> ert.compute_reciprocal_errors()
-        >>> ert.data["error"].mean() == 0.1
-        True
+        >>> assert ert.data["error"].mean() == 0.1
         """
 
         # Assign norrec ids if not already present
