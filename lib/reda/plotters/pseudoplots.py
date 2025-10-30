@@ -380,6 +380,9 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
     force_to_normal : bool, optional (False)
         If True, force all data points to be plotted below the y=0 axis.
         This is useful to visualize nor-rec-merged data sets.
+    interpolate: bool, optional (default: False)
+        If set, do not use a scatter plot but interpolate between the locations
+        to get a color plot
 
     Returns
     -------
@@ -533,8 +536,8 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         array.
         """
         nelems = len(markersize_array)
-        factor = 1/nelems
-        return markersize_array*np.flip(np.arange(1, nelems+1)*factor)
+        factor = 1 / nelems
+        return markersize_array * np.flip(np.arange(1, nelems+1) * factor)
 
     # check for overlapping points and adjust markersize accordingly
     for _, common in common_pscoords.iterrows():
@@ -544,34 +547,77 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
         pseudocoords.loc[subset.index, 'markersize'] = smallify(
             pseudocoords.loc[subset.index, 'markersize'].values)
 
-    scat = ax.scatter(
-        pseudocoords['xp'], pseudocoords['zp'],
-        s=pseudocoords['markersize'],
-        c=pseudocoords['plot_values'],
-        marker='o',
-        edgecolors='none',
-        cmap=cmap,
-        vmin=kwargs.get('cbmin', None),
-        vmax=kwargs.get('cbmax', None),
-        alpha=1
-    )
+    # import IPython
+    # IPython.embed()
 
-    ax.set_xlim(
-        [
-            np.min(pseudocoords['xp'])-1*kwargs.get('spacing', 1),
-            np.max(pseudocoords['xp'])+1*kwargs.get('spacing', 1)
-        ]
-    )
-    ax.set_ylim(
-        [
-            np.min(pseudocoords['zp'])-1*kwargs.get('spacing', 1),
-            np.max(pseudocoords['zp'])+1*kwargs.get('spacing', 1)
-        ]
-    )
+    if kwargs.pop("interpolate", False):
+        import matplotlib.tri as tri
+        triang = tri.Triangulation(pseudocoords['xp'], pseudocoords['zp'])
+        obj = ax.tripcolor(
+            triang,
+            pseudocoords['plot_values'],
+            cmap=cmap,
+            vmin=kwargs.get('cbmin', None),
+            vmax=kwargs.get('cbmax', None),
+        )
+        ax.set_xlim(
+            pseudocoords['xp'].min(),
+            pseudocoords['xp'].max(),
+        )
+        ax.set_ylim(
+            pseudocoords['zp'].min(),
+            pseudocoords['zp'].max(),
+        )
+
+    else:
+
+        # try to determine a suitable scatterpoint size
+        # this is quite complicated as the 's' parameter of ax.scatter
+        # takes values in units of [pt], which equals to 1/72 inch
+        min_dist_x = np.diff(pseudocoords['xp'].sort_values().unique()).min()
+        min_dist_z = np.diff(pseudocoords['zp'].sort_values().unique()).min()
+        min_dist = max(min_dist_x, min_dist_z)
+        ax.set_xlim(
+            [
+                np.min(pseudocoords['xp']) - min_dist,
+                np.max(pseudocoords['xp']) + min_dist
+            ]
+        )
+        ax.set_ylim(
+            [
+                np.min(pseudocoords['zp']) - min_dist,
+                np.max(pseudocoords['zp']) + min_dist
+            ]
+        )
+
+        width_data = np.abs(ax.get_xlim()[1] - ax.get_xlim()[0])
+        height_data = np.abs(ax.get_ylim()[1] - ax.get_ylim()[0])
+        bbox = ax.get_window_extent().transformed(
+            fig.dpi_scale_trans.inverted()
+        )
+        width = bbox.width
+        height = bbox.height
+
+        s_x = (width / width_data * min_dist_x * 2 * 72) ** 2
+        s_z = (height / height_data * min_dist_z * 2 * 72) ** 2
+        s = min(s_x, s_z) / 2
+
+        obj = ax.scatter(
+            pseudocoords['xp'], pseudocoords['zp'],
+            # s=pseudocoords['markersize'],
+            s=s,
+            c=pseudocoords['plot_values'],
+            marker='o',
+            edgecolors='none',
+            cmap=cmap,
+            vmin=kwargs.get('cbmin', None),
+            vmax=kwargs.get('cbmax', None),
+            alpha=1
+        )
 
     cb = None
     if not kwargs.get('nocb', False):
-        cb = fig.colorbar(scat, ax=ax)
+        cb = fig.colorbar(obj, ax=ax)
         cb.set_label(
             kwargs.get('cblabel', units.get_label(column, log10=use_log10))
         )
@@ -582,10 +628,10 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
             loc='left',
         )
     ax.set_xlabel(
-        kwargs.get('xlabel', 'Pseudodistance')
+        kwargs.get('xlabel', 'pseudodistance [m]')
     )
     ax.set_ylabel(
-        kwargs.get('ylabel', 'Pseudodepth')
+        kwargs.get('ylabel', 'pseudodepth [m]')
     )
 
     return fig, ax, cb
