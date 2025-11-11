@@ -513,9 +513,9 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
 
     # https://matplotlib.org/stable/api/prev_api_changes/api_changes_3.9.0.html#top-level-cmap-registration-and-access-functions-in-mpl-cm
     if mpl_version[0] <= 3 and mpl_version[1] < 9:
-        cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'viridis'))
+        cmap = mpl.cm.get_cmap(kwargs.get('cmap', 'turbo'))
     else:
-        cmap = mpl.colormaps[kwargs.get('cmap', 'viridis')]
+        cmap = mpl.colormaps[kwargs.get('cmap', 'turbo')]
 
     if kwargs.get('do_not_saturate', False):
         cmap.set_over(
@@ -568,6 +568,7 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
             pseudocoords['zp'].min(),
             pseudocoords['zp'].max(),
         )
+        ax.axhline(0, color='k', linestyle='dashed')
 
     else:
 
