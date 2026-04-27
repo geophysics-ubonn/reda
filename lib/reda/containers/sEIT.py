@@ -817,6 +817,11 @@ class sEIT(BaseContainer, sEITImporters):
         return group_ts.ngroups
 
     def correct_for_cable_inductances(self, inductance_matrix):
+        if self.data.shape[0] == 0:
+            # do nothing for empty data
+            return
+
+
         if isinstance(inductance_matrix, np.ndarray):
             L_matrix = inductance_matrix
         else:
