@@ -229,9 +229,16 @@ class ExportersBase(object):
     """
 
     @functools.wraps(reda_bert_export.export_bert)
-    def export_bert(self, filename):
-        reda_bert_export.export_bert(self.data, self.electrode_positions,
-                                     filename)
+    def export_bert(self, filename, additional_columns=None, header=None,
+                    add_comments=False,):
+        reda_bert_export.export_bert(
+            self.data,
+            self.electrode_positions,
+            filename,
+            additional_columns=additional_columns,
+            header=header,
+            add_comments=add_comments,
+        )
 
     @functools.wraps(export_bert)
     def export_pygimli(self, *args, **kargs):
@@ -279,7 +286,7 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
                 nd_elecs = np.atleast_2d(electrode_positions).T
             else:
                 nd_elecs = electrode_positions
-            print('ND_ELECS', nd_elecs.shape)
+
             if nd_elecs.shape[1] == 3:
                 columns = ['x', 'y', 'z']
             elif nd_elecs.shape[1] == 2:
@@ -771,8 +778,8 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
                 # assume this is a file
                 if os.path.isfile(coordinates):
                     coords_raw = np.loadtxt(coordinates)
-                    print('raw')
-                    print(coords_raw)
+                    # print('raw')
+                    # print(coords_raw)
                 else:
                     raise Exception(
                         'filename {} not found'.format(coordinates))
