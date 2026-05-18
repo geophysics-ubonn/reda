@@ -459,6 +459,10 @@ class BaseContainer(LoggingClass, ImportersBase, ExportersBase):
         """Use a finite-element modeling code to infer geometric factors for
         meshes with topography or irregular electrode spacings.
 
+        WARNING: Only the pygimli backend will actually use the
+        .electrode_positions information. CRTomo requires a pre-built mesh,
+        which directly includes electrode positions.
+
         Parameters
         ----------
         dataframe : pandas.DataFrame
