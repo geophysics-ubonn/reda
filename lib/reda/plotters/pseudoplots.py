@@ -545,7 +545,10 @@ def plot_pseudosection_type2(dataobj, column, **kwargs):
             'xp == {} and zp == {}'.format(common.xp, common.zp)
         )
         pseudocoords.loc[subset.index, 'markersize'] = smallify(
-            pseudocoords.loc[subset.index, 'markersize'].values)
+            pseudocoords.loc[subset.index, 'markersize'].values
+        ).astype(
+            pseudocoords['markersize'].dtype
+        )
 
     # import IPython
     # IPython.embed()
