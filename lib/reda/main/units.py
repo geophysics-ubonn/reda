@@ -74,6 +74,12 @@ rel = {
         'label_mpl': r'$\phi$ [mrad]',
         'unit': r'mrad',
     },
+    'rpha': {
+        'full_name': 'phi_[mrad]',
+        'label_latex': r'$\phi~[\mbox{mrad}]$',
+        'label_mpl': r'$\phi$ [mrad]',
+        'unit': r'mrad',
+    },
     'log10_real': {
         'full_name': 'log_real_[S/m]',
         'label_latex': r"$\log_{10}(\sigma'~[\mbox{S/m}])$",

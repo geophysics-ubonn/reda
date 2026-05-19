@@ -129,3 +129,7 @@ ert_rec.import_syscal_bin(
     reciprocals=48,
 )
 print(ert_rec.electrode_positions)
+
+###############################################################################
+# Basics plots
+ert1.plot_histogram(columns='r')

@@ -100,31 +100,38 @@ def compute_K(dataframe, settings, keep_dir=False):
         print('using default settings')
         settings = get_default_settings()
 
-    if not os.path.isfile(settings['elem']):
-        raise IOError(
-            'elem file not found: {0}'.format(settings['elem'])
-        )
+    if (mesh := settings.get('mesh', None)) is None:
+        # assume that we want to read the elem.dat/elec.dat files
+        if not os.path.isfile(settings['elem']):
+            raise IOError(
+                'elem file not found: {0}'.format(settings['elem'])
+            )
 
-    if not os.path.isfile(settings['elec']):
-        raise IOError(
-            'elec file not found: {0}'.format(settings['elec'])
-        )
+        if not os.path.isfile(settings['elec']):
+            raise IOError(
+                'elec file not found: {0}'.format(settings['elec'])
+            )
 
-    # read grid file and determine nr of cells
-    with open(settings['elem'], 'r') as fid:
-        fid.readline()
-        cell_type, cell_number, edge_number = np.fromstring(
-            fid.readline().strip(),
-            sep=' ',
-            dtype=int,
-        )
+        # read grid file and determine nr of cells
+        with open(settings['elem'], 'r') as fid:
+            # ignore first header line
+            fid.readline()
+            # read second header line
+            cell_type, cell_number, edge_number = np.fromstring(
+                fid.readline().strip(),
+                sep=' ',
+                dtype=int,
+            )
+        full_path_elem = os.path.abspath(settings['elem'])
+        full_path_elec = os.path.abspath(settings['elec'])
+    else:
+        cell_number = mesh.nr_of_elements
+
+    rho = settings.get('rho', 100)
 
     # generate forward model as a string
     forward_model = '{0}\n'.format(cell_number)
-    forward_model += '{0} {1}\n'.format(settings['rho'], 0) * cell_number
-
-    full_path_elem = os.path.abspath(settings['elem'])
-    full_path_elec = os.path.abspath(settings['elec'])
+    forward_model += '{0} {1}\n'.format(rho, 0) * cell_number
 
     pwd = os.getcwd()
     with tempfile.TemporaryDirectory() as invdir:
@@ -144,8 +151,11 @@ def compute_K(dataframe, settings, keep_dir=False):
         with open('rho/rho.dat', 'w') as fid:
             fid.write(forward_model)
 
-        shutil.copy(full_path_elem, 'grid/elem.dat')
-        shutil.copy(full_path_elec, 'grid/elec.dat')
+        if mesh is None:
+            shutil.copy(full_path_elem, 'grid/elem.dat')
+            shutil.copy(full_path_elec, 'grid/elec.dat')
+        else:
+            mesh.save_elem_elec_files('grid/elem.dat', 'grid/elec.dat')
 
         print('SETTINGS')
         print(settings)
@@ -214,7 +224,7 @@ def compute_K(dataframe, settings, keep_dir=False):
         if settings.get('norm_factor', None) is not None:
             modeled_resistances[:, 2] /= settings.get('norm_factor')
 
-        K = settings['rho'] / modeled_resistances[:, 2]
+        K = rho / modeled_resistances[:, 2]
         if isinstance(dataframe, pd.DataFrame):
             dataframe['k'] = K
         if keep_dir is not None and not os.path.isdir(keep_dir):

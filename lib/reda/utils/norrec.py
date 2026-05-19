@@ -303,11 +303,17 @@ def assign_norrec_diffs(df, diff_list):
     g = df.groupby(extra_dims)
     # import time
 
-    # def subrow(row):
-    #     if row.size == 2:
-    #         return row.iloc[1] - row.iloc[0]
-    #     else:
-    #         return np.nan
+    # we take different paths in case we have duplicates in either nor, or rec
+    # in that case we need to average those values before taking the difference
+    #
+    check_multiples = (g['r'].count().max().item()) > 2
+
+    def subrow(row):
+        # the 'simple' case without duplicates
+        if row.size == 2:
+            return row.iloc[1] - row.iloc[0]
+        else:
+            return np.nan
 
     for diffcol in diff_list:
         # start = time.perf_counter()
@@ -318,6 +324,7 @@ def assign_norrec_diffs(df, diff_list):
         # compute the normal reciprocal pairs
         # make sure to average repeated measurements
         def ggt(sd):
+            # this is used for the more complex case
             values_avg = sd.groupby('norrec')[diffcol].mean()
 
             has_nor = 'nor' in values_avg.index
@@ -326,12 +333,19 @@ def assign_norrec_diffs(df, diff_list):
                 return np.nan
             return values_avg['nor'] - values_avg['rec']
 
-        aggregate = g.apply(ggt, include_groups=False)
+        # import IPython
+        # IPython.embed()
+        # exit()
+        if check_multiples:
+            aggregate = g.apply(ggt, include_groups=False)
+        else:
+            aggregate = g[diffcol].agg(subrow)
         aggregate.name = '{}diff'.format(diffcol)
 
         # import IPython
         # IPython.embed()
         # diff = g[['id', diffcol]].agg(subrow).reset_index()
+
         # # rename the column
         # cols = list(diff.columns)
         # cols[-1] = diffcol + 'diff'
@@ -345,6 +359,7 @@ def assign_norrec_diffs(df, diff_list):
                 columns='{}diff'.format(diffcol),
                 errors='ignore',
         ).merge(aggregate, on=extra_dims)
+
         # df = df.drop(
         #     cols[-1], axis=1, errors='ignore'
         # ).merge(diff, on=extra_dims, how='outer')

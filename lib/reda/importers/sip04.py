@@ -248,6 +248,64 @@ def _import_mat_file(mat_filename):
     return df
 
 
+def _import_csv_file_v2(csv_filename):
+    """Reimplementation of csv import. NOT USED YET
+
+    Needs renaming of a few more columns, I think
+    """
+    # determine data blocks
+    empty_lines = [0]
+    with open(csv_filename, 'r') as fid:
+        for index, line in enumerate(fid.readlines()):
+            if line.strip() == '':
+                print('Empty line at ', index)
+                empty_lines += [index]
+
+    # read in data blocks
+    blocks = []
+    for index in range(len(empty_lines) - 1):
+        print('NEW BLOCK', index, index+1)
+        nrows = empty_lines[index+1] - empty_lines[index] - 2
+        if index == 0:
+            # I am not really sure why, but otherwise we loose one line of the
+            # first
+            # block
+            nrows += 1
+
+        subdata = pd.read_csv(
+            'outputA.csv',
+            skiprows=empty_lines[index],
+            nrows=nrows,
+            sep=';',
+            skipinitialspace=True,
+        )
+        blocks += [subdata]
+
+    # merge data blocks
+    data_all = blocks[0]
+    for block in blocks[1:]:
+        data_all = pd.merge(data_all, block, left_on='f', right_on='f')
+
+    # compute a few missing columns
+
+    # transfer phase [mrad]
+    data_all['rpha'] = data_all['Phi(Zm)'] * 1000
+    # [Ohm]
+    data_all['r'] = data_all['Abs(Zm)']
+    data_all['a'] = 1
+    data_all['b'] = 4
+    data_all['m'] = 2
+    data_all['n'] = 3
+    # complex-valued transfer impedance
+    data_all['zt'] = data_all['r'] * np.exp(1j * data_all['rpha'] / 1000)
+    data_all.rename(
+        {'f': 'frequency'},
+        axis=1,
+        inplace=True,
+    )
+    return data_all
+
+
 def _import_csv_file(csv_filename):
     """
     """

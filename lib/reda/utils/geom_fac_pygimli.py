@@ -13,10 +13,10 @@ def compute_K(dataframe, settings, keep_dir=False):
     from pygimli.physics import ert
     import pygimli as pg
 
-    print('COMPUTING GEomFacs using PYGimli')
+    print('Computing geometric factors using PyGimli')
     assert 'container' in settings, 'Please provide "container" in settings'
     container = settings['container']
-    if not isinstance(container, (reda.ERT, )):
+    if not isinstance(container, (reda.ERT, reda.CR, )):
         print('Computing K factors for this container is not supported')
         return None
 

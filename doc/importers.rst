@@ -13,6 +13,44 @@ must provide the following functionality:
 * import topography into a :py:class:`pandas.DataFrame`, if available in this
   data format
 
+
+Electrode positions
+-------------------
+
+Handling of electrode positions is done using the `.electrode_positions`
+DataFrame of all containers.
+
+.. note::
+   Quite often data formats either do not provide electrode positioning
+   information, or, even more often, device settings were not adapted to
+   specific measurement setups and therefore the imported electrode positions
+   cannot be used. In those cases you need to manually provide electrode
+   positions.
+
+Electrode positions can be modified using one of the following approaches:
+
+* At init time (parameter `electrode_positions` of the containers). See
+  :py:class:`reda.containers.BaseContainer`
+* Using :py:meth:`reda.containers.BaseContainer.BaseContainer.import_electrode_positions`
+* Directly by accessing the '.electrode_positions' variable of all containers
+
+A basic electrode_positions DataFrame can be created by: ::
+
+    elec_pos = pd.DataFrame()
+    elec_pos['x'] = [1, 2, 3]
+    elec_pos['y'] = [0, 0, 0]
+    elec_pos['z'] = [0, 0, 0]
+    elec_pos.index.name = 'electrode_number'
+
+
+Plot electrode positions with:
+:py:meth:`reda.BaseContainer.BaseContainer.plot_electrode_positions_2d`.
+
+After changing modifying electrode positions, it is advisable to recompute
+geometric factors.
+
+:py:meth:`reda.containers.BaseContainer.BaseContainer.compute_K_numerical`.
+
 Internal structure (for developers)
 -----------------------------------
 
@@ -54,7 +92,7 @@ A basic structure for an importer would be located in **reda.importers**::
 
 .. note::
 
-    We retained from introducing importer objects by means of classes to make
+    We refrained from introducing importer objects by means of classes to make
     usage as simple as possible. If at some point it will be necessary to use
     classes for the importers, they can be built upon the import functions.
 
