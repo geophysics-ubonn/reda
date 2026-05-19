@@ -5,6 +5,9 @@ API documentation
 
 .. automodule:: reda
    :noindex:
+   :members:
+   :undoc-members:
+   :inherited-members:
 
 .. rubric:: Module overview
 

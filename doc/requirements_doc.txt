@@ -1,3 +1,4 @@
+pytest
 sphinx
 numpydoc
 sphinx-gallery
