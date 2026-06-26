@@ -1,9 +1,8 @@
 # REDA - Reproducible Electrical Data Analysis
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Join the chat at https://gitter.im/geophysics-ubonn/reda](https://badges.gitter.im/geophysics-ubonn/reda.svg)](https://gitter.im/geophysics-ubonn/reda?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-*Latest release: 0.2.0 (29. Apr. 2024)*
+*Latest release: 0.2.9 (19. May. 2026)*
 
 See [releases page](https://github.com/geophysics-ubonn/reda/releases) for a
 complete list of releases. Releases are also published to
