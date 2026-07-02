@@ -124,8 +124,8 @@ def import_das1_td(filename, **kwargs):
     filename : str
         path to input file
 
-    Keyword arguments:
-    ------------------
+    Other Parameters
+    ----------------
     corr_arry : list
         used to correct the electrode numbers [a, b, m, n], eg. for cable
         layouts which separated current and potential cables, hence, 64

@@ -226,10 +226,15 @@ class ERTExporters(object):
 
         Parameters
         ----------
+        norrec: str|None
+            either nor,rec, or all
+        timestep: datetime-like | None
+            timestep to export
 
 
         Returns
         -------
+        pygimli data container
         """
         logger.info('Exporting to pygimli DataContainer')
         logger.info('{} data will be exported'.format(norrec))

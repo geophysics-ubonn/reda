@@ -142,8 +142,9 @@ class sip_response():
         label_rec : str
             label for reciprocal data (default: "reciprocal")
 
-        Additional Parameters
+        Other Parameters
         ---------------------
+        None
 
 
         Returns
