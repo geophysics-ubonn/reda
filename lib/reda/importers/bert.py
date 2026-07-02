@@ -25,8 +25,8 @@ def import_ohm(filename, verbose=False, reciprocals=False, **kwargs):
         treated as the maximum electrode number, and denotations are renamed
         according to the equation :math:`X_n = N - (X_a - 1)`
 
-    Additional Parameters
-    ---------------------
+    Other Parameters
+    ----------------
     shift_by_xyz : tuple|list|numpy.ndarray of size 1 or 2 or 3, optional
         If set, shift electrode positions by adding this vector Length of 1
         assumes that only the x coordinate of the vector differs from zero.
@@ -109,7 +109,7 @@ def import_ohm(filename, verbose=False, reciprocals=False, **kwargs):
             data_reda['r'] = data_reda['Vmn'] / data_reda['Iab']
 
     # rename electrode denotations
-    if type(reciprocals) == int:
+    if type(reciprocals) is int:
         logger.info('renumbering electrode numbers')
         data_reda[['a', 'b', 'm', 'n']] = reciprocals + 1 - data_reda[
             ['a', 'b', 'm', 'n']]

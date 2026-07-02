@@ -20,14 +20,20 @@ crtomo = opt_import("crtomo")
 
 
 def plot_pseudosection_type3(dataobj, column, log10, crmod_settings, **kwargs):
-    """
-    settings = {
-        'rho': 100,  # resistivity to use for homogeneous model, [Ohm m]
-        'elem'
-        'elec'
-        '2D' : True|False
-        'sink_node': '100',
-    }
+    r"""Plot a type 3 pseudosection
+
+    Example settings:
+
+    ::
+
+        settings = {
+            'rho': 100,  # resistivity to use for homogeneous model, [Ohm m]
+            'elem'
+            'elec'
+            '2D' : True|False
+            'sink_node': '100',
+        }
+
 
     """
     fwd_op = kwargs.get('use_fwd_operator')

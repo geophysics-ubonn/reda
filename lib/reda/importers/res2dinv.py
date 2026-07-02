@@ -15,10 +15,15 @@ logger = logging.getLogger(__name__)
 
 
 def import_res2dinv(filename, **kwargs):
-    """ Read a RES2DINV-style
+    r""" Read a RES2DINV-style
 
     Parameters
     ----------
+    filename: str
+        Filename to import
+
+    kwargs: dict
+        TODO: document kwargs
 
     Returns
     -------
@@ -55,12 +60,12 @@ def _read_file(filename):
 
     Parameters
     ----------
-    filename : str
+    filename: str
         Data filename
 
     Returns
     ------
-    type : int
+    type: int
         type of array extracted from header
     file_data : :py:class:`StringIO.StringIO`
         content of file in a StringIO object

@@ -547,8 +547,8 @@ class fzj_readbin(object):
         remove_noise_harmonics : bool (default, False)
             .
 
-        Additional Parameters
-        ---------------------
+        Other Parameters
+        ----------------
         peak_distance : int, optional (default: 20)
             Distance parameter of scipy.signal.find_peaks used to detect peaks
             in the FFT spectrum

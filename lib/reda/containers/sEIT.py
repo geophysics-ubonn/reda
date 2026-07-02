@@ -893,6 +893,14 @@ class sEIT(BaseContainer, sEITImporters):
 
         Parameters
         ----------
+        configs_to_keep: numpy.array
+            Nx4 array of configurations to keep: abmn
+        frequency: float|None
+            If given, apply filter only to this frequency
+
+        Returns
+        -------
+        None
 
         """
         if frequency is not None:

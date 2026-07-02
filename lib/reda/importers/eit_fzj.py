@@ -16,6 +16,7 @@ import reda.importers.eit_version_2013 as eit_version_2013
 import reda.importers.eit_version_2017 as eit_version_2017
 import reda.importers.eit_version_2018a as eit_version_2018a
 import reda.importers.eit_version_20200609 as eit_version_20200609
+import reda.importers.eit_version_20211111 as eit_version_20211111
 from reda.importers.fzj_readbin import fzj_readbin
 
 from reda.importers.utils.decorators import enable_result_transforms
@@ -32,6 +33,7 @@ mat_version_importers = {
     'FZJ-EZ-09.11.2010': eit_version_2010,
     'FZJ-EZ-14.02.2013': eit_version_2013,
     'EZ-2020-06-09': eit_version_20200609,
+    'EZ-2021-11-11': eit_version_20211111,
 }
 
 
@@ -53,7 +55,7 @@ def _get_file_version(filename):
     """
     mat = sio.loadmat(filename, squeeze_me=True)
     version = mat['MP']['Version'].item()
-    del(mat)
+    del (mat)
 
     return version
 
@@ -321,7 +323,7 @@ def compute_quadrupoles(df_emd, config_file, df_md=None):
             'Ileakage',
         ]
         for column in check_md_columns:
-            if(column not in dfn.columns and df_md is not None and
+            if (column not in dfn.columns and df_md is not None and
                     column in df_md.columns):
                 print('Adding column {} from MD'.format(column))
                 # import IPython
